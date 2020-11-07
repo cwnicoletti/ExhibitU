@@ -1,5 +1,5 @@
 import AsyncStorage from "@react-native-community/async-storage";
-import * as Config from "../../config";
+import Config from "../../config";
 
 // export const SIGNUP = "SIGNUP";
 // export const SIGNIN = "SIGNIN";

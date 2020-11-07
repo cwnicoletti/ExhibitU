@@ -1,7 +1,7 @@
 import Product from "../../models/project";
 import * as Notifications from "expo-notifications";
 import * as Permissions from "expo-permissions";
-import * as Config from "../../config";
+import Config from "../../config";
 
 export const CREATE_PROJECT = "CREATE_PROJECT";
 export const UPDATE_PROJECT = "UPDATE_PROJECT";
