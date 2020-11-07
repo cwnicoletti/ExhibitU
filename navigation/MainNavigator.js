@@ -92,6 +92,7 @@ const ProjectNavigator = createDrawerNavigator(
                 <Text
                   style={{
                     color: darkModeValue ? "white" : "black",
+                    fontSize: 16,
                     margin: 10,
                   }}
                 >

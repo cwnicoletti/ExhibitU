@@ -51,7 +51,8 @@ const ProjectItem = (props) => {
 
 const styles = StyleSheet.create({
   product: {
-    height: 300,
+    height: 150,
+    width: '40%',
     margin: 20,
   },
   image: {
@@ -59,12 +60,10 @@ const styles = StyleSheet.create({
     height: "100%",
   },
   title: {
-    fontFamily: "open-sans-bold",
     fontSize: 18,
     marginVertical: 4,
   },
   price: {
-    fontFamily: "open-sans",
     fontSize: 14,
     color: "#888",
   },

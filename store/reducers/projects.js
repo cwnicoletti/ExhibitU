@@ -1,4 +1,5 @@
-import Product from "../../models/project";
+import Project from "../../models/project";
+import PROJECTS from "../../data/dummy-data";
 import {
   UPDATE_PRODUCT,
   CREATE_PRODUCT,
@@ -7,8 +8,8 @@ import {
 } from "../actions/projects";
 
 const intiailState = {
-  allProjects: [],
-  userProjects: [],
+  allProjects: PROJECTS,
+  userProjects: PROJECTS,
 };
 
 export default (state = intiailState, action) => {
@@ -19,14 +20,13 @@ export default (state = intiailState, action) => {
         userProjects: action.userProducts,
       };
     case CREATE_PRODUCT:
-      const newProduct = new Product(
+      const newProduct = new Project(
         action.productData.id,
         action.productData.ownerId,
         action.productData.pushToken,
         action.productData.title,
         action.productData.imageUrl,
-        action.productData.description,
-        action.productData.price
+        action.productData.description
       );
       return {
         ...state,
@@ -37,14 +37,13 @@ export default (state = intiailState, action) => {
       const productIndex = state.userProjects.findIndex(
         (prod) => prod.id === action.pid
       );
-      const updatedProduct = new Product(
+      const updatedProduct = new Project(
         action.pid,
         state.userProjects[productIndex].ownerId,
         state.userProjects[productIndex].pushToken,
         action.productData.title,
         action.productData.imageUrl,
-        action.productData.description,
-        state.userProjects[productIndex].price
+        action.productData.description
       );
       const updatedUserProjects = [...state.userProjects];
       updatedUserProjects[productIndex] = updatedProduct;

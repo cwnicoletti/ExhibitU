@@ -23,19 +23,18 @@ const styles = StyleSheet.create({
   container: {
     justifyContent: "center",
     alignItems: "center",
+    marginTop: 10
   },
   secondContainer: {
-    alignItems: "center",
     flexDirection: "row",
-    marginTop: 10
   },
   thirdContainer: {
     marginRight: 30,
   },
   image: {
-    height: 90,
-    width: 90,
-    borderRadius: 90 / 2,
+    height: 80,
+    width: 80,
+    borderRadius: 80 / 2,
   },
 });
 

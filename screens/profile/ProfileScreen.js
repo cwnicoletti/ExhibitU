@@ -16,6 +16,7 @@ import { deleteProduct } from "../../store/actions/projects";
 import ProjectItem from "../../components/projectItems/ProjectItem";
 import HeaderButton from "../../components/UI/HeaderButton";
 import Profile from "../../components/user/Profile";
+import { ScrollView } from "react-native-gesture-handler";
 
 const ProfileScreen = (props) => {
   const userProjects = useSelector((state) => state.projects.userProjects);
@@ -39,17 +40,12 @@ const ProfileScreen = (props) => {
     ]);
   };
 
-  const editProducthandler = (id) => {
+  const viewProjectHandler = (id) => {
     props.navigation.navigate("EditProduct", { productId: id });
   };
 
-  return (
-    <View
-      style={{
-        ...styles.screen,
-        backgroundColor: darkModeValue ? "black" : "white",
-      }}
-    >
+  const topHeader = () => {
+    return (
       <Profile
         containerStyle={{
           ...styles.profileContainerStyle,
@@ -72,28 +68,29 @@ const ProfileScreen = (props) => {
         }}
         description="Cognitive Science student soon to graduate with extensive knowledge in field research, as well as Computer Science and Machine Learning. This means that on top of completing upper division Psychology courses required from the University of California, Santa Cruz, I have also completed upper division Computer Science courses including courses that emphasized Machine Learning."
       />
+    );
+  };
+
+  return (
+    <View
+      style={{
+        ...styles.screen,
+        backgroundColor: darkModeValue ? "black" : "white",
+      }}
+    >
       <FlatList
         data={userProjects}
         keyExtractor={(item) => item.id}
+        ListHeaderComponent={topHeader}
+        numColumns={2}
         renderItem={(itemData) => (
           <ProjectItem
             image={itemData.item.imageUrl}
             title={itemData.item.title}
             onSelect={() => {
-              editProducthandler(itemData.item.id);
+              viewProjectHandler(itemData.item.id);
             }}
-          >
-            <Button
-              title="Edit"
-              onPress={() => {
-                editProducthandler(itemData.item.id);
-              }}
-            />
-            <Button
-              title="Delete"
-              onPress={deleteHandler.bind(this, itemData.item.id)}
-            />
-          </ProjectItem>
+          />
         )}
       />
     </View>
