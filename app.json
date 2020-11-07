@@ -1,0 +1,24 @@
+{
+  "expo": {
+    "name": "Showcase",
+    "slug": "Showcase",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/showcase_icon.png",
+    "splash": {
+      "image": "./assets/showcase_splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#000000"
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": ["**/*"],
+    "ios": {
+      "supportsTablet": true
+    },
+    "web": {
+      "favicon": "./assets/showcase_icon.png"
+    }
+  }
+}
