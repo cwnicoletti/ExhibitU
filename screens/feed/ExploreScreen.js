@@ -5,7 +5,7 @@ import { HeaderButtons, Item } from "react-navigation-header-buttons";
 
 import { deleteProduct } from "../../store/actions/projects";
 
-import ProjectItem from "../../components/projectItems/ProjectItem";
+import ProjectItem from "../../components/projectItems/ProfileProjectItem";
 import HeaderButton from "../../components/UI/HeaderButton";
 
 const ExploreScreen = (props) => {
@@ -40,33 +40,7 @@ const ExploreScreen = (props) => {
         ...styles.screen,
         backgroundColor: darkModeValue ? "black" : "white",
       }}
-    >
-      <FlatList
-        data={userProjects}
-        keyExtractor={(item) => item.id}
-        renderItem={(itemData) => (
-          <ProjectItem
-            image={itemData.item.imageUrl}
-            title={itemData.item.title}
-            price={itemData.item.price}
-            onSelect={() => {
-              editProducthandler(itemData.item.id);
-            }}
-          >
-            <Button
-              title="Edit"
-              onPress={() => {
-                editProducthandler(itemData.item.id);
-              }}
-            />
-            <Button
-              title="Delete"
-              onPress={deleteHandler.bind(this, itemData.item.id)}
-            />
-          </ProjectItem>
-        )}
-      />
-    </View>
+    ></View>
   );
 };
 
