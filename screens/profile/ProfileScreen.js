@@ -1,47 +1,22 @@
 import React, { useEffect } from "react";
-import {
-  Button,
-  Image,
-  StyleSheet,
-  FlatList,
-  Alert,
-  View,
-  Text,
-} from "react-native";
-import { useSelector, useDispatch } from "react-redux";
+import { Image, StyleSheet, FlatList, View, Text } from "react-native";
+import { useSelector } from "react-redux";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 
-import { deleteProduct } from "../../store/actions/projects";
-
-import ProjectItem from "../../components/projectItems/ProjectItem";
+import ProjectItem from "../../components/projectItems/ProfileProjectItem";
 import HeaderButton from "../../components/UI/HeaderButton";
 import Profile from "../../components/user/Profile";
-import { ScrollView } from "react-native-gesture-handler";
 
 const ProfileScreen = (props) => {
   const userProjects = useSelector((state) => state.projects.userProjects);
   const darkModeValue = useSelector((state) => state.darkMode.darkMode);
-  const dispatch = useDispatch();
 
   useEffect(() => {
     props.navigation.setParams({ darkMode: darkModeValue });
   }, [darkModeValue]);
 
-  const deleteHandler = (id) => {
-    Alert.alert("Are you sure?", "Do you really want to delete this item?", [
-      { text: "No", style: "default" },
-      {
-        text: "Yes",
-        style: "desctructive",
-        onPress: () => {
-          dispatch(deleteProduct(id));
-        },
-      },
-    ]);
-  };
-
   const viewProjectHandler = (id) => {
-    props.navigation.navigate("EditProduct", { productId: id });
+    props.navigation.navigate("ViewProject", { productId: id });
   };
 
   const topHeader = () => {
@@ -66,6 +41,7 @@ const ProfileScreen = (props) => {
           ...styles.profileDescriptionStyle,
           color: darkModeValue ? "white" : "black",
         }}
+        onEditProfilePress={() => props.navigation.navigate("EditProfile")}
         description="Cognitive Science student soon to graduate with extensive knowledge in field research, as well as Computer Science and Machine Learning. This means that on top of completing upper division Psychology courses required from the University of California, Santa Cruz, I have also completed upper division Computer Science courses including courses that emphasized Machine Learning."
       />
     );
@@ -87,6 +63,14 @@ const ProfileScreen = (props) => {
           <ProjectItem
             image={itemData.item.imageUrl}
             title={itemData.item.title}
+            projectContainer={{
+              backgroundColor: darkModeValue ? "black" : "white",
+              borderBottomWidth: 1,
+              borderBottomColor: "white",
+            }}
+            titleStyle={{
+              color: darkModeValue ? "white" : "black",
+            }}
             onSelect={() => {
               viewProjectHandler(itemData.item.id);
             }}
