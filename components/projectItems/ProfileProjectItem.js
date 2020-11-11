@@ -19,7 +19,7 @@ const ProjectItem = (props) => {
   }
 
   return (
-    <Card style={styles.product}>
+    <Card style={{ ...styles.project, ...props.projectContainer }}>
       <View style={styles.touchable}>
         <TouchableCmp onPress={props.onSelect} useForeground>
           <View>
@@ -27,20 +27,9 @@ const ProjectItem = (props) => {
               <Image style={styles.image} source={{ uri: props.image }} />
             </View>
             <View style={styles.details}>
-              <Text style={styles.title}>{props.title}</Text>
-            </View>
-            <View style={styles.actions}>
-              {/* <Button
-                color={Colors.primary}
-                title="View Details"
-                onPress={props.onViewDetail}
-              />
-              <Button
-                color={Colors.accent}
-                title="To Cart"
-                onPress={props.onAddToCart}
-              /> */}
-              {props.children}
+              <Text style={{ ...styles.title, ...props.titleStyle }}>
+                {props.title}
+              </Text>
             </View>
           </View>
         </TouchableCmp>
@@ -50,33 +39,23 @@ const ProjectItem = (props) => {
 };
 
 const styles = StyleSheet.create({
-  product: {
+  project: {
     height: 150,
-    width: '40%',
-    margin: 20,
+    width: "46%",
+    margin: "2%",
   },
   image: {
     width: "100%",
     height: "100%",
   },
   title: {
-    fontSize: 18,
-    marginVertical: 4,
-  },
-  price: {
-    fontSize: 14,
-    color: "#888",
-  },
-  actions: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    height: "23%",
-    paddingHorizontal: 20,
+    fontSize: 13,
   },
   details: {
     alignItems: "center",
-    height: "17%",
+    justifyContent: "center",
+    height: "30%",
+    width: "100%",
     padding: 10,
   },
   touchable: {
@@ -85,7 +64,7 @@ const styles = StyleSheet.create({
   },
   imageContainer: {
     width: "100%",
-    height: "60%",
+    height: "70%",
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
     overflow: "hidden",
