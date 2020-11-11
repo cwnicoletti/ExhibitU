@@ -39,7 +39,7 @@ const formReducer = (state, action) => {
   return state;
 };
 
-const SignupScreen = (props) => {
+const LoginScreen = (props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(false);
   const dispatch = useDispatch();
@@ -140,7 +140,7 @@ const SignupScreen = (props) => {
   );
 };
 
-SignupScreen.navigationOptions = (navData) => {
+LoginScreen.navigationOptions = (navData) => {
   return {
     headerTitle: "Showcase",
     headerTitleStyle: {
@@ -192,4 +192,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SignupScreen;
+export default LoginScreen;
