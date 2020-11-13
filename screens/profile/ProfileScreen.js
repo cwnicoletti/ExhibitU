@@ -5,7 +5,9 @@ import { HeaderButtons, Item } from "react-navigation-header-buttons";
 
 import ProjectItem from "../../components/projectItems/ProfileProjectItem";
 import HeaderButton from "../../components/UI/HeaderButton";
-import Profile from "../../components/user/Profile";
+import ProfileHeader from "../../components/user/ProfileHeader";
+import { TouchableOpacity } from "react-native-gesture-handler";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 const ProfileScreen = (props) => {
   const userProjects = useSelector((state) => state.projects.userProjects);
@@ -16,15 +18,17 @@ const ProfileScreen = (props) => {
   }, [darkModeValue]);
 
   const viewProjectHandler = (id) => {
-    props.navigation.navigate("ViewProject", { productId: id });
+    props.navigation.navigate("ViewProfileProject", {
+      projectId: id,
+    });
   };
 
   const topHeader = () => {
     return (
-      <Profile
+      <ProfileHeader
         containerStyle={{
           ...styles.profileContainerStyle,
-          borderBottomColor: darkModeValue ? "white" : "black",
+          borderBottomColor: "gray",
         }}
         usernameStyle={{
           ...styles.profileUsernameStyle,
@@ -65,8 +69,6 @@ const ProfileScreen = (props) => {
             title={itemData.item.title}
             projectContainer={{
               backgroundColor: darkModeValue ? "black" : "white",
-              borderBottomWidth: 1,
-              borderBottomColor: "white",
             }}
             titleStyle={{
               color: darkModeValue ? "white" : "black",
@@ -77,6 +79,31 @@ const ProfileScreen = (props) => {
           />
         )}
       />
+      <TouchableOpacity
+        style={{
+          margin: 10,
+          padding: 10,
+          alignItems: "center",
+          justifyContent: "center",
+          borderWidth: 1,
+          borderColor: "gray",
+          flexDirection: "row",
+        }}
+      >
+        <MaterialCommunityIcons
+          name="glassdoor"
+          size={24}
+          color={darkModeValue ? "white" : "black"}
+        />
+        <Text
+          style={{
+            color: darkModeValue ? "white" : "black",
+            fontWeight: "bold",
+          }}
+        >
+          Showcase profile
+        </Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -144,18 +171,19 @@ ProfileScreen.navigationOptions = (navData) => {
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
+    justifyContent: "center",
   },
   profileTitleStyle: {
     fontSize: 24,
     fontWeight: "bold",
-    paddingTop: 10,
+    paddingTop: 5,
   },
   profileUsernameStyle: {
     fontSize: 18,
-    paddingTop: 10,
+    paddingTop: 5,
   },
   profileDescriptionStyle: {
-    padding: 20,
+    paddingBottom: 20,
   },
   profileContainerStyle: {
     borderBottomWidth: 1,

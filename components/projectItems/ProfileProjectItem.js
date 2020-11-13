@@ -23,10 +23,10 @@ const ProjectItem = (props) => {
       <View style={styles.touchable}>
         <TouchableCmp onPress={props.onSelect} useForeground>
           <View>
-            <View style={styles.imageContainer}>
+            <View style={{ ...styles.imageContainer, ...props.imageContainer }}>
               <Image style={styles.image} source={{ uri: props.image }} />
             </View>
-            <View style={styles.details}>
+            <View style={{ ...styles.details, ...props.details }}>
               <Text style={{ ...styles.title, ...props.titleStyle }}>
                 {props.title}
               </Text>
@@ -40,33 +40,34 @@ const ProjectItem = (props) => {
 
 const styles = StyleSheet.create({
   project: {
-    height: 150,
-    width: "46%",
-    margin: "2%",
+    height: 300,
+    width: 50,
+    borderWidth: 1,
+    borderColor: "gray",
+    width: "49%",
+    margin: '0.5%'
   },
   image: {
     width: "100%",
     height: "100%",
   },
   title: {
-    fontSize: 13,
+    fontSize: 14,
+    textAlign: "center",
   },
   details: {
     alignItems: "center",
     justifyContent: "center",
-    height: "30%",
+    height: "25%",
     width: "100%",
     padding: 10,
   },
   touchable: {
     overflow: "hidden",
-    borderRadius: 10,
   },
   imageContainer: {
     width: "100%",
-    height: "70%",
-    borderTopLeftRadius: 10,
-    borderTopRightRadius: 10,
+    height: "75%",
     overflow: "hidden",
   },
 });
