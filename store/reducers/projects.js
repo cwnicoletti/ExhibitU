@@ -1,5 +1,9 @@
 import Project from "../../models/project";
 import PROJECTS from "../../data/dummy-data";
+import LINKS from "../../data/dummy-data-links";
+import PROJECTLINKS from "../../data/dummy-data-project-links";
+import PROJECTITEMS from "../../data/dummy-data-project-items";
+
 import {
   UPDATE_PRODUCT,
   CREATE_PRODUCT,
@@ -10,6 +14,9 @@ import {
 const intiailState = {
   allProjects: PROJECTS,
   userProjects: PROJECTS,
+  userLinks: LINKS,
+  userProjectLinks: PROJECTLINKS,
+  userProjectItems: PROJECTITEMS,
 };
 
 export default (state = intiailState, action) => {

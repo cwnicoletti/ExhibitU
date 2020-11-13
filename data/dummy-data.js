@@ -5,49 +5,33 @@ const PROJECTS = [
     "p1",
     "u1",
     "u1",
-    "Red Shirt",
-    "https://cdn.pixabay.com/photo/2016/10/02/22/17/red-t-shirt-1710578_1280.jpg",
-    "A red t-shirt, perfect for days with non-red weather."
+    "Brain-to-Computer Interfacing",
+    "https://i.imgur.com/6X9LviI.jpg",
+    "This project is based around the construction and modifcation of an instructables DIY electroencephalogram aimed at providing communication via neural firing patterns using current AI strategies. The foundation of this project lies at https://www.instructables.com/id/DIY-EEG-and-ECG-Circuit/. Here you will find every aspect as to how to create the EEG yourself, and will help with understanding every aspect of the foundation of this project as well."
   ),
   new Project(
     "p2",
     "u1",
     "u1",
-    "Blue Carpet",
-    "https://images.pexels.com/photos/6292/blue-pattern-texture-macro.jpg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
-    "Fits your red shirt perfectly. To stand on. Not to wear it."
+    "Co-Creator",
+    "https://i.imgur.com/Zt2pmHD.png",
+    "Super rad project hosting app."
   ),
   new Project(
     "p3",
     "u2",
     "u2",
-    "Coffee Mug",
-    "https://images.pexels.com/photos/160834/coffee-cup-and-saucer-black-coffee-loose-coffee-beans-160834.jpeg?cs=srgb&dl=bean-beans-black-coffee-160834.jpg&fm=jpg",
-    "Can also be used for tea!"
+    "Automated Stock Trader",
+    "https://i.imgur.com/P4WiqAb.png",
+    "Automatic stock trading program to make me $$$."
   ),
   new Project(
     "p4",
     "u3",
     "u3",
-    "The Book - Limited Editionnnnnnnnnnnnnnnnnnnnnnnnnnnnnn",
-    "https://images.pexels.com/photos/46274/pexels-photo-46274.jpeg?cs=srgb&dl=blur-blurred-book-pages-46274.jpg&fm=jpg",
-    "What the content is? Why would that matter? It's a limited edition!"
-  ),
-  new Project(
-    "p5",
-    "u3",
-    "u3",
-    "PowerBook",
-    "https://get.pxhere.com/photo/laptop-computer-macbook-mac-screen-water-board-keyboard-technology-air-mouse-photo-airport-aircraft-tablet-aviation-office-black-monitor-keys-graphic-hardware-image-pc-exhibition-multimedia-calculator-vector-water-cooling-floppy-disk-phased-out-desktop-computer-netbook-personal-computer-computer-monitor-electronic-device-computer-hardware-display-device-448748.jpg",
-    "Awesome hardware, crappy keyboard and a hefty price. Buy now before a new one is released!"
-  ),
-  new Project(
-    "p6",
-    "u1",
-    "u1",
-    "Pen & Paper",
-    "https://cdn.pixabay.com/photo/2015/10/03/02/14/pen-969298_1280.jpg",
-    "Can be used for role-playing (not the kind of role-playing you're thinking about...)."
+    "Showcase",
+    "https://i.imgur.com/jpbEQku.png",
+    "A mobile app designed to showcase them in action as well as media from their jobs or projects."
   ),
 ];
 
