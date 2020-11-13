@@ -1,53 +1,96 @@
-import React, { useEffect } from "react";
-import { Button, StyleSheet, FlatList, Alert, View, Text } from "react-native";
+import React, { useEffect, useState } from "react";
+import {
+  StyleSheet,
+  Alert,
+  View,
+  Text,
+  Image,
+  TouchableWithoutFeedback,
+  Keyboard,
+} from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
+import { SearchBar } from "react-native-elements";
 
-import { deleteProduct } from "../../store/actions/projects";
-
-import ProjectItem from "../../components/projectItems/ProfileProjectItem";
 import HeaderButton from "../../components/UI/HeaderButton";
 
 const ExploreScreen = (props) => {
-  const userProjects = useSelector((state) => state.projects.userProjects);
   const darkModeValue = useSelector((state) => state.darkMode.darkMode);
-  const dispatch = useDispatch();
+
+  const [index, setIndex] = useState("");
+  const [search, setSearch] = useState("");
 
   useEffect(() => {
     props.navigation.setParams({ darkMode: darkModeValue });
   }, [darkModeValue]);
 
-  const deleteHandler = (id) => {
-    Alert.alert("Are you sure?", "Do you really want to delete this item?", [
-      { text: "No", style: "default" },
-      {
-        text: "Yes",
-        style: "desctructive",
-        onPress: () => {
-          dispatch(deleteProduct(id));
-        },
-      },
-    ]);
-  };
-
-  const editProducthandler = (id) => {
-    props.navigation.navigate("EditProduct", { productId: id });
+  const searchFilterFunction = (text) => {
+    setSearch(text);
   };
 
   return (
-    <View
-      style={{
-        ...styles.screen,
-        backgroundColor: darkModeValue ? "black" : "white",
-      }}
-    ></View>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+      <View
+        style={{
+          ...styles.screen,
+          backgroundColor: darkModeValue ? "black" : "white",
+        }}
+      >
+        <SearchBar
+          containerStyle={{
+            backgroundColor: darkModeValue ? "black" : "white",
+            margin: 5,
+            borderBottomColor: darkModeValue ? "white" : "black",
+            borderBottomWidth: 1,
+            borderTopWidth: 0,
+            width: "80%",
+          }}
+          inputContainerStyle={{
+            height: 30,
+            backgroundColor: darkModeValue ? "black" : "white",
+            borderBottomColor: "gray",
+            borderBottomWidth: 1,
+          }}
+          searchIcon={{ size: 24 }}
+          onChangeText={(text) => searchFilterFunction(text)}
+          onClear={() => searchFilterFunction("")}
+          placeholder="Search..."
+          value={search}
+        />
+      </View>
+    </TouchableWithoutFeedback>
   );
 };
 
 ExploreScreen.navigationOptions = (navData) => {
   const darkModeValue = navData.navigation.getParam("darkMode");
   return {
-    headerTitle: "Explore",
+    headerTitle: () => (
+      <View
+        forceInset={{ top: "always", horizontal: "never" }}
+        style={styles.logo}
+      >
+        {darkModeValue ? (
+          <Image
+            style={styles.image}
+            source={require("../../assets/showcase_icon_transparent_white.png")}
+          />
+        ) : (
+          <Image
+            style={styles.image}
+            source={require("../../assets/showcase_icon_transparent_black.png")}
+          />
+        )}
+        <Text
+          style={{
+            ...styles.logoTitle,
+            color: darkModeValue ? "white" : "black",
+          }}
+        >
+          Showcase
+        </Text>
+      </View>
+    ),
     headerLeft: () => (
       <HeaderButtons HeaderButtonComponent={HeaderButton}>
         <Item
@@ -79,26 +122,30 @@ ExploreScreen.navigationOptions = (navData) => {
     headerStyle: {
       backgroundColor: darkModeValue ? "black" : "white",
     },
-    tabBarOptions: {
-      activeTintColor: darkModeValue ? "white" : "black",
-      inactiveTintColor: darkModeValue ? "#696969" : "#bfbfbf",
-      tabStyle: {
-        backgroundColor: darkModeValue ? "black" : "white",
-      },
-      style: {
-        backgroundColor: darkModeValue ? "black" : "white",
-      },
-      showLabel: false,
-    },
   };
 };
 
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
+    alignItems: "center",
   },
   text: {
     padding: 10,
+  },
+  image: {
+    height: 30,
+    width: 30,
+    marginRight: 5,
+  },
+  logo: {
+    flex: 1,
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  logoTitle: {
+    fontSize: 22,
   },
 });
 
