@@ -1,137 +1,44 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
+import { useDispatch } from "react-redux";
+
 import { createStackNavigator } from "react-navigation-stack";
 import { createAppContainer, createSwitchNavigator } from "react-navigation";
 import { createBottomTabNavigator } from "react-navigation-tabs";
 import { createMaterialBottomTabNavigator } from "react-navigation-material-bottom-tabs";
-import {
-  createDrawerNavigator,
-  DrawerNavigatorItems,
-  DrawerActions,
-} from "react-navigation-drawer";
-import {
-  Platform,
-  SafeAreaView,
-  Button,
-  View,
-  Switch,
-  Text,
-  Image,
-  StyleSheet,
-} from "react-native";
+import { createDrawerNavigator, DrawerActions } from "react-navigation-drawer";
+import { Platform } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { Feather } from "@expo/vector-icons";
-import { useSelector, useDispatch } from "react-redux";
+import { SimpleLineIcons } from "@expo/vector-icons";
 
 import ProfileScreen from "../screens/profile/ProfileScreen";
-import SettingsScreen from "../screens/profile/SettingsScreen";
+import NotificationsSettingsScreen from "../screens/profile/NotificationsSettingsScreen";
+import EditProfileScreen from "../screens/profile/EditProfileScreen";
 import SignupOrLoginScreen from "../screens/auth/SignupOrLoginScreen";
 import SignupScreen from "../screens/auth/SignupScreen";
 import LoginScreen from "../screens/auth/LoginScreen";
 import StartupScreen from "../screens/StartupScreen";
 import ExploreScreen from "../screens/feed/ExploreScreen";
 import UserFeedScreen from "../screens/feed/UserFeedScreen";
+import ProjectScreen from "../screens/profile/ProjectScreen";
+
+import LeftDrawer from "../components/drawers/LeftDrawer";
+import RightDrawer from "../components/drawers/RightDrawer";
 
 import { logout } from "../store/actions/auth";
-import { setDarkMode } from "../store/actions/darkMode";
 
-const FilterSwitch = (props) => {
-  return (
-    <View style={{ ...props.viewStyle }}>
-      <Text style={{ ...props.labelStyle }}>{props.label}</Text>
-      <Switch value={props.state} onValueChange={props.onChange}></Switch>
-    </View>
-  );
-};
-
-const ProfileNavigator = createStackNavigator({
-  Profile: ProfileScreen,
-  Settings: SettingsScreen,
+const FeedandViewNavigator = createStackNavigator({
+  Feed: UserFeedScreen,
+  ViewFeedProject: ProjectScreen,
 });
 
-const ProjectNavigator = createDrawerNavigator(
+const RightFeedDrawerNavigator = createDrawerNavigator(
   {
-    "My Profile": ProfileNavigator,
+    "My Profile": FeedandViewNavigator,
   },
   {
     drawerPosition: "left",
-    contentComponent: (props) => {
-      const dispatch = useDispatch();
-
-      const darkModeValue = useSelector((state) => state.darkMode.darkMode);
-
-      return (
-        <View
-          style={{
-            flex: 1,
-            padding: 20,
-            backgroundColor: darkModeValue ? "black" : "white",
-            borderRightWidth: 0.3,
-            borderRightColor: darkModeValue ? "white" : "black",
-          }}
-        >
-          <View
-            style={{
-              alignItems: "center",
-              justifyContent: "center",
-              borderBottomWidth: 1,
-              borderBottomColor: darkModeValue ? "white" : "black",
-            }}
-          >
-            <SafeAreaView forceInset={{ top: "always", horizontal: "never" }}>
-              <View
-                style={{
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
-              >
-                <Image
-                  style={{ height: 50, width: 50, borderRadius: 50 / 2 }}
-                  source={require("../assets/me.png")}
-                />
-                <Text
-                  style={{
-                    color: darkModeValue ? "white" : "black",
-                    fontSize: 16,
-                    margin: 10,
-                  }}
-                >
-                  Christian Nicoletti
-                </Text>
-              </View>
-            </SafeAreaView>
-          </View>
-          <View>
-            <SafeAreaView forceInset={{ top: "always", horizontal: "never" }}>
-              <DrawerNavigatorItems {...props} />
-            </SafeAreaView>
-          </View>
-          <View
-            style={{
-              flex: 1,
-              justifyContent: "flex-end",
-            }}
-          >
-            <SafeAreaView>
-              <FilterSwitch
-                viewStyle={{
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                }}
-                labelStyle={{
-                  color: darkModeValue ? "white" : "black",
-                }}
-                label="Dark Mode"
-                state={darkModeValue}
-                onChange={(newValue) => {
-                  dispatch(setDarkMode(newValue));
-                }}
-              />
-            </SafeAreaView>
-          </View>
-        </View>
-      );
+    contentComponent: (navData) => {
+      return <LeftDrawer navData={navData} />;
     },
     getCustomActionCreators: (_route, key) => ({
       openLeftDrawer: () => DrawerActions.openDrawer({ key }),
@@ -141,130 +48,105 @@ const ProjectNavigator = createDrawerNavigator(
   }
 );
 
-const SettingsNavigator = createDrawerNavigator(
+const FeedNavigator = createDrawerNavigator(
   {
-    Projects: ProjectNavigator,
+    RightDrawer: RightFeedDrawerNavigator,
   },
   {
     drawerPosition: "right",
-    contentComponent: (props) => {
+    contentComponent: (navData) => {
+      return <RightDrawer navData={navData} component={FeedNavigator} />;
+    },
+    getCustomActionCreators: (_route, key) => ({
+      openRightDrawer: () => DrawerActions.openDrawer({ key }),
+      closeRightDrawer: () => DrawerActions.closeDrawer({ key }),
+      toggleRightDrawer: () => DrawerActions.toggleDrawer({ key }),
+    }),
+  }
+);
+
+const ExploreNavigator = createStackNavigator({
+  Explore: ExploreScreen,
+});
+
+const RightExploreDrawerNavigator = createDrawerNavigator(
+  {
+    "My Profile": ExploreNavigator,
+  },
+  {
+    drawerPosition: "left",
+    contentComponent: (navData) => {
+      return <LeftDrawer navData={navData} />;
+    },
+    getCustomActionCreators: (_route, key) => ({
+      openLeftDrawer: () => DrawerActions.openDrawer({ key }),
+      closeLeftDrawer: () => DrawerActions.closeDrawer({ key }),
+      toggleLeftDrawer: () => DrawerActions.toggleDrawer({ key }),
+    }),
+  }
+);
+
+const ExplorerNavigator = createDrawerNavigator(
+  {
+    RightDrawer: RightExploreDrawerNavigator,
+  },
+  {
+    drawerPosition: "right",
+    contentComponent: (navData) => {
+      return <RightDrawer navData={navData} component={ExplorerNavigator} />;
+    },
+    getCustomActionCreators: (_route, key) => ({
+      openRightDrawer: () => DrawerActions.openDrawer({ key }),
+      closeRightDrawer: () => DrawerActions.closeDrawer({ key }),
+      toggleRightDrawer: () => DrawerActions.toggleDrawer({ key }),
+    }),
+  }
+);
+
+const ProfileandSettingsNavigator = createStackNavigator({
+  Profile: ProfileScreen,
+  ViewProfileProject: ProjectScreen,
+  EditProfile: EditProfileScreen,
+  NotificationsSettings: NotificationsSettingsScreen,
+});
+
+const RightProfileDrawerNavigator = createDrawerNavigator(
+  {
+    "My Profile": ProfileandSettingsNavigator,
+  },
+  {
+    drawerPosition: "left",
+    contentComponent: (navData) => {
+      return <LeftDrawer navData={navData} />;
+    },
+    getCustomActionCreators: (_route, key) => ({
+      openLeftDrawer: () => DrawerActions.openDrawer({ key }),
+      closeLeftDrawer: () => DrawerActions.closeDrawer({ key }),
+      toggleLeftDrawer: () => DrawerActions.toggleDrawer({ key }),
+    }),
+  }
+);
+
+const ProfileNavigator = createDrawerNavigator(
+  {
+    RightDrawer: RightProfileDrawerNavigator,
+  },
+  {
+    drawerPosition: "right",
+    contentComponent: (navData) => {
       const dispatch = useDispatch();
-      const darkModeValue = useSelector((state) => state.darkMode.darkMode);
-
-      useEffect(() => {
-        props.navigation.setParams({ darkMode: darkModeValue });
-
-        // Calling navigation options within useEffect since to
-        // make sure it is called once darkModeValue is defined
-        SettingsNavigator.navigationOptions = (navData) => {
-          const darkModeValue = navData.navigation.getParam("darkMode");
-          console.log(`testing: ${darkModeValue}`);
-          return {
-            tabBarOptions: {
-              activeTintColor: darkModeValue ? "white" : "black",
-              inactiveTintColor: darkModeValue ? "#696969" : "#bfbfbf",
-              tabStyle: {
-                backgroundColor: darkModeValue ? "black" : "white",
-              },
-              style: {
-                backgroundColor: darkModeValue ? "black" : "white",
-              },
-              showLabel: false,
-            },
-          };
-        };
-      }, [darkModeValue]);
-
       return (
-        <View
-          style={{
-            flex: 1,
-            padding: 20,
-            backgroundColor: darkModeValue ? "black" : "white",
-            borderLeftWidth: 0.3,
-            borderLeftColor: darkModeValue ? "white" : "black",
-            justifyContent: "center",
+        <RightDrawer
+          navData={navData}
+          component={ProfileNavigator}
+          notificationsOnPress={() => {
+            navData.navigation.navigate("NotificationsSettings");
           }}
-        >
-          <View
-            style={{
-              alignItems: "center",
-              justifyContent: "center",
-              borderBottomWidth: 1,
-              borderBottomColor: darkModeValue ? "white" : "black",
-            }}
-          >
-            <SafeAreaView forceInset={{ top: "always", horizontal: "never" }}>
-              <View
-                style={{
-                  alignItems: "center",
-                  justifyContent: "center",
-                  flexDirection: "row",
-                }}
-              >
-                <Ionicons
-                  name="ios-settings"
-                  size={20}
-                  color={darkModeValue ? "white" : "black"}
-                />
-                <Text
-                  style={{
-                    color: darkModeValue ? "white" : "black",
-                    margin: 10,
-                    fontSize: 20,
-                  }}
-                >
-                  Settings
-                </Text>
-              </View>
-            </SafeAreaView>
-          </View>
-          <SafeAreaView forceInset={{ top: "always", horizontal: "never" }}>
-            <View
-              style={{
-                flexDirection: "row",
-                alignItems: "center",
-              }}
-            >
-              <Feather name="edit" size={20} color="#007AFF" />
-              <Button
-                title="Edit Showcase"
-                onPress={() => {
-                  props.navigation.navigate("Settings");
-                }}
-              />
-            </View>
-          </SafeAreaView>
-          <View
-            style={{
-              flex: 1,
-              justifyContent: "flex-end",
-            }}
-          >
-            <SafeAreaView>
-              <View
-                style={{
-                  flexDirection: "row",
-                  alignItems: "center",
-                }}
-              >
-                <Button
-                  title="Logout"
-                  color="#007AFF"
-                  onPress={() => {
-                    dispatch(logout());
-                    props.navigation.navigate("StartAuth");
-                  }}
-                />
-                <MaterialCommunityIcons
-                  name="logout"
-                  size={20}
-                  color="#007AFF"
-                />
-              </View>
-            </SafeAreaView>
-          </View>
-        </View>
+          logoutOnPress={() => {
+            dispatch(logout());
+            navData.navigation.navigate("StartAuth");
+          }}
+        />
       );
     },
     getCustomActionCreators: (_route, key) => ({
@@ -277,7 +159,7 @@ const SettingsNavigator = createDrawerNavigator(
 
 const tabScreenConfig = {
   Feed: {
-    screen: UserFeedScreen,
+    screen: FeedNavigator,
     navigationOptions: {
       tabBarIcon: (tabInfo) => {
         return <Ionicons name="ios-home" size={25} color={tabInfo.tintColor} />;
@@ -285,7 +167,7 @@ const tabScreenConfig = {
     },
   },
   Explore: {
-    screen: ExploreScreen,
+    screen: ExplorerNavigator,
     navigationOptions: {
       tabBarIcon: (tabInfo) => {
         return (
@@ -295,11 +177,11 @@ const tabScreenConfig = {
     },
   },
   Profile: {
-    screen: SettingsNavigator,
+    screen: ProfileNavigator,
     navigationOptions: {
       tabBarIcon: (tabInfo) => {
         return (
-          <Ionicons name="ios-person" size={25} color={tabInfo.tintColor} />
+          <SimpleLineIcons name="trophy" size={25} color={tabInfo.tintColor} />
         );
       },
     },
