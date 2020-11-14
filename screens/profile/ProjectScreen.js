@@ -38,6 +38,7 @@ const ProjectScreen = (props) => {
         }}
         title={projects.title}
         description={projects.description}
+        projectId={projectId}
       />
     );
   };

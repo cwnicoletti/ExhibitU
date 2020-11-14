@@ -1,14 +1,18 @@
 import React from "react";
 import { View, Text, StyleSheet, Image, FlatList } from "react-native";
 import { useSelector } from "react-redux";
+import * as WebBrowser from "expo-web-browser";
 
 import LinkButton from "../UI/LinkButton";
 
 const ProjectHeader = (props) => {
-  const userProjectLinks = useSelector(
-    (state) => state.projects.userProjectLinks
-  );
   const darkModeValue = useSelector((state) => state.darkMode.darkMode);
+
+  const listofLinks = useSelector((state) =>
+    state.projects.userProjectLinks.filter(
+      (proj) => proj.projectLinkId === props.projectId
+    )
+  );
 
   const handleLinkOnPress = (url) => {
     WebBrowser.openBrowserAsync(url);
@@ -40,7 +44,7 @@ const ProjectHeader = (props) => {
       </View>
       <Text style={props.descriptionStyle}>{props.description}</Text>
       <FlatList
-        data={userProjectLinks}
+        data={listofLinks}
         keyExtractor={(item) => item.id}
         numColumns={2}
         renderItem={(itemData) => (
