@@ -7,6 +7,7 @@ import {
   Text,
   KeyboardAvoidingView,
   SafeAreaView,
+  Button,
 } from "react-native";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import { useSelector, useDispatch } from "react-redux";
@@ -120,10 +121,42 @@ const EditProfileScreen = (props) => {
       keyboardVerticalOffset={100}
     >
       <ScrollView>
+        <View
+          style={{
+            alignItems: "center",
+            justifyContent: "center",
+            borderBottomWidth: 1,
+            borderBottomColor: "gray",
+            margin: 5,
+          }}
+        >
+          <SafeAreaView forceInset={{ top: "always", horizontal: "never" }}>
+            <View
+              style={{
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <Image
+                style={{ height: 100, width: 100, borderRadius: 100 / 2 }}
+                source={require("../../assets/me.png")}
+              />
+              <Text
+                style={{
+                  color: darkModeValue ? "white" : "black",
+                  fontSize: 16,
+                  margin: 5,
+                }}
+              >
+                Christian Nicoletti
+              </Text>
+            </View>
+          </SafeAreaView>
+        </View>
         <View style={styles.form}>
           <Input
             id="title"
-            label="Title"
+            label="Name"
             errorText="Please enter a valid title!"
             keyboardType="default"
             autoCapitalize="sentences"
@@ -135,7 +168,7 @@ const EditProfileScreen = (props) => {
           />
           <Input
             id="imageUrl"
-            label="Image Url"
+            label="Username"
             errorText="Please enter a valid imageUrl!"
             keyboardType="default"
             returnKeyType="next"
@@ -144,21 +177,22 @@ const EditProfileScreen = (props) => {
             intiallyValid={!!editedProduct}
             required
           />
-          {!editedProduct && (
-            <Input
-              id="price"
-              label="Price"
-              errorText="Please enter a valid price!"
-              keyboardType="decimal-pad"
-              returnKeyType="next"
-              onInputChange={inputChangeHandler}
-              required
-              min={0.1}
-            />
-          )}
           <Input
             id="description"
-            label="Description"
+            label="Bio"
+            errorText="Please enter a valid description!"
+            keyboardType="default"
+            multiline
+            numberOfLines={3}
+            onInputChange={inputChangeHandler}
+            initialValue={editedProduct ? editedProduct.description : ""}
+            intiallyValid={!!editedProduct}
+            required
+            minLength={5}
+          />
+          <Input
+            id="description"
+            label="Profile Link 1"
             errorText="Please enter a valid description!"
             keyboardType="default"
             multiline
@@ -170,6 +204,7 @@ const EditProfileScreen = (props) => {
             minLength={5}
           />
         </View>
+        <Button title="Update" style={{ margin: 20 }} onPress={submitHandler} />
       </ScrollView>
     </KeyboardAvoidingView>
   );
