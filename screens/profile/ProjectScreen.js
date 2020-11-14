@@ -19,7 +19,6 @@ const ProjectScreen = (props) => {
       (proj) => proj.projectPictureId === projectId
     )
   );
-  console.log(listofProjects);
 
   useEffect(() => {
     props.navigation.setParams({ darkMode: darkModeValue });

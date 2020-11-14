@@ -18,9 +18,7 @@ const ProfileScreen = (props) => {
   }, [darkModeValue]);
 
   const viewProjectHandler = (id) => {
-    props.navigation.navigate("ViewProfileProject", {
-      projectId: id,
-    });
+    props.navigation.navigate("ViewProfileProject", { projectId: id });
   };
 
   const topHeader = () => {

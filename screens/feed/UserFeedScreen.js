@@ -21,8 +21,8 @@ const UserFeedScreen = (props) => {
     props.navigation.setParams({ darkMode: darkModeValue });
   }, [darkModeValue]);
 
-  const editProducthandler = (id) => {
-    props.navigation.navigate("ViewFeedProject", { productId: id });
+  const viewProjectHandler = (id) => {
+    props.navigation.navigate("ViewFeedProject", { projectId: id });
   };
 
   return (
@@ -44,7 +44,7 @@ const UserFeedScreen = (props) => {
               marginBottom: 10,
             }}
             onSelect={() => {
-              editProducthandler(itemData.item.id);
+              viewProjectHandler(itemData.item.id);
             }}
           />
         )}
