@@ -14,6 +14,8 @@ const ProjectHeader = (props) => {
     )
   );
 
+  console.log(listofLinks.length);
+
   const handleLinkOnPress = (url) => {
     WebBrowser.openBrowserAsync(url);
   };
@@ -46,13 +48,16 @@ const ProjectHeader = (props) => {
       <FlatList
         data={listofLinks}
         keyExtractor={(item) => item.id}
-        numColumns={2}
+        numColumns={listofLinks.length > 1 ? 2 : 1}
         renderItem={(itemData) => (
           <LinkButton
             imageUrl={itemData.item.imageUrl}
             title={itemData.item.title}
             textStyle={{ color: darkModeValue ? "white" : "black" }}
-            linkContainer={{ borderColor: "gray" }}
+            linkContainer={{
+              borderColor: "gray",
+              width: listofLinks.length > 1 ? "46%" : "100%",
+            }}
             imageStyle={{
               backgroundColor: "white",
               borderRadius: 5,
