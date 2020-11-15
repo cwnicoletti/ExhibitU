@@ -7,7 +7,6 @@ import { Entypo } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 
 const RightDrawer = (props) => {
-  const dispatch = useDispatch();
   const darkModeValue = useSelector((state) => state.darkMode.darkMode);
 
   useEffect(() => {

@@ -8,8 +8,6 @@ import {
   Button,
 } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
-import { DrawerNavigatorItems } from "react-navigation-drawer";
-import { Ionicons } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 import FilterSwitch from "../UI/FilterSwitch";
@@ -22,7 +20,8 @@ const LeftDrawer = (props) => {
   const darkModeValue = useSelector((state) => state.darkMode.darkMode);
 
   return (
-    <View forceInset={{ top: "always", horizontal: "never" }}
+    <View
+      forceInset={{ top: "always", horizontal: "never" }}
       style={{
         flex: 1,
         padding: 20,
