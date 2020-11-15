@@ -9,10 +9,9 @@ import {
   SafeAreaView,
   Button,
 } from "react-native";
-import { HeaderButtons, Item } from "react-navigation-header-buttons";
+import { HeaderBackButton } from "react-navigation-stack";
 import { useSelector, useDispatch } from "react-redux";
 
-import HeaderButton from "../../components/UI/HeaderButton";
 import Input from "../../components/UI/Input";
 
 const FORM_INPUT_UPDATE = "FORM_INPUT_UPDATE";
@@ -110,8 +109,15 @@ const EditProfileScreen = (props) => {
     props.navigation.goBack();
   }, [dispatch, prodId, formState]);
 
+  let android = null;
+  if (Platform.OS === "android") {
+    android = true;
+  }
+
   useEffect(() => {
     props.navigation.setParams({ submit: submitHandler });
+    props.navigation.setParams({ darkMode: darkModeValue });
+    props.navigation.setParams({ android: android });
   }, [submitHandler]);
 
   return (
@@ -192,16 +198,13 @@ const EditProfileScreen = (props) => {
           />
           <Input
             id="description"
-            label="Profile Link 1"
+            label="Profile Link Title 1"
             errorText="Please enter a valid description!"
             keyboardType="default"
-            multiline
-            numberOfLines={3}
             onInputChange={inputChangeHandler}
             initialValue={editedProduct ? editedProduct.description : ""}
             intiallyValid={!!editedProduct}
             required
-            minLength={5}
           />
         </View>
         <Button title="Update" style={{ margin: 20 }} onPress={submitHandler} />
@@ -212,6 +215,7 @@ const EditProfileScreen = (props) => {
 
 EditProfileScreen.navigationOptions = (navData) => {
   const darkModeValue = navData.navigation.getParam("darkMode");
+  const android = navData.navigation.getParam("android");
   return {
     headerTitle: () => (
       <SafeAreaView
@@ -246,6 +250,18 @@ EditProfileScreen.navigationOptions = (navData) => {
     headerStyle: {
       backgroundColor: darkModeValue ? "black" : "white",
     },
+    headerLeft: (props) => (
+      <View>
+        {android ? (
+          <HeaderBackButton
+            {...props}
+            tintColor={darkModeValue ? "white" : "black"}
+          />
+        ) : (
+          <HeaderBackButton {...props} />
+        )}
+      </View>
+    ),
   };
 };
 

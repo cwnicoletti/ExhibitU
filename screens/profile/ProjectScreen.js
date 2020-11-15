@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
-import { Image, StyleSheet, FlatList, Alert, View, Text } from "react-native";
+import { Image, StyleSheet, FlatList, View, Text } from "react-native";
+import { HeaderBackButton } from "react-navigation-stack";
 import { useSelector } from "react-redux";
 
 import ProjectPictures from "../../components/projects/ProjectPictures";
@@ -20,8 +21,14 @@ const ProjectScreen = (props) => {
     )
   );
 
+  let android = null;
+  if (Platform.OS === "android") {
+    android = true;
+  }
+
   useEffect(() => {
     props.navigation.setParams({ darkMode: darkModeValue });
+    props.navigation.setParams({ android: android });
   }, [darkModeValue]);
 
   const topHeader = () => {
@@ -75,6 +82,8 @@ const ProjectScreen = (props) => {
 
 ProjectScreen.navigationOptions = (navData) => {
   const darkModeValue = navData.navigation.getParam("darkMode");
+
+  const android = navData.navigation.getParam("android");
   return {
     headerTitle: () => (
       <View style={styles.logo}>
@@ -106,6 +115,18 @@ ProjectScreen.navigationOptions = (navData) => {
     headerStyle: {
       backgroundColor: darkModeValue ? "black" : "white",
     },
+    headerLeft: (props) => (
+      <View>
+        {android ? (
+          <HeaderBackButton
+            {...props}
+            tintColor={darkModeValue ? "white" : "black"}
+          />
+        ) : (
+          <HeaderBackButton {...props} />
+        )}
+      </View>
+    ),
   };
 };
 
