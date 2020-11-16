@@ -3,7 +3,7 @@ class ProjectItem {
     id,
     ownerId,
     ownerPushToken,
-    projectPictureId,
+    projectId,
     title,
     imageUrl,
     description
@@ -11,7 +11,7 @@ class ProjectItem {
     this.id = id;
     this.ownerId = ownerId;
     this.pushToken = ownerPushToken;
-    this.projectPictureId = projectPictureId;
+    this.projectId = projectId;
     this.title = title;
     this.imageUrl = imageUrl;
     this.description = description;
