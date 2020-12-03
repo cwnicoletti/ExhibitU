@@ -1,8 +1,8 @@
-import AsyncStorage from "@react-native-community/async-storage";
-import Config from "../../config";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import axios from "axios";
 
-// export const SIGNUP = "SIGNUP";
-// export const SIGNIN = "SIGNIN";
+import { getUserData } from "./user";
+
 export const AUTHENTICATE = "AUTHENTICATE";
 export const LOGOUT = "LOGOUT";
 
@@ -12,100 +12,165 @@ export const authenticate = (userId, token) => {
   };
 };
 
-export const signup = (email, password) => {
+export const signup = (email, fullname, username, password) => {
   return async (dispatch) => {
-    const response = await fetch(
-      `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${Config.apikey}`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email: email,
-          password: password,
-          returnSecureToken: true,
-        }),
-      }
+    const signupForm = {
+      email: email,
+      fullname: fullname,
+      username: username,
+      password: password,
+    };
+    const getSignupResponse = await axios.post(
+      `https://us-central1-showcase-27b11.cloudfunctions.net/signupUser`,
+      signupForm
     );
-    if (!response.ok) {
-      throw new Error("Something went wrong!");
-    }
 
-    const resData = await response.json();
-    console.log(resData);
+    console.log(getSignupResponse);
+
+    saveDataToStorage(
+      getSignupResponse.data.localId,
+      getSignupResponse.data.idToken
+    );
+    saveUserDocumentToStorage(
+      getSignupResponse.data.docData.email,
+      getSignupResponse.data.docData.fullname,
+      getSignupResponse.data.docData.jobTitle,
+      getSignupResponse.data.docData.username,
+      getSignupResponse.data.docData.resumeLinkUrl,
+      getSignupResponse.data.docData.profileBiography,
+      getSignupResponse.data.docData.numberOfFollowers,
+      getSignupResponse.data.docData.numberOfFollowing,
+      getSignupResponse.data.docData.numberOfAdvocates,
+      getSignupResponse.data.docData.darkModeValue,
+      getSignupResponse.data.docData.showResumeValue,
+      getSignupResponse.data.docData.showcaseLocally,
+      getSignupResponse.data.docData.followers,
+      getSignupResponse.data.docData.following,
+      getSignupResponse.data.docData.advocates,
+      getSignupResponse.data.docData.profileProjects,
+      getSignupResponse.data.docData.profileLinks
+    );
+
+    dispatch(getUserData());
     dispatch(
       authenticate(
-        resData.localId,
-        resData.idToken,
-        parseInt(resData.expiresIn) * 1000
+        getSignupResponse.data.localId,
+        getSignupResponse.data.idToken
       )
     );
-    const expirationDate = new Date(
-      new Date().getTime() + parseInt(resData.expiresIn) * 1000
-    );
-    saveDataToStorage(resData.idToken, resData.localId, expirationDate);
+    console.log("Successful signup!");
   };
 };
 
 export const login = (email, password) => {
   return async (dispatch) => {
-    const response = await fetch(
-      `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${Config.apikey}`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email: email,
-          password: password,
-          returnSecureToken: true,
-        }),
-      }
+    const loginForm = {
+      email: email,
+      password: password,
+    };
+    const getLoginResponse = await axios.post(
+      `https://us-central1-showcase-27b11.cloudfunctions.net/loginUser`,
+      loginForm
     );
-    if (!response.ok) {
-      const errorResData = await response.json();
-      const errorId = errorResData.error.message;
-      let message = "Something went wrong!";
-      if (errorId === "EMAIL_NOT_FOUND") {
-        message = "This email could not be found!";
-      } else if (errorId === "INVALID_PASSWORD") {
-        message = "This password is not valid!";
-      } else if (errorId === "EMAIL_EXISTS") {
-        message = "This email already exists!";
-      }
-      throw new Error(message);
-    }
 
-    const resData = await response.json();
-    console.log(resData);
+    console.log(getLoginResponse);
+
+    console.log(getLoginResponse.data.docData);
+    saveUserDocumentToStorage(
+      getLoginResponse.data.docData.email,
+      getLoginResponse.data.docData.fullname,
+      getLoginResponse.data.docData.jobTitle,
+      getLoginResponse.data.docData.username,
+      getLoginResponse.data.docData.resumeLinkUrl,
+      getLoginResponse.data.docData.profileBiography,
+      getLoginResponse.data.docData.numberOfFollowers,
+      getLoginResponse.data.docData.numberOfFollowing,
+      getLoginResponse.data.docData.numberOfAdvocates,
+      getLoginResponse.data.docData.darkModeValue,
+      getLoginResponse.data.docData.showResumeValue,
+      getLoginResponse.data.docData.showcaseLocally,
+      getLoginResponse.data.docData.followers,
+      getLoginResponse.data.docData.following,
+      getLoginResponse.data.docData.advocates,
+      getLoginResponse.data.docData.profileProjects,
+      getLoginResponse.data.docData.profileLinks
+    );
+    saveDataToStorage(
+      getLoginResponse.data.localId,
+      getLoginResponse.data.idToken
+    );
+
+    dispatch(getUserData());
     dispatch(
-      authenticate(
-        resData.localId,
-        resData.idToken,
-        parseInt(resData.expiresIn) * 1000
-      )
+      authenticate(getLoginResponse.data.localId, getLoginResponse.data.idToken)
     );
-    const expirationDate = new Date(
-      new Date().getTime() + parseInt(resData.expiresIn) * 1000
-    );
-    saveDataToStorage(resData.idToken, resData.localId, expirationDate);
+    console.log("Successful login!");
   };
 };
 
 export const logout = () => {
-  AsyncStorage.removeItem("userData");
+  // const logoutForm = {
+  //   email: email,
+  //   password: password,
+  // };
+  // const getLogoutResponse = await axios.post(
+  //   `https://us-central1-showcase-27b11.cloudfunctions.net/logoutUserStore`,
+  //   logoutForm
+  // );
+  AsyncStorage.removeItem("userLoginData");
+  AsyncStorage.removeItem("userDocData");
   return { type: LOGOUT };
 };
 
-const saveDataToStorage = (token, userId, expirationDate) => {
+const saveDataToStorage = (localId, token) => {
   AsyncStorage.setItem(
-    "userData",
+    "userLoginData",
     JSON.stringify({
+      localId: localId,
       token: token,
-      userId: userId,
-      expiryDate: expirationDate.toISOString(),
+    })
+  );
+};
+
+const saveUserDocumentToStorage = (
+  email,
+  fullname,
+  jobTitle,
+  username,
+  resumeLinkUrl,
+  profileBiography,
+  numberOfFollowers,
+  numberOfFollowing,
+  numberOfAdvocates,
+  darkModeValue,
+  showResumeValue,
+  showcaseLocally,
+  followers,
+  following,
+  advocates,
+  profileProjects,
+  profileLinks
+) => {
+  AsyncStorage.setItem(
+    "userDocData",
+    JSON.stringify({
+      email: email,
+      fullname: fullname,
+      jobTitle: jobTitle,
+      username: username,
+      resumeLinkUrl: resumeLinkUrl,
+      profileBiography: profileBiography,
+      numberOfFollowers: numberOfFollowers,
+      numberOfFollowing: numberOfFollowing,
+      numberOfAdvocates: numberOfAdvocates,
+      darkModeValue: darkModeValue,
+      showResumeValue: showResumeValue,
+      showcaseLocally: showcaseLocally,
+      followers: followers,
+      following: following,
+      advocates: advocates,
+      profileProjects: profileProjects,
+      profileLinks: profileLinks,
     })
   );
 };
