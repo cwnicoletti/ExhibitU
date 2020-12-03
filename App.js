@@ -7,9 +7,12 @@ import * as Notifications from "expo-notifications";
 
 import projectsReducer from "./store/reducers/projects";
 import authReducer from "./store/reducers/auth";
-import darkModeReducer from "./store/reducers/darkMode";
+import switchesReducer from "./store/reducers/switches";
+import userReducer from "./store/reducers/user";
 
 import NavigationContainer from "./navigation/NavigationContainer";
+
+// Clapping Icon made by Freepik (https://www.flaticon.com/authors/freepik)
 
 Notifications.setNotificationHandler({
   handleNotification: async () => {
@@ -20,9 +23,10 @@ Notifications.setNotificationHandler({
 });
 
 const rootReducer = combineReducers({
-  darkMode: darkModeReducer,
+  switches: switchesReducer,
   projects: projectsReducer,
   auth: authReducer,
+  user: userReducer,
 });
 
 const store = createStore(rootReducer, applyMiddleware(ReduxThunk));
