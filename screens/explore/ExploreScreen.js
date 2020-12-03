@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import {
   StyleSheet,
-  Alert,
   View,
   Text,
   Image,
@@ -12,10 +11,10 @@ import { useSelector, useDispatch } from "react-redux";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import { SearchBar } from "react-native-elements";
 
-import HeaderButton from "../../components/UI/HeaderButton";
+import HeaderButton from "../../components/UI/IoniconsHeaderButton";
 
 const ExploreScreen = (props) => {
-  const darkModeValue = useSelector((state) => state.darkMode.darkMode);
+  const darkModeValue = useSelector((state) => state.switches.darkMode);
 
   const [index, setIndex] = useState("");
   const [search, setSearch] = useState("");
@@ -40,8 +39,7 @@ const ExploreScreen = (props) => {
           containerStyle={{
             backgroundColor: darkModeValue ? "black" : "white",
             margin: 5,
-            borderBottomColor: darkModeValue ? "white" : "black",
-            borderBottomWidth: 1,
+            borderBottomWidth: 0,
             borderTopWidth: 0,
             width: "80%",
           }}
