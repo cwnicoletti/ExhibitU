@@ -6,7 +6,9 @@ class ProjectItem {
     projectId,
     title,
     imageUrl,
-    description
+    description,
+    cheerCount,
+    commentCount
   ) {
     this.id = id;
     this.ownerId = ownerId;
@@ -15,6 +17,8 @@ class ProjectItem {
     this.title = title;
     this.imageUrl = imageUrl;
     this.description = description;
+    this.cheerCount = cheerCount;
+    this.commentCount = commentCount;
   }
 }
 
