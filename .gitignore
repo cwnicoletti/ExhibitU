@@ -16,3 +16,4 @@ web-build/
 config.js
 .firebaserc
 firebase.json
+functions/
