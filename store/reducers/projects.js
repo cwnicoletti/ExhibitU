@@ -1,4 +1,4 @@
-import Project from "../../models/project";
+import Project from "../../models/profile-project";
 import PROJECTS from "../../data/dummy-data";
 import LINKS from "../../data/dummy-data-links";
 import PROJECTLINKS from "../../data/dummy-data-project-links";
