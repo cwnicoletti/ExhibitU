@@ -9,15 +9,20 @@ import {
 } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import FilterSwitch from "../UI/FilterSwitch";
 
-import { setDarkMode } from "../../store/actions/darkMode";
+import { setDarkMode } from "../../store/actions/switches";
+import { setShowcaseLocalMode } from "../../store/actions/switches";
 
 const LeftDrawer = (props) => {
   const dispatch = useDispatch();
 
-  const darkModeValue = useSelector((state) => state.darkMode.darkMode);
+  const darkModeValue = useSelector((state) => state.switches.darkMode);
+  const showcaseLocalValue = useSelector(
+    (state) => state.switches.showcaseLocalMode
+  );
 
   return (
     <View
@@ -81,7 +86,6 @@ const LeftDrawer = (props) => {
         style={{
           flex: 1,
           justifyContent: "flex-end",
-          margin: 10,
         }}
       >
         <SafeAreaView forceInset={{ top: "always", horizontal: "never" }}>
@@ -90,6 +94,25 @@ const LeftDrawer = (props) => {
               flexDirection: "row",
               justifyContent: "space-between",
               alignItems: "center",
+              margin: 10,
+            }}
+            labelStyle={{
+              color: darkModeValue ? "white" : "black",
+            }}
+            label="Showcase locally"
+            state={showcaseLocalValue}
+            onChange={(newValue) => {
+              dispatch(setShowcaseLocalMode(newValue));
+            }}
+          />
+        </SafeAreaView>
+        <SafeAreaView forceInset={{ top: "always", horizontal: "never" }}>
+          <FilterSwitch
+            viewStyle={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+              alignItems: "center",
+              margin: 10,
             }}
             labelStyle={{
               color: darkModeValue ? "white" : "black",

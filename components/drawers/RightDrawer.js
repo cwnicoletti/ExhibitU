@@ -5,9 +5,10 @@ import { useSelector, useDispatch } from "react-redux";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Entypo } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
+import { SimpleLineIcons } from "@expo/vector-icons";
 
 const RightDrawer = (props) => {
-  const darkModeValue = useSelector((state) => state.darkMode.darkMode);
+  const darkModeValue = useSelector((state) => state.switches.darkMode);
 
   useEffect(() => {
     props.navData.navigation.setParams({ darkMode: darkModeValue });
@@ -33,7 +34,8 @@ const RightDrawer = (props) => {
   }, [darkModeValue]);
 
   return (
-    <View forceInset={{ top: "always", horizontal: "never" }}
+    <View
+      forceInset={{ top: "always", horizontal: "never" }}
       style={{
         flex: 1,
         padding: 20,
@@ -81,7 +83,19 @@ const RightDrawer = (props) => {
           style={{
             flexDirection: "row",
             alignItems: "center",
-            margin: 10,
+            margin: 5,
+          }}
+        >
+          <SimpleLineIcons name="trophy" size={20} color={"#007AFF"} />
+          <Button title="Showcase" onPress={props.showcaseOnPress} />
+        </View>
+      </SafeAreaView>
+      <SafeAreaView forceInset={{ top: "always", horizontal: "never" }}>
+        <View
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            margin: 5,
           }}
         >
           <Entypo name="notification" size={20} color="#007AFF" />
@@ -92,7 +106,7 @@ const RightDrawer = (props) => {
         style={{
           flex: 1,
           justifyContent: "flex-end",
-          margin: 10,
+          margin: 5,
         }}
       >
         <SafeAreaView forceInset={{ top: "always", horizontal: "never" }}>
@@ -102,12 +116,12 @@ const RightDrawer = (props) => {
               alignItems: "center",
             }}
           >
+            <MaterialCommunityIcons name="logout" size={20} color="#007AFF" />
             <Button
               title="Logout"
               color="#007AFF"
               onPress={props.logoutOnPress}
             />
-            <MaterialCommunityIcons name="logout" size={20} color="#007AFF" />
           </View>
         </SafeAreaView>
       </View>
