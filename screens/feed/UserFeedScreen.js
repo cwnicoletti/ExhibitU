@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   StyleSheet,
   FlatList,
@@ -6,16 +6,22 @@ import {
   Text,
   Image,
   SafeAreaView,
+  StatusBar,
 } from "react-native";
 import { useSelector } from "react-redux";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 
 import FeedItem from "../../components/projectItems/FeedItem";
-import HeaderButton from "../../components/UI/HeaderButton";
+import HeaderButton from "../../components/UI/IoniconsHeaderButton";
 
 const UserFeedScreen = (props) => {
-  const userProjects = useSelector((state) => state.projects.userProjects);
-  const darkModeValue = useSelector((state) => state.darkMode.darkMode);
+  const styleTypes = ["dark-content", "light-content"];
+
+  const userProjectItems = useSelector(
+    (state) => state.projects.userProjectItems
+  );
+  const darkModeValue = useSelector((state) => state.switches.darkMode);
+  const projects = useSelector((state) => state.projects.userProjects);
 
   useEffect(() => {
     props.navigation.setParams({ darkMode: darkModeValue });
@@ -25,6 +31,19 @@ const UserFeedScreen = (props) => {
     props.navigation.navigate("ViewFeedProject", { projectId: id });
   };
 
+  const getProjectTitle = (itemId) => {
+    const project = projects.filter((proj) => proj.id === itemId);
+    return project[0].title;
+  };
+
+  const setStatusBarStyle = (darkModeValue) => {
+    if (darkModeValue === true) {
+      return styleTypes[1];
+    } else {
+      return styleTypes[0];
+    }
+  };
+
   return (
     <View
       style={{
@@ -32,17 +51,66 @@ const UserFeedScreen = (props) => {
         backgroundColor: darkModeValue ? "black" : "white",
       }}
     >
+      <StatusBar barStyle={setStatusBarStyle(darkModeValue)} />
       <FlatList
-        data={userProjects}
+        data={userProjectItems}
         keyExtractor={(item) => item.id}
         renderItem={(itemData) => (
           <FeedItem
             image={itemData.item.imageUrl}
-            title={itemData.item.title}
+            profileImageSource={require("../../assets/me.png")}
+            projectTitle={getProjectTitle(itemData.item.projectId)}
+            pictureTitle={itemData.item.title}
             price={itemData.item.price}
+            name="Christian Nicoletti"
+            username="@christnicoletti"
+            nameStyle={{
+              color: darkModeValue ? "white" : "black",
+            }}
+            usernameStyle={{
+              color: darkModeValue ? "white" : "black",
+            }}
             projectContainer={{
+              borderColor: darkModeValue ? "#616161" : "#e8e8e8",
               marginBottom: 10,
             }}
+            titleContainer={{
+              color: darkModeValue ? "white" : "black",
+            }}
+            threeDotsStyle={darkModeValue ? "white" : "black"}
+            captionContainer={{
+              backgroundColor: darkModeValue ? "#121212" : "white",
+            }}
+            titleStyle={{
+              color: "white",
+            }}
+            nameTitleColors={["rgba(0,0,0,1)", "rgba(0,0,0,0.00)"]}
+            projectTitleColors={["rgba(0,0,0,0.00)", "rgba(0,0,0,1)"]}
+            pictureCheerContainer={{
+              backgroundColor: darkModeValue ? "#121212" : "white",
+            }}
+            pictureCheerNumber={{
+              color: darkModeValue ? "white" : "black",
+            }}
+            pictureCheerText={{
+              color: darkModeValue ? "white" : "black",
+            }}
+            numberOfCheers={itemData.item.cheerCount}
+            pictureCommentNumber={{
+              color: darkModeValue ? "white" : "black",
+            }}
+            numberOfComments={itemData.item.commentCount}
+            pictureTitleContainer={{
+              backgroundColor: darkModeValue ? "#121212" : "white",
+            }}
+            pictureTitleStyle={{
+              color: darkModeValue ? "white" : "black",
+            }}
+            captionStyle={{
+              color: darkModeValue ? "white" : "black",
+            }}
+            caption={itemData.item.description}
+            arrowColor={"white"}
             onSelect={() => {
               viewProjectHandler(itemData.item.id);
             }}
