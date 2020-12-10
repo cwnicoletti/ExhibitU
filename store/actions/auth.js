@@ -21,7 +21,7 @@ export const signup = (email, fullname, username, password) => {
       password: password,
     };
     const getSignupResponse = await axios.post(
-      `https://us-central1-showcase-27b11.cloudfunctions.net/signupUser`,
+      `https://us-central1-showcase-79c28.cloudfunctions.net/signupUser`,
       signupForm
     );
 
@@ -32,6 +32,7 @@ export const signup = (email, fullname, username, password) => {
       getSignupResponse.data.idToken
     );
     saveUserDocumentToStorage(
+      getSignupResponse.data.docData.showcaseId,
       getSignupResponse.data.docData.email,
       getSignupResponse.data.docData.fullname,
       getSignupResponse.data.docData.jobTitle,
@@ -69,7 +70,7 @@ export const login = (email, password) => {
       password: password,
     };
     const getLoginResponse = await axios.post(
-      `https://us-central1-showcase-27b11.cloudfunctions.net/loginUser`,
+      `https://us-central1-showcase-79c28.cloudfunctions.net/loginUser`,
       loginForm
     );
 
@@ -77,6 +78,7 @@ export const login = (email, password) => {
 
     console.log(getLoginResponse.data.docData);
     saveUserDocumentToStorage(
+      getLoginResponse.data.docData.showcaseId,
       getLoginResponse.data.docData.email,
       getLoginResponse.data.docData.fullname,
       getLoginResponse.data.docData.jobTitle,
@@ -109,14 +111,6 @@ export const login = (email, password) => {
 };
 
 export const logout = () => {
-  // const logoutForm = {
-  //   email: email,
-  //   password: password,
-  // };
-  // const getLogoutResponse = await axios.post(
-  //   `https://us-central1-showcase-27b11.cloudfunctions.net/logoutUserStore`,
-  //   logoutForm
-  // );
   AsyncStorage.removeItem("userLoginData");
   AsyncStorage.removeItem("userDocData");
   return { type: LOGOUT };
@@ -133,6 +127,7 @@ const saveDataToStorage = (localId, token) => {
 };
 
 const saveUserDocumentToStorage = (
+  showcaseId,
   email,
   fullname,
   jobTitle,
@@ -154,6 +149,7 @@ const saveUserDocumentToStorage = (
   AsyncStorage.setItem(
     "userDocData",
     JSON.stringify({
+      showcaseId: showcaseId,
       email: email,
       fullname: fullname,
       jobTitle: jobTitle,
