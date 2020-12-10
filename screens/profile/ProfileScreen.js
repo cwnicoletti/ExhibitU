@@ -4,21 +4,36 @@ import { useSelector } from "react-redux";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 
 import ProjectItem from "../../components/projectItems/ProfileProjectItem";
-import HeaderButton from "../../components/UI/HeaderButton";
+import HeaderButton from "../../components/UI/IoniconsHeaderButton";
 import ProfileHeader from "../../components/user/ProfileHeader";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 const ProfileScreen = (props) => {
-  const userProjects = useSelector((state) => state.projects.userProjects);
-  const darkModeValue = useSelector((state) => state.darkMode.darkMode);
+  const darkModeValue = useSelector((state) => state.switches.darkMode);
+  const showcaseLocalValue = useSelector(
+    (state) => state.switches.showcaseLocalMode
+  );
+
+  const userData = {
+    fullname: useSelector((state) => state.user.fullname),
+    username: useSelector((state) => state.user.username),
+    jobTitle: useSelector((state) => state.user.jobTitle),
+    profileBiography: useSelector((state) => state.user.profileBiography),
+    profileProjects: useSelector((state) => state.user.profileProjects),
+  };
+
+  console.log(userData.profileProjects);
 
   useEffect(() => {
     props.navigation.setParams({ darkMode: darkModeValue });
   }, [darkModeValue]);
 
-  const viewProjectHandler = (id) => {
-    props.navigation.navigate("ViewProfileProject", { projectId: id });
+  const viewProjectHandler = (projectId) => {
+    console.log(projectId);
+    props.navigation.navigate("ViewProfileProject", {
+      projectId: projectId,
+    });
   };
 
   const topHeader = () => {
@@ -26,7 +41,7 @@ const ProfileScreen = (props) => {
       <ProfileHeader
         containerStyle={{
           ...styles.profileContainerStyle,
-          borderBottomColor: "gray",
+          borderBottomColor: darkModeValue ? "gray" : "#c9c9c9",
         }}
         usernameStyle={{
           ...styles.profileUsernameStyle,
@@ -36,15 +51,28 @@ const ProfileScreen = (props) => {
           ...styles.profileTitleStyle,
           color: darkModeValue ? "white" : "black",
         }}
-        title="Christian Nicoletti"
-        username="@christnicoletti"
+        jobTitleStyle={{
+          ...styles.profileJobTitleStyle,
+          color: darkModeValue ? "white" : "black",
+        }}
+        title={userData.fullname}
+        username={`@${userData.username}`}
+        jobTitle={userData.jobTitle}
         imgSource={require("../../assets/me.png")}
         descriptionStyle={{
           ...styles.profileDescriptionStyle,
           color: darkModeValue ? "white" : "black",
         }}
+        resumeText={{
+          color: darkModeValue ? "white" : "black",
+        }}
+        iconResumeStyle={darkModeValue ? "white" : "black"}
         onEditProfilePress={() => props.navigation.navigate("EditProfile")}
-        description="Cognitive Science student soon to graduate with extensive knowledge in field research, as well as Computer Science and Machine Learning. This means that on top of completing upper division Psychology courses required from the University of California, Santa Cruz, I have also completed upper division Computer Science courses including courses that emphasized Machine Learning."
+        description={userData.profileBiography}
+        onAddNewProjectPress={() => props.navigation.navigate("AddProject")}
+        followersOnPress={() => props.navigation.navigate("Followers")}
+        followingOnPress={() => props.navigation.navigate("Following")}
+        advocatesOnPress={() => props.navigation.navigate("Advocates")}
       />
     );
   };
@@ -57,51 +85,54 @@ const ProfileScreen = (props) => {
       }}
     >
       <FlatList
-        data={userProjects}
+        data={Object.values(userData.profileProjects)}
         keyExtractor={(item) => item.id}
         ListHeaderComponent={topHeader}
         numColumns={2}
         renderItem={(itemData) => (
           <ProjectItem
-            image={itemData.item.imageUrl}
-            title={itemData.item.title}
+            image={itemData.item.projectImageUrl}
+            title={itemData.item.projectTitle}
             projectContainer={{
               backgroundColor: darkModeValue ? "black" : "white",
+              borderColor: darkModeValue ? "gray" : "#c9c9c9",
             }}
             titleStyle={{
               color: darkModeValue ? "white" : "black",
             }}
             onSelect={() => {
-              viewProjectHandler(itemData.item.id);
+              viewProjectHandler(itemData.item.projectId);
             }}
           />
         )}
       />
-      <TouchableOpacity
-        style={{
-          margin: 10,
-          padding: 10,
-          alignItems: "center",
-          justifyContent: "center",
-          borderWidth: 1,
-          borderColor: "gray",
-          flexDirection: "row",
-        }}
-      >
-        <MaterialCommunityIcons
-          name="glassdoor"
-          size={24}
-          color={darkModeValue ? "white" : "black"}
-        />
-        <Text
+      {!showcaseLocalValue ? (
+        <TouchableOpacity
           style={{
-            color: darkModeValue ? "white" : "black",
-            fontWeight: "bold",
+            margin: 10,
+            padding: 10,
+            alignItems: "center",
+            justifyContent: "center",
+            borderWidth: 1,
+            borderColor: darkModeValue ? "gray" : "#c9c9c9",
+            flexDirection: "row",
           }}
         >
-          Showcase profile
-        </Text>
-      </TouchableOpacity>
+          <MaterialCommunityIcons
+            name="glassdoor"
+            size={24}
+            color={darkModeValue ? "white" : "black"}
+          />
+          <Text
+            style={{
+              color: darkModeValue ? "white" : "black",
+              fontWeight: "bold",
+            }}
+          >
+            Showcase profile
+          </Text>
+        </TouchableOpacity>
+      ) : null}
     </View>
   );
 };
@@ -169,10 +200,15 @@ ProfileScreen.navigationOptions = (navData) => {
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    justifyContent: "center",
+    justifyContent: "space-between",
   },
   profileTitleStyle: {
     fontSize: 24,
+    fontWeight: "bold",
+    paddingTop: 5,
+  },
+  profileJobTitleStyle: {
+    fontSize: 17,
     fontWeight: "bold",
     paddingTop: 5,
   },
@@ -184,6 +220,7 @@ const styles = StyleSheet.create({
     paddingBottom: 20,
   },
   profileContainerStyle: {
+    justifyContent: "flex-start",
     borderBottomWidth: 1,
   },
   text: {

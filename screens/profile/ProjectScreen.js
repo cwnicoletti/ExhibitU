@@ -2,23 +2,20 @@ import React, { useEffect } from "react";
 import { Image, StyleSheet, FlatList, View, Text } from "react-native";
 import { HeaderBackButton } from "react-navigation-stack";
 import { useSelector } from "react-redux";
+import { HeaderButtons, Item } from "react-navigation-header-buttons";
 
-import ProjectPictures from "../../components/projects/ProjectPictures";
+import ProjectPictures from "../../components/UI/ProjectPictures";
 import ProjectHeader from "../../components/projects/ProjectHeader";
+import MaterialHeaderButton from "../../components/UI/MaterialHeaderButton";
 
 const ProjectScreen = (props) => {
-  const darkModeValue = useSelector((state) => state.darkMode.darkMode);
+  const darkModeValue = useSelector((state) => state.switches.darkMode);
 
-  const projectId = props.navigation.getParam("projectId");
+  const currentProjectId = props.navigation.getParam("projectId");
+  const profileProjects = useSelector((state) => state.user.profileProjects);
 
-  const projects = useSelector((state) =>
-    state.projects.userProjects.find((proj) => proj.id === projectId)
-  );
-
-  const listofProjects = useSelector((state) =>
-    state.projects.userProjectItems.filter(
-      (proj) => proj.projectPictureId === projectId
-    )
+  const project = Object.values(profileProjects).find(
+    (project) => project.projectId === currentProjectId
   );
 
   let android = null;
@@ -38,14 +35,19 @@ const ProjectScreen = (props) => {
           ...styles.profileContainerStyle,
           borderBottomColor: darkModeValue ? "white" : "black",
         }}
-        imgSource={{ uri: projects.imageUrl }}
+        imgSource={{ uri: project.projectImageUrl }}
         descriptionStyle={{
           ...styles.profileDescriptionStyle,
           color: darkModeValue ? "white" : "black",
         }}
-        title={projects.title}
-        description={projects.description}
-        projectId={projectId}
+        title={project.projectTitle}
+        description={project.projectDescription}
+        onEditProfilePress={() =>
+          props.navigation.navigate("EditProjectScreen", {
+            projectId: currentProjectId,
+            projectTitle: project.projectTitle,
+          })
+        }
       />
     );
   };
@@ -58,14 +60,13 @@ const ProjectScreen = (props) => {
       }}
     >
       <FlatList
-        data={listofProjects}
+        data={Object.values(project.projectPictures)}
         keyExtractor={(item) => item.id}
         ListHeaderComponent={topHeader}
         numColumns={2}
         renderItem={(itemData) => (
           <ProjectPictures
-            image={itemData.item.imageUrl}
-            title={itemData.item.title}
+            image={itemData.item.pictureUrl}
             projectContainer={{
               backgroundColor: darkModeValue ? "black" : "white",
             }}
@@ -126,6 +127,18 @@ ProjectScreen.navigationOptions = (navData) => {
           <HeaderBackButton {...props} />
         )}
       </View>
+    ),
+    headerRight: () => (
+      <HeaderButtons HeaderButtonComponent={MaterialHeaderButton}>
+        <Item
+          title="Add"
+          iconName={"add-a-photo"}
+          color={darkModeValue ? "white" : "black"}
+          onPress={() => {
+            navData.navigation.navigate("AddPicture");
+          }}
+        />
+      </HeaderButtons>
     ),
   };
 };
