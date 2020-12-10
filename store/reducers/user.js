@@ -9,6 +9,7 @@ import {
 } from "../actions/user";
 
 const intialState = {
+  showcaseId: "",
   email: "",
   fullname: "",
   jobTitle: "",
@@ -33,6 +34,7 @@ export default (state = intialState, action) => {
     case GET_USER_DATA:
       return {
         ...state,
+        showcaseId: action.showcaseId,
         email: action.email,
         fullname: action.fullname,
         jobTitle: action.jobTitle,

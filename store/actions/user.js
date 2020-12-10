@@ -41,6 +41,7 @@ export const getUserData = () => {
 
     dispatch({
       type: GET_USER_DATA,
+      showcaseId: transformedData.showcaseId,
       email: transformedData.email,
       fullname: transformedData.fullname,
       jobTitle: transformedData.jobTitle,
@@ -63,6 +64,7 @@ export const getUserData = () => {
 };
 
 export const uploadUpdateUserProfile = (
+  showcaseId,
   localId,
   fullname,
   jobTitle,
@@ -73,6 +75,7 @@ export const uploadUpdateUserProfile = (
 ) => {
   return async (dispatch) => {
     const uploadForm = {
+      showcaseId: showcaseId,
       localId: localId,
       fullname: fullname,
       jobTitle: jobTitle,
@@ -83,7 +86,7 @@ export const uploadUpdateUserProfile = (
     };
 
     await axios.post(
-      `https://us-central1-showcase-27b11.cloudfunctions.net/updateProfile`,
+      `https://us-central1-showcase-79c28.cloudfunctions.net/updateProfile`,
       uploadForm
     );
 
@@ -113,6 +116,7 @@ export const uploadUpdateUserProfile = (
 };
 
 export const uploadNewProject = (
+  showcaseId,
   localId,
   projectId,
   projectTitle,
@@ -121,6 +125,7 @@ export const uploadNewProject = (
 ) => {
   return async (dispatch) => {
     const uploadForm = {
+      showcaseId: showcaseId,
       localId: localId,
       projectId: projectId,
       projectTitle: projectTitle,
@@ -129,7 +134,7 @@ export const uploadNewProject = (
     };
 
     const newProjectResponse = await axios.post(
-      `https://us-central1-showcase-27b11.cloudfunctions.net/uploadNewProject`,
+      `https://us-central1-showcase-79c28.cloudfunctions.net/uploadNewProject`,
       uploadForm
     );
 
@@ -169,6 +174,7 @@ export const uploadNewProject = (
 };
 
 export const uploadUpdatedProject = (
+  showcaseId,
   localId,
   projectId,
   projectTitle,
@@ -177,6 +183,7 @@ export const uploadUpdatedProject = (
 ) => {
   return async (dispatch) => {
     const uploadForm = {
+      showcaseId: showcaseId,
       localId: localId,
       projectId: projectId,
       projectTitle: projectTitle,
@@ -185,7 +192,7 @@ export const uploadUpdatedProject = (
     };
 
     const updatedProjectResponse = await axios.post(
-      `https://us-central1-showcase-27b11.cloudfunctions.net/uploadUpdatedProject`,
+      `https://us-central1-showcase-79c28.cloudfunctions.net/uploadUpdatedProject`,
       uploadForm
     );
 
@@ -218,15 +225,16 @@ export const uploadUpdatedProject = (
   };
 };
 
-export const uploadRemoveProject = (localId, projectId) => {
+export const uploadRemoveProject = (showcaseId, localId, projectId) => {
   return async (dispatch) => {
     const uploadForm = {
+      showcaseId: showcaseId,
       localId: localId,
       projectId: projectId,
     };
 
     await axios.post(
-      `https://us-central1-showcase-27b11.cloudfunctions.net/uploadRemoveProject`,
+      `https://us-central1-showcase-79c28.cloudfunctions.net/uploadRemoveProject`,
       uploadForm
     );
 
@@ -269,7 +277,7 @@ export const followUser = (username) => {
     };
 
     const getFollowResponse = await axios.post(
-      `https://us-central1-showcase-27b11.cloudfunctions.net/followUser`,
+      `https://us-central1-showcase-79c28.cloudfunctions.net/followUser`,
       user
     );
 
