@@ -1,9 +1,16 @@
 import React, { useEffect } from "react";
-import { View, Text, StyleSheet, SafeAreaView, Button } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  SafeAreaView,
+  Button,
+  TouchableOpacity,
+  TouchableNativeFeedback,
+} from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { Entypo } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 import { SimpleLineIcons } from "@expo/vector-icons";
 
@@ -11,12 +18,7 @@ const RightDrawer = (props) => {
   const darkModeValue = useSelector((state) => state.switches.darkMode);
 
   useEffect(() => {
-    props.navData.navigation.setParams({ darkMode: darkModeValue });
-
-    // Calling navigation options within useEffect since to
-    // make sure it is called once darkModeValue is defined
-    props.component.navigationOptions = (navData) => {
-      const darkModeValue = navData.navigation.getParam("darkMode");
+    props.component.navigationOptions = () => {
       return {
         tabBarOptions: {
           activeTintColor: darkModeValue ? "white" : "black",
@@ -32,6 +34,11 @@ const RightDrawer = (props) => {
       };
     };
   }, [darkModeValue]);
+
+  let TouchableCmp = TouchableOpacity;
+  if (Platform.OS === "android") {
+    TouchableCmp = TouchableNativeFeedback;
+  }
 
   return (
     <View
@@ -83,11 +90,28 @@ const RightDrawer = (props) => {
           style={{
             flexDirection: "row",
             alignItems: "center",
-            margin: 5,
+            margin: 10,
+            marginTop: 20,
           }}
         >
-          <SimpleLineIcons name="trophy" size={20} color={"#007AFF"} />
-          <Button title="Showcase" onPress={props.showcaseOnPress} />
+          <SimpleLineIcons
+            name="trophy"
+            size={20}
+            color={darkModeValue ? "white" : "black"}
+          />
+          <TouchableCmp onPress={props.showcaseOnPress}>
+            <View>
+              <Text
+                style={{
+                  color: darkModeValue ? "#bababa" : "black",
+                  fontSize: 18,
+                  marginHorizontal: 10,
+                }}
+              >
+                Showcase
+              </Text>
+            </View>
+          </TouchableCmp>
         </View>
       </SafeAreaView>
       <SafeAreaView forceInset={{ top: "always", horizontal: "never" }}>
@@ -95,11 +119,55 @@ const RightDrawer = (props) => {
           style={{
             flexDirection: "row",
             alignItems: "center",
-            margin: 5,
+            margin: 10,
           }}
         >
-          <Entypo name="notification" size={20} color="#007AFF" />
-          <Button title="Notifications" onPress={props.notificationsOnPress} />
+          <MaterialCommunityIcons
+            name="update"
+            size={20}
+            color={darkModeValue ? "white" : "black"}
+          />
+          <TouchableCmp onPress={props.updatesOnPress}>
+            <View>
+              <Text
+                style={{
+                  color: darkModeValue ? "#bababa" : "black",
+                  fontSize: 18,
+                  marginHorizontal: 10,
+                }}
+              >
+                Future Updates
+              </Text>
+            </View>
+          </TouchableCmp>
+        </View>
+      </SafeAreaView>
+      <SafeAreaView forceInset={{ top: "always", horizontal: "never" }}>
+        <View
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            margin: 10,
+          }}
+        >
+          <MaterialCommunityIcons
+            name="email-edit-outline"
+            size={20}
+            color={darkModeValue ? "white" : "black"}
+          />
+          <TouchableCmp onPress={props.feedbackOnPress}>
+            <View>
+              <Text
+                style={{
+                  color: darkModeValue ? "#bababa" : "black",
+                  fontSize: 18,
+                  marginHorizontal: 10,
+                }}
+              >
+                Direct Feedback
+              </Text>
+            </View>
+          </TouchableCmp>
         </View>
       </SafeAreaView>
       <View
@@ -114,14 +182,27 @@ const RightDrawer = (props) => {
             style={{
               flexDirection: "row",
               alignItems: "center",
+              marginBottom: 10,
             }}
           >
-            <MaterialCommunityIcons name="logout" size={20} color="#007AFF" />
-            <Button
-              title="Logout"
-              color="#007AFF"
-              onPress={props.logoutOnPress}
+            <MaterialCommunityIcons
+              name="logout"
+              size={20}
+              color={darkModeValue ? "white" : "black"}
             />
+            <TouchableCmp onPress={props.logoutOnPress}>
+              <View>
+                <Text
+                  style={{
+                    color: darkModeValue ? "#bababa" : "black",
+                    fontSize: 18,
+                    marginHorizontal: 10,
+                  }}
+                >
+                  Logout
+                </Text>
+              </View>
+            </TouchableCmp>
           </View>
         </SafeAreaView>
       </View>
