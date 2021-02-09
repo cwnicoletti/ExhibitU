@@ -1,6 +1,8 @@
 import React from "react";
-import { View, StyleSheet, Button, Image, Text } from "react-native";
+import { View, StyleSheet, Image, Text } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
+
+import { Fontisto } from "@expo/vector-icons";
 
 const SignupOrLoginScreen = (props) => {
   return (
@@ -10,28 +12,27 @@ const SignupOrLoginScreen = (props) => {
         style={styles.image}
         source={require("../../assets/showcase_icon.png")}
       />
-      <View style={styles.buttonContainer}>
-        <TouchableOpacity
-          style={styles.buttons}
-          onPress={() => {
-            props.navigation.navigate("Signup");
-          }}
-        >
-          <Text style={styles.buttonText}>Signup with Email</Text>
-        </TouchableOpacity>
-      </View>
-      <Text style={styles.text}>----------- OR -----------</Text>
+      <TouchableOpacity
+        style={styles.buttonContainer}
+        onPress={() => {
+          props.navigation.navigate("Signup1");
+        }}
+      >
+        <Fontisto name="email" size={24} color="#0040a8" />
+        <Text style={{ ...styles.buttonText, marginHorizontal: 10 }}>
+          Signup with Email
+        </Text>
+      </TouchableOpacity>
+      <Text style={{ ...styles.text }}>----------- OR -----------</Text>
       <Text style={styles.text}>Already have showcase?</Text>
-      <View style={styles.buttonContainer}>
-        <TouchableOpacity
-          style={styles.buttons}
-          onPress={() => {
-            props.navigation.navigate("Login");
-          }}
-        >
-          <Text style={styles.buttonText}>Login</Text>
-        </TouchableOpacity>
-      </View>
+      <TouchableOpacity
+        style={styles.buttonContainer}
+        onPress={() => {
+          props.navigation.navigate("Login");
+        }}
+      >
+        <Text style={styles.buttonText}>Login</Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -65,22 +66,19 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: "#00B7DB",
+    fontSize: 16,
   },
   buttonContainer: {
-    width: "90%",
-    marginTop: 10,
     backgroundColor: "white",
     borderRadius: 10,
     borderWidth: 1,
     borderRadius: 15,
     borderBottomColor: "#ccc",
     borderBottomWidth: 1,
-    justifyContent: "space-between",
-  },
-  buttons: {
     alignItems: "center",
-    paddingVertical: 10,
-    color: "#00B7DB",
+    flexDirection: "row",
+    padding: 10,
+    paddingHorizontal: 80,
   },
 });
 
