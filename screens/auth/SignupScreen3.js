@@ -16,7 +16,7 @@ import Input from "../../components/UI/Input";
 import Card from "../../components/UI/Card";
 import IoniconsHeaderButton from "../../components/UI/IoniconsHeaderButton";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
-import { login } from "../../store/actions/auth";
+import { setUsername } from "../../store/actions/signup";
 
 const FORM_INPUT_UPDATE = "FORM_INPUT_UPDATE";
 
@@ -43,7 +43,7 @@ const formReducer = (state, action) => {
   return state;
 };
 
-const LoginScreen = (props) => {
+const SignupScreen2 = (props) => {
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false);
 
@@ -56,23 +56,19 @@ const LoginScreen = (props) => {
 
   const [formState, dispatchFormState] = useReducer(formReducer, {
     inputValues: {
-      email: "",
-      password: "",
+      username: "",
     },
     inputValidities: {
-      email: false,
-      password: false,
+      username: false,
     },
     formIsValid: false,
   });
 
   const authHandler = async () => {
-    setIsLoading(true);
-    await dispatch(
-      login(formState.inputValues.email, formState.inputValues.password)
-    );
-    props.navigation.navigate("Project");
-    setIsLoading(false);
+    await setIsLoading(true);
+    await dispatch(setUsername(formState.inputValues.username));
+    await props.navigation.navigate("Signup4");
+    await setIsLoading(false);
   };
 
   const inputChangeHandler = useCallback(
@@ -98,31 +94,20 @@ const LoginScreen = (props) => {
             style={styles.image}
             source={require("../../assets/showcase_icon.png")}
           />
+          <Text style={styles.text}>
+            By continuing, you agree to our Terms of Use, and Privacy Policy
+          </Text>
           <Card style={styles.authContainer}>
             <Input
-              id="email"
-              label="E-Mail"
-              keyboardType="email-address"
-              required
-              email
-              autoCapitalize="none"
-              errorText="Please enter a valid email address"
-              onInputChange={inputChangeHandler}
-              initialValue=""
-              textLabel={{ color: "white" }}
-            />
-            <Input
-              id="password"
-              label="Password"
+              id="username"
+              label="Username"
               keyboardType="default"
-              secureTextEntry
               required
-              minLength={5}
-              autoCapitalize="none"
-              errorText="Please enter a valid password"
+              minLength={2}
+              autoCapitalize="words"
+              errorText="Please enter a valid username"
               onInputChange={inputChangeHandler}
               initialValue=""
-              textLabel={{ color: "white" }}
             />
             {isLoading ? (
               <View style={styles.activityContainer}>
@@ -147,7 +132,7 @@ const LoginScreen = (props) => {
                     fontSize: 16,
                   }}
                 >
-                  Login
+                  Next
                 </Text>
               </TouchableCmp>
             )}
@@ -158,7 +143,7 @@ const LoginScreen = (props) => {
   );
 };
 
-LoginScreen.navigationOptions = (navData) => {
+SignupScreen2.navigationOptions = (navData) => {
   return {
     headerTitle: () => (
       <View style={styles.logo}>
@@ -178,6 +163,7 @@ LoginScreen.navigationOptions = (navData) => {
     ),
     headerTitleStyle: {
       color: "white",
+      fontSize: 20,
     },
     headerStyle: {
       backgroundColor: "black",
@@ -223,6 +209,10 @@ const styles = StyleSheet.create({
   logoTitle: {
     fontSize: 22,
   },
+  text: {
+    color: "white",
+    padding: 10,
+  },
   authContainer: {
     shadowColor: null,
     shadowOpacity: null,
@@ -240,18 +230,34 @@ const styles = StyleSheet.create({
   },
   loadingAuth: {
     flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  activityContainer: {
-    marginTop: 10,
-    flexDirection: "row",
   },
   buttonContainer: {
     marginTop: 10,
     backgroundColor: "#00B7DB",
     borderRadius: 10,
   },
+  activityContainer: {
+    marginTop: 10,
+  },
+  buttonText: {
+    color: "#00B7DB",
+  },
+  buttonLinkedInContainer: {
+    width: "90%",
+    marginTop: 10,
+    backgroundColor: "white",
+    borderRadius: 10,
+    borderWidth: 1,
+    borderRadius: 15,
+    borderBottomColor: "#ccc",
+    borderBottomWidth: 1,
+    justifyContent: "space-between",
+  },
+  buttons: {
+    alignItems: "center",
+    paddingVertical: 10,
+    color: "#00B7DB",
+  },
 });
 
-export default LoginScreen;
+export default SignupScreen2;

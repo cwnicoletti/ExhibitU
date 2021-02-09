@@ -1,30 +1,39 @@
 import React, { useEffect } from "react";
 import { View, StyleSheet, ActivityIndicator } from "react-native";
-import AsyncStorage from "@react-native-community/async-storage";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useDispatch } from "react-redux";
-import { authenticate } from "../store/actions/auth";
+import { authenticate, logout } from "../store/actions/auth";
+import { getUserData } from "../store/actions/user";
 
 const StartupScreen = (props) => {
   const dispatch = useDispatch();
   useEffect(() => {
     const tryLogin = async () => {
-      const userData = await AsyncStorage.getItem("userData");
+      const userData = await AsyncStorage.getItem("userLoginData");
       if (!userData) {
         props.navigation.navigate("StartAuth");
         return;
       }
       const transformedData = JSON.parse(userData);
-      const { token, userId } = transformedData;
+      const { localId, token, introing } = transformedData;
 
-      console.log(token);
+      console.log(`introing: ${introing}`);
+      console.log(`localId: ${localId}`);
+      console.log(`token: ${token}`);
 
-      if (!token || !userId) {
+      if (!token || !localId) {
         props.navigation.navigate("StartAuth");
         return;
       }
 
-      props.navigation.navigate("Project");
-      dispatch(authenticate(userId, token));
+      if (introing) {
+        props.navigation.navigate("Intro");
+        await dispatch(getUserData());
+      } else {
+        props.navigation.navigate("Project");
+        await dispatch(getUserData());
+        await dispatch(authenticate(localId, token));
+      }
     };
 
     tryLogin();

@@ -2,18 +2,23 @@ import React, { useReducer, useEffect, useCallback, useState } from "react";
 import {
   View,
   StyleSheet,
-  Button,
   ActivityIndicator,
   Alert,
   Image,
   Text,
+  TouchableOpacity,
+  TouchableNativeFeedback,
 } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
 import Input from "../../components/UI/Input";
 import Card from "../../components/UI/Card";
+import IoniconsHeaderButton from "../../components/UI/IoniconsHeaderButton";
+import { HeaderButtons, Item } from "react-navigation-header-buttons";
+import { setPassword } from "../../store/actions/signup";
 import { signup } from "../../store/actions/auth";
+import { setIntroing } from "../../store/actions/signup";
 
 const FORM_INPUT_UPDATE = "FORM_INPUT_UPDATE";
 
@@ -40,44 +45,48 @@ const formReducer = (state, action) => {
   return state;
 };
 
-const SignupScreen = (props) => {
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(false);
+const SignupScreen2 = (props) => {
   const dispatch = useDispatch();
+  const [isLoading, setIsLoading] = useState(false);
+  const email = useSelector((state) => state.signup.email);
+  const fullname = useSelector((state) => state.signup.fullname);
+  const username = useSelector((state) => state.signup.username);
+  const localId = useSelector((state) => state.auth.userId);
+  const showcaseId = useSelector((state) => state.user.showcaseId);
+
+  let android = null;
+  let TouchableCmp = TouchableOpacity;
+  if (Platform.OS === "android") {
+    TouchableCmp = TouchableNativeFeedback;
+    android = true;
+  }
 
   const [formState, dispatchFormState] = useReducer(formReducer, {
     inputValues: {
-      email: "",
       password: "",
+      confirmpassword: "",
     },
     inputValidities: {
-      email: false,
       password: false,
+      confirmpassword: false,
     },
     formIsValid: false,
   });
 
-  useEffect(() => {
-    if (error) {
-      Alert.alert("An error occured!", error, [{ text: "Okay" }]);
-    }
-  }, [error]);
-
   const authHandler = async () => {
-    let action;
-    action = signup(
-      formState.inputValues.email,
-      formState.inputValues.password
-    );
-    setError(null);
-    setIsLoading(true);
-    try {
-      await dispatch(action);
-      props.navigation.navigate("Project");
-    } catch (err) {
-      setError(err.message);
-      setIsLoading(false);
+    await setIsLoading(true);
+    if (
+      formState.inputValues.password === formState.inputValues.confirmpassword
+    ) {
+      await dispatch(setPassword(formState.inputValues.password));
+      await dispatch(
+        await signup(email, fullname, username, formState.inputValues.password)
+      );
+      await console.log(localId);
+      await dispatch(setIntroing(localId, showcaseId, true));
+      await props.navigation.navigate("Intro");
     }
+    await setIsLoading(false);
   };
 
   const inputChangeHandler = useCallback(
@@ -108,28 +117,6 @@ const SignupScreen = (props) => {
           </Text>
           <Card style={styles.authContainer}>
             <Input
-              id="email"
-              label="E-Mail"
-              keyboardType="email-address"
-              required
-              email
-              autoCapitalize="none"
-              errorText="Please enter a valid email address"
-              onInputChange={inputChangeHandler}
-              initialValue=""
-            />
-            <Input
-              id="fullname"
-              label="Full Name"
-              keyboardType="default"
-              required
-              minLength={2}
-              autoCapitalize="words"
-              errorText="Please enter a valid name"
-              onInputChange={inputChangeHandler}
-              initialValue=""
-            />
-            <Input
               id="password"
               label="Password"
               keyboardType="default"
@@ -153,24 +140,33 @@ const SignupScreen = (props) => {
               onInputChange={inputChangeHandler}
               initialValue=""
             />
-            <View style={styles.buttonContainer}>
-              {isLoading ? (
-                <View style={styles.loadingAuth}>
-                  <Button
-                    color="white"
-                    title="Create Account"
-                    onPress={authHandler}
-                  />
-                  <ActivityIndicator size="small" />
-                </View>
-              ) : (
-                <Button
-                  color="white"
-                  title="Create Account"
-                  onPress={authHandler}
-                />
-              )}
-            </View>
+            {isLoading ? (
+              <View style={styles.activityContainer}>
+                <ActivityIndicator size="small" color="white" />
+              </View>
+            ) : (
+              <TouchableCmp
+                style={{
+                  borderColor:
+                    formState.formIsValid === false ? "gray" : "#007AFF",
+                  borderWidth: 1,
+                  margin: 10,
+                  alignItems: "center",
+                }}
+                onPress={authHandler}
+                disabled={formState.formIsValid === false}
+              >
+                <Text
+                  style={{
+                    margin: 10,
+                    color: formState.formIsValid === false ? "gray" : "#007AFF",
+                    fontSize: 16,
+                  }}
+                >
+                  Finish Signup
+                </Text>
+              </TouchableCmp>
+            )}
           </Card>
         </View>
       </KeyboardAwareScrollView>
@@ -178,9 +174,24 @@ const SignupScreen = (props) => {
   );
 };
 
-SignupScreen.navigationOptions = (navData) => {
+SignupScreen2.navigationOptions = (navData) => {
   return {
-    headerTitle: "Showcase",
+    headerTitle: () => (
+      <View style={styles.logo}>
+        <Image
+          style={styles.logoImage}
+          source={require("../../assets/showcase_icon_transparent_white.png")}
+        />
+        <Text
+          style={{
+            ...styles.logoTitle,
+            color: "white",
+          }}
+        >
+          Showcase
+        </Text>
+      </View>
+    ),
     headerTitleStyle: {
       color: "white",
       fontSize: 20,
@@ -188,7 +199,18 @@ SignupScreen.navigationOptions = (navData) => {
     headerStyle: {
       backgroundColor: "black",
     },
-    headerBackTitle: "Back",
+    headerLeft: (props) => (
+      <HeaderButtons HeaderButtonComponent={IoniconsHeaderButton}>
+        <Item
+          title="Back"
+          iconName={"ios-arrow-back"}
+          color={"white"}
+          onPress={() => {
+            navData.navigation.goBack();
+          }}
+        />
+      </HeaderButtons>
+    ),
   };
 };
 
@@ -203,6 +225,20 @@ const styles = StyleSheet.create({
   image: {
     width: 150,
     height: 150,
+  },
+  logoImage: {
+    height: 30,
+    width: 30,
+    marginRight: 5,
+  },
+  logo: {
+    flex: 1,
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  logoTitle: {
+    fontSize: 22,
   },
   text: {
     color: "white",
@@ -224,12 +260,15 @@ const styles = StyleSheet.create({
     maxHeight: 400,
   },
   loadingAuth: {
-    flexDirection: 'row'
+    flexDirection: "row",
   },
   buttonContainer: {
     marginTop: 10,
     backgroundColor: "#00B7DB",
     borderRadius: 10,
+  },
+  activityContainer: {
+    marginTop: 10,
   },
   buttonText: {
     color: "#00B7DB",
@@ -252,4 +291,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SignupScreen;
+export default SignupScreen2;
