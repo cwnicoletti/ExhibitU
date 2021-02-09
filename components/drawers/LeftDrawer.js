@@ -1,27 +1,19 @@
 import React from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  SafeAreaView,
-  Image,
-  Button,
-} from "react-native";
+import { View, Text, StyleSheet, SafeAreaView, Image } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import FilterSwitch from "../UI/FilterSwitch";
 
 import { setDarkMode } from "../../store/actions/switches";
-import { setShowcaseLocalMode } from "../../store/actions/switches";
 
 const LeftDrawer = (props) => {
   const dispatch = useDispatch();
-
   const darkModeValue = useSelector((state) => state.switches.darkMode);
-  const showcaseLocalValue = useSelector(
-    (state) => state.switches.showcaseLocalMode
+  const localId = useSelector((state) => state.auth.userId);
+  const showcaseId = useSelector((state) => state.user.showcaseId);
+  const fullname = useSelector((state) => state.user.fullname);
+  const profilePictureUrl = useSelector(
+    (state) => state.user.profilePictureUrl
   );
 
   return (
@@ -52,7 +44,14 @@ const LeftDrawer = (props) => {
           >
             <Image
               style={{ height: 50, width: 50, borderRadius: 50 / 2 }}
-              source={require("../../assets/me.png")}
+              source={
+                profilePictureUrl
+                  ? { uri: profilePictureUrl }
+                  : {
+                      uri:
+                        "https://res.cloudinary.com/showcase-79c28/image/upload/v1608714145/white-profile-icon-24_r0veeu.png",
+                    }
+              }
             />
             <Text
               style={{
@@ -61,12 +60,12 @@ const LeftDrawer = (props) => {
                 margin: 10,
               }}
             >
-              Christian Nicoletti
+              {fullname}
             </Text>
           </View>
         </SafeAreaView>
       </View>
-      <SafeAreaView forceInset={{ top: "always", horizontal: "never" }}>
+      {/* <SafeAreaView forceInset={{ top: "always", horizontal: "never" }}>
         <View
           style={{
             flexDirection: "row",
@@ -81,7 +80,7 @@ const LeftDrawer = (props) => {
           />
           <Button title="QR Code" onPress={props.notificationsOnPress} />
         </View>
-      </SafeAreaView>
+      </SafeAreaView> */}
       <View
         style={{
           flex: 1,
@@ -99,28 +98,10 @@ const LeftDrawer = (props) => {
             labelStyle={{
               color: darkModeValue ? "white" : "black",
             }}
-            label="Showcase locally"
-            state={showcaseLocalValue}
-            onChange={(newValue) => {
-              dispatch(setShowcaseLocalMode(newValue));
-            }}
-          />
-        </SafeAreaView>
-        <SafeAreaView forceInset={{ top: "always", horizontal: "never" }}>
-          <FilterSwitch
-            viewStyle={{
-              flexDirection: "row",
-              justifyContent: "space-between",
-              alignItems: "center",
-              margin: 10,
-            }}
-            labelStyle={{
-              color: darkModeValue ? "white" : "black",
-            }}
             label="Dark Mode"
             state={darkModeValue}
             onChange={(newValue) => {
-              dispatch(setDarkMode(newValue));
+              dispatch(setDarkMode(localId, showcaseId, newValue));
             }}
           />
         </SafeAreaView>
