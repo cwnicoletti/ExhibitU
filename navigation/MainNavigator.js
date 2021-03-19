@@ -1,34 +1,74 @@
-import React from "react";
+import React, { useRef } from "react";
 import { useDispatch } from "react-redux";
 
 import { createStackNavigator } from "react-navigation-stack";
 import { createAppContainer, createSwitchNavigator } from "react-navigation";
 import { createBottomTabNavigator } from "react-navigation-tabs";
-import { createMaterialBottomTabNavigator } from "react-navigation-material-bottom-tabs";
 import { createDrawerNavigator, DrawerActions } from "react-navigation-drawer";
-import { Platform } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { SimpleLineIcons } from "@expo/vector-icons";
 
 import ProfileScreen from "../screens/profile/ProfileScreen";
-import NotificationsSettingsScreen from "../screens/profile/NotificationsSettingsScreen";
+import ShowcaseSettingsScreen from "../screens/drawers/ShowcaseSettingsScreen";
+import VoteUpdatesSettingsScreen from "../screens/drawers/VoteUpdatesSettingsScreen";
+import FeedbackScreen from "../screens/drawers/FeedbackScreen";
 import EditProfileScreen from "../screens/profile/EditProfileScreen";
 import SignupOrLoginScreen from "../screens/auth/SignupOrLoginScreen";
-import SignupScreen from "../screens/auth/SignupScreen";
+import SignupScreen1 from "../screens/auth/SignupScreen1";
+import SignupScreen2 from "../screens/auth/SignupScreen2";
+import SignupScreen3 from "../screens/auth/SignupScreen3";
+import SignupScreen4 from "../screens/auth/SignupScreen4";
+import IntroScreen from "../screens/auth/IntroScreen";
 import LoginScreen from "../screens/auth/LoginScreen";
 import StartupScreen from "../screens/StartupScreen";
-import ExploreScreen from "../screens/feed/ExploreScreen";
-import UserFeedScreen from "../screens/feed/UserFeedScreen";
+import ExploreScreen from "../screens/explore/ExploreScreen";
+import ExploreFollowersScreen from "../screens/explore/ExploreFollowersScreen";
+import ExploreFollowingScreen from "../screens/explore/ExploreFollowingScreen";
+import ExploreAdvocatesScreen from "../screens/explore/ExploreAdvocatesScreen";
+import ExploreProfileScreen from "../screens/explore/ExploreProfileScreen";
+import ExploreProjectScreen from "../screens/explore/ExploreProjectScreen";
+import ExplorePictureScreen from "../screens/explore/ExplorePictureScreen";
+import ExploreCheeringScreen from "../screens/explore/ExploreCheeringScreen";
+import FeedScreen from "../screens/feed/FeedScreen";
+import FeedCommentsScreen from "../screens/feed/FeedCommentsScreen";
+import FeedCheeringScreen from "../screens/feed/FeedCheeringScreen";
+import FeedProfileScreen from "../screens/feed/FeedProfileScreen";
+import FeedProjectScreen from "../screens/feed/FeedProjectScreen";
+import FeedAdvocatesScreen from "../screens/feed/FeedAdvocatesScreen";
+import FeedFollowersScreen from "../screens/feed/FeedFollowersScreen";
+import FeedFollowingScreen from "../screens/feed/FeedFollowingScreen";
 import ProjectScreen from "../screens/profile/ProjectScreen";
+import AddProjectScreen from "../screens/profile/AddProjectScreen";
+import AddPictureScreen from "../screens/profile/AddPictureScreen";
+import EditProjectScreen from "../screens/profile/EditProjectScreen";
+import AdvocatesScreen from "../screens/profile/AdvocatesScreen";
+import FollowersScreen from "../screens/profile/FollowersScreen";
+import FollowingScreen from "../screens/profile/FollowingScreen";
+import PictureScreen from "../screens/profile/PictureScreen";
+import CheeringScreen from "../screens/profile/CheeringScreen";
+import ShowcaseProfileScreen from "../screens/profile/ShowcaseProfileScreen";
+import ShowcaseProjectScreen from "../screens/profile/ShowcaseProjectScreen";
+import ShowcasePictureScreen from "../screens/profile/ShowcasePictureScreen";
 
 import LeftDrawer from "../components/drawers/LeftDrawer";
 import RightDrawer from "../components/drawers/RightDrawer";
 
+import FeedTab from "../components/bottom_tab_bar/FeedTab";
+import ExploreTab from "../components/bottom_tab_bar/ExploreTab";
+import ProfileTab from "../components/bottom_tab_bar/ProfileTab";
+
 import { logout } from "../store/actions/auth";
 
 const FeedandViewNavigator = createStackNavigator({
-  Feed: UserFeedScreen,
-  ViewFeedProject: ProjectScreen,
+  Feed: FeedScreen,
+  ViewCheering: FeedCheeringScreen,
+  ViewComments: FeedCommentsScreen,
+  ViewProfile: FeedProfileScreen,
+  ViewFollowers: FeedFollowersScreen,
+  ViewFollowing: FeedFollowingScreen,
+  ViewAdvocates: FeedAdvocatesScreen,
+  ViewFeedProject: FeedProjectScreen,
+  ViewFeedProfileProject: FeedProjectScreen,
 });
 
 const RightFeedDrawerNavigator = createDrawerNavigator(
@@ -55,7 +95,29 @@ const FeedNavigator = createDrawerNavigator(
   {
     drawerPosition: "right",
     contentComponent: (navData) => {
-      return <RightDrawer navData={navData} component={FeedNavigator} />;
+      const dispatch = useDispatch();
+      return (
+        <RightDrawer
+          navData={navData}
+          component={FeedNavigator}
+          showcaseOnPress={() => {
+            navData.navigation.closeRightDrawer();
+            navData.navigation.navigate("ShowcaseSettings");
+          }}
+          updatesOnPress={() => {
+            navData.navigation.closeRightDrawer();
+            navData.navigation.navigate("Updates");
+          }}
+          feedbackOnPress={() => {
+            navData.navigation.closeRightDrawer();
+            navData.navigation.navigate("Feedback");
+          }}
+          logoutOnPress={() => {
+            dispatch(logout());
+            navData.navigation.navigate("StartAuth");
+          }}
+        />
+      );
     },
     getCustomActionCreators: (_route, key) => ({
       openRightDrawer: () => DrawerActions.openDrawer({ key }),
@@ -67,6 +129,13 @@ const FeedNavigator = createDrawerNavigator(
 
 const ExploreNavigator = createStackNavigator({
   Explore: ExploreScreen,
+  ExploreProfile: ExploreProfileScreen,
+  ViewExploredProfileProject: ExploreProjectScreen,
+  ViewExploredProfileProjectPicture: ExplorePictureScreen,
+  ExploreCheering: ExploreCheeringScreen,
+  ExploreFollowers: ExploreFollowersScreen,
+  ExploreFollowing: ExploreFollowingScreen,
+  ExploreAdvocates: ExploreAdvocatesScreen,
 });
 
 const RightExploreDrawerNavigator = createDrawerNavigator(
@@ -86,33 +155,40 @@ const RightExploreDrawerNavigator = createDrawerNavigator(
   }
 );
 
-const ExplorerNavigator = createDrawerNavigator(
-  {
-    RightDrawer: RightExploreDrawerNavigator,
-  },
-  {
-    drawerPosition: "right",
-    contentComponent: (navData) => {
-      return <RightDrawer navData={navData} component={ExplorerNavigator} />;
-    },
-    getCustomActionCreators: (_route, key) => ({
-      openRightDrawer: () => DrawerActions.openDrawer({ key }),
-      closeRightDrawer: () => DrawerActions.closeDrawer({ key }),
-      toggleRightDrawer: () => DrawerActions.toggleDrawer({ key }),
-    }),
-  }
-);
+const ExplorerNavigator = createDrawerNavigator({
+  RightDrawer: RightExploreDrawerNavigator,
+});
 
 const ProfileandSettingsNavigator = createStackNavigator({
   Profile: ProfileScreen,
-  ViewProfileProject: ProjectScreen,
+  ShowcaseProfile: ShowcaseProfileScreen,
+  ShowcaseProject: ShowcaseProjectScreen,
   EditProfile: EditProfileScreen,
-  NotificationsSettings: NotificationsSettingsScreen,
+  ShowcaseSettings: ShowcaseSettingsScreen,
+  Updates: VoteUpdatesSettingsScreen,
+  Feedback: FeedbackScreen,
+  Advocates: AdvocatesScreen,
+  Following: FollowingScreen,
+  Followers: FollowersScreen,
+  AddProject: AddProjectScreen,
+});
+
+const RightProjectCreate = createStackNavigator({
+  Profile: ProfileScreen,
+  ShowcaseProfile: ShowcaseProfileScreen,
+  ShowcaseProject: ShowcaseProjectScreen,
+  ViewProfileProject: ProjectScreen,
+  PictureScreen: PictureScreen,
+  ShowcasePictureScreen: ShowcasePictureScreen,
+  CheeringScreen: CheeringScreen,
+  EditProjectScreen: EditProjectScreen,
+  AddPicture: AddPictureScreen,
 });
 
 const RightProfileDrawerNavigator = createDrawerNavigator(
   {
     "My Profile": ProfileandSettingsNavigator,
+    ProjectView: RightProjectCreate,
   },
   {
     drawerPosition: "left",
@@ -139,8 +215,17 @@ const ProfileNavigator = createDrawerNavigator(
         <RightDrawer
           navData={navData}
           component={ProfileNavigator}
-          notificationsOnPress={() => {
-            navData.navigation.navigate("NotificationsSettings");
+          showcaseOnPress={() => {
+            navData.navigation.closeRightDrawer();
+            navData.navigation.navigate("ShowcaseSettings");
+          }}
+          updatesOnPress={() => {
+            navData.navigation.closeRightDrawer();
+            navData.navigation.navigate("Updates");
+          }}
+          feedbackOnPress={() => {
+            navData.navigation.closeRightDrawer();
+            navData.navigation.navigate("Feedback");
           }}
           logoutOnPress={() => {
             dispatch(logout());
@@ -160,60 +245,59 @@ const ProfileNavigator = createDrawerNavigator(
 const tabScreenConfig = {
   Feed: {
     screen: FeedNavigator,
-    navigationOptions: {
-      tabBarIcon: (tabInfo) => {
-        return <Ionicons name="ios-home" size={25} color={tabInfo.tintColor} />;
+    navigationOptions: () => ({
+      tabBarComponent: ({ navigation }) => {
+        return <FeedTab navigation={navigation} />;
       },
-    },
+    }),
   },
   Explore: {
     screen: ExplorerNavigator,
-    navigationOptions: {
-      tabBarIcon: (tabInfo) => {
-        return (
-          <Ionicons name="ios-search" size={25} color={tabInfo.tintColor} />
-        );
+    navigationOptions: () => ({
+      tabBarComponent: ({ navigation }) => {
+        return <ExploreTab navigation={navigation} />;
       },
-    },
+    }),
   },
   Profile: {
     screen: ProfileNavigator,
-    navigationOptions: {
-      tabBarIcon: (tabInfo) => {
-        return (
-          <SimpleLineIcons name="trophy" size={25} color={tabInfo.tintColor} />
-        );
+    navigationOptions: () => ({
+      tabBarComponent: ({ navigation }) => {
+        return <ProfileTab navigation={navigation} />;
       },
-    },
+    }),
   },
 };
 
-const FullAppNavigator =
-  Platform.OS === "android"
-    ? createMaterialBottomTabNavigator(tabScreenConfig)
-    : createBottomTabNavigator(tabScreenConfig, {
-        tabBarOptions: {
-          activeTintColor: "black",
-          inactiveTintColor: "#bfbfbf",
-          tabStyle: {
-            backgroundColor: "white",
-          },
-          style: {
-            backgroundColor: "white",
-          },
-          showLabel: false,
-        },
-      });
+const FullAppNavigator = createBottomTabNavigator(tabScreenConfig, {
+  lazy: false,
+});
 
-const StartAuthNavigator = createStackNavigator({
+const StartSignup = createStackNavigator({
   SignupOrLogin: SignupOrLoginScreen,
-  Signup: SignupScreen,
+  Signup1: SignupScreen1,
+  Signup2: SignupScreen2,
+  Signup3: SignupScreen3,
+  Signup4: SignupScreen4,
   Login: LoginScreen,
 });
 
+const IntroStack = createStackNavigator(
+  {
+    IntroScreen: IntroScreen,
+  },
+  {
+    headerMode: "none",
+    navigationOptions: {
+      headerVisible: false,
+    },
+  }
+);
+
 const MainNavigator = createSwitchNavigator({
   Startup: StartupScreen,
-  StartAuth: StartAuthNavigator,
+  StartAuth: StartSignup,
+  Intro: IntroStack,
   Project: FullAppNavigator,
 });
 
