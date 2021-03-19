@@ -108,7 +108,7 @@ const RightDrawer = (props) => {
                   marginHorizontal: 10,
                 }}
               >
-                Showcase
+                Profile
               </Text>
             </View>
           </TouchableCmp>

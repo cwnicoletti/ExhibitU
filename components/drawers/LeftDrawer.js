@@ -47,10 +47,7 @@ const LeftDrawer = (props) => {
               source={
                 profilePictureUrl
                   ? { uri: profilePictureUrl }
-                  : {
-                      uri:
-                        "https://res.cloudinary.com/showcase-79c28/image/upload/v1608714145/white-profile-icon-24_r0veeu.png",
-                    }
+                  : require("../../assets/default-profile-icon.jpg")
               }
             />
             <Text
@@ -65,22 +62,6 @@ const LeftDrawer = (props) => {
           </View>
         </SafeAreaView>
       </View>
-      {/* <SafeAreaView forceInset={{ top: "always", horizontal: "never" }}>
-        <View
-          style={{
-            flexDirection: "row",
-            alignItems: "center",
-            margin: 10,
-          }}
-        >
-          <MaterialCommunityIcons
-            name="qrcode-scan"
-            size={20}
-            color="#007AFF"
-          />
-          <Button title="QR Code" onPress={props.notificationsOnPress} />
-        </View>
-      </SafeAreaView> */}
       <View
         style={{
           flex: 1,
