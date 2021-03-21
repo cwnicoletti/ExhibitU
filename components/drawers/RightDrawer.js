@@ -142,7 +142,7 @@ const RightDrawer = (props) => {
           </TouchableCmp>
         </View>
       </SafeAreaView>
-      <SafeAreaView forceInset={{ top: "always", horizontal: "never" }}>
+      {/* <SafeAreaView forceInset={{ top: "always", horizontal: "never" }}>
         <View
           style={{
             flexDirection: "row",
@@ -169,7 +169,7 @@ const RightDrawer = (props) => {
             </View>
           </TouchableCmp>
         </View>
-      </SafeAreaView>
+      </SafeAreaView> */}
       <View
         style={{
           flex: 1,
