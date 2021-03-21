@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import {
   StyleSheet,
   View,
@@ -7,35 +7,41 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
   FlatList,
+  RefreshControl,
 } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import { SearchBar } from "react-native-elements";
 import algoliasearch from "algoliasearch";
+import { offScreen } from "../../store/actions/user";
 
 import HeaderButton from "../../components/UI/IoniconsHeaderButton";
-import UserExploreCard from "../../components/explore/UserExploreCard";
+import ExploreCard from "../../components/explore/ExploreCard";
+import useDidMountEffect from "../../components/helper/useDidMountEffect";
 
 const ExploreScreen = (props) => {
-  const darkModeValue = useSelector((state) => state.switches.darkMode);
-  const [returnedIndex, setReturnedIndex] = useState([]);
-  const [search, setSearch] = useState("");
-
-  useEffect(() => {
-    props.navigation.setParams({ darkMode: darkModeValue });
-  }, [darkModeValue]);
-
   const client = algoliasearch(
     "EXC8LH5MAX",
     "2d8cedcaab4cb2b351e90679963fbd92"
   );
   const index = client.initIndex("users");
+  const dispatch = useDispatch();
+  const darkModeValue = useSelector((state) => state.switches.darkMode);
+  const [search, setSearch] = useState("");
+  const [returnedIndex, setReturnedIndex] = useState([]);
+  const [isRefreshing, setIsRefreshing] = useState(false);
+  const resetScrollExplore = useSelector(
+    (state) => state.user.resetScrollExplore
+  );
+
+  useEffect(() => {
+    props.navigation.setParams({ darkMode: darkModeValue });
+  }, [darkModeValue]);
 
   const searchFilterFunction = (text) => {
     setSearch(text);
     if (text) {
-      return index.search(text).then((responses) => {
-        console.log(responses.hits);
+      index.search(text).then((responses) => {
         setReturnedIndex(responses.hits);
       });
     } else {
@@ -43,7 +49,23 @@ const ExploreScreen = (props) => {
     }
   };
 
-  const viewProjectHandler = (
+  const refreshSearchIndex = (text) => {
+    setIsRefreshing(true);
+    setSearch(text);
+    if (text) {
+      index.search(text).then((responses) => {
+        setReturnedIndex(responses.hits);
+      });
+    } else {
+      setReturnedIndex([]);
+    }
+    setIsRefreshing(false);
+  };
+
+  const viewProfileHandler = (
+    text,
+    showcaseId,
+    profilePictureUrl,
     fullname,
     username,
     jobTitle,
@@ -52,13 +74,24 @@ const ExploreScreen = (props) => {
     numberOfFollowers,
     numberOfFollowing,
     numberOfAdvocates,
-    showResumeValue,
+    showResume,
+    hideFollowing,
+    hideFollowers,
+    hideAdvocates,
     followers,
     following,
     advocates,
-    profileProjects
+    profileProjects,
+    profileLinks,
+    projectLinks,
+    profileColumns,
+    showCheering
   ) => {
-    props.navigation.navigate("ExploreProfile", {
+    dispatch(offScreen("Explore"));
+    props.navigation.push("ExploreProfile", {
+      text: text,
+      showcaseId: showcaseId,
+      profilePictureUrl: profilePictureUrl,
       fullname: fullname,
       username: username,
       jobTitle: jobTitle,
@@ -67,13 +100,26 @@ const ExploreScreen = (props) => {
       numberOfFollowers: numberOfFollowers,
       numberOfFollowing: numberOfFollowing,
       numberOfAdvocates: numberOfAdvocates,
-      showResumeValue: showResumeValue,
+      showResume: showResume,
+      hideFollowing: hideFollowing,
+      hideFollowers: hideFollowers,
+      hideAdvocates: hideAdvocates,
       followers: followers,
       following: following,
       advocates: advocates,
       profileProjects: profileProjects,
+      profileLinks: profileLinks,
+      projectLinks: projectLinks,
+      profileColumns: profileColumns,
+      showCheering: showCheering,
     });
   };
+
+  const flatlistExplore = useRef();
+
+  useDidMountEffect(() => {
+    flatlistExplore.current.scrollToOffset({ animated: true, offset: 0 });
+  }, [resetScrollExplore]);
 
   return (
     <View
@@ -110,12 +156,20 @@ const ExploreScreen = (props) => {
       </TouchableWithoutFeedback>
       <FlatList
         data={returnedIndex}
-        keyExtractor={(item) => item.id}
-        numColumns={2}
+        refreshControl={
+          <RefreshControl
+            refreshing={isRefreshing}
+            onRefresh={() => refreshSearchIndex(search)}
+            tintColor={darkModeValue ? "white" : "black"}
+          />
+        }
+        ref={flatlistExplore}
+        keyExtractor={(item) => item.objectID}
         renderItem={(itemData) => (
-          <UserExploreCard
-            image={require("../../assets/me.png")}
+          <ExploreCard
+            image={itemData.item.profilePictureUrl}
             fullname={itemData.item.fullname}
+            jobTitle={itemData.item.jobTitle}
             username={itemData.item.username}
             projectContainer={{
               backgroundColor: darkModeValue ? "black" : "white",
@@ -124,8 +178,14 @@ const ExploreScreen = (props) => {
             fullNameStyle={{
               color: darkModeValue ? "white" : "black",
             }}
+            jobTitleStyle={{
+              color: darkModeValue ? "white" : "black",
+            }}
             onSelect={() => {
-              viewProjectHandler(
+              viewProfileHandler(
+                search,
+                itemData.item.objectID,
+                itemData.item.profilePictureUrl,
                 itemData.item.fullname,
                 itemData.item.username,
                 itemData.item.jobTitle,
@@ -134,11 +194,18 @@ const ExploreScreen = (props) => {
                 itemData.item.numberOfFollowers,
                 itemData.item.numberOfFollowing,
                 itemData.item.numberOfAdvocates,
-                itemData.item.showResumeValue,
+                itemData.item.showResume,
+                itemData.item.hideFollowing,
+                itemData.item.hideFollowers,
+                itemData.item.hideAdvocates,
                 itemData.item.followers,
                 itemData.item.following,
                 itemData.item.advocates,
-                itemData.item.profileProjects
+                itemData.item.profileProjects,
+                itemData.item.profileLinks,
+                itemData.item.projectLinks,
+                itemData.item.profileColumns,
+                itemData.item.showCheering
               );
             }}
           />
@@ -176,30 +243,6 @@ ExploreScreen.navigationOptions = (navData) => {
           Showcase
         </Text>
       </View>
-    ),
-    headerLeft: () => (
-      <HeaderButtons HeaderButtonComponent={HeaderButton}>
-        <Item
-          title="Menu"
-          iconName={Platform.OS === "android" ? "md-menu" : "ios-menu"}
-          color={darkModeValue ? "white" : "black"}
-          onPress={() => {
-            navData.navigation.toggleLeftDrawer();
-          }}
-        />
-      </HeaderButtons>
-    ),
-    headerRight: () => (
-      <HeaderButtons HeaderButtonComponent={HeaderButton}>
-        <Item
-          title="Add"
-          iconName={Platform.OS === "android" ? "md-settings" : "ios-settings"}
-          color={darkModeValue ? "white" : "black"}
-          onPress={() => {
-            navData.navigation.toggleRightDrawer();
-          }}
-        />
-      </HeaderButtons>
     ),
     headerTitleStyle: {
       color: darkModeValue ? "white" : "black",
