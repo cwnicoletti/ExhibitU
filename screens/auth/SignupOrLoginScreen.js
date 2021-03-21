@@ -1,38 +1,100 @@
 import React from "react";
-import { View, StyleSheet, Image, Text } from "react-native";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import {
+  View,
+  StyleSheet,
+  Image,
+  Text,
+  TouchableNativeFeedback,
+  TouchableOpacity,
+} from "react-native";
 
 import { Fontisto } from "@expo/vector-icons";
 
 const SignupOrLoginScreen = (props) => {
+  let android = null;
+  let TouchableCmp = TouchableOpacity;
+  if (Platform.OS === "android") {
+    TouchableCmp = TouchableNativeFeedback;
+    android = true;
+  }
+
   return (
     <View style={styles.screen}>
       <Text style={styles.titleText}>Showcase</Text>
       <Image
         style={styles.image}
-        source={require("../../assets/showcase_icon.png")}
+        source={require("../../assets/showcase_icon_transparent_white.png")}
       />
-      <TouchableOpacity
-        style={styles.buttonContainer}
-        onPress={() => {
-          props.navigation.navigate("Signup1");
+      <View
+        style={{
+          justifyContent: "center",
         }}
       >
-        <Fontisto name="email" size={24} color="#0040a8" />
-        <Text style={{ ...styles.buttonText, marginHorizontal: 10 }}>
-          Signup with Email
-        </Text>
-      </TouchableOpacity>
-      <Text style={{ ...styles.text }}>----------- OR -----------</Text>
+        <TouchableCmp
+          style={{
+            borderColor: "#00a0db",
+            borderWidth: 1,
+            margin: 10,
+            alignItems: "center",
+            flexDirection: "row",
+            paddingHorizontal: "20%",
+          }}
+          onPress={() => {
+            props.navigation.navigate("Signup1");
+          }}
+        >
+          <Fontisto
+            name="email"
+            size={24}
+            color="#38c9ff"
+            style={{ marginVertical: 10 }}
+          />
+          <Text style={{ margin: 10, color: "#00a0db" }}>
+            Signup with Email
+          </Text>
+        </TouchableCmp>
+      </View>
+      <View style={{ flexDirection: "row" }}>
+        <View
+          style={{
+            alignSelf: "center",
+            borderBottomWidth: 1,
+            borderColor: "white",
+            width: 100,
+          }}
+        />
+        <Text style={{ ...styles.text }}>OR</Text>
+        <View
+          style={{
+            alignSelf: "center",
+            borderBottomWidth: 1,
+            borderColor: "white",
+            width: 100,
+          }}
+        />
+      </View>
       <Text style={styles.text}>Already have showcase?</Text>
-      <TouchableOpacity
-        style={styles.buttonContainer}
-        onPress={() => {
-          props.navigation.navigate("Login");
+      <View
+        style={{
+          flexDirection: "row",
+          justifyContent: "center",
         }}
       >
-        <Text style={styles.buttonText}>Login</Text>
-      </TouchableOpacity>
+        <TouchableCmp
+          style={{
+            borderColor: "#00a0db",
+            borderWidth: 1,
+            margin: 10,
+            alignItems: "center",
+            width: "80%",
+          }}
+          onPress={() => {
+            props.navigation.navigate("Login");
+          }}
+        >
+          <Text style={{ margin: 10, color: "#00a0db" }}>Login</Text>
+        </TouchableCmp>
+      </View>
     </View>
   );
 };
@@ -57,8 +119,9 @@ const styles = StyleSheet.create({
     fontSize: 60,
   },
   image: {
-    width: 400,
-    height: 400,
+    width: 318,
+    height: 300,
+    margin: 40,
   },
   text: {
     color: "white",

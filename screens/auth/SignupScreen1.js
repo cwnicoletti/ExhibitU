@@ -18,6 +18,8 @@ import IoniconsHeaderButton from "../../components/UI/IoniconsHeaderButton";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import { setEmail } from "../../store/actions/signup";
 
+import { Fontisto } from "@expo/vector-icons";
+
 const FORM_INPUT_UPDATE = "FORM_INPUT_UPDATE";
 
 const formReducer = (state, action) => {
@@ -67,8 +69,8 @@ const SignupScreen1 = (props) => {
   const authHandler = async () => {
     await setIsLoading(true);
     await dispatch(setEmail(formState.inputValues.email));
-    await props.navigation.navigate("Signup2");
     await setIsLoading(false);
+    await props.navigation.navigate("Signup2");
   };
 
   const inputChangeHandler = useCallback(
@@ -90,13 +92,13 @@ const SignupScreen1 = (props) => {
         extraHeight={200}
       >
         <View style={styles.inner}>
-          <Image
-            style={styles.image}
-            source={require("../../assets/showcase_icon.png")}
+          <Text style={styles.text}>Enter your email</Text>
+          <Fontisto
+            name="email"
+            size={100}
+            color="white"
+            style={{ margin: 10 }}
           />
-          <Text style={styles.text}>
-            By continuing, you agree to our Terms of Use, and Privacy Policy
-          </Text>
           <Card style={styles.authContainer}>
             <Input
               id="email"
@@ -104,7 +106,18 @@ const SignupScreen1 = (props) => {
               keyboardType="email-address"
               required
               email
+              autoCorrect={false}
               autoCapitalize="none"
+              returnKeyType="done"
+              placeholder="example@example.com"
+              autoFocus={true}
+              blurOnSubmit={false}
+              initiallyValid={false}
+              onSubmitEditing={() => {
+                if (formState.formIsValid === true) {
+                  authHandler();
+                }
+              }}
               errorText="Please enter a valid email address"
               onInputChange={inputChangeHandler}
               initialValue=""
@@ -211,7 +224,8 @@ const styles = StyleSheet.create({
   },
   text: {
     color: "white",
-    padding: 10,
+    marginTop: 20,
+    fontSize: 22,
   },
   authContainer: {
     shadowColor: null,

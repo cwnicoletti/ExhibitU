@@ -67,12 +67,12 @@ const LoginScreen = (props) => {
   });
 
   const authHandler = async () => {
-    setIsLoading(true);
+    await setIsLoading(true);
     await dispatch(
       login(formState.inputValues.email, formState.inputValues.password)
     );
-    props.navigation.navigate("Project");
-    setIsLoading(false);
+    await setIsLoading(false);
+    await props.navigation.navigate("Project");
   };
 
   const inputChangeHandler = useCallback(
@@ -96,19 +96,25 @@ const LoginScreen = (props) => {
         <View style={styles.inner}>
           <Image
             style={styles.image}
-            source={require("../../assets/showcase_icon.png")}
+            source={require("../../assets/showcase_icon_transparent_white.png")}
           />
           <Card style={styles.authContainer}>
             <Input
               id="email"
-              label="E-Mail"
+              label="Email"
               keyboardType="email-address"
               required
               email
               autoCapitalize="none"
+              autoFocus={true}
+              initiallyValid={false}
+              returnKeyType="next"
               errorText="Please enter a valid email address"
               onInputChange={inputChangeHandler}
               initialValue=""
+              onSubmitEditing={() => {
+                password.focus();
+              }}
               textLabel={{ color: "white" }}
             />
             <Input
@@ -119,13 +125,38 @@ const LoginScreen = (props) => {
               required
               minLength={5}
               autoCapitalize="none"
+              returnKeyType="done"
+              inputRef={(ref) => (password = ref)}
+              initiallyValid={false}
+              onSubmitEditing={() => {
+                if (formState.formIsValid === true) {
+                  authHandler();
+                }
+              }}
               errorText="Please enter a valid password"
               onInputChange={inputChangeHandler}
               initialValue=""
               textLabel={{ color: "white" }}
             />
             {isLoading ? (
-              <View style={styles.activityContainer}>
+              <View
+                style={{
+                  margin: 20,
+                  justifyContent: "center",
+                  alignItems: "center",
+                  flexDirection: "row",
+                }}
+              >
+                <Text
+                  style={{
+                    fontWeight: "bold",
+                    textAlign: "center",
+                    color: "white",
+                    margin: 10,
+                  }}
+                >
+                  Logging in...
+                </Text>
                 <ActivityIndicator size="small" color="white" />
               </View>
             ) : (
@@ -208,6 +239,7 @@ const styles = StyleSheet.create({
   image: {
     width: 150,
     height: 150,
+    margin: 20,
   },
   logoImage: {
     height: 30,

@@ -66,8 +66,8 @@ const SignupScreen2 = (props) => {
   const authHandler = async () => {
     await setIsLoading(true);
     await dispatch(setFullname(formState.inputValues.fullname));
-    await props.navigation.navigate("Signup3");
     await setIsLoading(false);
+    await props.navigation.navigate("Signup3");
   };
 
   const inputChangeHandler = useCallback(
@@ -89,13 +89,11 @@ const SignupScreen2 = (props) => {
         extraHeight={200}
       >
         <View style={styles.inner}>
+          <Text style={styles.text}>Enter your name</Text>
           <Image
             style={styles.image}
-            source={require("../../assets/showcase_icon.png")}
+            source={require("../../assets/default-profile-icon.jpg")}
           />
-          <Text style={styles.text}>
-            By continuing, you agree to our Terms of Use, and Privacy Policy
-          </Text>
           <Card style={styles.authContainer}>
             <Input
               id="fullname"
@@ -103,7 +101,17 @@ const SignupScreen2 = (props) => {
               keyboardType="default"
               required
               minLength={2}
+              autoFocus={true}
+              blurOnSubmit={false}
+              initiallyValid={false}
               autoCapitalize="words"
+              returnKeyType="done"
+              onSubmitEditing={() => {
+                if (formState.formIsValid === true) {
+                  authHandler();
+                }
+              }}
+              placeholder="e.g. Christian Nicoletti"
               errorText="Please enter a valid name"
               onInputChange={inputChangeHandler}
               initialValue=""
@@ -210,7 +218,13 @@ const styles = StyleSheet.create({
   },
   text: {
     color: "white",
-    padding: 10,
+    marginTop: 20,
+    fontSize: 22,
+  },
+  smallerText: {
+    color: "white",
+    paddingBottom: 10,
+    fontSize: 12,
   },
   authContainer: {
     shadowColor: null,

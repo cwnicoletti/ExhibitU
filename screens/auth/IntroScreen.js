@@ -1,85 +1,75 @@
-import React, { useReducer, useEffect, useCallback, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
-  Animated,
   View,
   StyleSheet,
   Image,
   Text,
   TouchableOpacity,
   TouchableNativeFeedback,
+  ActivityIndicator,
   Dimensions,
-  ScrollView,
 } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
+import Carousel from "react-native-snap-carousel";
+
+import exampleImage1 from "../../assets/showcase_icon_transparent_white.png";
+import exampleImage2 from "../../assets/showcase_icon_transparent_white.png";
+import exampleImage3 from "../../assets/showcase_icon_transparent_white.png";
+import CarouselCardItem from "../../components/UI/CarouselCardItem";
 
 import { setIntroing } from "../../store/actions/signup";
 
 const IntroScreen = (props) => {
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false);
+  const [sliderIndex, setSliderIndex] = useState(0);
   const localId = useSelector((state) => state.auth.userId);
   const showcaseId = useSelector((state) => state.user.showcaseId);
+  const isCarousel = React.useRef(null);
+  const exampleImage1Uri = Image.resolveAssetSource(exampleImage1).uri;
+  const exampleImage2Uri = Image.resolveAssetSource(exampleImage2).uri;
+  const exampleImage3Uri = Image.resolveAssetSource(exampleImage3).uri;
 
-  const images = [
-    "https://s-media-cache-ak0.pinimg.com/originals/ee/51/39/ee5139157407967591081ee04723259a.png",
-    "https://s-media-cache-ak0.pinimg.com/originals/40/4f/83/404f83e93175630e77bc29b3fe727cbe.jpg",
-    "https://s-media-cache-ak0.pinimg.com/originals/8d/1a/da/8d1adab145a2d606c85e339873b9bb0e.jpg",
-    "https://s-media-cache-ak0.pinimg.com/originals/8d/1a/da/8d1adab145a2d606c85e339873b9bb0e.jpg",
-    "https://s-media-cache-ak0.pinimg.com/originals/8d/1a/da/8d1adab145a2d606c85e339873b9bb0e.jpg",
-    "https://s-media-cache-ak0.pinimg.com/originals/8d/1a/da/8d1adab145a2d606c85e339873b9bb0e.jpg",
+  useEffect(() => {
+    dispatch(setIntroing(localId, showcaseId, true));
+  }, []);
+
+  const data = [
+    {
+      title: "",
+      body:
+        "Welcome to showcase!\n\nThis platform is designed to help you showcase your projects, talents, and skills",
+      imgUrl1: exampleImage1Uri,
+      useImg1: true,
+    },
+    {
+      title: "",
+      body:
+        "Showcase is also a platform to cheer on your friends, family, and peers as they build their own showcases",
+      imgUrl2: exampleImage2Uri,
+      useImg2: true,
+    },
+    {
+      title: "",
+      body:
+        "Since showcase is a form of social media you can follow your friends and family to stay up to date on their projects",
+      useImg3: true,
+    },
+    {
+      title: "",
+      body:
+        "We also have a unique feature within showcase that allows you to 'advocate' for a user's project as a way of showing your contribution to a project",
+      useImg4: true,
+    },
+    {
+      title: "",
+      body:
+        "Our goal is to build an encouraging and healthy community for those looking to build or present their work or hobby!",
+      useImg5: true,
+    },
   ];
 
-  const deviceWidth = Dimensions.get("window").width;
-  const FIXED_BAR_WIDTH = 500;
-  const BAR_SPACE = 10;
-
-  const numItems = images.length;
-  const itemWidth = FIXED_BAR_WIDTH / numItems - (numItems - 1) * BAR_SPACE;
-  const animVal = new Animated.Value(0);
-
-  let imageArray = [];
-  let barArray = [];
-  images.forEach((image, i) => {
-    console.log(image, i);
-    const thisImage = (
-      <Image
-        key={`image${i}`}
-        source={{ uri: image }}
-        style={{ width: deviceWidth }}
-      />
-    );
-    imageArray.push(thisImage);
-
-    const scrollBarVal = animVal.interpolate({
-      inputRange: [deviceWidth * (i - 1), deviceWidth * (i + 1)],
-      outputRange: [-itemWidth, itemWidth],
-      extrapolate: "clamp",
-    });
-
-    const thisBar = (
-      <View
-        key={`bar${i}`}
-        style={[
-          styles.track,
-          {
-            width: itemWidth,
-            marginLeft: i === 0 ? 0 : BAR_SPACE,
-          },
-        ]}
-      >
-        <Animated.View
-          style={[
-            styles.bar,
-            {
-              width: itemWidth,
-              transform: [{ translateX: scrollBarVal }],
-            },
-          ]}
-        />
-      </View>
-    );
-    barArray.push(thisBar);
-  });
+  const WIDTH = Dimensions.get("window").width;
 
   let android = null;
   let TouchableCmp = TouchableOpacity;
@@ -91,74 +81,101 @@ const IntroScreen = (props) => {
   const authHandler = async () => {
     await setIsLoading(true);
     await dispatch(setIntroing(localId, showcaseId, false));
-    await props.navigation.navigate("Project");
     await setIsLoading(false);
+    await props.navigation.navigate("Project");
   };
 
   return (
     <View style={styles.screen}>
-      <ScrollView
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        scrollEventThrottle={10}
-        pagingEnabled
-        onScroll={Animated.event(
-          [{ nativeEvent: { contentOffset: { x: animVal } } }],
-          { useNativeDriver: false }
-        )}
-      >
-        {imageArray}
-      </ScrollView>
-      <View style={styles.barContainer}>{barArray}</View>
-      <TouchableCmp
-        style={{
-          borderColor: "#007AFF",
-          borderWidth: 1,
-          margin: 10,
-          alignItems: "center",
-          marginBottom: 30,
-        }}
-        onPress={authHandler}
-      >
-        <Text
+      <Carousel
+        ref={isCarousel}
+        data={data}
+        renderItem={CarouselCardItem}
+        onSnapToItem={(index) => setSliderIndex(index)}
+        sliderWidth={WIDTH}
+        itemWidth={WIDTH}
+      />
+      <View style={{ flexDirection: "row", alignSelf: "center", margin: 10 }}>
+        <View
           style={{
-            margin: 10,
-            color: "#007AFF",
-            fontSize: 16,
+            width: 8,
+            height: 8,
+            backgroundColor: sliderIndex === 0 ? "white" : "gray",
+            borderRadius: "50%",
+            marginHorizontal: 10,
           }}
+        />
+        <View
+          style={{
+            width: 8,
+            height: 8,
+            backgroundColor: sliderIndex === 1 ? "white" : "gray",
+            borderRadius: "50%",
+            marginHorizontal: 10,
+          }}
+        />
+        <View
+          style={{
+            width: 8,
+            height: 8,
+            backgroundColor: sliderIndex === 2 ? "white" : "gray",
+            borderRadius: "50%",
+            marginHorizontal: 10,
+          }}
+        />
+        <View
+          style={{
+            width: 8,
+            height: 8,
+            backgroundColor: sliderIndex === 3 ? "white" : "gray",
+            borderRadius: "50%",
+            marginHorizontal: 10,
+          }}
+        />
+        <View
+          style={{
+            width: 8,
+            height: 8,
+            backgroundColor: sliderIndex === 4 ? "white" : "gray",
+            borderRadius: "50%",
+            marginHorizontal: 10,
+          }}
+        />
+      </View>
+      {isLoading ? (
+        <View style={styles.activityContainer}>
+          <ActivityIndicator size="small" color="white" />
+        </View>
+      ) : (
+        <TouchableCmp
+          style={{
+            borderColor: "#007AFF",
+            borderWidth: 1,
+            margin: 10,
+            marginBottom: 60,
+            alignItems: "center",
+          }}
+          onPress={authHandler}
         >
-          Finish introduction!
-        </Text>
-      </TouchableCmp>
+          <Text
+            style={{
+              margin: 10,
+              color: "#007AFF",
+              fontSize: 16,
+            }}
+          >
+            Start
+          </Text>
+        </TouchableCmp>
+      )}
     </View>
   );
 };
 
 IntroScreen.navigationOptions = (navData) => {
   return {
-    headerTitle: () => (
-      <View style={styles.logo}>
-        <Image
-          style={styles.logoImage}
-          source={require("../../assets/showcase_icon_transparent_white.png")}
-        />
-        <Text
-          style={{
-            ...styles.logoTitle,
-            color: "white",
-          }}
-        >
-          Showcase
-        </Text>
-      </View>
-    ),
-    headerTitleStyle: {
-      color: "white",
-      fontSize: 20,
-    },
-    headerStyle: {
-      backgroundColor: "black",
-    },
+    headerMode: "none",
+    headerVisible: false,
   };
 };
 

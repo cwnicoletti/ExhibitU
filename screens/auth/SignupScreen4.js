@@ -1,9 +1,8 @@
-import React, { useReducer, useEffect, useCallback, useState } from "react";
+import React, { useReducer, useCallback, useState } from "react";
 import {
   View,
   StyleSheet,
   ActivityIndicator,
-  Alert,
   Image,
   Text,
   TouchableOpacity,
@@ -16,9 +15,7 @@ import Input from "../../components/UI/Input";
 import Card from "../../components/UI/Card";
 import IoniconsHeaderButton from "../../components/UI/IoniconsHeaderButton";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
-import { setPassword } from "../../store/actions/signup";
 import { signup } from "../../store/actions/auth";
-import { setIntroing } from "../../store/actions/signup";
 
 const FORM_INPUT_UPDATE = "FORM_INPUT_UPDATE";
 
@@ -51,8 +48,6 @@ const SignupScreen2 = (props) => {
   const email = useSelector((state) => state.signup.email);
   const fullname = useSelector((state) => state.signup.fullname);
   const username = useSelector((state) => state.signup.username);
-  const localId = useSelector((state) => state.auth.userId);
-  const showcaseId = useSelector((state) => state.user.showcaseId);
 
   let android = null;
   let TouchableCmp = TouchableOpacity;
@@ -78,15 +73,14 @@ const SignupScreen2 = (props) => {
     if (
       formState.inputValues.password === formState.inputValues.confirmpassword
     ) {
-      await dispatch(setPassword(formState.inputValues.password));
       await dispatch(
-        await signup(email, fullname, username, formState.inputValues.password)
+        signup(email, fullname, username, formState.inputValues.password)
       );
-      await console.log(localId);
-      await dispatch(setIntroing(localId, showcaseId, true));
+      await setIsLoading(false);
       await props.navigation.navigate("Intro");
+    } else {
+      await setIsLoading(false);
     }
-    await setIsLoading(false);
   };
 
   const inputChangeHandler = useCallback(
@@ -110,11 +104,10 @@ const SignupScreen2 = (props) => {
         <View style={styles.inner}>
           <Image
             style={styles.image}
-            source={require("../../assets/showcase_icon.png")}
+            source={require("../../assets/default-profile-icon.jpg")}
           />
-          <Text style={styles.text}>
-            By continuing, you agree to our Terms of Use, and Privacy Policy
-          </Text>
+          <Text style={styles.fullname}>{fullname}</Text>
+          <Text style={styles.username}>@{username}</Text>
           <Card style={styles.authContainer}>
             <Input
               id="password"
@@ -123,7 +116,14 @@ const SignupScreen2 = (props) => {
               secureTextEntry
               required
               minLength={5}
+              autoFocus={true}
+              autoCorrect={false}
+              initiallyValid={false}
               autoCapitalize="none"
+              returnKeyType="next"
+              onSubmitEditing={() => {
+                confirmpassword.focus();
+              }}
               errorText="Please enter a valid password"
               onInputChange={inputChangeHandler}
               initialValue=""
@@ -135,13 +135,43 @@ const SignupScreen2 = (props) => {
               secureTextEntry
               required
               minLength={5}
+              autoCorrect={false}
+              initiallyValid={false}
+              confirmPassword={formState.inputValues.password}
+              returnKeyType="done"
+              inputRef={(ref) => (confirmpassword = ref)}
               autoCapitalize="none"
+              onSubmitEditing={() => {
+                if (formState.formIsValid === true) {
+                  authHandler();
+                }
+              }}
               errorText="Please enter a valid password"
               onInputChange={inputChangeHandler}
               initialValue=""
             />
+            <Text style={styles.text}>
+              By continuing, you agree to our Terms of Use, and Privacy Policy
+            </Text>
             {isLoading ? (
-              <View style={styles.activityContainer}>
+              <View
+                style={{
+                  margin: 20,
+                  justifyContent: "center",
+                  alignItems: "center",
+                  flexDirection: "row",
+                }}
+              >
+                <Text
+                  style={{
+                    fontWeight: "bold",
+                    textAlign: "center",
+                    color: "white",
+                    margin: 10,
+                  }}
+                >
+                  Signing up...
+                </Text>
                 <ActivityIndicator size="small" color="white" />
               </View>
             ) : (
@@ -163,7 +193,7 @@ const SignupScreen2 = (props) => {
                     fontSize: 16,
                   }}
                 >
-                  Finish Signup
+                  Confirm Signup
                 </Text>
               </TouchableCmp>
             )}
@@ -240,9 +270,22 @@ const styles = StyleSheet.create({
   logoTitle: {
     fontSize: 22,
   },
+  fullname: {
+    color: "white",
+    padding: 5,
+    fontSize: 20,
+    fontWeight: "500",
+  },
+  username: {
+    color: "white",
+    padding: 5,
+    fontSize: 16,
+    fontWeight: "300",
+  },
   text: {
     color: "white",
     padding: 10,
+    textAlign: "center",
   },
   authContainer: {
     shadowColor: null,

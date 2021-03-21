@@ -10,7 +10,7 @@ import {
   TouchableNativeFeedback,
 } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
 import Input from "../../components/UI/Input";
 import Card from "../../components/UI/Card";
@@ -46,6 +46,7 @@ const formReducer = (state, action) => {
 const SignupScreen2 = (props) => {
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false);
+  const fullname = useSelector((state) => state.signup.fullname);
 
   let android = null;
   let TouchableCmp = TouchableOpacity;
@@ -67,8 +68,8 @@ const SignupScreen2 = (props) => {
   const authHandler = async () => {
     await setIsLoading(true);
     await dispatch(setUsername(formState.inputValues.username));
-    await props.navigation.navigate("Signup4");
     await setIsLoading(false);
+    await props.navigation.navigate("Signup4");
   };
 
   const inputChangeHandler = useCallback(
@@ -90,13 +91,15 @@ const SignupScreen2 = (props) => {
         extraHeight={200}
       >
         <View style={styles.inner}>
+          <Text style={styles.text}>Enter a username</Text>
+          <Text style={styles.smallerText}>
+            (You can change this at any time)
+          </Text>
           <Image
             style={styles.image}
-            source={require("../../assets/showcase_icon.png")}
+            source={require("../../assets/default-profile-icon.jpg")}
           />
-          <Text style={styles.text}>
-            By continuing, you agree to our Terms of Use, and Privacy Policy
-          </Text>
+          <Text style={styles.fullname}>{fullname}</Text>
           <Card style={styles.authContainer}>
             <Input
               id="username"
@@ -104,7 +107,18 @@ const SignupScreen2 = (props) => {
               keyboardType="default"
               required
               minLength={2}
-              autoCapitalize="words"
+              autoFocus={true}
+              autoCorrect={false}
+              blurOnSubmit={false}
+              initiallyValid={false}
+              autoCapitalize="none"
+              returnKeyType="done"
+              onSubmitEditing={() => {
+                if (formState.formIsValid === true) {
+                  authHandler();
+                }
+              }}
+              placeholder="e.g. emusk420"
               errorText="Please enter a valid username"
               onInputChange={inputChangeHandler}
               initialValue=""
@@ -211,7 +225,19 @@ const styles = StyleSheet.create({
   },
   text: {
     color: "white",
-    padding: 10,
+    marginTop: 20,
+    fontSize: 22,
+  },
+  fullname: {
+    color: "white",
+    padding: 5,
+    fontSize: 20,
+  },
+  smallerText: {
+    color: "white",
+    padding: 5,
+    paddingBottom: 10,
+    fontSize: 12,
   },
   authContainer: {
     shadowColor: null,

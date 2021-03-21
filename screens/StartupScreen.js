@@ -20,19 +20,19 @@ const StartupScreen = (props) => {
       console.log(`introing: ${introing}`);
       console.log(`localId: ${localId}`);
       console.log(`token: ${token}`);
-
       if (!token || !localId) {
         props.navigation.navigate("StartAuth");
         return;
       }
 
       if (introing) {
-        props.navigation.navigate("Intro");
-        await dispatch(getUserData());
-      } else {
-        props.navigation.navigate("Project");
         await dispatch(getUserData());
         await dispatch(authenticate(localId, token));
+        await props.navigation.navigate("Intro");
+      } else {
+        await dispatch(getUserData());
+        await dispatch(authenticate(localId, token));
+        await props.navigation.navigate("Project");
       }
     };
 
