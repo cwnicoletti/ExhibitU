@@ -1,4 +1,3 @@
-// import { SIGNIN, SIGNUP } from "../actions/auth";
 import { AUTHENTICATE, LOGOUT } from "../actions/auth";
 
 const intialState = {
