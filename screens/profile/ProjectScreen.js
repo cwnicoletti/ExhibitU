@@ -1,32 +1,86 @@
 import React, { useEffect } from "react";
 import { Image, StyleSheet, FlatList, View, Text } from "react-native";
-import { HeaderBackButton } from "react-navigation-stack";
-import { useSelector } from "react-redux";
-import { HeaderButtons, Item } from "react-navigation-header-buttons";
+import { useSelector, useDispatch } from "react-redux";
 
 import ProjectPictures from "../../components/UI/ProjectPictures";
 import ProjectHeader from "../../components/projects/ProjectHeader";
 import MaterialHeaderButton from "../../components/UI/MaterialHeaderButton";
+import IoniconsHeaderButton from "../../components/UI/IoniconsHeaderButton";
+import { HeaderButtons, Item } from "react-navigation-header-buttons";
+import { changeProjectNumberOfColumns } from "../../store/actions/user";
 
 const ProjectScreen = (props) => {
+  const dispatch = useDispatch();
   const darkModeValue = useSelector((state) => state.switches.darkMode);
-
   const currentProjectId = props.navigation.getParam("projectId");
+  const localId = useSelector((state) => state.auth.userId);
+  const showcaseId = useSelector((state) => state.user.showcaseId);
   const profileProjects = useSelector((state) => state.user.profileProjects);
-
-  const project = Object.values(profileProjects).find(
-    (project) => project.projectId === currentProjectId
-  );
+  const project = profileProjects[currentProjectId];
+  console.log("Projectscreen");
 
   let android = null;
   if (Platform.OS === "android") {
     android = true;
   }
 
+  const viewCommentsHandler = (
+    showcaseId,
+    projectId,
+    postId,
+    fullname,
+    username,
+    jobTitle,
+    profileBiography,
+    profileProjects,
+    profilePictureUrl,
+    postPhotoUrl,
+    postPhotoBase64,
+    numberOfCheers,
+    numberOfComments,
+    caption,
+    links
+  ) => {
+    props.navigation.push("PictureScreen", {
+      showcaseId: showcaseId,
+      projectId: projectId,
+      postId: postId,
+      fullname: fullname,
+      username: username,
+      jobTitle: jobTitle,
+      profileBiography: profileBiography,
+      profileProjects: profileProjects,
+      profilePictureUrl: profilePictureUrl,
+      postPhotoUrl: postPhotoUrl,
+      postPhotoBase64: postPhotoBase64,
+      numberOfCheers: numberOfCheers,
+      numberOfComments: numberOfComments,
+      caption: caption,
+      links: links,
+    });
+  };
+
   useEffect(() => {
     props.navigation.setParams({ darkMode: darkModeValue });
     props.navigation.setParams({ android: android });
-  }, [darkModeValue]);
+    props.navigation.setParams({ projectId: currentProjectId });
+    props.navigation.setParams({ projectTitle: project.projectTitle });
+    props.navigation.setParams({
+      projectDescription: project.projectDescription,
+    });
+    props.navigation.setParams({
+      projectCoverPhotoUrl: project.projectCoverPhotoUrl,
+    });
+    props.navigation.setParams({
+      projectDateCreated: project.projectDateCreated,
+    });
+    props.navigation.setParams({
+      projectLastUpdated: project.projectLastUpdated,
+    });
+    props.navigation.setParams({
+      projectLinks: project.projectLinks,
+    });
+  }, []);
 
   const topHeader = () => {
     return (
@@ -35,19 +89,83 @@ const ProjectScreen = (props) => {
           ...styles.profileContainerStyle,
           borderBottomColor: darkModeValue ? "white" : "black",
         }}
-        imgSource={{ uri: project.projectImageUrl }}
+        imgSource={{ uri: project.projectCoverPhotoBase64 }}
         descriptionStyle={{
           ...styles.profileDescriptionStyle,
           color: darkModeValue ? "white" : "black",
         }}
         title={project.projectTitle}
         description={project.projectDescription}
+        links={project.projectLinks}
         onEditProfilePress={() =>
           props.navigation.navigate("EditProjectScreen", {
             projectId: currentProjectId,
             projectTitle: project.projectTitle,
+            projectCoverPhotoUrl: project.projectCoverPhotoUrl,
+            projectDescription: project.projectDescription,
+            links: project.projectLinks,
           })
         }
+        changeColumnToTwo={async () => {
+          dispatch(
+            changeProjectNumberOfColumns(
+              localId,
+              showcaseId,
+              currentProjectId,
+              2
+            )
+          );
+        }}
+        columnTwoStyle={{
+          borderColor:
+            project.projectColumns === 2
+              ? darkModeValue
+                ? "#c9c9c9"
+                : "#3d3d3d"
+              : darkModeValue
+              ? "gray"
+              : "#c9c9c9",
+        }}
+        changeColumnToThree={async () => {
+          dispatch(
+            changeProjectNumberOfColumns(
+              localId,
+              showcaseId,
+              currentProjectId,
+              3
+            )
+          );
+        }}
+        columnThreeStyle={{
+          borderColor:
+            project.projectColumns === 3
+              ? darkModeValue
+                ? "#c9c9c9"
+                : "#3d3d3d"
+              : darkModeValue
+              ? "gray"
+              : "#c9c9c9",
+        }}
+        changeColumnToFour={async () => {
+          dispatch(
+            changeProjectNumberOfColumns(
+              localId,
+              showcaseId,
+              currentProjectId,
+              4
+            )
+          );
+        }}
+        columnFourStyle={{
+          borderColor:
+            project.projectColumns === 4
+              ? darkModeValue
+                ? "#c9c9c9"
+                : "#3d3d3d"
+              : darkModeValue
+              ? "gray"
+              : "#c9c9c9",
+        }}
       />
     );
   };
@@ -60,20 +178,49 @@ const ProjectScreen = (props) => {
       }}
     >
       <FlatList
-        data={Object.values(project.projectPictures)}
-        keyExtractor={(item) => item.id}
+        data={Object.values(project.projectPosts)}
+        keyExtractor={(item) => item.postId}
         ListHeaderComponent={topHeader}
-        numColumns={2}
+        key={project.projectColumns}
+        numColumns={project.projectColumns}
         renderItem={(itemData) => (
           <ProjectPictures
-            image={itemData.item.pictureUrl}
+            image={itemData.item.postPhotoBase64}
             projectContainer={{
               backgroundColor: darkModeValue ? "black" : "white",
+              width:
+                project.projectColumns === 2
+                  ? "50%"
+                  : project.projectColumns === 3
+                  ? "33.33%"
+                  : project.projectColumns === 4
+                  ? "25%"
+                  : "25%",
+              aspectRatio: project.projectColumns === 1 ? null : 3 / 3,
             }}
             titleStyle={{
               color: darkModeValue ? "white" : "black",
             }}
             imageContainer={styles.imageContainer}
+            onSelect={() =>
+              viewCommentsHandler(
+                itemData.item.showcaseId,
+                itemData.item.projectId,
+                itemData.item.postId,
+                itemData.item.fullname,
+                itemData.item.username,
+                itemData.item.jobTitle,
+                itemData.item.profileBiography,
+                itemData.item.profileProjects,
+                itemData.item.profilePictureUrl,
+                itemData.item.postPhotoUrl,
+                itemData.item.postPhotoBase64,
+                itemData.item.numberOfCheers,
+                itemData.item.numberOfComments,
+                itemData.item.caption,
+                itemData.item.postLinks
+              )
+            }
           />
         )}
       />
@@ -83,8 +230,15 @@ const ProjectScreen = (props) => {
 
 ProjectScreen.navigationOptions = (navData) => {
   const darkModeValue = navData.navigation.getParam("darkMode");
-
-  const android = navData.navigation.getParam("android");
+  const projectId = navData.navigation.getParam("projectId");
+  const projectTitle = navData.navigation.getParam("projectTitle");
+  const projectCoverPhotoUrl = navData.navigation.getParam(
+    "projectCoverPhotoUrl"
+  );
+  const projectDateCreated = navData.navigation.getParam("projectDateCreated");
+  const projectLastUpdated = navData.navigation.getParam("projectLastUpdated");
+  const projectDescription = navData.navigation.getParam("projectDescription");
+  const projectLinks = navData.navigation.getParam("projectLinks");
   return {
     headerTitle: () => (
       <View style={styles.logo}>
@@ -116,17 +270,17 @@ ProjectScreen.navigationOptions = (navData) => {
     headerStyle: {
       backgroundColor: darkModeValue ? "black" : "white",
     },
-    headerLeft: (props) => (
-      <View>
-        {android ? (
-          <HeaderBackButton
-            {...props}
-            tintColor={darkModeValue ? "white" : "black"}
-          />
-        ) : (
-          <HeaderBackButton {...props} />
-        )}
-      </View>
+    headerLeft: () => (
+      <HeaderButtons HeaderButtonComponent={IoniconsHeaderButton}>
+        <Item
+          title="Back"
+          iconName={"ios-arrow-back"}
+          color={darkModeValue ? "white" : "black"}
+          onPress={() => {
+            navData.navigation.goBack();
+          }}
+        />
+      </HeaderButtons>
     ),
     headerRight: () => (
       <HeaderButtons HeaderButtonComponent={MaterialHeaderButton}>
@@ -135,7 +289,15 @@ ProjectScreen.navigationOptions = (navData) => {
           iconName={"add-a-photo"}
           color={darkModeValue ? "white" : "black"}
           onPress={() => {
-            navData.navigation.navigate("AddPicture");
+            navData.navigation.navigate("AddPicture", {
+              projectId: projectId,
+              projectTitle: projectTitle,
+              projectCoverPhotoUrl: projectCoverPhotoUrl,
+              projectDateCreated: projectDateCreated,
+              projectLastUpdated: projectLastUpdated,
+              projectDescription: projectDescription,
+              projectLinks: projectLinks,
+            });
           }}
         />
       </HeaderButtons>
