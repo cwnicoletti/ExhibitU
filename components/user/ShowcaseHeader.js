@@ -10,29 +10,29 @@ import {
 import { useSelector } from "react-redux";
 import * as WebBrowser from "expo-web-browser";
 import { Ionicons } from "@expo/vector-icons";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
 
-import UserTitleEdit from "./UserTitleEdit";
+import UserTitleShowcaseLocal from "./UserTitleShowcaseLocal";
 import LinkButton from "../UI/LinkButton";
 
-const Profile = (props) => {
-  const links = props.links;
+const ShowcaseHeader = (props) => {
   const darkModeValue = useSelector((state) => state.switches.darkMode);
-  const followingValue = useSelector((state) => state.switches.hideFollowing);
-  const followersValue = useSelector((state) => state.switches.hideFollowers);
-  const advocatesValue = useSelector((state) => state.switches.hideAdvocates);
-  const showResumeValue = useSelector((state) => state.switches.showResume);
+  const links = props.links;
+  const followingValue = props.followingValue;
+  const followersValue = props.followersValue;
+  const advocatesValue = props.advocatesValue;
+  const showResumeValue = props.showResumeValue;
 
   const userDataProfileHeader = {
-    resumeLink: useSelector((state) => state.user.resumeLink),
-    numberOfFollowers: useSelector((state) => state.user.numberOfFollowers),
-    numberOfFollowing: useSelector((state) => state.user.numberOfFollowing),
-    numberOfAdvocates: useSelector((state) => state.user.numberOfAdvocates),
+    resumeLink: props.resumeLink,
+    numberOfFollowers: props.numberOfFollowers,
+    numberOfFollowing: props.numberOfFollowing,
+    numberOfAdvocates: props.numberOfAdvocates,
   };
 
   const linktoresume = userDataProfileHeader.resumeLink;
 
   let TouchableCmp = TouchableOpacity;
+
   if (Platform.OS === "android") {
     TouchableCmp = TouchableNativeFeedback;
   }
@@ -49,7 +49,7 @@ const Profile = (props) => {
           ...props.containerStyle,
         }}
       >
-        <UserTitleEdit {...props} />
+        <UserTitleShowcaseLocal {...props} />
         <View
           style={{
             margin: 10,
@@ -224,7 +224,7 @@ const Profile = (props) => {
                   Object.keys(links).length === 1
                     ? "96%"
                     : Object.keys(links).length === 2
-                    ? "46%"
+                    ? "48%"
                     : "28%",
               }}
               imageStyle={{
@@ -239,170 +239,6 @@ const Profile = (props) => {
             />
           )}
         />
-      </View>
-      <View
-        style={{
-          alignItems: "center",
-        }}
-      >
-        <TouchableCmp onPress={props.onAddNewProjectPress}>
-          <View
-            style={{
-              margin: 20,
-              marginTop: 10,
-              paddingHorizontal: "20%",
-              borderColor: darkModeValue ? "gray" : "#c9c9c9",
-              borderWidth: 1,
-              alignItems: "center",
-            }}
-          >
-            <Text
-              style={{
-                margin: 7,
-                color: darkModeValue ? "white" : "black",
-              }}
-            >
-              Add New Project
-            </Text>
-          </View>
-        </TouchableCmp>
-      </View>
-      <Text
-        style={{
-          color: darkModeValue ? "white" : "black",
-          fontSize: 12,
-        }}
-      >
-        Columns
-      </Text>
-      <View style={{ flexDirection: "row" }}>
-        <TouchableCmp onPress={props.changeColumnToTwo}>
-          <View
-            style={{
-              flexDirection: "row",
-              marginBottom: 20,
-              borderColor: darkModeValue ? "gray" : "#c9c9c9",
-              borderWidth: 1,
-              width: 45,
-              alignItems: "center",
-              justifyContent: "center",
-              flexDirection: "row",
-              ...props.columnTwoStyle,
-            }}
-          >
-            <View
-              style={{
-                width: 9,
-                marginHorizontal: 2,
-                marginTop: 5,
-                height: 12,
-                backgroundColor: "gray",
-              }}
-            />
-            <View
-              style={{
-                width: 9,
-                marginHorizontal: 2,
-                marginTop: 5,
-                height: 12,
-                backgroundColor: "gray",
-              }}
-            />
-          </View>
-        </TouchableCmp>
-        <TouchableCmp onPress={props.changeColumnToThree}>
-          <View
-            style={{
-              marginBottom: 20,
-              borderColor: darkModeValue ? "gray" : "#c9c9c9",
-              borderWidth: 1,
-              width: 50,
-              alignItems: "center",
-              justifyContent: "center",
-              flexDirection: "row",
-              ...props.columnThreeStyle,
-            }}
-          >
-            <View
-              style={{
-                width: 8,
-                marginHorizontal: 2,
-                marginTop: 5,
-                height: 12,
-                backgroundColor: "gray",
-              }}
-            />
-            <View
-              style={{
-                width: 8,
-                marginHorizontal: 2,
-                marginTop: 5,
-                height: 12,
-                backgroundColor: "gray",
-              }}
-            />
-            <View
-              style={{
-                width: 8,
-                marginHorizontal: 2,
-                marginTop: 5,
-                height: 12,
-                backgroundColor: "gray",
-              }}
-            />
-          </View>
-        </TouchableCmp>
-        <TouchableCmp onPress={props.changeColumnToFour}>
-          <View
-            style={{
-              marginBottom: 20,
-              borderColor: darkModeValue ? "gray" : "#c9c9c9",
-              borderWidth: 1,
-              width: 60,
-              alignItems: "center",
-              justifyContent: "center",
-              flexDirection: "row",
-              ...props.columnFourStyle,
-            }}
-          >
-            <View
-              style={{
-                width: 7,
-                marginHorizontal: 2,
-                marginTop: 5,
-                height: 12,
-                backgroundColor: "gray",
-              }}
-            />
-            <View
-              style={{
-                width: 7,
-                marginHorizontal: 2,
-                marginTop: 5,
-                height: 12,
-                backgroundColor: "gray",
-              }}
-            />
-            <View
-              style={{
-                width: 7,
-                marginHorizontal: 2,
-                marginTop: 5,
-                height: 12,
-                backgroundColor: "gray",
-              }}
-            />
-            <View
-              style={{
-                width: 7,
-                marginHorizontal: 2,
-                marginTop: 5,
-                height: 12,
-                backgroundColor: "gray",
-              }}
-            />
-          </View>
-        </TouchableCmp>
       </View>
     </View>
   );
@@ -442,7 +278,8 @@ const styles = StyleSheet.create({
   },
   resumeText: {
     margin: 10,
+    color: "#24a0ed",
   },
 });
 
-export default Profile;
+export default ShowcaseHeader;

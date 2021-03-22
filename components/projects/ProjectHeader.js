@@ -1,71 +1,243 @@
 import React from "react";
-import { View, Text, StyleSheet, Image, FlatList } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  FlatList,
+  TouchableOpacity,
+  TouchableNativeFeedback,
+} from "react-native";
 import { useSelector } from "react-redux";
 import * as WebBrowser from "expo-web-browser";
 
 import LinkButton from "../UI/LinkButton";
+import EditButton from "../UI/EditButton";
 
 const ProjectHeader = (props) => {
-  const darkModeValue = useSelector((state) => state.darkMode.darkMode);
+  const darkModeValue = useSelector((state) => state.switches.darkMode);
+  const links = props.links;
 
-  const listofLinks = useSelector((state) =>
-    state.projects.userProjectLinks.filter(
-      (proj) => proj.projectLinkId === props.projectId
-    )
-  );
+  let TouchableCmp = TouchableOpacity;
+  if (Platform.OS === "android") {
+    TouchableCmp = TouchableNativeFeedback;
+  }
 
-  console.log(listofLinks.length);
-
-  const handleLinkOnPress = (url) => {
-    WebBrowser.openBrowserAsync(url);
+  const handleLinkOnPress = async (url) => {
+    await WebBrowser.openBrowserAsync(url);
   };
 
   return (
-    <View style={{ ...styles.container, ...props.containerStyle }}>
-      <Image
-        style={{ ...styles.image, ...props.style }}
-        source={props.imgSource}
-      />
-      <View
-        style={{
-          alignItems: "center",
-          borderBottomColor: darkModeValue ? "white" : "black",
-          borderBottomWidth: 1,
-        }}
-      >
-        <Text
+    <View>
+      <View style={{ ...styles.container, ...props.containerStyle }}>
+        <Image
+          style={{ ...styles.image, ...props.style }}
+          source={
+            props.imgSource
+              ? { uri: props.imgSource }
+              : require("../../assets/default-post-icon.png")
+          }
+        />
+        <EditButton
+          editText="Edit Project"
+          onPress={props.onEditProfilePress}
+        />
+        <View
           style={{
-            color: darkModeValue ? "white" : "black",
-            fontWeight: "bold",
-            fontSize: 18,
-            margin: 10,
+            alignItems: "center",
+            borderBottomColor: darkModeValue ? "white" : "black",
+            borderBottomWidth: 1,
           }}
         >
-          {props.title}
-        </Text>
+          <Text
+            style={{
+              color: darkModeValue ? "white" : "black",
+              fontWeight: "bold",
+              fontSize: 18,
+              margin: 10,
+            }}
+          >
+            {props.title}
+          </Text>
+        </View>
+        <Text style={props.descriptionStyle}>{props.description}</Text>
+        <FlatList
+          data={Object.values(links)}
+          keyExtractor={(item) => item.linkId}
+          numColumns={
+            Object.keys(links).length === 1
+              ? 1
+              : Object.keys(links).length === 2
+              ? 2
+              : 3
+          }
+          columnWrapperStyle={
+            Object.keys(links).length > 1 ? { justifyContent: "center" } : null
+          }
+          renderItem={(itemData) => (
+            <LinkButton
+              imageUrl={itemData.item[`linkImageUrl${itemData.item.linkId}`]}
+              title={itemData.item[`linkTitle${itemData.item.linkId}`]}
+              textStyle={{ color: darkModeValue ? "white" : "black" }}
+              linkContainer={{
+                borderColor: "gray",
+                width:
+                  Object.keys(links).length === 1
+                    ? "96%"
+                    : Object.keys(links).length === 2
+                    ? "46%"
+                    : "28%",
+              }}
+              imageStyle={{
+                backgroundColor: "white",
+                borderRadius: 5,
+              }}
+              onPress={() =>
+                handleLinkOnPress(
+                  itemData.item[`linkUrl${itemData.item.linkId}`]
+                )
+              }
+            />
+          )}
+        />
       </View>
-      <Text style={props.descriptionStyle}>{props.description}</Text>
-      <FlatList
-        data={listofLinks}
-        keyExtractor={(item) => item.id}
-        numColumns={listofLinks.length > 1 ? 2 : 1}
-        renderItem={(itemData) => (
-          <LinkButton
-            imageUrl={itemData.item.imageUrl}
-            title={itemData.item.title}
-            textStyle={{ color: darkModeValue ? "white" : "black" }}
-            linkContainer={{
-              borderColor: "gray",
-              width: listofLinks.length > 1 ? "46%" : "100%",
+      <Text
+        style={{
+          color: darkModeValue ? "white" : "black",
+          fontSize: 12,
+        }}
+      >
+        Columns
+      </Text>
+      <View style={{ flexDirection: "row" }}>
+        <TouchableCmp onPress={props.changeColumnToTwo}>
+          <View
+            style={{
+              flexDirection: "row",
+              marginBottom: 20,
+              borderColor: darkModeValue ? "gray" : "#c9c9c9",
+              borderWidth: 1,
+              width: 45,
+              alignItems: "center",
+              justifyContent: "center",
+              flexDirection: "row",
+              ...props.columnTwoStyle,
             }}
-            imageStyle={{
-              backgroundColor: "white",
-              borderRadius: 5,
+          >
+            <View
+              style={{
+                width: 9,
+                marginHorizontal: 2,
+                marginTop: 5,
+                height: 12,
+                backgroundColor: "gray",
+              }}
+            />
+            <View
+              style={{
+                width: 9,
+                marginHorizontal: 2,
+                marginTop: 5,
+                height: 12,
+                backgroundColor: "gray",
+              }}
+            />
+          </View>
+        </TouchableCmp>
+        <TouchableCmp onPress={props.changeColumnToThree}>
+          <View
+            style={{
+              marginBottom: 20,
+              borderColor: darkModeValue ? "gray" : "#c9c9c9",
+              borderWidth: 1,
+              width: 50,
+              alignItems: "center",
+              justifyContent: "center",
+              flexDirection: "row",
+              ...props.columnThreeStyle,
             }}
-            onPress={() => handleLinkOnPress(itemData.item.linkUrl)}
-          />
-        )}
-      />
+          >
+            <View
+              style={{
+                width: 8,
+                marginHorizontal: 2,
+                marginTop: 5,
+                height: 12,
+                backgroundColor: "gray",
+              }}
+            />
+            <View
+              style={{
+                width: 8,
+                marginHorizontal: 2,
+                marginTop: 5,
+                height: 12,
+                backgroundColor: "gray",
+              }}
+            />
+            <View
+              style={{
+                width: 8,
+                marginHorizontal: 2,
+                marginTop: 5,
+                height: 12,
+                backgroundColor: "gray",
+              }}
+            />
+          </View>
+        </TouchableCmp>
+        <TouchableCmp onPress={props.changeColumnToFour}>
+          <View
+            style={{
+              marginBottom: 20,
+              borderColor: darkModeValue ? "gray" : "#c9c9c9",
+              borderWidth: 1,
+              width: 60,
+              alignItems: "center",
+              justifyContent: "center",
+              flexDirection: "row",
+              ...props.columnFourStyle,
+            }}
+          >
+            <View
+              style={{
+                width: 7,
+                marginHorizontal: 2,
+                marginTop: 5,
+                height: 12,
+                backgroundColor: "gray",
+              }}
+            />
+            <View
+              style={{
+                width: 7,
+                marginHorizontal: 2,
+                marginTop: 5,
+                height: 12,
+                backgroundColor: "gray",
+              }}
+            />
+            <View
+              style={{
+                width: 7,
+                marginHorizontal: 2,
+                marginTop: 5,
+                height: 12,
+                backgroundColor: "gray",
+              }}
+            />
+            <View
+              style={{
+                width: 7,
+                marginHorizontal: 2,
+                marginTop: 5,
+                height: 12,
+                backgroundColor: "gray",
+              }}
+            />
+          </View>
+        </TouchableCmp>
+      </View>
     </View>
   );
 };
