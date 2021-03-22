@@ -1,6 +1,13 @@
-import React, { useEffect } from "react";
-import { Image, StyleSheet, FlatList, View, Text } from "react-native";
-import { useSelector } from "react-redux";
+import React, { useEffect, useState, useRef } from "react";
+import {
+  Image,
+  StyleSheet,
+  FlatList,
+  View,
+  Text,
+  RefreshControl,
+} from "react-native";
+import { useSelector, useDispatch } from "react-redux";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 
 import ProjectItem from "../../components/projectItems/ProfileProjectItem";
@@ -8,33 +15,58 @@ import HeaderButton from "../../components/UI/IoniconsHeaderButton";
 import ProfileHeader from "../../components/user/ProfileHeader";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { refreshProfile, offScreen } from "../../store/actions/user";
+import useDidMountEffect from "../../components/helper/useDidMountEffect";
+
+import { changeProfileNumberOfColumns } from "../../store/actions/user";
 
 const ProfileScreen = (props) => {
+  const dispatch = useDispatch();
+  const [isRefreshing, setIsRefreshing] = useState(false);
   const darkModeValue = useSelector((state) => state.switches.darkMode);
-  const showcaseLocalValue = useSelector(
-    (state) => state.switches.showcaseLocalMode
+  const localId = useSelector((state) => state.auth.userId);
+  const showcaseId = useSelector((state) => state.user.showcaseId);
+  const profilePictureBase64 = useSelector(
+    (state) => state.user.profilePictureBase64
   );
+  const profileColumns = useSelector((state) => state.user.profileColumns);
+  const resetScrollProfile = useSelector(
+    (state) => state.user.resetScrollProfile
+  );
+  console.log("profilescreen");
 
   const userData = {
+    showcaseId: useSelector((state) => state.user.showcaseId),
     fullname: useSelector((state) => state.user.fullname),
     username: useSelector((state) => state.user.username),
     jobTitle: useSelector((state) => state.user.jobTitle),
     profileBiography: useSelector((state) => state.user.profileBiography),
+    profileLinks: useSelector((state) => state.user.profileLinks),
     profileProjects: useSelector((state) => state.user.profileProjects),
   };
-
-  console.log(userData.profileProjects);
 
   useEffect(() => {
     props.navigation.setParams({ darkMode: darkModeValue });
   }, [darkModeValue]);
 
   const viewProjectHandler = (projectId) => {
-    console.log(projectId);
-    props.navigation.navigate("ViewProfileProject", {
+    dispatch(offScreen("Profile"));
+    props.navigation.push("ViewProfileProject", {
       projectId: projectId,
     });
   };
+
+  const refreshFeed = async () => {
+    await setIsRefreshing(true);
+    await dispatch(refreshProfile(localId));
+    await setIsRefreshing(false);
+  };
+
+  const profileFlatlist = useRef();
+
+  useDidMountEffect(() => {
+    profileFlatlist.current.scrollToOffset({ animated: true, offset: 0 });
+  }, [resetScrollProfile]);
 
   const topHeader = () => {
     return (
@@ -47,7 +79,7 @@ const ProfileScreen = (props) => {
           ...styles.profileUsernameStyle,
           color: darkModeValue ? "white" : "black",
         }}
-        titleStyle={{
+        fullnameStyle={{
           ...styles.profileTitleStyle,
           color: darkModeValue ? "white" : "black",
         }}
@@ -55,10 +87,11 @@ const ProfileScreen = (props) => {
           ...styles.profileJobTitleStyle,
           color: darkModeValue ? "white" : "black",
         }}
-        title={userData.fullname}
+        fullname={userData.fullname}
         username={`@${userData.username}`}
         jobTitle={userData.jobTitle}
-        imgSource={require("../../assets/me.png")}
+        links={userData.profileLinks}
+        imgSource={profilePictureBase64}
         descriptionStyle={{
           ...styles.profileDescriptionStyle,
           color: darkModeValue ? "white" : "black",
@@ -70,9 +103,60 @@ const ProfileScreen = (props) => {
         onEditProfilePress={() => props.navigation.navigate("EditProfile")}
         description={userData.profileBiography}
         onAddNewProjectPress={() => props.navigation.navigate("AddProject")}
-        followersOnPress={() => props.navigation.navigate("Followers")}
-        followingOnPress={() => props.navigation.navigate("Following")}
-        advocatesOnPress={() => props.navigation.navigate("Advocates")}
+        followersOnPress={() =>
+          props.navigation.navigate("Followers", {
+            showcaseId: userData.showcaseId,
+          })
+        }
+        followingOnPress={() =>
+          props.navigation.navigate("Following", {
+            showcaseId: userData.showcaseId,
+          })
+        }
+        advocatesOnPress={() =>
+          props.navigation.navigate("Advocates", {
+            showcaseId: userData.showcaseId,
+          })
+        }
+        changeColumnToTwo={async () => {
+          dispatch(changeProfileNumberOfColumns(localId, showcaseId, 2));
+        }}
+        columnTwoStyle={{
+          borderColor:
+            profileColumns === 2
+              ? darkModeValue
+                ? "#c9c9c9"
+                : "#3d3d3d"
+              : darkModeValue
+              ? "gray"
+              : "#c9c9c9",
+        }}
+        changeColumnToThree={async () => {
+          dispatch(changeProfileNumberOfColumns(localId, showcaseId, 3));
+        }}
+        columnThreeStyle={{
+          borderColor:
+            profileColumns === 3
+              ? darkModeValue
+                ? "#c9c9c9"
+                : "#3d3d3d"
+              : darkModeValue
+              ? "gray"
+              : "#c9c9c9",
+        }}
+        changeColumnToFour={async () => {
+          dispatch(changeProfileNumberOfColumns(localId, showcaseId, 4));
+        }}
+        columnFourStyle={{
+          borderColor:
+            profileColumns === 4
+              ? darkModeValue
+                ? "#c9c9c9"
+                : "#3d3d3d"
+              : darkModeValue
+              ? "gray"
+              : "#c9c9c9",
+        }}
       />
     );
   };
@@ -86,12 +170,21 @@ const ProfileScreen = (props) => {
     >
       <FlatList
         data={Object.values(userData.profileProjects)}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item) => item.projectId}
+        key={profileColumns}
         ListHeaderComponent={topHeader}
-        numColumns={2}
+        refreshControl={
+          <RefreshControl
+            refreshing={isRefreshing}
+            onRefresh={refreshFeed}
+            tintColor={darkModeValue ? "white" : "black"}
+          />
+        }
+        ref={profileFlatlist}
+        numColumns={profileColumns}
         renderItem={(itemData) => (
           <ProjectItem
-            image={itemData.item.projectImageUrl}
+            image={itemData.item.projectCoverPhotoBase64}
             title={itemData.item.projectTitle}
             projectContainer={{
               backgroundColor: darkModeValue ? "black" : "white",
@@ -106,33 +199,34 @@ const ProfileScreen = (props) => {
           />
         )}
       />
-      {!showcaseLocalValue ? (
-        <TouchableOpacity
+      <TouchableOpacity
+        style={{
+          margin: 10,
+          padding: 10,
+          alignItems: "center",
+          justifyContent: "center",
+          borderWidth: 1,
+          borderColor: darkModeValue ? "gray" : "#c9c9c9",
+          flexDirection: "row",
+        }}
+        onPress={() => {
+          props.navigation.push("ShowcaseProfile");
+        }}
+      >
+        <MaterialCommunityIcons
+          name="glassdoor"
+          size={24}
+          color={darkModeValue ? "white" : "black"}
+        />
+        <Text
           style={{
-            margin: 10,
-            padding: 10,
-            alignItems: "center",
-            justifyContent: "center",
-            borderWidth: 1,
-            borderColor: darkModeValue ? "gray" : "#c9c9c9",
-            flexDirection: "row",
+            color: darkModeValue ? "white" : "black",
+            fontWeight: "bold",
           }}
         >
-          <MaterialCommunityIcons
-            name="glassdoor"
-            size={24}
-            color={darkModeValue ? "white" : "black"}
-          />
-          <Text
-            style={{
-              color: darkModeValue ? "white" : "black",
-              fontWeight: "bold",
-            }}
-          >
-            Showcase profile
-          </Text>
-        </TouchableOpacity>
-      ) : null}
+          Showcase profile
+        </Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -217,11 +311,10 @@ const styles = StyleSheet.create({
     paddingTop: 5,
   },
   profileDescriptionStyle: {
-    paddingBottom: 20,
+    padding: 20,
   },
   profileContainerStyle: {
     justifyContent: "flex-start",
-    borderBottomWidth: 1,
   },
   text: {
     padding: 10,
