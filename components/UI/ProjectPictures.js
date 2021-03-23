@@ -9,7 +9,7 @@ import {
   Platform,
 } from "react-native";
 
-import Card from "../UI/Card";
+import Card from "./Card";
 
 const ProjectItem = (props) => {
   let TouchableCmp = TouchableOpacity;
@@ -36,11 +36,6 @@ const ProjectItem = (props) => {
 const styles = StyleSheet.create({
   project: {
     height: 300,
-    width: 50,
-    borderWidth: 1,
-    borderColor: "gray",
-    width: "49%",
-    margin: '0.5%'
   },
   image: {
     width: "100%",

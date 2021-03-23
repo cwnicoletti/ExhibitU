@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -7,19 +7,36 @@ import {
   TouchableOpacity,
   TouchableNativeFeedback,
   Platform,
+  Dimensions,
 } from "react-native";
+import { useSelector } from "react-redux";
 
 import Card from "../UI/Card";
 
 const ProjectItem = (props) => {
-  let TouchableCmp = TouchableOpacity;
+  const profileColumns = useSelector((state) => state.user.profileColumns);
 
+  let TouchableCmp = TouchableOpacity;
   if (Platform.OS === "android") {
     TouchableCmp = TouchableNativeFeedback;
   }
 
   return (
-    <Card style={{ ...styles.project, ...props.projectContainer }}>
+    <Card
+      style={{
+        ...styles.project,
+        ...props.projectContainer,
+        width:
+          profileColumns === 2
+            ? "50%"
+            : profileColumns === 3
+            ? "33.33%"
+            : profileColumns === 4
+            ? "25%"
+            : "25%",
+        aspectRatio: profileColumns === 1 ? null : 2 / 3,
+      }}
+    >
       <View style={styles.touchable}>
         <TouchableCmp onPress={props.onSelect} useForeground>
           <View>
@@ -27,7 +44,13 @@ const ProjectItem = (props) => {
               <Image style={styles.image} source={{ uri: props.image }} />
             </View>
             <View style={{ ...styles.details, ...props.details }}>
-              <Text style={{ ...styles.title, ...props.titleStyle }}>
+              <Text
+                style={{
+                  ...styles.title,
+                  ...props.titleStyle,
+                }}
+                adjustsFontSizeToFit={true}
+              >
                 {props.title}
               </Text>
             </View>
@@ -41,11 +64,6 @@ const ProjectItem = (props) => {
 const styles = StyleSheet.create({
   project: {
     height: 300,
-    width: 50,
-    borderWidth: 1,
-    borderColor: "gray",
-    width: "49%",
-    margin: '0.5%'
   },
   image: {
     width: "100%",
