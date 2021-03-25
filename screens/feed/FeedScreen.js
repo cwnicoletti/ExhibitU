@@ -40,14 +40,12 @@ const UserFeedScreen = (props) => {
     }
   });
 
-  // Create items array
-  var items = Object.keys(filteredOutEmptyUserFeed).map((key) => {
-    return [key, filteredOutEmptyUserFeed[key]];
-  });
-
   // Sort the array based on the second element
-  items.sort((first, second) => {
-    return second[1] - first[1];
+  filteredOutEmptyUserFeed.sort((first, second) => {
+    return (
+      second["postDateCreated"]["_seconds"] -
+      first["postDateCreated"]["_seconds"]
+    );
   });
 
   useEffect(() => {
