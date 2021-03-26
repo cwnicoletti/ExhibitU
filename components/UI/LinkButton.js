@@ -1,18 +1,21 @@
 import React from "react";
 import { View, Image, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { EvilIcons } from "@expo/vector-icons";
+import { useSelector } from "react-redux";
 
 const LinkButton = (props) => {
-  const imageUrl = require("../../assets/showcase_icon.png");
+  const darkModeValue = useSelector((state) => state.switches.darkMode);
   return (
     <TouchableOpacity
       style={{ ...styles.container, ...props.linkContainer }}
       onPress={props.onPress}
     >
-      <Image
-        style={{ ...styles.image, ...props.imageStyle }}
-        source={{ uri: imageUrl, uri: props.imageUrl }}
+      <EvilIcons
+        name="link"
+        size={18}
+        color={darkModeValue ? "white" : "black"}
       />
-      <Text style={{ ...styles.textStyle, ...props.textStyle }}>
+      <Text style={{ ...styles.textStyle }} adjustsFontSizeToFit={true}>
         {props.title}
       </Text>
     </TouchableOpacity>
@@ -27,20 +30,14 @@ const styles = StyleSheet.create({
     marginLeft: "2%",
     marginRight: "2%",
     flexDirection: "row",
-    borderWidth: 1,
-    justifyContent: "flex-start",
+    justifyContent: "center",
     alignItems: "center",
-    overflow: "hidden",
-    borderRadius: 5,
-  },
-  image: {
-    margin: 5,
-    height: 20,
-    width: 20,
   },
   textStyle: {
-    fontSize: 12,
+    fontSize: 14,
     margin: 10,
+    marginLeft: 5,
+    color: "#24a0ed",
   },
 });
 
