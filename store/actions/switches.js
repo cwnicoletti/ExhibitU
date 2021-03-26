@@ -26,7 +26,6 @@ export const setDarkMode = (localId, showcaseId, value) => {
     AsyncStorage.getItem("userDocData").then((data) => {
       data = JSON.parse(data);
       data.darkMode = value;
-      console.log(data);
       AsyncStorage.setItem("userDocData", JSON.stringify(data));
     });
 
@@ -51,7 +50,6 @@ export const setShowResume = (localId, showcaseId, value) => {
     AsyncStorage.getItem("userDocData").then((data) => {
       data = JSON.parse(data);
       data.showResume = value;
-      console.log(data);
       AsyncStorage.setItem("userDocData", JSON.stringify(data));
     });
 
@@ -76,7 +74,6 @@ export const setShowCheering = (localId, showcaseId, value) => {
     AsyncStorage.getItem("userDocData").then((data) => {
       data = JSON.parse(data);
       data.showCheering = value;
-      console.log(data);
       AsyncStorage.setItem("userDocData", JSON.stringify(data));
     });
 
@@ -101,7 +98,6 @@ export const setHideFollowing = (localId, showcaseId, value) => {
     AsyncStorage.getItem("userDocData").then((data) => {
       data = JSON.parse(data);
       data.hideFollowing = value;
-      console.log(data);
       AsyncStorage.setItem("userDocData", JSON.stringify(data));
     });
 
@@ -126,7 +122,6 @@ export const setHideFollowers = (localId, showcaseId, value) => {
     AsyncStorage.getItem("userDocData").then((data) => {
       data = JSON.parse(data);
       data.hideFollowers = value;
-      console.log(data);
       AsyncStorage.setItem("userDocData", JSON.stringify(data));
     });
 
@@ -151,7 +146,6 @@ export const setHideAdvocates = (localId, showcaseId, value) => {
     AsyncStorage.getItem("userDocData").then((data) => {
       data = JSON.parse(data);
       data.hideAdvocates = value;
-      console.log(data);
       AsyncStorage.setItem("userDocData", JSON.stringify(data));
     });
 

@@ -84,9 +84,11 @@ export const signup = (email, fullname, username, password) => {
 
 const getBase64FromUrl = async (url) => {
   if (url) {
+    console.log(url);
     const response = await axios.get(url, {
       responseType: "arraybuffer",
     });
+    console.log(response);
     const base64 = Buffer.from(await response.data, "base64").toString(
       "base64"
     );
@@ -107,12 +109,20 @@ export const login = (email, password) => {
       loginForm
     );
 
+    console.log("axios post done");
+
     let profileProjects = await getLoginResponse.data.docData.profileProjects;
+    console.log("getLoginResponse.data.docData.profileProjects done");
+
     if (profileProjects) {
       const projectKeys = Object.keys(profileProjects);
+      console.log("Object.keys(profileProjects) done");
       for (const k of projectKeys) {
         const projectCoverPhotoBase64 = await getBase64FromUrl(
           profileProjects[k]["projectCoverPhotoUrl"]
+        );
+        console.log(
+          "getBase64FromUrl profileProjects[k]['projectCoverPhotoUrl'] done"
         );
         profileProjects[k]["projectCoverPhotoBase64"] = projectCoverPhotoBase64;
         const postKeys = Object.keys(profileProjects[k].projectPosts);
@@ -126,6 +136,8 @@ export const login = (email, password) => {
         }
       }
     }
+
+    console.log("profileproject base64 done");
 
     let userFeed = await getLoginResponse.data.docData.userFeed;
     if (userFeed) {
@@ -157,6 +169,8 @@ export const login = (email, password) => {
         }
       }
     }
+
+    console.log("feed base64 done");
 
     const profilePictureBase64 = await getBase64FromUrl(
       getLoginResponse.data.docData.profilePictureUrl
