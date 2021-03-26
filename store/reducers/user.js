@@ -169,6 +169,7 @@ export default (state = intialState, action) => {
           [action.projectId]: {
             ...state.profileProjects[action.projectId],
             projectCoverPhotoUrl: action.projectCoverPhotoUrl,
+            projectCoverPhotoId: action.projectCoverPhotoId,
             projectTempCoverPhotoBase64: action.projectTempCoverPhotoBase64,
           },
         },
@@ -207,6 +208,7 @@ export default (state = intialState, action) => {
           [action.projectId]: {
             ...state.profileProjects[action.projectId],
             projectId: action.projectId,
+            projectCoverPhotoId: action.projectCoverPhotoId,
             projectCoverPhotoUrl: action.projectCoverPhotoUrl,
             projectCoverPhotoBase64: action.projectCoverPhotoBase64,
             projectDateCreated: action.projectDateCreated,
@@ -229,6 +231,7 @@ export default (state = intialState, action) => {
           [action.projectId]: {
             ...state.profileProjects[action.projectId],
             projectId: action.projectId,
+            projectCoverPhotoId: action.projectCoverPhotoId,
             projectCoverPhotoUrl: action.projectCoverPhotoUrl,
             projectCoverPhotoBase64: action.projectCoverPhotoBase64,
             projectDateCreated: action.projectDateCreated,
@@ -244,6 +247,7 @@ export default (state = intialState, action) => {
     case ADD_USER_POST:
       return {
         ...state,
+        tempPhotoPostUrl: intialState.tempPhotoPostId,
         tempPhotoPostUrl: intialState.tempPhotoPostUrl,
         tempPhotoPostBase64: intialState.tempPhotoPostBase64,
         profileProjects: {
@@ -388,11 +392,17 @@ export default (state = intialState, action) => {
     case REMOVE_USER_POST:
       return {
         ...state,
-        profileProjects: Object.fromEntries(
-          Object.entries(
-            state.profileProjects[action.projectId].projectPosts
-          ).filter(([postId, v]) => postId !== action.postId)
-        ),
+        profileProjects: {
+          ...state.profileProjects,
+          [action.projectId]: {
+            ...state.profileProjects[action.projectId],
+            projectPosts: Object.fromEntries(
+              Object.entries(
+                state.profileProjects[action.projectId].projectPosts
+              ).filter(([postId, v]) => postId !== action.postId)
+            ),
+          },
+        },
         userFeed: Object.fromEntries(
           Object.entries(state.userFeed).filter(
             ([postId, v]) => postId !== action.postId

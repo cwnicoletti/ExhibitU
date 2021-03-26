@@ -254,6 +254,23 @@ export const uploadUpdateUserProfile = (
       data.resumeLink = resumeLink;
       data.showResumeValue = showResumeValue;
       data.profileLinks = links;
+      if (Object.keys(data.userFeed) > 0) {
+        feedPosts = Object.keys(data.userFeed);
+        for (post of feedPosts) {
+          data.userFeed = {
+            [post]: {
+              ...data.userFeed[post],
+              fullname: data.fullname,
+              jobTitle: data.jobTitle,
+              username: data.username,
+              profileBiography: data.bio,
+              resumeLink: data.resumeLink,
+              showResumeValue: data.showResumeValue,
+              profileLinks: data.links,
+            },
+          };
+        }
+      }
       AsyncStorage.setItem("userDocData", JSON.stringify(data));
     });
 
@@ -275,7 +292,7 @@ export const uploadUpdateUserProfile = (
 export const uploadNewProject = (
   showcaseId,
   localId,
-  projectTempCoverPhotoUrl,
+  projectTempCoverPhotoId,
   projectTempCoverPhotoBase64,
   projectTitle,
   projectDescription,
@@ -285,7 +302,8 @@ export const uploadNewProject = (
     const uploadForm = {
       showcaseId: showcaseId,
       localId: localId,
-      url: projectTempCoverPhotoUrl,
+      projectTempCoverPhotoId: projectTempCoverPhotoId,
+      projectTempCoverPhotoBase64: projectTempCoverPhotoBase64,
       projectTitle: projectTitle,
       projectDescription: projectDescription,
       links: links,
@@ -301,7 +319,8 @@ export const uploadNewProject = (
         ...data.profileProjects,
         [newProjectResponse.data.projectId]: {
           projectId: newProjectResponse.data.projectId,
-          projectCoverPhotoUrl: projectTempCoverPhotoUrl,
+          projectCoverPhotoId: newProjectResponse.data.photoId,
+          projectCoverPhotoUrl: newProjectResponse.data.url,
           projectCoverPhotoBase64: projectTempCoverPhotoBase64,
           projectDateCreated: newProjectResponse.data.time,
           projectLastUpdated: newProjectResponse.data.time,
@@ -331,7 +350,8 @@ export const uploadNewProject = (
     dispatch({
       type: ADD_USER_PROJECT,
       projectId: newProjectResponse.data.projectId,
-      projectCoverPhotoUrl: projectTempCoverPhotoUrl,
+      projectCoverPhotoId: newProjectResponse.data.photoId,
+      projectCoverPhotoUrl: newProjectResponse.data.url,
       projectCoverPhotoBase64: projectTempCoverPhotoBase64,
       projectDateCreated: newProjectResponse.data.time,
       projectLastUpdated: newProjectResponse.data.time,
@@ -444,14 +464,14 @@ export const uploadRemovePost = (showcaseId, localId, projectId, postId) => {
       uploadForm
     );
 
-    AsyncStorage.getItem("userDocData").then((data) => {
+    await AsyncStorage.getItem("userDocData").then((data) => {
       data = JSON.parse(data);
       delete data.profileProjects[projectId].projectPosts[postId];
       delete data.userFeed[postId];
       AsyncStorage.setItem("userDocData", JSON.stringify(data));
     });
 
-    dispatch({
+    await dispatch({
       type: REMOVE_USER_POST,
       projectId: projectId,
       postId: postId,
@@ -654,36 +674,7 @@ export const uploadAddTempProjectCoverPicture = (
   };
 };
 
-export const clearTempProjectCoverPicture = (showcaseId, localId) => {
-  return async (dispatch) => {
-    const picture = {
-      showcaseId: showcaseId,
-      localId: localId,
-    };
-
-    axios.post(
-      `https://us-central1-showcase-79c28.cloudfunctions.net/clearTempProjectCoverPicture`,
-      picture
-    );
-
-    await AsyncStorage.getItem("userDocData").then((data) => {
-      data = JSON.parse(data);
-      data.projectTempCoverPhotoUrl = "";
-      data.projectTempCoverPhotoId = "";
-      data.projectCoverPhotoBase64 = "";
-      AsyncStorage.setItem("userDocData", JSON.stringify(data));
-    });
-
-    await dispatch({
-      type: CLEAR_TEMP_PROJECT_PICTURE,
-      projectTempCoverPhotoUrl: "",
-      projectTempCoverPhotoId: "",
-      projectCoverPhotoBase64: "",
-    });
-  };
-};
-
-export const uploadChangeProjectCoverPicture = (
+export const uploadAddTempPostPicture = (
   base64,
   projectId,
   showcaseId,
@@ -692,49 +683,9 @@ export const uploadChangeProjectCoverPicture = (
   return async (dispatch) => {
     const picture = {
       base64: base64,
-      showcaseId: showcaseId,
-      localId: localId,
-    };
-
-    const uploadedPictureUrlResponse = await axios.post(
-      `https://us-central1-showcase-79c28.cloudfunctions.net/uploadChangeProjectCoverPicture`,
-      picture
-    );
-
-    await AsyncStorage.getItem("userDocData").then((data) => {
-      data = JSON.parse(data);
-      data.profileProjects = {
-        ...data.profileProjects,
-        [projectId]: {
-          ...data.profileProjects[projectId],
-          projectCoverPhotoUrl: uploadedPictureUrlResponse.data.url,
-          projectCoverPhotoBase64: base64,
-        },
-      };
-      AsyncStorage.setItem("userDocData", JSON.stringify(data));
-    });
-
-    await dispatch({
-      type: CHANGE_PROJECT_PICTURE,
       projectId: projectId,
-      projectCoverPhotoUrl: uploadedPictureUrlResponse.data.url,
-      projectCoverPhotoBase64: base64,
-    });
-  };
-};
-
-export const uploadAddTempPostPicture = (
-  base64,
-  showcaseId,
-  localId,
-  tempPhotoPostId
-) => {
-  return async (dispatch) => {
-    const picture = {
-      base64: base64,
       showcaseId: showcaseId,
       localId: localId,
-      tempPhotoPostId: tempPhotoPostId,
     };
 
     const uploadedPictureUrlResponse = await axios.post(
@@ -759,27 +710,47 @@ export const uploadAddTempPostPicture = (
   };
 };
 
-export const clearTempPostPicture = (showcaseId, localId) => {
+export const uploadChangeProjectCoverPicture = (
+  base64,
+  projectId,
+  showcaseId,
+  localId,
+  projectCoverPhotoId
+) => {
   return async (dispatch) => {
     const picture = {
+      base64: base64,
+      projectId: projectId,
       showcaseId: showcaseId,
       localId: localId,
+      projectCoverPhotoId: projectCoverPhotoId,
     };
 
-    await axios.post(
-      `https://us-central1-showcase-79c28.cloudfunctions.net/clearTempPostPicture`,
+    const uploadedPictureUrlResponse = await axios.post(
+      `https://us-central1-showcase-79c28.cloudfunctions.net/uploadChangeProjectCoverPicture`,
       picture
     );
 
     await AsyncStorage.getItem("userDocData").then((data) => {
       data = JSON.parse(data);
-      data.tempPhotoPostUrl = "";
+      data.profileProjects = {
+        ...data.profileProjects,
+        [projectId]: {
+          ...data.profileProjects[projectId],
+          projectCoverPhotoUrl: uploadedPictureUrlResponse.data.url,
+          projectCoverPhotoId: uploadedPictureUrlResponse.data.photoId,
+          projectCoverPhotoBase64: base64,
+        },
+      };
       AsyncStorage.setItem("userDocData", JSON.stringify(data));
     });
 
     await dispatch({
-      type: CLEAR_TEMP_POST_PICTURE,
-      tempPhotoPostUrl: "",
+      type: CHANGE_PROJECT_PICTURE,
+      projectId: projectId,
+      projectCoverPhotoUrl: uploadedPictureUrlResponse.data.url,
+      projectCoverPhotoId: uploadedPictureUrlResponse.data.photoId,
+      projectCoverPhotoBase64: base64,
     });
   };
 };
@@ -801,6 +772,7 @@ export const addUserPost = (
   projectLastUpdated,
   projectDescription,
   profilePictureUrl,
+  tempPhotoPostId,
   tempPhotoPostUrl,
   tempPhotoPostBase64,
   caption,
@@ -827,6 +799,7 @@ export const addUserPost = (
       projectLastUpdated: projectLastUpdated,
       projectDescription: projectDescription,
       profilePictureUrl: profilePictureUrl,
+      postId: tempPhotoPostId,
       postUrl: tempPhotoPostUrl,
       caption: caption,
       profileLinks: profileLinks,
@@ -845,6 +818,7 @@ export const addUserPost = (
 
     await AsyncStorage.getItem("userDocData").then((data) => {
       data = JSON.parse(data);
+      data.tempPhotoPostId = "";
       data.tempPhotoPostUrl = "";
       data.profileProjects = {
         ...data.profileProjects,
