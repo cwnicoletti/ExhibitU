@@ -15,7 +15,6 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 import { useSelector, useDispatch } from "react-redux";
 import * as Permissions from "expo-permissions";
 import * as ImagePicker from "expo-image-picker";
-import exampleImage4 from "../../assets/showcase_icon.png";
 import { Ionicons } from "@expo/vector-icons";
 
 import Input from "../../components/UI/Input";
@@ -260,6 +259,7 @@ const EditProfileScreen = (props) => {
         projectLastUpdated,
         projectDescription,
         profilePictureUrl,
+        tempPhotoPostId,
         tempPhotoPostUrl,
         tempPhotoPostBase64,
         formState.inputValues.caption,
@@ -286,13 +286,7 @@ const EditProfileScreen = (props) => {
     if (!result.cancelled) {
       const base64 = `data:image/png;base64,${result.base64}`;
       await dispatch(
-        uploadAddTempPostPicture(
-          base64,
-          projectId,
-          showcaseId,
-          localId,
-          tempPhotoPostId
-        )
+        uploadAddTempPostPicture(base64, projectId, showcaseId, localId)
       );
     }
     await setIsLoadingTempPicture(false);
@@ -373,7 +367,7 @@ const EditProfileScreen = (props) => {
             Preview
           </Text>
           <PreviewPostItem
-            image={tempPhotoPostUrl}
+            image={tempPhotoPostBase64}
             profileImageSource={profilePictureBase64}
             projectTitle={projectTitle}
             name="Christian Nicoletti"
