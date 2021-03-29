@@ -31,7 +31,7 @@ const rootReducer = combineReducers({
 
 const store = createStore(rootReducer, applyMiddleware(ReduxThunk));
 
-export default function App() {
+export default App = () => {
   return (
     <Provider store={store}>
       <SafeAreaProvider>
@@ -39,4 +39,4 @@ export default function App() {
       </SafeAreaProvider>
     </Provider>
   );
-}
+};

@@ -17,3 +17,7 @@ config.js
 .firebaserc
 firebase.json
 functions/*
+functions/index.js
+functions/package-lock.json
+functions/package.json
+functions/.gitignore
