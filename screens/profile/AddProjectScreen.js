@@ -226,7 +226,6 @@ const AddProjectScreen = (props) => {
         showcaseId,
         localId,
         projectTempCoverPhotoId,
-        projectTempCoverPhotoUrl,
         projectTempCoverPhotoBase64,
         formState.inputValues.projectTitle,
         formState.inputValues.projectDescription,
