@@ -11,6 +11,7 @@ const inputReducer = (state, action) => {
         ...state,
         value: action.value,
         isValid: action.isValid,
+        error: action.error,
       };
     case INPUT_BLUR:
       return {
@@ -25,6 +26,7 @@ const inputReducer = (state, action) => {
 const Input = (props) => {
   const [inputState, dispatch] = useReducer(inputReducer, {
     value: props.initialValue ? props.initialValue : "",
+    error: props.errorText,
     isValid: props.initiallyValid,
     touched: false,
   });
@@ -32,14 +34,13 @@ const Input = (props) => {
   const { onInputChange, id } = props;
 
   useEffect(() => {
-    if (inputState.touched) {
-      onInputChange(id, inputState.value, inputState.isValid);
-    }
+    onInputChange(id, inputState.value, inputState.isValid);
   }, [inputState, onInputChange, id]);
 
   const textChangeHandler = (text) => {
     const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     let isValid = true;
+    let error = props.errorText;
     if (props.required && text.trim().length === 0) {
       isValid = false;
     }
@@ -52,29 +53,44 @@ const Input = (props) => {
     if (props.max != null && +text > props.max) {
       isValid = false;
     }
+    if (props.confirmPassword != null && props.confirmPassword != text) {
+      isValid = false;
+      error = "Passwords don't match!";
+    }
     if (props.minLength != null && text.length < props.minLength) {
       isValid = false;
+      error = "Password not long enough!";
     }
-    dispatch({ type: INPUT_CHANGE, value: text, isValid: isValid });
+    dispatch({
+      type: INPUT_CHANGE,
+      value: text,
+      isValid: isValid,
+      error: error,
+    });
   };
 
   const lostFocusHandler = () => {
-    dispatch({ type: INPUT_BLUR });
+    dispatch({
+      type: INPUT_BLUR,
+    });
   };
 
   return (
     <View style={styles.formControl}>
-      <Text style={styles.label}>{props.label}</Text>
+      <Text style={{ ...styles.label, ...props.textLabel }}>{props.label}</Text>
       <TextInput
         {...props}
-        style={styles.input}
+        style={{ ...styles.input, ...props.styleInput, color: "white" }}
         value={inputState.value}
+        placeholder="type here..."
+        placeholderTextColor={"grey"}
         onChangeText={textChangeHandler}
         onBlur={lostFocusHandler}
+        ref={props.inputRef}
       />
       {!inputState.isValid && inputState.touched && (
         <View style={styles.errorContainer}>
-          <Text style={styles.errorText}>{props.errorText}</Text>
+          <Text style={styles.errorText}>{inputState.error}</Text>
         </View>
       )}
     </View>
@@ -88,17 +104,16 @@ const styles = StyleSheet.create({
   },
   label: {
     marginVertical: 2,
+    paddingLeft: 15,
     color: "white",
-    paddingLeft: 10,
   },
   input: {
-    borderWidth: 1,
-    borderRadius: 15,
-    paddingHorizontal: 10,
-    paddingVertical: 11,
-    borderBottomColor: "#ccc",
     borderBottomWidth: 1,
-    backgroundColor: "white",
+    borderColor: "grey",
+    paddingHorizontal: 10,
+    paddingVertical: 10,
+    backgroundColor: "black",
+    margin: 10,
   },
   errorContainer: {
     marginVertical: 5,
