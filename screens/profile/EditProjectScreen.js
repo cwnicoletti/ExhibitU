@@ -250,7 +250,7 @@ const EditProjectScreen = (props) => {
     );
 
     props.navigation.navigate("Profile");
-  }, [dispatch, formState, deleteHandler]);
+  }, [dispatch, deleteHandler]);
 
   let android = null;
   if (Platform.OS === "android") {
