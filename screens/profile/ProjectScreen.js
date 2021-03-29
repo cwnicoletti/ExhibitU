@@ -17,7 +17,6 @@ const ProjectScreen = (props) => {
   const showcaseId = useSelector((state) => state.user.showcaseId);
   const profileProjects = useSelector((state) => state.user.profileProjects);
   const project = profileProjects[currentProjectId];
-  console.log("Projectscreen");
 
   let android = null;
   if (Platform.OS === "android") {
@@ -80,7 +79,7 @@ const ProjectScreen = (props) => {
     props.navigation.setParams({
       projectLinks: project.projectLinks,
     });
-  }, []);
+  }, [currentProjectId]);
 
   const topHeader = () => {
     return (
@@ -89,7 +88,7 @@ const ProjectScreen = (props) => {
           ...styles.profileContainerStyle,
           borderBottomColor: darkModeValue ? "white" : "black",
         }}
-        imgSource={{ uri: project.projectCoverPhotoBase64 }}
+        imgSource={project.projectCoverPhotoBase64}
         descriptionStyle={{
           ...styles.profileDescriptionStyle,
           color: darkModeValue ? "white" : "black",
