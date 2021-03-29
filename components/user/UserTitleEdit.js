@@ -6,6 +6,7 @@ import {
   Image,
   TouchableNativeFeedback,
   TouchableOpacity,
+  Platform,
 } from "react-native";
 import { useSelector } from "react-redux";
 
