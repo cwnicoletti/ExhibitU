@@ -23,6 +23,7 @@ const PictureScreen = (props) => {
   );
   const showcaseId = props.navigation.getParam("showcaseId");
   const projectId = props.navigation.getParam("projectId");
+  console.log(projectId);
   const postId = props.navigation.getParam("postId");
   const fullname = props.navigation.getParam("fullname");
   const username = props.navigation.getParam("username");
@@ -78,12 +79,12 @@ const PictureScreen = (props) => {
   };
 
   const deleteHandler = useCallback(async () => {
-    await dispatch(uploadRemovePost(showcaseId, localId, projectId, postId));
+    dispatch(uploadRemovePost(showcaseId, localId, projectId, postId));
 
     props.navigation.navigate("ViewProfileProject", {
       projectId: projectId,
     });
-  }, [uploadRemovePost]);
+  }, [dispatch, deleteHandler]);
 
   useEffect(() => {
     props.navigation.setParams({ darkMode: darkModeValue });
