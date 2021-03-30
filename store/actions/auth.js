@@ -60,7 +60,9 @@ export const signup = (email, fullname, username, password) => {
       getSignupResponse.data.docData.cheeredPosts,
       getSignupResponse.data.docData.profileProjects,
       getSignupResponse.data.docData.profileLinks,
-      getSignupResponse.data.docData.userFeed,
+      getSignupResponse.data.docData.userFeed
+        ? getSignupResponse.data.docData.userFeed
+        : {},
       getSignupResponse.data.docData.darkMode,
       getSignupResponse.data.docData.showcaseLocalMode,
       getSignupResponse.data.docData.showResume,
@@ -211,9 +213,9 @@ export const login = (email, password) => {
       getLoginResponse.data.docData.advocating,
       getLoginResponse.data.docData.projectsAdvocating,
       getLoginResponse.data.docData.cheeredPosts,
-      profileProjects,
+      profileProjects ? profileProjects : {},
       getLoginResponse.data.docData.profileLinks,
-      userFeed,
+      userFeed ? userFeed : {},
       getLoginResponse.data.docData.darkMode,
       getLoginResponse.data.docData.showcaseLocalMode,
       getLoginResponse.data.docData.showResume,
