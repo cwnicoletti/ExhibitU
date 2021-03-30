@@ -64,7 +64,7 @@ const IntroScreen = (props) => {
     {
       title: "",
       body:
-        "Our goal is to build an encouraging and healthy community for those looking to build or present their work or hobby!",
+        "Our goal is to build an universal, encouraging and healthy community for those looking to build or present their work or hobby!",
       useImg5: true,
     },
   ];
