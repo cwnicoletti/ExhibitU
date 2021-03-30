@@ -149,6 +149,7 @@ const formReducer = (state, action) => {
 
 const AddProjectScreen = (props) => {
   const dispatch = useDispatch();
+  const [fileSizeError, setFileSizeError] = useState(false);
   const [linksState, setLinksState] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadingTempPicture, setIsLoadingTempPicture] = useState(false);
@@ -270,15 +271,21 @@ const AddProjectScreen = (props) => {
     });
     await setIsLoadingTempPicture(true);
     if (!result.cancelled) {
-      const base64 = `data:image/png;base64,${result.base64}`;
-      await dispatch(
-        uploadAddTempProjectCoverPicture(
-          base64,
-          showcaseId,
-          localId,
-          projectTempCoverPhotoId
-        )
-      );
+      const fileSize = result.base64.length * (3 / 4) - 2;
+      if (fileSize > 7000000) {
+        setFileSizeError(true);
+      } else {
+        setFileSizeError(false);
+        const base64 = `data:image/png;base64,${result.base64}`;
+        await dispatch(
+          uploadAddTempProjectCoverPicture(
+            base64,
+            showcaseId,
+            localId,
+            projectTempCoverPhotoId
+          )
+        );
+      }
     }
     await setIsLoadingTempPicture(false);
   };
@@ -524,6 +531,20 @@ const AddProjectScreen = (props) => {
               <ActivityIndicator size="small" color="white" />
             </View>
           )}
+          {fileSizeError ? (
+            <Text
+              style={{
+                color: "red",
+                alignSelf: "center",
+                marginHorizontal: 10,
+                marginTop: 5,
+                marginBottom: 15,
+              }}
+            >
+              Picture file size bigger than 7MB. Try cropping or using a
+              different picture.
+            </Text>
+          ) : null}
           <Input
             textLabel={{ color: darkModeValue ? "white" : "black" }}
             id="projectTitle"

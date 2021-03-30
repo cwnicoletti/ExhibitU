@@ -151,6 +151,7 @@ const formReducer = (state, action) => {
 
 const EditProjectScreen = (props) => {
   const dispatch = useDispatch();
+  const [fileSizeError, setFileSizeError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadingTempPicture, setIsLoadingTempPicture] = useState(false);
   const darkModeValue = useSelector((state) => state.switches.darkMode);
@@ -283,10 +284,16 @@ const EditProjectScreen = (props) => {
     });
     await setIsLoadingTempPicture(true);
     if (!result.cancelled) {
-      const base64 = `data:image/png;base64,${result.base64}`;
-      await dispatch(
-        uploadAddTempProjectCoverPicture(base64, projectId, localId)
-      );
+      const fileSize = result.base64.length * (3 / 4) - 2;
+      if (fileSize > 7000000) {
+        setFileSizeError(true);
+      } else {
+        setFileSizeError(false);
+        const base64 = `data:image/png;base64,${result.base64}`;
+        await dispatch(
+          uploadAddTempProjectCoverPicture(base64, projectId, localId)
+        );
+      }
     }
     await setIsLoadingTempPicture(false);
   };
@@ -528,6 +535,20 @@ const EditProjectScreen = (props) => {
               <ActivityIndicator size="small" color="white" />
             </View>
           )}
+          {fileSizeError ? (
+            <Text
+              style={{
+                color: "red",
+                alignSelf: "center",
+                marginHorizontal: 10,
+                marginTop: 5,
+                marginBottom: 15,
+              }}
+            >
+              Picture file size bigger than 7MB. Try cropping or using a
+              different picture.
+            </Text>
+          ) : null}
           <Input
             textLabel={{ color: darkModeValue ? "white" : "black" }}
             id="projectTitle"

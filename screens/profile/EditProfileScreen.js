@@ -149,6 +149,7 @@ const formReducer = (state, action) => {
 
 const EditProfileScreen = (props) => {
   const dispatch = useDispatch();
+  const [fileSizeError, setFileSizeError] = useState(false);
   const [showResumeField, setShowResumeField] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const prevLinks = useSelector((state) => state.user.profileLinks);
@@ -277,8 +278,14 @@ const EditProfileScreen = (props) => {
 
     await setIsLoadingTempPicture(true);
     if (!result.cancelled) {
-      const base64 = `data:image/png;base64,${result.base64}`;
-      await dispatch(uploadChangeProfilePicture(base64, showcaseId, localId));
+      const fileSize = result.base64.length * (3 / 4) - 2;
+      if (fileSize > 7000000) {
+        setFileSizeError(true);
+      } else {
+        setFileSizeError(false);
+        const base64 = `data:image/png;base64,${result.base64}`;
+        await dispatch(uploadChangeProfilePicture(base64, showcaseId, localId));
+      }
     }
     await setIsLoadingTempPicture(false);
   };
@@ -672,6 +679,20 @@ const EditProfileScreen = (props) => {
           <ActivityIndicator size="small" color="white" />
         </View>
       )}
+      {fileSizeError ? (
+            <Text
+              style={{
+                color: "red",
+                alignSelf: "center",
+                marginHorizontal: 10,
+                marginTop: 5,
+                marginBottom: 15,
+              }}
+            >
+              Picture file size bigger than 7MB. Try cropping or using a
+              different picture.
+            </Text>
+          ) : null}
       <Input
         textLabel={{ color: darkModeValue ? "white" : "black" }}
         id="fullname"
