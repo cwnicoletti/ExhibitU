@@ -1,17 +1,14 @@
-import React, { useRef } from "react";
+import React from "react";
 import { useDispatch } from "react-redux";
 
 import { createStackNavigator } from "react-navigation-stack";
 import { createAppContainer, createSwitchNavigator } from "react-navigation";
 import { createBottomTabNavigator } from "react-navigation-tabs";
 import { createDrawerNavigator, DrawerActions } from "react-navigation-drawer";
-import { Ionicons } from "@expo/vector-icons";
-import { SimpleLineIcons } from "@expo/vector-icons";
 
 import ProfileScreen from "../screens/profile/ProfileScreen";
 import ShowcaseSettingsScreen from "../screens/drawers/ShowcaseSettingsScreen";
 import VoteUpdatesSettingsScreen from "../screens/drawers/VoteUpdatesSettingsScreen";
-import FeedbackScreen from "../screens/drawers/FeedbackScreen";
 import EditProfileScreen from "../screens/profile/EditProfileScreen";
 import SignupOrLoginScreen from "../screens/auth/SignupOrLoginScreen";
 import SignupScreen1 from "../screens/auth/SignupScreen1";
@@ -166,7 +163,6 @@ const ProfileandSettingsNavigator = createStackNavigator({
   EditProfile: EditProfileScreen,
   ShowcaseSettings: ShowcaseSettingsScreen,
   Updates: VoteUpdatesSettingsScreen,
-  Feedback: FeedbackScreen,
   Advocates: AdvocatesScreen,
   Following: FollowingScreen,
   Followers: FollowersScreen,
