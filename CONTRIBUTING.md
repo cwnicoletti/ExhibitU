@@ -26,7 +26,7 @@ Here are some ways you can contribute:
   We will happily reopen the issue!
 
 ## Submitting a Pull Request
-1. [Fork](https://help.github.com/articles/fork-a-repo/) the [official repository](https://github.com/cwnicoletti/Electroencephalogram-Project).
+1. [Fork](https://help.github.com/articles/fork-a-repo/) the [official repository](https://github.com/christiannicoletti/Showcase).
 2. [Create a topic branch.](https://help.github.com/articles/about-branches/)
 3. Implement your feature or bug fix.
 4. Add, commit, and push your changes.
