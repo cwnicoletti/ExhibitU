@@ -1,5 +1,5 @@
 # Showcase
-This a mobile app built from scratch using React Native and Expo.
+This is a mobile app built from scratch using React Native and Expo. Designs were made via Adobe Xd.
 
 
 ## Getting started
