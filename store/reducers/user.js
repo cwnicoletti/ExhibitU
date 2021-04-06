@@ -121,7 +121,6 @@ export default (state = intialState, action) => {
       return {
         ...state,
         userFeed: {
-          ...state.userFeed,
           ...action.feedData,
         },
       };
@@ -203,23 +202,25 @@ export default (state = intialState, action) => {
       };
     case ADD_USER_PROJECT:
       Object.entries(state.userFeed).map(([id, value]) => {
-        Object.assign(state.userFeed[id].profileProjects, {
-          ...state.profileProjects,
-          [action.projectId]: {
-            ...state.profileProjects[action.projectId],
-            projectId: action.projectId,
-            projectCoverPhotoId: action.projectCoverPhotoId,
-            projectCoverPhotoUrl: action.projectCoverPhotoUrl,
-            projectCoverPhotoBase64: action.projectCoverPhotoBase64,
-            projectDateCreated: action.projectDateCreated,
-            projectLastUpdated: action.projectLastUpdated,
-            projectTitle: action.projectTitle,
-            projectDescription: action.projectDescription,
-            projectLinks: action.projectLinks,
-            projectColumns: 2,
-            projectPosts: {},
-          },
-        });
+        if (state.userFeed[id].showcaseId === action.showcaseId) {
+          Object.assign(state.userFeed[id].profileProjects, {
+            ...state.profileProjects,
+            [action.projectId]: {
+              ...state.profileProjects[action.projectId],
+              projectId: action.projectId,
+              projectCoverPhotoId: action.projectCoverPhotoId,
+              projectCoverPhotoUrl: action.projectCoverPhotoUrl,
+              projectCoverPhotoBase64: action.projectCoverPhotoBase64,
+              projectDateCreated: action.projectDateCreated,
+              projectLastUpdated: action.projectLastUpdated,
+              projectTitle: action.projectTitle,
+              projectDescription: action.projectDescription,
+              projectLinks: action.projectLinks,
+              projectColumns: 2,
+              projectPosts: {},
+            },
+          });
+        }
       });
       return {
         ...state,
@@ -351,10 +352,14 @@ export default (state = intialState, action) => {
       };
     case UPDATE_ALL_POSTS:
       Object.entries(state.userFeed).map(([id, value]) => {
-        Object.assign(
-          state.userFeed[id].profileProjects,
-          state.userFeed[action.postId].profileProjects
-        );
+        if (id !== action.postId) {
+          if (state.userFeed[id].showcaseId === action.showcaseId) {
+            Object.assign(
+              state.userFeed[id].profileProjects,
+              state.userFeed[action.postId].profileProjects
+            );
+          }
+        }
       });
       return state;
     case UPDATE_USER_PROJECT:

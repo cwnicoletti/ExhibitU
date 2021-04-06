@@ -140,9 +140,7 @@ const UserFeedScreen = (props) => {
     });
 
     setIsRefreshing(true);
-    if (following.length > 0) {
-      await dispatch(getUserFeed(localId, showcaseId));
-    }
+    await dispatch(getUserFeed(localId, showcaseId));
     setIsRefreshing(false);
   };
 
