@@ -3,7 +3,6 @@ import { createStore, combineReducers, applyMiddleware } from "redux";
 import { Provider } from "react-redux";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import ReduxThunk from "redux-thunk";
-import * as Notifications from "expo-notifications";
 
 import authReducer from "./store/reducers/auth";
 import switchesReducer from "./store/reducers/switches";
@@ -14,13 +13,13 @@ import NavigationContainer from "./navigation/NavigationContainer";
 
 // Clapping, default project icon made by Freepik (https://www.flaticon.com/authors/freepik)
 
-Notifications.setNotificationHandler({
-  handleNotification: async () => {
-    return {
-      shouldShowAlert: true,
-    };
-  },
-});
+// Notifications.setNotificationHandler({
+//   handleNotification: async () => {
+//     return {
+//       shouldShowAlert: true,
+//     };
+//   },
+// });
 
 const rootReducer = combineReducers({
   switches: switchesReducer,
