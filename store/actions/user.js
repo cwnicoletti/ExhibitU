@@ -332,15 +332,17 @@ export const uploadNewProject = (
         },
       };
       for (const post in data.userFeed) {
-        data.userFeed = {
-          ...data.userFeed,
-          [post]: {
-            ...data.userFeed[post],
-            profileProjects: {
-              ...data.profileProjects,
+        if (data.userFeed[post].showcaseId === showcaseId) {
+          data.userFeed = {
+            ...data.userFeed,
+            [post]: {
+              ...data.userFeed[post],
+              profileProjects: {
+                ...data.profileProjects,
+              },
             },
-          },
-        };
+          };
+        }
       }
       data.projectTempCoverPhotoUrl = "";
       data.projectTempCoverPhotoBase64 = "";
@@ -349,6 +351,7 @@ export const uploadNewProject = (
     });
     dispatch({
       type: ADD_USER_PROJECT,
+      showcaseId: showcaseId,
       projectId: newProjectResponse.data.projectId,
       projectCoverPhotoId: newProjectResponse.data.photoId,
       projectCoverPhotoUrl: newProjectResponse.data.url,
@@ -924,10 +927,12 @@ export const addUserPost = (
       };
       Object.entries(data.userFeed).map(([id, value]) => {
         if (id !== postId) {
-          Object.assign(
-            data.userFeed[id].profileProjects,
-            data.userFeed[postId].profileProjects
-          );
+          if (data.userFeed[id].showcaseId === showcaseId) {
+            Object.assign(
+              data.userFeed[id].profileProjects,
+              data.userFeed[postId].profileProjects
+            );
+          }
         }
       });
       AsyncStorage.setItem("userDocData", JSON.stringify(data));
@@ -981,7 +986,6 @@ export const getUserFeed = (localId, showcaseId) => {
     await AsyncStorage.getItem("userDocData").then((data) => {
       data = JSON.parse(data);
       data.userFeed = {
-        ...data.userFeed,
         ...returnData,
       };
       AsyncStorage.setItem("userDocData", JSON.stringify(data));
