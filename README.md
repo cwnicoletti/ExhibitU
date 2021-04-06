@@ -8,14 +8,11 @@ All contributions should be referenced to the [CONTRIBUTIONS](https://github.com
 
 ## Libraries used
 "@react-native-async-storage/async-storage": "^1.14.1"<br />
-"@react-native-community/async-storage": "^1.12.1"<br />
 "@react-native-community/masked-view": "^0.1.10"<br />
 "@testing-library/react-native": "^7.2.0"<br />
 "algoliasearch": "^4.8.3"<br />
 "atob": "^2.1.2"<br />
 "axios": "^0.21.1"<br />
-"base-64": "^1.0.0"<br />
-"base64-js": "^1.5.1"<br />
 "buffer": "^6.0.3"<br />
 "expo": "~39.0.2"<br />
 "expo-image-picker": "~9.1.0"<br />
@@ -29,7 +26,6 @@ All contributions should be referenced to the [CONTRIBUTIONS](https://github.com
 "firebase": "^8.1.1"<br />
 "jest": "^26.6.3"<br />
 "jest-expo": "^40.0.2"<br />
-"js-base64": "^3.6.0"<br />
 "react": "16.13.1"<br />
 "react-dom": "16.13.1"<br />
 "react-native": "https://github.com/expo/react-native/archive/sdk-39.0.4.tar.gz"<br />
