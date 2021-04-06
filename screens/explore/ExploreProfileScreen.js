@@ -178,6 +178,10 @@ const ExploreProfileScreen = (props) => {
     props.navigation.setParams({ darkMode: darkModeValue });
     props.navigation.setParams({ isfollowing: isfollowing });
     props.navigation.setParams({ isLoading: isLoading });
+    props.navigation.setParams({ showcaseId: showcaseId });
+    props.navigation.setParams({
+      exploredShowcaseId: exploredUserData.exploredShowcaseId,
+    });
     props.navigation.setParams({ followFn: followUserHandler });
     props.navigation.setParams({ unfollowFn: unfollowUserHandler });
   }, [
@@ -322,6 +326,8 @@ ExploreProfileScreen.navigationOptions = (navData) => {
   const darkModeValue = navData.navigation.getParam("darkMode");
   const isfollowing = navData.navigation.getParam("isfollowing");
   const isLoading = navData.navigation.getParam("isLoading");
+  const showcaseId = navData.navigation.getParam("showcaseId");
+  const exploredShowcaseId = navData.navigation.getParam("exploredShowcaseId");
   const followFn = navData.navigation.getParam("followFn");
   const unfollowFn = navData.navigation.getParam("unfollowFn");
   return {
@@ -369,51 +375,55 @@ ExploreProfileScreen.navigationOptions = (navData) => {
     ),
     headerRight: () => (
       <View>
-        {!isfollowing ? (
+        {showcaseId !== exploredShowcaseId ? (
           <View>
-            {!isLoading ? (
-              <HeaderButtons
-                HeaderButtonComponent={SimpleLineIconsHeaderButton}
-              >
-                <Item
-                  title="Follow"
-                  iconName={"user-follow"}
-                  color={darkModeValue ? "white" : "black"}
-                  onPress={followFn}
-                />
-              </HeaderButtons>
+            {!isfollowing ? (
+              <View>
+                {!isLoading ? (
+                  <HeaderButtons
+                    HeaderButtonComponent={SimpleLineIconsHeaderButton}
+                  >
+                    <Item
+                      title="Follow"
+                      iconName={"user-follow"}
+                      color={darkModeValue ? "white" : "black"}
+                      onPress={followFn}
+                    />
+                  </HeaderButtons>
+                ) : (
+                  <View style={{ margin: 20 }}>
+                    <ActivityIndicator
+                      size="small"
+                      color={darkModeValue ? "white" : "black"}
+                    />
+                  </View>
+                )}
+              </View>
             ) : (
-              <View style={{ margin: 20 }}>
-                <ActivityIndicator
-                  size="small"
-                  color={darkModeValue ? "white" : "black"}
-                />
+              <View>
+                {!isLoading ? (
+                  <HeaderButtons
+                    HeaderButtonComponent={SimpleLineIconsHeaderButton}
+                  >
+                    <Item
+                      title="Follow"
+                      iconName={"user-follow"}
+                      color={"red"}
+                      onPress={unfollowFn}
+                    />
+                  </HeaderButtons>
+                ) : (
+                  <View style={{ margin: 20 }}>
+                    <ActivityIndicator
+                      size="small"
+                      color={darkModeValue ? "white" : "black"}
+                    />
+                  </View>
+                )}
               </View>
             )}
           </View>
-        ) : (
-          <View>
-            {!isLoading ? (
-              <HeaderButtons
-                HeaderButtonComponent={SimpleLineIconsHeaderButton}
-              >
-                <Item
-                  title="Follow"
-                  iconName={"user-follow"}
-                  color={"red"}
-                  onPress={unfollowFn}
-                />
-              </HeaderButtons>
-            ) : (
-              <View style={{ margin: 20 }}>
-                <ActivityIndicator
-                  size="small"
-                  color={darkModeValue ? "white" : "black"}
-                />
-              </View>
-            )}
-          </View>
-        )}
+        ) : null}
       </View>
     ),
   };
