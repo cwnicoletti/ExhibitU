@@ -24,15 +24,12 @@ All contributions should be referenced to the [CONTRIBUTIONS](https://github.com
 ## Libraries used
 "@react-native-async-storage/async-storage": "^1.14.1"<br />
 "@react-native-community/masked-view": "^0.1.10"<br />
-"@testing-library/react-native": "^7.2.0"<br />
 "algoliasearch": "^4.8.3"<br />
-"atob": "^2.1.2"<br />
 "axios": "^0.21.1"<br />
 "buffer": "^6.0.3"<br />
 "expo": "~39.0.2"<br />
 "expo-image-picker": "~9.1.0"<br />
 "expo-linear-gradient": "~8.3.0"<br />
-"expo-linking": "^1.0.5"<br />
 "expo-notifications": "~0.7.2"<br />
 "expo-permissions": "~9.3.0"<br />
 "expo-screen-orientation": "~2.0.0"<br />
@@ -55,18 +52,15 @@ All contributions should be referenced to the [CONTRIBUTIONS](https://github.com
 "react-native-svg": "12.1.0"<br />
 "react-native-svg-transformer": "^0.14.3"<br />
 "react-native-vector-icons": "^7.1.0"<br />
-"react-native-web": "~0.13.12"<br />
 "react-navigation": "^4.4.3"<br />
 "react-navigation-drawer": "^2.6.0"<br />
 "react-navigation-header-buttons": "^6.3.1"<br />
-"react-navigation-material-bottom-tabs": "^2.3.3"<br />
 "react-navigation-stack": "^2.9.0"<br />
 "react-navigation-tabs": "^2.10.1"<br />
 "react-redux": "^7.2.2"<br />
 "react-test-renderer": "^17.0.2"<br />
 "redux": "^4.0.5"<br />
 "redux-thunk": "^2.3.0"<br />
-"window": "^4.2.7"<br />
 
 ## Licensing
 The content of this repository is licensed under the terms specified in the [LICENSE](https://github.com/christiannicoletti/Showcase/blob/master/LICENSE) file.
