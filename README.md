@@ -17,7 +17,7 @@ This is a mobile app built from scratch using React Native and Expo. Designs wer
 6. While in the root directory of this repo, run "*expo start*"
 7. Expo Go should find your project if you're on the same wifi as your computer, if not: Open the camera app and focus on the QR code to get a notification to the app.
 
-** THIS APP USES A BACKEND IN A PRIVATE REPO. YOU CAN'T EDIT THE BACKEND, BUT IT WILL STILL WORK **
+** THIS MOBILE APP USES A BACKEND IN A PRIVATE REPO. YOU CAN'T EDIT THE BACKEND, BUT IT WILL STILL WORK **
 
 ## Contributions
 All contributions should be referenced to the [CONTRIBUTIONS](https://github.com/christiannicoletti/Showcase/blob/master/CONTRIBUTING.md) file before making a pull request.
