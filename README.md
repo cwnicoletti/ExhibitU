@@ -1,9 +1,9 @@
 # Showcase
 This is a mobile app built from scratch using React Native and Expo. Designs were made via Adobe Xd.
 
-<img src="https://res.cloudinary.com/personaluse1234/image/upload/v1617769361/image2_hoz5kt.png" width="200">&nbsp;
-<img src="https://res.cloudinary.com/personaluse1234/image/upload/v1617769361/image0_3_t2ufqe.png" width="200">&nbsp;
-<img src="https://res.cloudinary.com/personaluse1234/image/upload/v1617769367/image1_1_yfw0kk.png" width="200">&nbsp;
+<img src="https://res.cloudinary.com/personaluse1234/image/upload/v1617769361/image2_hoz5kt.png" width="250">&nbsp;
+<img src="https://res.cloudinary.com/personaluse1234/image/upload/v1617769361/image0_3_t2ufqe.png" width="250">&nbsp;
+<img src="https://res.cloudinary.com/personaluse1234/image/upload/v1617769367/image1_1_yfw0kk.png" width="250">&nbsp;
 
 
 
