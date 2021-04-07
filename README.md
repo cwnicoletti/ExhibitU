@@ -10,8 +10,8 @@ This is a mobile app built from scratch using React Native and Expo. Designs wer
 ## Getting started
 
 1. Download [npm](https://www.npmjs.com/get-npm) from Node.js
-2. Run "*expo install [package-name]*" for each package listed below (to get the correct versions)
-3. Install the [expo-cli](https://docs.expo.io/)
+2. Install the [expo-cli](https://docs.expo.io/)
+3. Run "*expo install [package-name]*" for each package listed below (to get the correct versions)
 4. Download [Expo Go](https://apps.apple.com/us/app/expo-go/id982107779) on the App Store
 5. [Fork](https://docs.github.com/en/github/getting-started-with-github/fork-a-repo) this repository
 6. While in the root directory of this repo, run "*expo start*"
