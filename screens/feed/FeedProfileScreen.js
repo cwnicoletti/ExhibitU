@@ -21,7 +21,6 @@ const FeedProfileScreen = (props) => {
     username: props.navigation.getParam("username"),
     jobTitle: props.navigation.getParam("jobTitle"),
     profileBiography: props.navigation.getParam("profileBiography"),
-    profileProjects: props.navigation.getParam("profileProjects"),
     profilePictureUrl: props.navigation.getParam("profilePictureUrl"),
     numberOfFollowers: props.navigation.getParam("numberOfFollowers"),
     numberOfFollowing: props.navigation.getParam("numberOfFollowing"),
@@ -29,6 +28,9 @@ const FeedProfileScreen = (props) => {
     hideFollowing: props.navigation.getParam("hideFollowing"),
     hideFollowers: props.navigation.getParam("hideFollowers"),
     hideAdvocates: props.navigation.getParam("hideAdvocates"),
+    profileProjects: props.navigation.getParam("profileProjects")
+      ? props.navigation.getParam("profileProjects")
+      : {},
     profileLinks: props.navigation.getParam("profileLinks")
       ? props.navigation.getParam("profileLinks")
       : {},
@@ -159,11 +161,7 @@ const FeedProfileScreen = (props) => {
         numColumns={userData.profileColumns}
         renderItem={(itemData) => (
           <ProjectItem
-            image={
-              showcaseId === userData.showcaseId
-                ? itemData.item.projectCoverPhotoBase64
-                : itemData.item.projectCoverPhotoUrl
-            }
+            image={itemData.item.projectCoverPhotoBase64}
             title={itemData.item.projectTitle}
             projectContainer={{
               backgroundColor: darkModeValue ? "black" : "white",
