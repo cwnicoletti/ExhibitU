@@ -50,10 +50,7 @@ const FeedCommentsScreen = (props) => {
     userShowcaseId === showcaseId
       ? useSelector((state) => state.user.numberOfAdvocates)
       : props.navigation.getParam("numberOfAdvocates");
-  const postPhoto =
-    userShowcaseId === showcaseId
-      ? profileProjects[projectId].projectPosts[postId].postPhotoBase64
-      : props.navigation.getParam("postPhotoUrl");
+  const postPhoto = props.navigation.getParam("postPhotoBase64");
   const numberOfCheers =
     userShowcaseId === showcaseId
       ? profileProjects[projectId].projectPosts[postId].numberOfCheers
@@ -240,7 +237,7 @@ const FeedCommentsScreen = (props) => {
             jobTitle,
             profileBiography,
             profileProjects,
-            profilePictureUrl,
+            profilePicture,
             numberOfFollowers,
             numberOfFollowing,
             numberOfAdvocates,
