@@ -11,31 +11,9 @@ import { HeaderButtons, Item } from "react-navigation-header-buttons";
 const FeedProjectScreen = (props) => {
   const darkModeValue = useSelector((state) => state.switches.darkMode);
   const currentProjectId = props.navigation.getParam("projectId");
-  const showcaseId = useSelector((state) => state.user.showcaseId);
-  const projectData = {
-    showcaseId: props.navigation.getParam("showcaseId"),
-    projectId: props.navigation.getParam("projectId"),
-    fullname: props.navigation.getParam("fullname"),
-    username: props.navigation.getParam("username"),
-    jobTitle: props.navigation.getParam("jobTitle"),
-    profileBiography: props.navigation.getParam("profileBiography"),
-    profileProjects: props.navigation.getParam("profileProjects"),
-    profilePictureUrl: props.navigation.getParam("profilePictureUrl"),
-    numberOfFollowers: props.navigation.getParam("numberOfFollowers"),
-    numberOfFollowing: props.navigation.getParam("numberOfFollowing"),
-    numberOfAdvocates: props.navigation.getParam("numberOfAdvocates"),
-    hideFollowing: props.navigation.getParam("hideFollowing"),
-    hideFollowers: props.navigation.getParam("hideFollowers"),
-    hideAdvocates: props.navigation.getParam("hideAdvocates"),
-    profileLinks: props.navigation.getParam("profileLinks")
-      ? props.navigation.getParam("profileLinks")
-      : {},
-    postLinks: props.navigation.getParam("postLinks")
-      ? props.navigation.getParam("postLinks")
-      : {},
-  };
+  const profileProjects = props.navigation.getParam("profileProjects");
 
-  const project = Object.values(projectData.profileProjects).find(
+  const project = Object.values(profileProjects).find(
     (project) => project.projectId === currentProjectId
   );
 
@@ -54,7 +32,7 @@ const FeedProjectScreen = (props) => {
     profileBiography,
     profileProjects,
     profilePictureUrl,
-    postPhotoUrl,
+    postPhotoBase64,
     numberOfCheers,
     numberOfComments,
     caption,
@@ -77,7 +55,7 @@ const FeedProjectScreen = (props) => {
       profileBiography: profileBiography,
       profileProjects: profileProjects,
       profilePictureUrl: profilePictureUrl,
-      postPhotoUrl: postPhotoUrl,
+      postPhotoBase64: postPhotoBase64,
       numberOfCheers: numberOfCheers,
       numberOfComments: numberOfComments,
       caption: caption,
@@ -95,9 +73,7 @@ const FeedProjectScreen = (props) => {
   useEffect(() => {
     props.navigation.setParams({ darkMode: darkModeValue });
     props.navigation.setParams({ android: android });
-    props.navigation.setParams({ projectId: currentProjectId });
-    props.navigation.setParams({ projectTitle: project.projectTitle });
-  }, [darkModeValue, android, project.projectTitle, currentProjectId]);
+  }, [darkModeValue, android]);
 
   const topHeader = () => {
     return (
@@ -106,11 +82,7 @@ const FeedProjectScreen = (props) => {
           ...styles.profileContainerStyle,
           borderBottomColor: darkModeValue ? "white" : "black",
         }}
-        imgSource={
-          showcaseId === projectData.showcaseId
-            ? project.projectCoverPhotoBase64
-            : project.projectCoverPhotoUrl
-        }
+        imgSource={project.projectCoverPhotoBase64}
         descriptionStyle={{
           ...styles.profileDescriptionStyle,
           color: darkModeValue ? "white" : "black",
@@ -136,11 +108,7 @@ const FeedProjectScreen = (props) => {
         numColumns={project.projectColumns}
         renderItem={(itemData) => (
           <ProjectPictures
-            image={
-              itemData.item.postPhotoBase64
-                ? itemData.item.postPhotoBase64
-                : itemData.item.postPhotoUrl
-            }
+            image={itemData.item.postPhotoBase64}
             projectContainer={{
               backgroundColor: darkModeValue ? "black" : "white",
               width:
@@ -161,27 +129,27 @@ const FeedProjectScreen = (props) => {
             imageContainer={styles.imageContainer}
             onSelect={() =>
               viewCommentsHandler(
-                projectData.showcaseId,
-                projectData.projectId,
+                itemData.item.showcaseId,
+                itemData.item.projectId,
                 itemData.item.postId,
-                projectData.fullname,
-                projectData.username,
-                projectData.jobTitle,
-                projectData.profileBiography,
-                projectData.profileProjects,
-                projectData.profilePictureUrl,
-                itemData.item.postPhotoUrl,
+                itemData.item.fullname,
+                itemData.item.username,
+                itemData.item.jobTitle,
+                itemData.item.profileBiography,
+                profileProjects,
+                itemData.item.profilePictureUrl,
+                itemData.item.postPhotoBase64,
                 itemData.item.numberOfCheers,
                 itemData.item.numberOfComments,
                 itemData.item.caption,
-                projectData.numberOfFollowers,
-                projectData.numberOfFollowing,
-                projectData.numberOfAdvocates,
-                projectData.hideFollowing,
-                projectData.hideFollowers,
-                projectData.hideAdvocates,
-                projectData.profileLinks,
-                projectData.postLinks
+                itemData.item.numberOfFollowers,
+                itemData.item.numberOfFollowing,
+                itemData.item.numberOfAdvocates,
+                itemData.item.hideFollowing,
+                itemData.item.hideFollowers,
+                itemData.item.hideAdvocates,
+                itemData.item.profileLinks,
+                itemData.item.postLinks
               )
             }
           />
@@ -194,8 +162,6 @@ const FeedProjectScreen = (props) => {
 FeedProjectScreen.navigationOptions = (navData) => {
   const darkModeValue = navData.navigation.getParam("darkMode");
   const android = navData.navigation.getParam("android");
-  const projectId = navData.navigation.getParam("projectId");
-  const projectTitle = navData.navigation.getParam("projectTitle");
 
   return {
     headerTitle: () => (
