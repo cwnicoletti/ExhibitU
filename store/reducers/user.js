@@ -503,18 +503,24 @@ export default (state = intialState, action) => {
       };
     case CHEER_UPDATE_POSTS:
       Object.entries(state.userFeed).map(([id, value]) => {
-        state.userFeed[id].profileProjects[action.projectId].projectPosts[
-          action.postId
-        ].numberOfCheers =
-          state.userFeed[action.postId].profileProjects[
-            action.projectId
-          ].projectPosts[action.postId].numberOfCheers;
-        Object.assign(
-          state.userFeed[id].profileProjects[action.projectId].projectPosts[
-            action.postId
-          ].cheering,
-          state.userFeed[action.postId].profileProjects[action.projectId]
-            .projectPosts[action.postId].cheering
+        Object.entries(state.userFeed[id].profileProjects).map(
+          ([projId, value]) => {
+            if (
+              Object.keys(
+                state.userFeed[id].profileProjects[projId].projectPosts
+              ).includes(action.postId)
+            ) {
+              state.userFeed[id].profileProjects[projId].projectPosts[
+                action.postId
+              ].numberOfCheers = state.userFeed[action.postId].numberOfCheers;
+              Object.assign(
+                state.userFeed[id].profileProjects[projId].projectPosts[
+                  action.postId
+                ].cheering,
+                state.userFeed[action.postId].cheering
+              );
+            }
+          }
         );
       });
       return state;
@@ -660,18 +666,24 @@ export default (state = intialState, action) => {
       };
     case UNCHEER_UPDATE_POSTS:
       Object.entries(state.userFeed).map(([id, value]) => {
-        state.userFeed[id].profileProjects[action.projectId].projectPosts[
-          action.postId
-        ].numberOfCheers =
-          state.userFeed[action.postId].profileProjects[
-            action.projectId
-          ].projectPosts[action.postId].numberOfCheers;
-        Object.assign(
-          state.userFeed[id].profileProjects[action.projectId].projectPosts[
-            action.postId
-          ].cheering,
-          state.userFeed[action.postId].profileProjects[action.projectId]
-            .projectPosts[action.postId].cheering
+        Object.entries(state.userFeed[id].profileProjects).map(
+          ([projId, value]) => {
+            if (
+              Object.keys(
+                state.userFeed[id].profileProjects[projId].projectPosts
+              ).includes(action.postId)
+            ) {
+              state.userFeed[id].profileProjects[projId].projectPosts[
+                action.postId
+              ].numberOfCheers = state.userFeed[action.postId].numberOfCheers;
+              Object.assign(
+                state.userFeed[id].profileProjects[projId].projectPosts[
+                  action.postId
+                ].cheering,
+                state.userFeed[action.postId].cheering
+              );
+            }
+          }
         );
       });
       return state;

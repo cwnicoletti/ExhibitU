@@ -52,6 +52,20 @@ export const UPDATE_ALL_POSTS = "UPDATE_ALL_POSTS";
 export const UPLOAD_FEEDBACK = "UPLOAD_FEEDBACK";
 export const UPLOAD_REPORT_BUG = "UPLOAD_REPORT_BUG";
 
+const getBase64FromUrl = async (url) => {
+  if (url) {
+    const response = await axios.get(url, {
+      responseType: "arraybuffer",
+    });
+    const base64 = Buffer.from(await response.data, "base64").toString(
+      "base64"
+    );
+    return `data:image/png;base64,${base64}`;
+  } else {
+    return "";
+  }
+};
+
 export const refreshProfile = (localId) => {
   return async (dispatch) => {
     const downloadForm = {
@@ -981,7 +995,34 @@ export const getUserFeed = (localId, showcaseId) => {
       userFeedGet
     );
 
-    const returnData = uploadedUserPost.data.returnData;
+    let returnData = uploadedUserPost.data.returnData;
+
+    if (returnData) {
+      const feedKeys = Object.keys(returnData);
+      for (const key of feedKeys) {
+        const postPhotoBase64 = await getBase64FromUrl(
+          returnData[key]["postPhotoUrl"]
+        );
+        returnData[key]["postPhotoBase64"] = postPhotoBase64;
+        const feedProjectKeys = Object.keys(returnData[key].profileProjects);
+        for (const projectKey of feedProjectKeys) {
+          const postKeys = Object.keys(
+            returnData[key].profileProjects[projectKey].projectPosts
+          );
+          const projectCoverPhotoBase64 = await getBase64FromUrl(
+            returnData[key].profileProjects[projectKey]["projectCoverPhotoUrl"]
+          );
+          returnData[key].profileProjects[projectKey][
+            "projectCoverPhotoBase64"
+          ] = projectCoverPhotoBase64;
+          for (const postKey of postKeys) {
+            returnData[key].profileProjects[projectKey].projectPosts[postKey][
+              "postPhotoBase64"
+            ] = postPhotoBase64;
+          }
+        }
+      }
+    }
 
     await AsyncStorage.getItem("userDocData").then((data) => {
       data = JSON.parse(data);
@@ -1051,15 +1092,24 @@ export const cheerPost = (
           cheering: [...data.userFeed[postId].cheering, showcaseId],
         },
       };
-
       Object.entries(data.userFeed).map(([id, value]) => {
-        data.userFeed[id].profileProjects[projectId].projectPosts[
-          postId
-        ].numberOfCheers = data.userFeed[postId].numberOfCheers;
-        Object.assign(
-          data.userFeed[id].profileProjects[projectId].projectPosts[postId]
-            .cheering,
-          data.userFeed[postId].cheering
+        Object.entries(data.userFeed[id].profileProjects).map(
+          ([projId, value]) => {
+            if (
+              Object.keys(
+                data.userFeed[id].profileProjects[projId].projectPosts
+              ).includes(postId)
+            ) {
+              data.userFeed[id].profileProjects[projId].projectPosts[
+                postId
+              ].numberOfCheers = data.userFeed[postId].numberOfCheers;
+              Object.assign(
+                data.userFeed[id].profileProjects[projId].projectPosts[postId]
+                  .cheering,
+                data.userFeed[postId].cheering
+              );
+            }
+          }
         );
       });
 
@@ -1194,13 +1244,23 @@ export const cheerOwnProfilePost = (
       };
 
       Object.entries(data.userFeed).map(([id, value]) => {
-        data.userFeed[id].profileProjects[projectId].projectPosts[
-          postId
-        ].numberOfCheers = data.userFeed[postId].numberOfCheers;
-        Object.assign(
-          data.userFeed[id].profileProjects[projectId].projectPosts[postId]
-            .cheering,
-          data.userFeed[postId].cheering
+        Object.entries(data.userFeed[id].profileProjects).map(
+          ([projId, value]) => {
+            if (
+              Object.keys(
+                data.userFeed[id].profileProjects[projId].projectPosts
+              ).includes(postId)
+            ) {
+              data.userFeed[id].profileProjects[projId].projectPosts[
+                postId
+              ].numberOfCheers = data.userFeed[postId].numberOfCheers;
+              Object.assign(
+                data.userFeed[id].profileProjects[projId].projectPosts[postId]
+                  .cheering,
+                data.userFeed[postId].cheering
+              );
+            }
+          }
         );
       });
 
