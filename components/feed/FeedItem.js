@@ -51,6 +51,10 @@ const FeedItem = (props) => {
   const showcaseId = useSelector((state) => state.user.showcaseId);
   const projectId = props.projectId;
   const postId = props.postId;
+  console.log("--------------")
+  console.log(projectId)
+  console.log(postId)
+  console.log("--------------")
   const posterShowcaseId = props.posterShowcaseId;
   const links = props.links ? props.links : {};
   const fullname = props.fullname;
