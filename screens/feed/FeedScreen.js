@@ -12,7 +12,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { AntDesign } from "@expo/vector-icons";
 
 import { getUserFeed, offScreen } from "../../store/actions/user";
-import FeedItem from "../../components/projectItems/FeedItem";
+import FeedItem from "../../components/feed/FeedItem";
 import useDidMountEffect from "../../components/helper/useDidMountEffect";
 
 const UserFeedScreen = (props) => {
@@ -24,7 +24,6 @@ const UserFeedScreen = (props) => {
   const showcaseId = useSelector((state) => state.user.showcaseId);
   const localId = useSelector((state) => state.auth.userId);
   const userFeed = useSelector((state) => state.user.userFeed);
-  const following = useSelector((state) => state.user.following);
   const profileProjects = useSelector((state) => state.user.profileProjects);
   const resetScrollFeed = useSelector((state) => state.user.resetScrollFeed);
   const profilePictureBase64 = useSelector(
@@ -203,11 +202,7 @@ const UserFeedScreen = (props) => {
         keyExtractor={(item) => item.postId}
         renderItem={(itemData) => (
           <FeedItem
-            image={
-              itemData.item.showcaseId === showcaseId
-                ? itemData.item.postPhotoBase64
-                : itemData.item.postPhotoUrl
-            }
+            image={itemData.item.postPhotoBase64}
             profileImageSource={
               itemData.item.showcaseId === showcaseId
                 ? profilePictureBase64
@@ -277,9 +272,7 @@ const UserFeedScreen = (props) => {
               viewProjectHandler(
                 itemData.item.showcaseId,
                 itemData.item.projectId,
-                itemData.item.showcaseId === showcaseId
-                  ? profileProjects
-                  : itemData.item.profileProjects,
+                itemData.item.profileProjects,
                 itemData.item.postLinks
               );
             }}
