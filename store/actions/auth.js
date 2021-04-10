@@ -86,11 +86,11 @@ export const signup = (email, fullname, username, password) => {
 
 const getBase64FromUrl = async (url) => {
   if (url) {
-    console.log(url);
+    // console.log(url);
     const response = await axios.get(url, {
       responseType: "arraybuffer",
     });
-    console.log(response);
+    // console.log(response);
     const base64 = Buffer.from(await response.data, "base64").toString(
       "base64"
     );
@@ -111,21 +111,21 @@ export const login = (email, password) => {
       loginForm
     );
 
-    console.log("axios post done");
+    // console.log("axios post done");
 
     let profileProjects = await getLoginResponse.data.docData.profileProjects;
-    console.log("getLoginResponse.data.docData.profileProjects done");
+    // console.log("getLoginResponse.data.docData.profileProjects done");
 
     if (profileProjects) {
       const projectKeys = Object.keys(profileProjects);
-      console.log("Object.keys(profileProjects) done");
+      // console.log("Object.keys(profileProjects) done");
       for (const k of projectKeys) {
         const projectCoverPhotoBase64 = await getBase64FromUrl(
           profileProjects[k]["projectCoverPhotoUrl"]
         );
-        console.log(
-          "getBase64FromUrl profileProjects[k]['projectCoverPhotoUrl'] done"
-        );
+        // console.log(
+        //   "getBase64FromUrl profileProjects[k]['projectCoverPhotoUrl'] done"
+        // );
         profileProjects[k]["projectCoverPhotoBase64"] = projectCoverPhotoBase64;
         const postKeys = Object.keys(profileProjects[k].projectPosts);
         for (const id of postKeys) {
@@ -139,11 +139,10 @@ export const login = (email, password) => {
       }
     }
 
-    console.log("profileproject base64 done");
+    // console.log("profileproject base64 done");
 
     let userFeed = await getLoginResponse.data.docData.userFeed;
     if (userFeed) {
-      const projectKeys = Object.keys(profileProjects);
       const feedKeys = Object.keys(userFeed);
       for (const key of feedKeys) {
         const postPhotoBase64 = await getBase64FromUrl(
@@ -155,24 +154,27 @@ export const login = (email, password) => {
           const postKeys = Object.keys(
             userFeed[key].profileProjects[projectKey].projectPosts
           );
-          if (projectKey in projectKeys) {
-            const projectCoverPhotoBase64 = await getBase64FromUrl(
-              profileProjects[projectKey]["projectCoverPhotoUrl"]
-            );
-            userFeed[key].profileProjects[projectKey][
-              "projectCoverPhotoBase64"
-            ] = projectCoverPhotoBase64;
-            for (const postKey of postKeys) {
+          const projectCoverPhotoBase64 = await getBase64FromUrl(
+            userFeed[key].profileProjects[projectKey]["projectCoverPhotoUrl"]
+          );
+          userFeed[key].profileProjects[projectKey][
+            "projectCoverPhotoBase64"
+          ] = projectCoverPhotoBase64;
+          for (const postKey of postKeys) {
+            const postPhotoBase64 = await getBase64FromUrl(
               userFeed[key].profileProjects[projectKey].projectPosts[postKey][
-                "postPhotoBase64"
-              ] = postPhotoBase64;
-            }
+                "postPhotoUrl"
+              ]
+            );
+            userFeed[key].profileProjects[projectKey].projectPosts[postKey][
+              "postPhotoBase64"
+            ] = postPhotoBase64;
           }
         }
       }
     }
 
-    console.log("feed base64 done");
+    // console.log("feed base64 done");
 
     const profilePictureBase64 = await getBase64FromUrl(
       getLoginResponse.data.docData.profilePictureUrl
