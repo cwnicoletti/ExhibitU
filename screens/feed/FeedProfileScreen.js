@@ -39,6 +39,7 @@ const FeedProfileScreen = (props) => {
       : {},
     profileColumns: props.navigation.getParam("profileColumns"),
   };
+  console.log(userData.profileColumns);
 
   useEffect(() => {
     props.navigation.setParams({ darkMode: darkModeValue });
@@ -238,18 +239,6 @@ FeedProfileScreen.navigationOptions = (navData) => {
           color={darkModeValue ? "white" : "black"}
           onPress={() => {
             navData.navigation.goBack();
-          }}
-        />
-      </HeaderButtons>
-    ),
-    headerRight: () => (
-      <HeaderButtons HeaderButtonComponent={HeaderButton}>
-        <Item
-          title="Add"
-          iconName={Platform.OS === "android" ? "md-settings" : "ios-settings"}
-          color={darkModeValue ? "white" : "black"}
-          onPress={() => {
-            navData.navigation.toggleRightDrawer();
           }}
         />
       </HeaderButtons>
