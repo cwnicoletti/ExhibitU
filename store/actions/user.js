@@ -1016,6 +1016,11 @@ export const getUserFeed = (localId, showcaseId) => {
             "projectCoverPhotoBase64"
           ] = projectCoverPhotoBase64;
           for (const postKey of postKeys) {
+            const postPhotoBase64 = await getBase64FromUrl(
+              returnData[key].profileProjects[projectKey].projectPosts[postKey][
+                "postPhotoUrl"
+              ]
+            );
             returnData[key].profileProjects[projectKey].projectPosts[postKey][
               "postPhotoBase64"
             ] = postPhotoBase64;
@@ -1339,17 +1344,23 @@ export const uncheerPost = (
         },
       };
       Object.entries(data.userFeed).map(([id, value]) => {
-        data.userFeed[id].profileProjects[projectId].projectPosts[
-          postId
-        ].numberOfCheers =
-          data.userFeed[postId].profileProjects[projectId].projectPosts[
-            postId
-          ].numberOfCheers;
-        Object.assign(
-          data.userFeed[id].profileProjects[projectId].projectPosts[postId]
-            .cheering,
-          data.userFeed[postId].profileProjects[projectId].projectPosts[postId]
-            .cheering
+        Object.entries(data.userFeed[id].profileProjects).map(
+          ([projId, value]) => {
+            if (
+              Object.keys(
+                data.userFeed[id].profileProjects[projId].projectPosts
+              ).includes(postId)
+            ) {
+              data.userFeed[id].profileProjects[projId].projectPosts[
+                postId
+              ].numberOfCheers = data.userFeed[postId].numberOfCheers;
+              Object.assign(
+                data.userFeed[id].profileProjects[projId].projectPosts[postId]
+                  .cheering,
+                data.userFeed[postId].cheering
+              );
+            }
+          }
         );
       });
       data.cheeredPosts = data.cheeredPosts.filter((post) => post !== postId);
@@ -1482,17 +1493,23 @@ export const uncheerOwnProfilePost = (
         },
       };
       Object.entries(data.userFeed).map(([id, value]) => {
-        data.userFeed[id].profileProjects[projectId].projectPosts[
-          postId
-        ].numberOfCheers =
-          data.userFeed[postId].profileProjects[projectId].projectPosts[
-            postId
-          ].numberOfCheers;
-        Object.assign(
-          data.userFeed[id].profileProjects[projectId].projectPosts[postId]
-            .cheering,
-          data.userFeed[postId].profileProjects[projectId].projectPosts[postId]
-            .cheering
+        Object.entries(data.userFeed[id].profileProjects).map(
+          ([projId, value]) => {
+            if (
+              Object.keys(
+                data.userFeed[id].profileProjects[projId].projectPosts
+              ).includes(postId)
+            ) {
+              data.userFeed[id].profileProjects[projId].projectPosts[
+                postId
+              ].numberOfCheers = data.userFeed[postId].numberOfCheers;
+              Object.assign(
+                data.userFeed[id].profileProjects[projId].projectPosts[postId]
+                  .cheering,
+                data.userFeed[postId].cheering
+              );
+            }
+          }
         );
       });
       data.cheeredPosts = data.cheeredPosts.filter((post) => post !== postId);
