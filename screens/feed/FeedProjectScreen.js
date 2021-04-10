@@ -43,6 +43,7 @@ const FeedProjectScreen = (props) => {
     hideFollowers,
     hideAdvocates,
     profileLinks,
+    profileColumns,
     postLinks
   ) => {
     props.navigation.navigate("ViewComments", {
@@ -66,6 +67,7 @@ const FeedProjectScreen = (props) => {
       hideFollowers: hideFollowers,
       hideAdvocates: hideAdvocates,
       profileLinks: profileLinks,
+      profileColumns: profileColumns,
       postLinks: postLinks,
     });
   };
@@ -149,6 +151,7 @@ const FeedProjectScreen = (props) => {
                 itemData.item.hideFollowers,
                 itemData.item.hideAdvocates,
                 itemData.item.profileLinks,
+                itemData.item.profileColumns,
                 itemData.item.postLinks
               )
             }
