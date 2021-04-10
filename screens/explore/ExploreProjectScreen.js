@@ -113,6 +113,10 @@ const ExploreProjectScreen = (props) => {
 
   useEffect(() => {
     props.navigation.setParams({ darkMode: darkModeValue });
+    props.navigation.setParams({ showcaseId: showcaseId });
+    props.navigation.setParams({
+      exploredShowcaseId: exploredUserData.exploredShowcaseId,
+    });
     props.navigation.setParams({ isAdvocating: isAdvocating });
     props.navigation.setParams({ isLoading: isLoading });
     props.navigation.setParams({ exploredUserData: exploredUserData });
@@ -206,6 +210,8 @@ const ExploreProjectScreen = (props) => {
 
 ExploreProjectScreen.navigationOptions = (navData) => {
   const darkModeValue = navData.navigation.getParam("darkMode");
+  const showcaseId = navData.navigation.getParam("showcaseId");
+  const exploredShowcaseId = navData.navigation.getParam("exploredShowcaseId");
   const isAdvocating = navData.navigation.getParam("isAdvocating");
   const isLoading = navData.navigation.getParam("isLoading");
   const advocateFn = navData.navigation.getParam("advocateFn");
@@ -256,47 +262,55 @@ ExploreProjectScreen.navigationOptions = (navData) => {
     ),
     headerRight: () => (
       <View>
-        {!isAdvocating ? (
+        {showcaseId !== exploredShowcaseId ? (
           <View>
-            {!isLoading ? (
-              <HeaderButtons HeaderButtonComponent={FontAwesomeHeaderButton}>
-                <Item
-                  title="Advocate"
-                  iconName={"handshake-o"}
-                  color={darkModeValue ? "white" : "black"}
-                  onPress={advocateFn}
-                />
-              </HeaderButtons>
+            {!isAdvocating ? (
+              <View>
+                {!isLoading ? (
+                  <HeaderButtons
+                    HeaderButtonComponent={FontAwesomeHeaderButton}
+                  >
+                    <Item
+                      title="Advocate"
+                      iconName={"handshake-o"}
+                      color={darkModeValue ? "white" : "black"}
+                      onPress={advocateFn}
+                    />
+                  </HeaderButtons>
+                ) : (
+                  <View style={{ margin: 20 }}>
+                    <ActivityIndicator
+                      size="small"
+                      color={darkModeValue ? "white" : "black"}
+                    />
+                  </View>
+                )}
+              </View>
             ) : (
-              <View style={{ margin: 20 }}>
-                <ActivityIndicator
-                  size="small"
-                  color={darkModeValue ? "white" : "black"}
-                />
+              <View>
+                {!isLoading ? (
+                  <HeaderButtons
+                    HeaderButtonComponent={FontAwesomeHeaderButton}
+                  >
+                    <Item
+                      title="Unadvocate"
+                      iconName={"handshake-o"}
+                      color={"red"}
+                      onPress={unadvocateFn}
+                    />
+                  </HeaderButtons>
+                ) : (
+                  <View style={{ margin: 20 }}>
+                    <ActivityIndicator
+                      size="small"
+                      color={darkModeValue ? "white" : "black"}
+                    />
+                  </View>
+                )}
               </View>
             )}
           </View>
-        ) : (
-          <View>
-            {!isLoading ? (
-              <HeaderButtons HeaderButtonComponent={FontAwesomeHeaderButton}>
-                <Item
-                  title="Unadvocate"
-                  iconName={"handshake-o"}
-                  color={"red"}
-                  onPress={unadvocateFn}
-                />
-              </HeaderButtons>
-            ) : (
-              <View style={{ margin: 20 }}>
-                <ActivityIndicator
-                  size="small"
-                  color={darkModeValue ? "white" : "black"}
-                />
-              </View>
-            )}
-          </View>
-        )}
+        ) : null}
       </View>
     ),
   };
