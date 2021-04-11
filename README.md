@@ -1,4 +1,6 @@
 # Showcase
+<img src="https://img.shields.io/github/languages/top/cwnicoletti/showcase" alt="Languages">  <img src="https://img.shields.io/github/repo-size/cwnicoletti/showcase" alt="Languages">  <img src="https://img.shields.io/github/commit-activity/m/cwnicoletti/showcase" alt="Languages">  <img src="https://img.shields.io/github/last-commit/cwnicoletti/showcase" alt="Languages">
+
 This is a mobile app built from scratch using React Native and Expo. Designs were made via Adobe Xd.
 
 <img src="https://res.cloudinary.com/personaluse1234/image/upload/v1617769361/image2_hoz5kt.png" width="250">&nbsp;
