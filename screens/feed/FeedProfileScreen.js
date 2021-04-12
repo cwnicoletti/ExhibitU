@@ -39,7 +39,6 @@ const FeedProfileScreen = (props) => {
       : {},
     profileColumns: props.navigation.getParam("profileColumns"),
   };
-  console.log(userData.profileColumns);
 
   useEffect(() => {
     props.navigation.setParams({ darkMode: darkModeValue });

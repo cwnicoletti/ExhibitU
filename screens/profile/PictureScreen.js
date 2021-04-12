@@ -23,13 +23,11 @@ const PictureScreen = (props) => {
   );
   const showcaseId = props.navigation.getParam("showcaseId");
   const projectId = props.navigation.getParam("projectId");
-  console.log(projectId);
   const postId = props.navigation.getParam("postId");
   const fullname = props.navigation.getParam("fullname");
   const username = props.navigation.getParam("username");
   const jobTitle = props.navigation.getParam("jobTitle");
   const profileBiography = props.navigation.getParam("profileBiography");
-  const postPhotoUrl = props.navigation.getParam("postPhotoUrl");
   const postPhotoBase64 = props.navigation.getParam("postPhotoBase64");
   const numberOfCheers = props.navigation.getParam("numberOfCheers");
   const numberOfComments = props.navigation.getParam("numberOfComments");

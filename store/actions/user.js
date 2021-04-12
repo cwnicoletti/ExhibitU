@@ -998,24 +998,21 @@ export const getUserFeed = (localId, showcaseId) => {
     let returnData = uploadedUserPost.data.returnData;
 
     if (returnData) {
-      const feedKeys = Object.keys(returnData);
-      for (const key of feedKeys) {
+      for (const key of Object.keys(returnData)) {
         const postPhotoBase64 = await getBase64FromUrl(
           returnData[key]["postPhotoUrl"]
         );
         returnData[key]["postPhotoBase64"] = postPhotoBase64;
-        const feedProjectKeys = Object.keys(returnData[key].profileProjects);
-        for (const projectKey of feedProjectKeys) {
-          const postKeys = Object.keys(
-            returnData[key].profileProjects[projectKey].projectPosts
-          );
+        for (const projectKey of Object.keys(returnData[key].profileProjects)) {
           const projectCoverPhotoBase64 = await getBase64FromUrl(
             returnData[key].profileProjects[projectKey]["projectCoverPhotoUrl"]
           );
           returnData[key].profileProjects[projectKey][
             "projectCoverPhotoBase64"
           ] = projectCoverPhotoBase64;
-          for (const postKey of postKeys) {
+          for (const postKey of Object.keys(
+            returnData[key].profileProjects[projectKey].projectPosts
+          )) {
             const postPhotoBase64 = await getBase64FromUrl(
               returnData[key].profileProjects[projectKey].projectPosts[postKey][
                 "postPhotoUrl"

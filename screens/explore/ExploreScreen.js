@@ -10,12 +10,10 @@ import {
   RefreshControl,
 } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
-import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import { SearchBar } from "react-native-elements";
 import algoliasearch from "algoliasearch";
 import { offScreen } from "../../store/actions/user";
 
-import HeaderButton from "../../components/UI/IoniconsHeaderButton";
 import ExploreCard from "../../components/explore/ExploreCard";
 import useDidMountEffect from "../../components/helper/useDidMountEffect";
 
@@ -116,7 +114,6 @@ const ExploreScreen = (props) => {
   };
 
   const flatlistExplore = useRef();
-
   useDidMountEffect(() => {
     flatlistExplore.current.scrollToOffset({ animated: true, offset: 0 });
   }, [resetScrollExplore]);

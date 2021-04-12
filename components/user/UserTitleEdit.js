@@ -8,7 +8,6 @@ import {
   TouchableOpacity,
   Platform,
 } from "react-native";
-import { useSelector } from "react-redux";
 
 import EditButton from "../UI/EditButton";
 
