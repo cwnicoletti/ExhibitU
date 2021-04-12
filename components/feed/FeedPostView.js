@@ -36,12 +36,12 @@ const FeedPostView = (props) => {
   const [clap, setClap] = useState(false);
   const cheeredPosts = useSelector((state) => state.user.cheeredPosts);
   const localId = useSelector((state) => state.auth.userId);
-  const fullname = useSelector((state) => state.user.fullname);
   const showcaseId = useSelector((state) => state.user.showcaseId);
   const darkModeValue = useSelector((state) => state.switches.darkMode);
   const defaultPostIcon = require("../../assets/default-profile-icon.jpg");
   const source = resolveAssetSource(defaultPostIcon);
   const posterShowcaseId = props.posterShowcaseId;
+  const fullname = props.fullname;
   const links = props.links;
   const postId = props.postId;
   const projectId = props.projectId;
