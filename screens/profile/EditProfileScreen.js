@@ -279,7 +279,7 @@ const EditProfileScreen = (props) => {
     await setIsLoadingTempPicture(true);
     if (!result.cancelled) {
       const fileSize = result.base64.length * (3 / 4) - 2;
-      if (fileSize > 7000000) {
+      if (fileSize > 6000000) {
         setFileSizeError(true);
       } else {
         setFileSizeError(false);
@@ -689,7 +689,7 @@ const EditProfileScreen = (props) => {
                 marginBottom: 15,
               }}
             >
-              Picture file size bigger than 7MB. Try cropping or using a
+              Picture file size bigger than 6MB. Try cropping or using a
               different picture.
             </Text>
           ) : null}
@@ -818,6 +818,7 @@ const EditProfileScreen = (props) => {
             errorText="Please enter a valid link url!"
             keyboardType={Platform.OS === "ios" ? "url" : "default"}
             onInputChange={inputChangeHandler}
+            autoCorrect={false}
             initialValue={link[`linkUrl${link.linkId}`]}
             initiallyValid={true}
             required
