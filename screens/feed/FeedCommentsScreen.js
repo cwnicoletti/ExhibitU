@@ -174,6 +174,7 @@ const FeedCommentsScreen = (props) => {
           color: darkModeValue ? "white" : "black",
         }}
         caption={caption}
+        fullname={fullname}
         profileImageSource={profilePicture}
         numberOfCheers={numberOfCheers}
         numberOfComments={numberOfComments}
