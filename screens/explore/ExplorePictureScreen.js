@@ -11,6 +11,7 @@ const ExplorePictureScreen = (props) => {
   const showcaseId = props.navigation.getParam("showcaseId");
   const currentProjectId = props.navigation.getParam("projectId");
   const postId = props.navigation.getParam("postId");
+  const fullname = props.navigation.getParam("fullname");
   const profilePictureUrl = props.navigation.getParam("profilePictureUrl");
   const postPhotoUrl = props.navigation.getParam("postPhotoUrl");
   const numberOfCheers = props.navigation.getParam("numberOfCheers");
@@ -64,6 +65,7 @@ const ExplorePictureScreen = (props) => {
           color: darkModeValue ? "white" : "black",
         }}
         caption={caption}
+        fullname={fullname}
         profileImageSource={profilePictureUrl}
         numberOfCheers={numberOfCheers}
         numberOfComments={numberOfComments}
