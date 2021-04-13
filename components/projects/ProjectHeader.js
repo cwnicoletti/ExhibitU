@@ -7,12 +7,30 @@ import {
   FlatList,
   TouchableOpacity,
   TouchableNativeFeedback,
+  Platform,
 } from "react-native";
 import { useSelector } from "react-redux";
 import * as WebBrowser from "expo-web-browser";
 
 import LinkButton from "../UI/LinkButton";
 import EditButton from "../UI/EditButton";
+
+const styles = StyleSheet.create({
+  container: {
+    alignItems: "center",
+  },
+  descriptionStyle: {
+    margin: 50,
+  },
+  image: {
+    height: 350,
+    width: "100%",
+  },
+});
+
+const handleLinkOnPress = async (url) => {
+  await WebBrowser.openBrowserAsync(url);
+};
 
 const ProjectHeader = (props) => {
   const darkModeValue = useSelector((state) => state.switches.darkMode);
@@ -22,10 +40,6 @@ const ProjectHeader = (props) => {
   if (Platform.OS === "android") {
     TouchableCmp = TouchableNativeFeedback;
   }
-
-  const handleLinkOnPress = async (url) => {
-    await WebBrowser.openBrowserAsync(url);
-  };
 
   return (
     <View>
@@ -120,7 +134,6 @@ const ProjectHeader = (props) => {
               width: 45,
               alignItems: "center",
               justifyContent: "center",
-              flexDirection: "row",
               ...props.columnTwoStyle,
             }}
           >
@@ -241,18 +254,5 @@ const ProjectHeader = (props) => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    alignItems: "center",
-  },
-  descriptionStyle: {
-    margin: 50,
-  },
-  image: {
-    height: 350,
-    width: "100%",
-  },
-});
 
 export default ProjectHeader;
