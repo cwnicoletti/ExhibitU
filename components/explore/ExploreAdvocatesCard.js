@@ -9,7 +9,6 @@ import {
   Platform,
   FlatList,
 } from "react-native";
-import { useSelector } from "react-redux";
 
 import Card from "../UI/Card";
 import ExploreAdvocatesProjectsIcons from "./ExploreAdvocatesProjectsIcons";
@@ -17,6 +16,9 @@ import ExploreAdvocatesProjectsIcons from "./ExploreAdvocatesProjectsIcons";
 const ExploreAdvocatesCard = (props) => {
   const projects = props.projects;
   const projectsAdvocating = props.projectsAdvocating;
+  const image = props.image
+    ? { uri: props.image }
+    : require("../../assets/default-profile-icon.jpg");
 
   let projectsAdvocatingFor = [];
   [projects].filter((object) => {
@@ -36,14 +38,7 @@ const ExploreAdvocatesCard = (props) => {
         <TouchableCmp onPress={props.onSelect} useForeground>
           <View style={{ flexDirection: "row", margin: 5 }}>
             <View style={{ ...styles.imageContainer, ...props.imageContainer }}>
-              <Image
-                style={styles.image}
-                source={
-                  props.image
-                    ? { uri: props.image }
-                    : require("../../assets/default-profile-icon.jpg")
-                }
-              />
+              <Image style={styles.image} source={image} />
             </View>
             <View style={{ ...styles.details, ...props.details }}>
               <Text style={{ ...styles.fullname, ...props.fullNameStyle }}>
