@@ -1,5 +1,5 @@
 # Showcase
-<a href="https://github.com/cwnicoletti/Showcase/blob/main/LICENSE"><img src="https://img.shields.io/badge/License-CC%20BY--NC%204.0-critical" alt="CC BY-NC 4.0"></a>  <img src="https://img.shields.io/github/repo-size/cwnicoletti/showcase" alt="Repo Size">  [![Codacy Badge](https://app.codacy.com/project/badge/Grade/6749da8aa61a4e6c80c7c72138157fd5)](https://www.codacy.com/gh/cwnicoletti/Showcase/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=cwnicoletti/Showcase&amp;utm_campaign=Badge_Grade)  <img src="https://img.shields.io/github/last-commit/cwnicoletti/showcase" alt="Last Commit">
+<a href="https://github.com/cwnicoletti/Showcase/blob/main/LICENSE"><img src="https://img.shields.io/badge/License-CC%20BY--NC%204.0-critical" alt="CC BY-NC 4.0"></a>  <img src="https://img.shields.io/github/repo-size/cwnicoletti/showcase" alt="Repo Size">  [![Codacy Badge](https://app.codacy.com/project/badge/Grade/6749da8aa61a4e6c80c7c72138157fd5)](https://www.codacy.com/gh/cwnicoletti/Showcase/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=cwnicoletti/Showcase&amp;utm_campaign=Badge_Grade) <img src="https://img.shields.io/github/last-commit/cwnicoletti/showcase" alt="Last Commit">
 
 This is a mobile app built using React Native and Expo. Designs were made via Adobe Xd.
 
