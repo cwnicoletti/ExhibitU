@@ -31,8 +31,6 @@ const UserFeedScreen = (props) => {
     (state) => state.user.profilePictureBase64
   );
 
-  console.log("-----------------------");
-  console.log("UPDATING FEED 1!");
   let filteredOutEmptyUserFeed = [];
   Object.entries(userFeed).forEach(([k, value]) => {
     if (!!Object.keys(value).length) {

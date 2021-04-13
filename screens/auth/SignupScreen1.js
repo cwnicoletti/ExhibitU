@@ -34,7 +34,9 @@ const formReducer = (state, action) => {
     };
     let updatedFormIsValid = true;
     for (const key in updatedValidities) {
-      updatedFormIsValid = updatedFormIsValid && updatedValidities[key];
+      if (updatedValidities.hasOwnProperty(key)) {
+        updatedFormIsValid = updatedFormIsValid && updatedValidities[key];
+      }
     }
     return {
       formIsValid: updatedFormIsValid,

@@ -80,7 +80,6 @@ export const signup = (email, fullname, username, password) => {
         getSignupResponse.data.idToken
       )
     );
-    console.log("Successful signup!");
   };
 };
 
@@ -240,7 +239,6 @@ export const login = (email, password) => {
         getLoginResponse.data.idToken
       )
     );
-    await console.log("Successful login!");
   };
 };
 

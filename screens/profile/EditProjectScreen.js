@@ -170,7 +170,6 @@ const EditProjectScreen = (props) => {
   );
   const showcaseId = useSelector((state) => state.user.showcaseId);
 
-  console.log("editproject");
 
   let TouchableCmp = TouchableOpacity;
   if (Platform.OS === "android") {

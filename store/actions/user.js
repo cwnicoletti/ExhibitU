@@ -131,8 +131,6 @@ export const refreshProfile = (localId) => {
       projectsAdvocating: projectsAdvocating,
       cheeredPosts: cheeredPosts,
     });
-
-    console.log("Successfully uploaded an updated version of user!");
   };
 };
 
@@ -298,8 +296,6 @@ export const uploadUpdateUserProfile = (
       showResumeValue: showResumeValue,
       profileLinks: links,
     });
-
-    console.log("Successfully uploaded an updated version of user!");
   };
 };
 
@@ -376,7 +372,6 @@ export const uploadNewProject = (
       projectDescription: projectDescription,
       projectLinks: links,
     });
-    console.log("Successfully uploaded your updated project!");
   };
 };
 
@@ -430,7 +425,6 @@ export const uploadUpdatedProject = (
       projectDescription: projectDescription,
       projectLinks: links,
     });
-    console.log("Successfully uploaded a new updated project!");
   };
 };
 
@@ -463,7 +457,6 @@ export const uploadRemoveProject = (showcaseId, localId, projectId) => {
       type: REMOVE_USER_PROJECT,
       projectId: projectId,
     });
-    console.log("Successfully removed project!");
   };
 };
 
@@ -493,7 +486,6 @@ export const uploadRemovePost = (showcaseId, localId, projectId, postId) => {
       projectId: projectId,
       postId: postId,
     });
-    console.log("Successfully removed post!");
   };
 };
 

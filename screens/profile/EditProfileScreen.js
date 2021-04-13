@@ -181,7 +181,6 @@ const EditProfileScreen = (props) => {
     numberOfAdvocates: useSelector((state) => state.user.numberOfAdvocates),
   };
 
-  console.log("editprofile");
 
   let TouchableCmp = TouchableOpacity;
   if (Platform.OS === "android") {

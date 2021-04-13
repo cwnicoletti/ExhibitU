@@ -17,9 +17,6 @@ const StartupScreen = (props) => {
       const transformedData = JSON.parse(userData);
       const { localId, token, introing } = transformedData;
 
-      console.log(`introing: ${introing}`);
-      console.log(`localId: ${localId}`);
-      console.log(`token: ${token}`);
       if (!token || !localId) {
         props.navigation.navigate("StartAuth");
         return;

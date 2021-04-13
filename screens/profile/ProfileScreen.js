@@ -33,7 +33,6 @@ const ProfileScreen = (props) => {
   const resetScrollProfile = useSelector(
     (state) => state.user.resetScrollProfile
   );
-  console.log("profilescreen");
 
   const userData = {
     showcaseId: useSelector((state) => state.user.showcaseId),
