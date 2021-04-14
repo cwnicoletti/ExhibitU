@@ -64,7 +64,7 @@ const IntroScreen = (props) => {
     {
       title: "",
       body:
-        "Our goal is to build an universal, encouraging and healthy community for those looking to build or present their work or hobby!",
+        "Our goal is to build a universal, encouraging and healthy community for those looking to build or present their work or hobby!",
       useImg5: true,
     },
   ];
@@ -242,7 +242,6 @@ const styles = StyleSheet.create({
     width: "90%",
     marginTop: 10,
     backgroundColor: "white",
-    borderRadius: 10,
     borderWidth: 1,
     borderRadius: 15,
     borderBottomColor: "#ccc",

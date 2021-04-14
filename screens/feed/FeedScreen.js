@@ -132,7 +132,7 @@ const UserFeedScreen = (props) => {
   const refreshFeed = async () => {
     let filteredOutEmptyUserFeed = [];
     Object.entries(userFeed).forEach(([k, value]) => {
-      if (!!Object.keys(value).length) {
+      if (Object.keys(value).length > 0) {
         filteredOutEmptyUserFeed.push(value);
       }
     });

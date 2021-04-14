@@ -342,7 +342,6 @@ const EditProfileScreen = (props) => {
       <Text
         style={{
           fontSize: 28,
-          color: "white",
           fontWeight: "bold",
           textAlign: "center",
           margin: 10,
