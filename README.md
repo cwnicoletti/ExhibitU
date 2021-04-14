@@ -21,6 +21,14 @@ This is a mobile app built using React Native and Expo. Designs were made via Ad
 
 **THIS MOBILE APP USES A BACKEND IN A PRIVATE REPO. YOU CAN'T EDIT THE BACKEND, BUT IT WILL STILL WORK**
 
+## Testing your code
+
+Before making a pull request, run:
+```
+npm test
+```
+Testing is supported by [jest](https://jestjs.io/) and test files (".test.js") can be found in "__test__" directories
+
 ## Contributions
 All contributions should be referenced to the [CONTRIBUTIONS](https://github.com/christiannicoletti/Showcase/blob/master/CONTRIBUTING.md) file before making a pull request.
 
