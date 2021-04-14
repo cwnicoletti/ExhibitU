@@ -15,6 +15,10 @@ import { Ionicons } from "@expo/vector-icons";
 import UserTitleShowcaseLocal from "../user/UserTitleShowcaseLocal";
 import LinkButton from "../UI/LinkButton";
 
+const handleLinkOnPress = (url) => {
+  WebBrowser.openBrowserAsync(url);
+};
+
 const FeedProfileHeader = (props) => {
   const darkModeValue = useSelector((state) => state.switches.darkMode);
   const links = props.links;
@@ -36,10 +40,6 @@ const FeedProfileHeader = (props) => {
   if (Platform.OS === "android") {
     TouchableCmp = TouchableNativeFeedback;
   }
-
-  const handleLinkOnPress = (url) => {
-    WebBrowser.openBrowserAsync(url);
-  };
 
   return (
     <View>

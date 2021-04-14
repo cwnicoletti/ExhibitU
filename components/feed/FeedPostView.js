@@ -13,6 +13,7 @@ import {
   Animated,
   FlatList,
 } from "react-native";
+import * as WebBrowser from "expo-web-browser";
 import { useSelector } from "react-redux";
 import Cheer from "../../assets/Icons/clap.svg";
 import Cheerfill from "../../assets/Icons/clap-fill.svg";
@@ -27,6 +28,10 @@ import {
 } from "../../store/actions/user";
 
 import { LogBox } from "react-native";
+
+const handleLinkOnPress = async (url) => {
+  await WebBrowser.openBrowserAsync(url);
+};
 
 const FeedPostView = (props) => {
   const [height, setHeight] = useState(null);
@@ -49,7 +54,6 @@ const FeedPostView = (props) => {
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const slideAnim = useRef(new Animated.Value(0)).current;
 
-  let secondnow = null;
   let TouchableCmp = TouchableOpacity;
   if (Platform.OS === "android") {
     TouchableCmp = TouchableNativeFeedback;
@@ -118,6 +122,7 @@ const FeedPostView = (props) => {
     }
   };
 
+  let secondnow = null;
   const handleToubleTap = async () => {
     const now = Date.now();
     if (now - secondnow < 200) {

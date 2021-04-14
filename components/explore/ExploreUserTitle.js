@@ -1,17 +1,16 @@
 import React from "react";
 import { View, Text, StyleSheet, Image } from "react-native";
-import { useSelector } from "react-redux";
 
 const ExploreUserTitle = (props) => {
+  const sourceImg = props.imgSource
+    ? { uri: props.imgSource }
+    : require("../../assets/default-profile-icon.jpg");
+
   return (
     <View style={{ justifyContent: "center", alignItems: "center" }}>
       <Image
         style={{ ...styles.showCaseLocalImage, ...props.style }}
-        source={
-          props.imgSource
-            ? { uri: props.imgSource }
-            : require("../../assets/default-profile-icon.jpg")
-        }
+        source={sourceImg}
       />
       <Text style={props.fullnameStyle}>{props.fullname}</Text>
       {props.jobTitle ? (

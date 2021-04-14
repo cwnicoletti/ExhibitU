@@ -5,13 +5,13 @@ import * as WebBrowser from "expo-web-browser";
 
 import LinkButton from "../UI/LinkButton";
 
+const handleLinkOnPress = (url) => {
+  WebBrowser.openBrowserAsync(url);
+};
+
 const ShowcaseProjectHeader = (props) => {
   const darkModeValue = useSelector((state) => state.switches.darkMode);
   const links = props.links;
-
-  const handleLinkOnPress = (url) => {
-    WebBrowser.openBrowserAsync(url);
-  };
 
   return (
     <View style={{ ...styles.container, ...props.containerStyle }}>

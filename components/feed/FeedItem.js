@@ -37,6 +37,10 @@ const toDateTime = (seconds) => {
   return t;
 };
 
+const handleLinkOnPress = async (url) => {
+  await WebBrowser.openBrowserAsync(url);
+};
+
 const FeedItem = (props) => {
   const dispatch = useDispatch();
   const [height, setHeight] = useState(null);
@@ -60,7 +64,6 @@ const FeedItem = (props) => {
 
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const slideAnim = useRef(new Animated.Value(0)).current;
-  let secondnow = null;
 
   let TouchableCmp = TouchableOpacity;
   if (Platform.OS === "android") {
@@ -87,10 +90,6 @@ const FeedItem = (props) => {
       setWidth(screenWidth);
     });
   }, [Image]);
-
-  const handleLinkOnPress = async (url) => {
-    await WebBrowser.openBrowserAsync(url);
-  };
 
   const slideUp = () => {
     Animated.timing(slideAnim, {
@@ -131,6 +130,7 @@ const FeedItem = (props) => {
     }
   };
 
+  let secondnow = null;
   const handleToubleTap = async () => {
     const now = Date.now();
     if (now - secondnow < 200) {
