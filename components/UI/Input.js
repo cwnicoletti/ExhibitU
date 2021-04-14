@@ -23,27 +23,22 @@ const inputReducer = (state, action) => {
   }
 };
 
-const textChangeHandler = (text) => {
+const textChangeHandler = (text, props) => {
   const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   let isValid = true;
   let error = props.errorText;
   if (props.required && text.trim().length === 0) {
     isValid = false;
-  }
-  if (props.email && !emailRegex.test(text.toLowerCase())) {
+  } else if (props.email && !emailRegex.test(text.toLowerCase())) {
     isValid = false;
-  }
-  if (props.min !== null && +text < props.min) {
+  } else if (props.min !== null && +text < props.min) {
     isValid = false;
-  }
-  if (props.max !== null && +text > props.max) {
+  } else if (props.max !== null && +text > props.max) {
     isValid = false;
-  }
-  if (props.confirmPassword !== null && props.confirmPassword !== text) {
+  } else if (props.confirmPassword !== null && props.confirmPassword !== text) {
     isValid = false;
     error = "Passwords don't match!";
-  }
-  if (props.minLength !== null && text.length < props.minLength) {
+  } else if (props.minLength !== null && text.length < props.minLength) {
     isValid = false;
     error = "Password not long enough!";
   }
@@ -85,7 +80,7 @@ const Input = (props) => {
         value={inputState.value}
         placeholder="type here..."
         placeholderTextColor={"grey"}
-        onChangeText={textChangeHandler}
+        onChangeText={(text) => textChangeHandler(text, props)}
         onBlur={lostFocusHandler}
         ref={props.inputRef}
       />
