@@ -47,17 +47,17 @@ const Input = (props) => {
     if (props.email && !emailRegex.test(text.toLowerCase())) {
       isValid = false;
     }
-    if (props.min !== null && +text < props.min) {
+    if (props.min !== undefined && +text < props.min) {
       isValid = false;
     }
-    if (props.max !== null && +text > props.max) {
+    if (props.max !== undefined && +text > props.max) {
       isValid = false;
     }
-    if (props.confirmPassword !== null && props.confirmPassword !== text) {
+    if (props.confirmPassword !== undefined && props.confirmPassword !== text) {
       isValid = false;
       error = "Passwords don't match!";
     }
-    if (props.minLength !== null && text.length < props.minLength) {
+    if (props.minLength !== undefined && text.length < props.minLength) {
       isValid = false;
       error = "Password not long enough!";
     }
