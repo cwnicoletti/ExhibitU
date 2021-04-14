@@ -245,13 +245,9 @@ const AddProjectScreen = (props) => {
 
   useEffect(() => {
     (async () => {
-      try {
-        const { statusRoll } = await Permissions.askAsync(
-          Permissions.CAMERA_ROLL
-        );
-      } catch (err) {
-        console.log(err);
-      }
+      const { statusRoll } = await Permissions.askAsync(
+        Permissions.CAMERA_ROLL
+      );
     })();
   }, []);
 
@@ -332,7 +328,6 @@ const AddProjectScreen = (props) => {
           <Text
             style={{
               fontSize: 28,
-              color: "white",
               fontWeight: "bold",
               margin: 10,
               color: darkModeValue ? "white" : "black",

@@ -320,7 +320,6 @@ const styles = StyleSheet.create({
     width: "90%",
     marginTop: 10,
     backgroundColor: "white",
-    borderRadius: 10,
     borderWidth: 1,
     borderRadius: 15,
     borderBottomColor: "#ccc",

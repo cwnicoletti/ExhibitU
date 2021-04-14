@@ -326,14 +326,10 @@ const EditProfileScreen = (props) => {
 
   useEffect(() => {
     (async () => {
-      try {
-        const { status } = await Permissions.askAsync(Permissions.CAMERA);
-        const { statusRoll } = await Permissions.askAsync(
-          Permissions.CAMERA_ROLL
-        );
-      } catch (err) {
-        console.log(err);
-      }
+      const { status } = await Permissions.askAsync(Permissions.CAMERA);
+      const { statusRoll } = await Permissions.askAsync(
+        Permissions.CAMERA_ROLL
+      );
     })();
   }, []);
 
@@ -364,7 +360,6 @@ const EditProfileScreen = (props) => {
           <Text
             style={{
               fontSize: 28,
-              color: "white",
               textAlign: "center",
               fontWeight: "bold",
               margin: 10,

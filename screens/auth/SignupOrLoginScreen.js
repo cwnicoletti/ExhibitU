@@ -133,7 +133,6 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     backgroundColor: "white",
-    borderRadius: 10,
     borderWidth: 1,
     borderRadius: 15,
     borderBottomColor: "#ccc",

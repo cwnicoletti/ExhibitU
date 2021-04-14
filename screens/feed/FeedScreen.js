@@ -33,7 +33,7 @@ const UserFeedScreen = (props) => {
 
   let filteredOutEmptyUserFeed = [];
   Object.entries(userFeed).forEach(([k, value]) => {
-    if (!!Object.keys(value).length) {
+    if (Object.keys(value).length > 0) {
       filteredOutEmptyUserFeed.push(value);
     }
   });
@@ -73,10 +73,10 @@ const UserFeedScreen = (props) => {
   ) => {
     dispatch(offScreen("Feed"));
     props.navigation.navigate("ViewCheering", {
-      showcaseId: showcaseId,
-      projectId: projectId,
-      postId: postId,
-      numberOfCheers: numberOfCheers,
+      showcaseId,
+      projectId,
+      postId,
+      numberOfCheers,
     });
   };
 
@@ -101,23 +101,23 @@ const UserFeedScreen = (props) => {
   ) => {
     dispatch(offScreen("Feed"));
     props.navigation.navigate("ViewProfile", {
-      showcaseId: showcaseId,
-      projectId: projectId,
-      fullname: fullname,
-      username: username,
-      jobTitle: jobTitle,
-      profileBiography: profileBiography,
-      profileProjects: profileProjects,
-      profilePictureUrl: profilePictureUrl,
-      numberOfFollowers: numberOfFollowers,
-      numberOfFollowing: numberOfFollowing,
-      numberOfAdvocates: numberOfAdvocates,
-      hideFollowing: hideFollowing,
-      hideFollowers: hideFollowers,
-      hideAdvocates: hideAdvocates,
-      profileLinks: profileLinks,
-      postLinks: postLinks,
-      profileColumns: profileColumns,
+      showcaseId,
+      projectId,
+      fullname,
+      username,
+      jobTitle,
+      profileBiography,
+      profileProjects,
+      profilePictureUrl,
+      numberOfFollowers,
+      numberOfFollowing,
+      numberOfAdvocates,
+      hideFollowing,
+      hideFollowers,
+      hideAdvocates,
+      profileLinks,
+      postLinks,
+      profileColumns,
     });
   };
 

@@ -181,7 +181,6 @@ const EditProfileScreen = (props) => {
     numberOfAdvocates: useSelector((state) => state.user.numberOfAdvocates),
   };
 
-
   let TouchableCmp = TouchableOpacity;
   if (Platform.OS === "android") {
     TouchableCmp = TouchableNativeFeedback;
@@ -189,11 +188,11 @@ const EditProfileScreen = (props) => {
 
   let initialState = {
     inputValues: {
-      fullname: !!userData.fullname ? userData.fullname : "",
-      jobTitle: !!userData.jobTitle ? userData.jobTitle : "",
-      username: !!userData.username ? userData.username : "",
-      resumeLink: !!userData.resumeLinkUrl ? userData.resumeLinkUrl : "",
-      bio: !!userData.profileBiography ? userData.profileBiography : "",
+      fullname: userData.fullname ? userData.fullname : "",
+      jobTitle: userData.jobTitle ? userData.jobTitle : "",
+      username: userData.username ? userData.username : "",
+      resumeLink: userData.resumeLinkUrl ? userData.resumeLinkUrl : "",
+      bio: userData.profileBiography ? userData.profileBiography : "",
       ...prevLinks,
     },
     inputValidities: {
@@ -316,22 +315,21 @@ const EditProfileScreen = (props) => {
 
   useEffect(() => {
     (async () => {
-      try {
-        const { statusRoll } = await Permissions.askAsync(
-          Permissions.CAMERA_ROLL
-        );
-      } catch (err) {
-        console.log(err);
-      }
+      const { statusRoll } = await Permissions.askAsync(
+        Permissions.CAMERA_ROLL
+      );
     })();
   }, []);
 
   useEffect(() => {
-    LogBox.ignoreLogs(["VirtualizedLists should never be nested"]);
     props.navigation.setParams({ submit: submitHandler });
+  }, [submitHandler]);
+
+  useEffect(() => {
+    LogBox.ignoreLogs(["VirtualizedLists should never be nested"]);
     props.navigation.setParams({ darkMode: darkModeValue });
     props.navigation.setParams({ android: android });
-  }, [submitHandler]);
+  }, [darkModeValue]);
 
   return (
     <KeyboardAwareScrollView
@@ -392,7 +390,7 @@ const EditProfileScreen = (props) => {
             >
               {userData.fullname}
             </Text>
-            {!!userData.jobTitle ? (
+            {userData.jobTitle ? (
               <Text
                 style={{
                   color: darkModeValue ? "white" : "black",
@@ -679,19 +677,19 @@ const EditProfileScreen = (props) => {
         </View>
       )}
       {fileSizeError ? (
-            <Text
-              style={{
-                color: "red",
-                alignSelf: "center",
-                marginHorizontal: 10,
-                marginTop: 5,
-                marginBottom: 15,
-              }}
-            >
-              Picture file size bigger than 6MB. Try cropping or using a
-              different picture.
-            </Text>
-          ) : null}
+        <Text
+          style={{
+            color: "red",
+            alignSelf: "center",
+            marginHorizontal: 10,
+            marginTop: 5,
+            marginBottom: 15,
+          }}
+        >
+          Picture file size bigger than 6MB. Try cropping or using a different
+          picture.
+        </Text>
+      ) : null}
       <Input
         textLabel={{ color: darkModeValue ? "white" : "black" }}
         id="fullname"
@@ -702,7 +700,7 @@ const EditProfileScreen = (props) => {
         returnKeyType="next"
         onInputChange={inputChangeHandler}
         initialValue={userData.fullname ? userData.fullname : ""}
-        initiallyValid={!!userData.fullname}
+        initiallyValid={userData.fullname}
         required
       />
       <Input
@@ -714,7 +712,7 @@ const EditProfileScreen = (props) => {
         returnKeyType="next"
         onInputChange={inputChangeHandler}
         initialValue={userData.username ? userData.username : ""}
-        initiallyValid={!!userData.username}
+        initiallyValid={userData.username}
         required
       />
       <Input
@@ -726,7 +724,7 @@ const EditProfileScreen = (props) => {
         returnKeyType="next"
         onInputChange={inputChangeHandler}
         initialValue={userData.jobTitle ? userData.jobTitle : ""}
-        initiallyValid={!!userData.jobTitle}
+        initiallyValid={userData.jobTitle}
         required
       />
       <FilterSwitch
@@ -757,7 +755,7 @@ const EditProfileScreen = (props) => {
           returnKeyType="next"
           onInputChange={inputChangeHandler}
           initialValue={userData.resumeLinkUrl ? userData.resumeLinkUrl : ""}
-          initiallyValid={!!userData.resumeLinkUrl}
+          initiallyValid={userData.resumeLinkUrl}
           required
         />
       ) : null}
@@ -773,7 +771,7 @@ const EditProfileScreen = (props) => {
         initialValue={
           userData.profileBiography ? userData.profileBiography : ""
         }
-        initiallyValid={!!userData.profileBiography}
+        initiallyValid={userData.profileBiography}
       />
       {linksState.map((link, i) => (
         <View key={link.linkId}>

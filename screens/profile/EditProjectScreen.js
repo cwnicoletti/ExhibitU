@@ -170,7 +170,6 @@ const EditProjectScreen = (props) => {
   );
   const showcaseId = useSelector((state) => state.user.showcaseId);
 
-
   let TouchableCmp = TouchableOpacity;
   if (Platform.OS === "android") {
     TouchableCmp = TouchableNativeFeedback;
@@ -339,7 +338,6 @@ const EditProjectScreen = (props) => {
           <Text
             style={{
               fontSize: 28,
-              color: "white",
               fontWeight: "bold",
               margin: 10,
               color: darkModeValue ? "white" : "black",
