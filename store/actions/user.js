@@ -68,12 +68,10 @@ const getBase64FromUrl = async (url) => {
 
 export const refreshProfile = (localId) => {
   return async (dispatch) => {
-    const downloadForm = {
-      localId: localId,
-    };
+    const downloadForm = { localId };
 
     const profileInfo = await axios.post(
-      `https://us-central1-showcase-79c28.cloudfunctions.net/refreshProfile`,
+      "https://us-central1-showcase-79c28.cloudfunctions.net/refreshProfile",
       downloadForm
     );
 
@@ -124,12 +122,12 @@ export const refreshProfile = (localId) => {
       numberOfFollowing: profileInfo.data.data.numberOfFollowing,
       numberOfAdvocates: profileInfo.data.data.numberOfAdvocates,
       numberOfAdvocating: profileInfo.data.data.numberOfAdvocating,
-      followers: followers,
-      following: following,
-      advocates: advocates,
-      advocating: advocating,
-      projectsAdvocating: projectsAdvocating,
-      cheeredPosts: cheeredPosts,
+      followers,
+      following,
+      advocates,
+      advocating,
+      projectsAdvocating,
+      cheeredPosts,
     });
   };
 };
@@ -203,16 +201,16 @@ export const getUserData = () => {
       numberOfAdvocates: transformedData.numberOfAdvocates,
       numberOfAdvocating: transformedData.numberOfAdvocating,
       profileColumns: transformedData.profileColumns,
-      followers: followers,
-      following: following,
-      advocates: advocates,
-      advocating: advocating,
-      projectsAdvocating: projectsAdvocating,
-      cheeredPosts: cheeredPosts,
-      profileProjects: profileProjects,
-      profileLinks: profileLinks,
-      userFeed: userFeed,
-      updates: updates,
+      followers,
+      following,
+      advocates,
+      advocating,
+      projectsAdvocating,
+      cheeredPosts,
+      profileProjects,
+      profileLinks,
+      userFeed,
+      updates,
     });
 
     await dispatch({
@@ -241,19 +239,19 @@ export const uploadUpdateUserProfile = (
 ) => {
   return async (dispatch) => {
     const uploadForm = {
-      showcaseId: showcaseId,
-      localId: localId,
-      fullname: fullname,
-      jobTitle: jobTitle,
-      username: username,
-      bio: bio,
-      resumeLink: resumeLink,
-      showResumeValue: showResumeValue,
-      links: links,
+      showcaseId,
+      localId,
+      fullname,
+      jobTitle,
+      username,
+      bio,
+      resumeLink,
+      showResumeValue,
+      links,
     };
 
     await axios.post(
-      `https://us-central1-showcase-79c28.cloudfunctions.net/updateProfile`,
+      "https://us-central1-showcase-79c28.cloudfunctions.net/updateProfile",
       uploadForm
     );
 
@@ -267,8 +265,8 @@ export const uploadUpdateUserProfile = (
       data.showResumeValue = showResumeValue;
       data.profileLinks = links;
       if (Object.keys(data.userFeed) > 0) {
-        feedPosts = Object.keys(data.userFeed);
-        for (post of feedPosts) {
+        const feedPosts = Object.keys(data.userFeed);
+        for (const post of feedPosts) {
           data.userFeed = {
             [post]: {
               ...data.userFeed[post],
@@ -288,12 +286,12 @@ export const uploadUpdateUserProfile = (
 
     dispatch({
       type: UPDATE_USER_PROFILE,
-      fullname: fullname,
-      jobTitle: jobTitle,
-      username: username,
-      bio: bio,
-      resumeLink: resumeLink,
-      showResumeValue: showResumeValue,
+      fullname,
+      jobTitle,
+      username,
+      bio,
+      resumeLink,
+      showResumeValue,
       profileLinks: links,
     });
   };
@@ -310,17 +308,17 @@ export const uploadNewProject = (
 ) => {
   return async (dispatch) => {
     const uploadForm = {
-      showcaseId: showcaseId,
-      localId: localId,
-      projectTempCoverPhotoId: projectTempCoverPhotoId,
-      projectTempCoverPhotoBase64: projectTempCoverPhotoBase64,
-      projectTitle: projectTitle,
-      projectDescription: projectDescription,
-      links: links,
+      showcaseId,
+      localId,
+      projectTempCoverPhotoId,
+      projectTempCoverPhotoBase64,
+      projectTitle,
+      projectDescription,
+      links,
     };
 
     const newProjectResponse = await axios.post(
-      `https://us-central1-showcase-79c28.cloudfunctions.net/uploadNewProject`,
+      "https://us-central1-showcase-79c28.cloudfunctions.net/uploadNewProject",
       uploadForm
     );
     AsyncStorage.getItem("userDocData").then((data) => {
@@ -361,15 +359,15 @@ export const uploadNewProject = (
     });
     dispatch({
       type: ADD_USER_PROJECT,
-      showcaseId: showcaseId,
+      showcaseId,
       projectId: newProjectResponse.data.projectId,
       projectCoverPhotoId: newProjectResponse.data.photoId,
       projectCoverPhotoUrl: newProjectResponse.data.url,
       projectCoverPhotoBase64: projectTempCoverPhotoBase64,
       projectDateCreated: newProjectResponse.data.time,
       projectLastUpdated: newProjectResponse.data.time,
-      projectTitle: projectTitle,
-      projectDescription: projectDescription,
+      projectTitle,
+      projectDescription,
       projectLinks: links,
     });
   };
@@ -386,17 +384,17 @@ export const uploadUpdatedProject = (
 ) => {
   return async (dispatch) => {
     const uploadForm = {
-      showcaseId: showcaseId,
-      localId: localId,
-      projectId: projectId,
+      showcaseId,
+      localId,
+      projectId,
       url: projectTempCoverPhotoUrl,
-      projectTitle: projectTitle,
-      projectDescription: projectDescription,
-      links: links,
+      projectTitle,
+      projectDescription,
+      links,
     };
 
     const updatedProjectResponse = await axios.post(
-      `https://us-central1-showcase-79c28.cloudfunctions.net/uploadUpdatedProject`,
+      "https://us-central1-showcase-79c28.cloudfunctions.net/uploadUpdatedProject",
       uploadForm
     );
 
@@ -418,11 +416,11 @@ export const uploadUpdatedProject = (
 
     dispatch({
       type: UPDATE_USER_PROJECT,
-      projectId: projectId,
+      projectId,
       projectLastUpdated: updatedProjectResponse.data.time,
-      projectTitle: projectTitle,
+      projectTitle,
       projectCoverPhotoUrl: projectTempCoverPhotoUrl,
-      projectDescription: projectDescription,
+      projectDescription,
       projectLinks: links,
     });
   };
@@ -430,14 +428,10 @@ export const uploadUpdatedProject = (
 
 export const uploadRemoveProject = (showcaseId, localId, projectId) => {
   return async (dispatch) => {
-    const uploadForm = {
-      showcaseId: showcaseId,
-      localId: localId,
-      projectId: projectId,
-    };
+    const uploadForm = { showcaseId, localId, projectId };
 
     axios.post(
-      `https://us-central1-showcase-79c28.cloudfunctions.net/uploadRemoveProject`,
+      "https://us-central1-showcase-79c28.cloudfunctions.net/uploadRemoveProject",
       uploadForm
     );
 
@@ -455,22 +449,17 @@ export const uploadRemoveProject = (showcaseId, localId, projectId) => {
 
     dispatch({
       type: REMOVE_USER_PROJECT,
-      projectId: projectId,
+      projectId,
     });
   };
 };
 
 export const uploadRemovePost = (showcaseId, localId, projectId, postId) => {
   return async (dispatch) => {
-    const uploadForm = {
-      showcaseId: showcaseId,
-      localId: localId,
-      projectId: projectId,
-      postId: postId,
-    };
+    const uploadForm = { showcaseId, localId, projectId, postId };
 
     axios.post(
-      `https://us-central1-showcase-79c28.cloudfunctions.net/uploadRemovePost`,
+      "https://us-central1-showcase-79c28.cloudfunctions.net/uploadRemovePost",
       uploadForm
     );
 
@@ -483,53 +472,45 @@ export const uploadRemovePost = (showcaseId, localId, projectId, postId) => {
 
     await dispatch({
       type: REMOVE_USER_POST,
-      projectId: projectId,
-      postId: postId,
+      projectId,
+      postId,
     });
   };
 };
 
 export const followUser = (exploredShowcaseId, showcaseId, localId) => {
   return async (dispatch) => {
-    const user = {
-      exploredShowcaseId: exploredShowcaseId,
-      showcaseId: showcaseId,
-      localId: localId,
-    };
+    const user = { exploredShowcaseId, showcaseId, localId };
 
     await axios.post(
-      `https://us-central1-showcase-79c28.cloudfunctions.net/followUser`,
+      "https://us-central1-showcase-79c28.cloudfunctions.net/followUser",
       user
     );
 
-    AsyncStorage.getItem("userDocData").then((data) => {
+    await AsyncStorage.getItem("userDocData").then((data) => {
       data = JSON.parse(data);
       data.following = data.following.concat(exploredShowcaseId);
       data.numberOfFollowing = data.numberOfFollowing + 1;
       AsyncStorage.setItem("userDocData", JSON.stringify(data));
     });
 
-    dispatch({
+    await dispatch({
       type: FOLLOW_USER,
-      exploredShowcaseId: exploredShowcaseId,
+      exploredShowcaseId,
     });
   };
 };
 
 export const unfollowUser = (exploredShowcaseId, showcaseId, localId) => {
   return async (dispatch) => {
-    const user = {
-      exploredShowcaseId: exploredShowcaseId,
-      showcaseId: showcaseId,
-      localId: localId,
-    };
+    const user = { exploredShowcaseId, showcaseId, localId };
 
     await axios.post(
-      `https://us-central1-showcase-79c28.cloudfunctions.net/unfollowUser`,
+      "https://us-central1-showcase-79c28.cloudfunctions.net/unfollowUser",
       user
     );
 
-    AsyncStorage.getItem("userDocData").then((data) => {
+    await AsyncStorage.getItem("userDocData").then((data) => {
       data = JSON.parse(data);
       data.following = data.following.filter(
         (user) => user !== exploredShowcaseId
@@ -538,9 +519,9 @@ export const unfollowUser = (exploredShowcaseId, showcaseId, localId) => {
       AsyncStorage.setItem("userDocData", JSON.stringify(data));
     });
 
-    dispatch({
+    await dispatch({
       type: UNFOLLOW_USER,
-      exploredShowcaseId: exploredShowcaseId,
+      exploredShowcaseId,
     });
   };
 };
@@ -552,19 +533,14 @@ export const advocateForUser = (
   projectId
 ) => {
   return async (dispatch) => {
-    const user = {
-      exploredShowcaseId: exploredShowcaseId,
-      showcaseId: showcaseId,
-      localId: localId,
-      projectId: projectId,
-    };
+    const user = { exploredShowcaseId, showcaseId, localId, projectId };
 
     await axios.post(
-      `https://us-central1-showcase-79c28.cloudfunctions.net/advocateForUser`,
+      "https://us-central1-showcase-79c28.cloudfunctions.net/advocateForUser",
       user
     );
 
-    AsyncStorage.getItem("userDocData").then((data) => {
+    await AsyncStorage.getItem("userDocData").then((data) => {
       data = JSON.parse(data);
       data.advocating = data.advocating.concat(exploredShowcaseId);
       data.projectsAdvocating = data.projectsAdvocating.concat(projectId);
@@ -572,10 +548,10 @@ export const advocateForUser = (
       AsyncStorage.setItem("userDocData", JSON.stringify(data));
     });
 
-    dispatch({
+    await dispatch({
       type: ADVOCATE_FOR_USER,
-      exploredShowcaseId: exploredShowcaseId,
-      projectId: projectId,
+      exploredShowcaseId,
+      projectId,
     });
   };
 };
@@ -587,19 +563,14 @@ export const unadvocateForUser = (
   projectId
 ) => {
   return async (dispatch) => {
-    const user = {
-      exploredShowcaseId: exploredShowcaseId,
-      showcaseId: showcaseId,
-      localId: localId,
-      projectId: projectId,
-    };
+    const user = { exploredShowcaseId, showcaseId, localId, projectId };
 
     await axios.post(
-      `https://us-central1-showcase-79c28.cloudfunctions.net/unadvocateForUser`,
+      "https://us-central1-showcase-79c28.cloudfunctions.net/unadvocateForUser",
       user
     );
 
-    AsyncStorage.getItem("userDocData").then((data) => {
+    await AsyncStorage.getItem("userDocData").then((data) => {
       data = JSON.parse(data);
       data.advocating = data.advocating.filter(
         (user) => user !== exploredShowcaseId
@@ -611,24 +582,20 @@ export const unadvocateForUser = (
       AsyncStorage.setItem("userDocData", JSON.stringify(data));
     });
 
-    dispatch({
+    await dispatch({
       type: UNADVOCATE_FOR_USER,
-      exploredShowcaseId: exploredShowcaseId,
-      projectId: projectId,
+      exploredShowcaseId,
+      projectId,
     });
   };
 };
 
 export const uploadChangeProfilePicture = (base64, showcaseId, localId) => {
   return async (dispatch) => {
-    const picture = {
-      base64: base64,
-      showcaseId: showcaseId,
-      localId: localId,
-    };
+    const picture = { base64, showcaseId, localId };
 
     const uploadedPictureUrlResponse = await axios.post(
-      `https://us-central1-showcase-79c28.cloudfunctions.net/uploadChangeProfilePicture`,
+      "https://us-central1-showcase-79c28.cloudfunctions.net/uploadChangeProfilePicture",
       picture
     );
 
@@ -654,15 +621,10 @@ export const uploadAddTempProjectCoverPicture = (
   projectTempCoverPhotoId
 ) => {
   return async (dispatch) => {
-    const picture = {
-      base64: base64,
-      showcaseId: showcaseId,
-      localId: localId,
-      projectTempCoverPhotoId: projectTempCoverPhotoId,
-    };
+    const picture = { base64, showcaseId, localId, projectTempCoverPhotoId };
 
     const uploadedPictureUrlResponse = await axios.post(
-      `https://us-central1-showcase-79c28.cloudfunctions.net/uploadAddTempProjectCoverPicture`,
+      "https://us-central1-showcase-79c28.cloudfunctions.net/uploadAddTempProjectCoverPicture",
       picture
     );
 
@@ -690,15 +652,10 @@ export const uploadAddTempPostPicture = (
   localId
 ) => {
   return async (dispatch) => {
-    const picture = {
-      base64: base64,
-      projectId: projectId,
-      showcaseId: showcaseId,
-      localId: localId,
-    };
+    const picture = { base64, projectId, showcaseId, localId };
 
     const uploadedPictureUrlResponse = await axios.post(
-      `https://us-central1-showcase-79c28.cloudfunctions.net/uploadAddTempPostPicture`,
+      "https://us-central1-showcase-79c28.cloudfunctions.net/uploadAddTempPostPicture",
       picture
     );
 
@@ -728,15 +685,15 @@ export const uploadChangeProjectCoverPicture = (
 ) => {
   return async (dispatch) => {
     const picture = {
-      base64: base64,
-      projectId: projectId,
-      showcaseId: showcaseId,
-      localId: localId,
-      projectCoverPhotoId: projectCoverPhotoId,
+      base64,
+      projectId,
+      showcaseId,
+      localId,
+      projectCoverPhotoId,
     };
 
     const uploadedPictureUrlResponse = await axios.post(
-      `https://us-central1-showcase-79c28.cloudfunctions.net/uploadChangeProjectCoverPicture`,
+      "https://us-central1-showcase-79c28.cloudfunctions.net/uploadChangeProjectCoverPicture",
       picture
     );
 
@@ -792,33 +749,33 @@ export const addUserPost = (
 ) => {
   return async (dispatch) => {
     const picture = {
-      showcaseId: showcaseId,
-      localId: localId,
-      projectId: projectId,
-      fullname: fullname,
-      username: username,
-      jobTitle: jobTitle,
-      numberOfFollowers: numberOfFollowers,
-      numberOfFollowing: numberOfFollowing,
-      numberOfAdvocates: numberOfAdvocates,
-      profileBiography: profileBiography,
-      projectTitle: projectTitle,
-      projectCoverPhotoUrl: projectCoverPhotoUrl,
-      projectDateCreated: projectDateCreated,
-      projectLastUpdated: projectLastUpdated,
-      projectDescription: projectDescription,
-      profilePictureUrl: profilePictureUrl,
+      showcaseId,
+      localId,
+      projectId,
+      fullname,
+      username,
+      jobTitle,
+      numberOfFollowers,
+      numberOfFollowing,
+      numberOfAdvocates,
+      profileBiography,
+      projectTitle,
+      projectCoverPhotoUrl,
+      projectDateCreated,
+      projectLastUpdated,
+      projectDescription,
+      profilePictureUrl,
       postId: tempPhotoPostId,
       postUrl: tempPhotoPostUrl,
-      caption: caption,
-      profileLinks: profileLinks,
-      projectLinks: projectLinks,
-      links: links,
-      profileColumns: profileColumns,
+      caption,
+      profileLinks,
+      projectLinks,
+      links,
+      profileColumns,
     };
 
     const uploadedUserPost = await axios.post(
-      `https://us-central1-showcase-79c28.cloudfunctions.net/uploadAddUserPost`,
+      "https://us-central1-showcase-79c28.cloudfunctions.net/uploadAddUserPost",
       picture
     );
 
@@ -946,44 +903,39 @@ export const addUserPost = (
 
     await dispatch({
       type: ADD_USER_POST,
-      fullname: fullname,
-      username: username,
-      jobTitle: jobTitle,
-      showcaseId: showcaseId,
-      profileBiography: profileBiography,
-      projectTitle: projectTitle,
-      numberOfFollowers: numberOfFollowers,
-      numberOfFollowing: numberOfFollowing,
-      numberOfAdvocates: numberOfAdvocates,
-      profilePictureUrl: profilePictureUrl,
-      projectId: projectId,
+      fullname,
+      username,
+      jobTitle,
+      showcaseId,
+      profileBiography,
+      projectTitle,
+      numberOfFollowers,
+      numberOfFollowing,
+      numberOfAdvocates,
+      profilePictureUrl,
+      projectId,
       postId: postId,
       postDateCreated: time,
       postLastUpdated: time,
       postPhotoUrl: tempPhotoPostUrl,
       postPhotoBase64: tempPhotoPostBase64,
-      caption: caption,
-      profileLinks: profileLinks,
-      projectLinks: projectLinks,
+      caption,
+      profileLinks,
+      projectLinks,
       postLinks: links,
-      profileColumns: profileColumns,
+      profileColumns,
     });
-    await dispatch({
-      type: UPDATE_ALL_POSTS,
-      postId: postId,
-    });
+
+    await dispatch({ type: UPDATE_ALL_POSTS, postId: postId });
   };
 };
 
 export const getUserFeed = (localId, showcaseId) => {
   return async (dispatch) => {
-    const userFeedGet = {
-      localId: localId,
-      showcaseId: showcaseId,
-    };
+    const userFeedGet = { localId, showcaseId };
 
     const uploadedUserPost = await axios.post(
-      `https://us-central1-showcase-79c28.cloudfunctions.net/getUserFeed`,
+      "https://us-central1-showcase-79c28.cloudfunctions.net/getUserFeed",
       userFeedGet
     );
 
@@ -1020,16 +972,11 @@ export const getUserFeed = (localId, showcaseId) => {
 
     await AsyncStorage.getItem("userDocData").then((data) => {
       data = JSON.parse(data);
-      data.userFeed = {
-        ...returnData,
-      };
+      data.userFeed = { ...returnData };
       AsyncStorage.setItem("userDocData", JSON.stringify(data));
     });
 
-    await dispatch({
-      type: GET_USER_FEED,
-      feedData: returnData,
-    });
+    await dispatch({ type: GET_USER_FEED, feedData: returnData });
   };
 };
 
@@ -1042,15 +989,15 @@ export const cheerPost = (
 ) => {
   return async (dispatch) => {
     const cheeringForm = {
-      localId: localId,
-      showcaseId: showcaseId,
-      projectId: projectId,
-      postId: postId,
-      posterShowcaseId: posterShowcaseId,
+      localId,
+      showcaseId,
+      projectId,
+      postId,
+      posterShowcaseId,
     };
 
     axios.post(
-      `https://us-central1-showcase-79c28.cloudfunctions.net/cheerPost`,
+      "https://us-central1-showcase-79c28.cloudfunctions.net/cheerPost",
       cheeringForm
     );
 
@@ -1114,15 +1061,12 @@ export const cheerPost = (
 
     await dispatch({
       type: CHEER_POST,
-      showcaseId: showcaseId,
-      projectId: projectId,
-      postId: postId,
+      showcaseId,
+      projectId,
+      postId,
     });
-    await dispatch({
-      type: CHEER_UPDATE_POSTS,
-      projectId: projectId,
-      postId: postId,
-    });
+
+    await dispatch({ type: CHEER_UPDATE_POSTS, projectId, postId });
   };
 };
 
@@ -1155,9 +1099,9 @@ export const cheerOwnFeedPost = (showcaseId, projectId, postId) => {
 
     await dispatch({
       type: CHEER_OWN_FEED_POST,
-      showcaseId: showcaseId,
-      projectId: projectId,
-      postId: postId,
+      showcaseId,
+      projectId,
+      postId,
     });
   };
 };
@@ -1171,15 +1115,15 @@ export const cheerOwnProfilePost = (
 ) => {
   return async (dispatch) => {
     const cheeringForm = {
-      localId: localId,
-      showcaseId: showcaseId,
-      projectId: projectId,
-      postId: postId,
-      posterShowcaseId: posterShowcaseId,
+      localId,
+      showcaseId,
+      projectId,
+      postId,
+      posterShowcaseId,
     };
 
     axios.post(
-      `https://us-central1-showcase-79c28.cloudfunctions.net/cheerPost`,
+      "https://us-central1-showcase-79c28.cloudfunctions.net/cheerPost",
       cheeringForm
     );
 
@@ -1264,16 +1208,12 @@ export const cheerOwnProfilePost = (
 
     await dispatch({
       type: CHEER_OWN_PROFILE_POST,
-      showcaseId: showcaseId,
-      projectId: projectId,
-      postId: postId,
+      showcaseId,
+      projectId,
+      postId,
     });
 
-    await dispatch({
-      type: CHEER_UPDATE_POSTS,
-      projectId: projectId,
-      postId: postId,
-    });
+    await dispatch({ type: CHEER_UPDATE_POSTS, projectId, postId });
   };
 };
 
@@ -1286,15 +1226,15 @@ export const uncheerPost = (
 ) => {
   return async (dispatch) => {
     const uncheeringForm = {
-      localId: localId,
-      showcaseId: showcaseId,
-      projectId: projectId,
-      postId: postId,
-      posterShowcaseId: posterShowcaseId,
+      localId,
+      showcaseId,
+      projectId,
+      postId,
+      posterShowcaseId,
     };
 
     axios.post(
-      `https://us-central1-showcase-79c28.cloudfunctions.net/uncheerPost`,
+      "https://us-central1-showcase-79c28.cloudfunctions.net/uncheerPost",
       uncheeringForm
     );
 
@@ -1358,15 +1298,12 @@ export const uncheerPost = (
 
     await dispatch({
       type: UNCHEER_POST,
-      showcaseId: showcaseId,
-      projectId: projectId,
-      postId: postId,
+      showcaseId,
+      projectId,
+      postId,
     });
-    await dispatch({
-      type: UNCHEER_UPDATE_POSTS,
-      projectId: projectId,
-      postId: postId,
-    });
+
+    await dispatch({ type: UNCHEER_UPDATE_POSTS, projectId, postId });
   };
 };
 
@@ -1399,9 +1336,9 @@ export const uncheerOwnFeedPost = (showcaseId, projectId, postId) => {
 
     await dispatch({
       type: UNCHEER_OWN_FEED_POST,
-      showcaseId: showcaseId,
-      projectId: projectId,
-      postId: postId,
+      showcaseId,
+      projectId,
+      postId,
     });
   };
 };
@@ -1415,15 +1352,15 @@ export const uncheerOwnProfilePost = (
 ) => {
   return async (dispatch) => {
     const uncheeringForm = {
-      localId: localId,
-      showcaseId: showcaseId,
-      projectId: projectId,
-      postId: postId,
-      posterShowcaseId: posterShowcaseId,
+      localId,
+      showcaseId,
+      projectId,
+      postId,
+      posterShowcaseId,
     };
 
     axios.post(
-      `https://us-central1-showcase-79c28.cloudfunctions.net/uncheerPost`,
+      "https://us-central1-showcase-79c28.cloudfunctions.net/uncheerPost",
       uncheeringForm
     );
 
@@ -1507,54 +1444,21 @@ export const uncheerOwnProfilePost = (
 
     await dispatch({
       type: UNCHEER_OWN_PROFILE_POST,
-      showcaseId: showcaseId,
-      projectId: projectId,
-      postId: postId,
-    });
-    await dispatch({
-      type: UNCHEER_UPDATE_POSTS,
-      projectId: projectId,
-      postId: postId,
-    });
-  };
-};
-
-export const uploadFeedback = (localId, title, feedback) => {
-  return async (dispatch) => {
-    const picture = {
-      localId: localId,
-      title: title,
-      feedback: feedback,
-    };
-
-    await axios.post(
-      `https://us-central1-showcase-79c28.cloudfunctions.net/uploadFeedback`,
-      picture
-    );
-
-    await AsyncStorage.getItem("userDocData").then((data) => {
-      data = JSON.parse(data);
-      data.feedback = feedback;
-      AsyncStorage.setItem("userDocData", JSON.stringify(data));
+      showcaseId,
+      projectId,
+      postId,
     });
 
-    await dispatch({
-      type: UPLOAD_FEEDBACK,
-      feedback: feedback,
-    });
+    await dispatch({ type: UNCHEER_UPDATE_POSTS, projectId, postId });
   };
 };
 
 export const changeProfileNumberOfColumns = (localId, showcaseId, number) => {
   return async (dispatch) => {
-    const picture = {
-      localId: localId,
-      showcaseId: showcaseId,
-      number: number,
-    };
+    const picture = { localId, showcaseId, number };
 
     axios.post(
-      `https://us-central1-showcase-79c28.cloudfunctions.net/changeProfileNumberOfColumns`,
+      "https://us-central1-showcase-79c28.cloudfunctions.net/changeProfileNumberOfColumns",
       picture
     );
 
@@ -1564,10 +1468,7 @@ export const changeProfileNumberOfColumns = (localId, showcaseId, number) => {
       AsyncStorage.setItem("userDocData", JSON.stringify(data));
     });
 
-    dispatch({
-      type: CHANGE_PROFILE_COLUMNS,
-      number: number,
-    });
+    dispatch({ type: CHANGE_PROFILE_COLUMNS, number });
   };
 };
 
@@ -1578,15 +1479,10 @@ export const changeProjectNumberOfColumns = (
   number
 ) => {
   return async (dispatch) => {
-    const picture = {
-      localId: localId,
-      showcaseId: showcaseId,
-      projectId: projectId,
-      number: number,
-    };
+    const picture = { localId, showcaseId, projectId, number };
 
     axios.post(
-      `https://us-central1-showcase-79c28.cloudfunctions.net/changeProjectNumberOfColumns`,
+      "https://us-central1-showcase-79c28.cloudfunctions.net/changeProjectNumberOfColumns",
       picture
     );
 
@@ -1602,76 +1498,41 @@ export const changeProjectNumberOfColumns = (
       AsyncStorage.setItem("userDocData", JSON.stringify(data));
     });
 
-    dispatch({
-      type: CHANGE_PROJECT_COLUMNS,
-      projectId: projectId,
-      number: number,
-    });
+    dispatch({ type: CHANGE_PROJECT_COLUMNS, projectId, number });
   };
 };
 
 export const getUpdates = () => {
   return async (dispatch) => {
     const uploadedUserPost = await axios.post(
-      `https://us-central1-showcase-79c28.cloudfunctions.net/getUpdates`
+      "https://us-central1-showcase-79c28.cloudfunctions.net/getUpdates"
     );
-
     const returnData = uploadedUserPost.data.returnData;
 
     await AsyncStorage.getItem("userDocData").then((data) => {
       data = JSON.parse(data);
-      data.updates = {
-        ...returnData,
-      };
+      data.updates = { ...returnData };
       AsyncStorage.setItem("userDocData", JSON.stringify(data));
     });
 
-    await dispatch({
-      type: GET_UPDATES,
-      updateData: returnData,
-    });
-  };
-};
-
-export const showcaseLocally = () => {
-  return async (dispatch) => {
-    await dispatch({
-      type: SHOWCASE_LOCALLY,
-    });
-  };
-};
-
-export const returnFromShowcasing = () => {
-  return async (dispatch) => {
-    await dispatch({
-      type: RETURN_FROM_SHOWCASING,
-    });
+    await dispatch({ type: GET_UPDATES, updateData: returnData });
   };
 };
 
 export const resetScroll = (tab) => {
   return async (dispatch) => {
-    await dispatch({
-      type: RESET_SCROLL,
-      tab: tab,
-    });
+    await dispatch({ type: RESET_SCROLL, tab });
   };
 };
 
 export const onScreen = (tab) => {
   return async (dispatch) => {
-    await dispatch({
-      type: ON_SCREEN,
-      tab: tab,
-    });
+    await dispatch({ type: ON_SCREEN, tab });
   };
 };
 
 export const offScreen = (tab) => {
   return async (dispatch) => {
-    await dispatch({
-      type: OFF_SCREEN,
-      tab: tab,
-    });
+    await dispatch({ type: OFF_SCREEN, tab });
   };
 };

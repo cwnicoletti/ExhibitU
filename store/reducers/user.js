@@ -72,8 +72,6 @@ const intialState = {
   profileLinks: {},
   userFeed: {},
   updates: {},
-  showcasingLocally: false,
-  returnFromShowcasing: false,
   resetScrollFeed: false,
   resetScrollExplore: false,
   resetScrollProfile: false,
@@ -831,11 +829,6 @@ export default (state = intialState, action) => {
       return {
         ...state,
         showcasingLocally: !state.showcasingLocally,
-      };
-    case RETURN_FROM_SHOWCASING:
-      return {
-        ...state,
-        returnFromShowcasing: !state.returnFromShowcasing,
       };
   }
   return state;
