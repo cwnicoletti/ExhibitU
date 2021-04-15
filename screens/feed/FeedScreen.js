@@ -27,9 +27,6 @@ const UserFeedScreen = (props) => {
   const userFeed = useSelector((state) => state.user.userFeed);
   const profileProjects = useSelector((state) => state.user.profileProjects);
   const resetScrollFeed = useSelector((state) => state.user.resetScrollFeed);
-  const profilePictureBase64 = useSelector(
-    (state) => state.user.profilePictureBase64
-  );
 
   let filteredOutEmptyUserFeed = [];
   Object.entries(userFeed).forEach(([k, value]) => {
@@ -58,10 +55,10 @@ const UserFeedScreen = (props) => {
   ) => {
     dispatch(offScreen("Feed"));
     props.navigation.navigate("ViewFeedProject", {
-      showcaseId: showcaseId,
-      projectId: projectId,
-      profileProjects: profileProjects,
-      postLinks: postLinks,
+      feedShowcaseId: showcaseId,
+      projectId,
+      profileProjects,
+      postLinks,
     });
   };
 
@@ -88,7 +85,7 @@ const UserFeedScreen = (props) => {
     jobTitle,
     profileBiography,
     profileProjects,
-    profilePictureUrl,
+    profilePictureBase64,
     numberOfFollowers,
     numberOfFollowing,
     numberOfAdvocates,
@@ -108,7 +105,7 @@ const UserFeedScreen = (props) => {
       jobTitle,
       profileBiography,
       profileProjects,
-      profilePictureUrl,
+      profilePictureBase64,
       numberOfFollowers,
       numberOfFollowing,
       numberOfAdvocates,
@@ -202,11 +199,7 @@ const UserFeedScreen = (props) => {
         renderItem={(itemData) => (
           <FeedItem
             image={itemData.item.postPhotoBase64}
-            profileImageSource={
-              itemData.item.showcaseId === showcaseId
-                ? profilePictureBase64
-                : itemData.item.profilePictureUrl
-            }
+            profileImageSource={itemData.item.profilePictureBase64}
             projectTitle={itemData.item.projectTitle}
             caption={itemData.item.caption}
             numberOfCheers={itemData.item.numberOfCheers}
@@ -294,7 +287,7 @@ const UserFeedScreen = (props) => {
                 itemData.item.showcaseId === showcaseId
                   ? profileProjects
                   : itemData.item.profileProjects,
-                itemData.item.profilePictureUrl,
+                itemData.item.profilePictureBase64,
                 itemData.item.numberOfFollowers,
                 itemData.item.numberOfFollowing,
                 itemData.item.numberOfAdvocates,

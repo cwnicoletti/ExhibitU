@@ -5,15 +5,10 @@ import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import IoniconsHeaderButton from "../../components/UI/IoniconsHeaderButton";
 
 import ProjectItem from "../../components/projectItems/ProfileProjectItem";
-import HeaderButton from "../../components/UI/IoniconsHeaderButton";
 import FeedProfileHeader from "../../components/feed/FeedProfileHeader";
 
 const FeedProfileScreen = (props) => {
   const darkModeValue = useSelector((state) => state.switches.darkMode);
-  const showcaseId = useSelector((state) => state.user.showcaseId);
-  const profilePictureBase64 = useSelector(
-    (state) => state.user.profilePictureBase64
-  );
   const userData = {
     showcaseId: props.navigation.getParam("showcaseId"),
     projectId: props.navigation.getParam("projectId"),
@@ -21,7 +16,7 @@ const FeedProfileScreen = (props) => {
     username: props.navigation.getParam("username"),
     jobTitle: props.navigation.getParam("jobTitle"),
     profileBiography: props.navigation.getParam("profileBiography"),
-    profilePictureUrl: props.navigation.getParam("profilePictureUrl"),
+    profilePictureBase64: props.navigation.getParam("profilePictureBase64"),
     numberOfFollowers: props.navigation.getParam("numberOfFollowers"),
     numberOfFollowing: props.navigation.getParam("numberOfFollowing"),
     numberOfAdvocates: props.navigation.getParam("numberOfAdvocates"),
@@ -42,7 +37,7 @@ const FeedProfileScreen = (props) => {
 
   useEffect(() => {
     props.navigation.setParams({ darkMode: darkModeValue });
-  }, [darkModeValue]);
+  }, []);
 
   const viewProjectHandler = (
     showcaseId,
@@ -52,7 +47,7 @@ const FeedProfileScreen = (props) => {
     jobTitle,
     profileBiography,
     profileProjects,
-    profilePictureUrl,
+    profilePictureBase64,
     numberOfFollowers,
     numberOfFollowing,
     numberOfAdvocates,
@@ -70,7 +65,7 @@ const FeedProfileScreen = (props) => {
       jobTitle: jobTitle,
       profileBiography: profileBiography,
       profileProjects: profileProjects,
-      profilePictureUrl: profilePictureUrl,
+      profilePictureBase64: profilePictureBase64,
       numberOfFollowers: numberOfFollowers,
       numberOfFollowing: numberOfFollowing,
       numberOfAdvocates: numberOfAdvocates,
@@ -111,11 +106,7 @@ const FeedProfileScreen = (props) => {
         hideFollowers={userData.hideFollowers}
         hideAdvocates={userData.hideAdvocates}
         links={userData.profileLinks}
-        imgSource={
-          showcaseId === userData.showcaseId
-            ? profilePictureBase64
-            : userData.profilePictureUrl
-        }
+        imgSource={userData.profilePictureBase64}
         descriptionStyle={{
           ...styles.profileDescriptionStyle,
           color: darkModeValue ? "white" : "black",
@@ -179,7 +170,7 @@ const FeedProfileScreen = (props) => {
                 userData.jobTitle,
                 userData.profileBiography,
                 userData.profileProjects,
-                userData.profilePictureUrl,
+                userData.profilePictureBase64,
                 userData.numberOfFollowers,
                 userData.numberOfFollowing,
                 userData.numberOfAdvocates,

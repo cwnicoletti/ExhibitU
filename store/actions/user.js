@@ -946,7 +946,11 @@ export const getUserFeed = (localId, showcaseId) => {
         const postPhotoBase64 = await getBase64FromUrl(
           returnData[key]["postPhotoUrl"]
         );
+        const profilePictureBase64 = await getBase64FromUrl(
+          returnData[key]["profilePictureUrl"]
+        );
         returnData[key]["postPhotoBase64"] = postPhotoBase64;
+        returnData[key]["profilePictureBase64"] = profilePictureBase64;
         for (const projectKey of Object.keys(returnData[key].profileProjects)) {
           const projectCoverPhotoBase64 = await getBase64FromUrl(
             returnData[key].profileProjects[projectKey]["projectCoverPhotoUrl"]

@@ -1,5 +1,12 @@
 import React, { useEffect } from "react";
-import { Image, StyleSheet, FlatList, View, Text } from "react-native";
+import {
+  Image,
+  StyleSheet,
+  FlatList,
+  View,
+  Text,
+  Platform,
+} from "react-native";
 import { useSelector } from "react-redux";
 
 import ProjectPictures from "../../components/UI/ProjectPictures";
@@ -10,7 +17,12 @@ import { HeaderButtons, Item } from "react-navigation-header-buttons";
 
 const FeedProjectScreen = (props) => {
   const darkModeValue = useSelector((state) => state.switches.darkMode);
+  const feedShowcaseId = props.navigation.getParam("feedShowcaseId");
+  const showcaseId = useSelector((state) => state.user.showcaseId);
   const currentProjectId = props.navigation.getParam("projectId");
+  const profilePictureBase64 = props.navigation.getParam(
+    "profilePictureBase64"
+  );
   const profileProjects = props.navigation.getParam("profileProjects");
 
   const project = Object.values(profileProjects).find(
@@ -31,7 +43,7 @@ const FeedProjectScreen = (props) => {
     jobTitle,
     profileBiography,
     profileProjects,
-    profilePictureUrl,
+    profilePictureBase64,
     postPhotoBase64,
     numberOfCheers,
     numberOfComments,
@@ -47,35 +59,37 @@ const FeedProjectScreen = (props) => {
     postLinks
   ) => {
     props.navigation.navigate("ViewComments", {
-      showcaseId: showcaseId,
-      projectId: projectId,
-      postId: postId,
-      fullname: fullname,
-      username: username,
-      jobTitle: jobTitle,
-      profileBiography: profileBiography,
-      profileProjects: profileProjects,
-      profilePictureUrl: profilePictureUrl,
-      postPhotoBase64: postPhotoBase64,
-      numberOfCheers: numberOfCheers,
-      numberOfComments: numberOfComments,
-      caption: caption,
-      numberOfFollowers: numberOfFollowers,
-      numberOfFollowing: numberOfFollowing,
-      numberOfAdvocates: numberOfAdvocates,
-      hideFollowing: hideFollowing,
-      hideFollowers: hideFollowers,
-      hideAdvocates: hideAdvocates,
-      profileLinks: profileLinks,
-      profileColumns: profileColumns,
-      postLinks: postLinks,
+      showcaseId,
+      projectId,
+      postId,
+      fullname,
+      username,
+      jobTitle,
+      profileBiography,
+      profileProjects,
+      profilePictureBase64,
+      postPhotoBase64,
+      numberOfCheers,
+      numberOfComments,
+      caption,
+      numberOfFollowers,
+      numberOfFollowing,
+      numberOfAdvocates,
+      hideFollowing,
+      hideFollowers,
+      hideAdvocates,
+      profileLinks,
+      profileColumns,
+      postLinks,
     });
   };
 
   useEffect(() => {
     props.navigation.setParams({ darkMode: darkModeValue });
+    props.navigation.setParams({ showcaseId: showcaseId });
+    props.navigation.setParams({ feedShowcaseId: feedShowcaseId });
     props.navigation.setParams({ android: android });
-  }, [darkModeValue, android]);
+  }, [darkModeValue, showcaseId, feedShowcaseId, android]);
 
   const topHeader = () => {
     return (
@@ -139,7 +153,7 @@ const FeedProjectScreen = (props) => {
                 itemData.item.jobTitle,
                 itemData.item.profileBiography,
                 profileProjects,
-                itemData.item.profilePictureUrl,
+                profilePictureBase64,
                 itemData.item.postPhotoBase64,
                 itemData.item.numberOfCheers,
                 itemData.item.numberOfComments,
@@ -164,6 +178,8 @@ const FeedProjectScreen = (props) => {
 
 FeedProjectScreen.navigationOptions = (navData) => {
   const darkModeValue = navData.navigation.getParam("darkMode");
+  const showcaseId = navData.navigation.getParam("showcaseId");
+  const feedShowcaseId = navData.navigation.getParam("feedShowcaseId");
   const android = navData.navigation.getParam("android");
 
   return {
@@ -210,16 +226,20 @@ FeedProjectScreen.navigationOptions = (navData) => {
       </HeaderButtons>
     ),
     headerRight: () => (
-      <HeaderButtons HeaderButtonComponent={FontAwesomeHeaderButton}>
-        <Item
-          title="Advocate"
-          iconName={"handshake-o"}
-          color={darkModeValue ? "white" : "black"}
-          onPress={() => {
-            navData.navigation.toggleRightDrawer();
-          }}
-        />
-      </HeaderButtons>
+      <View>
+        {showcaseId !== feedShowcaseId ? (
+          <HeaderButtons HeaderButtonComponent={FontAwesomeHeaderButton}>
+            <Item
+              title="Advocate"
+              iconName={"handshake-o"}
+              color={darkModeValue ? "white" : "black"}
+              onPress={() => {
+                navData.navigation.toggleRightDrawer();
+              }}
+            />
+          </HeaderButtons>
+        ) : null}
+      </View>
     ),
   };
 };

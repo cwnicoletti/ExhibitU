@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { Image, StyleSheet, FlatList, View, Text } from "react-native";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 
 import ProjectItem from "../../components/projectItems/ProfileProjectItem";
@@ -8,17 +8,17 @@ import ShowcaseHeader from "../../components/user/ShowcaseHeader";
 import IoniconsHeaderButton from "../../components/UI/IoniconsHeaderButton";
 
 const ShowcaseProfileScreen = (props) => {
-  const dispatch = useDispatch();
   const darkModeValue = useSelector((state) => state.switches.darkMode);
   const showcaseId = useSelector((state) => state.user.showcaseId);
+  const undefined = void 0;
   const profilePicture =
-    props.navigation.getParam("profilePictureUrl") === showcaseId ||
-    props.navigation.getParam("profileColumns") === undefined
+    props.navigation.getParam("showcaseId") === showcaseId ||
+    props.navigation.getParam("profilePictureUrl") === undefined
       ? useSelector((state) => state.user.profilePictureBase64)
       : props.navigation.getParam("profilePictureUrl");
 
   const profileColumns =
-    props.navigation.getParam("profileColumns") === showcaseId ||
+    props.navigation.getParam("showcaseId") === showcaseId ||
     props.navigation.getParam("profileColumns") === undefined
       ? useSelector((state) => state.user.profileColumns)
       : props.navigation.getParam("profileColumns");
@@ -30,57 +30,57 @@ const ShowcaseProfileScreen = (props) => {
         ? useSelector((state) => state.user.showcaseId)
         : props.navigation.getParam("showcaseId"),
     fullname:
-      props.navigation.getParam("fullname") === showcaseId ||
+      props.navigation.getParam("showcaseId") === showcaseId ||
       props.navigation.getParam("fullname") === undefined
         ? useSelector((state) => state.user.fullname)
         : props.navigation.getParam("fullname"),
     username:
-      props.navigation.getParam("username") === showcaseId ||
+      props.navigation.getParam("showcaseId") === showcaseId ||
       props.navigation.getParam("username") === undefined
         ? useSelector((state) => state.user.username)
         : props.navigation.getParam("username"),
     jobTitle:
-      props.navigation.getParam("jobTitle") === showcaseId ||
+      props.navigation.getParam("showcaseId") === showcaseId ||
       props.navigation.getParam("jobTitle") === undefined
         ? useSelector((state) => state.user.jobTitle)
         : props.navigation.getParam("jobTitle"),
     profileBiography:
-      props.navigation.getParam("profileBiography") === showcaseId ||
+      props.navigation.getParam("showcaseId") === showcaseId ||
       props.navigation.getParam("profileBiography") === undefined
         ? useSelector((state) => state.user.profileBiography)
         : props.navigation.getParam("profileBiography"),
     profileLinks:
-      props.navigation.getParam("profileLinks") === showcaseId ||
+      props.navigation.getParam("showcaseId") === showcaseId ||
       props.navigation.getParam("profileLinks") === undefined
         ? useSelector((state) => state.user.profileLinks)
         : props.navigation.getParam("profileLinks"),
     profileProjects:
-      props.navigation.getParam("profileProjects") === showcaseId ||
+      props.navigation.getParam("showcaseId") === showcaseId ||
       props.navigation.getParam("profileProjects") === undefined
         ? useSelector((state) => state.user.profileProjects)
         : props.navigation.getParam("profileProjects"),
     numberOfAdvocates:
-      props.navigation.getParam("numberOfAdvocates") === showcaseId ||
+      props.navigation.getParam("showcaseId") === showcaseId ||
       props.navigation.getParam("numberOfAdvocates") === undefined
         ? useSelector((state) => state.user.numberOfAdvocates)
         : props.navigation.getParam("numberOfAdvocates"),
     numberOfFollowers:
-      props.navigation.getParam("numberOfFollowers") === showcaseId ||
+      props.navigation.getParam("showcaseId") === showcaseId ||
       props.navigation.getParam("numberOfFollowers") === undefined
         ? useSelector((state) => state.user.numberOfFollowers)
         : props.navigation.getParam("numberOfFollowers"),
     numberOfFollowing:
-      props.navigation.getParam("numberOfFollowing") === showcaseId ||
+      props.navigation.getParam("showcaseId") === showcaseId ||
       props.navigation.getParam("numberOfFollowing") === undefined
         ? useSelector((state) => state.user.numberOfFollowing)
         : props.navigation.getParam("numberOfFollowing"),
     showResumeValue:
-      props.navigation.getParam("showResumeValue") === showcaseId ||
+      props.navigation.getParam("showcaseId") === showcaseId ||
       props.navigation.getParam("showResumeValue") === undefined
         ? useSelector((state) => state.user.showResumeValue)
         : props.navigation.getParam("showResumeValue"),
     resumeLink:
-      props.navigation.getParam("resumeLink") === showcaseId ||
+      props.navigation.getParam("showcaseId") === showcaseId ||
       props.navigation.getParam("resumeLink") === undefined
         ? useSelector((state) => state.user.resumeLink)
         : props.navigation.getParam("resumeLink"),
@@ -92,7 +92,7 @@ const ShowcaseProfileScreen = (props) => {
 
   const viewProjectHandler = (projectId) => {
     props.navigation.push("ShowcaseProject", {
-      projectId: projectId,
+      projectId,
       profileProjects: userData.profileProjects,
     });
   };
