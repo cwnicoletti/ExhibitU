@@ -41,26 +41,32 @@ const Input = (props) => {
     const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     let isValid = true;
     let error = props.errorText;
+    const realUndefined = void 0;
+
     if (props.required && text.trim().length === 0) {
       isValid = false;
     }
     if (props.email && !emailRegex.test(text.toLowerCase())) {
       isValid = false;
     }
-    if (props.min !== undefined && +text < props.min) {
+    if (props.min !== realUndefined && +text < props.min) {
       isValid = false;
     }
-    if (props.max !== undefined && +text > props.max) {
+    if (props.max !== realUndefined && +text > props.max) {
       isValid = false;
     }
-    if (props.confirmPassword !== undefined && props.confirmPassword !== text) {
+    if (
+      props.confirmPassword !== realUndefined &&
+      props.confirmPassword !== text
+    ) {
       isValid = false;
       error = "Passwords don't match!";
     }
-    if (props.minLength !== undefined && text.length < props.minLength) {
+    if (props.minLength !== realUndefined && text.length < props.minLength) {
       isValid = false;
       error = "Password not long enough!";
     }
+    
     dispatch({
       type: INPUT_CHANGE,
       value: text,
