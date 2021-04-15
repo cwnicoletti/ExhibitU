@@ -1,5 +1,5 @@
 # Showcase
-<a href="https://github.com/cwnicoletti/Showcase/blob/main/LICENSE"><img src="https://img.shields.io/badge/License-CC%20BY--NC%204.0-critical" alt="CC BY-NC 4.0"></a>  <img src="https://img.shields.io/github/repo-size/cwnicoletti/showcase" alt="Repo Size">  [![Codacy Badge](https://app.codacy.com/project/badge/Grade/6749da8aa61a4e6c80c7c72138157fd5)](https://www.codacy.com/gh/cwnicoletti/Showcase/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=cwnicoletti/Showcase&amp;utm_campaign=Badge_Grade) <img src="https://img.shields.io/github/last-commit/cwnicoletti/showcase" alt="Last Commit">
+<a href="https://github.com/cwnicoletti/Showcase/blob/main/LICENSE"><img src="https://img.shields.io/badge/License-CC%20BY--NC%204.0-critical" alt="CC BY-NC 4.0"></a>  <img src="https://img.shields.io/github/repo-size/cwnicoletti/showcase" alt="Repo Size">  [![Codacy Badge](https://app.codacy.com/project/badge/Grade/6749da8aa61a4e6c80c7c72138157fd5)](https://www.codacy.com/gh/cwnicoletti/Showcase/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=cwnicoletti/Showcase&amp;utm_campaign=Badge_Grade)
 
 This is a mobile app built using React Native and Expo. Designs were made via Adobe Xd.
 
@@ -20,6 +20,14 @@ This is a mobile app built using React Native and Expo. Designs were made via Ad
 7. Expo Go should find your project if you're on the same wifi as your computer, if not: Open the camera app and focus on the QR code to get a notification to the app.
 
 **THIS MOBILE APP USES A BACKEND IN A PRIVATE REPO. YOU CAN'T EDIT THE BACKEND, BUT IT WILL STILL WORK**
+
+## Testing your code
+
+Before making a pull request, run:
+```
+npm test
+```
+Testing is supported by [jest](https://jestjs.io/) and test files (".test.js") can be found in "__test__" directories
 
 ## Contributions
 All contributions should be referenced to the [CONTRIBUTIONS](https://github.com/christiannicoletti/Showcase/blob/master/CONTRIBUTING.md) file before making a pull request.
