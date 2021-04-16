@@ -1,5 +1,12 @@
 import React, { useEffect, useCallback } from "react";
-import { Image, StyleSheet, View, Text, ScrollView } from "react-native";
+import {
+  Image,
+  StyleSheet,
+  View,
+  Text,
+  ScrollView,
+  Platform,
+} from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 
@@ -12,6 +19,7 @@ import { uploadRemovePost } from "../../store/actions/user";
 
 const PictureScreen = (props) => {
   const dispatch = useDispatch();
+
   const darkModeValue = useSelector((state) => state.switches.darkMode);
   const localId = useSelector((state) => state.auth.userId);
   const profileProjects = useSelector((state) => state.user.profileProjects);
@@ -35,10 +43,6 @@ const PictureScreen = (props) => {
   const links = props.navigation.getParam("links")
     ? props.navigation.getParam("links")
     : {};
-
-  useEffect(() => {
-    LogBox.ignoreLogs(["VirtualizedLists should never be nested"]);
-  }, []);
 
   let android = null;
   if (Platform.OS === "android") {
@@ -65,14 +69,14 @@ const PictureScreen = (props) => {
     profilePictureUrl
   ) => {
     props.navigation.push("ShowcaseProfile", {
-      showcaseId: showcaseId,
-      projectId: projectId,
-      fullname: fullname,
-      username: username,
-      jobTitle: jobTitle,
-      profileBiography: profileBiography,
-      profileProjects: profileProjects,
-      profilePictureUrl: profilePictureUrl,
+      showcaseId,
+      projectId,
+      fullname,
+      username,
+      jobTitle,
+      profileBiography,
+      profileProjects,
+      profilePictureUrl,
     });
   };
 
@@ -85,10 +89,14 @@ const PictureScreen = (props) => {
   }, [dispatch, deleteHandler]);
 
   useEffect(() => {
-    props.navigation.setParams({ darkMode: darkModeValue });
+    LogBox.ignoreLogs(["VirtualizedLists should never be nested"]);
     props.navigation.setParams({ android: android });
     props.navigation.setParams({ deleteFn: deleteHandler });
-  }, [darkModeValue, android, deleteHandler]);
+  }, []);
+
+  useEffect(() => {
+    props.navigation.setParams({ darkMode: darkModeValue });
+  }, [darkModeValue]);
 
   return (
     <ScrollView

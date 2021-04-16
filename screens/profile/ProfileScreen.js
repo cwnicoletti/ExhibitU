@@ -51,7 +51,7 @@ const ProfileScreen = (props) => {
   const viewProjectHandler = (projectId) => {
     dispatch(offScreen("Profile"));
     props.navigation.push("ViewProfileProject", {
-      projectId: projectId,
+      projectId,
     });
   };
 
@@ -62,7 +62,6 @@ const ProfileScreen = (props) => {
   };
 
   const profileFlatlist = useRef();
-
   useDidMountEffect(() => {
     profileFlatlist.current.scrollToOffset({ animated: true, offset: 0 });
   }, [resetScrollProfile]);
@@ -117,7 +116,7 @@ const ProfileScreen = (props) => {
             showcaseId: userData.showcaseId,
           })
         }
-        changeColumnToTwo={async () => {
+        changeColumnToTwo={() => {
           dispatch(changeProfileNumberOfColumns(localId, showcaseId, 2));
         }}
         columnTwoStyle={{
@@ -130,7 +129,7 @@ const ProfileScreen = (props) => {
               ? "gray"
               : "#c9c9c9",
         }}
-        changeColumnToThree={async () => {
+        changeColumnToThree={() => {
           dispatch(changeProfileNumberOfColumns(localId, showcaseId, 3));
         }}
         columnThreeStyle={{
@@ -143,7 +142,7 @@ const ProfileScreen = (props) => {
               ? "gray"
               : "#c9c9c9",
         }}
-        changeColumnToFour={async () => {
+        changeColumnToFour={() => {
           dispatch(changeProfileNumberOfColumns(localId, showcaseId, 4));
         }}
         columnFourStyle={{

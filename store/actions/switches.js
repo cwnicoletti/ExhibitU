@@ -11,12 +11,7 @@ export const HIDE_ADVOCATES = "HIDE_ADVOCATES";
 
 export const setDarkMode = (localId, showcaseId, value) => {
   return async (dispatch) => {
-    const userFeedGet = {
-      localId: localId,
-      showcaseId: showcaseId,
-      value: value,
-      switchName: "darkMode",
-    };
+    const userFeedGet = { localId, showcaseId, value, switchName: "darkMode" };
 
     axios.post(
       `https://us-central1-showcase-79c28.cloudfunctions.net/setSwitch`,
@@ -36,9 +31,9 @@ export const setDarkMode = (localId, showcaseId, value) => {
 export const setShowResume = (localId, showcaseId, value) => {
   return async (dispatch) => {
     const userFeedGet = {
-      localId: localId,
-      showcaseId: showcaseId,
-      value: value,
+      localId,
+      showcaseId,
+      value,
       switchName: "showResume",
     };
 
@@ -60,9 +55,9 @@ export const setShowResume = (localId, showcaseId, value) => {
 export const setShowCheering = (localId, showcaseId, value) => {
   return async (dispatch) => {
     const userFeedGet = {
-      localId: localId,
-      showcaseId: showcaseId,
-      value: value,
+      localId,
+      showcaseId,
+      value,
       switchName: "showCheering",
     };
 
@@ -84,9 +79,9 @@ export const setShowCheering = (localId, showcaseId, value) => {
 export const setHideFollowing = (localId, showcaseId, value) => {
   return async (dispatch) => {
     const userFeedGet = {
-      localId: localId,
-      showcaseId: showcaseId,
-      value: value,
+      localId,
+      showcaseId,
+      value,
       switchName: "hideFollowing",
     };
 
@@ -108,9 +103,9 @@ export const setHideFollowing = (localId, showcaseId, value) => {
 export const setHideFollowers = (localId, showcaseId, value) => {
   return async (dispatch) => {
     const userFeedGet = {
-      localId: localId,
-      showcaseId: showcaseId,
-      value: value,
+      localId,
+      showcaseId,
+      value,
       switchName: "hideFollowers",
     };
 
@@ -132,9 +127,9 @@ export const setHideFollowers = (localId, showcaseId, value) => {
 export const setHideAdvocates = (localId, showcaseId, value) => {
   return async (dispatch) => {
     const userFeedGet = {
-      localId: localId,
-      showcaseId: showcaseId,
-      value: value,
+      localId,
+      showcaseId,
+      value,
       switchName: "hideAdvocates",
     };
 

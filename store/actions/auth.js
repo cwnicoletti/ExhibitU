@@ -15,12 +15,8 @@ export const authenticate = (userId, token) => {
 
 export const signup = (email, fullname, username, password) => {
   return async (dispatch) => {
-    const signupForm = {
-      email: email,
-      fullname: fullname,
-      username: username,
-      password: password,
-    };
+    const signupForm = { email, fullname, username, password };
+
     const getSignupResponse = await axios.post(
       `https://us-central1-showcase-79c28.cloudfunctions.net/signupUser`,
       signupForm
@@ -101,30 +97,21 @@ const getBase64FromUrl = async (url) => {
 
 export const login = (email, password) => {
   return async (dispatch) => {
-    const loginForm = {
-      email: email,
-      password: password,
-    };
+    const loginForm = { email, password };
+
     const getLoginResponse = await axios.post(
       `https://us-central1-showcase-79c28.cloudfunctions.net/loginUser`,
       loginForm
     );
 
-    // console.log("axios post done");
-
     let profileProjects = await getLoginResponse.data.docData.profileProjects;
-    // console.log("getLoginResponse.data.docData.profileProjects done");
 
     if (profileProjects) {
       const projectKeys = Object.keys(profileProjects);
-      // console.log("Object.keys(profileProjects) done");
       for (const k of projectKeys) {
         const projectCoverPhotoBase64 = await getBase64FromUrl(
           profileProjects[k]["projectCoverPhotoUrl"]
         );
-        // console.log(
-        //   "getBase64FromUrl profileProjects[k]['projectCoverPhotoUrl'] done"
-        // );
         profileProjects[k]["projectCoverPhotoBase64"] = projectCoverPhotoBase64;
         const postKeys = Object.keys(profileProjects[k].projectPosts);
         for (const id of postKeys) {
@@ -137,8 +124,6 @@ export const login = (email, password) => {
         }
       }
     }
-
-    // console.log("profileproject base64 done");
 
     let userFeed = await getLoginResponse.data.docData.userFeed;
     if (userFeed) {
@@ -172,8 +157,6 @@ export const login = (email, password) => {
         }
       }
     }
-
-    // console.log("feed base64 done");
 
     const profilePictureBase64 = await getBase64FromUrl(
       getLoginResponse.data.docData.profilePictureUrl
@@ -251,11 +234,7 @@ export const logout = () => {
 const saveDataToStorage = async (localId, token, introing) => {
   await AsyncStorage.setItem(
     "userLoginData",
-    JSON.stringify({
-      localId: localId,
-      token: token,
-      introing: introing,
-    })
+    JSON.stringify({ localId, token, introing })
   );
 };
 
@@ -301,43 +280,43 @@ const saveUserDocumentToStorage = async (
   await AsyncStorage.setItem(
     "userDocData",
     JSON.stringify({
-      showcaseId: showcaseId,
-      email: email,
-      profilePictureUrl: profilePictureUrl,
-      profilePictureBase64: profilePictureBase64,
-      projectTempCoverPhotoId: projectTempCoverPhotoId,
-      projectTempCoverPhotoUrl: projectTempCoverPhotoUrl,
-      projectTempCoverPhotoBase64: projectTempCoverPhotoBase64,
-      tempPhotoPostId: tempPhotoPostId,
-      tempPhotoPostUrl: tempPhotoPostUrl,
-      tempPhotoPostBase64: tempPhotoPostBase64,
-      fullname: fullname,
-      jobTitle: jobTitle,
-      username: username,
-      resumeLinkUrl: resumeLinkUrl,
-      profileBiography: profileBiography,
-      numberOfFollowers: numberOfFollowers,
-      numberOfFollowing: numberOfFollowing,
-      numberOfAdvocates: numberOfAdvocates,
-      numberOfAdvocating: numberOfAdvocating,
-      profileColumns: profileColumns,
-      followers: followers,
-      following: following,
-      advocates: advocates,
-      advocating: advocating,
-      projectsAdvocating: projectsAdvocating,
-      cheeredPosts: cheeredPosts,
-      profileProjects: profileProjects,
-      profileLinks: profileLinks,
-      userFeed: userFeed,
-      darkMode: darkMode,
-      showcaseLocalMode: showcaseLocalMode,
-      showResume: showResume,
-      showCheering: showCheering,
-      hideFollowing: hideFollowing,
-      hideFollowers: hideFollowers,
-      hideAdvocates: hideAdvocates,
-      updates: updates,
+      showcaseId,
+      email,
+      profilePictureUrl,
+      profilePictureBase64,
+      projectTempCoverPhotoId,
+      projectTempCoverPhotoUrl,
+      projectTempCoverPhotoBase64,
+      tempPhotoPostId,
+      tempPhotoPostUrl,
+      tempPhotoPostBase64,
+      fullname,
+      jobTitle,
+      username,
+      resumeLinkUrl,
+      profileBiography,
+      numberOfFollowers,
+      numberOfFollowing,
+      numberOfAdvocates,
+      numberOfAdvocating,
+      profileColumns,
+      followers,
+      following,
+      advocates,
+      advocating,
+      projectsAdvocating,
+      cheeredPosts,
+      profileProjects,
+      profileLinks,
+      userFeed,
+      darkMode,
+      showcaseLocalMode,
+      showResume,
+      showCheering,
+      hideFollowing,
+      hideFollowers,
+      hideAdvocates,
+      updates,
     })
   );
 };

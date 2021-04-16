@@ -24,11 +24,15 @@ const FollowingScreen = (props) => {
   );
   const index = client.initIndex("users");
 
-  const darkModeValue = useSelector((state) => state.switches.darkMode);
-  const [returnedIndex, setReturnedIndex] = useState([]);
   const [search, setSearch] = useState("");
+  const [returnedIndex, setReturnedIndex] = useState([]);
   const [isRefreshing, setIsRefreshing] = useState(false);
+  const darkModeValue = useSelector((state) => state.switches.darkMode);
   const showcaseId = props.navigation.getParam("showcaseId");
+
+  useEffect(() => {
+    props.navigation.setParams({ darkMode: darkModeValue });
+  }, [darkModeValue]);
 
   useEffect(() => {
     index.search("").then((responses) => {
@@ -38,10 +42,10 @@ const FollowingScreen = (props) => {
       const filteredIndex = responses.hits.filter((object) =>
         following.includes(object.objectID)
       );
+
       setReturnedIndex(filteredIndex);
     });
-    props.navigation.setParams({ darkMode: darkModeValue });
-  }, [darkModeValue]);
+  }, []);
 
   const returnIndex = (text) => {
     index.search(text).then((responses) => {
@@ -51,6 +55,7 @@ const FollowingScreen = (props) => {
       const filteredIndex = responses.hits.filter((object) =>
         following.includes(object.objectID)
       );
+
       setReturnedIndex(filteredIndex);
     });
   };
@@ -91,28 +96,28 @@ const FollowingScreen = (props) => {
     showCheering
   ) => {
     props.navigation.push("ShowcaseProfile", {
-      showcaseId: showcaseId,
-      profilePictureUrl: profilePictureUrl,
-      fullname: fullname,
-      username: username,
-      jobTitle: jobTitle,
-      resumeLinkUrl: resumeLinkUrl,
-      profileBiography: profileBiography,
-      numberOfFollowers: numberOfFollowers,
-      numberOfFollowing: numberOfFollowing,
-      numberOfAdvocates: numberOfAdvocates,
-      showResume: showResume,
-      hideFollowing: hideFollowing,
-      hideFollowers: hideFollowers,
-      hideAdvocates: hideAdvocates,
-      followers: followers,
-      following: following,
-      advocates: advocates,
-      profileProjects: profileProjects,
-      profileLinks: profileLinks,
-      projectLinks: projectLinks,
-      profileColumns: profileColumns,
-      showCheering: showCheering,
+      showcaseId,
+      profilePictureUrl,
+      fullname,
+      username,
+      jobTitle,
+      resumeLinkUrl,
+      profileBiography,
+      numberOfFollowers,
+      numberOfFollowing,
+      numberOfAdvocates,
+      showResume,
+      hideFollowing,
+      hideFollowers,
+      hideAdvocates,
+      followers,
+      following,
+      advocates,
+      profileProjects,
+      profileLinks,
+      projectLinks,
+      profileColumns,
+      showCheering,
     });
   };
 

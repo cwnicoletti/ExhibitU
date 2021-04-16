@@ -9,12 +9,7 @@ export const SIGNUP_PASSWORD = "SIGNUP_PASSWORD";
 
 export const setIntroing = (localId, showcaseId, value) => {
   return async (dispatch) => {
-    const userFeedGet = {
-      localId: localId,
-      showcaseId: showcaseId,
-      value: value,
-      switchName: "introing",
-    };
+    const userFeedGet = { localId, showcaseId, value, switchName: "introing" };
 
     axios.post(
       `https://us-central1-showcase-79c28.cloudfunctions.net/setSwitch`,
@@ -26,6 +21,7 @@ export const setIntroing = (localId, showcaseId, value) => {
       data.introing = value;
       AsyncStorage.setItem("userLoginData", JSON.stringify(data));
     });
+    
     await dispatch({ type: INTROING, introing: value });
   };
 };

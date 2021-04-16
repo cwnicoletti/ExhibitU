@@ -779,7 +779,7 @@ export const addUserPost = (
       picture
     );
 
-    const postId = uploadedUserPost.data.postId;
+    const retrievedPostId = uploadedUserPost.data.postId;
     const time = uploadedUserPost.data.time;
 
     await AsyncStorage.getItem("userDocData").then((data) => {
@@ -792,8 +792,8 @@ export const addUserPost = (
           ...data.profileProjects[projectId],
           projectPosts: {
             ...data.profileProjects[projectId].projectPosts,
-            [postId]: {
-              postId: postId,
+            [retrievedPostId]: {
+              postId: retrievedPostId,
               showcaseId,
               projectId,
               fullname,
@@ -824,8 +824,8 @@ export const addUserPost = (
 
       data.userFeed = {
         ...data.userFeed,
-        [postId]: {
-          postId: postId,
+        [retrievedPostId]: {
+          postId: retrievedPostId,
           showcaseId: showcaseId,
           projectId: projectId,
           fullname: fullname,
@@ -841,8 +841,8 @@ export const addUserPost = (
               ...data.profileProjects[projectId],
               projectPosts: {
                 ...data.profileProjects[projectId].projectPosts,
-                [postId]: {
-                  postId: postId,
+                [retrievedPostId]: {
+                  postId: retrievedPostId,
                   showcaseId,
                   projectId,
                   fullname,
@@ -889,11 +889,11 @@ export const addUserPost = (
         },
       };
       Object.entries(data.userFeed).map(([id, value]) => {
-        if (id !== postId) {
+        if (id !== retrievedPostId) {
           if (data.userFeed[id].showcaseId === showcaseId) {
             Object.assign(
               data.userFeed[id].profileProjects,
-              data.userFeed[postId].profileProjects
+              data.userFeed[retrievedPostId].profileProjects
             );
           }
         }
@@ -914,7 +914,7 @@ export const addUserPost = (
       numberOfAdvocates,
       profilePictureUrl,
       projectId,
-      postId: postId,
+      postId: retrievedPostId,
       postDateCreated: time,
       postLastUpdated: time,
       postPhotoUrl: tempPhotoPostUrl,

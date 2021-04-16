@@ -1,5 +1,12 @@
 import React, { useEffect } from "react";
-import { Image, StyleSheet, FlatList, View, Text } from "react-native";
+import {
+  Image,
+  StyleSheet,
+  FlatList,
+  View,
+  Text,
+  Platform,
+} from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 
 import ProjectPictures from "../../components/UI/ProjectPictures";
@@ -12,10 +19,10 @@ import { changeProjectNumberOfColumns } from "../../store/actions/user";
 const ProjectScreen = (props) => {
   const dispatch = useDispatch();
   const darkModeValue = useSelector((state) => state.switches.darkMode);
-  const currentProjectId = props.navigation.getParam("projectId");
   const localId = useSelector((state) => state.auth.userId);
   const showcaseId = useSelector((state) => state.user.showcaseId);
   const profileProjects = useSelector((state) => state.user.profileProjects);
+  const currentProjectId = props.navigation.getParam("projectId");
   const project = profileProjects[currentProjectId];
 
   let android = null;
@@ -41,28 +48,34 @@ const ProjectScreen = (props) => {
     links
   ) => {
     props.navigation.push("PictureScreen", {
-      showcaseId: showcaseId,
-      projectId: projectId,
-      postId: postId,
-      fullname: fullname,
-      username: username,
-      jobTitle: jobTitle,
-      profileBiography: profileBiography,
-      profileProjects: profileProjects,
-      profilePictureUrl: profilePictureUrl,
-      postPhotoUrl: postPhotoUrl,
-      postPhotoBase64: postPhotoBase64,
-      numberOfCheers: numberOfCheers,
-      numberOfComments: numberOfComments,
-      caption: caption,
-      links: links,
+      showcaseId,
+      projectId,
+      postId,
+      fullname,
+      username,
+      jobTitle,
+      profileBiography,
+      profileProjects,
+      profilePictureUrl,
+      postPhotoUrl,
+      postPhotoBase64,
+      numberOfCheers,
+      numberOfComments,
+      caption,
+      links,
     });
   };
 
   useEffect(() => {
-    props.navigation.setParams({ darkMode: darkModeValue });
     props.navigation.setParams({ android: android });
     props.navigation.setParams({ projectId: currentProjectId });
+  }, []);
+
+  useEffect(() => {
+    props.navigation.setParams({ darkMode: darkModeValue });
+  }, [darkModeValue]);
+
+  useEffect(() => {
     props.navigation.setParams({ projectTitle: project.projectTitle });
     props.navigation.setParams({
       projectDescription: project.projectDescription,
@@ -79,7 +92,13 @@ const ProjectScreen = (props) => {
     props.navigation.setParams({
       projectLinks: project.projectLinks,
     });
-  }, [currentProjectId]);
+  }, [
+    project.projectTitle,
+    project.projectDescription,
+    project.projectDateCreated,
+    project.projectLastUpdated,
+    project.projectLinks,
+  ]);
 
   const topHeader = () => {
     return (
@@ -105,7 +124,7 @@ const ProjectScreen = (props) => {
             links: project.projectLinks,
           })
         }
-        changeColumnToTwo={async () => {
+        changeColumnToTwo={() => {
           dispatch(
             changeProjectNumberOfColumns(
               localId,
@@ -125,7 +144,7 @@ const ProjectScreen = (props) => {
               ? "gray"
               : "#c9c9c9",
         }}
-        changeColumnToThree={async () => {
+        changeColumnToThree={() => {
           dispatch(
             changeProjectNumberOfColumns(
               localId,
@@ -145,7 +164,7 @@ const ProjectScreen = (props) => {
               ? "gray"
               : "#c9c9c9",
         }}
-        changeColumnToFour={async () => {
+        changeColumnToFour={() => {
           dispatch(
             changeProjectNumberOfColumns(
               localId,
