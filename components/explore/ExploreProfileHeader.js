@@ -6,6 +6,7 @@ import {
   FlatList,
   TouchableNativeFeedback,
   TouchableOpacity,
+  Platform,
 } from "react-native";
 import { useSelector } from "react-redux";
 import * as WebBrowser from "expo-web-browser";
@@ -13,6 +14,10 @@ import { Ionicons } from "@expo/vector-icons";
 
 import ExploreUserTitle from "./ExploreUserTitle";
 import LinkButton from "../UI/LinkButton";
+
+const handleLinkOnPress = (url) => {
+  WebBrowser.openBrowserAsync(url);
+};
 
 const ExploreProfileHeader = (props) => {
   const darkModeValue = useSelector((state) => state.switches.darkMode);
@@ -36,10 +41,6 @@ const ExploreProfileHeader = (props) => {
   if (Platform.OS === "android") {
     TouchableCmp = TouchableNativeFeedback;
   }
-
-  const handleLinkOnPress = (url) => {
-    WebBrowser.openBrowserAsync(url);
-  };
 
   return (
     <View>
