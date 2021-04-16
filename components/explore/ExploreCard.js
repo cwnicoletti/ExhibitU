@@ -11,42 +11,7 @@ import {
 
 import Card from "../UI/Card";
 
-const styles = StyleSheet.create({
-  project: {
-    marginVertical: 2,
-    borderWidth: 1,
-    width: "100%",
-    justifyContent: "center",
-  },
-  image: {
-    height: 60,
-    width: 60,
-    borderRadius: 70 / 2,
-    overflow: "hidden",
-  },
-  fullname: {
-    fontWeight: "800",
-    fontSize: 14,
-  },
-  jobTitle: {
-    fontWeight: "500",
-    fontSize: 12,
-  },
-  username: {
-    color: "gray",
-    fontSize: 12,
-  },
-  details: {
-    marginLeft: 10,
-    justifyContent: "center",
-  },
-  touchable: {
-    overflow: "hidden",
-  },
-});
-
 const ExploreCard = (props) => {
-  
   let TouchableCmp = TouchableOpacity;
   if (Platform.OS === "android") {
     TouchableCmp = TouchableNativeFeedback;
@@ -86,5 +51,39 @@ const ExploreCard = (props) => {
     </Card>
   );
 };
+
+const styles = StyleSheet.create({
+  project: {
+    marginVertical: 2,
+    borderWidth: 1,
+    width: "100%",
+    justifyContent: "center",
+  },
+  image: {
+    height: 60,
+    width: 60,
+    borderRadius: 70 / 2,
+    overflow: "hidden",
+  },
+  fullname: {
+    fontWeight: "800",
+    fontSize: 14,
+  },
+  jobTitle: {
+    fontWeight: "500",
+    fontSize: 12,
+  },
+  username: {
+    color: "gray",
+    fontSize: 12,
+  },
+  details: {
+    marginLeft: 10,
+    justifyContent: "center",
+  },
+  touchable: {
+    overflow: "hidden",
+  },
+});
 
 export default ExploreCard;
