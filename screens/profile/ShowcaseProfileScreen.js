@@ -11,11 +11,12 @@ const ShowcaseProfileScreen = (props) => {
   const darkModeValue = useSelector((state) => state.switches.darkMode);
   const showcaseId = useSelector((state) => state.user.showcaseId);
   const undefined = void 0;
-  const profilePicture =
+
+  const profilePictureBase64 =
     props.navigation.getParam("showcaseId") === showcaseId ||
-    props.navigation.getParam("profilePictureUrl") === undefined
+    props.navigation.getParam("profilePictureBase64") === undefined
       ? useSelector((state) => state.user.profilePictureBase64)
-      : props.navigation.getParam("profilePictureUrl");
+      : props.navigation.getParam("profilePictureBase64");
 
   const profileColumns =
     props.navigation.getParam("showcaseId") === showcaseId ||
@@ -119,7 +120,7 @@ const ShowcaseProfileScreen = (props) => {
         fullname={userData.fullname}
         username={`@${userData.username}`}
         jobTitle={userData.jobTitle}
-        imgSource={profilePicture}
+        imgSource={profilePictureBase64}
         description={userData.profileBiography}
         links={userData.profileLinks}
         followingValue={userData.followingValue}
@@ -173,11 +174,7 @@ const ShowcaseProfileScreen = (props) => {
         numColumns={profileColumns}
         renderItem={(itemData) => (
           <ProjectItem
-            image={
-              itemData.item.projectCoverPhotoBase64
-                ? itemData.item.projectCoverPhotoBase64
-                : itemData.item.projectCoverPhotoUrl
-            }
+            image={itemData.item.projectCoverPhotoBase64}
             title={itemData.item.projectTitle}
             projectContainer={{
               backgroundColor: darkModeValue ? "black" : "white",

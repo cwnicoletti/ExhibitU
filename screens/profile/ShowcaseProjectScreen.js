@@ -1,5 +1,12 @@
 import React, { useEffect } from "react";
-import { Image, StyleSheet, FlatList, View, Text } from "react-native";
+import {
+  Image,
+  StyleSheet,
+  FlatList,
+  View,
+  Text,
+  Platform,
+} from "react-native";
 import { useSelector } from "react-redux";
 
 import ProjectPictures from "../../components/UI/ProjectPictures";
@@ -11,6 +18,12 @@ const ShowcaseProjectScreen = (props) => {
   const darkModeValue = useSelector((state) => state.switches.darkMode);
   const currentProjectId = props.navigation.getParam("projectId");
   const profileProjects = props.navigation.getParam("profileProjects");
+  const profilePictureBase64 =
+    props.navigation.getParam("showcaseId") === showcaseId ||
+    props.navigation.getParam("profilePictureBase64") === undefined
+      ? useSelector((state) => state.user.profilePictureBase64)
+      : props.navigation.getParam("profilePictureBase64");
+
   const project = profileProjects[currentProjectId];
 
   let android = null;
@@ -27,7 +40,7 @@ const ShowcaseProjectScreen = (props) => {
     jobTitle,
     profileBiography,
     profileProjects,
-    profilePictureUrl,
+    profilePictureBase64,
     postPhotoUrl,
     postPhotoBase64,
     numberOfCheers,
@@ -36,21 +49,21 @@ const ShowcaseProjectScreen = (props) => {
     links
   ) => {
     props.navigation.push("ShowcasePictureScreen", {
-      showcaseId: showcaseId,
-      projectId: projectId,
-      postId: postId,
-      fullname: fullname,
-      username: username,
-      jobTitle: jobTitle,
-      profileBiography: profileBiography,
-      profileProjects: profileProjects,
-      profilePictureUrl: profilePictureUrl,
-      postPhotoUrl: postPhotoUrl,
-      postPhotoBase64: postPhotoBase64,
-      numberOfCheers: numberOfCheers,
-      numberOfComments: numberOfComments,
-      caption: caption,
-      links: links,
+      showcaseId,
+      projectId,
+      postId,
+      fullname,
+      username,
+      jobTitle,
+      profileBiography,
+      profileProjects,
+      profilePictureBase64,
+      postPhotoUrl,
+      postPhotoBase64,
+      numberOfCheers,
+      numberOfComments,
+      caption,
+      links,
     });
   };
 
@@ -66,11 +79,7 @@ const ShowcaseProjectScreen = (props) => {
           ...styles.profileContainerStyle,
           borderBottomColor: darkModeValue ? "white" : "black",
         }}
-        imgSource={
-          project.projectCoverPhotoBase64
-            ? project.projectCoverPhotoBase64
-            : project.projectCoverPhotoUrl
-        }
+        imgSource={project.projectCoverPhotoBase64}
         descriptionStyle={{
           ...styles.profileDescriptionStyle,
           color: darkModeValue ? "white" : "black",
@@ -129,7 +138,7 @@ const ShowcaseProjectScreen = (props) => {
                 itemData.item.jobTitle,
                 itemData.item.profileBiography,
                 itemData.item.profileProjects,
-                itemData.item.profilePictureUrl,
+                profilePictureBase64,
                 itemData.item.postPhotoUrl,
                 itemData.item.postPhotoBase64,
                 itemData.item.numberOfCheers,

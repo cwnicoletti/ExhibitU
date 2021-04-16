@@ -1,5 +1,12 @@
 import React, { useEffect } from "react";
-import { Image, StyleSheet, View, Text, ScrollView } from "react-native";
+import {
+  Image,
+  StyleSheet,
+  View,
+  Text,
+  ScrollView,
+  Platform,
+} from "react-native";
 import { useSelector } from "react-redux";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 
@@ -10,6 +17,8 @@ import { LogBox } from "react-native";
 
 const ShowcasePictureScreen = (props) => {
   const darkModeValue = useSelector((state) => state.switches.darkMode);
+  const profileProjects = useSelector((state) => state.user.profileProjects);
+
   const showcaseId = props.navigation.getParam("showcaseId");
   const projectId = props.navigation.getParam("projectId");
   const postId = props.navigation.getParam("postId");
@@ -17,8 +26,8 @@ const ShowcasePictureScreen = (props) => {
   const username = props.navigation.getParam("username");
   const jobTitle = props.navigation.getParam("jobTitle");
   const profileBiography = props.navigation.getParam("profileBiography");
-  const profilePicture = props.navigation.getParam("profilePictureUrl")
-    ? props.navigation.getParam("profilePictureUrl")
+  const profilePictureBase64 = props.navigation.getParam("profilePictureBase64")
+    ? props.navigation.getParam("profilePictureBase64")
     : useSelector((state) => state.user.profilePictureBase64);
   const postPhoto = props.navigation.getParam("postPhotoBase64")
     ? props.navigation.getParam("postPhotoBase64")
@@ -29,7 +38,6 @@ const ShowcasePictureScreen = (props) => {
   const links = props.navigation.getParam("links")
     ? props.navigation.getParam("links")
     : {};
-  const profileProjects = useSelector((state) => state.user.profileProjects);
 
   let android = null;
   if (Platform.OS === "android") {
@@ -53,17 +61,17 @@ const ShowcasePictureScreen = (props) => {
     jobTitle,
     profileBiography,
     profileProjects,
-    profilePictureUrl
+    profilePictureBase64
   ) => {
     props.navigation.push("ViewProfile", {
-      showcaseId: showcaseId,
-      projectId: projectId,
-      fullname: fullname,
-      username: username,
-      jobTitle: jobTitle,
-      profileBiography: profileBiography,
-      profileProjects: profileProjects,
-      profilePictureUrl: profilePictureUrl,
+      showcaseId,
+      projectId,
+      fullname,
+      username,
+      jobTitle,
+      profileBiography,
+      profileProjects,
+      profilePictureBase64,
     });
   };
 
@@ -94,7 +102,7 @@ const ShowcasePictureScreen = (props) => {
           color: darkModeValue ? "white" : "black",
         }}
         caption={caption}
-        profileImageSource={profilePicture}
+        profileImageSource={profilePictureBase64}
         numberOfCheers={numberOfCheers}
         numberOfComments={numberOfComments}
         links={links}
@@ -153,7 +161,7 @@ const ShowcasePictureScreen = (props) => {
             jobTitle,
             profileBiography,
             profileProjects,
-            profilePictureUrl
+            profilePictureBase64
           );
         }}
       />
