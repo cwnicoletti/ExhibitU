@@ -28,16 +28,15 @@ const ExplorePostView = (props) => {
   const [showClapping, setShowClapping] = useState(false);
   const [clap, setClap] = useState(false);
   const darkModeValue = useSelector((state) => state.switches.darkMode);
-  const fullname = useSelector((state) => state.user.fullname);
   const defaultPostIcon = require("../../assets/default-profile-icon.jpg");
   const source = resolveAssetSource(defaultPostIcon);
+  const fullname = props.fullname;
   const showCheering = props.showCheering;
   const links = props.links;
 
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const slideAnim = useRef(new Animated.Value(0)).current;
 
-  let secondnow = null;
   let TouchableCmp = TouchableOpacity;
   if (Platform.OS === "android") {
     TouchableCmp = TouchableNativeFeedback;
@@ -103,6 +102,7 @@ const ExplorePostView = (props) => {
     }
   };
 
+  let secondnow = null;
   const handleToubleTap = () => {
     const now = Date.now();
     if (now - secondnow < 200) {
