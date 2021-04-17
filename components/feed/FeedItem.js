@@ -279,7 +279,7 @@ const FeedItem = (props) => {
                       </View>
                       <Text
                         style={{
-                          color: darkModeValue ? "white" : "black",
+                          color: "white",
                           marginTop: 3,
                           textAlign: "center",
                         }}
