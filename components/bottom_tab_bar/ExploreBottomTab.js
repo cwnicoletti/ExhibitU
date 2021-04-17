@@ -6,7 +6,7 @@ import { Ionicons, SimpleLineIcons } from "@expo/vector-icons";
 
 import { resetScroll, onScreen } from "../../store/actions/user";
 
-const ExploreTab = (props) => {
+const ExploreBottomTab = ({ navigation }) => {
   const dispatch = useDispatch();
   const darkModeValue = useSelector((state) => state.switches.darkMode);
   const onExploreScreen = useSelector((state) => state.user.onExploreScreen);
@@ -16,14 +16,13 @@ const ExploreTab = (props) => {
       <View style={{ flexDirection: "row" }}>
         <TouchableWithoutFeedback
           onPress={() => {
-            props.navigation.navigate("Feed");
+            navigation.navigate("Feed");
           }}
         >
           <View
             style={{
               flex: 1,
               padding: 20,
-              paddingBottom: 35,
               borderTopWidth: 1,
               borderColor: "gray",
               backgroundColor: darkModeValue ? "black" : "white",
@@ -35,7 +34,7 @@ const ExploreTab = (props) => {
               name="ios-home"
               size={25}
               color={
-                props.navigation.isFocused()
+                navigation.isFocused()
                   ? "gray"
                   : [darkModeValue ? "white" : "black"]
               }
@@ -49,14 +48,13 @@ const ExploreTab = (props) => {
             } else {
               dispatch(onScreen("Explore"));
             }
-            props.navigation.navigate("Explore");
+            navigation.navigate("Explore");
           }}
         >
           <View
             style={{
               flex: 1,
               padding: 20,
-              paddingBottom: 35,
               borderTopWidth: 1,
               borderColor: "gray",
               backgroundColor: darkModeValue ? "black" : "white",
@@ -73,14 +71,13 @@ const ExploreTab = (props) => {
         </TouchableWithoutFeedback>
         <TouchableWithoutFeedback
           onPress={() => {
-            props.navigation.navigate("Profile");
+            navigation.navigate("Profile");
           }}
         >
           <View
             style={{
               flex: 1,
               padding: 20,
-              paddingBottom: 35,
               borderTopWidth: 1,
               borderColor: "gray",
               backgroundColor: darkModeValue ? "black" : "white",
@@ -92,7 +89,7 @@ const ExploreTab = (props) => {
               name="trophy"
               size={25}
               color={
-                props.navigation.isFocused()
+                navigation.isFocused()
                   ? "gray"
                   : [darkModeValue ? "white" : "black"]
               }
@@ -100,10 +97,16 @@ const ExploreTab = (props) => {
           </View>
         </TouchableWithoutFeedback>
       </View>
+      <View
+        style={{
+          padding: 10,
+          backgroundColor: darkModeValue ? "black" : "white",
+        }}
+      />
     </View>
   );
 };
 
 const styles = StyleSheet.create({});
 
-export default ExploreTab;
+export default ExploreBottomTab;

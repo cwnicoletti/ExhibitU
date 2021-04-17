@@ -50,23 +50,36 @@ import ShowcasePictureScreen from "../screens/profile/ShowcasePictureScreen";
 import LeftDrawer from "../components/drawers/LeftDrawer";
 import RightDrawer from "../components/drawers/RightDrawer";
 
-import FeedTab from "../components/bottom_tab_bar/FeedTab";
-import ExploreTab from "../components/bottom_tab_bar/ExploreTab";
-import ProfileTab from "../components/bottom_tab_bar/ProfileTab";
+import FeedBottomTab from "../components/bottom_tab_bar/FeedBottomTab";
+import ExploreBottomTab from "../components/bottom_tab_bar/ExploreBottomTab";
+import ProfileBottomTab from "../components/bottom_tab_bar/ProfileBottomTab";
+
+import ProfileHeader from "../components/headers/ProfileHeader";
+import ProfileProjectHeader from "../components/headers/ProfileProjectHeader";
+import TitleOnlyHeader from "../components/headers/TitleOnlyHeader";
 
 import { logout } from "../store/actions/auth";
 
-const FeedandViewNavigator = createStackNavigator({
-  Feed: FeedScreen,
-  ViewCheering: FeedCheeringScreen,
-  ViewComments: FeedCommentsScreen,
-  ViewProfile: FeedProfileScreen,
-  ViewFollowers: FeedFollowersScreen,
-  ViewFollowing: FeedFollowingScreen,
-  ViewAdvocates: FeedAdvocatesScreen,
-  ViewFeedProject: FeedProjectScreen,
-  ViewFeedProfileProject: FeedProjectScreen,
-});
+const FeedandViewNavigator = createStackNavigator(
+  {
+    Feed: FeedScreen,
+    ViewCheering: FeedCheeringScreen,
+    ViewComments: FeedCommentsScreen,
+    ViewProfile: FeedProfileScreen,
+    ViewFollowers: FeedFollowersScreen,
+    ViewFollowing: FeedFollowingScreen,
+    ViewAdvocates: FeedAdvocatesScreen,
+    ViewFeedProject: FeedProjectScreen,
+    ViewFeedProfileProject: FeedProjectScreen,
+  },
+  // {
+  //   defaultNavigationOptions: ({ navigation }) => {
+  //     return {
+  //       header: () => <TitleOnlyHeader navigation={navigation} />,
+  //     };
+  //   },
+  // }
+);
 
 const RightFeedDrawerNavigator = createDrawerNavigator(
   {
@@ -124,16 +137,23 @@ const FeedNavigator = createDrawerNavigator(
   }
 );
 
-const ExploreNavigator = createStackNavigator({
-  Explore: ExploreScreen,
-  ExploreProfile: ExploreProfileScreen,
-  ViewExploredProfileProject: ExploreProjectScreen,
-  ViewExploredProfileProjectPicture: ExplorePictureScreen,
-  ExploreCheering: ExploreCheeringScreen,
-  ExploreFollowers: ExploreFollowersScreen,
-  ExploreFollowing: ExploreFollowingScreen,
-  ExploreAdvocates: ExploreAdvocatesScreen,
-});
+const ExploreNavigator = createStackNavigator(
+  {
+    Explore: ExploreScreen,
+    ExploreProfile: ExploreProfileScreen,
+    ViewExploredProfileProject: ExploreProjectScreen,
+    ViewExploredProfileProjectPicture: ExplorePictureScreen,
+    ExploreCheering: ExploreCheeringScreen,
+    ExploreFollowers: ExploreFollowersScreen,
+    ExploreFollowing: ExploreFollowingScreen,
+    ExploreAdvocates: ExploreAdvocatesScreen,
+  },
+  // {
+  //   defaultNavigationOptions: (navigation) => ({
+  //     header: () => <TitleOnlyHeader navigation={navigation} />,
+  //   }),
+  // }
+);
 
 const RightExploreDrawerNavigator = createDrawerNavigator(
   {
@@ -156,35 +176,45 @@ const ExplorerNavigator = createDrawerNavigator({
   RightDrawer: RightExploreDrawerNavigator,
 });
 
-const ProfileandSettingsNavigator = createStackNavigator({
-  Profile: ProfileScreen,
-  ShowcaseProfile: ShowcaseProfileScreen,
-  ShowcaseProject: ShowcaseProjectScreen,
-  EditProfile: EditProfileScreen,
-  ShowcaseSettings: ShowcaseSettingsScreen,
-  Updates: VoteUpdatesSettingsScreen,
-  Advocates: AdvocatesScreen,
-  Following: FollowingScreen,
-  Followers: FollowersScreen,
-  AddProject: AddProjectScreen,
-});
-
-const RightProjectCreate = createStackNavigator({
-  Profile: ProfileScreen,
-  ShowcaseProfile: ShowcaseProfileScreen,
-  ShowcaseProject: ShowcaseProjectScreen,
-  ViewProfileProject: ProjectScreen,
-  PictureScreen: PictureScreen,
-  ShowcasePictureScreen: ShowcasePictureScreen,
-  CheeringScreen: CheeringScreen,
-  EditProjectScreen: EditProjectScreen,
-  AddPicture: AddPictureScreen,
-});
+const ProfileandSettingsNavigator = createStackNavigator(
+  {
+    Profile: ProfileScreen,
+    ViewProfileProject: {
+      screen: ProjectScreen,
+      // navigationOptions: ({ navigation }) => ({
+      //   header: () => <ProfileProjectHeader navigation={navigation} />,
+      // }),
+    },
+    ShowcaseProfile: {
+      screen: ShowcaseProfileScreen,
+      // navigationOptions: ({ navigation }) => ({
+      //   header: () => <ProfileProjectHeader navigation={navigation} />,
+      // }),
+    },
+    ShowcaseProject: ShowcaseProjectScreen,
+    ShowcasePictureScreen: ShowcasePictureScreen,
+    EditProfile: EditProfileScreen,
+    PictureScreen: PictureScreen,
+    ShowcaseSettings: ShowcaseSettingsScreen,
+    Updates: VoteUpdatesSettingsScreen,
+    Advocates: AdvocatesScreen,
+    Following: FollowingScreen,
+    Followers: FollowersScreen,
+    AddProject: AddProjectScreen,
+    CheeringScreen: CheeringScreen,
+    EditProjectScreen: EditProjectScreen,
+    AddPicture: AddPictureScreen,
+  },
+  // {
+  //   defaultNavigationOptions: ({ navigation }) => ({
+  //     header: () => <ProfileHeader navigation={navigation} />,
+  //   }),
+  // }
+);
 
 const RightProfileDrawerNavigator = createDrawerNavigator(
   {
     "My Profile": ProfileandSettingsNavigator,
-    ProjectView: RightProjectCreate,
   },
   {
     drawerPosition: "left",
@@ -243,7 +273,7 @@ const tabScreenConfig = {
     screen: FeedNavigator,
     navigationOptions: () => ({
       tabBarComponent: ({ navigation }) => {
-        return <FeedTab navigation={navigation} />;
+        return <FeedBottomTab navigation={navigation} />;
       },
     }),
   },
@@ -251,7 +281,7 @@ const tabScreenConfig = {
     screen: ExplorerNavigator,
     navigationOptions: () => ({
       tabBarComponent: ({ navigation }) => {
-        return <ExploreTab navigation={navigation} />;
+        return <ExploreBottomTab navigation={navigation} />;
       },
     }),
   },
@@ -259,7 +289,7 @@ const tabScreenConfig = {
     screen: ProfileNavigator,
     navigationOptions: () => ({
       tabBarComponent: ({ navigation }) => {
-        return <ProfileTab navigation={navigation} />;
+        return <ProfileBottomTab navigation={navigation} />;
       },
     }),
   },

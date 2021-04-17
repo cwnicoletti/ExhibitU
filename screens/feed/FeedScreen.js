@@ -13,7 +13,6 @@ import { AntDesign } from "@expo/vector-icons";
 
 import { getUserFeed, offScreen } from "../../store/actions/user";
 import FeedItem from "../../components/feed/FeedItem";
-import TopTabBar from "../../components/top_tab_bar/FeedTopTab";
 import useDidMountEffect from "../../components/helper/useDidMountEffect";
 
 const UserFeedScreen = (props) => {
