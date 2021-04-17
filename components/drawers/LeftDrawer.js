@@ -81,7 +81,7 @@ const LeftDrawer = (props) => {
             }}
             label="Dark Mode"
             state={darkModeValue}
-            onChange={(newValue) => {
+            onChange={async (newValue) => {
               dispatch(setDarkMode(localId, showcaseId, newValue));
             }}
           />
