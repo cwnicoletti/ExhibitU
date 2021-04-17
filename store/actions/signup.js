@@ -16,10 +16,10 @@ export const setIntroing = (localId, showcaseId, value) => {
       userFeedGet
     );
 
-    AsyncStorage.getItem("userLoginData").then((data) => {
+    AsyncStorage.getItem("userLoginData").then(async (data) => {
       data = JSON.parse(data);
       data.introing = value;
-      AsyncStorage.setItem("userLoginData", JSON.stringify(data));
+      await AsyncStorage.setItem("userLoginData", JSON.stringify(data));
     });
     
     await dispatch({ type: INTROING, introing: value });

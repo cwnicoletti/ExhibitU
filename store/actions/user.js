@@ -101,7 +101,7 @@ export const refreshProfile = (localId) => {
       cheeredPosts = profileInfo.data.data.cheeredPosts;
     }
 
-    await AsyncStorage.getItem("userDocData").then((data) => {
+    await AsyncStorage.getItem("userDocData").then(async (data) => {
       data = JSON.parse(data);
       data.numberOfFollowers = profileInfo.data.data.numberOfFollowers;
       data.numberOfFollowing = profileInfo.data.data.numberOfFollowing;
@@ -113,7 +113,7 @@ export const refreshProfile = (localId) => {
       data.advocating = advocating;
       data.projectsAdvocating = projectsAdvocating;
       data.cheeredPosts = cheeredPosts;
-      AsyncStorage.setItem("userDocData", JSON.stringify(data));
+      await AsyncStorage.setItem("userDocData", JSON.stringify(data));
     });
 
     await dispatch({
@@ -136,6 +136,8 @@ export const getUserData = () => {
   return async (dispatch) => {
     const userData = await AsyncStorage.getItem("userDocData");
     const transformedData = JSON.parse(userData);
+
+    console.log(transformedData.darkMode);
 
     let followers = [];
     let following = [];
@@ -255,7 +257,7 @@ export const uploadUpdateUserProfile = (
       uploadForm
     );
 
-    AsyncStorage.getItem("userDocData").then((data) => {
+    AsyncStorage.getItem("userDocData").then(async (data) => {
       data = JSON.parse(data);
       data.fullname = fullname;
       data.jobTitle = jobTitle;
@@ -281,7 +283,7 @@ export const uploadUpdateUserProfile = (
           };
         }
       }
-      AsyncStorage.setItem("userDocData", JSON.stringify(data));
+      await AsyncStorage.setItem("userDocData", JSON.stringify(data));
     });
 
     dispatch({
@@ -321,7 +323,7 @@ export const uploadNewProject = (
       "https://us-central1-showcase-79c28.cloudfunctions.net/uploadNewProject",
       uploadForm
     );
-    AsyncStorage.getItem("userDocData").then((data) => {
+    AsyncStorage.getItem("userDocData").then(async (data) => {
       data = JSON.parse(data);
       data.profileProjects = {
         ...data.profileProjects,
@@ -355,7 +357,7 @@ export const uploadNewProject = (
       data.projectTempCoverPhotoUrl = "";
       data.projectTempCoverPhotoBase64 = "";
       data.projectTempCoverPhotoId = "";
-      AsyncStorage.setItem("userDocData", JSON.stringify(data));
+      await AsyncStorage.setItem("userDocData", JSON.stringify(data));
     });
     dispatch({
       type: ADD_USER_PROJECT,
@@ -398,7 +400,7 @@ export const uploadUpdatedProject = (
       uploadForm
     );
 
-    AsyncStorage.getItem("userDocData").then((data) => {
+    AsyncStorage.getItem("userDocData").then(async (data) => {
       data = JSON.parse(data);
       data.profileProjects = {
         ...data.profileProjects,
@@ -411,7 +413,7 @@ export const uploadUpdatedProject = (
           projectLinks: links,
         },
       };
-      AsyncStorage.setItem("userDocData", JSON.stringify(data));
+      await AsyncStorage.setItem("userDocData", JSON.stringify(data));
     });
 
     dispatch({
@@ -435,7 +437,7 @@ export const uploadRemoveProject = (showcaseId, localId, projectId) => {
       uploadForm
     );
 
-    AsyncStorage.getItem("userDocData").then((data) => {
+    AsyncStorage.getItem("userDocData").then(async (data) => {
       data = JSON.parse(data);
       const postIds = Object.keys(data.profileProjects[projectId].projectPosts);
       delete data.profileProjects[projectId];
@@ -444,7 +446,7 @@ export const uploadRemoveProject = (showcaseId, localId, projectId) => {
           delete data.userFeed[post];
         }
       }
-      AsyncStorage.setItem("userDocData", JSON.stringify(data));
+      await AsyncStorage.setItem("userDocData", JSON.stringify(data));
     });
 
     dispatch({
@@ -463,11 +465,11 @@ export const uploadRemovePost = (showcaseId, localId, projectId, postId) => {
       uploadForm
     );
 
-    await AsyncStorage.getItem("userDocData").then((data) => {
+    await AsyncStorage.getItem("userDocData").then(async (data) => {
       data = JSON.parse(data);
       delete data.profileProjects[projectId].projectPosts[postId];
       delete data.userFeed[postId];
-      AsyncStorage.setItem("userDocData", JSON.stringify(data));
+      await AsyncStorage.setItem("userDocData", JSON.stringify(data));
     });
 
     await dispatch({
@@ -487,11 +489,11 @@ export const followUser = (exploredShowcaseId, showcaseId, localId) => {
       user
     );
 
-    await AsyncStorage.getItem("userDocData").then((data) => {
+    await AsyncStorage.getItem("userDocData").then(async (data) => {
       data = JSON.parse(data);
       data.following = data.following.concat(exploredShowcaseId);
       data.numberOfFollowing = data.numberOfFollowing + 1;
-      AsyncStorage.setItem("userDocData", JSON.stringify(data));
+      await AsyncStorage.setItem("userDocData", JSON.stringify(data));
     });
 
     await dispatch({
@@ -510,13 +512,13 @@ export const unfollowUser = (exploredShowcaseId, showcaseId, localId) => {
       user
     );
 
-    await AsyncStorage.getItem("userDocData").then((data) => {
+    await AsyncStorage.getItem("userDocData").then(async (data) => {
       data = JSON.parse(data);
       data.following = data.following.filter(
         (user) => user !== exploredShowcaseId
       );
       data.numberOfFollowing = data.numberOfFollowing - 1;
-      AsyncStorage.setItem("userDocData", JSON.stringify(data));
+      await AsyncStorage.setItem("userDocData", JSON.stringify(data));
     });
 
     await dispatch({
@@ -540,12 +542,12 @@ export const advocateForUser = (
       user
     );
 
-    await AsyncStorage.getItem("userDocData").then((data) => {
+    await AsyncStorage.getItem("userDocData").then(async (data) => {
       data = JSON.parse(data);
       data.advocating = data.advocating.concat(exploredShowcaseId);
       data.projectsAdvocating = data.projectsAdvocating.concat(projectId);
       data.numberOfAdvocating = data.numberOfAdvocating + 1;
-      AsyncStorage.setItem("userDocData", JSON.stringify(data));
+      await AsyncStorage.setItem("userDocData", JSON.stringify(data));
     });
 
     await dispatch({
@@ -570,7 +572,7 @@ export const unadvocateForUser = (
       user
     );
 
-    await AsyncStorage.getItem("userDocData").then((data) => {
+    await AsyncStorage.getItem("userDocData").then(async (data) => {
       data = JSON.parse(data);
       data.advocating = data.advocating.filter(
         (user) => user !== exploredShowcaseId
@@ -579,7 +581,7 @@ export const unadvocateForUser = (
         (user) => user !== projectId
       );
       data.numberOfAdvocating = data.numberOfAdvocating - 1;
-      AsyncStorage.setItem("userDocData", JSON.stringify(data));
+      await AsyncStorage.setItem("userDocData", JSON.stringify(data));
     });
 
     await dispatch({
@@ -599,11 +601,11 @@ export const uploadChangeProfilePicture = (base64, showcaseId, localId) => {
       picture
     );
 
-    await AsyncStorage.getItem("userDocData").then((data) => {
+    await AsyncStorage.getItem("userDocData").then(async (data) => {
       data = JSON.parse(data);
       data.profilePictureUrl = uploadedPictureUrlResponse.data.url;
       data.profilePictureBase64 = base64;
-      AsyncStorage.setItem("userDocData", JSON.stringify(data));
+      await AsyncStorage.setItem("userDocData", JSON.stringify(data));
     });
 
     await dispatch({
@@ -628,12 +630,12 @@ export const uploadAddTempProjectCoverPicture = (
       picture
     );
 
-    await AsyncStorage.getItem("userDocData").then((data) => {
+    await AsyncStorage.getItem("userDocData").then(async (data) => {
       data = JSON.parse(data);
       data.projectTempCoverPhotoUrl = uploadedPictureUrlResponse.data.url;
       data.projectTempCoverPhotoId = uploadedPictureUrlResponse.data.photoId;
       data.projectTempCoverPhotoBase64 = base64;
-      AsyncStorage.setItem("userDocData", JSON.stringify(data));
+      await AsyncStorage.setItem("userDocData", JSON.stringify(data));
     });
 
     await dispatch({
@@ -659,12 +661,12 @@ export const uploadAddTempPostPicture = (
       picture
     );
 
-    await AsyncStorage.getItem("userDocData").then((data) => {
+    await AsyncStorage.getItem("userDocData").then(async (data) => {
       data = JSON.parse(data);
       data.tempPhotoPostId = uploadedPictureUrlResponse.data.photoId;
       data.tempPhotoPostUrl = uploadedPictureUrlResponse.data.url;
       data.tempPhotoPostBase64 = base64;
-      AsyncStorage.setItem("userDocData", JSON.stringify(data));
+      await AsyncStorage.setItem("userDocData", JSON.stringify(data));
     });
 
     await dispatch({
@@ -697,7 +699,7 @@ export const uploadChangeProjectCoverPicture = (
       picture
     );
 
-    await AsyncStorage.getItem("userDocData").then((data) => {
+    await AsyncStorage.getItem("userDocData").then(async (data) => {
       data = JSON.parse(data);
       data.profileProjects = {
         ...data.profileProjects,
@@ -708,7 +710,7 @@ export const uploadChangeProjectCoverPicture = (
           projectCoverPhotoBase64: base64,
         },
       };
-      AsyncStorage.setItem("userDocData", JSON.stringify(data));
+      await AsyncStorage.setItem("userDocData", JSON.stringify(data));
     });
 
     await dispatch({
@@ -782,7 +784,7 @@ export const addUserPost = (
     const retrievedPostId = uploadedUserPost.data.postId;
     const time = uploadedUserPost.data.time;
 
-    await AsyncStorage.getItem("userDocData").then((data) => {
+    await AsyncStorage.getItem("userDocData").then(async (data) => {
       data = JSON.parse(data);
       data.tempPhotoPostId = "";
       data.tempPhotoPostUrl = "";
@@ -898,7 +900,7 @@ export const addUserPost = (
           }
         }
       });
-      AsyncStorage.setItem("userDocData", JSON.stringify(data));
+      await AsyncStorage.setItem("userDocData", JSON.stringify(data));
     });
 
     await dispatch({
@@ -974,10 +976,10 @@ export const getUserFeed = (localId, showcaseId) => {
       }
     }
 
-    await AsyncStorage.getItem("userDocData").then((data) => {
+    await AsyncStorage.getItem("userDocData").then(async (data) => {
       data = JSON.parse(data);
       data.userFeed = { ...returnData };
-      AsyncStorage.setItem("userDocData", JSON.stringify(data));
+      await AsyncStorage.setItem("userDocData", JSON.stringify(data));
     });
 
     await dispatch({ type: GET_USER_FEED, feedData: returnData });
@@ -1005,7 +1007,7 @@ export const cheerPost = (
       cheeringForm
     );
 
-    await AsyncStorage.getItem("userDocData").then((data) => {
+    await AsyncStorage.getItem("userDocData").then(async (data) => {
       data = JSON.parse(data);
       data.userFeed = {
         ...data.userFeed,
@@ -1060,7 +1062,7 @@ export const cheerPost = (
 
       data.cheeredPosts = [...data.cheeredPosts, postId];
 
-      AsyncStorage.setItem("userDocData", JSON.stringify(data));
+      await AsyncStorage.setItem("userDocData", JSON.stringify(data));
     });
 
     await dispatch({
@@ -1076,7 +1078,7 @@ export const cheerPost = (
 
 export const cheerOwnFeedPost = (showcaseId, projectId, postId) => {
   return async (dispatch) => {
-    await AsyncStorage.getItem("userDocData").then((data) => {
+    await AsyncStorage.getItem("userDocData").then(async (data) => {
       data = JSON.parse(data);
       data.profileProjects = {
         ...data.profileProjects,
@@ -1098,7 +1100,7 @@ export const cheerOwnFeedPost = (showcaseId, projectId, postId) => {
           },
         },
       };
-      AsyncStorage.setItem("userDocData", JSON.stringify(data));
+      await AsyncStorage.setItem("userDocData", JSON.stringify(data));
     });
 
     await dispatch({
@@ -1131,7 +1133,7 @@ export const cheerOwnProfilePost = (
       cheeringForm
     );
 
-    await AsyncStorage.getItem("userDocData").then((data) => {
+    await AsyncStorage.getItem("userDocData").then(async (data) => {
       data = JSON.parse(data);
       data.profileProjects = {
         ...data.profileProjects,
@@ -1207,7 +1209,7 @@ export const cheerOwnProfilePost = (
       });
 
       data.cheeredPosts = [...data.cheeredPosts, postId];
-      AsyncStorage.setItem("userDocData", JSON.stringify(data));
+      await AsyncStorage.setItem("userDocData", JSON.stringify(data));
     });
 
     await dispatch({
@@ -1242,7 +1244,7 @@ export const uncheerPost = (
       uncheeringForm
     );
 
-    await AsyncStorage.getItem("userDocData").then((data) => {
+    await AsyncStorage.getItem("userDocData").then(async (data) => {
       data = JSON.parse(data);
       data.userFeed = {
         ...data.userFeed,
@@ -1297,7 +1299,7 @@ export const uncheerPost = (
         );
       });
       data.cheeredPosts = data.cheeredPosts.filter((post) => post !== postId);
-      AsyncStorage.setItem("userDocData", JSON.stringify(data));
+      await AsyncStorage.setItem("userDocData", JSON.stringify(data));
     });
 
     await dispatch({
@@ -1313,7 +1315,7 @@ export const uncheerPost = (
 
 export const uncheerOwnFeedPost = (showcaseId, projectId, postId) => {
   return async (dispatch) => {
-    await AsyncStorage.getItem("userDocData").then((data) => {
+    await AsyncStorage.getItem("userDocData").then(async (data) => {
       data = JSON.parse(data);
       data.profileProjects = {
         ...data.profileProjects,
@@ -1335,7 +1337,7 @@ export const uncheerOwnFeedPost = (showcaseId, projectId, postId) => {
           },
         },
       };
-      AsyncStorage.setItem("userDocData", JSON.stringify(data));
+      await AsyncStorage.setItem("userDocData", JSON.stringify(data));
     });
 
     await dispatch({
@@ -1368,7 +1370,7 @@ export const uncheerOwnProfilePost = (
       uncheeringForm
     );
 
-    await AsyncStorage.getItem("userDocData").then((data) => {
+    await AsyncStorage.getItem("userDocData").then(async (data) => {
       data = JSON.parse(data);
       data.profileProjects = {
         ...data.profileProjects,
@@ -1443,7 +1445,7 @@ export const uncheerOwnProfilePost = (
         );
       });
       data.cheeredPosts = data.cheeredPosts.filter((post) => post !== postId);
-      AsyncStorage.setItem("userDocData", JSON.stringify(data));
+      await AsyncStorage.setItem("userDocData", JSON.stringify(data));
     });
 
     await dispatch({
@@ -1466,10 +1468,10 @@ export const changeProfileNumberOfColumns = (localId, showcaseId, number) => {
       picture
     );
 
-    AsyncStorage.getItem("userDocData").then((data) => {
+    AsyncStorage.getItem("userDocData").then(async (data) => {
       data = JSON.parse(data);
       data.profileColumns = number;
-      AsyncStorage.setItem("userDocData", JSON.stringify(data));
+      await AsyncStorage.setItem("userDocData", JSON.stringify(data));
     });
 
     dispatch({ type: CHANGE_PROFILE_COLUMNS, number });
@@ -1490,7 +1492,7 @@ export const changeProjectNumberOfColumns = (
       picture
     );
 
-    AsyncStorage.getItem("userDocData").then((data) => {
+    AsyncStorage.getItem("userDocData").then(async (data) => {
       data = JSON.parse(data);
       data.profileProjects = {
         ...data.profileProjects,
@@ -1499,7 +1501,7 @@ export const changeProjectNumberOfColumns = (
           projectColumns: number,
         },
       };
-      AsyncStorage.setItem("userDocData", JSON.stringify(data));
+      await AsyncStorage.setItem("userDocData", JSON.stringify(data));
     });
 
     dispatch({ type: CHANGE_PROJECT_COLUMNS, projectId, number });
@@ -1513,10 +1515,10 @@ export const getUpdates = () => {
     );
     const returnData = uploadedUserPost.data.returnData;
 
-    await AsyncStorage.getItem("userDocData").then((data) => {
+    await AsyncStorage.getItem("userDocData").then(async (data) => {
       data = JSON.parse(data);
       data.updates = { ...returnData };
-      AsyncStorage.setItem("userDocData", JSON.stringify(data));
+      await AsyncStorage.setItem("userDocData", JSON.stringify(data));
     });
 
     await dispatch({ type: GET_UPDATES, updateData: returnData });
