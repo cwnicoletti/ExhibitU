@@ -33,6 +33,8 @@ Testing is supported by [jest](https://jestjs.io/) and test files (".test.js") c
 All contributions should be referenced to the [CONTRIBUTIONS](https://github.com/christiannicoletti/Showcase/blob/master/CONTRIBUTING.md) file before making a pull request.
 
 ## Packages
+[Package.json](https://github.com/cwnicoletti/Showcase/blob/main/package.json)
+
 "@react-native-async-storage/async-storage": "^1.13.0",<br />
 "@react-native-community/masked-view": "0.1.10",<br />
 "algoliasearch": "^4.8.3",<br />
