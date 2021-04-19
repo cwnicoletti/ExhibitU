@@ -14,7 +14,7 @@ import ProjectItem from "../../components/projectItems/ProfileProjectItem";
 import HeaderButton from "../../components/UI/IoniconsHeaderButton";
 import ProfileHeader from "../../components/user/ProfileHeader";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { SimpleLineIcons } from "@expo/vector-icons";
 import { refreshProfile, offScreen } from "../../store/actions/user";
 import useDidMountEffect from "../../components/helper/useDidMountEffect";
 
@@ -211,8 +211,8 @@ const ProfileScreen = (props) => {
           props.navigation.push("ShowcaseProfile");
         }}
       >
-        <MaterialCommunityIcons
-          name="glassdoor"
+        <SimpleLineIcons
+          name="trophy"
           size={24}
           color={darkModeValue ? "white" : "black"}
         />

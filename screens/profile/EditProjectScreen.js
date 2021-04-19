@@ -504,7 +504,7 @@ const EditProjectScreen = (props) => {
                   flexDirection: "row",
                 }}
               >
-                <MaterialIcons name="edit" size={14} color="#007AFF" />
+                <MaterialIcons name="pencil" size={14} color="#007AFF" />
                 <Text style={{ margin: 10, color: "#007AFF" }}>
                   Change Project Cover Photo
                 </Text>
