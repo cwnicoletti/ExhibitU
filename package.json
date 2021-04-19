@@ -9,12 +9,12 @@
     "test": "jest"
   },
   "dependencies": {
-    "@react-native-async-storage/async-storage": "^1.14.1",
-    "@react-native-community/masked-view": "^0.1.10",
+    "@react-native-async-storage/async-storage": "^1.15.2",
+    "@react-native-community/masked-view": "0.1.10",
     "algoliasearch": "^4.8.3",
     "axios": "^0.21.1",
     "buffer": "^6.0.3",
-    "expo": "~39.0.2",
+    "expo": "^39.0.5",
     "expo-image-picker": "~9.1.0",
     "expo-linear-gradient": "~8.3.0",
     "expo-notifications": "~0.7.2",
