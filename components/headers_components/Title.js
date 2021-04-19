@@ -7,14 +7,20 @@ const Title = (props) => {
   return (
     <props.View
       style={{
-        flex: 5,
-        padding: 10,
+        flex: 6,
+        paddingTop: 9,
+        paddingBottom: 7,
         borderBottomWidth: 1,
         borderColor: "gray",
         backgroundColor: props.darkModeValue ? "black" : "white",
       }}
     >
       <props.View style={styles.logo}>
+        {props.darkModeValue ? (
+          <props.Image style={styles.image} source={IconWhite} />
+        ) : (
+          <props.Image style={styles.image} source={IconBlack} />
+        )}
         <props.Text
           style={{
             ...styles.logoTitle,

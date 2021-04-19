@@ -50,19 +50,23 @@ import ShowcasePictureScreen from "../screens/profile/ShowcasePictureScreen";
 import LeftDrawer from "../components/drawers/LeftDrawer";
 import RightDrawer from "../components/drawers/RightDrawer";
 
-import FeedBottomTab from "../components/bottom_tab_bar/FeedBottomTab";
-import ExploreBottomTab from "../components/bottom_tab_bar/ExploreBottomTab";
-import ProfileBottomTab from "../components/bottom_tab_bar/ProfileBottomTab";
+import FeedBottomTab from "../components/footers/FeedBottomTab";
+import ExploreBottomTab from "../components/footers/ExploreBottomTab";
+import ProfileBottomTab from "../components/footers/ProfileBottomTab";
 
 import ProfileHeader from "../components/headers/ProfileHeader";
-import ProfileProjectHeader from "../components/headers/ProfileProjectHeader";
 import TitleOnlyHeader from "../components/headers/TitleOnlyHeader";
 
 import { logout } from "../store/actions/auth";
 
 const FeedandViewNavigator = createStackNavigator(
   {
-    Feed: FeedScreen,
+    Feed: {
+      screen: FeedScreen,
+      navigationOptions: ({ navigation }) => ({
+        header: () => <TitleOnlyHeader navigation={navigation} />,
+      }),
+    },
     ViewCheering: FeedCheeringScreen,
     ViewComments: FeedCommentsScreen,
     ViewProfile: FeedProfileScreen,
@@ -71,14 +75,7 @@ const FeedandViewNavigator = createStackNavigator(
     ViewAdvocates: FeedAdvocatesScreen,
     ViewFeedProject: FeedProjectScreen,
     ViewFeedProfileProject: FeedProjectScreen,
-  },
-  // {
-  //   defaultNavigationOptions: ({ navigation }) => {
-  //     return {
-  //       header: () => <TitleOnlyHeader navigation={navigation} />,
-  //     };
-  //   },
-  // }
+  }
 );
 
 const RightFeedDrawerNavigator = createDrawerNavigator(
@@ -139,7 +136,12 @@ const FeedNavigator = createDrawerNavigator(
 
 const ExploreNavigator = createStackNavigator(
   {
-    Explore: ExploreScreen,
+    Explore: {
+      screen: ExploreScreen,
+      navigationOptions: ({ navigation }) => ({
+        header: () => <TitleOnlyHeader navigation={navigation} />,
+      }),
+    },
     ExploreProfile: ExploreProfileScreen,
     ViewExploredProfileProject: ExploreProjectScreen,
     ViewExploredProfileProjectPicture: ExplorePictureScreen,
@@ -147,12 +149,7 @@ const ExploreNavigator = createStackNavigator(
     ExploreFollowers: ExploreFollowersScreen,
     ExploreFollowing: ExploreFollowingScreen,
     ExploreAdvocates: ExploreAdvocatesScreen,
-  },
-  // {
-  //   defaultNavigationOptions: (navigation) => ({
-  //     header: () => <TitleOnlyHeader navigation={navigation} />,
-  //   }),
-  // }
+  }
 );
 
 const RightExploreDrawerNavigator = createDrawerNavigator(
@@ -176,41 +173,29 @@ const ExplorerNavigator = createDrawerNavigator({
   RightDrawer: RightExploreDrawerNavigator,
 });
 
-const ProfileandSettingsNavigator = createStackNavigator(
-  {
-    Profile: ProfileScreen,
-    ViewProfileProject: {
-      screen: ProjectScreen,
-      // navigationOptions: ({ navigation }) => ({
-      //   header: () => <ProfileProjectHeader navigation={navigation} />,
-      // }),
-    },
-    ShowcaseProfile: {
-      screen: ShowcaseProfileScreen,
-      // navigationOptions: ({ navigation }) => ({
-      //   header: () => <ProfileProjectHeader navigation={navigation} />,
-      // }),
-    },
-    ShowcaseProject: ShowcaseProjectScreen,
-    ShowcasePictureScreen: ShowcasePictureScreen,
-    EditProfile: EditProfileScreen,
-    PictureScreen: PictureScreen,
-    ShowcaseSettings: ShowcaseSettingsScreen,
-    Updates: VoteUpdatesSettingsScreen,
-    Advocates: AdvocatesScreen,
-    Following: FollowingScreen,
-    Followers: FollowersScreen,
-    AddProject: AddProjectScreen,
-    CheeringScreen: CheeringScreen,
-    EditProjectScreen: EditProjectScreen,
-    AddPicture: AddPictureScreen,
+const ProfileandSettingsNavigator = createStackNavigator({
+  Profile: {
+    screen: ProfileScreen,
+    navigationOptions: ({ navigation }) => ({
+      header: () => <ProfileHeader navigation={navigation} />,
+    }),
   },
-  // {
-  //   defaultNavigationOptions: ({ navigation }) => ({
-  //     header: () => <ProfileHeader navigation={navigation} />,
-  //   }),
-  // }
-);
+  ViewProfileProject: ProjectScreen,
+  PictureScreen: PictureScreen,
+  ShowcaseProfile: ShowcaseProfileScreen,
+  ShowcaseProject: ShowcaseProjectScreen,
+  ShowcasePictureScreen: ShowcasePictureScreen,
+  EditProfile: EditProfileScreen,
+  ShowcaseSettings: ShowcaseSettingsScreen,
+  Updates: VoteUpdatesSettingsScreen,
+  Advocates: AdvocatesScreen,
+  Following: FollowingScreen,
+  Followers: FollowersScreen,
+  AddProject: AddProjectScreen,
+  CheeringScreen: CheeringScreen,
+  EditProjectScreen: EditProjectScreen,
+  AddPicture: AddPictureScreen,
+});
 
 const RightProfileDrawerNavigator = createDrawerNavigator(
   {

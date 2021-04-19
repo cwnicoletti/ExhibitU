@@ -3,14 +3,14 @@ import { View, Image, Text } from "react-native";
 import { useSelector } from "react-redux";
 import Title from "../headers_components/Title";
 
-const ProfileHeader = () => {
+const TitleOnlyHeader = () => {
   const darkModeValue = useSelector((state) => state.switches.darkMode);
 
   return (
     <View>
       <View
         style={{
-          padding: 20,
+          padding: 23,
           backgroundColor: darkModeValue ? "black" : "white",
         }}
       />
@@ -26,4 +26,4 @@ const ProfileHeader = () => {
   );
 };
 
-export default ProfileHeader;
+export default TitleOnlyHeader;
