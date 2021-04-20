@@ -43,9 +43,6 @@ All contributions should be referenced to the [CONTRIBUTIONS](https://github.com
 "expo-permissions": "~12.0.1",<br />
 "expo-status-bar": "~1.0.4",<br />
 "expo-web-browser": "~9.1.0",<br />
-"firebase": "8.2.3",<br />
-"jest": "^26.6.3",<br />
-"jest-expo": "^41.0.0",<br />
 "react": "16.13.1",<br />
 "react-dom": "16.13.1",<br />
 "react-native": "https://github.com/expo/react-native/archive/sdk-41.0.0.tar.gz",<br />
@@ -66,9 +63,16 @@ All contributions should be referenced to the [CONTRIBUTIONS](https://github.com
 "react-navigation-stack": "^2.9.0",<br />
 "react-navigation-tabs": "^2.10.1",<br />
 "react-redux": "^7.2.2",<br />
-"react-test-renderer": "^17.0.2",<br />
 "redux": "^4.0.5",<br />
 "redux-thunk": "^2.3.0"<br />
+
+## DevDependencies
+[Package.json](https://github.com/cwnicoletti/Showcase/blob/main/package.json)
+
+"firebase": "8.2.3",<br />
+"jest": "^26.6.3",<br />
+"jest-expo": "^41.0.0",<br />
+"react-test-renderer": "^17.0.2",<br />
 
 ## Licensing
 The content of this repository is licensed under the terms specified in the [LICENSE](https://github.com/christiannicoletti/Showcase/blob/master/LICENSE) file.
