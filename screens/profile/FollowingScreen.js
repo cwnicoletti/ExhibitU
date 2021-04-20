@@ -17,13 +17,10 @@ import algoliasearch from "algoliasearch";
 import IoniconsHeaderButton from "../../components/UI/IoniconsHeaderButton";
 import ExploreCard from "../../components/explore/ExploreCard";
 
-const FollowingScreen = (props) => {
-  const client = algoliasearch(
-    "EXC8LH5MAX",
-    "2d8cedcaab4cb2b351e90679963fbd92"
-  );
-  const index = client.initIndex("users");
+const client = algoliasearch("EXC8LH5MAX", "2d8cedcaab4cb2b351e90679963fbd92");
+const index = client.initIndex("users");
 
+const FollowingScreen = (props) => {
   const [search, setSearch] = useState("");
   const [returnedIndex, setReturnedIndex] = useState([]);
   const [isRefreshing, setIsRefreshing] = useState(false);

@@ -11,7 +11,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 
 import ProjectItem from "../../components/projectItems/ProfileProjectItem";
-import HeaderButton from "../../components/UI/IoniconsHeaderButton";
+import IoniconsHeaderButton from "../../components/UI/IoniconsHeaderButton";
 import ProfileHeader from "../../components/user/ProfileHeader";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { SimpleLineIcons } from "@expo/vector-icons";
@@ -263,7 +263,7 @@ ProfileScreen.navigationOptions = (navData) => {
       backgroundColor: darkModeValue ? "black" : "white",
     },
     headerLeft: () => (
-      <HeaderButtons HeaderButtonComponent={HeaderButton}>
+      <HeaderButtons HeaderButtonComponent={IoniconsHeaderButton}>
         <Item
           title="Menu"
           iconName={Platform.OS === "android" ? "md-menu" : "ios-menu"}
@@ -275,7 +275,7 @@ ProfileScreen.navigationOptions = (navData) => {
       </HeaderButtons>
     ),
     headerRight: () => (
-      <HeaderButtons HeaderButtonComponent={HeaderButton}>
+      <HeaderButtons HeaderButtonComponent={IoniconsHeaderButton}>
         <Item
           title="Add"
           iconName={Platform.OS === "android" ? "md-settings" : "ios-settings"}

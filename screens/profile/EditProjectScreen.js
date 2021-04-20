@@ -2,7 +2,6 @@ import React, { useEffect, useCallback, useReducer, useState } from "react";
 import {
   Image,
   StyleSheet,
-  ScrollView,
   View,
   Text,
   KeyboardAvoidingView,
@@ -11,10 +10,11 @@ import {
   TouchableNativeFeedback,
   ActivityIndicator,
   FlatList,
+  Platform,
 } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
-import { MaterialIcons, Ionicons } from "@expo/vector-icons";
+import { Octicons, Ionicons } from "@expo/vector-icons";
 import LinkButton from "../../components/UI/LinkButton";
 import DefaultPicture from "../../assets/Icons/picture.svg";
 import * as Permissions from "expo-permissions";
@@ -59,7 +59,7 @@ const correctUrls = (links) => {
 const parseLinkValuesFromInputValues = (formState) => {
   let linkArgs = {};
   for (const key in formState.inputValues) {
-    if (key.search("link") != -1) {
+    if (key.search("link") !== -1) {
       linkArgs = { ...linkArgs, [key]: formState.inputValues[key] };
     }
   }
@@ -69,9 +69,9 @@ const parseLinkValuesFromInputValues = (formState) => {
 const updateDictionaryOnRemove = (state) => {
   let linkNum = 1;
   for (const key in state) {
-    if (key.search("link") != -1) {
+    if (key.search("link") !== -1) {
       state[`link${linkNum}`] = state[key];
-      if (`link${linkNum}` != key) {
+      if (`link${linkNum}` !== key) {
         delete state[key];
       }
       linkNum += 1;
@@ -83,17 +83,17 @@ const updateDictionaryOnRemove = (state) => {
 const updateArrayOnRemove = (state) => {
   state.forEach((object, i) => {
     for (const key in object) {
-      if (key.search("linkTitle") != -1) {
+      if (key.search("linkTitle") !== -1) {
         object[`linkTitle${i + 1}`] = object[key];
-        if (`linkTitle${i + 1}` != key) {
+        if (`linkTitle${i + 1}` !== key) {
           delete object[key];
         }
-      } else if (key.search("linkUrl") != -1) {
+      } else if (key.search("linkUrl") !== -1) {
         object[`linkUrl${i + 1}`] = object[key];
-        if (`linkUrl${i + 1}` != key) {
+        if (`linkUrl${i + 1}` !== key) {
           delete object[key];
         }
-      } else if (key.search("linkId") != -1) {
+      } else if (key.search("linkId") !== -1) {
         object[`linkId`] = i + 1;
       }
     }
@@ -114,7 +114,9 @@ const formReducer = (state, action) => {
       };
       let updatedFormIsValid = true;
       for (const key in updatedValidities) {
-        updatedFormIsValid = updatedFormIsValid && updatedValidities[key];
+        if (updatedValidities.hasOwnProperty(key)) {
+          updatedFormIsValid = updatedFormIsValid && updatedValidities[key];
+        }
       }
       return {
         formIsValid: updatedFormIsValid,
@@ -154,13 +156,13 @@ const EditProjectScreen = (props) => {
   const [fileSizeError, setFileSizeError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadingTempPicture, setIsLoadingTempPicture] = useState(false);
+  const [linksState, setLinksState] = useState(Object.values(prevLinks));
   const darkModeValue = useSelector((state) => state.switches.darkMode);
   const localId = useSelector((state) => state.auth.userId);
   const projectTitle = props.navigation.getParam("projectTitle");
   const projectId = props.navigation.getParam("projectId");
   const projectDescription = props.navigation.getParam("projectDescription");
   const prevLinks = props.navigation.getParam("links");
-  const [linksState, setLinksState] = useState(Object.values(prevLinks));
   const projectCoverPhotoId = props.navigation.getParam("projectCoverPhotoId");
   const projectCoverPhotoUrl = props.navigation.getParam(
     "projectCoverPhotoUrl"
@@ -190,7 +192,7 @@ const EditProjectScreen = (props) => {
 
   const inputChangeHandler = useCallback(
     (inputIdentifier, inputValue, inputValidity) => {
-      if (inputIdentifier.search("linkTitle") != -1) {
+      if (inputIdentifier.search("linkTitle") !== -1) {
         const linkNumber = inputIdentifier.replace("linkTitle", "");
         dispatchFormState({
           type: FORM_INPUT_LINKS_UPDATE,
@@ -199,7 +201,7 @@ const EditProjectScreen = (props) => {
           input: inputIdentifier,
           linkNum: linkNumber,
         });
-      } else if (inputIdentifier.search("linkUrl") != -1) {
+      } else if (inputIdentifier.search("linkUrl") !== -1) {
         const linkNumber = inputIdentifier.replace("linkUrl", "");
         dispatchFormState({
           type: FORM_INPUT_LINKS_UPDATE,
@@ -259,19 +261,19 @@ const EditProjectScreen = (props) => {
   useEffect(() => {
     LogBox.ignoreLogs(["VirtualizedLists should never be nested"]);
     props.navigation.setParams({ submit: submitHandler });
-    props.navigation.setParams({ darkMode: darkModeValue });
-    props.navigation.setParams({ android: android });
+    props.navigation.setParams({ android });
     props.navigation.setParams({ deleteFn: deleteHandler });
+  }, []);
+
+  useEffect(() => {
+    props.navigation.setParams({ darkMode: darkModeValue });
+  }, [darkModeValue]);
+
+  useEffect(() => {
     props.navigation.setParams({
       projectTitle: formState.inputValues.projectTitle,
     });
-  }, [
-    submitHandler,
-    darkModeValue,
-    android,
-    deleteHandler,
-    formState.inputValues.projectTitle,
-  ]);
+  }, [formState.inputValues.projectTitle]);
 
   const changeProjectCoverPicture = async () => {
     const result = await ImagePicker.launchImageLibraryAsync({
@@ -289,7 +291,13 @@ const EditProjectScreen = (props) => {
         setFileSizeError(false);
         const base64 = `data:image/png;base64,${result.base64}`;
         await dispatch(
-          uploadAddTempProjectCoverPicture(base64, projectId, localId)
+          uploadChangeProjectCoverPicture(
+            base64,
+            projectId,
+            showcaseId,
+            localId,
+            projectCoverPhotoId
+          )
         );
       }
     }
@@ -504,7 +512,7 @@ const EditProjectScreen = (props) => {
                   flexDirection: "row",
                 }}
               >
-                <MaterialIcons name="pencil" size={14} color="#007AFF" />
+                <Octicons name="pencil" size={14} color="#007AFF" />
                 <Text style={{ margin: 10, color: "#007AFF" }}>
                   Change Project Cover Photo
                 </Text>
@@ -774,7 +782,7 @@ EditProjectScreen.navigationOptions = (navData) => {
     headerStyle: {
       backgroundColor: darkModeValue ? "black" : "white",
     },
-    headerLeft: (props) => (
+    headerLeft: () => (
       <HeaderButtons HeaderButtonComponent={IoniconsHeaderButton}>
         <Item
           title="Add"

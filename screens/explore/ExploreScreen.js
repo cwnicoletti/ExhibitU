@@ -17,12 +17,10 @@ import { offScreen } from "../../store/actions/user";
 import ExploreCard from "../../components/explore/ExploreCard";
 import useDidMountEffect from "../../components/helper/useDidMountEffect";
 
+const client = algoliasearch("EXC8LH5MAX", "2d8cedcaab4cb2b351e90679963fbd92");
+const index = client.initIndex("users");
+
 const ExploreScreen = (props) => {
-  const client = algoliasearch(
-    "EXC8LH5MAX",
-    "2d8cedcaab4cb2b351e90679963fbd92"
-  );
-  const index = client.initIndex("users");
   const dispatch = useDispatch();
   const darkModeValue = useSelector((state) => state.switches.darkMode);
   const [search, setSearch] = useState("");
@@ -87,29 +85,29 @@ const ExploreScreen = (props) => {
   ) => {
     dispatch(offScreen("Explore"));
     props.navigation.push("ExploreProfile", {
-      text: text,
-      showcaseId: showcaseId,
-      profilePictureUrl: profilePictureUrl,
-      fullname: fullname,
-      username: username,
-      jobTitle: jobTitle,
-      resumeLinkUrl: resumeLinkUrl,
-      profileBiography: profileBiography,
-      numberOfFollowers: numberOfFollowers,
-      numberOfFollowing: numberOfFollowing,
-      numberOfAdvocates: numberOfAdvocates,
-      showResume: showResume,
-      hideFollowing: hideFollowing,
-      hideFollowers: hideFollowers,
-      hideAdvocates: hideAdvocates,
-      followers: followers,
-      following: following,
-      advocates: advocates,
-      profileProjects: profileProjects,
-      profileLinks: profileLinks,
-      projectLinks: projectLinks,
-      profileColumns: profileColumns,
-      showCheering: showCheering,
+      text,
+      showcaseId,
+      profilePictureUrl,
+      fullname,
+      username,
+      jobTitle,
+      resumeLinkUrl,
+      profileBiography,
+      numberOfFollowers,
+      numberOfFollowing,
+      numberOfAdvocates,
+      showResume,
+      hideFollowing,
+      hideFollowers,
+      hideAdvocates,
+      followers,
+      following,
+      advocates,
+      profileProjects,
+      profileLinks,
+      projectLinks,
+      profileColumns,
+      showCheering,
     });
   };
 

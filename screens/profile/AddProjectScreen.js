@@ -10,6 +10,7 @@ import {
   TouchableNativeFeedback,
   ActivityIndicator,
   FlatList,
+  Platform,
 } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { useSelector, useDispatch } from "react-redux";
@@ -57,7 +58,7 @@ const correctUrls = (links) => {
 const parseLinkValuesFromInputValues = (formState) => {
   let linkArgs = {};
   for (const key in formState.inputValues) {
-    if (key.search("link") != -1) {
+    if (key.search("link") !== -1) {
       linkArgs = { ...linkArgs, [key]: formState.inputValues[key] };
     }
   }
@@ -67,9 +68,9 @@ const parseLinkValuesFromInputValues = (formState) => {
 const updateDictionaryOnRemove = (state) => {
   let linkNum = 1;
   for (const key in state) {
-    if (key.search("link") != -1) {
+    if (key.search("link") !== -1) {
       state[`link${linkNum}`] = state[key];
-      if (`link${linkNum}` != key) {
+      if (`link${linkNum}` !== key) {
         delete state[key];
       }
       linkNum += 1;
@@ -81,17 +82,17 @@ const updateDictionaryOnRemove = (state) => {
 const updateArrayOnRemove = (state) => {
   state.forEach((object, i) => {
     for (const key in object) {
-      if (key.search("linkTitle") != -1) {
+      if (key.search("linkTitle") !== -1) {
         object[`linkTitle${i + 1}`] = object[key];
-        if (`linkTitle${i + 1}` != key) {
+        if (`linkTitle${i + 1}` !== key) {
           delete object[key];
         }
-      } else if (key.search("linkUrl") != -1) {
+      } else if (key.search("linkUrl") !== -1) {
         object[`linkUrl${i + 1}`] = object[key];
-        if (`linkUrl${i + 1}` != key) {
+        if (`linkUrl${i + 1}` !== key) {
           delete object[key];
         }
-      } else if (key.search("linkId") != -1) {
+      } else if (key.search("linkId") !== -1) {
         object[`linkId`] = i + 1;
       }
     }
@@ -112,7 +113,9 @@ const formReducer = (state, action) => {
       };
       let updatedFormIsValid = true;
       for (const key in updatedValidities) {
-        updatedFormIsValid = updatedFormIsValid && updatedValidities[key];
+        if (updatedValidities.hasOwnProperty(key)) {
+          updatedFormIsValid = updatedFormIsValid && updatedValidities[key];
+        }
       }
       return {
         formIsValid: updatedFormIsValid,
@@ -181,7 +184,7 @@ const AddProjectScreen = (props) => {
 
   const inputChangeHandler = useCallback(
     (inputIdentifier, inputValue, inputValidity) => {
-      if (inputIdentifier.search("linkTitle") != -1) {
+      if (inputIdentifier.search("linkTitle") !== -1) {
         const linkNumber = inputIdentifier.replace("linkTitle", "");
         dispatchFormState({
           type: FORM_INPUT_LINKS_UPDATE,
@@ -190,7 +193,7 @@ const AddProjectScreen = (props) => {
           input: inputIdentifier,
           linkNum: linkNumber,
         });
-      } else if (inputIdentifier.search("linkUrl") != -1) {
+      } else if (inputIdentifier.search("linkUrl") !== -1) {
         const linkNumber = inputIdentifier.replace("linkUrl", "");
         dispatchFormState({
           type: FORM_INPUT_LINKS_UPDATE,

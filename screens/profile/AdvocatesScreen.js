@@ -17,19 +17,20 @@ import IoniconsHeaderButton from "../../components/UI/IoniconsHeaderButton";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import ExploreAdvocatesCard from "../../components/explore/ExploreAdvocatesCard";
 
-const AdvocatesScreen = (props) => {
-  const client = algoliasearch(
-    "EXC8LH5MAX",
-    "2d8cedcaab4cb2b351e90679963fbd92"
-  );
-  const index = client.initIndex("users");
+const client = algoliasearch("EXC8LH5MAX", "2d8cedcaab4cb2b351e90679963fbd92");
+const index = client.initIndex("users");
 
+const AdvocatesScreen = (props) => {
   const darkModeValue = useSelector((state) => state.switches.darkMode);
   const [returnedIndex, setReturnedIndex] = useState([]);
   const [projects, setProjects] = useState({});
   const [search, setSearch] = useState("");
   const [isRefreshing, setIsRefreshing] = useState(false);
   const showcaseId = props.navigation.getParam("showcaseId");
+
+  useEffect(() => {
+    props.navigation.setParams({ darkMode: darkModeValue });
+  }, [darkModeValue]);
 
   useEffect(() => {
     index.search("").then((responses) => {
@@ -45,8 +46,7 @@ const AdvocatesScreen = (props) => {
       );
       setReturnedIndex(filteredIndex);
     });
-    props.navigation.setParams({ darkMode: darkModeValue });
-  }, [darkModeValue]);
+  }, []);
 
   const returnIndex = (text) => {
     index.search(text).then((responses) => {
@@ -100,28 +100,28 @@ const AdvocatesScreen = (props) => {
     showCheering
   ) => {
     props.navigation.push("ShowcaseProfile", {
-      showcaseId: showcaseId,
-      profilePictureUrl: profilePictureUrl,
-      fullname: fullname,
-      username: username,
-      jobTitle: jobTitle,
-      resumeLinkUrl: resumeLinkUrl,
-      profileBiography: profileBiography,
-      numberOfFollowers: numberOfFollowers,
-      numberOfFollowing: numberOfFollowing,
-      numberOfAdvocates: numberOfAdvocates,
-      showResume: showResume,
-      hideFollowing: hideFollowing,
-      hideFollowers: hideFollowers,
-      hideAdvocates: hideAdvocates,
-      followers: followers,
-      following: following,
-      advocates: advocates,
-      profileProjects: profileProjects,
-      profileLinks: profileLinks,
-      projectLinks: projectLinks,
-      profileColumns: profileColumns,
-      showCheering: showCheering,
+      showcaseId,
+      profilePictureUrl,
+      fullname,
+      username,
+      jobTitle,
+      resumeLinkUrl,
+      profileBiography,
+      numberOfFollowers,
+      numberOfFollowing,
+      numberOfAdvocates,
+      showResume,
+      hideFollowing,
+      hideFollowers,
+      hideAdvocates,
+      followers,
+      following,
+      advocates,
+      profileProjects,
+      profileLinks,
+      projectLinks,
+      profileColumns,
+      showCheering,
     });
   };
 

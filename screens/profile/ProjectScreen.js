@@ -11,7 +11,6 @@ import { useSelector, useDispatch } from "react-redux";
 
 import ProjectPictures from "../../components/UI/ProjectPictures";
 import ProjectHeader from "../../components/projects/ProjectHeader";
-import MaterialHeaderButton from "../../components/UI/MaterialHeaderButton";
 import IoniconsHeaderButton from "../../components/UI/IoniconsHeaderButton";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import { changeProjectNumberOfColumns } from "../../store/actions/user";
@@ -301,10 +300,10 @@ ProjectScreen.navigationOptions = (navData) => {
       </HeaderButtons>
     ),
     headerRight: () => (
-      <HeaderButtons HeaderButtonComponent={MaterialHeaderButton}>
+      <HeaderButtons HeaderButtonComponent={IoniconsHeaderButton}>
         <Item
           title="Add"
-          iconName={"add-a-photo"}
+          iconName={"ios-add"}
           color={darkModeValue ? "white" : "black"}
           onPress={() => {
             navData.navigation.navigate("AddPicture", {

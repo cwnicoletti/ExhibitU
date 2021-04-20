@@ -17,18 +17,19 @@ import IoniconsHeaderButton from "../../components/UI/IoniconsHeaderButton";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import ExploreCard from "../../components/explore/ExploreCard";
 
-const ExploreFollowingScreen = (props) => {
-  const client = algoliasearch(
-    "EXC8LH5MAX",
-    "2d8cedcaab4cb2b351e90679963fbd92"
-  );
-  const index = client.initIndex("users");
+const client = algoliasearch("EXC8LH5MAX", "2d8cedcaab4cb2b351e90679963fbd92");
+const index = client.initIndex("users");
 
+const ExploreFollowingScreen = (props) => {
   const darkModeValue = useSelector((state) => state.switches.darkMode);
   const [returnedIndex, setReturnedIndex] = useState([]);
   const [search, setSearch] = useState("");
   const [isRefreshing, setIsRefreshing] = useState(false);
   const showcaseId = props.navigation.getParam("showcaseId");
+
+  useEffect(() => {
+    props.navigation.setParams({ darkMode: darkModeValue });
+  }, [darkModeValue]);
 
   useEffect(() => {
     index.search("").then((responses) => {
@@ -40,8 +41,7 @@ const ExploreFollowingScreen = (props) => {
       );
       setReturnedIndex(filteredIndex);
     });
-    props.navigation.setParams({ darkMode: darkModeValue });
-  }, [darkModeValue]);
+  }, []);
 
   const returnIndex = (text) => {
     index.search(text).then((responses) => {
@@ -93,28 +93,28 @@ const ExploreFollowingScreen = (props) => {
   ) => {
     props.navigation.push("ExploreProfile", {
       text: text,
-      showcaseId: showcaseId,
-      profilePictureUrl: profilePictureUrl,
-      fullname: fullname,
-      username: username,
-      jobTitle: jobTitle,
-      resumeLinkUrl: resumeLinkUrl,
-      profileBiography: profileBiography,
-      numberOfFollowers: numberOfFollowers,
-      numberOfFollowing: numberOfFollowing,
-      numberOfAdvocates: numberOfAdvocates,
-      showResume: showResume,
-      hideFollowing: hideFollowing,
-      hideFollowers: hideFollowers,
-      hideAdvocates: hideAdvocates,
-      followers: followers,
-      following: following,
-      advocates: advocates,
-      profileProjects: profileProjects,
-      profileLinks: profileLinks,
-      projectLinks: projectLinks,
-      profileColumns: profileColumns,
-      showCheering: showCheering,
+      showcaseId,
+      profilePictureUrl,
+      fullname,
+      username,
+      jobTitle,
+      resumeLinkUrl,
+      profileBiography,
+      numberOfFollowers,
+      numberOfFollowing,
+      numberOfAdvocates,
+      showResume,
+      hideFollowing,
+      hideFollowers,
+      hideAdvocates,
+      followers,
+      following,
+      advocates,
+      profileProjects,
+      profileLinks,
+      projectLinks,
+      profileColumns,
+      showCheering,
     });
   };
 
@@ -249,7 +249,7 @@ ExploreFollowingScreen.navigationOptions = (navData) => {
     headerStyle: {
       backgroundColor: darkModeValue ? "black" : "white",
     },
-    headerLeft: (props) => (
+    headerLeft: () => (
       <HeaderButtons HeaderButtonComponent={IoniconsHeaderButton}>
         <Item
           title="Add"

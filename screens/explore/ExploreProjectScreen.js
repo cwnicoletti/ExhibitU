@@ -6,6 +6,7 @@ import {
   View,
   Text,
   ActivityIndicator,
+  Platform,
 } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 
@@ -19,12 +20,6 @@ import { advocateForUser, unadvocateForUser } from "../../store/actions/user";
 
 const ExploreProjectScreen = (props) => {
   const dispatch = useDispatch();
-
-  let android = null;
-  if (Platform.OS === "android") {
-    android = true;
-  }
-
   const [isLoading, setIsLoading] = useState(false);
   const darkModeValue = useSelector((state) => state.switches.darkMode);
   const localId = useSelector((state) => state.auth.userId);
@@ -44,6 +39,11 @@ const ExploreProjectScreen = (props) => {
       ? props.navigation.getParam("projectLinks")
       : {},
   };
+
+  let android = null;
+  if (Platform.OS === "android") {
+    android = true;
+  }
 
   const [isAdvocating, setIsAdvocating] = useState(
     exploredUserData.advocates.includes(showcaseId) ? true : false
@@ -93,43 +93,44 @@ const ExploreProjectScreen = (props) => {
     postLinks
   ) => {
     props.navigation.push("ViewExploredProfileProjectPicture", {
-      showcaseId: showcaseId,
+      showcaseId,
       projectId: exploredProjectData.projectId,
-      postId: postId,
-      fullname: fullname,
-      username: username,
-      jobTitle: jobTitle,
-      profileBiography: profileBiography,
-      profileProjects: profileProjects,
-      profilePictureUrl: profilePictureUrl,
-      postPhotoUrl: postPhotoUrl,
-      numberOfCheers: numberOfCheers,
-      numberOfComments: numberOfComments,
-      caption: caption,
+      postId,
+      fullname,
+      username,
+      jobTitle,
+      profileBiography,
+      profileProjects,
+      profilePictureUrl,
+      postPhotoUrl,
+      numberOfCheers,
+      numberOfComments,
+      caption,
       exploredUserData: exploredUserData,
-      postLinks: postLinks,
+      postLinks,
     });
   };
 
   useEffect(() => {
-    props.navigation.setParams({ darkMode: darkModeValue });
     props.navigation.setParams({ showcaseId: showcaseId });
     props.navigation.setParams({
       exploredShowcaseId: exploredUserData.exploredShowcaseId,
     });
-    props.navigation.setParams({ isAdvocating: isAdvocating });
-    props.navigation.setParams({ isLoading: isLoading });
-    props.navigation.setParams({ exploredUserData: exploredUserData });
     props.navigation.setParams({ advocateFn: advocateUserHandler });
     props.navigation.setParams({ unadvocateFn: unadvocateUserHandler });
-  }, [
-    darkModeValue,
-    isLoading,
-    exploredUserData,
-    isAdvocating,
-    advocateUserHandler,
-    unadvocateUserHandler,
-  ]);
+  }, []);
+
+  useEffect(() => {
+    props.navigation.setParams({ darkMode: darkModeValue });
+  }, [darkModeValue]);
+
+  useEffect(() => {
+    props.navigation.setParams({ isLoading: isLoading });
+  }, [isLoading]);
+
+  useEffect(() => {
+    props.navigation.setParams({ isAdvocating: isAdvocating });
+  }, [isAdvocating]);
 
   const topHeader = () => {
     return (
