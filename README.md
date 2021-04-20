@@ -37,6 +37,7 @@ All contributions should be referenced to the [CONTRIBUTIONS](https://github.com
 "axios": "^0.21.1",<br />
 "buffer": "^6.0.3",<br />
 "expo": "^41.0.0",<br />
+"expo-font": "~9.1.0",<br />
 "expo-image-picker": "~10.1.3",<br />
 "expo-linear-gradient": "~9.1.0",<br />
 "expo-notifications": "~0.11.5",<br />
@@ -51,7 +52,7 @@ All contributions should be referenced to the [CONTRIBUTIONS](https://github.com
 "react-native-keyboard-aware-scroll-view": "^0.9.3",<br />
 "react-native-linear-gradient": "^2.5.6",<br />
 "react-native-paper": "^4.7.0",<br />
-"react-native-reanimated": "~2.1.0",<br />
+"react-native-reanimated": "^1.13.3",<br />
 "react-native-screens": "~3.0.0",<br />
 "react-native-snap-carousel": "^3.9.1",<br />
 "react-native-svg": "12.1.0",<br />
