@@ -12,9 +12,9 @@ This is a mobile app built using React Native and Expo. Designs were made via Ad
 1.  Download [npm](https://www.npmjs.com/get-npm) from Node.js
 2.  Install the [expo-cli](https://docs.expo.io/)
 3.  [Fork](https://docs.github.com/en/github/getting-started-with-github/fork-a-repo) this repository
-4.  While in the root directory of this repo, run "*expo install [package-name]*" for each package listed below
+4.  While in the root directory of this repo, run: `npm install package-name@version-number` for each dependency and run: `npm install --save-dev package-name@version-number` for each devDependency listed below
 5.  Download [Expo Go](https://apps.apple.com/us/app/expo-go/id982107779) on the App Store
-6.  While in the root directory of this repo, run "*expo start*"
+6.  While in the root directory of this repo, run: `expo start`
 7.  Expo Go should find your project if you're on the same wifi as your computer, if not: Open the camera app and focus on the QR code to get a notification to the app.
 
 **THIS MOBILE APP USES A BACKEND IN A PRIVATE REPO. YOU CAN'T EDIT THE BACKEND, BUT IT WILL STILL WORK**
@@ -28,7 +28,7 @@ Testing is supported by [jest](https://jestjs.io/) and test files (".test.js") c
 ## Contributions
 All contributions should be referenced to the [CONTRIBUTIONS](https://github.com/christiannicoletti/Showcase/blob/master/CONTRIBUTING.md) file before making a pull request.
 
-## Packages
+## Dependencies
 [Package.json](https://github.com/cwnicoletti/Showcase/blob/main/package.json)
 
 "@react-native-async-storage/async-storage": "^1.13.0",<br />
