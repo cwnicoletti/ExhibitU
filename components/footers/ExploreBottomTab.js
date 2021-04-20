@@ -1,5 +1,5 @@
 import React from "react";
-import { View, StyleSheet, TouchableWithoutFeedback } from "react-native";
+import { View, TouchableWithoutFeedback } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 
 import { Ionicons, SimpleLineIcons } from "@expo/vector-icons";
@@ -106,7 +106,5 @@ const ExploreBottomTab = ({ navigation }) => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({});
 
 export default ExploreBottomTab;

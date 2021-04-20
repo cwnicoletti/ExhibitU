@@ -5,6 +5,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   TouchableNativeFeedback,
+  Platform,
 } from "react-native";
 import { useSelector } from "react-redux";
 

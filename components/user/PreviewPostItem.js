@@ -29,12 +29,11 @@ const toDateTime = (seconds) => {
 
 const ProjectItem = (props) => {
   const [height, setHeight] = useState(null);
-  const [width, setWidth] = useState(null);
   const darkModeValue = useSelector((state) => state.switches.darkMode);
-  const links = props.links;
   const fullname = useSelector((state) => state.user.fullname);
   const defaultPostIcon = require("../../assets/default-post-icon.png");
   const source = resolveAssetSource(defaultPostIcon);
+  const links = props.links;
   const currentTime = toDateTime(
     Math.floor(Date.now() / 1000)
   ).toLocaleString();
@@ -46,6 +45,10 @@ const ProjectItem = (props) => {
 
   useEffect(() => {
     LogBox.ignoreLogs(["VirtualizedLists should never be nested"]);
+  }, []);
+
+  useEffect(() => {
+    LogBox.ignoreLogs(["VirtualizedLists should never be nested"]);
     Image.getSize(props.image ? props.image : source, (width, height) => {
       // calculate image width and height
       const screenWidth = Dimensions.get("window").width;
@@ -54,7 +57,6 @@ const ProjectItem = (props) => {
       let imageHeight = height / scaleFactor;
 
       setHeight(imageHeight);
-      setWidth(screenWidth);
     });
   }, [Image]);
 

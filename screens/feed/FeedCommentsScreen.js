@@ -1,5 +1,12 @@
 import React, { useEffect } from "react";
-import { Image, StyleSheet, View, Text, ScrollView } from "react-native";
+import {
+  Image,
+  StyleSheet,
+  View,
+  Text,
+  ScrollView,
+  Platform,
+} from "react-native";
 import { useSelector } from "react-redux";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 

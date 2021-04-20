@@ -5,6 +5,7 @@ import {
   TouchableNativeFeedback,
   TouchableOpacity,
   Text,
+  Platform,
 } from "react-native";
 
 const UpdatesHeader = (props) => {

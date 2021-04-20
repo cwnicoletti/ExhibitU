@@ -7,7 +7,6 @@ import {
   TouchableOpacity,
   TouchableNativeFeedback,
   Platform,
-  Dimensions,
 } from "react-native";
 import { useSelector } from "react-redux";
 

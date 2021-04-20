@@ -1,13 +1,13 @@
-import React, { useReducer, useEffect, useCallback, useState } from "react";
+import React, { useReducer, useCallback, useState } from "react";
 import {
   View,
   StyleSheet,
   ActivityIndicator,
-  Alert,
   Image,
   Text,
   TouchableOpacity,
   TouchableNativeFeedback,
+  Platform,
 } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { useSelector, useDispatch } from "react-redux";

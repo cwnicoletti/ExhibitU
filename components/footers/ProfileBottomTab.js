@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import { View, StyleSheet, TouchableWithoutFeedback } from "react-native";
+import React from "react";
+import { View, TouchableWithoutFeedback } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 
 import { Ionicons, SimpleLineIcons } from "@expo/vector-icons";
@@ -106,7 +106,5 @@ const ProfileBottomTab = (props) => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({});
 
 export default ProfileBottomTab;

@@ -15,19 +15,6 @@ import * as WebBrowser from "expo-web-browser";
 import LinkButton from "../UI/LinkButton";
 import EditButton from "../UI/EditButton";
 
-const styles = StyleSheet.create({
-  container: {
-    alignItems: "center",
-  },
-  descriptionStyle: {
-    margin: 50,
-  },
-  image: {
-    height: 350,
-    width: "100%",
-  },
-});
-
 const handleLinkOnPress = async (url) => {
   await WebBrowser.openBrowserAsync(url);
 };
@@ -254,5 +241,18 @@ const ProjectHeader = (props) => {
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    alignItems: "center",
+  },
+  descriptionStyle: {
+    margin: 50,
+  },
+  image: {
+    height: 350,
+    width: "100%",
+  },
+});
 
 export default ProjectHeader;

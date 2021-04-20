@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState } from "react";
 import {
   StyleSheet,
   View,
@@ -9,7 +9,7 @@ import {
   FlatList,
   SafeAreaView,
 } from "react-native";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { SearchBar } from "react-native-elements";
 import algoliasearch from "algoliasearch";
 
@@ -17,18 +17,19 @@ import IoniconsHeaderButton from "../../components/UI/IoniconsHeaderButton";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import ExploreCard from "../../components/explore/ExploreCard";
 
-const FeedFollowingScreen = (props) => {
-  const client = algoliasearch(
-    "EXC8LH5MAX",
-    "2d8cedcaab4cb2b351e90679963fbd92"
-  );
-  const index = client.initIndex("users");
+const client = algoliasearch("EXC8LH5MAX", "2d8cedcaab4cb2b351e90679963fbd92");
+const index = client.initIndex("users");
 
+const FeedFollowingScreen = (props) => {
   const darkModeValue = useSelector((state) => state.switches.darkMode);
   const [returnedIndex, setReturnedIndex] = useState([]);
   const [search, setSearch] = useState("");
   const [isRefreshing, setIsRefreshing] = useState(false);
   const showcaseId = props.navigation.getParam("showcaseId");
+
+  useEffect(() => {
+    props.navigation.setParams({ darkMode: darkModeValue });
+  }, [darkModeValue]);
 
   useEffect(() => {
     index.search("").then((responses) => {
@@ -40,8 +41,7 @@ const FeedFollowingScreen = (props) => {
       );
       setReturnedIndex(filteredIndex);
     });
-    props.navigation.setParams({ darkMode: darkModeValue });
-  }, [darkModeValue]);
+  }, []);
 
   const returnIndex = (text) => {
     index.search(text).then((responses) => {
@@ -86,23 +86,23 @@ const FeedFollowingScreen = (props) => {
     profileColumns
   ) => {
     props.navigation.push("ViewProfile", {
-      showcaseId: showcaseId,
-      projectId: projectId,
-      fullname: fullname,
-      username: username,
-      jobTitle: jobTitle,
-      profileBiography: profileBiography,
-      profileProjects: profileProjects,
-      profilePictureUrl: profilePictureUrl,
-      numberOfFollowers: numberOfFollowers,
-      numberOfFollowing: numberOfFollowing,
-      numberOfAdvocates: numberOfAdvocates,
-      hideFollowing: hideFollowing,
-      hideFollowers: hideFollowers,
-      hideAdvocates: hideAdvocates,
-      profileLinks: profileLinks,
-      postLinks: postLinks,
-      profileColumns: profileColumns,
+      showcaseId,
+      projectId,
+      fullname,
+      username,
+      jobTitle,
+      profileBiography,
+      profileProjects,
+      profilePictureUrl,
+      numberOfFollowers,
+      numberOfFollowing,
+      numberOfAdvocates,
+      hideFollowing,
+      hideFollowers,
+      hideAdvocates,
+      profileLinks,
+      postLinks,
+      profileColumns,
     });
   };
 
@@ -146,9 +146,7 @@ const FeedFollowingScreen = (props) => {
         keyExtractor={(item) => item.objectID}
         renderItem={(itemData) => (
           <ExploreCard
-            image={
-              itemData.item.profilePictureUrl
-            }
+            image={itemData.item.profilePictureUrl}
             fullname={itemData.item.fullname}
             username={itemData.item.username}
             jobTitle={itemData.item.jobTitle}

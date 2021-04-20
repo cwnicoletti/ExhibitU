@@ -45,6 +45,9 @@ const ShowcasePostView = (props) => {
 
   useEffect(() => {
     LogBox.ignoreLogs(["VirtualizedLists should never be nested"]);
+  }, []);
+
+  useEffect(() => {
     Image.getSize(props.image ? props.image : source, (width, height) => {
       // calculate image width and height
       const screenWidth = Dimensions.get("window").width;

@@ -85,11 +85,14 @@ const FeedProjectScreen = (props) => {
   };
 
   useEffect(() => {
-    props.navigation.setParams({ darkMode: darkModeValue });
     props.navigation.setParams({ showcaseId: showcaseId });
     props.navigation.setParams({ feedShowcaseId: feedShowcaseId });
-    props.navigation.setParams({ android: android });
-  }, [darkModeValue, showcaseId, feedShowcaseId, android]);
+    props.navigation.setParams({ android });
+  }, []);
+
+  useEffect(() => {
+    props.navigation.setParams({ darkMode: darkModeValue });
+  }, [darkModeValue]);
 
   const topHeader = () => {
     return (

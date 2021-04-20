@@ -37,7 +37,7 @@ const FeedProfileScreen = (props) => {
 
   useEffect(() => {
     props.navigation.setParams({ darkMode: darkModeValue });
-  }, []);
+  }, [darkModeValue]);
 
   const viewProjectHandler = (
     showcaseId,
@@ -58,22 +58,22 @@ const FeedProfileScreen = (props) => {
     postLinks
   ) => {
     props.navigation.navigate("ViewFeedProfileProject", {
-      showcaseId: showcaseId,
-      projectId: projectId,
-      fullname: fullname,
-      username: username,
-      jobTitle: jobTitle,
-      profileBiography: profileBiography,
-      profileProjects: profileProjects,
-      profilePictureBase64: profilePictureBase64,
-      numberOfFollowers: numberOfFollowers,
-      numberOfFollowing: numberOfFollowing,
-      numberOfAdvocates: numberOfAdvocates,
-      hideFollowing: hideFollowing,
-      hideFollowers: hideFollowers,
-      hideAdvocates: hideAdvocates,
-      profileLinks: profileLinks,
-      postLinks: postLinks,
+      showcaseId,
+      projectId,
+      fullname,
+      username,
+      jobTitle,
+      profileBiography,
+      profileProjects,
+      profilePictureBase64,
+      numberOfFollowers,
+      numberOfFollowing,
+      numberOfAdvocates,
+      hideFollowing,
+      hideFollowers,
+      hideAdvocates,
+      profileLinks,
+      postLinks,
     });
   };
 

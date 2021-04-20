@@ -1,10 +1,11 @@
 import React from "react";
-import { View, Image, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { Text, StyleSheet, TouchableOpacity } from "react-native";
 import { EvilIcons } from "@expo/vector-icons";
 import { useSelector } from "react-redux";
 
 const LinkButton = (props) => {
   const darkModeValue = useSelector((state) => state.switches.darkMode);
+
   return (
     <TouchableOpacity
       style={{ ...styles.container, ...props.linkContainer }}

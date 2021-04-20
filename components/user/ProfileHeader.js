@@ -6,11 +6,11 @@ import {
   FlatList,
   TouchableNativeFeedback,
   TouchableOpacity,
+  Platform,
 } from "react-native";
 import { useSelector } from "react-redux";
 import * as WebBrowser from "expo-web-browser";
 import { Ionicons } from "@expo/vector-icons";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 import UserTitleEdit from "./UserTitleEdit";
 import LinkButton from "../UI/LinkButton";

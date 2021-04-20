@@ -69,8 +69,11 @@ const ShowcaseProjectScreen = (props) => {
 
   useEffect(() => {
     props.navigation.setParams({ darkMode: darkModeValue });
+  }, [darkModeValue]);
+
+  useEffect(() => {
     props.navigation.setParams({ android: android });
-  }, [darkModeValue, android]);
+  }, []);
 
   const topHeader = () => {
     return (

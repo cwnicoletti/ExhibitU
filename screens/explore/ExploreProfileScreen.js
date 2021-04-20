@@ -7,11 +7,10 @@ import {
   Text,
   ActivityIndicator,
   RefreshControl,
+  Platform,
 } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import algoliasearch from "algoliasearch";
-
-import useDidMountEffect from "../../components/helper/useDidMountEffect";
 
 import ProjectItem from "../../components/projectItems/ProfileProjectItem";
 import SimpleLineIconsHeaderButton from "../../components/UI/SimpleLineIconsHeaderButton";
@@ -21,20 +20,11 @@ import ExploreProfileHeader from "../../components/explore/ExploreProfileHeader"
 
 import { followUser, unfollowUser } from "../../store/actions/user";
 
+const client = algoliasearch("EXC8LH5MAX", "2d8cedcaab4cb2b351e90679963fbd92");
+const index = client.initIndex("users");
+
 const ExploreProfileScreen = (props) => {
-  const client = algoliasearch(
-    "EXC8LH5MAX",
-    "2d8cedcaab4cb2b351e90679963fbd92"
-  );
-  const index = client.initIndex("users");
-
   const dispatch = useDispatch();
-
-  let android = null;
-  if (Platform.OS === "android") {
-    android = true;
-  }
-
   const [isLoading, setIsLoading] = useState(false);
   const [isRefreshing, setIsRefreshing] = useState(false);
   const darkModeValue = useSelector((state) => state.switches.darkMode);
@@ -86,6 +76,11 @@ const ExploreProfileScreen = (props) => {
   const [numberOfAdvocatesLocal, setNumberOfAdvocatesLocal] = useState(
     exploredUserData.numberOfAdvocates
   );
+
+  let android = null;
+  if (Platform.OS === "android") {
+    android = true;
+  }
 
   useEffect(() => {
     if (exploredUserData.text) {
@@ -175,22 +170,25 @@ const ExploreProfileScreen = (props) => {
   };
 
   useEffect(() => {
-    props.navigation.setParams({ darkMode: darkModeValue });
-    props.navigation.setParams({ isfollowing: isfollowing });
-    props.navigation.setParams({ isLoading: isLoading });
     props.navigation.setParams({ showcaseId: showcaseId });
     props.navigation.setParams({
       exploredShowcaseId: exploredUserData.exploredShowcaseId,
     });
     props.navigation.setParams({ followFn: followUserHandler });
     props.navigation.setParams({ unfollowFn: unfollowUserHandler });
-  }, [
-    darkModeValue,
-    isLoading,
-    isfollowing,
-    followUserHandler,
-    unfollowUserHandler,
-  ]);
+  }, []);
+
+  useEffect(() => {
+    props.navigation.setParams({ darkMode: darkModeValue });
+  }, [darkModeValue]);
+
+  useEffect(() => {
+    props.navigation.setParams({ isLoading: isLoading });
+  }, [isLoading]);
+
+  useEffect(() => {
+    props.navigation.setParams({ isfollowing: isfollowing });
+  }, [isfollowing]);
 
   const viewProjectHandler = (
     projectTitle,
@@ -203,14 +201,14 @@ const ExploreProfileScreen = (props) => {
     projectColumns
   ) => {
     props.navigation.push("ViewExploredProfileProject", {
-      projectTitle: projectTitle,
-      projectCoverPhotoUrl: projectCoverPhotoUrl,
-      projectDescription: projectDescription,
-      projectPictures: projectPictures,
-      projectLinks: projectLinks,
-      projectPosts: projectPosts,
-      projectId: projectId,
-      projectColumns: projectColumns,
+      projectTitle,
+      projectCoverPhotoUrl,
+      projectDescription,
+      projectPictures,
+      projectLinks,
+      projectPosts,
+      projectId,
+      projectColumns,
       exploredUserData: exploredUserData,
     });
   };

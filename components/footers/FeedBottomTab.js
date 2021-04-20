@@ -1,12 +1,5 @@
-import React, { useEffect } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  SafeAreaView,
-  Button,
-  TouchableWithoutFeedback,
-} from "react-native";
+import React from "react";
+import { View, TouchableWithoutFeedback } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 
 import { Ionicons, SimpleLineIcons } from "@expo/vector-icons";
@@ -16,9 +9,6 @@ import { resetScroll, onScreen } from "../../store/actions/user";
 const FeedBottomTab = (props) => {
   const dispatch = useDispatch();
   const darkModeValue = useSelector((state) => state.switches.darkMode);
-  const showcasingLocally = useSelector(
-    (state) => state.user.showcasingLocally
-  );
   const onFeedScreen = useSelector((state) => state.user.onFeedScreen);
 
   return (
@@ -116,7 +106,5 @@ const FeedBottomTab = (props) => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({});
 
 export default FeedBottomTab;

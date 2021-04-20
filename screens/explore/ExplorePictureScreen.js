@@ -1,5 +1,12 @@
 import React, { useEffect } from "react";
-import { Image, StyleSheet, View, Text, ScrollView } from "react-native";
+import {
+  Image,
+  StyleSheet,
+  View,
+  Text,
+  ScrollView,
+  Platform,
+} from "react-native";
 import { useSelector } from "react-redux";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 
@@ -19,7 +26,7 @@ const ExplorePictureScreen = (props) => {
   const caption = props.navigation.getParam("caption");
   const exploredUserData = props.navigation.getParam("exploredUserData");
   const links = props.navigation.getParam("postLinks");
-  
+
   let android = null;
   if (Platform.OS === "android") {
     android = true;
@@ -42,10 +49,13 @@ const ExplorePictureScreen = (props) => {
   };
 
   useEffect(() => {
-    props.navigation.setParams({ darkMode: darkModeValue });
     props.navigation.setParams({ android: android });
     props.navigation.setParams({ projectId: currentProjectId });
-  }, [darkModeValue, android, currentProjectId]);
+  }, []);
+
+  useEffect(() => {
+    props.navigation.setParams({ darkMode: darkModeValue });
+  }, [darkModeValue]);
 
   return (
     <ScrollView

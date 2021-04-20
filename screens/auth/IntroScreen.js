@@ -8,6 +8,7 @@ import {
   TouchableNativeFeedback,
   ActivityIndicator,
   Dimensions,
+  Platform,
 } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import Carousel from "react-native-snap-carousel";

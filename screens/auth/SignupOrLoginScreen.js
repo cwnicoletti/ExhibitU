@@ -6,6 +6,7 @@ import {
   Text,
   TouchableNativeFeedback,
   TouchableOpacity,
+  Platform,
 } from "react-native";
 
 import { Fontisto } from "@expo/vector-icons";

@@ -2,7 +2,6 @@ import React from "react";
 import {
   View,
   Text,
-  Image,
   StyleSheet,
   TouchableOpacity,
   TouchableNativeFeedback,
@@ -13,7 +12,6 @@ import Card from "../UI/Card";
 
 const UpdateCard = (props) => {
   let TouchableCmp = TouchableOpacity;
-
   if (Platform.OS === "android") {
     TouchableCmp = TouchableNativeFeedback;
   }

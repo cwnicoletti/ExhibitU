@@ -6,6 +6,7 @@ import {
   FlatList,
   TouchableNativeFeedback,
   TouchableOpacity,
+  Platform,
 } from "react-native";
 import { useSelector } from "react-redux";
 import * as WebBrowser from "expo-web-browser";
@@ -32,7 +33,6 @@ const ShowcaseHeader = (props) => {
   const linktoresume = userDataProfileHeader.resumeLink;
 
   let TouchableCmp = TouchableOpacity;
-
   if (Platform.OS === "android") {
     TouchableCmp = TouchableNativeFeedback;
   }

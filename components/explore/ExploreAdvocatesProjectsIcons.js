@@ -12,7 +12,6 @@ import Card from "../UI/Card";
 
 const ExploreAdvocatesProjectsIcons = (props) => {
   let TouchableCmp = TouchableOpacity;
-
   if (Platform.OS === "android") {
     TouchableCmp = TouchableNativeFeedback;
   }
