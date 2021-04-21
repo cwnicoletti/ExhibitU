@@ -18,7 +18,7 @@ export const signup = (email, fullname, username, password) => {
     const signupForm = { email, fullname, username, password };
 
     const getSignupResponse = await axios.post(
-      `https://us-central1-showcase-79c28.cloudfunctions.net/signupUser`,
+      `https://us-central1-creatist-79c28.cloudfunctions.net/signupUser`,
       signupForm
     );
 
@@ -28,7 +28,7 @@ export const signup = (email, fullname, username, password) => {
       getSignupResponse.data.introing
     );
     await saveUserDocumentToStorage(
-      getSignupResponse.data.docData.showcaseId,
+      getSignupResponse.data.docData.creatistId,
       getSignupResponse.data.docData.email,
       getSignupResponse.data.docData.profilePictureUrl,
       "",
@@ -60,7 +60,7 @@ export const signup = (email, fullname, username, password) => {
         ? getSignupResponse.data.docData.userFeed
         : {},
       getSignupResponse.data.docData.darkMode,
-      getSignupResponse.data.docData.showcaseLocalMode,
+      getSignupResponse.data.docData.creatistLocalMode,
       getSignupResponse.data.docData.showResume,
       getSignupResponse.data.docData.showCheering,
       getSignupResponse.data.docData.hideFollowing,
@@ -100,7 +100,7 @@ export const login = (email, password) => {
     const loginForm = { email, password };
 
     const getLoginResponse = await axios.post(
-      `https://us-central1-showcase-79c28.cloudfunctions.net/loginUser`,
+      `https://us-central1-creatist-79c28.cloudfunctions.net/loginUser`,
       loginForm
     );
 
@@ -171,7 +171,7 @@ export const login = (email, password) => {
     );
 
     await saveUserDocumentToStorage(
-      getLoginResponse.data.docData.showcaseId,
+      getLoginResponse.data.docData.creatistId,
       getLoginResponse.data.docData.email,
       getLoginResponse.data.docData.profilePictureUrl,
       profilePictureBase64,
@@ -201,7 +201,7 @@ export const login = (email, password) => {
       getLoginResponse.data.docData.profileLinks,
       userFeed ? userFeed : {},
       getLoginResponse.data.docData.darkMode,
-      getLoginResponse.data.docData.showcaseLocalMode,
+      getLoginResponse.data.docData.creatistLocalMode,
       getLoginResponse.data.docData.showResume,
       getLoginResponse.data.docData.showCheering,
       getLoginResponse.data.docData.hideFollowing,
@@ -239,7 +239,7 @@ const saveDataToStorage = async (localId, token, introing) => {
 };
 
 const saveUserDocumentToStorage = async (
-  showcaseId,
+  creatistId,
   email,
   profilePictureUrl,
   profilePictureBase64,
@@ -269,7 +269,7 @@ const saveUserDocumentToStorage = async (
   profileLinks,
   userFeed,
   darkMode,
-  showcaseLocalMode,
+  creatistLocalMode,
   showResume,
   showCheering,
   hideFollowing,
@@ -280,7 +280,7 @@ const saveUserDocumentToStorage = async (
   await AsyncStorage.setItem(
     "userDocData",
     JSON.stringify({
-      showcaseId,
+      creatistId,
       email,
       profilePictureUrl,
       profilePictureBase64,
@@ -310,7 +310,7 @@ const saveUserDocumentToStorage = async (
       profileLinks,
       userFeed,
       darkMode,
-      showcaseLocalMode,
+      creatistLocalMode,
       showResume,
       showCheering,
       hideFollowing,

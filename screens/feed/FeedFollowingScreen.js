@@ -25,7 +25,7 @@ const FeedFollowingScreen = (props) => {
   const [returnedIndex, setReturnedIndex] = useState([]);
   const [search, setSearch] = useState("");
   const [isRefreshing, setIsRefreshing] = useState(false);
-  const showcaseId = props.navigation.getParam("showcaseId");
+  const creatistId = props.navigation.getParam("creatistId");
 
   useEffect(() => {
     props.navigation.setParams({ darkMode: darkModeValue });
@@ -34,7 +34,7 @@ const FeedFollowingScreen = (props) => {
   useEffect(() => {
     index.search("").then((responses) => {
       const following = responses.hits.find(
-        (object) => object.objectID === showcaseId
+        (object) => object.objectID === creatistId
       ).following;
       const filteredIndex = responses.hits.filter((object) =>
         following.includes(object.objectID)
@@ -46,7 +46,7 @@ const FeedFollowingScreen = (props) => {
   const returnIndex = (text) => {
     index.search(text).then((responses) => {
       const following = responses.hits.find(
-        (object) => object.objectID === showcaseId
+        (object) => object.objectID === creatistId
       ).following;
       const filteredIndex = responses.hits.filter((object) =>
         following.includes(object.objectID)
@@ -67,7 +67,7 @@ const FeedFollowingScreen = (props) => {
   };
 
   const viewProfileHandler = (
-    showcaseId,
+    creatistId,
     projectId,
     fullname,
     username,
@@ -86,7 +86,7 @@ const FeedFollowingScreen = (props) => {
     profileColumns
   ) => {
     props.navigation.push("ViewProfile", {
-      showcaseId,
+      creatistId,
       projectId,
       fullname,
       username,
@@ -199,12 +199,12 @@ FeedFollowingScreen.navigationOptions = (navData) => {
         {darkModeValue ? (
           <Image
             style={styles.image}
-            source={require("../../assets/showcase_icon_transparent_white.png")}
+            source={require("../../assets/creatist_icon_transparent_white.png")}
           />
         ) : (
           <Image
             style={styles.image}
-            source={require("../../assets/showcase_icon_transparent_black.png")}
+            source={require("../../assets/creatist_icon_transparent_black.png")}
           />
         )}
         <Text

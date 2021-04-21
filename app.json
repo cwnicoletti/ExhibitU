@@ -1,28 +1,36 @@
 {
   "expo": {
-    "name": "Showcase",
-    "slug": "Showcase",
+    "name": "Creatist",
+    "slug": "Creatist",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/showcase_icon.png",
+    "icon": "./assets/creatist_icon.png",
     "splash": {
-      "image": "./assets/showcase_splash.png",
+      "image": "./assets/creatist_splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#000000"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.creatist.ios"
     },
     "web": {
-      "favicon": "./assets/showcase_icon.png"
+      "favicon": "./assets/creatist_icon.png"
     },
     "packagerOpts": {
       "config": "metro.config.js",
-      "sourceExts": ["js", "jsx", "svg", "svgx"]
+      "sourceExts": [
+        "js",
+        "jsx",
+        "svg",
+        "svgx"
+      ]
     }
   }
 }

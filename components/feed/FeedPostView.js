@@ -42,11 +42,11 @@ const FeedPostView = (props) => {
   const [clap, setClap] = useState(false);
   const cheeredPosts = useSelector((state) => state.user.cheeredPosts);
   const localId = useSelector((state) => state.auth.userId);
-  const showcaseId = useSelector((state) => state.user.showcaseId);
+  const creatistId = useSelector((state) => state.user.creatistId);
   const darkModeValue = useSelector((state) => state.switches.darkMode);
   const defaultPostIcon = require("../../assets/default-profile-icon.jpg");
   const source = resolveAssetSource(defaultPostIcon);
-  const posterShowcaseId = props.posterShowcaseId;
+  const posterCreatistId = props.posterCreatistId;
   const fullname = props.fullname;
   const links = props.links;
   const postId = props.postId;
@@ -145,10 +145,10 @@ const FeedPostView = (props) => {
       if (!cheeredPosts.includes(postId)) {
         await setLoadingCheer(true);
         await dispatch(
-          cheerPost(localId, showcaseId, projectId, postId, posterShowcaseId)
+          cheerPost(localId, creatistId, projectId, postId, posterCreatistId)
         );
-        if (showcaseId === posterShowcaseId) {
-          await dispatch(cheerOwnPost(showcaseId, projectId, postId));
+        if (creatistId === posterCreatistId) {
+          await dispatch(cheerOwnPost(creatistId, projectId, postId));
         }
         await setLoadingCheer(false);
       }
@@ -161,10 +161,10 @@ const FeedPostView = (props) => {
     if (cheeredPosts.includes(postId)) {
       await setLoadingCheer(true);
       await dispatch(
-        uncheerPost(localId, showcaseId, projectId, postId, posterShowcaseId)
+        uncheerPost(localId, creatistId, projectId, postId, posterCreatistId)
       );
-      if (showcaseId === posterShowcaseId) {
-        await dispatch(uncheerOwnPost(showcaseId, projectId, postId));
+      if (creatistId === posterCreatistId) {
+        await dispatch(uncheerOwnPost(creatistId, projectId, postId));
       }
       await setLoadingCheer(false);
     }

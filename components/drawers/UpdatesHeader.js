@@ -17,7 +17,7 @@ const UpdatesHeader = (props) => {
   return (
     <View style={styles.container}>
       <Text style={{ ...styles.updatesTitle, ...props.updatesTitle }}>
-        Future Showcase Updates
+        Future Creatist Updates
       </Text>
     </View>
   );

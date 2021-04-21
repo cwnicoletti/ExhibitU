@@ -1,5 +1,5 @@
 import React from "react";
-import ShowcaseHeader from "../ShowcaseHeader";
+import CreatistHeader from "../CreatistHeader";
 import renderer from "react-test-renderer";
 
 import { createStore, combineReducers, applyMiddleware } from "redux";
@@ -26,7 +26,7 @@ test("renders correctly", () => {
     .create(
       <Provider store={store}>
         <SafeAreaProvider>
-          <ShowcaseHeader />
+          <CreatistHeader />
         </SafeAreaProvider>
       </Provider>
     )

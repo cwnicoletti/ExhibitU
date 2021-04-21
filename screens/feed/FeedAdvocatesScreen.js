@@ -26,7 +26,7 @@ const FeedAdvocatesScreen = (props) => {
   const [search, setSearch] = useState("");
   const [isRefreshing, setIsRefreshing] = useState(false);
   const darkModeValue = useSelector((state) => state.switches.darkMode);
-  const showcaseId = props.navigation.getParam("showcaseId");
+  const creatistId = props.navigation.getParam("creatistId");
 
   useEffect(() => {
     props.navigation.setParams({ darkMode: darkModeValue });
@@ -35,10 +35,10 @@ const FeedAdvocatesScreen = (props) => {
   useEffect(() => {
     index.search("").then((responses) => {
       const advocates = responses.hits.find(
-        (object) => object.objectID === showcaseId
+        (object) => object.objectID === creatistId
       ).advocates;
       const projects = responses.hits.find(
-        (object) => object.objectID === showcaseId
+        (object) => object.objectID === creatistId
       ).profileProjects;
       setProjects(projects);
       const filteredIndex = responses.hits.filter((object) =>
@@ -51,10 +51,10 @@ const FeedAdvocatesScreen = (props) => {
   const returnIndex = (text) => {
     index.search(text).then((responses) => {
       const advocates = responses.hits.find(
-        (object) => object.objectID === showcaseId
+        (object) => object.objectID === creatistId
       ).advocates;
       const projects = responses.hits.find(
-        (object) => object.objectID === showcaseId
+        (object) => object.objectID === creatistId
       ).profileProjects;
       setProjects(projects);
       const filteredIndex = responses.hits.filter((object) =>
@@ -76,7 +76,7 @@ const FeedAdvocatesScreen = (props) => {
   };
 
   const viewProjectHandler = (
-    showcaseId,
+    creatistId,
     projectId,
     fullname,
     username,
@@ -95,7 +95,7 @@ const FeedAdvocatesScreen = (props) => {
     profileColumns
   ) => {
     props.navigation.push("ViewProfile", {
-      showcaseId,
+      creatistId,
       projectId,
       fullname,
       username,
@@ -213,12 +213,12 @@ FeedAdvocatesScreen.navigationOptions = (navData) => {
         {darkModeValue ? (
           <Image
             style={styles.image}
-            source={require("../../assets/showcase_icon_transparent_white.png")}
+            source={require("../../assets/creatist_icon_transparent_white.png")}
           />
         ) : (
           <Image
             style={styles.image}
-            source={require("../../assets/showcase_icon_transparent_black.png")}
+            source={require("../../assets/creatist_icon_transparent_black.png")}
           />
         )}
         <Text

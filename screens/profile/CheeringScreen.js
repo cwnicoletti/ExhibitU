@@ -25,7 +25,7 @@ const CheeringScreen = (props) => {
   const [search, setSearch] = useState("");
   const [isRefreshing, setIsRefreshing] = useState(false);
   const darkModeValue = useSelector((state) => state.switches.darkMode);
-  const showcaseId = props.navigation.getParam("showcaseId");
+  const creatistId = props.navigation.getParam("creatistId");
   const projectId = props.navigation.getParam("projectId");
   const postId = props.navigation.getParam("postId");
   const numberOfCheers = props.navigation.getParam("numberOfCheers");
@@ -37,7 +37,7 @@ const CheeringScreen = (props) => {
   useEffect(() => {
     index.search("").then((responses) => {
       const cheering = responses.hits.find(
-        (object) => object.objectID === showcaseId
+        (object) => object.objectID === creatistId
       ).profileProjects[projectId].projectPosts[postId].cheering;
       const filteredIndex = responses.hits.filter((object) =>
         cheering.includes(object.objectID)
@@ -49,7 +49,7 @@ const CheeringScreen = (props) => {
   const returnIndex = (text) => {
     index.search(text).then((responses) => {
       const cheering = responses.hits.find(
-        (object) => object.objectID === showcaseId
+        (object) => object.objectID === creatistId
       ).profileProjects[projectId].projectPosts[postId].cheering;
       const filteredIndex = responses.hits.filter((object) =>
         cheering.includes(object.objectID)
@@ -70,7 +70,7 @@ const CheeringScreen = (props) => {
   };
 
   const viewProjectHandler = (
-    showcaseId,
+    creatistId,
     profilePictureUrl,
     fullname,
     username,
@@ -87,7 +87,7 @@ const CheeringScreen = (props) => {
     profileProjects
   ) => {
     props.navigation.push("ViewProfile", {
-      showcaseId,
+      creatistId,
       profilePictureUrl,
       fullname,
       username,
@@ -151,7 +151,7 @@ const CheeringScreen = (props) => {
                 ? { uri: itemData.item.profilePictureUrl }
                 : {
                     uri:
-                      "https://res.cloudinary.com/showcase-79c28/image/upload/v1608714145/white-profile-icon-24_r0veeu.png",
+                      "https://res.cloudinary.com/creatist-79c28/image/upload/v1608714145/white-profile-icon-24_r0veeu.png",
                   }
             }
             fullname={itemData.item.fullname}
@@ -200,12 +200,12 @@ CheeringScreen.navigationOptions = (navData) => {
         {darkModeValue ? (
           <Image
             style={styles.image}
-            source={require("../../assets/showcase_icon_transparent_white.png")}
+            source={require("../../assets/creatist_icon_transparent_white.png")}
           />
         ) : (
           <Image
             style={styles.image}
-            source={require("../../assets/showcase_icon_transparent_black.png")}
+            source={require("../../assets/creatist_icon_transparent_black.png")}
           />
         )}
         <Text
@@ -214,7 +214,7 @@ CheeringScreen.navigationOptions = (navData) => {
             color: darkModeValue ? "white" : "black",
           }}
         >
-          Showcase
+          Creatist
         </Text>
       </SafeAreaView>
     ),

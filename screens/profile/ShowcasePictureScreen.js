@@ -10,16 +10,16 @@ import {
 import { useSelector } from "react-redux";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 
-import ShowcasePostView from "../../components/user/ShowcasePostView";
+import CreatistPostView from "../../components/user/CreatistPostView";
 import IoniconsHeaderButton from "../../components/UI/IoniconsHeaderButton";
 
 import { LogBox } from "react-native";
 
-const ShowcasePictureScreen = (props) => {
+const CreatistPictureScreen = (props) => {
   const darkModeValue = useSelector((state) => state.switches.darkMode);
   const profileProjects = useSelector((state) => state.user.profileProjects);
 
-  const showcaseId = props.navigation.getParam("showcaseId");
+  const creatistId = props.navigation.getParam("creatistId");
   const projectId = props.navigation.getParam("projectId");
   const postId = props.navigation.getParam("postId");
   const fullname = props.navigation.getParam("fullname");
@@ -46,7 +46,7 @@ const ShowcasePictureScreen = (props) => {
 
   const viewCheeringHandler = () => {
     props.navigation.push("CheeringScreen", {
-      showcaseId: showcaseId,
+      creatistId: creatistId,
       projectId: projectId,
       postId: postId,
       numberOfCheers: numberOfCheers,
@@ -54,7 +54,7 @@ const ShowcasePictureScreen = (props) => {
   };
 
   const viewProfileHandler = (
-    showcaseId,
+    creatistId,
     projectId,
     fullname,
     username,
@@ -64,7 +64,7 @@ const ShowcasePictureScreen = (props) => {
     profilePictureBase64
   ) => {
     props.navigation.push("ViewProfile", {
-      showcaseId,
+      creatistId,
       projectId,
       fullname,
       username,
@@ -91,7 +91,7 @@ const ShowcasePictureScreen = (props) => {
         backgroundColor: darkModeValue ? "black" : "white",
       }}
     >
-      <ShowcasePostView
+      <CreatistPostView
         containerStyle={{
           ...styles.profileContainerStyle,
           borderBottomColor: darkModeValue ? "white" : "black",
@@ -154,7 +154,7 @@ const ShowcasePictureScreen = (props) => {
         }}
         onSelectProfile={() => {
           viewProfileHandler(
-            showcaseId,
+            creatistId,
             projectId,
             fullname,
             username,
@@ -169,7 +169,7 @@ const ShowcasePictureScreen = (props) => {
   );
 };
 
-ShowcasePictureScreen.navigationOptions = (navData) => {
+CreatistPictureScreen.navigationOptions = (navData) => {
   const darkModeValue = navData.navigation.getParam("darkMode");
   const android = navData.navigation.getParam("android");
 
@@ -179,12 +179,12 @@ ShowcasePictureScreen.navigationOptions = (navData) => {
         {darkModeValue ? (
           <Image
             style={styles.image}
-            source={require("../../assets/showcase_icon_transparent_white.png")}
+            source={require("../../assets/creatist_icon_transparent_white.png")}
           />
         ) : (
           <Image
             style={styles.image}
-            source={require("../../assets/showcase_icon_transparent_black.png")}
+            source={require("../../assets/creatist_icon_transparent_black.png")}
           />
         )}
         <Text
@@ -193,7 +193,7 @@ ShowcasePictureScreen.navigationOptions = (navData) => {
             color: darkModeValue ? "white" : "black",
           }}
         >
-          Showcase
+          Creatist
         </Text>
       </View>
     ),
@@ -248,4 +248,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ShowcasePictureScreen;
+export default CreatistPictureScreen;

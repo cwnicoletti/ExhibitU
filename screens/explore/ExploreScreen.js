@@ -60,7 +60,7 @@ const ExploreScreen = (props) => {
 
   const viewProfileHandler = (
     text,
-    showcaseId,
+    creatistId,
     profilePictureUrl,
     fullname,
     username,
@@ -86,7 +86,7 @@ const ExploreScreen = (props) => {
     dispatch(offScreen("Explore"));
     props.navigation.push("ExploreProfile", {
       text,
-      showcaseId,
+      creatistId,
       profilePictureUrl,
       fullname,
       username,
@@ -221,12 +221,12 @@ ExploreScreen.navigationOptions = (navData) => {
         {darkModeValue ? (
           <Image
             style={styles.image}
-            source={require("../../assets/showcase_icon_transparent_white.png")}
+            source={require("../../assets/creatist_icon_transparent_white.png")}
           />
         ) : (
           <Image
             style={styles.image}
-            source={require("../../assets/showcase_icon_transparent_black.png")}
+            source={require("../../assets/creatist_icon_transparent_black.png")}
           />
         )}
         <Text
@@ -235,7 +235,7 @@ ExploreScreen.navigationOptions = (navData) => {
             color: darkModeValue ? "white" : "black",
           }}
         >
-          Showcase
+          Creatist
         </Text>
       </View>
     ),

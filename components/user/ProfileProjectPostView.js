@@ -36,12 +36,12 @@ const ProfileProjectPostView = (props) => {
   const [loadingCheer, setLoadingCheer] = useState(false);
   const [numberOfCheers, setNumberOfCheers] = useState(props.numberOfCheers);
   const [processingWholeCheer, setProcessingWholeCheer] = useState(false);
-  const showcaseId = useSelector((state) => state.user.showcaseId);
+  const creatistId = useSelector((state) => state.user.creatistId);
   const cheeredPosts = useSelector((state) => state.user.cheeredPosts);
   const fullname = useSelector((state) => state.user.fullname);
   const [clap, setClap] = useState(false);
   const localId = useSelector((state) => state.auth.userId);
-  const posterShowcaseId = useSelector((state) => state.user.showcaseId);
+  const posterCreatistId = useSelector((state) => state.user.creatistId);
   const defaultPostIcon = require("../../assets/default-profile-icon.jpg");
   const source = resolveAssetSource(defaultPostIcon);
   const links = props.links;
@@ -144,10 +144,10 @@ const ProfileProjectPostView = (props) => {
         await dispatch(
           cheerOwnProfilePost(
             localId,
-            showcaseId,
+            creatistId,
             projectId,
             postId,
-            posterShowcaseId
+            posterCreatistId
           )
         );
         setNumberOfCheers((prevState) => prevState + 1);
@@ -165,10 +165,10 @@ const ProfileProjectPostView = (props) => {
       await dispatch(
         uncheerOwnProfilePost(
           localId,
-          showcaseId,
+          creatistId,
           projectId,
           postId,
-          posterShowcaseId
+          posterCreatistId
         )
       );
       setNumberOfCheers((prevState) => prevState - 1);

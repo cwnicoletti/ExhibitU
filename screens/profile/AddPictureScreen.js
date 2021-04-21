@@ -154,7 +154,7 @@ const EditProfileScreen = (props) => {
   const [linksState, setLinksState] = useState([]);
   const darkModeValue = useSelector((state) => state.switches.darkMode);
   const localId = useSelector((state) => state.auth.userId);
-  const showcaseId = useSelector((state) => state.user.showcaseId);
+  const creatistId = useSelector((state) => state.user.creatistId);
   const profilePictureUrl = useSelector(
     (state) => state.user.profilePictureUrl
   );
@@ -245,7 +245,7 @@ const EditProfileScreen = (props) => {
     await setIsLoading(true);
     await dispatch(
       addUserPost(
-        showcaseId,
+        creatistId,
         localId,
         projectId,
         fullname,
@@ -293,7 +293,7 @@ const EditProfileScreen = (props) => {
         setFileSizeError(false);
         const base64 = `data:image/png;base64,${result.base64}`;
         await dispatch(
-          uploadAddTempPostPicture(base64, projectId, showcaseId, localId)
+          uploadAddTempPostPicture(base64, projectId, creatistId, localId)
         );
       }
     }
@@ -699,12 +699,12 @@ EditProfileScreen.navigationOptions = (navData) => {
         {darkModeValue ? (
           <Image
             style={styles.image}
-            source={require("../../assets/showcase_icon_transparent_white.png")}
+            source={require("../../assets/creatist_icon_transparent_white.png")}
           />
         ) : (
           <Image
             style={styles.image}
-            source={require("../../assets/showcase_icon_transparent_black.png")}
+            source={require("../../assets/creatist_icon_transparent_black.png")}
           />
         )}
         <Text

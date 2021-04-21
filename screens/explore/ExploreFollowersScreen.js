@@ -25,7 +25,7 @@ const ExploreFollowersScreen = (props) => {
   const [returnedIndex, setReturnedIndex] = useState([]);
   const [search, setSearch] = useState("");
   const [isRefreshing, setIsRefreshing] = useState(false);
-  const showcaseId = props.navigation.getParam("showcaseId");
+  const creatistId = props.navigation.getParam("creatistId");
 
   useEffect(() => {
     props.navigation.setParams({ darkMode: darkModeValue });
@@ -34,7 +34,7 @@ const ExploreFollowersScreen = (props) => {
   useEffect(() => {
     index.search("").then((responses) => {
       const followers = responses.hits.find(
-        (object) => object.objectID === showcaseId
+        (object) => object.objectID === creatistId
       ).followers;
       const filteredIndex = responses.hits.filter((object) =>
         followers.includes(object.objectID)
@@ -46,7 +46,7 @@ const ExploreFollowersScreen = (props) => {
   const returnIndex = (text) => {
     index.search(text).then((responses) => {
       const followers = responses.hits.find(
-        (object) => object.objectID === showcaseId
+        (object) => object.objectID === creatistId
       ).followers;
       const filteredIndex = responses.hits.filter((object) =>
         followers.includes(object.objectID)
@@ -68,7 +68,7 @@ const ExploreFollowersScreen = (props) => {
 
   const viewProjectHandler = (
     text,
-    showcaseId,
+    creatistId,
     profilePictureUrl,
     fullname,
     username,
@@ -93,7 +93,7 @@ const ExploreFollowersScreen = (props) => {
   ) => {
     props.navigation.push("ExploreProfile", {
       text,
-      showcaseId,
+      creatistId,
       profilePictureUrl,
       fullname,
       username,
@@ -225,12 +225,12 @@ ExploreFollowersScreen.navigationOptions = (navData) => {
         {darkModeValue ? (
           <Image
             style={styles.image}
-            source={require("../../assets/showcase_icon_transparent_white.png")}
+            source={require("../../assets/creatist_icon_transparent_white.png")}
           />
         ) : (
           <Image
             style={styles.image}
-            source={require("../../assets/showcase_icon_transparent_black.png")}
+            source={require("../../assets/creatist_icon_transparent_black.png")}
           />
         )}
         <Text

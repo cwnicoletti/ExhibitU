@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Text, StyleSheet, Image } from "react-native";
 
-const UserTitleShowcaseLocal = (props) => {
+const UserTitleCreatistLocal = (props) => {
   return (
     <View style={{ justifyContent: "center", alignItems: "center" }}>
       <Image
@@ -33,4 +33,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default UserTitleShowcaseLocal;
+export default UserTitleCreatistLocal;

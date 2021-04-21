@@ -21,7 +21,7 @@ const UserFeedScreen = (props) => {
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [emptyFeed, setEmptyFeed] = useState(false);
   const darkModeValue = useSelector((state) => state.switches.darkMode);
-  const showcaseId = useSelector((state) => state.user.showcaseId);
+  const creatistId = useSelector((state) => state.user.creatistId);
   const localId = useSelector((state) => state.auth.userId);
   const userFeed = useSelector((state) => state.user.userFeed);
   const profileProjects = useSelector((state) => state.user.profileProjects);
@@ -47,14 +47,14 @@ const UserFeedScreen = (props) => {
   }, [darkModeValue]);
 
   const viewProjectHandler = (
-    showcaseId,
+    creatistId,
     projectId,
     profileProjects,
     postLinks
   ) => {
     dispatch(offScreen("Feed"));
     props.navigation.navigate("ViewFeedProject", {
-      feedShowcaseId: showcaseId,
+      feedCreatistId: creatistId,
       projectId,
       profileProjects,
       postLinks,
@@ -62,14 +62,14 @@ const UserFeedScreen = (props) => {
   };
 
   const viewCheeringHandler = (
-    showcaseId,
+    creatistId,
     projectId,
     postId,
     numberOfCheers
   ) => {
     dispatch(offScreen("Feed"));
     props.navigation.navigate("ViewCheering", {
-      showcaseId,
+      creatistId,
       projectId,
       postId,
       numberOfCheers,
@@ -77,7 +77,7 @@ const UserFeedScreen = (props) => {
   };
 
   const viewProfileHandler = (
-    showcaseId,
+    creatistId,
     projectId,
     fullname,
     username,
@@ -97,7 +97,7 @@ const UserFeedScreen = (props) => {
   ) => {
     dispatch(offScreen("Feed"));
     props.navigation.navigate("ViewProfile", {
-      showcaseId,
+      creatistId,
       projectId,
       fullname,
       username,
@@ -134,7 +134,7 @@ const UserFeedScreen = (props) => {
     });
 
     setIsRefreshing(true);
-    await dispatch(getUserFeed(localId, showcaseId));
+    await dispatch(getUserFeed(localId, creatistId));
     setIsRefreshing(false);
   };
 
@@ -205,7 +205,7 @@ const UserFeedScreen = (props) => {
             numberOfComments={itemData.item.numberOfComments}
             projectId={itemData.item.projectId}
             postId={itemData.item.postId}
-            posterShowcaseId={itemData.item.showcaseId}
+            posterCreatistId={itemData.item.creatistId}
             links={itemData.item.postLinks}
             fullname={itemData.item.fullname}
             postDateCreated={itemData.item.postDateCreated._seconds}
@@ -261,7 +261,7 @@ const UserFeedScreen = (props) => {
             arrowColor={"white"}
             onSelect={() => {
               viewProjectHandler(
-                itemData.item.showcaseId,
+                itemData.item.creatistId,
                 itemData.item.projectId,
                 itemData.item.profileProjects,
                 itemData.item.postLinks
@@ -269,7 +269,7 @@ const UserFeedScreen = (props) => {
             }}
             onSelectCheering={() => {
               viewCheeringHandler(
-                itemData.item.showcaseId,
+                itemData.item.creatistId,
                 itemData.item.projectId,
                 itemData.item.postId,
                 itemData.item.numberOfCheers
@@ -277,13 +277,13 @@ const UserFeedScreen = (props) => {
             }}
             onSelectProfile={() => {
               viewProfileHandler(
-                itemData.item.showcaseId,
+                itemData.item.creatistId,
                 itemData.item.projectId,
                 itemData.item.fullname,
                 itemData.item.username,
                 itemData.item.jobTitle,
                 itemData.item.profileBiography,
-                itemData.item.showcaseId === showcaseId
+                itemData.item.creatistId === creatistId
                   ? profileProjects
                   : itemData.item.profileProjects,
                 itemData.item.profilePictureBase64,
@@ -316,12 +316,12 @@ UserFeedScreen.navigationOptions = (navData) => {
         {darkModeValue ? (
           <Image
             style={styles.image}
-            source={require("../../assets/showcase_icon_transparent_white.png")}
+            source={require("../../assets/creatist_icon_transparent_white.png")}
           />
         ) : (
           <Image
             style={styles.image}
-            source={require("../../assets/showcase_icon_transparent_black.png")}
+            source={require("../../assets/creatist_icon_transparent_black.png")}
           />
         )}
         <Text
@@ -330,7 +330,7 @@ UserFeedScreen.navigationOptions = (navData) => {
             color: darkModeValue ? "white" : "black",
           }}
         >
-          Showcase
+          Creatist
         </Text>
       </View>
     ),

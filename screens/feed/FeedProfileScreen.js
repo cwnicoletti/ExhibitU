@@ -10,7 +10,7 @@ import FeedProfileHeader from "../../components/feed/FeedProfileHeader";
 const FeedProfileScreen = (props) => {
   const darkModeValue = useSelector((state) => state.switches.darkMode);
   const userData = {
-    showcaseId: props.navigation.getParam("showcaseId"),
+    creatistId: props.navigation.getParam("creatistId"),
     projectId: props.navigation.getParam("projectId"),
     fullname: props.navigation.getParam("fullname"),
     username: props.navigation.getParam("username"),
@@ -40,7 +40,7 @@ const FeedProfileScreen = (props) => {
   }, [darkModeValue]);
 
   const viewProjectHandler = (
-    showcaseId,
+    creatistId,
     projectId,
     fullname,
     username,
@@ -58,7 +58,7 @@ const FeedProfileScreen = (props) => {
     postLinks
   ) => {
     props.navigation.navigate("ViewFeedProfileProject", {
-      showcaseId,
+      creatistId,
       projectId,
       fullname,
       username,
@@ -120,17 +120,17 @@ const FeedProfileScreen = (props) => {
         onAddNewProjectPress={() => props.navigation.navigate("AddProject")}
         followersOnPress={() =>
           props.navigation.navigate("ViewFollowers", {
-            showcaseId: userData.showcaseId,
+            creatistId: userData.creatistId,
           })
         }
         followingOnPress={() =>
           props.navigation.navigate("ViewFollowing", {
-            showcaseId: userData.showcaseId,
+            creatistId: userData.creatistId,
           })
         }
         advocatesOnPress={() =>
           props.navigation.navigate("ViewAdvocates", {
-            showcaseId: userData.showcaseId,
+            creatistId: userData.creatistId,
           })
         }
       />
@@ -163,7 +163,7 @@ const FeedProfileScreen = (props) => {
             }}
             onSelect={() => {
               viewProjectHandler(
-                userData.showcaseId,
+                userData.creatistId,
                 itemData.item.projectId,
                 userData.fullname,
                 userData.username,
@@ -196,12 +196,12 @@ FeedProfileScreen.navigationOptions = (navData) => {
         {darkModeValue ? (
           <Image
             style={styles.image}
-            source={require("../../assets/showcase_icon_transparent_white.png")}
+            source={require("../../assets/creatist_icon_transparent_white.png")}
           />
         ) : (
           <Image
             style={styles.image}
-            source={require("../../assets/showcase_icon_transparent_black.png")}
+            source={require("../../assets/creatist_icon_transparent_black.png")}
           />
         )}
         <Text
@@ -210,7 +210,7 @@ FeedProfileScreen.navigationOptions = (navData) => {
             color: darkModeValue ? "white" : "black",
           }}
         >
-          Showcase
+          Creatist
         </Text>
       </View>
     ),

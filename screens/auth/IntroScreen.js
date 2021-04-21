@@ -13,9 +13,9 @@ import {
 import { useSelector, useDispatch } from "react-redux";
 import Carousel from "react-native-snap-carousel";
 
-import exampleImage1 from "../../assets/showcase_icon_transparent_white.png";
-import exampleImage2 from "../../assets/showcase_icon_transparent_white.png";
-import exampleImage3 from "../../assets/showcase_icon_transparent_white.png";
+import exampleImage1 from "../../assets/creatist_icon_transparent_white.png";
+import exampleImage2 from "../../assets/creatist_icon_transparent_white.png";
+import exampleImage3 from "../../assets/creatist_icon_transparent_white.png";
 import CarouselCardItem from "../../components/UI/CarouselCardItem";
 
 import { setIntroing } from "../../store/actions/signup";
@@ -25,41 +25,41 @@ const IntroScreen = (props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [sliderIndex, setSliderIndex] = useState(0);
   const localId = useSelector((state) => state.auth.userId);
-  const showcaseId = useSelector((state) => state.user.showcaseId);
+  const creatistId = useSelector((state) => state.user.creatistId);
   const isCarousel = React.useRef(null);
   const exampleImage1Uri = Image.resolveAssetSource(exampleImage1).uri;
   const exampleImage2Uri = Image.resolveAssetSource(exampleImage2).uri;
   const exampleImage3Uri = Image.resolveAssetSource(exampleImage3).uri;
 
   useEffect(() => {
-    dispatch(setIntroing(localId, showcaseId, true));
+    dispatch(setIntroing(localId, creatistId, true));
   }, []);
 
   const data = [
     {
       title: "",
       body:
-        "Welcome to showcase!\n\nThis platform is designed to help you showcase your projects, talents, and skills",
+        "Welcome to creatist!\n\nThis platform is designed to help you creatist your projects, talents, and skills",
       imgUrl1: exampleImage1Uri,
       useImg1: true,
     },
     {
       title: "",
       body:
-        "Showcase is also a platform to cheer on your friends, family, and peers as they build their own showcases",
+        "Creatist is also a platform to cheer on your friends, family, and peers as they build their own creatists",
       imgUrl2: exampleImage2Uri,
       useImg2: true,
     },
     {
       title: "",
       body:
-        "Since showcase is a form of social media you can follow your friends and family to stay up to date on their projects",
+        "Since creatist is a form of social media you can follow your friends and family to stay up to date on their projects",
       useImg3: true,
     },
     {
       title: "",
       body:
-        "We also have a unique feature within showcase that allows you to 'advocate' for a user's project as a way of showing your contribution to a project",
+        "We also have a unique feature within creatist that allows you to 'advocate' for a user's project as a way of showing your contribution to a project",
       useImg4: true,
     },
     {
@@ -81,7 +81,7 @@ const IntroScreen = (props) => {
 
   const authHandler = async () => {
     await setIsLoading(true);
-    await dispatch(setIntroing(localId, showcaseId, false));
+    await dispatch(setIntroing(localId, creatistId, false));
     await setIsLoading(false);
     await props.navigation.navigate("Project");
   };

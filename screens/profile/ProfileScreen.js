@@ -25,7 +25,7 @@ const ProfileScreen = (props) => {
   const [isRefreshing, setIsRefreshing] = useState(false);
   const darkModeValue = useSelector((state) => state.switches.darkMode);
   const localId = useSelector((state) => state.auth.userId);
-  const showcaseId = useSelector((state) => state.user.showcaseId);
+  const creatistId = useSelector((state) => state.user.creatistId);
   const profilePictureBase64 = useSelector(
     (state) => state.user.profilePictureBase64
   );
@@ -35,7 +35,7 @@ const ProfileScreen = (props) => {
   );
 
   const userData = {
-    showcaseId: useSelector((state) => state.user.showcaseId),
+    creatistId: useSelector((state) => state.user.creatistId),
     fullname: useSelector((state) => state.user.fullname),
     username: useSelector((state) => state.user.username),
     jobTitle: useSelector((state) => state.user.jobTitle),
@@ -103,21 +103,21 @@ const ProfileScreen = (props) => {
         onAddNewProjectPress={() => props.navigation.navigate("AddProject")}
         followersOnPress={() =>
           props.navigation.navigate("Followers", {
-            showcaseId: userData.showcaseId,
+            creatistId: userData.creatistId,
           })
         }
         followingOnPress={() =>
           props.navigation.navigate("Following", {
-            showcaseId: userData.showcaseId,
+            creatistId: userData.creatistId,
           })
         }
         advocatesOnPress={() =>
           props.navigation.navigate("Advocates", {
-            showcaseId: userData.showcaseId,
+            creatistId: userData.creatistId,
           })
         }
         changeColumnToTwo={() => {
-          dispatch(changeProfileNumberOfColumns(localId, showcaseId, 2));
+          dispatch(changeProfileNumberOfColumns(localId, creatistId, 2));
         }}
         columnTwoStyle={{
           borderColor:
@@ -130,7 +130,7 @@ const ProfileScreen = (props) => {
               : "#c9c9c9",
         }}
         changeColumnToThree={() => {
-          dispatch(changeProfileNumberOfColumns(localId, showcaseId, 3));
+          dispatch(changeProfileNumberOfColumns(localId, creatistId, 3));
         }}
         columnThreeStyle={{
           borderColor:
@@ -143,7 +143,7 @@ const ProfileScreen = (props) => {
               : "#c9c9c9",
         }}
         changeColumnToFour={() => {
-          dispatch(changeProfileNumberOfColumns(localId, showcaseId, 4));
+          dispatch(changeProfileNumberOfColumns(localId, creatistId, 4));
         }}
         columnFourStyle={{
           borderColor:
@@ -208,7 +208,7 @@ const ProfileScreen = (props) => {
           flexDirection: "row",
         }}
         onPress={() => {
-          props.navigation.push("ShowcaseProfile");
+          props.navigation.push("CreatistProfile");
         }}
       >
         <SimpleLineIcons
@@ -222,7 +222,7 @@ const ProfileScreen = (props) => {
             fontWeight: "bold",
           }}
         >
-          Showcase profile
+          Creatist profile
         </Text>
       </TouchableOpacity>
     </View>
@@ -237,12 +237,12 @@ ProfileScreen.navigationOptions = (navData) => {
         {darkModeValue ? (
           <Image
             style={styles.image}
-            source={require("../../assets/showcase_icon_transparent_white.png")}
+            source={require("../../assets/creatist_icon_transparent_white.png")}
           />
         ) : (
           <Image
             style={styles.image}
-            source={require("../../assets/showcase_icon_transparent_black.png")}
+            source={require("../../assets/creatist_icon_transparent_black.png")}
           />
         )}
         <Text
@@ -251,7 +251,7 @@ ProfileScreen.navigationOptions = (navData) => {
             color: darkModeValue ? "white" : "black",
           }}
         >
-          Showcase
+          Creatist
         </Text>
       </View>
     ),

@@ -9,12 +9,12 @@ export const HIDE_FOLLOWING = "HIDE_FOLLOWING";
 export const HIDE_FOLLOWERS = "HIDE_FOLLOWERS";
 export const HIDE_ADVOCATES = "HIDE_ADVOCATES";
 
-export const setDarkMode = (localId, showcaseId, value) => {
+export const setDarkMode = (localId, creatistId, value) => {
   return async (dispatch) => {
-    const userFeedGet = { localId, showcaseId, value, switchName: "darkMode" };
+    const userFeedGet = { localId, creatistId, value, switchName: "darkMode" };
 
     axios.post(
-      `https://us-central1-showcase-79c28.cloudfunctions.net/setSwitch`,
+      `https://us-central1-creatist-79c28.cloudfunctions.net/setSwitch`,
       userFeedGet
     );
 
@@ -28,17 +28,17 @@ export const setDarkMode = (localId, showcaseId, value) => {
   };
 };
 
-export const setShowResume = (localId, showcaseId, value) => {
+export const setShowResume = (localId, creatistId, value) => {
   return async (dispatch) => {
     const userFeedGet = {
       localId,
-      showcaseId,
+      creatistId,
       value,
       switchName: "showResume",
     };
 
     axios.post(
-      `https://us-central1-showcase-79c28.cloudfunctions.net/setSwitch`,
+      `https://us-central1-creatist-79c28.cloudfunctions.net/setSwitch`,
       userFeedGet
     );
 
@@ -52,17 +52,17 @@ export const setShowResume = (localId, showcaseId, value) => {
   };
 };
 
-export const setShowCheering = (localId, showcaseId, value) => {
+export const setShowCheering = (localId, creatistId, value) => {
   return async (dispatch) => {
     const userFeedGet = {
       localId,
-      showcaseId,
+      creatistId,
       value,
       switchName: "showCheering",
     };
 
     axios.post(
-      `https://us-central1-showcase-79c28.cloudfunctions.net/setSwitch`,
+      `https://us-central1-creatist-79c28.cloudfunctions.net/setSwitch`,
       userFeedGet
     );
 
@@ -76,17 +76,17 @@ export const setShowCheering = (localId, showcaseId, value) => {
   };
 };
 
-export const setHideFollowing = (localId, showcaseId, value) => {
+export const setHideFollowing = (localId, creatistId, value) => {
   return async (dispatch) => {
     const userFeedGet = {
       localId,
-      showcaseId,
+      creatistId,
       value,
       switchName: "hideFollowing",
     };
 
     axios.post(
-      `https://us-central1-showcase-79c28.cloudfunctions.net/setSwitch`,
+      `https://us-central1-creatist-79c28.cloudfunctions.net/setSwitch`,
       userFeedGet
     );
 
@@ -100,17 +100,17 @@ export const setHideFollowing = (localId, showcaseId, value) => {
   };
 };
 
-export const setHideFollowers = (localId, showcaseId, value) => {
+export const setHideFollowers = (localId, creatistId, value) => {
   return async (dispatch) => {
     const userFeedGet = {
       localId,
-      showcaseId,
+      creatistId,
       value,
       switchName: "hideFollowers",
     };
 
     axios.post(
-      `https://us-central1-showcase-79c28.cloudfunctions.net/setSwitch`,
+      `https://us-central1-creatist-79c28.cloudfunctions.net/setSwitch`,
       userFeedGet
     );
 
@@ -124,17 +124,17 @@ export const setHideFollowers = (localId, showcaseId, value) => {
   };
 };
 
-export const setHideAdvocates = (localId, showcaseId, value) => {
+export const setHideAdvocates = (localId, creatistId, value) => {
   return async (dispatch) => {
     const userFeedGet = {
       localId,
-      showcaseId,
+      creatistId,
       value,
       switchName: "hideAdvocates",
     };
 
     axios.post(
-      `https://us-central1-showcase-79c28.cloudfunctions.net/setSwitch`,
+      `https://us-central1-creatist-79c28.cloudfunctions.net/setSwitch`,
       userFeedGet
     );
 

@@ -13,7 +13,7 @@ import {
   setHideAdvocates,
 } from "../../store/actions/switches";
 
-const ShowcaseSettingsScreen = (props) => {
+const CreatistSettingsScreen = (props) => {
   const dispatch = useDispatch();
   const darkModeValue = useSelector((state) => state.switches.darkMode);
   const showCheeringValue = useSelector((state) => state.switches.showCheering);
@@ -21,7 +21,7 @@ const ShowcaseSettingsScreen = (props) => {
   const followersValue = useSelector((state) => state.switches.hideFollowers);
   const advocatesValue = useSelector((state) => state.switches.hideAdvocates);
   const localId = useSelector((state) => state.auth.userId);
-  const showcaseId = useSelector((state) => state.user.showcaseId);
+  const creatistId = useSelector((state) => state.user.creatistId);
 
   useEffect(() => {
     props.navigation.setParams({ darkMode: darkModeValue });
@@ -47,7 +47,7 @@ const ShowcaseSettingsScreen = (props) => {
         label="Show Cheering"
         state={showCheeringValue}
         onChange={(newValue) => {
-          dispatch(setShowCheering(localId, showcaseId, newValue));
+          dispatch(setShowCheering(localId, creatistId, newValue));
         }}
       />
       <FilterSwitch
@@ -63,7 +63,7 @@ const ShowcaseSettingsScreen = (props) => {
         label="Hide followers"
         state={followersValue}
         onChange={(newValue) => {
-          dispatch(setHideFollowers(localId, showcaseId, newValue));
+          dispatch(setHideFollowers(localId, creatistId, newValue));
         }}
       />
       <FilterSwitch
@@ -79,7 +79,7 @@ const ShowcaseSettingsScreen = (props) => {
         label="Hide following"
         state={followingValue}
         onChange={(newValue) => {
-          dispatch(setHideFollowing(localId, showcaseId, newValue));
+          dispatch(setHideFollowing(localId, creatistId, newValue));
         }}
       />
       <FilterSwitch
@@ -95,21 +95,21 @@ const ShowcaseSettingsScreen = (props) => {
         label="Hide advocates"
         state={advocatesValue}
         onChange={(newValue) => {
-          dispatch(setHideAdvocates(localId, showcaseId, newValue));
+          dispatch(setHideAdvocates(localId, creatistId, newValue));
         }}
       />
     </View>
   );
 };
 
-ShowcaseSettingsScreen.navigationOptions = (navData) => {
+CreatistSettingsScreen.navigationOptions = (navData) => {
   const darkModeValue = navData.navigation.getParam("darkMode");
   return {
     headerTitle: () => (
       <View style={styles.logo}>
         <Image
           style={styles.logoImage}
-          source={require("../../assets/showcase_icon_transparent_white.png")}
+          source={require("../../assets/creatist_icon_transparent_white.png")}
         />
         <Text
           style={{
@@ -117,7 +117,7 @@ ShowcaseSettingsScreen.navigationOptions = (navData) => {
             color: "white",
           }}
         >
-          Showcase
+          Creatist
         </Text>
       </View>
     ),
@@ -170,4 +170,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ShowcaseSettingsScreen;
+export default CreatistSettingsScreen;

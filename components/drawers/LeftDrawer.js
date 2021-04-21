@@ -10,7 +10,7 @@ const LeftDrawer = (props) => {
   const dispatch = useDispatch();
   const darkModeValue = useSelector((state) => state.switches.darkMode);
   const localId = useSelector((state) => state.auth.userId);
-  const showcaseId = useSelector((state) => state.user.showcaseId);
+  const creatistId = useSelector((state) => state.user.creatistId);
   const fullname = useSelector((state) => state.user.fullname);
   const profilePictureUrl = useSelector(
     (state) => state.user.profilePictureUrl
@@ -82,7 +82,7 @@ const LeftDrawer = (props) => {
             label="Dark Mode"
             state={darkModeValue}
             onChange={async (newValue) => {
-              dispatch(setDarkMode(localId, showcaseId, newValue));
+              dispatch(setDarkMode(localId, creatistId, newValue));
             }}
           />
         </SafeAreaView>

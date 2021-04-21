@@ -17,8 +17,8 @@ import { HeaderButtons, Item } from "react-navigation-header-buttons";
 
 const FeedProjectScreen = (props) => {
   const darkModeValue = useSelector((state) => state.switches.darkMode);
-  const feedShowcaseId = props.navigation.getParam("feedShowcaseId");
-  const showcaseId = useSelector((state) => state.user.showcaseId);
+  const feedCreatistId = props.navigation.getParam("feedCreatistId");
+  const creatistId = useSelector((state) => state.user.creatistId);
   const currentProjectId = props.navigation.getParam("projectId");
   const profilePictureBase64 = props.navigation.getParam(
     "profilePictureBase64"
@@ -35,7 +35,7 @@ const FeedProjectScreen = (props) => {
   }
 
   const viewCommentsHandler = (
-    showcaseId,
+    creatistId,
     projectId,
     postId,
     fullname,
@@ -59,7 +59,7 @@ const FeedProjectScreen = (props) => {
     postLinks
   ) => {
     props.navigation.navigate("ViewComments", {
-      showcaseId,
+      creatistId,
       projectId,
       postId,
       fullname,
@@ -85,8 +85,8 @@ const FeedProjectScreen = (props) => {
   };
 
   useEffect(() => {
-    props.navigation.setParams({ showcaseId: showcaseId });
-    props.navigation.setParams({ feedShowcaseId: feedShowcaseId });
+    props.navigation.setParams({ creatistId: creatistId });
+    props.navigation.setParams({ feedCreatistId: feedCreatistId });
     props.navigation.setParams({ android });
   }, []);
 
@@ -148,7 +148,7 @@ const FeedProjectScreen = (props) => {
             imageContainer={styles.imageContainer}
             onSelect={() =>
               viewCommentsHandler(
-                itemData.item.showcaseId,
+                itemData.item.creatistId,
                 itemData.item.projectId,
                 itemData.item.postId,
                 itemData.item.fullname,
@@ -181,8 +181,8 @@ const FeedProjectScreen = (props) => {
 
 FeedProjectScreen.navigationOptions = (navData) => {
   const darkModeValue = navData.navigation.getParam("darkMode");
-  const showcaseId = navData.navigation.getParam("showcaseId");
-  const feedShowcaseId = navData.navigation.getParam("feedShowcaseId");
+  const creatistId = navData.navigation.getParam("creatistId");
+  const feedCreatistId = navData.navigation.getParam("feedCreatistId");
   const android = navData.navigation.getParam("android");
 
   return {
@@ -191,12 +191,12 @@ FeedProjectScreen.navigationOptions = (navData) => {
         {darkModeValue ? (
           <Image
             style={styles.image}
-            source={require("../../assets/showcase_icon_transparent_white.png")}
+            source={require("../../assets/creatist_icon_transparent_white.png")}
           />
         ) : (
           <Image
             style={styles.image}
-            source={require("../../assets/showcase_icon_transparent_black.png")}
+            source={require("../../assets/creatist_icon_transparent_black.png")}
           />
         )}
         <Text
@@ -205,7 +205,7 @@ FeedProjectScreen.navigationOptions = (navData) => {
             color: darkModeValue ? "white" : "black",
           }}
         >
-          Showcase
+          Creatist
         </Text>
       </View>
     ),
@@ -230,7 +230,7 @@ FeedProjectScreen.navigationOptions = (navData) => {
     ),
     headerRight: () => (
       <View>
-        {showcaseId !== feedShowcaseId ? (
+        {creatistId !== feedCreatistId ? (
           <HeaderButtons HeaderButtonComponent={FontAwesomeHeaderButton}>
             <Item
               title="Advocate"

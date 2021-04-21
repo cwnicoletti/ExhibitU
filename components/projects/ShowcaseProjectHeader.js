@@ -9,7 +9,7 @@ const handleLinkOnPress = (url) => {
   WebBrowser.openBrowserAsync(url);
 };
 
-const ShowcaseProjectHeader = (props) => {
+const CreatistProjectHeader = (props) => {
   const darkModeValue = useSelector((state) => state.switches.darkMode);
   const links = props.links;
 
@@ -92,4 +92,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ShowcaseProjectHeader;
+export default CreatistProjectHeader;

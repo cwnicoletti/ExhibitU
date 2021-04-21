@@ -1,5 +1,5 @@
 import React from "react";
-import ShowcasePostView from "../ShowcasePostView";
+import CreatistPostView from "../CreatistPostView";
 import renderer from "react-test-renderer";
 
 import { createStore, combineReducers, applyMiddleware } from "redux";
@@ -26,7 +26,7 @@ test("renders correctly", () => {
     .create(
       <Provider store={store}>
         <SafeAreaProvider>
-          <ShowcasePostView />
+          <CreatistPostView />
         </SafeAreaProvider>
       </Provider>
     )

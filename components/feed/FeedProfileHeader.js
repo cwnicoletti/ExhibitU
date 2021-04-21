@@ -12,7 +12,7 @@ import { useSelector } from "react-redux";
 import * as WebBrowser from "expo-web-browser";
 import { Ionicons } from "@expo/vector-icons";
 
-import UserTitleShowcaseLocal from "../user/UserTitleShowcaseLocal";
+import UserTitleCreatistLocal from "../user/UserTitleCreatistLocal";
 import LinkButton from "../UI/LinkButton";
 
 const handleLinkOnPress = (url) => {
@@ -49,7 +49,7 @@ const FeedProfileHeader = (props) => {
           ...props.containerStyle,
         }}
       >
-        <UserTitleShowcaseLocal {...props} />
+        <UserTitleCreatistLocal {...props} />
         <View
           style={{
             margin: 10,

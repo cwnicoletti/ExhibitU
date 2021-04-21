@@ -28,7 +28,7 @@ const PictureScreen = (props) => {
   const profilePictureBase64 = useSelector(
     (state) => state.user.profilePictureBase64
   );
-  const showcaseId = props.navigation.getParam("showcaseId");
+  const creatistId = props.navigation.getParam("creatistId");
   const projectId = props.navigation.getParam("projectId");
   const postId = props.navigation.getParam("postId");
   const fullname = props.navigation.getParam("fullname");
@@ -50,7 +50,7 @@ const PictureScreen = (props) => {
 
   const viewCheeringHandler = () => {
     props.navigation.push("CheeringScreen", {
-      showcaseId: showcaseId,
+      creatistId: creatistId,
       projectId: projectId,
       postId: postId,
       numberOfCheers: numberOfCheers,
@@ -58,7 +58,7 @@ const PictureScreen = (props) => {
   };
 
   const viewProfileHandler = (
-    showcaseId,
+    creatistId,
     projectId,
     fullname,
     username,
@@ -67,8 +67,8 @@ const PictureScreen = (props) => {
     profileProjects,
     profilePictureUrl
   ) => {
-    props.navigation.push("ShowcaseProfile", {
-      showcaseId,
+    props.navigation.push("CreatistProfile", {
+      creatistId,
       projectId,
       fullname,
       username,
@@ -80,7 +80,7 @@ const PictureScreen = (props) => {
   };
 
   const deleteHandler = useCallback(async () => {
-    dispatch(uploadRemovePost(showcaseId, localId, projectId, postId));
+    dispatch(uploadRemovePost(creatistId, localId, projectId, postId));
 
     props.navigation.navigate("ViewProfileProject", {
       projectId: projectId,
@@ -169,7 +169,7 @@ const PictureScreen = (props) => {
         }}
         onSelectProfile={() => {
           viewProfileHandler(
-            showcaseId,
+            creatistId,
             projectId,
             fullname,
             username,
@@ -195,12 +195,12 @@ PictureScreen.navigationOptions = (navData) => {
         {darkModeValue ? (
           <Image
             style={styles.image}
-            source={require("../../assets/showcase_icon_transparent_white.png")}
+            source={require("../../assets/creatist_icon_transparent_white.png")}
           />
         ) : (
           <Image
             style={styles.image}
-            source={require("../../assets/showcase_icon_transparent_black.png")}
+            source={require("../../assets/creatist_icon_transparent_black.png")}
           />
         )}
         <Text
@@ -209,7 +209,7 @@ PictureScreen.navigationOptions = (navData) => {
             color: darkModeValue ? "white" : "black",
           }}
         >
-          Showcase
+          Creatist
         </Text>
       </View>
     ),

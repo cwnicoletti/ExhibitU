@@ -52,10 +52,10 @@ const FeedItem = (props) => {
   const darkModeValue = useSelector((state) => state.switches.darkMode);
   const cheeredPosts = useSelector((state) => state.user.cheeredPosts);
   const localId = useSelector((state) => state.auth.userId);
-  const showcaseId = useSelector((state) => state.user.showcaseId);
+  const creatistId = useSelector((state) => state.user.creatistId);
   const projectId = props.projectId;
   const postId = props.postId;
-  const posterShowcaseId = props.posterShowcaseId;
+  const posterCreatistId = props.posterCreatistId;
   const links = props.links ? props.links : {};
   const fullname = props.fullname;
   const defaultPostIcon = require("../../assets/default-profile-icon.jpg");
@@ -150,10 +150,10 @@ const FeedItem = (props) => {
       if (!cheeredPosts.includes(postId)) {
         await setLoadingCheer(true);
         await dispatch(
-          cheerPost(localId, showcaseId, projectId, postId, posterShowcaseId)
+          cheerPost(localId, creatistId, projectId, postId, posterCreatistId)
         );
-        if (showcaseId === posterShowcaseId) {
-          await dispatch(cheerOwnFeedPost(showcaseId, projectId, postId));
+        if (creatistId === posterCreatistId) {
+          await dispatch(cheerOwnFeedPost(creatistId, projectId, postId));
         }
         await setLoadingCheer(false);
       }
@@ -167,10 +167,10 @@ const FeedItem = (props) => {
     if (cheeredPosts.includes(postId)) {
       await setLoadingCheer(true);
       await dispatch(
-        uncheerPost(localId, showcaseId, projectId, postId, posterShowcaseId)
+        uncheerPost(localId, creatistId, projectId, postId, posterCreatistId)
       );
-      if (showcaseId === posterShowcaseId) {
-        await dispatch(uncheerOwnFeedPost(showcaseId, projectId, postId));
+      if (creatistId === posterCreatistId) {
+        await dispatch(uncheerOwnFeedPost(creatistId, projectId, postId));
       }
       await setLoadingCheer(false);
     }

@@ -10,16 +10,16 @@ import {
 import { useSelector } from "react-redux";
 
 import ProjectPictures from "../../components/UI/ProjectPictures";
-import ShowcaseProjectHeader from "../../components/projects/ShowcaseProjectHeader";
+import CreatistProjectHeader from "../../components/projects/CreatistProjectHeader";
 import IoniconsHeaderButton from "../../components/UI/IoniconsHeaderButton";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 
-const ShowcaseProjectScreen = (props) => {
+const CreatistProjectScreen = (props) => {
   const darkModeValue = useSelector((state) => state.switches.darkMode);
   const currentProjectId = props.navigation.getParam("projectId");
   const profileProjects = props.navigation.getParam("profileProjects");
   const profilePictureBase64 =
-    props.navigation.getParam("showcaseId") === showcaseId ||
+    props.navigation.getParam("creatistId") === creatistId ||
     props.navigation.getParam("profilePictureBase64") === undefined
       ? useSelector((state) => state.user.profilePictureBase64)
       : props.navigation.getParam("profilePictureBase64");
@@ -32,7 +32,7 @@ const ShowcaseProjectScreen = (props) => {
   }
 
   const viewCommentsHandler = (
-    showcaseId,
+    creatistId,
     projectId,
     postId,
     fullname,
@@ -48,8 +48,8 @@ const ShowcaseProjectScreen = (props) => {
     caption,
     links
   ) => {
-    props.navigation.push("ShowcasePictureScreen", {
-      showcaseId,
+    props.navigation.push("CreatistPictureScreen", {
+      creatistId,
       projectId,
       postId,
       fullname,
@@ -77,7 +77,7 @@ const ShowcaseProjectScreen = (props) => {
 
   const topHeader = () => {
     return (
-      <ShowcaseProjectHeader
+      <CreatistProjectHeader
         containerStyle={{
           ...styles.profileContainerStyle,
           borderBottomColor: darkModeValue ? "white" : "black",
@@ -133,7 +133,7 @@ const ShowcaseProjectScreen = (props) => {
             imageContainer={styles.imageContainer}
             onSelect={() =>
               viewCommentsHandler(
-                itemData.item.showcaseId,
+                itemData.item.creatistId,
                 itemData.item.projectId,
                 itemData.item.postId,
                 itemData.item.fullname,
@@ -157,7 +157,7 @@ const ShowcaseProjectScreen = (props) => {
   );
 };
 
-ShowcaseProjectScreen.navigationOptions = (navData) => {
+CreatistProjectScreen.navigationOptions = (navData) => {
   const darkModeValue = navData.navigation.getParam("darkMode");
   return {
     headerTitle: () => (
@@ -165,12 +165,12 @@ ShowcaseProjectScreen.navigationOptions = (navData) => {
         {darkModeValue ? (
           <Image
             style={styles.image}
-            source={require("../../assets/showcase_icon_transparent_white.png")}
+            source={require("../../assets/creatist_icon_transparent_white.png")}
           />
         ) : (
           <Image
             style={styles.image}
-            source={require("../../assets/showcase_icon_transparent_black.png")}
+            source={require("../../assets/creatist_icon_transparent_black.png")}
           />
         )}
         <Text
@@ -179,7 +179,7 @@ ShowcaseProjectScreen.navigationOptions = (navData) => {
             color: darkModeValue ? "white" : "black",
           }}
         >
-          Showcase
+          Creatist
         </Text>
       </View>
     ),
@@ -234,4 +234,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ShowcaseProjectScreen;
+export default CreatistProjectScreen;

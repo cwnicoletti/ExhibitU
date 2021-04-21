@@ -7,7 +7,7 @@ import { createBottomTabNavigator } from "react-navigation-tabs";
 import { createDrawerNavigator, DrawerActions } from "react-navigation-drawer";
 
 import ProfileScreen from "../screens/profile/ProfileScreen";
-import ShowcaseSettingsScreen from "../screens/drawers/ShowcaseSettingsScreen";
+import CreatistSettingsScreen from "../screens/drawers/CreatistSettingsScreen";
 import VoteUpdatesSettingsScreen from "../screens/drawers/VoteUpdatesSettingsScreen";
 import EditProfileScreen from "../screens/profile/EditProfileScreen";
 import SignupOrLoginScreen from "../screens/auth/SignupOrLoginScreen";
@@ -43,9 +43,9 @@ import FollowersScreen from "../screens/profile/FollowersScreen";
 import FollowingScreen from "../screens/profile/FollowingScreen";
 import PictureScreen from "../screens/profile/PictureScreen";
 import CheeringScreen from "../screens/profile/CheeringScreen";
-import ShowcaseProfileScreen from "../screens/profile/ShowcaseProfileScreen";
-import ShowcaseProjectScreen from "../screens/profile/ShowcaseProjectScreen";
-import ShowcasePictureScreen from "../screens/profile/ShowcasePictureScreen";
+import CreatistProfileScreen from "../screens/profile/CreatistProfileScreen";
+import CreatistProjectScreen from "../screens/profile/CreatistProjectScreen";
+import CreatistPictureScreen from "../screens/profile/CreatistPictureScreen";
 
 import LeftDrawer from "../components/drawers/LeftDrawer";
 import RightDrawer from "../components/drawers/RightDrawer";
@@ -107,9 +107,9 @@ const FeedNavigator = createDrawerNavigator(
         <RightDrawer
           navData={navData}
           component={FeedNavigator}
-          showcaseOnPress={() => {
+          creatistOnPress={() => {
             navData.navigation.closeRightDrawer();
-            navData.navigation.navigate("ShowcaseSettings");
+            navData.navigation.navigate("CreatistSettings");
           }}
           updatesOnPress={() => {
             navData.navigation.closeRightDrawer();
@@ -182,11 +182,11 @@ const ProfileandSettingsNavigator = createStackNavigator({
   },
   ViewProfileProject: ProjectScreen,
   PictureScreen: PictureScreen,
-  ShowcaseProfile: ShowcaseProfileScreen,
-  ShowcaseProject: ShowcaseProjectScreen,
-  ShowcasePictureScreen: ShowcasePictureScreen,
+  CreatistProfile: CreatistProfileScreen,
+  CreatistProject: CreatistProjectScreen,
+  CreatistPictureScreen: CreatistPictureScreen,
   EditProfile: EditProfileScreen,
-  ShowcaseSettings: ShowcaseSettingsScreen,
+  CreatistSettings: CreatistSettingsScreen,
   Updates: VoteUpdatesSettingsScreen,
   Advocates: AdvocatesScreen,
   Following: FollowingScreen,
@@ -226,9 +226,9 @@ const ProfileNavigator = createDrawerNavigator(
         <RightDrawer
           navData={navData}
           component={ProfileNavigator}
-          showcaseOnPress={() => {
+          creatistOnPress={() => {
             navData.navigation.closeRightDrawer();
-            navData.navigation.navigate("ShowcaseSettings");
+            navData.navigation.navigate("CreatistSettings");
           }}
           updatesOnPress={() => {
             navData.navigation.closeRightDrawer();

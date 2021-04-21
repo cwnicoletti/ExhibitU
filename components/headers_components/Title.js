@@ -1,7 +1,7 @@
 import React from "react";
 import { StyleSheet } from "react-native";
-import IconWhite from "../../assets/showcase_icon_transparent_white.png";
-import IconBlack from "../../assets/showcase_icon_transparent_black.png";
+import IconWhite from "../../assets/creatist_icon_transparent_white.png";
+import IconBlack from "../../assets/creatist_icon_transparent_black.png";
 
 const Title = (props) => {
   return (
@@ -27,7 +27,7 @@ const Title = (props) => {
             color: props.darkModeValue ? "white" : "black",
           }}
         >
-          Showcase
+          Creatist
         </props.Text>
       </props.View>
     </props.View>

@@ -211,7 +211,7 @@ SignupScreen2.navigationOptions = (navData) => {
       <View style={styles.logo}>
         <Image
           style={styles.logoImage}
-          source={require("../../assets/showcase_icon_transparent_white.png")}
+          source={require("../../assets/creatist_icon_transparent_white.png")}
         />
         <Text
           style={{
@@ -219,7 +219,7 @@ SignupScreen2.navigationOptions = (navData) => {
             color: "white",
           }}
         >
-          Showcase
+          Creatist
         </Text>
       </View>
     ),

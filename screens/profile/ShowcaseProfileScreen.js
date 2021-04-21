@@ -4,84 +4,84 @@ import { useSelector } from "react-redux";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 
 import ProjectItem from "../../components/projectItems/ProfileProjectItem";
-import ShowcaseHeader from "../../components/user/ShowcaseHeader";
+import CreatistHeader from "../../components/user/CreatistHeader";
 import IoniconsHeaderButton from "../../components/UI/IoniconsHeaderButton";
 
-const ShowcaseProfileScreen = (props) => {
+const CreatistProfileScreen = (props) => {
   const darkModeValue = useSelector((state) => state.switches.darkMode);
-  const showcaseId = useSelector((state) => state.user.showcaseId);
+  const creatistId = useSelector((state) => state.user.creatistId);
   const trueUndefined = void 0;
 
   const profilePictureBase64 =
-    props.navigation.getParam("showcaseId") === showcaseId ||
+    props.navigation.getParam("creatistId") === creatistId ||
     props.navigation.getParam("profilePictureBase64") === trueUndefined
       ? useSelector((state) => state.user.profilePictureBase64)
       : props.navigation.getParam("profilePictureBase64");
 
   const profileColumns =
-    props.navigation.getParam("showcaseId") === showcaseId ||
+    props.navigation.getParam("creatistId") === creatistId ||
     props.navigation.getParam("profileColumns") === trueUndefined
       ? useSelector((state) => state.user.profileColumns)
       : props.navigation.getParam("profileColumns");
 
   const userData = {
-    showcaseId:
-      props.navigation.getParam("showcaseId") === showcaseId ||
-      props.navigation.getParam("showcaseId") === trueUndefined
-        ? useSelector((state) => state.user.showcaseId)
-        : props.navigation.getParam("showcaseId"),
+    creatistId:
+      props.navigation.getParam("creatistId") === creatistId ||
+      props.navigation.getParam("creatistId") === trueUndefined
+        ? useSelector((state) => state.user.creatistId)
+        : props.navigation.getParam("creatistId"),
     fullname:
-      props.navigation.getParam("showcaseId") === showcaseId ||
+      props.navigation.getParam("creatistId") === creatistId ||
       props.navigation.getParam("fullname") === trueUndefined
         ? useSelector((state) => state.user.fullname)
         : props.navigation.getParam("fullname"),
     username:
-      props.navigation.getParam("showcaseId") === showcaseId ||
+      props.navigation.getParam("creatistId") === creatistId ||
       props.navigation.getParam("username") === trueUndefined
         ? useSelector((state) => state.user.username)
         : props.navigation.getParam("username"),
     jobTitle:
-      props.navigation.getParam("showcaseId") === showcaseId ||
+      props.navigation.getParam("creatistId") === creatistId ||
       props.navigation.getParam("jobTitle") === trueUndefined
         ? useSelector((state) => state.user.jobTitle)
         : props.navigation.getParam("jobTitle"),
     profileBiography:
-      props.navigation.getParam("showcaseId") === showcaseId ||
+      props.navigation.getParam("creatistId") === creatistId ||
       props.navigation.getParam("profileBiography") === trueUndefined
         ? useSelector((state) => state.user.profileBiography)
         : props.navigation.getParam("profileBiography"),
     profileLinks:
-      props.navigation.getParam("showcaseId") === showcaseId ||
+      props.navigation.getParam("creatistId") === creatistId ||
       props.navigation.getParam("profileLinks") === trueUndefined
         ? useSelector((state) => state.user.profileLinks)
         : props.navigation.getParam("profileLinks"),
     profileProjects:
-      props.navigation.getParam("showcaseId") === showcaseId ||
+      props.navigation.getParam("creatistId") === creatistId ||
       props.navigation.getParam("profileProjects") === trueUndefined
         ? useSelector((state) => state.user.profileProjects)
         : props.navigation.getParam("profileProjects"),
     numberOfAdvocates:
-      props.navigation.getParam("showcaseId") === showcaseId ||
+      props.navigation.getParam("creatistId") === creatistId ||
       props.navigation.getParam("numberOfAdvocates") === trueUndefined
         ? useSelector((state) => state.user.numberOfAdvocates)
         : props.navigation.getParam("numberOfAdvocates"),
     numberOfFollowers:
-      props.navigation.getParam("showcaseId") === showcaseId ||
+      props.navigation.getParam("creatistId") === creatistId ||
       props.navigation.getParam("numberOfFollowers") === trueUndefined
         ? useSelector((state) => state.user.numberOfFollowers)
         : props.navigation.getParam("numberOfFollowers"),
     numberOfFollowing:
-      props.navigation.getParam("showcaseId") === showcaseId ||
+      props.navigation.getParam("creatistId") === creatistId ||
       props.navigation.getParam("numberOfFollowing") === trueUndefined
         ? useSelector((state) => state.user.numberOfFollowing)
         : props.navigation.getParam("numberOfFollowing"),
     showResumeValue:
-      props.navigation.getParam("showcaseId") === showcaseId ||
+      props.navigation.getParam("creatistId") === creatistId ||
       props.navigation.getParam("showResumeValue") === trueUndefined
         ? useSelector((state) => state.user.showResumeValue)
         : props.navigation.getParam("showResumeValue"),
     resumeLink:
-      props.navigation.getParam("showcaseId") === showcaseId ||
+      props.navigation.getParam("creatistId") === creatistId ||
       props.navigation.getParam("resumeLink") === trueUndefined
         ? useSelector((state) => state.user.resumeLink)
         : props.navigation.getParam("resumeLink"),
@@ -92,7 +92,7 @@ const ShowcaseProfileScreen = (props) => {
   }, [darkModeValue]);
 
   const viewProjectHandler = (projectId) => {
-    props.navigation.push("ShowcaseProject", {
+    props.navigation.push("CreatistProject", {
       projectId,
       profileProjects: userData.profileProjects,
     });
@@ -100,7 +100,7 @@ const ShowcaseProfileScreen = (props) => {
 
   const topHeader = () => {
     return (
-      <ShowcaseHeader
+      <CreatistHeader
         containerStyle={{
           ...styles.profileContainerStyle,
           borderBottomColor: darkModeValue ? "gray" : "#c9c9c9",
@@ -143,17 +143,17 @@ const ShowcaseProfileScreen = (props) => {
         onAddNewProjectPress={() => props.navigation.navigate("AddProject")}
         followersOnPress={() =>
           props.navigation.push("Followers", {
-            showcaseId: userData.showcaseId,
+            creatistId: userData.creatistId,
           })
         }
         followingOnPress={() =>
           props.navigation.push("Following", {
-            showcaseId: userData.showcaseId,
+            creatistId: userData.creatistId,
           })
         }
         advocatesOnPress={() =>
           props.navigation.push("Advocates", {
-            showcaseId: userData.showcaseId,
+            creatistId: userData.creatistId,
           })
         }
       />
@@ -193,7 +193,7 @@ const ShowcaseProfileScreen = (props) => {
   );
 };
 
-ShowcaseProfileScreen.navigationOptions = (navData) => {
+CreatistProfileScreen.navigationOptions = (navData) => {
   const darkModeValue = navData.navigation.getParam("darkMode");
   return {
     headerTitle: () => (
@@ -201,12 +201,12 @@ ShowcaseProfileScreen.navigationOptions = (navData) => {
         {darkModeValue ? (
           <Image
             style={styles.image}
-            source={require("../../assets/showcase_icon_transparent_white.png")}
+            source={require("../../assets/creatist_icon_transparent_white.png")}
           />
         ) : (
           <Image
             style={styles.image}
-            source={require("../../assets/showcase_icon_transparent_black.png")}
+            source={require("../../assets/creatist_icon_transparent_black.png")}
           />
         )}
         <Text
@@ -215,7 +215,7 @@ ShowcaseProfileScreen.navigationOptions = (navData) => {
             color: darkModeValue ? "white" : "black",
           }}
         >
-          Showcase
+          Creatist
         </Text>
       </View>
     ),
@@ -285,4 +285,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ShowcaseProfileScreen;
+export default CreatistProfileScreen;

@@ -12,10 +12,10 @@ import { useSelector } from "react-redux";
 import * as WebBrowser from "expo-web-browser";
 import { Ionicons } from "@expo/vector-icons";
 
-import UserTitleShowcaseLocal from "./UserTitleShowcaseLocal";
+import UserTitleCreatistLocal from "./UserTitleCreatistLocal";
 import LinkButton from "../UI/LinkButton";
 
-const ShowcaseHeader = (props) => {
+const CreatistHeader = (props) => {
   const darkModeValue = useSelector((state) => state.switches.darkMode);
   const links = props.links;
   const followingValue = props.followingValue;
@@ -49,7 +49,7 @@ const ShowcaseHeader = (props) => {
           ...props.containerStyle,
         }}
       >
-        <UserTitleShowcaseLocal {...props} />
+        <UserTitleCreatistLocal {...props} />
         <View
           style={{
             margin: 10,
@@ -282,4 +282,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ShowcaseHeader;
+export default CreatistHeader;

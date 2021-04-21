@@ -29,7 +29,7 @@ const ExploreProfileScreen = (props) => {
   const [isRefreshing, setIsRefreshing] = useState(false);
   const darkModeValue = useSelector((state) => state.switches.darkMode);
   const localId = useSelector((state) => state.auth.userId);
-  const showcaseId = useSelector((state) => state.user.showcaseId);
+  const creatistId = useSelector((state) => state.user.creatistId);
   const following = useSelector((state) => state.user.following);
   const projectsAdvocating = useSelector(
     (state) => state.user.projectsAdvocating
@@ -37,7 +37,7 @@ const ExploreProfileScreen = (props) => {
 
   const [exploredUserData, setExploredUserData] = useState({
     text: props.navigation.getParam("text"),
-    exploredShowcaseId: props.navigation.getParam("showcaseId"),
+    exploredCreatistId: props.navigation.getParam("creatistId"),
     profilePictureUrl: props.navigation.getParam("profilePictureUrl"),
     fullname: props.navigation.getParam("fullname"),
     username: props.navigation.getParam("username"),
@@ -65,7 +65,7 @@ const ExploreProfileScreen = (props) => {
   });
 
   const [isfollowing, setIsFollowing] = useState(
-    exploredUserData.followers.includes(showcaseId) ? true : false
+    exploredUserData.followers.includes(creatistId) ? true : false
   );
   const [numberOfFollowersLocal, setNumberOfFollowersLocal] = useState(
     exploredUserData.numberOfFollowers
@@ -86,7 +86,7 @@ const ExploreProfileScreen = (props) => {
     if (exploredUserData.text) {
       index.search(exploredUserData.text).then((responses) => {
         responses.hits.forEach((hit) => {
-          if (hit.objectID === exploredUserData.exploredShowcaseId) {
+          if (hit.objectID === exploredUserData.exploredCreatistId) {
             setNumberOfAdvocatesLocal(hit.numberOfAdvocates);
             const exploredUserDataPrevState = exploredUserData;
             exploredUserDataPrevState.numberOfAdvocates = hit.numberOfAdvocates;
@@ -102,9 +102,9 @@ const ExploreProfileScreen = (props) => {
     if (exploredUserData.text) {
       index.search(exploredUserData.text).then((responses) => {
         responses.hits.forEach((hit) => {
-          if (hit.objectID === exploredUserData.exploredShowcaseId) {
+          if (hit.objectID === exploredUserData.exploredCreatistId) {
             setNumberOfFollowersLocal(hit.numberOfFollowers);
-            if (hit.followers.includes(showcaseId)) {
+            if (hit.followers.includes(creatistId)) {
               setIsFollowing(true);
             } else {
               setIsFollowing(false);
@@ -118,7 +118,7 @@ const ExploreProfileScreen = (props) => {
   const followUserHandler = useCallback(async () => {
     await setIsLoading(true);
     await dispatch(
-      await followUser(exploredUserData.exploredShowcaseId, showcaseId, localId)
+      await followUser(exploredUserData.exploredCreatistId, creatistId, localId)
     );
     await setIsFollowing(true);
     await setIsLoading(false);
@@ -128,8 +128,8 @@ const ExploreProfileScreen = (props) => {
     await setIsLoading(true);
     await dispatch(
       await unfollowUser(
-        exploredUserData.exploredShowcaseId,
-        showcaseId,
+        exploredUserData.exploredCreatistId,
+        creatistId,
         localId
       )
     );
@@ -141,7 +141,7 @@ const ExploreProfileScreen = (props) => {
     setIsRefreshing(true);
     index.search(exploredUserData.text).then((responses) => {
       responses.hits.forEach((hit) => {
-        if (hit.objectID === exploredUserData.exploredShowcaseId) {
+        if (hit.objectID === exploredUserData.exploredCreatistId) {
           const exploredUserDataPrevState = exploredUserData;
           exploredUserDataPrevState.profileProjects = hit.profileProjects;
           exploredUserDataPrevState.following = hit.following;
@@ -170,9 +170,9 @@ const ExploreProfileScreen = (props) => {
   };
 
   useEffect(() => {
-    props.navigation.setParams({ showcaseId: showcaseId });
+    props.navigation.setParams({ creatistId: creatistId });
     props.navigation.setParams({
-      exploredShowcaseId: exploredUserData.exploredShowcaseId,
+      exploredCreatistId: exploredUserData.exploredCreatistId,
     });
     props.navigation.setParams({ followFn: followUserHandler });
     props.navigation.setParams({ unfollowFn: unfollowUserHandler });
@@ -250,21 +250,21 @@ const ExploreProfileScreen = (props) => {
         hideFollowing={exploredUserData.hideFollowing}
         hideFollowers={exploredUserData.hideFollowers}
         hideAdvocates={exploredUserData.hideAdvocates}
-        showcaseId={exploredUserData.exploredShowcaseId}
+        creatistId={exploredUserData.exploredCreatistId}
         links={exploredUserData.profileLinks}
         followersOnPress={() =>
           props.navigation.navigate("ExploreFollowers", {
-            showcaseId: exploredUserData.exploredShowcaseId,
+            creatistId: exploredUserData.exploredCreatistId,
           })
         }
         followingOnPress={() =>
           props.navigation.navigate("ExploreFollowing", {
-            showcaseId: exploredUserData.exploredShowcaseId,
+            creatistId: exploredUserData.exploredCreatistId,
           })
         }
         advocatesOnPress={() =>
           props.navigation.navigate("ExploreAdvocates", {
-            exploredShowcaseId: exploredUserData.exploredShowcaseId,
+            exploredCreatistId: exploredUserData.exploredCreatistId,
           })
         }
       />
@@ -324,8 +324,8 @@ ExploreProfileScreen.navigationOptions = (navData) => {
   const darkModeValue = navData.navigation.getParam("darkMode");
   const isfollowing = navData.navigation.getParam("isfollowing");
   const isLoading = navData.navigation.getParam("isLoading");
-  const showcaseId = navData.navigation.getParam("showcaseId");
-  const exploredShowcaseId = navData.navigation.getParam("exploredShowcaseId");
+  const creatistId = navData.navigation.getParam("creatistId");
+  const exploredCreatistId = navData.navigation.getParam("exploredCreatistId");
   const followFn = navData.navigation.getParam("followFn");
   const unfollowFn = navData.navigation.getParam("unfollowFn");
   return {
@@ -334,12 +334,12 @@ ExploreProfileScreen.navigationOptions = (navData) => {
         {darkModeValue ? (
           <Image
             style={styles.image}
-            source={require("../../assets/showcase_icon_transparent_white.png")}
+            source={require("../../assets/creatist_icon_transparent_white.png")}
           />
         ) : (
           <Image
             style={styles.image}
-            source={require("../../assets/showcase_icon_transparent_black.png")}
+            source={require("../../assets/creatist_icon_transparent_black.png")}
           />
         )}
         <Text
@@ -348,7 +348,7 @@ ExploreProfileScreen.navigationOptions = (navData) => {
             color: darkModeValue ? "white" : "black",
           }}
         >
-          Showcase
+          Creatist
         </Text>
       </View>
     ),
@@ -373,7 +373,7 @@ ExploreProfileScreen.navigationOptions = (navData) => {
     ),
     headerRight: () => (
       <View>
-        {showcaseId !== exploredShowcaseId ? (
+        {creatistId !== exploredCreatistId ? (
           <View>
             {!isfollowing ? (
               <View>

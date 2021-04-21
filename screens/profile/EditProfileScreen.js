@@ -160,7 +160,7 @@ const EditProfileScreen = (props) => {
   const darkModeValue = useSelector((state) => state.switches.darkMode);
   const showResumeValue = useSelector((state) => state.switches.showResume);
   const localId = useSelector((state) => state.auth.userId);
-  const showcaseId = useSelector((state) => state.user.showcaseId);
+  const creatistId = useSelector((state) => state.user.creatistId);
   const profilePictureBase64 = useSelector(
     (state) => state.user.profilePictureBase64
   );
@@ -247,7 +247,7 @@ const EditProfileScreen = (props) => {
     await setIsLoading(true);
     await dispatch(
       uploadUpdateUserProfile(
-        showcaseId,
+        creatistId,
         localId,
         formState.inputValues.fullname,
         formState.inputValues.jobTitle,
@@ -284,7 +284,7 @@ const EditProfileScreen = (props) => {
       } else {
         setFileSizeError(false);
         const base64 = `data:image/png;base64,${result.base64}`;
-        await dispatch(uploadChangeProfilePicture(base64, showcaseId, localId));
+        await dispatch(uploadChangeProfilePicture(base64, creatistId, localId));
       }
     }
     await setIsLoadingTempPicture(false);
@@ -747,7 +747,7 @@ const EditProfileScreen = (props) => {
         label="Show Resume"
         state={showResumeValue}
         onChange={(newValue) => {
-          dispatch(setShowResume(localId, showcaseId, newValue));
+          dispatch(setShowResume(localId, creatistId, newValue));
           setShowResumeField(newValue);
         }}
       />
@@ -949,12 +949,12 @@ EditProfileScreen.navigationOptions = (navData) => {
         {darkModeValue ? (
           <Image
             style={styles.image}
-            source={require("../../assets/showcase_icon_transparent_white.png")}
+            source={require("../../assets/creatist_icon_transparent_white.png")}
           />
         ) : (
           <Image
             style={styles.image}
-            source={require("../../assets/showcase_icon_transparent_black.png")}
+            source={require("../../assets/creatist_icon_transparent_black.png")}
           />
         )}
         <Text
