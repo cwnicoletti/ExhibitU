@@ -26,7 +26,7 @@ Before making a pull request, run: `npm test` in the root directory
 Testing is supported by [jest](https://jestjs.io/) and test files (".test.js") can be found in test directories
 
 ## Contributions
-All contributions should be referenced to the [CONTRIBUTIONS](https://github.com/christiannicoletti/Creatist/blob/master/CONTRIBUTING.md) file before making a pull request.
+All contributions should be referenced to the [CONTRIBUTIONS](https://github.com/cwnicoletti/Creatist/blob/main/CONTRIBUTING.md) file before making a pull request.
 
 ## Dependencies
 [Package.json](https://github.com/cwnicoletti/Creatist/blob/main/package.json)
