@@ -21,9 +21,13 @@ import resolveAssetSource from "react-native/Libraries/Image/resolveAssetSource"
 
 import { LogBox } from "react-native";
 
+const handleLinkOnPress = async (url) => {
+  await WebBrowser.openBrowserAsync(url);
+};
+
 const ExplorePostView = (props) => {
-  const [height, setHeight] = useState(null);
-  const [width, setWidth] = useState(null);
+  const [photoHeight, setHeight] = useState(null);
+  const [photoWidth, setWidth] = useState(null);
   const [doubleTapped, setDoubleTapped] = useState(false);
   const [showClapping, setShowClapping] = useState(false);
   const [clap, setClap] = useState(false);
@@ -134,8 +138,8 @@ const ExplorePostView = (props) => {
         <View>
           <ImageBackground
             style={{
-              height: height,
-              width: width,
+              height: photoHeight,
+              width: photoWidth,
             }}
             source={props.image}
           >

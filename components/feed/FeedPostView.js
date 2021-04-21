@@ -14,7 +14,7 @@ import {
   FlatList,
 } from "react-native";
 import * as WebBrowser from "expo-web-browser";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Cheer from "../../assets/Icons/clap.svg";
 import Cheerfill from "../../assets/Icons/clap-fill.svg";
 import LinkButton from "../UI/LinkButton";
@@ -34,8 +34,9 @@ const handleLinkOnPress = async (url) => {
 };
 
 const FeedPostView = (props) => {
-  const [height, setHeight] = useState(null);
-  const [width, setWidth] = useState(null);
+  const dispatch = useDispatch();
+  const [photoHeight, setHeight] = useState(null);
+  const [photoWidth, setWidth] = useState(null);
   const [loadingCheer, setLoadingCheer] = useState(false);
   const [showClapping, setShowClapping] = useState(false);
   const [clap, setClap] = useState(false);
@@ -129,7 +130,6 @@ const FeedPostView = (props) => {
   const handleToubleTap = async () => {
     const now = Date.now();
     if (now - secondnow < 200) {
-      await setProcessingWholeCheer(true);
       await setShowClapping(true);
       await fadeIn();
       await slideUp();
@@ -152,7 +152,6 @@ const FeedPostView = (props) => {
         }
         await setLoadingCheer(false);
       }
-      await setProcessingWholeCheer(false);
     } else {
       secondnow = now;
     }
@@ -177,8 +176,8 @@ const FeedPostView = (props) => {
         <View>
           <ImageBackground
             style={{
-              height: height,
-              width: width,
+              height: photoHeight,
+              width: photoWidth,
             }}
             source={
               props.image

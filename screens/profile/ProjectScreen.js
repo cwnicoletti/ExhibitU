@@ -66,7 +66,7 @@ const ProjectScreen = (props) => {
   };
 
   useEffect(() => {
-    props.navigation.setParams({ android: android });
+    props.navigation.setParams({ android });
     props.navigation.setParams({ projectId: currentProjectId });
   }, []);
 
@@ -247,15 +247,21 @@ const ProjectScreen = (props) => {
 
 ProjectScreen.navigationOptions = (navData) => {
   const darkModeValue = navData.navigation.getParam("darkMode");
-  const projectId = navData.navigation.getParam("projectId");
-  const projectTitle = navData.navigation.getParam("projectTitle");
-  const projectCoverPhotoUrl = navData.navigation.getParam(
+  const projectIdParam = navData.navigation.getParam("projectId");
+  const projectTitleParam = navData.navigation.getParam("projectTitle");
+  const projectCoverPhotoUrlParam = navData.navigation.getParam(
     "projectCoverPhotoUrl"
   );
-  const projectDateCreated = navData.navigation.getParam("projectDateCreated");
-  const projectLastUpdated = navData.navigation.getParam("projectLastUpdated");
-  const projectDescription = navData.navigation.getParam("projectDescription");
-  const projectLinks = navData.navigation.getParam("projectLinks");
+  const projectDateCreatedParam = navData.navigation.getParam(
+    "projectDateCreated"
+  );
+  const projectLastUpdatedParam = navData.navigation.getParam(
+    "projectLastUpdated"
+  );
+  const projectDescriptionParam = navData.navigation.getParam(
+    "projectDescription"
+  );
+  const projectLinksParam = navData.navigation.getParam("projectLinks");
   return {
     headerTitle: () => (
       <View style={styles.logo}>
@@ -307,13 +313,13 @@ ProjectScreen.navigationOptions = (navData) => {
           color={darkModeValue ? "white" : "black"}
           onPress={() => {
             navData.navigation.navigate("AddPicture", {
-              projectId: projectId,
-              projectTitle: projectTitle,
-              projectCoverPhotoUrl: projectCoverPhotoUrl,
-              projectDateCreated: projectDateCreated,
-              projectLastUpdated: projectLastUpdated,
-              projectDescription: projectDescription,
-              projectLinks: projectLinks,
+              projectId: projectIdParam,
+              projectTitle: projectTitleParam,
+              projectCoverPhotoUrl: projectCoverPhotoUrlParam,
+              projectDateCreated: projectDateCreatedParam,
+              projectLastUpdated: projectLastUpdatedParam,
+              projectDescription: projectDescriptionParam,
+              projectLinks: projectLinksParam,
             });
           }}
         />

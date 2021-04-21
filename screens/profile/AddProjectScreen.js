@@ -93,7 +93,7 @@ const updateArrayOnRemove = (state) => {
           delete object[key];
         }
       } else if (key.search("linkId") !== -1) {
-        object[`linkId`] = i + 1;
+        object["linkId"] = i + 1;
       }
     }
   });
@@ -257,9 +257,12 @@ const AddProjectScreen = (props) => {
   useEffect(() => {
     LogBox.ignoreLogs(["VirtualizedLists should never be nested"]);
     props.navigation.setParams({ submit: submitHandler });
+    props.navigation.setParams({ android });
+  }, []);
+  
+  useEffect(() => {
     props.navigation.setParams({ darkMode: darkModeValue });
-    props.navigation.setParams({ android: android });
-  }, [submitHandler, darkModeValue]);
+  }, [darkModeValue]);
 
   const changeProjectCoverPicture = async () => {
     const result = await ImagePicker.launchImageLibraryAsync({

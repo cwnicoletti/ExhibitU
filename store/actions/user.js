@@ -137,8 +137,6 @@ export const getUserData = () => {
     const userData = await AsyncStorage.getItem("userDocData");
     const transformedData = JSON.parse(userData);
 
-    console.log(transformedData.darkMode);
-
     let followers = [];
     let following = [];
     let advocates = [];
@@ -407,9 +405,9 @@ export const uploadUpdatedProject = (
         [projectId]: {
           ...data.profileProjects[projectId],
           projectLastUpdated: updatedProjectResponse.data.time,
-          projectTitle: projectTitle,
           projectCoverPhotoUrl: projectTempCoverPhotoUrl,
-          projectDescription: projectDescription,
+          projectTitle,
+          projectDescription,
           projectLinks: links,
         },
       };
@@ -420,8 +418,8 @@ export const uploadUpdatedProject = (
       type: UPDATE_USER_PROJECT,
       projectId,
       projectLastUpdated: updatedProjectResponse.data.time,
-      projectTitle,
       projectCoverPhotoUrl: projectTempCoverPhotoUrl,
+      projectTitle,
       projectDescription,
       projectLinks: links,
     });
@@ -811,7 +809,7 @@ export const addUserPost = (
               postLastUpdated: time,
               postPhotoUrl: tempPhotoPostUrl,
               postPhotoBase64: tempPhotoPostBase64,
-              caption: caption,
+              caption,
               numberOfComments: 0,
               numberOfCheers: 0,
               cheering: [],
@@ -828,15 +826,15 @@ export const addUserPost = (
         ...data.userFeed,
         [retrievedPostId]: {
           postId: retrievedPostId,
-          showcaseId: showcaseId,
-          projectId: projectId,
-          fullname: fullname,
-          username: username,
-          jobTitle: jobTitle,
-          numberOfFollowers: numberOfFollowers,
-          numberOfFollowing: numberOfFollowing,
-          numberOfAdvocates: numberOfAdvocates,
-          profileBiography: profileBiography,
+          showcaseId,
+          projectId,
+          fullname,
+          username,
+          jobTitle,
+          numberOfFollowers,
+          numberOfFollowing,
+          numberOfAdvocates,
+          profileBiography,
           profileProjects: {
             ...data.profileProjects,
             [projectId]: {
@@ -928,7 +926,7 @@ export const addUserPost = (
       profileColumns,
     });
 
-    await dispatch({ type: UPDATE_ALL_POSTS, postId: postId });
+    await dispatch({ type: UPDATE_ALL_POSTS, postId: retrievedPostId });
   };
 };
 

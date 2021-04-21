@@ -21,6 +21,10 @@ import resolveAssetSource from "react-native/Libraries/Image/resolveAssetSource"
 
 import { LogBox } from "react-native";
 
+const handleLinkOnPress = async (url) => {
+  await WebBrowser.openBrowserAsync(url);
+};
+
 const ShowcasePostView = (props) => {
   const [height, setHeight] = useState(null);
   const [width, setWidth] = useState(null);
