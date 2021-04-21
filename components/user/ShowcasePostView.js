@@ -14,6 +14,7 @@ import {
   FlatList,
 } from "react-native";
 import { useSelector } from "react-redux";
+import * as WebBrowser from "expo-web-browser";
 import Cheer from "../../assets/Icons/clap.svg";
 import Cheerfill from "../../assets/Icons/clap-fill.svg";
 import LinkButton from "../UI/LinkButton";
