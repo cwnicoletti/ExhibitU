@@ -208,7 +208,7 @@ const ProfileScreen = (props) => {
           flexDirection: "row",
         }}
         onPress={() => {
-          props.navigation.push("CreatistProfile");
+          props.navigation.push("ShowcaseProfile");
         }}
       >
         <SimpleLineIcons
@@ -220,9 +220,10 @@ const ProfileScreen = (props) => {
           style={{
             color: darkModeValue ? "white" : "black",
             fontWeight: "bold",
+            marginLeft: 10,
           }}
         >
-          Creatist profile
+          Showcase creations
         </Text>
       </TouchableOpacity>
     </View>

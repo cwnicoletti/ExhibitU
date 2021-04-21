@@ -3,16 +3,16 @@ import {
   View,
   Text,
   StyleSheet,
-  Image,
   FlatList,
   TouchableNativeFeedback,
   TouchableOpacity,
+  Platform,
 } from "react-native";
 import { useSelector } from "react-redux";
 import * as WebBrowser from "expo-web-browser";
 import { Ionicons } from "@expo/vector-icons";
 
-import UserTitleCreatistLocal from "../user/UserTitleCreatistLocal";
+import UserTitleShowcaseLocal from "../user/UserTitleShowcaseLocal";
 import LinkButton from "../UI/LinkButton";
 
 const handleLinkOnPress = (url) => {
@@ -49,7 +49,7 @@ const FeedProfileHeader = (props) => {
           ...props.containerStyle,
         }}
       >
-        <UserTitleCreatistLocal {...props} />
+        <UserTitleShowcaseLocal {...props} />
         <View
           style={{
             margin: 10,

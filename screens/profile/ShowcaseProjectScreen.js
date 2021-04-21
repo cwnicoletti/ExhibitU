@@ -10,11 +10,11 @@ import {
 import { useSelector } from "react-redux";
 
 import ProjectPictures from "../../components/UI/ProjectPictures";
-import CreatistProjectHeader from "../../components/projects/CreatistProjectHeader";
+import ShowcaseProjectHeader from "../../components/projects/ShowcaseProjectHeader";
 import IoniconsHeaderButton from "../../components/UI/IoniconsHeaderButton";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 
-const CreatistProjectScreen = (props) => {
+const ShowcaseProjectScreen = (props) => {
   const darkModeValue = useSelector((state) => state.switches.darkMode);
   const currentProjectId = props.navigation.getParam("projectId");
   const profileProjects = props.navigation.getParam("profileProjects");
@@ -48,7 +48,7 @@ const CreatistProjectScreen = (props) => {
     caption,
     links
   ) => {
-    props.navigation.push("CreatistPictureScreen", {
+    props.navigation.push("ShowcasePictureScreen", {
       creatistId,
       projectId,
       postId,
@@ -77,7 +77,7 @@ const CreatistProjectScreen = (props) => {
 
   const topHeader = () => {
     return (
-      <CreatistProjectHeader
+      <ShowcaseProjectHeader
         containerStyle={{
           ...styles.profileContainerStyle,
           borderBottomColor: darkModeValue ? "white" : "black",
@@ -157,7 +157,7 @@ const CreatistProjectScreen = (props) => {
   );
 };
 
-CreatistProjectScreen.navigationOptions = (navData) => {
+ShowcaseProjectScreen.navigationOptions = (navData) => {
   const darkModeValue = navData.navigation.getParam("darkMode");
   return {
     headerTitle: () => (
@@ -234,4 +234,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CreatistProjectScreen;
+export default ShowcaseProjectScreen;

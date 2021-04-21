@@ -18,7 +18,7 @@ export const signup = (email, fullname, username, password) => {
     const signupForm = { email, fullname, username, password };
 
     const getSignupResponse = await axios.post(
-      `https://us-central1-creatist-79c28.cloudfunctions.net/signupUser`,
+      `https://us-central1-showcase-79c28.cloudfunctions.net/signupUser`,
       signupForm
     );
 
@@ -100,7 +100,7 @@ export const login = (email, password) => {
     const loginForm = { email, password };
 
     const getLoginResponse = await axios.post(
-      `https://us-central1-creatist-79c28.cloudfunctions.net/loginUser`,
+      `https://us-central1-showcase-79c28.cloudfunctions.net/loginUser`,
       loginForm
     );
 

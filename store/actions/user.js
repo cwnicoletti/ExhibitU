@@ -71,7 +71,7 @@ export const refreshProfile = (localId) => {
     const downloadForm = { localId };
 
     const profileInfo = await axios.post(
-      "https://us-central1-creatist-79c28.cloudfunctions.net/refreshProfile",
+      "https://us-central1-showcase-79c28.cloudfunctions.net/refreshProfile",
       downloadForm
     );
 
@@ -251,7 +251,7 @@ export const uploadUpdateUserProfile = (
     };
 
     await axios.post(
-      "https://us-central1-creatist-79c28.cloudfunctions.net/updateProfile",
+      "https://us-central1-showcase-79c28.cloudfunctions.net/updateProfile",
       uploadForm
     );
 
@@ -318,7 +318,7 @@ export const uploadNewProject = (
     };
 
     const newProjectResponse = await axios.post(
-      "https://us-central1-creatist-79c28.cloudfunctions.net/uploadNewProject",
+      "https://us-central1-showcase-79c28.cloudfunctions.net/uploadNewProject",
       uploadForm
     );
     AsyncStorage.getItem("userDocData").then(async (data) => {
@@ -394,7 +394,7 @@ export const uploadUpdatedProject = (
     };
 
     const updatedProjectResponse = await axios.post(
-      "https://us-central1-creatist-79c28.cloudfunctions.net/uploadUpdatedProject",
+      "https://us-central1-showcase-79c28.cloudfunctions.net/uploadUpdatedProject",
       uploadForm
     );
 
@@ -431,7 +431,7 @@ export const uploadRemoveProject = (creatistId, localId, projectId) => {
     const uploadForm = { creatistId, localId, projectId };
 
     axios.post(
-      "https://us-central1-creatist-79c28.cloudfunctions.net/uploadRemoveProject",
+      "https://us-central1-showcase-79c28.cloudfunctions.net/uploadRemoveProject",
       uploadForm
     );
 
@@ -459,7 +459,7 @@ export const uploadRemovePost = (creatistId, localId, projectId, postId) => {
     const uploadForm = { creatistId, localId, projectId, postId };
 
     axios.post(
-      "https://us-central1-creatist-79c28.cloudfunctions.net/uploadRemovePost",
+      "https://us-central1-showcase-79c28.cloudfunctions.net/uploadRemovePost",
       uploadForm
     );
 
@@ -483,7 +483,7 @@ export const followUser = (exploredCreatistId, creatistId, localId) => {
     const user = { exploredCreatistId, creatistId, localId };
 
     await axios.post(
-      "https://us-central1-creatist-79c28.cloudfunctions.net/followUser",
+      "https://us-central1-showcase-79c28.cloudfunctions.net/followUser",
       user
     );
 
@@ -506,7 +506,7 @@ export const unfollowUser = (exploredCreatistId, creatistId, localId) => {
     const user = { exploredCreatistId, creatistId, localId };
 
     await axios.post(
-      "https://us-central1-creatist-79c28.cloudfunctions.net/unfollowUser",
+      "https://us-central1-showcase-79c28.cloudfunctions.net/unfollowUser",
       user
     );
 
@@ -536,7 +536,7 @@ export const advocateForUser = (
     const user = { exploredCreatistId, creatistId, localId, projectId };
 
     await axios.post(
-      "https://us-central1-creatist-79c28.cloudfunctions.net/advocateForUser",
+      "https://us-central1-showcase-79c28.cloudfunctions.net/advocateForUser",
       user
     );
 
@@ -566,7 +566,7 @@ export const unadvocateForUser = (
     const user = { exploredCreatistId, creatistId, localId, projectId };
 
     await axios.post(
-      "https://us-central1-creatist-79c28.cloudfunctions.net/unadvocateForUser",
+      "https://us-central1-showcase-79c28.cloudfunctions.net/unadvocateForUser",
       user
     );
 
@@ -595,7 +595,7 @@ export const uploadChangeProfilePicture = (base64, creatistId, localId) => {
     const picture = { base64, creatistId, localId };
 
     const uploadedPictureUrlResponse = await axios.post(
-      "https://us-central1-creatist-79c28.cloudfunctions.net/uploadChangeProfilePicture",
+      "https://us-central1-showcase-79c28.cloudfunctions.net/uploadChangeProfilePicture",
       picture
     );
 
@@ -624,7 +624,7 @@ export const uploadAddTempProjectCoverPicture = (
     const picture = { base64, creatistId, localId, projectTempCoverPhotoId };
 
     const uploadedPictureUrlResponse = await axios.post(
-      "https://us-central1-creatist-79c28.cloudfunctions.net/uploadAddTempProjectCoverPicture",
+      "https://us-central1-showcase-79c28.cloudfunctions.net/uploadAddTempProjectCoverPicture",
       picture
     );
 
@@ -655,7 +655,7 @@ export const uploadAddTempPostPicture = (
     const picture = { base64, projectId, creatistId, localId };
 
     const uploadedPictureUrlResponse = await axios.post(
-      "https://us-central1-creatist-79c28.cloudfunctions.net/uploadAddTempPostPicture",
+      "https://us-central1-showcase-79c28.cloudfunctions.net/uploadAddTempPostPicture",
       picture
     );
 
@@ -693,7 +693,7 @@ export const uploadChangeProjectCoverPicture = (
     };
 
     const uploadedPictureUrlResponse = await axios.post(
-      "https://us-central1-creatist-79c28.cloudfunctions.net/uploadChangeProjectCoverPicture",
+      "https://us-central1-showcase-79c28.cloudfunctions.net/uploadChangeProjectCoverPicture",
       picture
     );
 
@@ -775,7 +775,7 @@ export const addUserPost = (
     };
 
     const uploadedUserPost = await axios.post(
-      "https://us-central1-creatist-79c28.cloudfunctions.net/uploadAddUserPost",
+      "https://us-central1-showcase-79c28.cloudfunctions.net/uploadAddUserPost",
       picture
     );
 
@@ -935,7 +935,7 @@ export const getUserFeed = (localId, creatistId) => {
     const userFeedGet = { localId, creatistId };
 
     const uploadedUserPost = await axios.post(
-      "https://us-central1-creatist-79c28.cloudfunctions.net/getUserFeed",
+      "https://us-central1-showcase-79c28.cloudfunctions.net/getUserFeed",
       userFeedGet
     );
 
@@ -1001,7 +1001,7 @@ export const cheerPost = (
     };
 
     axios.post(
-      "https://us-central1-creatist-79c28.cloudfunctions.net/cheerPost",
+      "https://us-central1-showcase-79c28.cloudfunctions.net/cheerPost",
       cheeringForm
     );
 
@@ -1127,7 +1127,7 @@ export const cheerOwnProfilePost = (
     };
 
     axios.post(
-      "https://us-central1-creatist-79c28.cloudfunctions.net/cheerPost",
+      "https://us-central1-showcase-79c28.cloudfunctions.net/cheerPost",
       cheeringForm
     );
 
@@ -1238,7 +1238,7 @@ export const uncheerPost = (
     };
 
     axios.post(
-      "https://us-central1-creatist-79c28.cloudfunctions.net/uncheerPost",
+      "https://us-central1-showcase-79c28.cloudfunctions.net/uncheerPost",
       uncheeringForm
     );
 
@@ -1364,7 +1364,7 @@ export const uncheerOwnProfilePost = (
     };
 
     axios.post(
-      "https://us-central1-creatist-79c28.cloudfunctions.net/uncheerPost",
+      "https://us-central1-showcase-79c28.cloudfunctions.net/uncheerPost",
       uncheeringForm
     );
 
@@ -1462,7 +1462,7 @@ export const changeProfileNumberOfColumns = (localId, creatistId, number) => {
     const picture = { localId, creatistId, number };
 
     axios.post(
-      "https://us-central1-creatist-79c28.cloudfunctions.net/changeProfileNumberOfColumns",
+      "https://us-central1-showcase-79c28.cloudfunctions.net/changeProfileNumberOfColumns",
       picture
     );
 
@@ -1486,7 +1486,7 @@ export const changeProjectNumberOfColumns = (
     const picture = { localId, creatistId, projectId, number };
 
     axios.post(
-      "https://us-central1-creatist-79c28.cloudfunctions.net/changeProjectNumberOfColumns",
+      "https://us-central1-showcase-79c28.cloudfunctions.net/changeProjectNumberOfColumns",
       picture
     );
 
@@ -1509,7 +1509,7 @@ export const changeProjectNumberOfColumns = (
 export const getUpdates = () => {
   return async (dispatch) => {
     const uploadedUserPost = await axios.post(
-      "https://us-central1-creatist-79c28.cloudfunctions.net/getUpdates"
+      "https://us-central1-showcase-79c28.cloudfunctions.net/getUpdates"
     );
     const returnData = uploadedUserPost.data.returnData;
 

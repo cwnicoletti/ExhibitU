@@ -39,14 +39,14 @@ const IntroScreen = (props) => {
     {
       title: "",
       body:
-        "Welcome to creatist!\n\nThis platform is designed to help you creatist your projects, talents, and skills",
+        "Welcome to creatist!\n\nThis platform is designed to help you showcase your projects, talents, and skills",
       imgUrl1: exampleImage1Uri,
       useImg1: true,
     },
     {
       title: "",
       body:
-        "Creatist is also a platform to cheer on your friends, family, and peers as they build their own creatists",
+        "Creatist is also a platform to cheer on your friends, family, and peers as they build their own creations",
       imgUrl2: exampleImage2Uri,
       useImg2: true,
     },
@@ -59,13 +59,13 @@ const IntroScreen = (props) => {
     {
       title: "",
       body:
-        "We also have a unique feature within creatist that allows you to 'advocate' for a user's project as a way of showing your contribution to a project",
+        "We also have a unique feature within creatist that allows you to 'advocate' for a user's creation as a way of showing your contribution to a creation",
       useImg4: true,
     },
     {
       title: "",
       body:
-        "Our goal is to build a universal, encouraging and healthy community for those looking to build or present their work or hobby!",
+        "Our goal is to build a universal, encouraging and healthy community for those looking to build or present their creations!",
       useImg5: true,
     },
   ];

@@ -43,9 +43,9 @@ import FollowersScreen from "../screens/profile/FollowersScreen";
 import FollowingScreen from "../screens/profile/FollowingScreen";
 import PictureScreen from "../screens/profile/PictureScreen";
 import CheeringScreen from "../screens/profile/CheeringScreen";
-import CreatistProfileScreen from "../screens/profile/CreatistProfileScreen";
-import CreatistProjectScreen from "../screens/profile/CreatistProjectScreen";
-import CreatistPictureScreen from "../screens/profile/CreatistPictureScreen";
+import ShowcaseProfileScreen from "../screens/profile/ShowcaseProfileScreen";
+import ShowcaseProjectScreen from "../screens/profile/ShowcaseProjectScreen";
+import ShowcasePictureScreen from "../screens/profile/ShowcasePictureScreen";
 
 import LeftDrawer from "../components/drawers/LeftDrawer";
 import RightDrawer from "../components/drawers/RightDrawer";
@@ -182,9 +182,9 @@ const ProfileandSettingsNavigator = createStackNavigator({
   },
   ViewProfileProject: ProjectScreen,
   PictureScreen: PictureScreen,
-  CreatistProfile: CreatistProfileScreen,
-  CreatistProject: CreatistProjectScreen,
-  CreatistPictureScreen: CreatistPictureScreen,
+  ShowcaseProfile: ShowcaseProfileScreen,
+  ShowcaseProject: ShowcaseProjectScreen,
+  ShowcasePictureScreen: ShowcasePictureScreen,
   EditProfile: EditProfileScreen,
   CreatistSettings: CreatistSettingsScreen,
   Updates: VoteUpdatesSettingsScreen,

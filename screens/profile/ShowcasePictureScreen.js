@@ -10,12 +10,12 @@ import {
 import { useSelector } from "react-redux";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 
-import CreatistPostView from "../../components/user/CreatistPostView";
+import ShowcasePostView from "../../components/user/ShowcasePostView";
 import IoniconsHeaderButton from "../../components/UI/IoniconsHeaderButton";
 
 import { LogBox } from "react-native";
 
-const CreatistPictureScreen = (props) => {
+const ShowcasePictureScreen = (props) => {
   const darkModeValue = useSelector((state) => state.switches.darkMode);
   const profileProjects = useSelector((state) => state.user.profileProjects);
 
@@ -91,7 +91,7 @@ const CreatistPictureScreen = (props) => {
         backgroundColor: darkModeValue ? "black" : "white",
       }}
     >
-      <CreatistPostView
+      <ShowcasePostView
         containerStyle={{
           ...styles.profileContainerStyle,
           borderBottomColor: darkModeValue ? "white" : "black",
@@ -169,7 +169,7 @@ const CreatistPictureScreen = (props) => {
   );
 };
 
-CreatistPictureScreen.navigationOptions = (navData) => {
+ShowcasePictureScreen.navigationOptions = (navData) => {
   const darkModeValue = navData.navigation.getParam("darkMode");
   const android = navData.navigation.getParam("android");
 
@@ -248,4 +248,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CreatistPictureScreen;
+export default ShowcasePictureScreen;

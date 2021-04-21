@@ -12,7 +12,7 @@ export const setIntroing = (localId, creatistId, value) => {
     const userFeedGet = { localId, creatistId, value, switchName: "introing" };
 
     axios.post(
-      `https://us-central1-creatist-79c28.cloudfunctions.net/setSwitch`,
+      `https://us-central1-showcase-79c28.cloudfunctions.net/setSwitch`,
       userFeedGet
     );
 

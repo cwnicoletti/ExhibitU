@@ -12,7 +12,7 @@ import { useSelector } from "react-redux";
 import * as WebBrowser from "expo-web-browser";
 import { Ionicons } from "@expo/vector-icons";
 
-import UserTitleCreatistLocal from "./UserTitleCreatistLocal";
+import UserTitleShowcaseLocal from "./UserTitleShowcaseLocal";
 import LinkButton from "../UI/LinkButton";
 
 const CreatistHeader = (props) => {
@@ -49,7 +49,7 @@ const CreatistHeader = (props) => {
           ...props.containerStyle,
         }}
       >
-        <UserTitleCreatistLocal {...props} />
+        <UserTitleShowcaseLocal {...props} />
         <View
           style={{
             margin: 10,
