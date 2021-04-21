@@ -41,7 +41,6 @@ All contributions should be referenced to the [CONTRIBUTIONS](https://github.com
 "expo-image-picker": "~10.1.3",<br />
 "expo-linear-gradient": "~9.1.0",<br />
 "expo-notifications": "~0.11.5",<br />
-"expo-permissions": "~12.0.1",<br />
 "expo-status-bar": "~1.0.4",<br />
 "expo-web-browser": "~9.1.0",<br />
 "react": "16.13.1",<br />
