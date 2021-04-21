@@ -154,12 +154,12 @@ const FeedCommentsScreen = (props) => {
 
   useEffect(() => {
     props.navigation.setParams({ darkMode: darkModeValue });
-    props.navigation.setParams({ android: android });
-    props.navigation.setParams({ projectId: projectId });
-  }, [darkModeValue, android, projectId]);
+  }, [darkModeValue]);
 
   useEffect(() => {
     LogBox.ignoreLogs(["VirtualizedLists should never be nested"]);
+    props.navigation.setParams({ android });
+    props.navigation.setParams({ projectId: projectId });
   }, []);
 
   return (

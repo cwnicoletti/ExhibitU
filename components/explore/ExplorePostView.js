@@ -70,7 +70,7 @@ const ExplorePostView = (props) => {
 
   const slideUp = () => {
     Animated.timing(slideAnim, {
-      toValue: -height / 2,
+      toValue: -photoHeight / 2,
       duration: 750,
       useNativeDriver: true,
     }).start();
@@ -157,22 +157,22 @@ const ExplorePostView = (props) => {
                 {clap ? (
                   <Cheerfill
                     style={{
-                      marginTop: height,
+                      marginTop: photoHeight,
                       ...props.clapContainer,
                     }}
-                    height={height / 5}
-                    width={width / 5}
+                    height={photoHeight / 5}
+                    width={photoWidth / 5}
                     fill="white"
                   />
                 ) : (
                   <Cheer
                     style={{
-                      marginTop: height,
+                      marginTop: photoHeight,
                       ...props.clapContainer,
                       transform: [{ rotate: "5deg" }],
                     }}
-                    height={height / 5}
-                    width={width / 5}
+                    height={photoHeight / 5}
+                    width={photoWidth / 5}
                     fill="white"
                   />
                 )}
