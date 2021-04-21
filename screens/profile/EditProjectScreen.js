@@ -17,7 +17,6 @@ import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import { Octicons, Ionicons } from "@expo/vector-icons";
 import LinkButton from "../../components/UI/LinkButton";
 import DefaultPicture from "../../assets/Icons/picture.svg";
-import * as Permissions from "expo-permissions";
 import * as ImagePicker from "expo-image-picker";
 
 import { LogBox } from "react-native";

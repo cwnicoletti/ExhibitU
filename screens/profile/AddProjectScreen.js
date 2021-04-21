@@ -14,7 +14,6 @@ import {
 } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { useSelector, useDispatch } from "react-redux";
-import * as Permissions from "expo-permissions";
 import * as ImagePicker from "expo-image-picker";
 import LinkButton from "../../components/UI/LinkButton";
 import DefaultPicture from "../../assets/Icons/picture.svg";
@@ -248,9 +247,14 @@ const AddProjectScreen = (props) => {
 
   useEffect(() => {
     (async () => {
-      const { statusRoll } = await Permissions.askAsync(
-        Permissions.CAMERA_ROLL
-      );
+      if (Platform.OS !== "web") {
+        const {
+          status,
+        } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+        if (status !== "granted") {
+          alert("Sorry, we need camera roll permissions to make this work!");
+        }
+      }
     })();
   }, []);
 
@@ -259,7 +263,7 @@ const AddProjectScreen = (props) => {
     props.navigation.setParams({ submit: submitHandler });
     props.navigation.setParams({ android });
   }, []);
-  
+
   useEffect(() => {
     props.navigation.setParams({ darkMode: darkModeValue });
   }, [darkModeValue]);

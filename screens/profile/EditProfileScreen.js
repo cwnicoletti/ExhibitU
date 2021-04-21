@@ -15,7 +15,6 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 import { useSelector, useDispatch } from "react-redux";
 import { Octicons, Ionicons } from "@expo/vector-icons";
 import LinkButton from "../../components/UI/LinkButton";
-import * as Permissions from "expo-permissions";
 import * as ImagePicker from "expo-image-picker";
 
 import { LogBox } from "react-native";
@@ -318,9 +317,14 @@ const EditProfileScreen = (props) => {
 
   useEffect(() => {
     (async () => {
-      const { statusRoll } = await Permissions.askAsync(
-        Permissions.CAMERA_ROLL
-      );
+      if (Platform.OS !== "web") {
+        const {
+          status,
+        } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+        if (status !== "granted") {
+          alert("Sorry, we need camera roll permissions to make this work!");
+        }
+      }
     })();
   }, []);
 
