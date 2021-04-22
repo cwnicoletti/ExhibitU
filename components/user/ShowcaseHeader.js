@@ -187,7 +187,7 @@ const CreatistHeader = (props) => {
               }}
             >
               <Ionicons
-                name="ios-paper"
+                name="ios-list-outline"
                 size={24}
                 color={props.iconResumeStyle}
               />
