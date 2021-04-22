@@ -1,9 +1,18 @@
 import React from "react";
 import { StyleSheet } from "react-native";
-import IconWhite from "../../assets/creatist_icon_transparent_white.png";
-import IconBlack from "../../assets/creatist_icon_transparent_black.png";
+import IconWhite from "../../assets/DiamondCase_icon_transparent_white.png";
+import IconBlack from "../../assets/DiamondCase_icon_transparent_black.png";
+import { useFonts } from "expo-font";
 
 const Title = (props) => {
+  const [loaded] = useFonts({
+    CormorantUpright: require("../../assets/fonts/CormorantUpright-Regular.ttf"),
+  });
+
+  if (!loaded) {
+    return null;
+  }
+
   return (
     <props.View
       style={{
@@ -16,18 +25,14 @@ const Title = (props) => {
       }}
     >
       <props.View style={styles.logo}>
-        {props.darkModeValue ? (
-          <props.Image style={styles.image} source={IconWhite} />
-        ) : (
-          <props.Image style={styles.image} source={IconBlack} />
-        )}
         <props.Text
           style={{
             ...styles.logoTitle,
             color: props.darkModeValue ? "white" : "black",
+            fontFamily: "CormorantUpright",
           }}
         >
-          Creatist
+          Diamond Case
         </props.Text>
       </props.View>
     </props.View>
@@ -46,7 +51,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   logoTitle: {
-    fontSize: 22,
+    fontSize: 28,
   },
 });
 

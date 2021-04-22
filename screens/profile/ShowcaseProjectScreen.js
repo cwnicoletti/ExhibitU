@@ -16,11 +16,11 @@ import { HeaderButtons, Item } from "react-navigation-header-buttons";
 
 const ShowcaseProjectScreen = (props) => {
   const darkModeValue = useSelector((state) => state.switches.darkMode);
-  const creatistId = useSelector((state) => state.switches.creatistId);
+  const DiamondCaseId = useSelector((state) => state.switches.DiamondCaseId);
   const currentProjectId = props.navigation.getParam("projectId");
   const profileProjects = props.navigation.getParam("profileProjects");
   const profilePictureBase64 =
-    props.navigation.getParam("creatistId") === creatistId ||
+    props.navigation.getParam("DiamondCaseId") === DiamondCaseId ||
     props.navigation.getParam("profilePictureBase64") === undefined
       ? useSelector((state) => state.user.profilePictureBase64)
       : props.navigation.getParam("profilePictureBase64");
@@ -33,7 +33,7 @@ const ShowcaseProjectScreen = (props) => {
   }
 
   const viewCommentsHandler = (
-    creatistId,
+    DiamondCaseId,
     projectId,
     postId,
     fullname,
@@ -50,7 +50,7 @@ const ShowcaseProjectScreen = (props) => {
     links
   ) => {
     props.navigation.push("ShowcasePictureScreen", {
-      creatistId,
+      DiamondCaseId,
       projectId,
       postId,
       fullname,
@@ -134,7 +134,7 @@ const ShowcaseProjectScreen = (props) => {
             imageContainer={styles.imageContainer}
             onSelect={() =>
               viewCommentsHandler(
-                itemData.item.creatistId,
+                itemData.item.DiamondCaseId,
                 itemData.item.projectId,
                 itemData.item.postId,
                 itemData.item.fullname,
@@ -166,12 +166,12 @@ ShowcaseProjectScreen.navigationOptions = (navData) => {
         {darkModeValue ? (
           <Image
             style={styles.image}
-            source={require("../../assets/creatist_icon_transparent_white.png")}
+            source={require("../../assets/DiamondCase_icon_transparent_white.png")}
           />
         ) : (
           <Image
             style={styles.image}
-            source={require("../../assets/creatist_icon_transparent_black.png")}
+            source={require("../../assets/DiamondCase_icon_transparent_black.png")}
           />
         )}
         <Text
@@ -180,7 +180,7 @@ ShowcaseProjectScreen.navigationOptions = (navData) => {
             color: darkModeValue ? "white" : "black",
           }}
         >
-          Creatist
+          Diamond Case
         </Text>
       </View>
     ),

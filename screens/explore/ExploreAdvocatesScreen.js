@@ -27,7 +27,7 @@ const ExploreAdvocatesScreen = (props) => {
   const [projects, setProjects] = useState({});
   const [search, setSearch] = useState("");
   const [isRefreshing, setIsRefreshing] = useState(false);
-  const exploredCreatistId = props.navigation.getParam("exploredCreatistId");
+  const exploredDiamondCaseId = props.navigation.getParam("exploredDiamondCaseId");
 
   useEffect(() => {
     props.navigation.setParams({ darkMode: darkModeValue });
@@ -36,10 +36,10 @@ const ExploreAdvocatesScreen = (props) => {
   useEffect(() => {
     index.search("").then((responses) => {
       const advocates = responses.hits.find(
-        (object) => object.objectID === exploredCreatistId
+        (object) => object.objectID === exploredDiamondCaseId
       ).advocates;
       const projects = responses.hits.find(
-        (object) => object.objectID === exploredCreatistId
+        (object) => object.objectID === exploredDiamondCaseId
       ).profileProjects;
       setProjects(projects);
       const filteredIndex = responses.hits.filter((object) =>
@@ -52,10 +52,10 @@ const ExploreAdvocatesScreen = (props) => {
   const returnIndex = (text) => {
     index.search(text).then((responses) => {
       const advocates = responses.hits.find(
-        (object) => object.objectID === exploredCreatistId
+        (object) => object.objectID === exploredDiamondCaseId
       ).advocates;
       const projects = responses.hits.find(
-        (object) => object.objectID === exploredCreatistId
+        (object) => object.objectID === exploredDiamondCaseId
       ).profileProjects;
       setProjects(projects);
       const filteredIndex = responses.hits.filter((object) =>
@@ -78,7 +78,7 @@ const ExploreAdvocatesScreen = (props) => {
 
   const viewProfileHandler = (
     text,
-    creatistId,
+    DiamondCaseId,
     profilePictureUrl,
     fullname,
     username,
@@ -103,7 +103,7 @@ const ExploreAdvocatesScreen = (props) => {
   ) => {
     props.navigation.push("ExploreProfile", {
       text,
-      creatistId,
+      DiamondCaseId,
       profilePictureUrl,
       fullname,
       username,
@@ -232,12 +232,12 @@ ExploreAdvocatesScreen.navigationOptions = (navData) => {
         {darkModeValue ? (
           <Image
             style={styles.image}
-            source={require("../../assets/creatist_icon_transparent_white.png")}
+            source={require("../../assets/DiamondCase_icon_transparent_white.png")}
           />
         ) : (
           <Image
             style={styles.image}
-            source={require("../../assets/creatist_icon_transparent_black.png")}
+            source={require("../../assets/DiamondCase_icon_transparent_black.png")}
           />
         )}
         <Text

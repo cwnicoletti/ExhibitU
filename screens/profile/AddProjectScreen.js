@@ -157,7 +157,7 @@ const AddProjectScreen = (props) => {
   const [isLoadingTempPicture, setIsLoadingTempPicture] = useState(false);
   const darkModeValue = useSelector((state) => state.switches.darkMode);
   const localId = useSelector((state) => state.auth.userId);
-  const creatistId = useSelector((state) => state.user.creatistId);
+  const DiamondCaseId = useSelector((state) => state.user.DiamondCaseId);
   const projectTempCoverPhotoId = useSelector(
     (state) => state.user.projectTempCoverPhotoId
   );
@@ -226,7 +226,7 @@ const AddProjectScreen = (props) => {
     await setIsLoading(true);
     await dispatch(
       uploadNewProject(
-        creatistId,
+        DiamondCaseId,
         localId,
         projectTempCoverPhotoId,
         projectTempCoverPhotoBase64,
@@ -286,7 +286,7 @@ const AddProjectScreen = (props) => {
         await dispatch(
           uploadAddTempProjectCoverPicture(
             base64,
-            creatistId,
+            DiamondCaseId,
             localId,
             projectTempCoverPhotoId
           )
@@ -780,12 +780,12 @@ AddProjectScreen.navigationOptions = (navData) => {
         {darkModeValue ? (
           <Image
             style={styles.image}
-            source={require("../../assets/creatist_icon_transparent_white.png")}
+            source={require("../../assets/DiamondCase_icon_transparent_white.png")}
           />
         ) : (
           <Image
             style={styles.image}
-            source={require("../../assets/creatist_icon_transparent_black.png")}
+            source={require("../../assets/DiamondCase_icon_transparent_black.png")}
           />
         )}
         <Text

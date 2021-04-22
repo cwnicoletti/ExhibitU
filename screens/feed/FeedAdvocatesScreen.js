@@ -27,7 +27,7 @@ const FeedAdvocatesScreen = (props) => {
   const [search, setSearch] = useState("");
   const [isRefreshing, setIsRefreshing] = useState(false);
   const darkModeValue = useSelector((state) => state.switches.darkMode);
-  const creatistId = props.navigation.getParam("creatistId");
+  const DiamondCaseId = props.navigation.getParam("DiamondCaseId");
 
   useEffect(() => {
     props.navigation.setParams({ darkMode: darkModeValue });
@@ -36,10 +36,10 @@ const FeedAdvocatesScreen = (props) => {
   useEffect(() => {
     index.search("").then((responses) => {
       const advocates = responses.hits.find(
-        (object) => object.objectID === creatistId
+        (object) => object.objectID === DiamondCaseId
       ).advocates;
       const projects = responses.hits.find(
-        (object) => object.objectID === creatistId
+        (object) => object.objectID === DiamondCaseId
       ).profileProjects;
       setProjects(projects);
       const filteredIndex = responses.hits.filter((object) =>
@@ -52,10 +52,10 @@ const FeedAdvocatesScreen = (props) => {
   const returnIndex = (text) => {
     index.search(text).then((responses) => {
       const advocates = responses.hits.find(
-        (object) => object.objectID === creatistId
+        (object) => object.objectID === DiamondCaseId
       ).advocates;
       const projects = responses.hits.find(
-        (object) => object.objectID === creatistId
+        (object) => object.objectID === DiamondCaseId
       ).profileProjects;
       setProjects(projects);
       const filteredIndex = responses.hits.filter((object) =>
@@ -77,7 +77,7 @@ const FeedAdvocatesScreen = (props) => {
   };
 
   const viewProjectHandler = (
-    creatistId,
+    DiamondCaseId,
     projectId,
     fullname,
     username,
@@ -96,7 +96,7 @@ const FeedAdvocatesScreen = (props) => {
     profileColumns
   ) => {
     props.navigation.push("ViewProfile", {
-      creatistId,
+      DiamondCaseId,
       projectId,
       fullname,
       username,
@@ -214,12 +214,12 @@ FeedAdvocatesScreen.navigationOptions = (navData) => {
         {darkModeValue ? (
           <Image
             style={styles.image}
-            source={require("../../assets/creatist_icon_transparent_white.png")}
+            source={require("../../assets/DiamondCase_icon_transparent_white.png")}
           />
         ) : (
           <Image
             style={styles.image}
-            source={require("../../assets/creatist_icon_transparent_black.png")}
+            source={require("../../assets/DiamondCase_icon_transparent_black.png")}
           />
         )}
         <Text

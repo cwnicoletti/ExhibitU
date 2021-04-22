@@ -17,8 +17,8 @@ import { HeaderButtons, Item } from "react-navigation-header-buttons";
 
 const FeedProjectScreen = (props) => {
   const darkModeValue = useSelector((state) => state.switches.darkMode);
-  const feedCreatistId = props.navigation.getParam("feedCreatistId");
-  const creatistId = useSelector((state) => state.user.creatistId);
+  const feedDiamondCaseId = props.navigation.getParam("feedDiamondCaseId");
+  const DiamondCaseId = useSelector((state) => state.user.DiamondCaseId);
   const currentProjectId = props.navigation.getParam("projectId");
   const profilePictureBase64 = props.navigation.getParam(
     "profilePictureBase64"
@@ -35,7 +35,7 @@ const FeedProjectScreen = (props) => {
   }
 
   const viewCommentsHandler = (
-    creatistId,
+    DiamondCaseId,
     projectId,
     postId,
     fullname,
@@ -59,7 +59,7 @@ const FeedProjectScreen = (props) => {
     postLinks
   ) => {
     props.navigation.navigate("ViewComments", {
-      creatistId,
+      DiamondCaseId,
       projectId,
       postId,
       fullname,
@@ -85,8 +85,8 @@ const FeedProjectScreen = (props) => {
   };
 
   useEffect(() => {
-    props.navigation.setParams({ creatistId: creatistId });
-    props.navigation.setParams({ feedCreatistId: feedCreatistId });
+    props.navigation.setParams({ DiamondCaseId: DiamondCaseId });
+    props.navigation.setParams({ feedDiamondCaseId: feedDiamondCaseId });
     props.navigation.setParams({ android });
   }, []);
 
@@ -148,7 +148,7 @@ const FeedProjectScreen = (props) => {
             imageContainer={styles.imageContainer}
             onSelect={() =>
               viewCommentsHandler(
-                itemData.item.creatistId,
+                itemData.item.DiamondCaseId,
                 itemData.item.projectId,
                 itemData.item.postId,
                 itemData.item.fullname,
@@ -181,8 +181,8 @@ const FeedProjectScreen = (props) => {
 
 FeedProjectScreen.navigationOptions = (navData) => {
   const darkModeValue = navData.navigation.getParam("darkMode");
-  const creatistId = navData.navigation.getParam("creatistId");
-  const feedCreatistId = navData.navigation.getParam("feedCreatistId");
+  const DiamondCaseId = navData.navigation.getParam("DiamondCaseId");
+  const feedDiamondCaseId = navData.navigation.getParam("feedDiamondCaseId");
   const android = navData.navigation.getParam("android");
 
   return {
@@ -191,12 +191,12 @@ FeedProjectScreen.navigationOptions = (navData) => {
         {darkModeValue ? (
           <Image
             style={styles.image}
-            source={require("../../assets/creatist_icon_transparent_white.png")}
+            source={require("../../assets/DiamondCase_icon_transparent_white.png")}
           />
         ) : (
           <Image
             style={styles.image}
-            source={require("../../assets/creatist_icon_transparent_black.png")}
+            source={require("../../assets/DiamondCase_icon_transparent_black.png")}
           />
         )}
         <Text
@@ -205,7 +205,7 @@ FeedProjectScreen.navigationOptions = (navData) => {
             color: darkModeValue ? "white" : "black",
           }}
         >
-          Creatist
+          Diamond Case
         </Text>
       </View>
     ),
@@ -230,7 +230,7 @@ FeedProjectScreen.navigationOptions = (navData) => {
     ),
     headerRight: () => (
       <View>
-        {creatistId !== feedCreatistId ? (
+        {DiamondCaseId !== feedDiamondCaseId ? (
           <HeaderButtons HeaderButtonComponent={FontAwesomeHeaderButton}>
             <Item
               title="Advocate"

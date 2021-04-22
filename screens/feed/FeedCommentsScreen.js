@@ -17,76 +17,76 @@ import { LogBox } from "react-native";
 
 const FeedCommentsScreen = (props) => {
   const darkModeValue = useSelector((state) => state.switches.darkMode);
-  const userCreatistId = useSelector((state) => state.user.creatistId);
-  const creatistId = props.navigation.getParam("creatistId");
+  const userDiamondCaseId = useSelector((state) => state.user.DiamondCaseId);
+  const DiamondCaseId = props.navigation.getParam("DiamondCaseId");
   const projectId = props.navigation.getParam("projectId");
   const postId = props.navigation.getParam("postId");
   const profileProjects =
-    userCreatistId === creatistId
+    userDiamondCaseId === DiamondCaseId
       ? useSelector((state) => state.user.profileProjects)
       : props.navigation.getParam("profileProjects");
   const fullname =
-    userCreatistId === creatistId
+    userDiamondCaseId === DiamondCaseId
       ? useSelector((state) => state.user.fullname)
       : props.navigation.getParam("fullname");
   const username =
-    userCreatistId === creatistId
+    userDiamondCaseId === DiamondCaseId
       ? useSelector((state) => state.user.username)
       : props.navigation.getParam("username");
   const jobTitle =
-    userCreatistId === creatistId
+    userDiamondCaseId === DiamondCaseId
       ? useSelector((state) => state.user.jobTitle)
       : props.navigation.getParam("jobTitle");
   const profileBiography =
-    userCreatistId === creatistId
+    userDiamondCaseId === DiamondCaseId
       ? useSelector((state) => state.user.profileBiography)
       : props.navigation.getParam("profileBiography");
   const profilePictureBase64 = props.navigation.getParam(
     "profilePictureBase64"
   );
   const numberOfFollowers =
-    userCreatistId === creatistId
+    userDiamondCaseId === DiamondCaseId
       ? useSelector((state) => state.user.numberOfFollowers)
       : props.navigation.getParam("numberOfFollowers");
   const numberOfFollowing =
-    userCreatistId === creatistId
+    userDiamondCaseId === DiamondCaseId
       ? useSelector((state) => state.user.numberOfFollowing)
       : props.navigation.getParam("numberOfFollowing");
   const numberOfAdvocates =
-    userCreatistId === creatistId
+    userDiamondCaseId === DiamondCaseId
       ? useSelector((state) => state.user.numberOfAdvocates)
       : props.navigation.getParam("numberOfAdvocates");
   const postPhoto = props.navigation.getParam("postPhotoBase64");
   const numberOfCheers =
-    userCreatistId === creatistId
+    userDiamondCaseId === DiamondCaseId
       ? profileProjects[projectId].projectPosts[postId].numberOfCheers
       : props.navigation.getParam("numberOfCheers");
   const numberOfComments =
-    userCreatistId === creatistId
+    userDiamondCaseId === DiamondCaseId
       ? profileProjects[projectId].projectPosts[postId].numberOfComments
       : props.navigation.getParam("numberOfComments");
   const caption =
-    userCreatistId === creatistId
+    userDiamondCaseId === DiamondCaseId
       ? profileProjects[projectId].projectPosts[postId].caption
       : props.navigation.getParam("caption");
   const hideFollowing =
-    userCreatistId === creatistId
+    userDiamondCaseId === DiamondCaseId
       ? profileProjects[projectId].projectPosts[postId].hideFollowing
       : props.navigation.getParam("hideFollowing");
   const hideFollowers =
-    userCreatistId === creatistId
+    userDiamondCaseId === DiamondCaseId
       ? profileProjects[projectId].projectPosts[postId].hideFollowers
       : props.navigation.getParam("hideFollowers");
   const hideAdvocates =
-    userCreatistId === creatistId
+    userDiamondCaseId === DiamondCaseId
       ? profileProjects[projectId].projectPosts[postId].hideAdvocates
       : props.navigation.getParam("hideAdvocates");
   const profileLinks =
-    userCreatistId === creatistId
+    userDiamondCaseId === DiamondCaseId
       ? useSelector((state) => state.user.profileLinks)
       : props.navigation.getParam("profileLinks");
   const postLinks =
-    userCreatistId === creatistId
+    userDiamondCaseId === DiamondCaseId
       ? profileProjects[projectId].projectPosts[postId].postLinks
         ? profileProjects[projectId].projectPosts[postId].postLinks
         : {}
@@ -94,7 +94,7 @@ const FeedCommentsScreen = (props) => {
       ? props.navigation.getParam("postLinks")
       : {};
   const profileColumns =
-    userCreatistId === creatistId
+    userDiamondCaseId === DiamondCaseId
       ? useSelector((state) => state.user.profileColumns)
       : props.navigation.getParam("profileColumns");
 
@@ -105,7 +105,7 @@ const FeedCommentsScreen = (props) => {
 
   const viewCheeringHandler = () => {
     props.navigation.push("ViewCheering", {
-      creatistId: creatistId,
+      DiamondCaseId: DiamondCaseId,
       projectId: projectId,
       postId: postId,
       numberOfCheers: numberOfCheers,
@@ -113,7 +113,7 @@ const FeedCommentsScreen = (props) => {
   };
 
   const viewProfileHandler = (
-    creatistId,
+    DiamondCaseId,
     projectId,
     fullname,
     username,
@@ -132,7 +132,7 @@ const FeedCommentsScreen = (props) => {
     profileColumns
   ) => {
     props.navigation.push("ViewProfile", {
-      creatistId,
+      DiamondCaseId,
       projectId,
       fullname,
       username,
@@ -186,7 +186,7 @@ const FeedCommentsScreen = (props) => {
         numberOfComments={numberOfComments}
         postId={postId}
         projectId={projectId}
-        posterCreatistId={creatistId}
+        posterDiamondCaseId={DiamondCaseId}
         links={postLinks}
         nameStyle={{
           color: darkModeValue ? "white" : "black",
@@ -237,7 +237,7 @@ const FeedCommentsScreen = (props) => {
         }}
         onSelectProfile={() => {
           viewProfileHandler(
-            creatistId,
+            DiamondCaseId,
             projectId,
             fullname,
             username,
@@ -271,12 +271,12 @@ FeedCommentsScreen.navigationOptions = (navData) => {
         {darkModeValue ? (
           <Image
             style={styles.image}
-            source={require("../../assets/creatist_icon_transparent_white.png")}
+            source={require("../../assets/DiamondCase_icon_transparent_white.png")}
           />
         ) : (
           <Image
             style={styles.image}
-            source={require("../../assets/creatist_icon_transparent_black.png")}
+            source={require("../../assets/DiamondCase_icon_transparent_black.png")}
           />
         )}
         <Text
@@ -285,7 +285,7 @@ FeedCommentsScreen.navigationOptions = (navData) => {
             color: darkModeValue ? "white" : "black",
           }}
         >
-          Creatist
+          Diamond Case
         </Text>
       </View>
     ),

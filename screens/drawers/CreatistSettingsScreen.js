@@ -13,7 +13,7 @@ import {
   setHideAdvocates,
 } from "../../store/actions/switches";
 
-const CreatistSettingsScreen = (props) => {
+const DiamondCaseSettingsScreen = (props) => {
   const dispatch = useDispatch();
   const darkModeValue = useSelector((state) => state.switches.darkMode);
   const showCheeringValue = useSelector((state) => state.switches.showCheering);
@@ -21,7 +21,7 @@ const CreatistSettingsScreen = (props) => {
   const followersValue = useSelector((state) => state.switches.hideFollowers);
   const advocatesValue = useSelector((state) => state.switches.hideAdvocates);
   const localId = useSelector((state) => state.auth.userId);
-  const creatistId = useSelector((state) => state.user.creatistId);
+  const DiamondCaseId = useSelector((state) => state.user.DiamondCaseId);
 
   useEffect(() => {
     props.navigation.setParams({ darkMode: darkModeValue });
@@ -47,7 +47,7 @@ const CreatistSettingsScreen = (props) => {
         label="Show Cheering"
         state={showCheeringValue}
         onChange={(newValue) => {
-          dispatch(setShowCheering(localId, creatistId, newValue));
+          dispatch(setShowCheering(localId, DiamondCaseId, newValue));
         }}
       />
       <FilterSwitch
@@ -63,7 +63,7 @@ const CreatistSettingsScreen = (props) => {
         label="Hide followers"
         state={followersValue}
         onChange={(newValue) => {
-          dispatch(setHideFollowers(localId, creatistId, newValue));
+          dispatch(setHideFollowers(localId, DiamondCaseId, newValue));
         }}
       />
       <FilterSwitch
@@ -79,7 +79,7 @@ const CreatistSettingsScreen = (props) => {
         label="Hide following"
         state={followingValue}
         onChange={(newValue) => {
-          dispatch(setHideFollowing(localId, creatistId, newValue));
+          dispatch(setHideFollowing(localId, DiamondCaseId, newValue));
         }}
       />
       <FilterSwitch
@@ -95,21 +95,21 @@ const CreatistSettingsScreen = (props) => {
         label="Hide advocates"
         state={advocatesValue}
         onChange={(newValue) => {
-          dispatch(setHideAdvocates(localId, creatistId, newValue));
+          dispatch(setHideAdvocates(localId, DiamondCaseId, newValue));
         }}
       />
     </View>
   );
 };
 
-CreatistSettingsScreen.navigationOptions = (navData) => {
+DiamondCaseSettingsScreen.navigationOptions = (navData) => {
   const darkModeValue = navData.navigation.getParam("darkMode");
   return {
     headerTitle: () => (
       <View style={styles.logo}>
         <Image
           style={styles.logoImage}
-          source={require("../../assets/creatist_icon_transparent_white.png")}
+          source={require("../../assets/DiamondCase_icon_transparent_white.png")}
         />
         <Text
           style={{
@@ -117,7 +117,7 @@ CreatistSettingsScreen.navigationOptions = (navData) => {
             color: "white",
           }}
         >
-          Creatist
+          Diamond Case
         </Text>
       </View>
     ),
@@ -170,4 +170,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CreatistSettingsScreen;
+export default DiamondCaseSettingsScreen;

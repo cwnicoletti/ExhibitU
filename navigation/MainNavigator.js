@@ -7,7 +7,7 @@ import { createBottomTabNavigator } from "react-navigation-tabs";
 import { createDrawerNavigator, DrawerActions } from "react-navigation-drawer";
 
 import ProfileScreen from "../screens/profile/ProfileScreen";
-import CreatistSettingsScreen from "../screens/drawers/CreatistSettingsScreen";
+import DiamondCaseSettingsScreen from "../screens/drawers/DiamondCaseSettingsScreen";
 import VoteUpdatesSettingsScreen from "../screens/drawers/VoteUpdatesSettingsScreen";
 import EditProfileScreen from "../screens/profile/EditProfileScreen";
 import SignupOrLoginScreen from "../screens/auth/SignupOrLoginScreen";
@@ -107,9 +107,9 @@ const FeedNavigator = createDrawerNavigator(
         <RightDrawer
           navData={navData}
           component={FeedNavigator}
-          creatistOnPress={() => {
+          DiamondCaseOnPress={() => {
             navData.navigation.closeRightDrawer();
-            navData.navigation.navigate("CreatistSettings");
+            navData.navigation.navigate("DiamondCaseSettings");
           }}
           updatesOnPress={() => {
             navData.navigation.closeRightDrawer();
@@ -186,7 +186,7 @@ const ProfileandSettingsNavigator = createStackNavigator({
   ShowcaseProject: ShowcaseProjectScreen,
   ShowcasePictureScreen: ShowcasePictureScreen,
   EditProfile: EditProfileScreen,
-  CreatistSettings: CreatistSettingsScreen,
+  DiamondCaseSettings: DiamondCaseSettingsScreen,
   Updates: VoteUpdatesSettingsScreen,
   Advocates: AdvocatesScreen,
   Following: FollowingScreen,
@@ -226,9 +226,9 @@ const ProfileNavigator = createDrawerNavigator(
         <RightDrawer
           navData={navData}
           component={ProfileNavigator}
-          creatistOnPress={() => {
+          DiamondCaseOnPress={() => {
             navData.navigation.closeRightDrawer();
-            navData.navigation.navigate("CreatistSettings");
+            navData.navigation.navigate("DiamondCaseSettings");
           }}
           updatesOnPress={() => {
             navData.navigation.closeRightDrawer();

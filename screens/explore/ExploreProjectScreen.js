@@ -23,7 +23,7 @@ const ExploreProjectScreen = (props) => {
   const [isLoading, setIsLoading] = useState(false);
   const darkModeValue = useSelector((state) => state.switches.darkMode);
   const localId = useSelector((state) => state.auth.userId);
-  const creatistId = useSelector((state) => state.user.creatistId);
+  const DiamondCaseId = useSelector((state) => state.user.DiamondCaseId);
   const exploredUserData = props.navigation.getParam("exploredUserData");
 
   const exploredProjectData = {
@@ -46,15 +46,15 @@ const ExploreProjectScreen = (props) => {
   }
 
   const [isAdvocating, setIsAdvocating] = useState(
-    exploredUserData.advocates.includes(creatistId) ? true : false
+    exploredUserData.advocates.includes(DiamondCaseId) ? true : false
   );
 
   const advocateUserHandler = useCallback(async () => {
     await setIsLoading(true);
     await dispatch(
       await advocateForUser(
-        exploredUserData.exploredCreatistId,
-        creatistId,
+        exploredUserData.exploredDiamondCaseId,
+        DiamondCaseId,
         localId,
         exploredProjectData.projectId
       )
@@ -67,8 +67,8 @@ const ExploreProjectScreen = (props) => {
     await setIsLoading(true);
     await dispatch(
       await unadvocateForUser(
-        exploredUserData.exploredCreatistId,
-        creatistId,
+        exploredUserData.exploredDiamondCaseId,
+        DiamondCaseId,
         localId,
         exploredProjectData.projectId
       )
@@ -78,7 +78,7 @@ const ExploreProjectScreen = (props) => {
   }, [setIsLoading, unadvocateForUser, setIsAdvocating]);
 
   const viewCommentsHandler = (
-    creatistId,
+    DiamondCaseId,
     postId,
     fullname,
     username,
@@ -93,7 +93,7 @@ const ExploreProjectScreen = (props) => {
     postLinks
   ) => {
     props.navigation.push("ViewExploredProfileProjectPicture", {
-      creatistId,
+      DiamondCaseId,
       projectId: exploredProjectData.projectId,
       postId,
       fullname,
@@ -112,9 +112,9 @@ const ExploreProjectScreen = (props) => {
   };
 
   useEffect(() => {
-    props.navigation.setParams({ creatistId: creatistId });
+    props.navigation.setParams({ DiamondCaseId: DiamondCaseId });
     props.navigation.setParams({
-      exploredCreatistId: exploredUserData.exploredCreatistId,
+      exploredDiamondCaseId: exploredUserData.exploredDiamondCaseId,
     });
     props.navigation.setParams({ advocateFn: advocateUserHandler });
     props.navigation.setParams({ unadvocateFn: unadvocateUserHandler });
@@ -187,7 +187,7 @@ const ExploreProjectScreen = (props) => {
             imageContainer={styles.imageContainer}
             onSelect={() =>
               viewCommentsHandler(
-                itemData.item.creatistId,
+                itemData.item.DiamondCaseId,
                 itemData.item.postId,
                 itemData.item.fullname,
                 itemData.item.username,
@@ -211,8 +211,8 @@ const ExploreProjectScreen = (props) => {
 
 ExploreProjectScreen.navigationOptions = (navData) => {
   const darkModeValue = navData.navigation.getParam("darkMode");
-  const creatistId = navData.navigation.getParam("creatistId");
-  const exploredCreatistId = navData.navigation.getParam("exploredCreatistId");
+  const DiamondCaseId = navData.navigation.getParam("DiamondCaseId");
+  const exploredDiamondCaseId = navData.navigation.getParam("exploredDiamondCaseId");
   const isAdvocating = navData.navigation.getParam("isAdvocating");
   const isLoading = navData.navigation.getParam("isLoading");
   const advocateFn = navData.navigation.getParam("advocateFn");
@@ -224,12 +224,12 @@ ExploreProjectScreen.navigationOptions = (navData) => {
         {darkModeValue ? (
           <Image
             style={styles.image}
-            source={require("../../assets/creatist_icon_transparent_white.png")}
+            source={require("../../assets/DiamondCase_icon_transparent_white.png")}
           />
         ) : (
           <Image
             style={styles.image}
-            source={require("../../assets/creatist_icon_transparent_black.png")}
+            source={require("../../assets/DiamondCase_icon_transparent_black.png")}
           />
         )}
         <Text
@@ -238,7 +238,7 @@ ExploreProjectScreen.navigationOptions = (navData) => {
             color: darkModeValue ? "white" : "black",
           }}
         >
-          Creatist
+          Diamond Case
         </Text>
       </View>
     ),
@@ -263,7 +263,7 @@ ExploreProjectScreen.navigationOptions = (navData) => {
     ),
     headerRight: () => (
       <View>
-        {creatistId !== exploredCreatistId ? (
+        {DiamondCaseId !== exploredDiamondCaseId ? (
           <View>
             {!isAdvocating ? (
               <View>

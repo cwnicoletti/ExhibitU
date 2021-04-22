@@ -26,7 +26,7 @@ const FeedCheeringScreen = (props) => {
   const [search, setSearch] = useState("");
   const [isRefreshing, setIsRefreshing] = useState(false);
   const darkModeValue = useSelector((state) => state.switches.darkMode);
-  const creatistId = props.navigation.getParam("creatistId");
+  const DiamondCaseId = props.navigation.getParam("DiamondCaseId");
   const projectId = props.navigation.getParam("projectId");
   const postId = props.navigation.getParam("postId");
   const numberOfCheers = props.navigation.getParam("numberOfCheers");
@@ -38,7 +38,7 @@ const FeedCheeringScreen = (props) => {
   useEffect(() => {
     index.search("").then((responses) => {
       const cheering = responses.hits.find(
-        (object) => object.objectID === creatistId
+        (object) => object.objectID === DiamondCaseId
       ).profileProjects[projectId].projectPosts[postId].cheering;
       const filteredIndex = responses.hits.filter((object) =>
         cheering.includes(object.objectID)
@@ -50,7 +50,7 @@ const FeedCheeringScreen = (props) => {
   const returnIndex = (text) => {
     index.search(text).then((responses) => {
       const cheering = responses.hits.find(
-        (object) => object.objectID === creatistId
+        (object) => object.objectID === DiamondCaseId
       ).profileProjects[projectId].projectPosts[postId].cheering;
       const filteredIndex = responses.hits.filter((object) =>
         cheering.includes(object.objectID)
@@ -71,7 +71,7 @@ const FeedCheeringScreen = (props) => {
   };
 
   const viewProfileHandler = (
-    creatistId,
+    DiamondCaseId,
     projectId,
     fullname,
     username,
@@ -90,7 +90,7 @@ const FeedCheeringScreen = (props) => {
     profileColumns
   ) => {
     props.navigation.push("ViewProfile", {
-      creatistId,
+      DiamondCaseId,
       projectId,
       fullname,
       username,
@@ -210,12 +210,12 @@ FeedCheeringScreen.navigationOptions = (navData) => {
         {darkModeValue ? (
           <Image
             style={styles.image}
-            source={require("../../assets/creatist_icon_transparent_white.png")}
+            source={require("../../assets/DiamondCase_icon_transparent_white.png")}
           />
         ) : (
           <Image
             style={styles.image}
-            source={require("../../assets/creatist_icon_transparent_black.png")}
+            source={require("../../assets/DiamondCase_icon_transparent_black.png")}
           />
         )}
         <Text
@@ -224,7 +224,7 @@ FeedCheeringScreen.navigationOptions = (navData) => {
             color: darkModeValue ? "white" : "black",
           }}
         >
-          Creatist
+          Diamond Case
         </Text>
       </SafeAreaView>
     ),

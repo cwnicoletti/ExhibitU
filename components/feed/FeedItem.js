@@ -52,10 +52,10 @@ const FeedItem = (props) => {
   const darkModeValue = useSelector((state) => state.switches.darkMode);
   const cheeredPosts = useSelector((state) => state.user.cheeredPosts);
   const localId = useSelector((state) => state.auth.userId);
-  const creatistId = useSelector((state) => state.user.creatistId);
+  const DiamondCaseId = useSelector((state) => state.user.DiamondCaseId);
   const projectId = props.projectId;
   const postId = props.postId;
-  const posterCreatistId = props.posterCreatistId;
+  const posterDiamondCaseId = props.posterDiamondCaseId;
   const links = props.links ? props.links : {};
   const fullname = props.fullname;
   const defaultPostIcon = require("../../assets/default-profile-icon.jpg");
@@ -150,10 +150,10 @@ const FeedItem = (props) => {
       if (!cheeredPosts.includes(postId)) {
         await setLoadingCheer(true);
         await dispatch(
-          cheerPost(localId, creatistId, projectId, postId, posterCreatistId)
+          cheerPost(localId, DiamondCaseId, projectId, postId, posterDiamondCaseId)
         );
-        if (creatistId === posterCreatistId) {
-          await dispatch(cheerOwnFeedPost(creatistId, projectId, postId));
+        if (DiamondCaseId === posterDiamondCaseId) {
+          await dispatch(cheerOwnFeedPost(DiamondCaseId, projectId, postId));
         }
         await setLoadingCheer(false);
       }
@@ -167,10 +167,10 @@ const FeedItem = (props) => {
     if (cheeredPosts.includes(postId)) {
       await setLoadingCheer(true);
       await dispatch(
-        uncheerPost(localId, creatistId, projectId, postId, posterCreatistId)
+        uncheerPost(localId, DiamondCaseId, projectId, postId, posterDiamondCaseId)
       );
-      if (creatistId === posterCreatistId) {
-        await dispatch(uncheerOwnFeedPost(creatistId, projectId, postId));
+      if (DiamondCaseId === posterDiamondCaseId) {
+        await dispatch(uncheerOwnFeedPost(DiamondCaseId, projectId, postId));
       }
       await setLoadingCheer(false);
     }

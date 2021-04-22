@@ -19,7 +19,7 @@ const ProjectScreen = (props) => {
   const dispatch = useDispatch();
   const darkModeValue = useSelector((state) => state.switches.darkMode);
   const localId = useSelector((state) => state.auth.userId);
-  const creatistId = useSelector((state) => state.user.creatistId);
+  const DiamondCaseId = useSelector((state) => state.user.DiamondCaseId);
   const profileProjects = useSelector((state) => state.user.profileProjects);
   const currentProjectId = props.navigation.getParam("projectId");
   const project = profileProjects[currentProjectId];
@@ -30,7 +30,7 @@ const ProjectScreen = (props) => {
   }
 
   const viewCommentsHandler = (
-    creatistId,
+    DiamondCaseId,
     projectId,
     postId,
     fullname,
@@ -47,7 +47,7 @@ const ProjectScreen = (props) => {
     links
   ) => {
     props.navigation.push("PictureScreen", {
-      creatistId,
+      DiamondCaseId,
       projectId,
       postId,
       fullname,
@@ -127,7 +127,7 @@ const ProjectScreen = (props) => {
           dispatch(
             changeProjectNumberOfColumns(
               localId,
-              creatistId,
+              DiamondCaseId,
               currentProjectId,
               2
             )
@@ -147,7 +147,7 @@ const ProjectScreen = (props) => {
           dispatch(
             changeProjectNumberOfColumns(
               localId,
-              creatistId,
+              DiamondCaseId,
               currentProjectId,
               3
             )
@@ -167,7 +167,7 @@ const ProjectScreen = (props) => {
           dispatch(
             changeProjectNumberOfColumns(
               localId,
-              creatistId,
+              DiamondCaseId,
               currentProjectId,
               4
             )
@@ -221,7 +221,7 @@ const ProjectScreen = (props) => {
             imageContainer={styles.imageContainer}
             onSelect={() =>
               viewCommentsHandler(
-                itemData.item.creatistId,
+                itemData.item.DiamondCaseId,
                 itemData.item.projectId,
                 itemData.item.postId,
                 itemData.item.fullname,
@@ -268,12 +268,12 @@ ProjectScreen.navigationOptions = (navData) => {
         {darkModeValue ? (
           <Image
             style={styles.image}
-            source={require("../../assets/creatist_icon_transparent_white.png")}
+            source={require("../../assets/DiamondCase_icon_transparent_white.png")}
           />
         ) : (
           <Image
             style={styles.image}
-            source={require("../../assets/creatist_icon_transparent_black.png")}
+            source={require("../../assets/DiamondCase_icon_transparent_black.png")}
           />
         )}
         <Text
@@ -282,7 +282,7 @@ ProjectScreen.navigationOptions = (navData) => {
             color: darkModeValue ? "white" : "black",
           }}
         >
-          Creatist
+          Diamond Case
         </Text>
       </View>
     ),

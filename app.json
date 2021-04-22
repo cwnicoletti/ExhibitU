@@ -1,12 +1,12 @@
 {
   "expo": {
-    "name": "Creatist",
-    "slug": "Creatist",
+    "name": "Diamond Case",
+    "slug": "Diamond Case",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/creatist_icon.png",
+    "icon": "./assets/DiamondCase_icon.png",
     "splash": {
-      "image": "./assets/creatist_splash.png",
+      "image": "./assets/DiamondCase_splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#000000"
     },
@@ -18,10 +18,10 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.creatist.ios"
+      "bundleIdentifier": "com.DiamondCase.ios"
     },
     "web": {
-      "favicon": "./assets/creatist_icon.png"
+      "favicon": "./assets/DiamondCase_icon.png"
     },
     "packagerOpts": {
       "config": "metro.config.js",

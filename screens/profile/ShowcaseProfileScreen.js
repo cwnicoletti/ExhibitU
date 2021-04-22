@@ -9,79 +9,79 @@ import IoniconsHeaderButton from "../../components/UI/IoniconsHeaderButton";
 
 const ShowcaseProfileScreen = (props) => {
   const darkModeValue = useSelector((state) => state.switches.darkMode);
-  const creatistId = useSelector((state) => state.user.creatistId);
+  const DiamondCaseId = useSelector((state) => state.user.DiamondCaseId);
   const trueUndefined = void 0;
 
   const profilePictureBase64 =
-    props.navigation.getParam("creatistId") === creatistId ||
+    props.navigation.getParam("DiamondCaseId") === DiamondCaseId ||
     props.navigation.getParam("profilePictureBase64") === trueUndefined
       ? useSelector((state) => state.user.profilePictureBase64)
       : props.navigation.getParam("profilePictureBase64");
 
   const profileColumns =
-    props.navigation.getParam("creatistId") === creatistId ||
+    props.navigation.getParam("DiamondCaseId") === DiamondCaseId ||
     props.navigation.getParam("profileColumns") === trueUndefined
       ? useSelector((state) => state.user.profileColumns)
       : props.navigation.getParam("profileColumns");
 
   const userData = {
-    creatistId:
-      props.navigation.getParam("creatistId") === creatistId ||
-      props.navigation.getParam("creatistId") === trueUndefined
-        ? useSelector((state) => state.user.creatistId)
-        : props.navigation.getParam("creatistId"),
+    DiamondCaseId:
+      props.navigation.getParam("DiamondCaseId") === DiamondCaseId ||
+      props.navigation.getParam("DiamondCaseId") === trueUndefined
+        ? useSelector((state) => state.user.DiamondCaseId)
+        : props.navigation.getParam("DiamondCaseId"),
     fullname:
-      props.navigation.getParam("creatistId") === creatistId ||
+      props.navigation.getParam("DiamondCaseId") === DiamondCaseId ||
       props.navigation.getParam("fullname") === trueUndefined
         ? useSelector((state) => state.user.fullname)
         : props.navigation.getParam("fullname"),
     username:
-      props.navigation.getParam("creatistId") === creatistId ||
+      props.navigation.getParam("DiamondCaseId") === DiamondCaseId ||
       props.navigation.getParam("username") === trueUndefined
         ? useSelector((state) => state.user.username)
         : props.navigation.getParam("username"),
     jobTitle:
-      props.navigation.getParam("creatistId") === creatistId ||
+      props.navigation.getParam("DiamondCaseId") === DiamondCaseId ||
       props.navigation.getParam("jobTitle") === trueUndefined
         ? useSelector((state) => state.user.jobTitle)
         : props.navigation.getParam("jobTitle"),
     profileBiography:
-      props.navigation.getParam("creatistId") === creatistId ||
+      props.navigation.getParam("DiamondCaseId") === DiamondCaseId ||
       props.navigation.getParam("profileBiography") === trueUndefined
         ? useSelector((state) => state.user.profileBiography)
         : props.navigation.getParam("profileBiography"),
     profileLinks:
-      props.navigation.getParam("creatistId") === creatistId ||
+      props.navigation.getParam("DiamondCaseId") === DiamondCaseId ||
       props.navigation.getParam("profileLinks") === trueUndefined
         ? useSelector((state) => state.user.profileLinks)
         : props.navigation.getParam("profileLinks"),
     profileProjects:
-      props.navigation.getParam("creatistId") === creatistId ||
+      props.navigation.getParam("DiamondCaseId") === DiamondCaseId ||
       props.navigation.getParam("profileProjects") === trueUndefined
         ? useSelector((state) => state.user.profileProjects)
         : props.navigation.getParam("profileProjects"),
     numberOfAdvocates:
-      props.navigation.getParam("creatistId") === creatistId ||
+      props.navigation.getParam("DiamondCaseId") === DiamondCaseId ||
       props.navigation.getParam("numberOfAdvocates") === trueUndefined
         ? useSelector((state) => state.user.numberOfAdvocates)
         : props.navigation.getParam("numberOfAdvocates"),
     numberOfFollowers:
-      props.navigation.getParam("creatistId") === creatistId ||
+      props.navigation.getParam("DiamondCaseId") === DiamondCaseId ||
       props.navigation.getParam("numberOfFollowers") === trueUndefined
         ? useSelector((state) => state.user.numberOfFollowers)
         : props.navigation.getParam("numberOfFollowers"),
     numberOfFollowing:
-      props.navigation.getParam("creatistId") === creatistId ||
+      props.navigation.getParam("DiamondCaseId") === DiamondCaseId ||
       props.navigation.getParam("numberOfFollowing") === trueUndefined
         ? useSelector((state) => state.user.numberOfFollowing)
         : props.navigation.getParam("numberOfFollowing"),
     showResumeValue:
-      props.navigation.getParam("creatistId") === creatistId ||
+      props.navigation.getParam("DiamondCaseId") === DiamondCaseId ||
       props.navigation.getParam("showResumeValue") === trueUndefined
         ? useSelector((state) => state.user.showResumeValue)
         : props.navigation.getParam("showResumeValue"),
     resumeLink:
-      props.navigation.getParam("creatistId") === creatistId ||
+      props.navigation.getParam("DiamondCaseId") === DiamondCaseId ||
       props.navigation.getParam("resumeLink") === trueUndefined
         ? useSelector((state) => state.user.resumeLink)
         : props.navigation.getParam("resumeLink"),
@@ -143,17 +143,17 @@ const ShowcaseProfileScreen = (props) => {
         onAddNewProjectPress={() => props.navigation.navigate("AddProject")}
         followersOnPress={() =>
           props.navigation.push("Followers", {
-            creatistId: userData.creatistId,
+            DiamondCaseId: userData.DiamondCaseId,
           })
         }
         followingOnPress={() =>
           props.navigation.push("Following", {
-            creatistId: userData.creatistId,
+            DiamondCaseId: userData.DiamondCaseId,
           })
         }
         advocatesOnPress={() =>
           props.navigation.push("Advocates", {
-            creatistId: userData.creatistId,
+            DiamondCaseId: userData.DiamondCaseId,
           })
         }
       />
@@ -201,12 +201,12 @@ ShowcaseProfileScreen.navigationOptions = (navData) => {
         {darkModeValue ? (
           <Image
             style={styles.image}
-            source={require("../../assets/creatist_icon_transparent_white.png")}
+            source={require("../../assets/DiamondCase_icon_transparent_white.png")}
           />
         ) : (
           <Image
             style={styles.image}
-            source={require("../../assets/creatist_icon_transparent_black.png")}
+            source={require("../../assets/DiamondCase_icon_transparent_black.png")}
           />
         )}
         <Text
@@ -215,7 +215,7 @@ ShowcaseProfileScreen.navigationOptions = (navData) => {
             color: darkModeValue ? "white" : "black",
           }}
         >
-          Creatist
+          Diamond Case
         </Text>
       </View>
     ),

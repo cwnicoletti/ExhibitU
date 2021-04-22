@@ -28,7 +28,7 @@ const PictureScreen = (props) => {
   const profilePictureBase64 = useSelector(
     (state) => state.user.profilePictureBase64
   );
-  const creatistId = props.navigation.getParam("creatistId");
+  const DiamondCaseId = props.navigation.getParam("DiamondCaseId");
   const projectId = props.navigation.getParam("projectId");
   const postId = props.navigation.getParam("postId");
   const fullname = props.navigation.getParam("fullname");
@@ -50,7 +50,7 @@ const PictureScreen = (props) => {
 
   const viewCheeringHandler = () => {
     props.navigation.push("CheeringScreen", {
-      creatistId: creatistId,
+      DiamondCaseId: DiamondCaseId,
       projectId: projectId,
       postId: postId,
       numberOfCheers: numberOfCheers,
@@ -58,7 +58,7 @@ const PictureScreen = (props) => {
   };
 
   const viewProfileHandler = (
-    creatistId,
+    DiamondCaseId,
     projectId,
     fullname,
     username,
@@ -67,8 +67,8 @@ const PictureScreen = (props) => {
     profileProjects,
     profilePictureUrl
   ) => {
-    props.navigation.push("CreatistProfile", {
-      creatistId,
+    props.navigation.push("DiamondCaseProfile", {
+      DiamondCaseId,
       projectId,
       fullname,
       username,
@@ -80,7 +80,7 @@ const PictureScreen = (props) => {
   };
 
   const deleteHandler = useCallback(async () => {
-    dispatch(uploadRemovePost(creatistId, localId, projectId, postId));
+    dispatch(uploadRemovePost(DiamondCaseId, localId, projectId, postId));
 
     props.navigation.navigate("ViewProfileProject", {
       projectId: projectId,
@@ -169,7 +169,7 @@ const PictureScreen = (props) => {
         }}
         onSelectProfile={() => {
           viewProfileHandler(
-            creatistId,
+            DiamondCaseId,
             projectId,
             fullname,
             username,
@@ -195,12 +195,12 @@ PictureScreen.navigationOptions = (navData) => {
         {darkModeValue ? (
           <Image
             style={styles.image}
-            source={require("../../assets/creatist_icon_transparent_white.png")}
+            source={require("../../assets/DiamondCase_icon_transparent_white.png")}
           />
         ) : (
           <Image
             style={styles.image}
-            source={require("../../assets/creatist_icon_transparent_black.png")}
+            source={require("../../assets/DiamondCase_icon_transparent_black.png")}
           />
         )}
         <Text
@@ -209,7 +209,7 @@ PictureScreen.navigationOptions = (navData) => {
             color: darkModeValue ? "white" : "black",
           }}
         >
-          Creatist
+          Diamond Case
         </Text>
       </View>
     ),

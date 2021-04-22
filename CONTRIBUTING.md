@@ -1,6 +1,6 @@
 # Contributing
 
-Pull requests are super awesome, if you have the time, I'd really love if you could create a pull request for Creatist!
+Pull requests are super awesome, if you have the time, I'd really love if you could create a pull request for Diamond Case!
 
 Here are some ways you can contribute:
 
@@ -9,11 +9,11 @@ Here are some ways you can contribute:
 *   by writing or editing documentation
 *   by writing code ( **no patch is too small** : fix typos, add comments, clean up inconsistent whitespace )
 *   by refactoring code
-*   by closing [issues](https://github.com/christiannicoletti/Creatist/issues)
+*   by closing [issues](https://github.com/christiannicoletti/Diamond Case/issues)
 
 ## Submitting an Issue
 
-*   We use the [GitHub issue tracker](https://github.com/christiannicoletti/Creatist/issues) to track bugs and features.
+*   We use the [GitHub issue tracker](https://github.com/christiannicoletti/Diamond Case/issues) to track bugs and features.
 *   Before submitting a bug report or feature request, check to make sure it hasn't already been submitted.
 
 ## Cleaning up issues
@@ -23,7 +23,7 @@ Here are some ways you can contribute:
 *   If your issue is closed by mistake, please understand and explain the issue. We will happily reopen the issue!
 
 ## Submitting a Pull Request
-1.  [Fork](https://help.github.com/articles/fork-a-repo/) the [official repository](https://github.com/christiannicoletti/Creatist).
+1.  [Fork](https://help.github.com/articles/fork-a-repo/) the [official repository](https://github.com/christiannicoletti/Diamond Case).
 2.  [Create a topic branch.](https://help.github.com/articles/about-branches/)
 3.  Implement your feature or bug fix.
 4.  Add, commit, and push your changes.

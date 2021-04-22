@@ -1,5 +1,5 @@
-# Creatist
-<a href="https://github.com/cwnicoletti/Creatist/blob/main/LICENSE"><img src="https://img.shields.io/badge/License-CC%20BY--NC%204.0-critical" alt="CC BY-NC 4.0"></a>  <img src="https://img.shields.io/github/repo-size/cwnicoletti/creatist" alt="Repo Size">  [![Codacy Badge](https://app.codacy.com/project/badge/Grade/6749da8aa61a4e6c80c7c72138157fd5)](https://www.codacy.com/gh/cwnicoletti/Creatist/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=cwnicoletti/Creatist&amp;utm_campaign=Badge_Grade)
+# Diamond Case
+<a href="https://github.com/cwnicoletti/Diamond Case/blob/main/LICENSE"><img src="https://img.shields.io/badge/License-CC%20BY--NC%204.0-critical" alt="CC BY-NC 4.0"></a>  <img src="https://img.shields.io/github/repo-size/cwnicoletti/DiamondCase" alt="Repo Size">  [![Codacy Badge](https://app.codacy.com/project/badge/Grade/6749da8aa61a4e6c80c7c72138157fd5)](https://www.codacy.com/gh/cwnicoletti/Diamond Case/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=cwnicoletti/Diamond Case&amp;utm_campaign=Badge_Grade)
 
 This is a mobile app built using React Native and Expo. Designs were made via Adobe Xd.
 
@@ -27,10 +27,10 @@ Before making a pull request, run: `npm test` in the root directory
 Testing is supported by [jest](https://jestjs.io/) and test files (".test.js") can be found in test directories
 
 ## Contributions
-All contributions should be referenced to the [CONTRIBUTIONS](https://github.com/cwnicoletti/Creatist/blob/main/CONTRIBUTING.md) file before making a pull request.
+All contributions should be referenced to the [CONTRIBUTIONS](https://github.com/cwnicoletti/Diamond Case/blob/main/CONTRIBUTING.md) file before making a pull request.
 
 ## Dependencies
-[Package.json](https://github.com/cwnicoletti/Creatist/blob/main/package.json)
+[Package.json](https://github.com/cwnicoletti/Diamond Case/blob/main/package.json)
 
 "@react-native-async-storage/async-storage": "^1.13.0",<br />
 "@react-native-community/masked-view": "0.1.10",<br />
@@ -68,7 +68,7 @@ All contributions should be referenced to the [CONTRIBUTIONS](https://github.com
 "redux-thunk": "^2.3.0"<br />
 
 ## DevDependencies
-[Package.json](https://github.com/cwnicoletti/Creatist/blob/main/package.json)
+[Package.json](https://github.com/cwnicoletti/Diamond Case/blob/main/package.json)
 
 "firebase": "8.2.3",<br />
 "jest": "^26.6.3",<br />
@@ -76,4 +76,4 @@ All contributions should be referenced to the [CONTRIBUTIONS](https://github.com
 "react-test-renderer": "^17.0.2",<br />
 
 ## Licensing
-The content of this repository is licensed under the terms specified in the [LICENSE](https://github.com/christiannicoletti/Creatist/blob/master/LICENSE) file.
+The content of this repository is licensed under the terms specified in the [LICENSE](https://github.com/christiannicoletti/Diamond Case/blob/master/LICENSE) file.

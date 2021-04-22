@@ -26,7 +26,7 @@ const ExploreFollowersScreen = (props) => {
   const [returnedIndex, setReturnedIndex] = useState([]);
   const [search, setSearch] = useState("");
   const [isRefreshing, setIsRefreshing] = useState(false);
-  const creatistId = props.navigation.getParam("creatistId");
+  const DiamondCaseId = props.navigation.getParam("DiamondCaseId");
 
   useEffect(() => {
     props.navigation.setParams({ darkMode: darkModeValue });
@@ -35,7 +35,7 @@ const ExploreFollowersScreen = (props) => {
   useEffect(() => {
     index.search("").then((responses) => {
       const followers = responses.hits.find(
-        (object) => object.objectID === creatistId
+        (object) => object.objectID === DiamondCaseId
       ).followers;
       const filteredIndex = responses.hits.filter((object) =>
         followers.includes(object.objectID)
@@ -47,7 +47,7 @@ const ExploreFollowersScreen = (props) => {
   const returnIndex = (text) => {
     index.search(text).then((responses) => {
       const followers = responses.hits.find(
-        (object) => object.objectID === creatistId
+        (object) => object.objectID === DiamondCaseId
       ).followers;
       const filteredIndex = responses.hits.filter((object) =>
         followers.includes(object.objectID)
@@ -69,7 +69,7 @@ const ExploreFollowersScreen = (props) => {
 
   const viewProjectHandler = (
     text,
-    creatistId,
+    DiamondCaseId,
     profilePictureUrl,
     fullname,
     username,
@@ -94,7 +94,7 @@ const ExploreFollowersScreen = (props) => {
   ) => {
     props.navigation.push("ExploreProfile", {
       text,
-      creatistId,
+      DiamondCaseId,
       profilePictureUrl,
       fullname,
       username,
@@ -226,12 +226,12 @@ ExploreFollowersScreen.navigationOptions = (navData) => {
         {darkModeValue ? (
           <Image
             style={styles.image}
-            source={require("../../assets/creatist_icon_transparent_white.png")}
+            source={require("../../assets/DiamondCase_icon_transparent_white.png")}
           />
         ) : (
           <Image
             style={styles.image}
-            source={require("../../assets/creatist_icon_transparent_black.png")}
+            source={require("../../assets/DiamondCase_icon_transparent_black.png")}
           />
         )}
         <Text

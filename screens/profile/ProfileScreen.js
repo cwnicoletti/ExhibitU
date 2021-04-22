@@ -23,7 +23,7 @@ const ProfileScreen = (props) => {
   const [isRefreshing, setIsRefreshing] = useState(false);
   const darkModeValue = useSelector((state) => state.switches.darkMode);
   const localId = useSelector((state) => state.auth.userId);
-  const creatistId = useSelector((state) => state.user.creatistId);
+  const DiamondCaseId = useSelector((state) => state.user.DiamondCaseId);
   const profilePictureBase64 = useSelector(
     (state) => state.user.profilePictureBase64
   );
@@ -33,7 +33,7 @@ const ProfileScreen = (props) => {
   );
 
   const userData = {
-    creatistId: useSelector((state) => state.user.creatistId),
+    DiamondCaseId: useSelector((state) => state.user.DiamondCaseId),
     fullname: useSelector((state) => state.user.fullname),
     username: useSelector((state) => state.user.username),
     jobTitle: useSelector((state) => state.user.jobTitle),
@@ -101,21 +101,21 @@ const ProfileScreen = (props) => {
         onAddNewProjectPress={() => props.navigation.navigate("AddProject")}
         followersOnPress={() =>
           props.navigation.navigate("Followers", {
-            creatistId: userData.creatistId,
+            DiamondCaseId: userData.DiamondCaseId,
           })
         }
         followingOnPress={() =>
           props.navigation.navigate("Following", {
-            creatistId: userData.creatistId,
+            DiamondCaseId: userData.DiamondCaseId,
           })
         }
         advocatesOnPress={() =>
           props.navigation.navigate("Advocates", {
-            creatistId: userData.creatistId,
+            DiamondCaseId: userData.DiamondCaseId,
           })
         }
         changeColumnToTwo={() => {
-          dispatch(changeProfileNumberOfColumns(localId, creatistId, 2));
+          dispatch(changeProfileNumberOfColumns(localId, DiamondCaseId, 2));
         }}
         columnTwoStyle={{
           borderColor:
@@ -128,7 +128,7 @@ const ProfileScreen = (props) => {
               : "#c9c9c9",
         }}
         changeColumnToThree={() => {
-          dispatch(changeProfileNumberOfColumns(localId, creatistId, 3));
+          dispatch(changeProfileNumberOfColumns(localId, DiamondCaseId, 3));
         }}
         columnThreeStyle={{
           borderColor:
@@ -141,7 +141,7 @@ const ProfileScreen = (props) => {
               : "#c9c9c9",
         }}
         changeColumnToFour={() => {
-          dispatch(changeProfileNumberOfColumns(localId, creatistId, 4));
+          dispatch(changeProfileNumberOfColumns(localId, DiamondCaseId, 4));
         }}
         columnFourStyle={{
           borderColor:

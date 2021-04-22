@@ -164,7 +164,7 @@ SignupScreen1.navigationOptions = (navData) => {
       <View style={styles.logo}>
         <Image
           style={styles.logoImage}
-          source={require("../../assets/creatist_icon_transparent_white.png")}
+          source={require("../../assets/DiamondCase_icon_transparent_white.png")}
         />
         <Text
           style={{
@@ -172,7 +172,7 @@ SignupScreen1.navigationOptions = (navData) => {
             color: "white",
           }}
         >
-          Creatist
+          Diamond Case
         </Text>
       </View>
     ),

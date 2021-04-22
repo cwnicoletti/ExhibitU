@@ -21,10 +21,10 @@ const SignupOrLoginScreen = (props) => {
 
   return (
     <View style={styles.screen}>
-      <Text style={styles.titleText}>Creatist</Text>
+      <Text style={styles.titleText}>Diamond Case</Text>
       <Image
         style={styles.image}
-        source={require("../../assets/creatist_icon_transparent_white.png")}
+        source={require("../../assets/DiamondCase_icon_transparent_white.png")}
       />
       <View
         style={{
@@ -74,7 +74,7 @@ const SignupOrLoginScreen = (props) => {
           }}
         />
       </View>
-      <Text style={styles.text}>Already have creatist?</Text>
+      <Text style={styles.text}>Already have DiamondCase?</Text>
       <View
         style={{
           flexDirection: "row",

@@ -19,7 +19,7 @@ const ShowcasePictureScreen = (props) => {
   const darkModeValue = useSelector((state) => state.switches.darkMode);
   const profileProjects = useSelector((state) => state.user.profileProjects);
 
-  const creatistId = props.navigation.getParam("creatistId");
+  const DiamondCaseId = props.navigation.getParam("DiamondCaseId");
   const projectId = props.navigation.getParam("projectId");
   const postId = props.navigation.getParam("postId");
   const fullname = props.navigation.getParam("fullname");
@@ -46,7 +46,7 @@ const ShowcasePictureScreen = (props) => {
 
   const viewCheeringHandler = () => {
     props.navigation.push("CheeringScreen", {
-      creatistId: creatistId,
+      DiamondCaseId: DiamondCaseId,
       projectId: projectId,
       postId: postId,
       numberOfCheers: numberOfCheers,
@@ -54,7 +54,7 @@ const ShowcasePictureScreen = (props) => {
   };
 
   const viewProfileHandler = (
-    creatistId,
+    DiamondCaseId,
     projectId,
     fullname,
     username,
@@ -64,7 +64,7 @@ const ShowcasePictureScreen = (props) => {
     profilePictureBase64
   ) => {
     props.navigation.push("ViewProfile", {
-      creatistId,
+      DiamondCaseId,
       projectId,
       fullname,
       username,
@@ -154,7 +154,7 @@ const ShowcasePictureScreen = (props) => {
         }}
         onSelectProfile={() => {
           viewProfileHandler(
-            creatistId,
+            DiamondCaseId,
             projectId,
             fullname,
             username,
@@ -179,12 +179,12 @@ ShowcasePictureScreen.navigationOptions = (navData) => {
         {darkModeValue ? (
           <Image
             style={styles.image}
-            source={require("../../assets/creatist_icon_transparent_white.png")}
+            source={require("../../assets/DiamondCase_icon_transparent_white.png")}
           />
         ) : (
           <Image
             style={styles.image}
-            source={require("../../assets/creatist_icon_transparent_black.png")}
+            source={require("../../assets/DiamondCase_icon_transparent_black.png")}
           />
         )}
         <Text
@@ -193,7 +193,7 @@ ShowcasePictureScreen.navigationOptions = (navData) => {
             color: darkModeValue ? "white" : "black",
           }}
         >
-          Creatist
+          Diamond Case
         </Text>
       </View>
     ),
