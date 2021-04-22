@@ -177,7 +177,6 @@ const EditProfileScreen = (props) => {
   };
 
   const userDataProfileHeader = {
-    resumeLink: useSelector((state) => state.user.resumeLink),
     numberOfFollowers: useSelector((state) => state.user.numberOfFollowers),
     numberOfFollowing: useSelector((state) => state.user.numberOfFollowing),
     numberOfAdvocates: useSelector((state) => state.user.numberOfAdvocates),
@@ -561,7 +560,7 @@ const EditProfileScreen = (props) => {
               }}
             >
               <Ionicons
-                name="ios-paper"
+                name="ios-list-outline"
                 size={24}
                 color={darkModeValue ? "white" : "black"}
               />
