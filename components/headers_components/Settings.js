@@ -1,4 +1,5 @@
 import React from "react";
+import { HeaderButtons, Item } from "react-navigation-header-buttons";
 
 const Menu = (props) => {
   return (
@@ -11,18 +12,16 @@ const Menu = (props) => {
         backgroundColor: props.darkModeValue ? "black" : "white",
       }}
     >
-      <props.HeaderButtons HeaderButtonComponent={props.HeaderButton}>
-        <props.Item
-          title="Menu"
-          iconName={
-            props.Platform.OS === "android" ? "md-settings" : "ios-settings"
-          }
+      <HeaderButtons HeaderButtonComponent={props.HeaderButton}>
+        <Item
+          title="Settings"
+          iconName={"settings"}
           color={props.darkModeValue ? "white" : "black"}
           onPress={() => {
             props.navigation.toggleRightDrawer();
           }}
         />
-      </props.HeaderButtons>
+      </HeaderButtons>
     </props.View>
   );
 };

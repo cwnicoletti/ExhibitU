@@ -8,10 +8,8 @@ import {
   RefreshControl,
 } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
-import { HeaderButtons, Item } from "react-navigation-header-buttons";
 
 import ProjectItem from "../../components/projectItems/ProfileProjectItem";
-import IoniconsHeaderButton from "../../components/UI/IoniconsHeaderButton";
 import ProfileHeader from "../../components/user/ProfileHeader";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { SimpleLineIcons } from "@expo/vector-icons";
@@ -223,71 +221,11 @@ const ProfileScreen = (props) => {
             marginLeft: 10,
           }}
         >
-          Showcase creations
+          Showcase profile
         </Text>
       </TouchableOpacity>
     </View>
   );
-};
-
-ProfileScreen.navigationOptions = (navData) => {
-  const darkModeValue = navData.navigation.getParam("darkMode");
-  return {
-    headerTitle: () => (
-      <View style={styles.logo}>
-        {darkModeValue ? (
-          <Image
-            style={styles.image}
-            source={require("../../assets/creatist_icon_transparent_white.png")}
-          />
-        ) : (
-          <Image
-            style={styles.image}
-            source={require("../../assets/creatist_icon_transparent_black.png")}
-          />
-        )}
-        <Text
-          style={{
-            ...styles.logoTitle,
-            color: darkModeValue ? "white" : "black",
-          }}
-        >
-          Creatist
-        </Text>
-      </View>
-    ),
-    headerTitleStyle: {
-      color: darkModeValue ? "white" : "black",
-      fontSize: 20,
-    },
-    headerStyle: {
-      backgroundColor: darkModeValue ? "black" : "white",
-    },
-    headerLeft: () => (
-      <HeaderButtons HeaderButtonComponent={IoniconsHeaderButton}>
-        <Item
-          title="Menu"
-          iconName={Platform.OS === "android" ? "md-menu" : "ios-menu"}
-          color={darkModeValue ? "white" : "black"}
-          onPress={() => {
-            navData.navigation.toggleLeftDrawer();
-          }}
-        />
-      </HeaderButtons>
-    ),
-    headerRight: () => (
-      <HeaderButtons HeaderButtonComponent={IoniconsHeaderButton}>
-        <Item
-          title="Add"
-          iconName={Platform.OS === "android" ? "md-settings" : "ios-settings"}
-          color={darkModeValue ? "white" : "black"}
-          onPress={() => {
-            navData.navigation.toggleRightDrawer();
-          }}
-        />
-      </HeaderButtons>
-    ),
-  };
 };
 
 const styles = StyleSheet.create({

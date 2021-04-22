@@ -11,7 +11,7 @@ import {
 import { useSelector } from "react-redux";
 
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { Ionicons } from "@expo/vector-icons";
+import { Feather } from "@expo/vector-icons";
 import { SimpleLineIcons } from "@expo/vector-icons";
 
 const RightDrawer = (props) => {
@@ -50,9 +50,9 @@ const RightDrawer = (props) => {
               flexDirection: "row",
             }}
           >
-            <Ionicons
-              name="ios-settings"
-              size={20}
+            <Feather
+              name="settings"
+              size={21}
               color={darkModeValue ? "white" : "black"}
             />
             <Text

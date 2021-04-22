@@ -2,7 +2,8 @@ import React from "react";
 import { View, Image, Text, Platform } from "react-native";
 import { useSelector } from "react-redux";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
-import HeaderButton from "../UI/IoniconsHeaderButton";
+import FeatherHeaderButton from "../UI/FeatherHeaderButton";
+import IoniconsHeaderButton from "../UI/IoniconsHeaderButton";
 import Menu from "../headers_components/Menu";
 import Title from "../headers_components/Title";
 import Settings from "../headers_components/Settings";
@@ -22,7 +23,7 @@ const ProfileHeader = ({ navigation }) => {
         <Menu
           darkModeValue={darkModeValue}
           navigation={navigation}
-          HeaderButton={HeaderButton}
+          HeaderButton={IoniconsHeaderButton}
           HeaderButtons={HeaderButtons}
           Item={Item}
           View={View}
@@ -37,7 +38,7 @@ const ProfileHeader = ({ navigation }) => {
         <Settings
           darkModeValue={darkModeValue}
           navigation={navigation}
-          HeaderButton={HeaderButton}
+          HeaderButton={FeatherHeaderButton}
           HeaderButtons={HeaderButtons}
           Item={Item}
           View={View}

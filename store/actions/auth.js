@@ -81,11 +81,9 @@ export const signup = (email, fullname, username, password) => {
 
 const getBase64FromUrl = async (url) => {
   if (url) {
-    // console.log(url);
     const response = await axios.get(url, {
       responseType: "arraybuffer",
     });
-    // console.log(response);
     const base64 = Buffer.from(await response.data, "base64").toString(
       "base64"
     );
