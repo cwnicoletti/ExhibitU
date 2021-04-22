@@ -13,6 +13,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { SearchBar } from "react-native-elements";
 import algoliasearch from "algoliasearch";
 import { offScreen } from "../../store/actions/user";
+import { EvilIcons } from "@expo/vector-icons";
 
 import ExploreCard from "../../components/explore/ExploreCard";
 import useDidMountEffect from "../../components/helper/useDidMountEffect";
@@ -139,7 +140,7 @@ const ExploreScreen = (props) => {
               borderBottomColor: "gray",
               borderBottomWidth: 1,
             }}
-            searchIcon={{ size: 24 }}
+            searchIcon={<EvilIcons name="search" size={24} color="white" />}
             onChangeText={(text) => searchFilterFunction(text)}
             onClear={() => {
               searchFilterFunction("");

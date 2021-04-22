@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState } from "react";
 import {
   StyleSheet,
   View,
@@ -9,10 +9,11 @@ import {
   FlatList,
   SafeAreaView,
 } from "react-native";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import { SearchBar } from "react-native-elements";
 import algoliasearch from "algoliasearch";
+import { EvilIcons } from "@expo/vector-icons";
 
 import IoniconsHeaderButton from "../../components/UI/IoniconsHeaderButton";
 import ExploreCard from "../../components/explore/ExploreCard";
@@ -141,7 +142,7 @@ const FollowingScreen = (props) => {
               borderBottomColor: "gray",
               borderBottomWidth: 1,
             }}
-            searchIcon={{ size: 24 }}
+            searchIcon={<EvilIcons name="search" size={24} color="white" />}
             onChangeText={(text) => searchFilterFunction(text)}
             onClear={() => {
               searchFilterFunction("");

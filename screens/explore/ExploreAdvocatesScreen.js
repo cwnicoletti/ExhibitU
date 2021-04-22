@@ -12,6 +12,7 @@ import {
 import { useSelector } from "react-redux";
 import { SearchBar } from "react-native-elements";
 import algoliasearch from "algoliasearch";
+import { EvilIcons } from "@expo/vector-icons";
 
 import IoniconsHeaderButton from "../../components/UI/IoniconsHeaderButton";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
@@ -150,7 +151,7 @@ const ExploreAdvocatesScreen = (props) => {
               borderBottomColor: "gray",
               borderBottomWidth: 1,
             }}
-            searchIcon={{ size: 24 }}
+            searchIcon={<EvilIcons name="search" size={24} color="white" />}
             onChangeText={(text) => searchFilterFunction(text)}
             onClear={() => {
               searchFilterFunction("");
