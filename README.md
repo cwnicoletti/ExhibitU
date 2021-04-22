@@ -3,10 +3,10 @@
 
 This is a mobile app built using React Native and Expo. Designs were made via Adobe Xd.
 
-<img src="https://res.cloudinary.com/personaluse1234/image/upload/v1619063089/image4_oodmf5.png" width="250">&nbsp;
-<img src="https://res.cloudinary.com/personaluse1234/image/upload/v1619063087/image3_zhopxe.png" width="250">&nbsp;
-<img src="https://res.cloudinary.com/personaluse1234/image/upload/v1619063095/image2_1_tebeoy.png" width="250">&nbsp;
-<img src="https://res.cloudinary.com/personaluse1234/image/upload/v1619063096/image1_2_bp5gdn.png" width="250">&nbsp;
+<img src="https://res.cloudinary.com/personaluse1234/image/upload/v1619063089/image4_oodmf5.png" width="200">&nbsp;
+<img src="https://res.cloudinary.com/personaluse1234/image/upload/v1619063087/image3_zhopxe.png" width="200">&nbsp;
+<img src="https://res.cloudinary.com/personaluse1234/image/upload/v1619063095/image2_1_tebeoy.png" width="200">&nbsp;
+<img src="https://res.cloudinary.com/personaluse1234/image/upload/v1619063096/image1_2_bp5gdn.png" width="200">&nbsp;
 
 ## Getting started
 
