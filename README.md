@@ -5,7 +5,7 @@ This is a mobile app built using React Native and Expo. Designs were made via Ad
 
 <img src="https://res.cloudinary.com/personaluse1234/image/upload/v1619141399/image4_lxnmd1.png" width="200">&nbsp;
 <img src="https://res.cloudinary.com/personaluse1234/image/upload/v1619141399/image1_fhwgea.png" width="200">&nbsp;
-<img src="https://res.cloudinary.com/personaluse1234/image/upload/v1619141404/image2_ky0qor.png" width="200">&nbsp;
+<img src="https://res.cloudinary.com/personaluse1234/image/upload/v1619141616/image0_5_a2jila.png" width="200">&nbsp;
 <img src="https://res.cloudinary.com/personaluse1234/image/upload/v1619141404/image0_pu5mnr.png" width="200">&nbsp;
 
 ## Getting started
