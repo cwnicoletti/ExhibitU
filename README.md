@@ -1,12 +1,12 @@
 # Diamond Case
-<a href="https://github.com/cwnicoletti/Diamond Case/blob/main/LICENSE"><img src="https://img.shields.io/badge/License-CC%20BY--NC%204.0-critical" alt="CC BY-NC 4.0"></a>  <img src="https://img.shields.io/github/repo-size/cwnicoletti/DiamondCase" alt="Repo Size">  [![Codacy Badge](https://app.codacy.com/project/badge/Grade/6749da8aa61a4e6c80c7c72138157fd5)](https://www.codacy.com/gh/cwnicoletti/Diamond Case/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=cwnicoletti/Diamond Case&amp;utm_campaign=Badge_Grade)
+<a href="https://github.com/cwnicoletti/Diamond-Case/blob/main/LICENSE"><img src="https://img.shields.io/badge/License-CC%20BY--NC%204.0-critical" alt="CC BY-NC 4.0"></a>  <img src="https://img.shields.io/github/repo-size/cwnicoletti/Diamond-Case" alt="Repo Size">  [![Codacy Badge](https://app.codacy.com/project/badge/Grade/6749da8aa61a4e6c80c7c72138157fd5)](https://www.codacy.com/gh/cwnicoletti/Diamond-Case/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=cwnicoletti/Diamond-Case&amp;utm_campaign=Badge_Grade)
 
 This is a mobile app built using React Native and Expo. Designs were made via Adobe Xd.
 
-<img src="https://res.cloudinary.com/personaluse1234/image/upload/v1619063089/image4_oodmf5.png" width="200">&nbsp;
-<img src="https://res.cloudinary.com/personaluse1234/image/upload/v1619063087/image3_zhopxe.png" width="200">&nbsp;
-<img src="https://res.cloudinary.com/personaluse1234/image/upload/v1619063095/image2_1_tebeoy.png" width="200">&nbsp;
-<img src="https://res.cloudinary.com/personaluse1234/image/upload/v1619063096/image1_2_bp5gdn.png" width="200">&nbsp;
+<img src="https://res.cloudinary.com/personaluse1234/image/upload/v1619141399/image4_lxnmd1.png" width="200">&nbsp;
+<img src="https://res.cloudinary.com/personaluse1234/image/upload/v1619143304/image0_6_gvodax.png" width="200">&nbsp;
+<img src="https://res.cloudinary.com/personaluse1234/image/upload/v1619141616/image0_5_a2jila.png" width="200">&nbsp;
+<img src="https://res.cloudinary.com/personaluse1234/image/upload/v1619144139/image4_1_es2epq.png" width="200">&nbsp;
 
 ## Getting started
 
@@ -27,10 +27,10 @@ Before making a pull request, run: `npm test` in the root directory
 Testing is supported by [jest](https://jestjs.io/) and test files (".test.js") can be found in test directories
 
 ## Contributions
-All contributions should be referenced to the [CONTRIBUTIONS](https://github.com/cwnicoletti/Diamond Case/blob/main/CONTRIBUTING.md) file before making a pull request.
+All contributions should be referenced to the [CONTRIBUTIONS](https://github.com/cwnicoletti/Diamond-Case/blob/main/CONTRIBUTING.md) file before making a pull request.
 
 ## Dependencies
-[Package.json](https://github.com/cwnicoletti/Diamond Case/blob/main/package.json)
+[Package.json](https://github.com/cwnicoletti/Diamond-Case/blob/main/package.json)
 
 "@react-native-async-storage/async-storage": "^1.13.0",<br />
 "@react-native-community/masked-view": "0.1.10",<br />
@@ -68,7 +68,7 @@ All contributions should be referenced to the [CONTRIBUTIONS](https://github.com
 "redux-thunk": "^2.3.0"<br />
 
 ## DevDependencies
-[Package.json](https://github.com/cwnicoletti/Diamond Case/blob/main/package.json)
+[Package.json](https://github.com/cwnicoletti/Diamond-Case/blob/main/package.json)
 
 "firebase": "8.2.3",<br />
 "jest": "^26.6.3",<br />
@@ -76,4 +76,4 @@ All contributions should be referenced to the [CONTRIBUTIONS](https://github.com
 "react-test-renderer": "^17.0.2",<br />
 
 ## Licensing
-The content of this repository is licensed under the terms specified in the [LICENSE](https://github.com/christiannicoletti/Diamond Case/blob/master/LICENSE) file.
+The content of this repository is licensed under the terms specified in the [LICENSE](https://github.com/christiannicoletti/Diamond-Case/blob/master/LICENSE) file.
