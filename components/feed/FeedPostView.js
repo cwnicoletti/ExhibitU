@@ -42,11 +42,11 @@ const FeedPostView = (props) => {
   const [clap, setClap] = useState(false);
   const cheeredPosts = useSelector((state) => state.user.cheeredPosts);
   const localId = useSelector((state) => state.auth.userId);
-  const DiamondCaseId = useSelector((state) => state.user.DiamondCaseId);
+  const ExhibitUId = useSelector((state) => state.user.ExhibitUId);
   const darkModeValue = useSelector((state) => state.switches.darkMode);
   const defaultPostIcon = require("../../assets/default-profile-icon.jpg");
   const source = resolveAssetSource(defaultPostIcon);
-  const posterDiamondCaseId = props.posterDiamondCaseId;
+  const posterExhibitUId = props.posterExhibitUId;
   const fullname = props.fullname;
   const links = props.links;
   const postId = props.postId;
@@ -145,10 +145,10 @@ const FeedPostView = (props) => {
       if (!cheeredPosts.includes(postId)) {
         await setLoadingCheer(true);
         await dispatch(
-          cheerPost(localId, DiamondCaseId, projectId, postId, posterDiamondCaseId)
+          cheerPost(localId, ExhibitUId, projectId, postId, posterExhibitUId)
         );
-        if (DiamondCaseId === posterDiamondCaseId) {
-          await dispatch(cheerOwnPost(DiamondCaseId, projectId, postId));
+        if (ExhibitUId === posterExhibitUId) {
+          await dispatch(cheerOwnPost(ExhibitUId, projectId, postId));
         }
         await setLoadingCheer(false);
       }
@@ -161,10 +161,10 @@ const FeedPostView = (props) => {
     if (cheeredPosts.includes(postId)) {
       await setLoadingCheer(true);
       await dispatch(
-        uncheerPost(localId, DiamondCaseId, projectId, postId, posterDiamondCaseId)
+        uncheerPost(localId, ExhibitUId, projectId, postId, posterExhibitUId)
       );
-      if (DiamondCaseId === posterDiamondCaseId) {
-        await dispatch(uncheerOwnPost(DiamondCaseId, projectId, postId));
+      if (ExhibitUId === posterExhibitUId) {
+        await dispatch(uncheerOwnPost(ExhibitUId, projectId, postId));
       }
       await setLoadingCheer(false);
     }

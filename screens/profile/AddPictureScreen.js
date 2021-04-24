@@ -154,7 +154,7 @@ const EditProfileScreen = (props) => {
   const [linksState, setLinksState] = useState([]);
   const darkModeValue = useSelector((state) => state.switches.darkMode);
   const localId = useSelector((state) => state.auth.userId);
-  const DiamondCaseId = useSelector((state) => state.user.DiamondCaseId);
+  const ExhibitUId = useSelector((state) => state.user.ExhibitUId);
   const profilePictureUrl = useSelector(
     (state) => state.user.profilePictureUrl
   );
@@ -245,7 +245,7 @@ const EditProfileScreen = (props) => {
     await setIsLoading(true);
     await dispatch(
       addUserPost(
-        DiamondCaseId,
+        ExhibitUId,
         localId,
         projectId,
         fullname,
@@ -293,7 +293,7 @@ const EditProfileScreen = (props) => {
         setFileSizeError(false);
         const base64 = `data:image/png;base64,${result.base64}`;
         await dispatch(
-          uploadAddTempPostPicture(base64, projectId, DiamondCaseId, localId)
+          uploadAddTempPostPicture(base64, projectId, ExhibitUId, localId)
         );
       }
     }
@@ -699,12 +699,12 @@ EditProfileScreen.navigationOptions = (navData) => {
         {darkModeValue ? (
           <Image
             style={styles.image}
-            source={require("../../assets/DiamondCase_icon_transparent_white.png")}
+            source={require("../../assets/ExhibitU_icon_transparent_white.png")}
           />
         ) : (
           <Image
             style={styles.image}
-            source={require("../../assets/DiamondCase_icon_transparent_black.png")}
+            source={require("../../assets/ExhibitU_icon_transparent_black.png")}
           />
         )}
         <Text

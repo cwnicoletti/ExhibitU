@@ -15,7 +15,7 @@ import IoniconsHeaderButton from "../../components/UI/IoniconsHeaderButton";
 
 const ExplorePictureScreen = (props) => {
   const darkModeValue = useSelector((state) => state.switches.darkMode);
-  const DiamondCaseId = props.navigation.getParam("DiamondCaseId");
+  const ExhibitUId = props.navigation.getParam("ExhibitUId");
   const currentProjectId = props.navigation.getParam("projectId");
   const postId = props.navigation.getParam("postId");
   const fullname = props.navigation.getParam("fullname");
@@ -34,7 +34,7 @@ const ExplorePictureScreen = (props) => {
 
   const viewCheeringHandler = () => {
     props.navigation.navigate("ExploreCheering", {
-      DiamondCaseId: DiamondCaseId,
+      ExhibitUId: ExhibitUId,
       projectId: currentProjectId,
       postId: postId,
       numberOfCheers: numberOfCheers,
@@ -44,7 +44,7 @@ const ExplorePictureScreen = (props) => {
   const viewProfileHandler = () => {
     props.navigation.push("ExploreProfile", {
       ...exploredUserData,
-      DiamondCaseId: DiamondCaseId,
+      ExhibitUId: ExhibitUId,
     });
   };
 
@@ -146,12 +146,12 @@ ExplorePictureScreen.navigationOptions = (navData) => {
         {darkModeValue ? (
           <Image
             style={styles.image}
-            source={require("../../assets/DiamondCase_icon_transparent_white.png")}
+            source={require("../../assets/ExhibitU_icon_transparent_white.png")}
           />
         ) : (
           <Image
             style={styles.image}
-            source={require("../../assets/DiamondCase_icon_transparent_black.png")}
+            source={require("../../assets/ExhibitU_icon_transparent_black.png")}
           />
         )}
         <Text
@@ -160,7 +160,7 @@ ExplorePictureScreen.navigationOptions = (navData) => {
             color: darkModeValue ? "white" : "black",
           }}
         >
-          Diamond Case
+          ExhibitU
         </Text>
       </View>
     ),

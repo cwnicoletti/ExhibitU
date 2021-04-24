@@ -40,7 +40,7 @@ const ProjectHeader = (props) => {
           }
         />
         <EditButton
-          editText="Edit Project"
+          editText="Edit Case"
           onPress={props.onEditProfilePress}
         />
         <View

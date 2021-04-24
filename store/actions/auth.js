@@ -28,7 +28,7 @@ export const signup = (email, fullname, username, password) => {
       getSignupResponse.data.introing
     );
     await saveUserDocumentToStorage(
-      getSignupResponse.data.docData.DiamondCaseId,
+      getSignupResponse.data.docData.ExhibitUId,
       getSignupResponse.data.docData.email,
       getSignupResponse.data.docData.profilePictureUrl,
       "",
@@ -60,7 +60,7 @@ export const signup = (email, fullname, username, password) => {
         ? getSignupResponse.data.docData.userFeed
         : {},
       getSignupResponse.data.docData.darkMode,
-      getSignupResponse.data.docData.DiamondCaseLocalMode,
+      getSignupResponse.data.docData.ExhibitULocalMode,
       getSignupResponse.data.docData.showResume,
       getSignupResponse.data.docData.showCheering,
       getSignupResponse.data.docData.hideFollowing,
@@ -169,7 +169,7 @@ export const login = (email, password) => {
     );
 
     await saveUserDocumentToStorage(
-      getLoginResponse.data.docData.DiamondCaseId,
+      getLoginResponse.data.docData.ExhibitUId,
       getLoginResponse.data.docData.email,
       getLoginResponse.data.docData.profilePictureUrl,
       profilePictureBase64,
@@ -199,7 +199,7 @@ export const login = (email, password) => {
       getLoginResponse.data.docData.profileLinks,
       userFeed ? userFeed : {},
       getLoginResponse.data.docData.darkMode,
-      getLoginResponse.data.docData.DiamondCaseLocalMode,
+      getLoginResponse.data.docData.ExhibitULocalMode,
       getLoginResponse.data.docData.showResume,
       getLoginResponse.data.docData.showCheering,
       getLoginResponse.data.docData.hideFollowing,
@@ -237,7 +237,7 @@ const saveDataToStorage = async (localId, token, introing) => {
 };
 
 const saveUserDocumentToStorage = async (
-  DiamondCaseId,
+  ExhibitUId,
   email,
   profilePictureUrl,
   profilePictureBase64,
@@ -267,7 +267,7 @@ const saveUserDocumentToStorage = async (
   profileLinks,
   userFeed,
   darkMode,
-  DiamondCaseLocalMode,
+  ExhibitULocalMode,
   showResume,
   showCheering,
   hideFollowing,
@@ -278,7 +278,7 @@ const saveUserDocumentToStorage = async (
   await AsyncStorage.setItem(
     "userDocData",
     JSON.stringify({
-      DiamondCaseId,
+      ExhibitUId,
       email,
       profilePictureUrl,
       profilePictureBase64,
@@ -308,7 +308,7 @@ const saveUserDocumentToStorage = async (
       profileLinks,
       userFeed,
       darkMode,
-      DiamondCaseLocalMode,
+      ExhibitULocalMode,
       showResume,
       showCheering,
       hideFollowing,

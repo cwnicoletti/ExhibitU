@@ -169,7 +169,7 @@ const EditProjectScreen = (props) => {
   const projectTempCoverPhotoUrl = useSelector(
     (state) => state.user.projectTempCoverPhotoUrl
   );
-  const DiamondCaseId = useSelector((state) => state.user.DiamondCaseId);
+  const ExhibitUId = useSelector((state) => state.user.ExhibitUId);
 
   let TouchableCmp = TouchableOpacity;
   if (Platform.OS === "android") {
@@ -227,7 +227,7 @@ const EditProjectScreen = (props) => {
     await setIsLoading(true);
     await dispatch(
       uploadUpdatedProject(
-        DiamondCaseId,
+        ExhibitUId,
         localId,
         projectId,
         projectTempCoverPhotoUrl
@@ -246,7 +246,7 @@ const EditProjectScreen = (props) => {
 
   const deleteHandler = useCallback(() => {
     dispatch(
-      uploadRemoveProject(DiamondCaseId, localId, projectId, projectCoverPhotoId)
+      uploadRemoveProject(ExhibitUId, localId, projectId, projectCoverPhotoId)
     );
 
     props.navigation.navigate("Profile");
@@ -293,7 +293,7 @@ const EditProjectScreen = (props) => {
           uploadChangeProjectCoverPicture(
             base64,
             projectId,
-            DiamondCaseId,
+            ExhibitUId,
             localId,
             projectCoverPhotoId
           )
@@ -756,12 +756,12 @@ EditProjectScreen.navigationOptions = (navData) => {
         {darkModeValue ? (
           <Image
             style={styles.image}
-            source={require("../../assets/DiamondCase_icon_transparent_white.png")}
+            source={require("../../assets/ExhibitU_icon_transparent_white.png")}
           />
         ) : (
           <Image
             style={styles.image}
-            source={require("../../assets/DiamondCase_icon_transparent_black.png")}
+            source={require("../../assets/ExhibitU_icon_transparent_black.png")}
           />
         )}
         <Text

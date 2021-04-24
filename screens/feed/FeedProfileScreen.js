@@ -10,7 +10,7 @@ import FeedProfileHeader from "../../components/feed/FeedProfileHeader";
 const FeedProfileScreen = (props) => {
   const darkModeValue = useSelector((state) => state.switches.darkMode);
   const userData = {
-    DiamondCaseId: props.navigation.getParam("DiamondCaseId"),
+    ExhibitUId: props.navigation.getParam("ExhibitUId"),
     projectId: props.navigation.getParam("projectId"),
     fullname: props.navigation.getParam("fullname"),
     username: props.navigation.getParam("username"),
@@ -40,7 +40,7 @@ const FeedProfileScreen = (props) => {
   }, [darkModeValue]);
 
   const viewProjectHandler = (
-    DiamondCaseId,
+    ExhibitUId,
     projectId,
     fullname,
     username,
@@ -58,7 +58,7 @@ const FeedProfileScreen = (props) => {
     postLinks
   ) => {
     props.navigation.navigate("ViewFeedProfileProject", {
-      DiamondCaseId,
+      ExhibitUId,
       projectId,
       fullname,
       username,
@@ -120,17 +120,17 @@ const FeedProfileScreen = (props) => {
         onAddNewProjectPress={() => props.navigation.navigate("AddProject")}
         followersOnPress={() =>
           props.navigation.navigate("ViewFollowers", {
-            DiamondCaseId: userData.DiamondCaseId,
+            ExhibitUId: userData.ExhibitUId,
           })
         }
         followingOnPress={() =>
           props.navigation.navigate("ViewFollowing", {
-            DiamondCaseId: userData.DiamondCaseId,
+            ExhibitUId: userData.ExhibitUId,
           })
         }
         advocatesOnPress={() =>
           props.navigation.navigate("ViewAdvocates", {
-            DiamondCaseId: userData.DiamondCaseId,
+            ExhibitUId: userData.ExhibitUId,
           })
         }
       />
@@ -163,7 +163,7 @@ const FeedProfileScreen = (props) => {
             }}
             onSelect={() => {
               viewProjectHandler(
-                userData.DiamondCaseId,
+                userData.ExhibitUId,
                 itemData.item.projectId,
                 userData.fullname,
                 userData.username,
@@ -196,12 +196,12 @@ FeedProfileScreen.navigationOptions = (navData) => {
         {darkModeValue ? (
           <Image
             style={styles.image}
-            source={require("../../assets/DiamondCase_icon_transparent_white.png")}
+            source={require("../../assets/ExhibitU_icon_transparent_white.png")}
           />
         ) : (
           <Image
             style={styles.image}
-            source={require("../../assets/DiamondCase_icon_transparent_black.png")}
+            source={require("../../assets/ExhibitU_icon_transparent_black.png")}
           />
         )}
         <Text
@@ -210,7 +210,7 @@ FeedProfileScreen.navigationOptions = (navData) => {
             color: darkModeValue ? "white" : "black",
           }}
         >
-          Diamond Case
+          ExhibitU
         </Text>
       </View>
     ),

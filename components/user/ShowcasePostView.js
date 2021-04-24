@@ -26,7 +26,7 @@ const handleLinkOnPress = async (url) => {
   await WebBrowser.openBrowserAsync(url);
 };
 
-const DiamondCasePostView = (props) => {
+const ExhibitUPostView = (props) => {
   const [photoHeight, setHeight] = useState(null);
   const [photoWidth, setWidth] = useState(null);
   const [doubleTapped, setDoubleTapped] = useState(false);
@@ -509,4 +509,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default DiamondCasePostView;
+export default ExhibitUPostView;

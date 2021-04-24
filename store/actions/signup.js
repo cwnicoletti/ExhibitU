@@ -7,9 +7,9 @@ export const SIGNUP_FULLNAME = "SIGNUP_FULLNAME";
 export const SIGNUP_USERNAME = "SIGNUP_USERNAME";
 export const SIGNUP_PASSWORD = "SIGNUP_PASSWORD";
 
-export const setIntroing = (localId, DiamondCaseId, value) => {
+export const setIntroing = (localId, ExhibitUId, value) => {
   return async (dispatch) => {
-    const userFeedGet = { localId, DiamondCaseId, value, switchName: "introing" };
+    const userFeedGet = { localId, ExhibitUId, value, switchName: "introing" };
 
     axios.post(
       `https://us-central1-showcase-79c28.cloudfunctions.net/setSwitch`,

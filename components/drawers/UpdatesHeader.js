@@ -17,7 +17,7 @@ const UpdatesHeader = (props) => {
   return (
     <View style={styles.container}>
       <Text style={{ ...styles.updatesTitle, ...props.updatesTitle }}>
-        Future Diamond Case Updates
+        Future ExhibitU Updates
       </Text>
     </View>
   );

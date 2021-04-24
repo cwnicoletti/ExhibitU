@@ -13,7 +13,7 @@ import {
   setHideAdvocates,
 } from "../../store/actions/switches";
 
-const DiamondCaseSettingsScreen = (props) => {
+const ShowcaseSettingsScreen = (props) => {
   const dispatch = useDispatch();
   const darkModeValue = useSelector((state) => state.switches.darkMode);
   const showCheeringValue = useSelector((state) => state.switches.showCheering);
@@ -21,7 +21,7 @@ const DiamondCaseSettingsScreen = (props) => {
   const followersValue = useSelector((state) => state.switches.hideFollowers);
   const advocatesValue = useSelector((state) => state.switches.hideAdvocates);
   const localId = useSelector((state) => state.auth.userId);
-  const DiamondCaseId = useSelector((state) => state.user.DiamondCaseId);
+  const ExhibitUId = useSelector((state) => state.user.ExhibitUId);
 
   useEffect(() => {
     props.navigation.setParams({ darkMode: darkModeValue });
@@ -47,7 +47,7 @@ const DiamondCaseSettingsScreen = (props) => {
         label="Show Cheering"
         state={showCheeringValue}
         onChange={(newValue) => {
-          dispatch(setShowCheering(localId, DiamondCaseId, newValue));
+          dispatch(setShowCheering(localId, ExhibitUId, newValue));
         }}
       />
       <FilterSwitch
@@ -63,7 +63,7 @@ const DiamondCaseSettingsScreen = (props) => {
         label="Hide followers"
         state={followersValue}
         onChange={(newValue) => {
-          dispatch(setHideFollowers(localId, DiamondCaseId, newValue));
+          dispatch(setHideFollowers(localId, ExhibitUId, newValue));
         }}
       />
       <FilterSwitch
@@ -79,7 +79,7 @@ const DiamondCaseSettingsScreen = (props) => {
         label="Hide following"
         state={followingValue}
         onChange={(newValue) => {
-          dispatch(setHideFollowing(localId, DiamondCaseId, newValue));
+          dispatch(setHideFollowing(localId, ExhibitUId, newValue));
         }}
       />
       <FilterSwitch
@@ -95,21 +95,21 @@ const DiamondCaseSettingsScreen = (props) => {
         label="Hide advocates"
         state={advocatesValue}
         onChange={(newValue) => {
-          dispatch(setHideAdvocates(localId, DiamondCaseId, newValue));
+          dispatch(setHideAdvocates(localId, ExhibitUId, newValue));
         }}
       />
     </View>
   );
 };
 
-DiamondCaseSettingsScreen.navigationOptions = (navData) => {
+ShowcaseSettingsScreen.navigationOptions = (navData) => {
   const darkModeValue = navData.navigation.getParam("darkMode");
   return {
     headerTitle: () => (
       <View style={styles.logo}>
         <Image
           style={styles.logoImage}
-          source={require("../../assets/DiamondCase_icon_transparent_white.png")}
+          source={require("../../assets/ExhibitU_icon_transparent_white.png")}
         />
         <Text
           style={{
@@ -117,7 +117,7 @@ DiamondCaseSettingsScreen.navigationOptions = (navData) => {
             color: "white",
           }}
         >
-          Diamond Case
+          ExhibitU
         </Text>
       </View>
     ),
@@ -170,4 +170,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default DiamondCaseSettingsScreen;
+export default ShowcaseSettingsScreen;

@@ -26,7 +26,7 @@ const FollowingScreen = (props) => {
   const [returnedIndex, setReturnedIndex] = useState([]);
   const [isRefreshing, setIsRefreshing] = useState(false);
   const darkModeValue = useSelector((state) => state.switches.darkMode);
-  const DiamondCaseId = props.navigation.getParam("DiamondCaseId");
+  const ExhibitUId = props.navigation.getParam("ExhibitUId");
 
   useEffect(() => {
     props.navigation.setParams({ darkMode: darkModeValue });
@@ -35,7 +35,7 @@ const FollowingScreen = (props) => {
   useEffect(() => {
     index.search("").then((responses) => {
       const following = responses.hits.find(
-        (object) => object.objectID === DiamondCaseId
+        (object) => object.objectID === ExhibitUId
       ).following;
       const filteredIndex = responses.hits.filter((object) =>
         following.includes(object.objectID)
@@ -48,7 +48,7 @@ const FollowingScreen = (props) => {
   const returnIndex = (text) => {
     index.search(text).then((responses) => {
       const following = responses.hits.find(
-        (object) => object.objectID === DiamondCaseId
+        (object) => object.objectID === ExhibitUId
       ).following;
       const filteredIndex = responses.hits.filter((object) =>
         following.includes(object.objectID)
@@ -70,7 +70,7 @@ const FollowingScreen = (props) => {
   };
 
   const viewProfileHandler = (
-    DiamondCaseId,
+    ExhibitUId,
     profilePictureUrl,
     fullname,
     username,
@@ -93,8 +93,8 @@ const FollowingScreen = (props) => {
     profileColumns,
     showCheering
   ) => {
-    props.navigation.push("DiamondCaseProfile", {
-      DiamondCaseId,
+    props.navigation.push("ExhibitUProfile", {
+      ExhibitUId,
       profilePictureUrl,
       fullname,
       username,
@@ -217,12 +217,12 @@ FollowingScreen.navigationOptions = (navData) => {
         {darkModeValue ? (
           <Image
             style={styles.image}
-            source={require("../../assets/DiamondCase_icon_transparent_white.png")}
+            source={require("../../assets/ExhibitU_icon_transparent_white.png")}
           />
         ) : (
           <Image
             style={styles.image}
-            source={require("../../assets/DiamondCase_icon_transparent_black.png")}
+            source={require("../../assets/ExhibitU_icon_transparent_black.png")}
           />
         )}
         <Text

@@ -21,7 +21,7 @@ const UserFeedScreen = (props) => {
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [emptyFeed, setEmptyFeed] = useState(false);
   const darkModeValue = useSelector((state) => state.switches.darkMode);
-  const DiamondCaseId = useSelector((state) => state.user.DiamondCaseId);
+  const ExhibitUId = useSelector((state) => state.user.ExhibitUId);
   const localId = useSelector((state) => state.auth.userId);
   const userFeed = useSelector((state) => state.user.userFeed);
   const profileProjects = useSelector((state) => state.user.profileProjects);
@@ -47,14 +47,14 @@ const UserFeedScreen = (props) => {
   }, [darkModeValue]);
 
   const viewProjectHandler = (
-    DiamondCaseId,
+    ExhibitUId,
     projectId,
     profileProjects,
     postLinks
   ) => {
     dispatch(offScreen("Feed"));
     props.navigation.navigate("ViewFeedProject", {
-      feedDiamondCaseId: DiamondCaseId,
+      feedExhibitUId: ExhibitUId,
       projectId,
       profileProjects,
       postLinks,
@@ -62,14 +62,14 @@ const UserFeedScreen = (props) => {
   };
 
   const viewCheeringHandler = (
-    DiamondCaseId,
+    ExhibitUId,
     projectId,
     postId,
     numberOfCheers
   ) => {
     dispatch(offScreen("Feed"));
     props.navigation.navigate("ViewCheering", {
-      DiamondCaseId,
+      ExhibitUId,
       projectId,
       postId,
       numberOfCheers,
@@ -77,7 +77,7 @@ const UserFeedScreen = (props) => {
   };
 
   const viewProfileHandler = (
-    DiamondCaseId,
+    ExhibitUId,
     projectId,
     fullname,
     username,
@@ -97,7 +97,7 @@ const UserFeedScreen = (props) => {
   ) => {
     dispatch(offScreen("Feed"));
     props.navigation.navigate("ViewProfile", {
-      DiamondCaseId,
+      ExhibitUId,
       projectId,
       fullname,
       username,
@@ -134,7 +134,7 @@ const UserFeedScreen = (props) => {
     });
 
     setIsRefreshing(true);
-    await dispatch(getUserFeed(localId, DiamondCaseId));
+    await dispatch(getUserFeed(localId, ExhibitUId));
     setIsRefreshing(false);
   };
 
@@ -205,7 +205,7 @@ const UserFeedScreen = (props) => {
             numberOfComments={itemData.item.numberOfComments}
             projectId={itemData.item.projectId}
             postId={itemData.item.postId}
-            posterDiamondCaseId={itemData.item.DiamondCaseId}
+            posterExhibitUId={itemData.item.ExhibitUId}
             links={itemData.item.postLinks}
             fullname={itemData.item.fullname}
             postDateCreated={itemData.item.postDateCreated._seconds}
@@ -261,7 +261,7 @@ const UserFeedScreen = (props) => {
             arrowColor={"white"}
             onSelect={() => {
               viewProjectHandler(
-                itemData.item.DiamondCaseId,
+                itemData.item.ExhibitUId,
                 itemData.item.projectId,
                 itemData.item.profileProjects,
                 itemData.item.postLinks
@@ -269,7 +269,7 @@ const UserFeedScreen = (props) => {
             }}
             onSelectCheering={() => {
               viewCheeringHandler(
-                itemData.item.DiamondCaseId,
+                itemData.item.ExhibitUId,
                 itemData.item.projectId,
                 itemData.item.postId,
                 itemData.item.numberOfCheers
@@ -277,13 +277,13 @@ const UserFeedScreen = (props) => {
             }}
             onSelectProfile={() => {
               viewProfileHandler(
-                itemData.item.DiamondCaseId,
+                itemData.item.ExhibitUId,
                 itemData.item.projectId,
                 itemData.item.fullname,
                 itemData.item.username,
                 itemData.item.jobTitle,
                 itemData.item.profileBiography,
-                itemData.item.DiamondCaseId === DiamondCaseId
+                itemData.item.ExhibitUId === ExhibitUId
                   ? profileProjects
                   : itemData.item.profileProjects,
                 itemData.item.profilePictureBase64,
@@ -316,12 +316,12 @@ UserFeedScreen.navigationOptions = (navData) => {
         {darkModeValue ? (
           <Image
             style={styles.image}
-            source={require("../../assets/DiamondCase_icon_transparent_white.png")}
+            source={require("../../assets/ExhibitU_icon_transparent_white.png")}
           />
         ) : (
           <Image
             style={styles.image}
-            source={require("../../assets/DiamondCase_icon_transparent_black.png")}
+            source={require("../../assets/ExhibitU_icon_transparent_black.png")}
           />
         )}
         <Text
@@ -330,7 +330,7 @@ UserFeedScreen.navigationOptions = (navData) => {
             color: darkModeValue ? "white" : "black",
           }}
         >
-          Diamond Case
+          ExhibitU
         </Text>
       </View>
     ),

@@ -9,9 +9,9 @@ export const HIDE_FOLLOWING = "HIDE_FOLLOWING";
 export const HIDE_FOLLOWERS = "HIDE_FOLLOWERS";
 export const HIDE_ADVOCATES = "HIDE_ADVOCATES";
 
-export const setDarkMode = (localId, DiamondCaseId, value) => {
+export const setDarkMode = (localId, ExhibitUId, value) => {
   return async (dispatch) => {
-    const userFeedGet = { localId, DiamondCaseId, value, switchName: "darkMode" };
+    const userFeedGet = { localId, ExhibitUId, value, switchName: "darkMode" };
 
     axios.post(
       `https://us-central1-showcase-79c28.cloudfunctions.net/setSwitch`,
@@ -28,11 +28,11 @@ export const setDarkMode = (localId, DiamondCaseId, value) => {
   };
 };
 
-export const setShowResume = (localId, DiamondCaseId, value) => {
+export const setShowResume = (localId, ExhibitUId, value) => {
   return async (dispatch) => {
     const userFeedGet = {
       localId,
-      DiamondCaseId,
+      ExhibitUId,
       value,
       switchName: "showResume",
     };
@@ -52,11 +52,11 @@ export const setShowResume = (localId, DiamondCaseId, value) => {
   };
 };
 
-export const setShowCheering = (localId, DiamondCaseId, value) => {
+export const setShowCheering = (localId, ExhibitUId, value) => {
   return async (dispatch) => {
     const userFeedGet = {
       localId,
-      DiamondCaseId,
+      ExhibitUId,
       value,
       switchName: "showCheering",
     };
@@ -76,11 +76,11 @@ export const setShowCheering = (localId, DiamondCaseId, value) => {
   };
 };
 
-export const setHideFollowing = (localId, DiamondCaseId, value) => {
+export const setHideFollowing = (localId, ExhibitUId, value) => {
   return async (dispatch) => {
     const userFeedGet = {
       localId,
-      DiamondCaseId,
+      ExhibitUId,
       value,
       switchName: "hideFollowing",
     };
@@ -100,11 +100,11 @@ export const setHideFollowing = (localId, DiamondCaseId, value) => {
   };
 };
 
-export const setHideFollowers = (localId, DiamondCaseId, value) => {
+export const setHideFollowers = (localId, ExhibitUId, value) => {
   return async (dispatch) => {
     const userFeedGet = {
       localId,
-      DiamondCaseId,
+      ExhibitUId,
       value,
       switchName: "hideFollowers",
     };
@@ -124,11 +124,11 @@ export const setHideFollowers = (localId, DiamondCaseId, value) => {
   };
 };
 
-export const setHideAdvocates = (localId, DiamondCaseId, value) => {
+export const setHideAdvocates = (localId, ExhibitUId, value) => {
   return async (dispatch) => {
     const userFeedGet = {
       localId,
-      DiamondCaseId,
+      ExhibitUId,
       value,
       switchName: "hideAdvocates",
     };

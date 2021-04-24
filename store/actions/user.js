@@ -3,8 +3,9 @@ import axios from "axios";
 
 export const FORCE_SEARCH = "FORCE_SEARCH";
 export const RESET_SCROLL = "RESET_SCROLL";
-export const SHOWCASE_LOCALLY = "SHOWCASE_LOCALLY";
+export const SHOWCASE_PROFILE = "SHOWCASE_PROFILE";
 export const RETURN_FROM_SHOWCASING = "RETURN_FROM_SHOWCASING";
+export const HIDE_PROFILE_FOOTER = "HIDE_PROFILE_FOOTER";
 export const ON_SCREEN = "ON_SCREEN";
 export const OFF_SCREEN = "OFF_SCREEN";
 
@@ -181,7 +182,7 @@ export const getUserData = () => {
 
     await dispatch({
       type: GET_USER_DATA,
-      DiamondCaseId: transformedData.DiamondCaseId,
+      ExhibitUId: transformedData.ExhibitUId,
       email: transformedData.email,
       profilePictureUrl: transformedData.profilePictureUrl,
       profilePictureBase64: transformedData.profilePictureBase64,
@@ -216,7 +217,7 @@ export const getUserData = () => {
     await dispatch({
       type: GET_SWITCHES,
       darkMode: transformedData.darkMode,
-      DiamondCaseLocalMode: transformedData.DiamondCaseLocalMode,
+      ExhibitULocalMode: transformedData.ExhibitULocalMode,
       showResume: transformedData.showResume,
       showCheering: transformedData.showCheering,
       hideFollowing: transformedData.hideFollowing,
@@ -227,7 +228,7 @@ export const getUserData = () => {
 };
 
 export const uploadUpdateUserProfile = (
-  DiamondCaseId,
+  ExhibitUId,
   localId,
   fullname,
   jobTitle,
@@ -239,7 +240,7 @@ export const uploadUpdateUserProfile = (
 ) => {
   return async (dispatch) => {
     const uploadForm = {
-      DiamondCaseId,
+      ExhibitUId,
       localId,
       fullname,
       jobTitle,
@@ -298,7 +299,7 @@ export const uploadUpdateUserProfile = (
 };
 
 export const uploadNewProject = (
-  DiamondCaseId,
+  ExhibitUId,
   localId,
   projectTempCoverPhotoId,
   projectTempCoverPhotoBase64,
@@ -308,7 +309,7 @@ export const uploadNewProject = (
 ) => {
   return async (dispatch) => {
     const uploadForm = {
-      DiamondCaseId,
+      ExhibitUId,
       localId,
       projectTempCoverPhotoId,
       projectTempCoverPhotoBase64,
@@ -340,7 +341,7 @@ export const uploadNewProject = (
         },
       };
       for (const post in data.userFeed) {
-        if (data.userFeed[post].DiamondCaseId === DiamondCaseId) {
+        if (data.userFeed[post].ExhibitUId === ExhibitUId) {
           data.userFeed = {
             ...data.userFeed,
             [post]: {
@@ -359,7 +360,7 @@ export const uploadNewProject = (
     });
     dispatch({
       type: ADD_USER_PROJECT,
-      DiamondCaseId,
+      ExhibitUId,
       projectId: newProjectResponse.data.projectId,
       projectCoverPhotoId: newProjectResponse.data.photoId,
       projectCoverPhotoUrl: newProjectResponse.data.url,
@@ -374,7 +375,7 @@ export const uploadNewProject = (
 };
 
 export const uploadUpdatedProject = (
-  DiamondCaseId,
+  ExhibitUId,
   localId,
   projectId,
   projectTempCoverPhotoUrl,
@@ -384,7 +385,7 @@ export const uploadUpdatedProject = (
 ) => {
   return async (dispatch) => {
     const uploadForm = {
-      DiamondCaseId,
+      ExhibitUId,
       localId,
       projectId,
       url: projectTempCoverPhotoUrl,
@@ -426,9 +427,9 @@ export const uploadUpdatedProject = (
   };
 };
 
-export const uploadRemoveProject = (DiamondCaseId, localId, projectId) => {
+export const uploadRemoveProject = (ExhibitUId, localId, projectId) => {
   return async (dispatch) => {
-    const uploadForm = { DiamondCaseId, localId, projectId };
+    const uploadForm = { ExhibitUId, localId, projectId };
 
     axios.post(
       "https://us-central1-showcase-79c28.cloudfunctions.net/uploadRemoveProject",
@@ -454,9 +455,9 @@ export const uploadRemoveProject = (DiamondCaseId, localId, projectId) => {
   };
 };
 
-export const uploadRemovePost = (DiamondCaseId, localId, projectId, postId) => {
+export const uploadRemovePost = (ExhibitUId, localId, projectId, postId) => {
   return async (dispatch) => {
-    const uploadForm = { DiamondCaseId, localId, projectId, postId };
+    const uploadForm = { ExhibitUId, localId, projectId, postId };
 
     axios.post(
       "https://us-central1-showcase-79c28.cloudfunctions.net/uploadRemovePost",
@@ -478,9 +479,9 @@ export const uploadRemovePost = (DiamondCaseId, localId, projectId, postId) => {
   };
 };
 
-export const followUser = (exploredDiamondCaseId, DiamondCaseId, localId) => {
+export const followUser = (exploredExhibitUId, ExhibitUId, localId) => {
   return async (dispatch) => {
-    const user = { exploredDiamondCaseId, DiamondCaseId, localId };
+    const user = { exploredExhibitUId, ExhibitUId, localId };
 
     await axios.post(
       "https://us-central1-showcase-79c28.cloudfunctions.net/followUser",
@@ -489,21 +490,21 @@ export const followUser = (exploredDiamondCaseId, DiamondCaseId, localId) => {
 
     await AsyncStorage.getItem("userDocData").then(async (data) => {
       data = JSON.parse(data);
-      data.following = data.following.concat(exploredDiamondCaseId);
+      data.following = data.following.concat(exploredExhibitUId);
       data.numberOfFollowing = data.numberOfFollowing + 1;
       await AsyncStorage.setItem("userDocData", JSON.stringify(data));
     });
 
     await dispatch({
       type: FOLLOW_USER,
-      exploredDiamondCaseId,
+      exploredExhibitUId,
     });
   };
 };
 
-export const unfollowUser = (exploredDiamondCaseId, DiamondCaseId, localId) => {
+export const unfollowUser = (exploredExhibitUId, ExhibitUId, localId) => {
   return async (dispatch) => {
-    const user = { exploredDiamondCaseId, DiamondCaseId, localId };
+    const user = { exploredExhibitUId, ExhibitUId, localId };
 
     await axios.post(
       "https://us-central1-showcase-79c28.cloudfunctions.net/unfollowUser",
@@ -513,7 +514,7 @@ export const unfollowUser = (exploredDiamondCaseId, DiamondCaseId, localId) => {
     await AsyncStorage.getItem("userDocData").then(async (data) => {
       data = JSON.parse(data);
       data.following = data.following.filter(
-        (user) => user !== exploredDiamondCaseId
+        (user) => user !== exploredExhibitUId
       );
       data.numberOfFollowing = data.numberOfFollowing - 1;
       await AsyncStorage.setItem("userDocData", JSON.stringify(data));
@@ -521,19 +522,19 @@ export const unfollowUser = (exploredDiamondCaseId, DiamondCaseId, localId) => {
 
     await dispatch({
       type: UNFOLLOW_USER,
-      exploredDiamondCaseId,
+      exploredExhibitUId,
     });
   };
 };
 
 export const advocateForUser = (
-  exploredDiamondCaseId,
-  DiamondCaseId,
+  exploredExhibitUId,
+  ExhibitUId,
   localId,
   projectId
 ) => {
   return async (dispatch) => {
-    const user = { exploredDiamondCaseId, DiamondCaseId, localId, projectId };
+    const user = { exploredExhibitUId, ExhibitUId, localId, projectId };
 
     await axios.post(
       "https://us-central1-showcase-79c28.cloudfunctions.net/advocateForUser",
@@ -542,7 +543,7 @@ export const advocateForUser = (
 
     await AsyncStorage.getItem("userDocData").then(async (data) => {
       data = JSON.parse(data);
-      data.advocating = data.advocating.concat(exploredDiamondCaseId);
+      data.advocating = data.advocating.concat(exploredExhibitUId);
       data.projectsAdvocating = data.projectsAdvocating.concat(projectId);
       data.numberOfAdvocating = data.numberOfAdvocating + 1;
       await AsyncStorage.setItem("userDocData", JSON.stringify(data));
@@ -550,20 +551,20 @@ export const advocateForUser = (
 
     await dispatch({
       type: ADVOCATE_FOR_USER,
-      exploredDiamondCaseId,
+      exploredExhibitUId,
       projectId,
     });
   };
 };
 
 export const unadvocateForUser = (
-  exploredDiamondCaseId,
-  DiamondCaseId,
+  exploredExhibitUId,
+  ExhibitUId,
   localId,
   projectId
 ) => {
   return async (dispatch) => {
-    const user = { exploredDiamondCaseId, DiamondCaseId, localId, projectId };
+    const user = { exploredExhibitUId, ExhibitUId, localId, projectId };
 
     await axios.post(
       "https://us-central1-showcase-79c28.cloudfunctions.net/unadvocateForUser",
@@ -573,7 +574,7 @@ export const unadvocateForUser = (
     await AsyncStorage.getItem("userDocData").then(async (data) => {
       data = JSON.parse(data);
       data.advocating = data.advocating.filter(
-        (user) => user !== exploredDiamondCaseId
+        (user) => user !== exploredExhibitUId
       );
       data.projectsAdvocating = data.projectsAdvocating.filter(
         (user) => user !== projectId
@@ -584,15 +585,15 @@ export const unadvocateForUser = (
 
     await dispatch({
       type: UNADVOCATE_FOR_USER,
-      exploredDiamondCaseId,
+      exploredExhibitUId,
       projectId,
     });
   };
 };
 
-export const uploadChangeProfilePicture = (base64, DiamondCaseId, localId) => {
+export const uploadChangeProfilePicture = (base64, ExhibitUId, localId) => {
   return async (dispatch) => {
-    const picture = { base64, DiamondCaseId, localId };
+    const picture = { base64, ExhibitUId, localId };
 
     const uploadedPictureUrlResponse = await axios.post(
       "https://us-central1-showcase-79c28.cloudfunctions.net/uploadChangeProfilePicture",
@@ -616,12 +617,12 @@ export const uploadChangeProfilePicture = (base64, DiamondCaseId, localId) => {
 
 export const uploadAddTempProjectCoverPicture = (
   base64,
-  DiamondCaseId,
+  ExhibitUId,
   localId,
   projectTempCoverPhotoId
 ) => {
   return async (dispatch) => {
-    const picture = { base64, DiamondCaseId, localId, projectTempCoverPhotoId };
+    const picture = { base64, ExhibitUId, localId, projectTempCoverPhotoId };
 
     const uploadedPictureUrlResponse = await axios.post(
       "https://us-central1-showcase-79c28.cloudfunctions.net/uploadAddTempProjectCoverPicture",
@@ -648,11 +649,11 @@ export const uploadAddTempProjectCoverPicture = (
 export const uploadAddTempPostPicture = (
   base64,
   projectId,
-  DiamondCaseId,
+  ExhibitUId,
   localId
 ) => {
   return async (dispatch) => {
-    const picture = { base64, projectId, DiamondCaseId, localId };
+    const picture = { base64, projectId, ExhibitUId, localId };
 
     const uploadedPictureUrlResponse = await axios.post(
       "https://us-central1-showcase-79c28.cloudfunctions.net/uploadAddTempPostPicture",
@@ -679,7 +680,7 @@ export const uploadAddTempPostPicture = (
 export const uploadChangeProjectCoverPicture = (
   base64,
   projectId,
-  DiamondCaseId,
+  ExhibitUId,
   localId,
   projectCoverPhotoId
 ) => {
@@ -687,7 +688,7 @@ export const uploadChangeProjectCoverPicture = (
     const picture = {
       base64,
       projectId,
-      DiamondCaseId,
+      ExhibitUId,
       localId,
       projectCoverPhotoId,
     };
@@ -722,7 +723,7 @@ export const uploadChangeProjectCoverPicture = (
 };
 
 export const addUserPost = (
-  DiamondCaseId,
+  ExhibitUId,
   localId,
   projectId,
   fullname,
@@ -749,7 +750,7 @@ export const addUserPost = (
 ) => {
   return async (dispatch) => {
     const picture = {
-      DiamondCaseId,
+      ExhibitUId,
       localId,
       projectId,
       fullname,
@@ -794,7 +795,7 @@ export const addUserPost = (
             ...data.profileProjects[projectId].projectPosts,
             [retrievedPostId]: {
               postId: retrievedPostId,
-              DiamondCaseId,
+              ExhibitUId,
               projectId,
               fullname,
               username,
@@ -826,7 +827,7 @@ export const addUserPost = (
         ...data.userFeed,
         [retrievedPostId]: {
           postId: retrievedPostId,
-          DiamondCaseId,
+          ExhibitUId,
           projectId,
           fullname,
           username,
@@ -843,7 +844,7 @@ export const addUserPost = (
                 ...data.profileProjects[projectId].projectPosts,
                 [retrievedPostId]: {
                   postId: retrievedPostId,
-                  DiamondCaseId,
+                  ExhibitUId,
                   projectId,
                   fullname,
                   username,
@@ -890,7 +891,7 @@ export const addUserPost = (
       };
       Object.entries(data.userFeed).map(([id, value]) => {
         if (id !== retrievedPostId) {
-          if (data.userFeed[id].DiamondCaseId === DiamondCaseId) {
+          if (data.userFeed[id].ExhibitUId === ExhibitUId) {
             Object.assign(
               data.userFeed[id].profileProjects,
               data.userFeed[retrievedPostId].profileProjects
@@ -906,7 +907,7 @@ export const addUserPost = (
       fullname,
       username,
       jobTitle,
-      DiamondCaseId,
+      ExhibitUId,
       profileBiography,
       projectTitle,
       numberOfFollowers,
@@ -930,9 +931,9 @@ export const addUserPost = (
   };
 };
 
-export const getUserFeed = (localId, DiamondCaseId) => {
+export const getUserFeed = (localId, ExhibitUId) => {
   return async (dispatch) => {
-    const userFeedGet = { localId, DiamondCaseId };
+    const userFeedGet = { localId, ExhibitUId };
 
     const uploadedUserPost = await axios.post(
       "https://us-central1-showcase-79c28.cloudfunctions.net/getUserFeed",
@@ -986,18 +987,18 @@ export const getUserFeed = (localId, DiamondCaseId) => {
 
 export const cheerPost = (
   localId,
-  DiamondCaseId,
+  ExhibitUId,
   projectId,
   postId,
-  posterDiamondCaseId
+  posterExhibitUId
 ) => {
   return async (dispatch) => {
     const cheeringForm = {
       localId,
-      DiamondCaseId,
+      ExhibitUId,
       projectId,
       postId,
-      posterDiamondCaseId,
+      posterExhibitUId,
     };
 
     axios.post(
@@ -1027,14 +1028,14 @@ export const cheerPost = (
                   cheering: [
                     ...data.userFeed[postId].profileProjects[projectId]
                       .projectPosts[postId].cheering,
-                    DiamondCaseId,
+                    ExhibitUId,
                   ],
                 },
               },
             },
           },
           numberOfCheers: data.userFeed[postId].numberOfCheers + 1,
-          cheering: [...data.userFeed[postId].cheering, DiamondCaseId],
+          cheering: [...data.userFeed[postId].cheering, ExhibitUId],
         },
       };
       Object.entries(data.userFeed).map(([id, value]) => {
@@ -1065,7 +1066,7 @@ export const cheerPost = (
 
     await dispatch({
       type: CHEER_POST,
-      DiamondCaseId,
+      ExhibitUId,
       projectId,
       postId,
     });
@@ -1074,7 +1075,7 @@ export const cheerPost = (
   };
 };
 
-export const cheerOwnFeedPost = (DiamondCaseId, projectId, postId) => {
+export const cheerOwnFeedPost = (ExhibitUId, projectId, postId) => {
   return async (dispatch) => {
     await AsyncStorage.getItem("userDocData").then(async (data) => {
       data = JSON.parse(data);
@@ -1092,7 +1093,7 @@ export const cheerOwnFeedPost = (DiamondCaseId, projectId, postId) => {
               cheering: [
                 ...data.profileProjects[projectId].projectPosts[postId]
                   .cheering,
-                DiamondCaseId,
+                ExhibitUId,
               ],
             },
           },
@@ -1103,7 +1104,7 @@ export const cheerOwnFeedPost = (DiamondCaseId, projectId, postId) => {
 
     await dispatch({
       type: CHEER_OWN_FEED_POST,
-      DiamondCaseId,
+      ExhibitUId,
       projectId,
       postId,
     });
@@ -1112,18 +1113,18 @@ export const cheerOwnFeedPost = (DiamondCaseId, projectId, postId) => {
 
 export const cheerOwnProfilePost = (
   localId,
-  DiamondCaseId,
+  ExhibitUId,
   projectId,
   postId,
-  posterDiamondCaseId
+  posterExhibitUId
 ) => {
   return async (dispatch) => {
     const cheeringForm = {
       localId,
-      DiamondCaseId,
+      ExhibitUId,
       projectId,
       postId,
-      posterDiamondCaseId,
+      posterExhibitUId,
     };
 
     axios.post(
@@ -1147,7 +1148,7 @@ export const cheerOwnProfilePost = (
               cheering: [
                 ...data.profileProjects[projectId].projectPosts[postId]
                   .cheering,
-                DiamondCaseId,
+                ExhibitUId,
               ],
             },
           },
@@ -1174,14 +1175,14 @@ export const cheerOwnProfilePost = (
                   cheering: [
                     ...data.userFeed[postId].profileProjects[projectId]
                       .projectPosts[postId].cheering,
-                    DiamondCaseId,
+                    ExhibitUId,
                   ],
                 },
               },
             },
           },
           numberOfCheers: data.userFeed[postId].numberOfCheers + 1,
-          cheering: [...data.userFeed[postId].cheering, DiamondCaseId],
+          cheering: [...data.userFeed[postId].cheering, ExhibitUId],
         },
       };
 
@@ -1212,7 +1213,7 @@ export const cheerOwnProfilePost = (
 
     await dispatch({
       type: CHEER_OWN_PROFILE_POST,
-      DiamondCaseId,
+      ExhibitUId,
       projectId,
       postId,
     });
@@ -1223,18 +1224,18 @@ export const cheerOwnProfilePost = (
 
 export const uncheerPost = (
   localId,
-  DiamondCaseId,
+  ExhibitUId,
   projectId,
   postId,
-  posterDiamondCaseId
+  posterExhibitUId
 ) => {
   return async (dispatch) => {
     const uncheeringForm = {
       localId,
-      DiamondCaseId,
+      ExhibitUId,
       projectId,
       postId,
-      posterDiamondCaseId,
+      posterExhibitUId,
     };
 
     axios.post(
@@ -1264,7 +1265,7 @@ export const uncheerPost = (
                   cheering: data.userFeed[postId].profileProjects[
                     projectId
                   ].projectPosts[postId].cheering.filter(
-                    (listDiamondCaseId) => listDiamondCaseId !== DiamondCaseId
+                    (listExhibitUId) => listExhibitUId !== ExhibitUId
                   ),
                 },
               },
@@ -1272,7 +1273,7 @@ export const uncheerPost = (
           },
           numberOfCheers: data.userFeed[postId].numberOfCheers - 1,
           cheering: data.userFeed[postId].cheering.filter(
-            (listDiamondCaseId) => listDiamondCaseId !== DiamondCaseId
+            (listExhibitUId) => listExhibitUId !== ExhibitUId
           ),
         },
       };
@@ -1302,7 +1303,7 @@ export const uncheerPost = (
 
     await dispatch({
       type: UNCHEER_POST,
-      DiamondCaseId,
+      ExhibitUId,
       projectId,
       postId,
     });
@@ -1311,7 +1312,7 @@ export const uncheerPost = (
   };
 };
 
-export const uncheerOwnFeedPost = (DiamondCaseId, projectId, postId) => {
+export const uncheerOwnFeedPost = (ExhibitUId, projectId, postId) => {
   return async (dispatch) => {
     await AsyncStorage.getItem("userDocData").then(async (data) => {
       data = JSON.parse(data);
@@ -1329,7 +1330,7 @@ export const uncheerOwnFeedPost = (DiamondCaseId, projectId, postId) => {
               cheering: data.profileProjects[projectId].projectPosts[
                 postId
               ].cheering.filter(
-                (listDiamondCaseId) => listDiamondCaseId !== DiamondCaseId
+                (listExhibitUId) => listExhibitUId !== ExhibitUId
               ),
             },
           },
@@ -1340,7 +1341,7 @@ export const uncheerOwnFeedPost = (DiamondCaseId, projectId, postId) => {
 
     await dispatch({
       type: UNCHEER_OWN_FEED_POST,
-      DiamondCaseId,
+      ExhibitUId,
       projectId,
       postId,
     });
@@ -1349,18 +1350,18 @@ export const uncheerOwnFeedPost = (DiamondCaseId, projectId, postId) => {
 
 export const uncheerOwnProfilePost = (
   localId,
-  DiamondCaseId,
+  ExhibitUId,
   projectId,
   postId,
-  posterDiamondCaseId
+  posterExhibitUId
 ) => {
   return async (dispatch) => {
     const uncheeringForm = {
       localId,
-      DiamondCaseId,
+      ExhibitUId,
       projectId,
       postId,
-      posterDiamondCaseId,
+      posterExhibitUId,
     };
 
     axios.post(
@@ -1384,7 +1385,7 @@ export const uncheerOwnProfilePost = (
               cheering: data.profileProjects[projectId].projectPosts[
                 postId
               ].cheering.filter(
-                (listDiamondCaseId) => listDiamondCaseId !== DiamondCaseId
+                (listExhibitUId) => listExhibitUId !== ExhibitUId
               ),
             },
           },
@@ -1410,7 +1411,7 @@ export const uncheerOwnProfilePost = (
                   cheering: data.userFeed[postId].profileProjects[
                     projectId
                   ].projectPosts[postId].cheering.filter(
-                    (listDiamondCaseId) => listDiamondCaseId !== DiamondCaseId
+                    (listExhibitUId) => listExhibitUId !== ExhibitUId
                   ),
                 },
               },
@@ -1418,7 +1419,7 @@ export const uncheerOwnProfilePost = (
           },
           numberOfCheers: data.userFeed[postId].numberOfCheers - 1,
           cheering: data.userFeed[postId].cheering.filter(
-            (listDiamondCaseId) => listDiamondCaseId !== DiamondCaseId
+            (listExhibitUId) => listExhibitUId !== ExhibitUId
           ),
         },
       };
@@ -1448,7 +1449,7 @@ export const uncheerOwnProfilePost = (
 
     await dispatch({
       type: UNCHEER_OWN_PROFILE_POST,
-      DiamondCaseId,
+      ExhibitUId,
       projectId,
       postId,
     });
@@ -1457,9 +1458,13 @@ export const uncheerOwnProfilePost = (
   };
 };
 
-export const changeProfileNumberOfColumns = (localId, DiamondCaseId, number) => {
+export const changeProfileNumberOfColumns = (
+  localId,
+  ExhibitUId,
+  number
+) => {
   return async (dispatch) => {
-    const picture = { localId, DiamondCaseId, number };
+    const picture = { localId, ExhibitUId, number };
 
     axios.post(
       "https://us-central1-showcase-79c28.cloudfunctions.net/changeProfileNumberOfColumns",
@@ -1478,12 +1483,12 @@ export const changeProfileNumberOfColumns = (localId, DiamondCaseId, number) => 
 
 export const changeProjectNumberOfColumns = (
   localId,
-  DiamondCaseId,
+  ExhibitUId,
   projectId,
   number
 ) => {
   return async (dispatch) => {
-    const picture = { localId, DiamondCaseId, projectId, number };
+    const picture = { localId, ExhibitUId, projectId, number };
 
     axios.post(
       "https://us-central1-showcase-79c28.cloudfunctions.net/changeProjectNumberOfColumns",
@@ -1538,5 +1543,23 @@ export const onScreen = (tab) => {
 export const offScreen = (tab) => {
   return async (dispatch) => {
     await dispatch({ type: OFF_SCREEN, tab });
+  };
+};
+
+export const showcaseProfile = () => {
+  return async (dispatch) => {
+    await dispatch({ type: SHOWCASE_PROFILE });
+  };
+};
+
+export const returnFromShowcasing = (value) => {
+  return async (dispatch) => {
+    await dispatch({ type: RETURN_FROM_SHOWCASING, value });
+  };
+};
+
+export const setHideProfileFooter = (value) => {
+  return async (dispatch) => {
+    await dispatch({ type: HIDE_PROFILE_FOOTER, value });
   };
 };

@@ -26,7 +26,7 @@ const ExploreFollowingScreen = (props) => {
   const [returnedIndex, setReturnedIndex] = useState([]);
   const [search, setSearch] = useState("");
   const [isRefreshing, setIsRefreshing] = useState(false);
-  const DiamondCaseId = props.navigation.getParam("DiamondCaseId");
+  const ExhibitUId = props.navigation.getParam("ExhibitUId");
 
   useEffect(() => {
     props.navigation.setParams({ darkMode: darkModeValue });
@@ -35,7 +35,7 @@ const ExploreFollowingScreen = (props) => {
   useEffect(() => {
     index.search("").then((responses) => {
       const following = responses.hits.find(
-        (object) => object.objectID === DiamondCaseId
+        (object) => object.objectID === ExhibitUId
       ).following;
       const filteredIndex = responses.hits.filter((object) =>
         following.includes(object.objectID)
@@ -47,7 +47,7 @@ const ExploreFollowingScreen = (props) => {
   const returnIndex = (text) => {
     index.search(text).then((responses) => {
       const following = responses.hits.find(
-        (object) => object.objectID === DiamondCaseId
+        (object) => object.objectID === ExhibitUId
       ).following;
       const filteredIndex = responses.hits.filter((object) =>
         following.includes(object.objectID)
@@ -69,7 +69,7 @@ const ExploreFollowingScreen = (props) => {
 
   const viewProjectHandler = (
     text,
-    DiamondCaseId,
+    ExhibitUId,
     profilePictureUrl,
     fullname,
     username,
@@ -94,7 +94,7 @@ const ExploreFollowingScreen = (props) => {
   ) => {
     props.navigation.push("ExploreProfile", {
       text: text,
-      DiamondCaseId,
+      ExhibitUId,
       profilePictureUrl,
       fullname,
       username,
@@ -164,7 +164,7 @@ const ExploreFollowingScreen = (props) => {
                 ? { uri: itemData.item.profilePictureUrl }
                 : {
                     uri:
-                      "https://res.cloudinary.com/DiamondCase-79c28/image/upload/v1608714145/white-profile-icon-24_r0veeu.png",
+                      "https://res.cloudinary.com/ExhibitU-79c28/image/upload/v1608714145/white-profile-icon-24_r0veeu.png",
                   }
             }
             fullname={itemData.item.fullname}
@@ -225,12 +225,12 @@ ExploreFollowingScreen.navigationOptions = (navData) => {
         {darkModeValue ? (
           <Image
             style={styles.image}
-            source={require("../../assets/DiamondCase_icon_transparent_white.png")}
+            source={require("../../assets/ExhibitU_icon_transparent_white.png")}
           />
         ) : (
           <Image
             style={styles.image}
-            source={require("../../assets/DiamondCase_icon_transparent_black.png")}
+            source={require("../../assets/ExhibitU_icon_transparent_black.png")}
           />
         )}
         <Text

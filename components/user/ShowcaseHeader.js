@@ -15,7 +15,7 @@ import { Ionicons } from "@expo/vector-icons";
 import UserTitleShowcaseLocal from "./UserTitleShowcaseLocal";
 import LinkButton from "../UI/LinkButton";
 
-const DiamondCaseHeader = (props) => {
+const ExhibitUHeader = (props) => {
   const darkModeValue = useSelector((state) => state.switches.darkMode);
   const links = props.links;
   const followingValue = props.followingValue;
@@ -282,4 +282,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default DiamondCaseHeader;
+export default ExhibitUHeader;

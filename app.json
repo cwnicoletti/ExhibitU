@@ -1,12 +1,12 @@
 {
   "expo": {
-    "name": "Diamond Case",
-    "slug": "Diamond Case",
-    "version": "1.0.0",
+    "name": "ExhibitU",
+    "slug": "ExhibitU",
+    "version": "0.1.0",
     "orientation": "portrait",
-    "icon": "./assets/DiamondCase_icon.png",
+    "icon": "./assets/ExhibitU_icon.png",
     "splash": {
-      "image": "./assets/DiamondCase_splash.png",
+      "image": "./assets/ExhibitU_splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#000000"
     },
@@ -18,10 +18,10 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.DiamondCase.ios"
+      "bundleIdentifier": "com.exhibitu.ios"
     },
     "web": {
-      "favicon": "./assets/DiamondCase_icon.png"
+      "favicon": "./assets/ExhibitU_icon.png"
     },
     "packagerOpts": {
       "config": "metro.config.js",

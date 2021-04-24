@@ -1,7 +1,5 @@
 import React from "react";
 import { StyleSheet } from "react-native";
-import IconWhite from "../../assets/DiamondCase_icon_transparent_white.png";
-import IconBlack from "../../assets/DiamondCase_icon_transparent_black.png";
 import { useFonts } from "expo-font";
 
 const Title = (props) => {
@@ -32,7 +30,7 @@ const Title = (props) => {
             fontFamily: "CormorantUpright",
           }}
         >
-          Diamond Case
+          ExhibitU
         </props.Text>
       </props.View>
     </props.View>
@@ -51,7 +49,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   logoTitle: {
-    fontSize: 28,
+    fontSize: 26,
   },
 });
 

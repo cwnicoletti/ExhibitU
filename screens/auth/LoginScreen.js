@@ -96,7 +96,7 @@ const LoginScreen = (props) => {
         <View style={styles.inner}>
           <Image
             style={styles.image}
-            source={require("../../assets/DiamondCase_icon_transparent_white.png")}
+            source={require("../../assets/ExhibitU_icon_transparent_white.png")}
           />
           <Card style={styles.authContainer}>
             <Input
@@ -195,7 +195,7 @@ LoginScreen.navigationOptions = (navData) => {
       <View style={styles.logo}>
         <Image
           style={styles.logoImage}
-          source={require("../../assets/DiamondCase_icon_transparent_white.png")}
+          source={require("../../assets/ExhibitU_icon_transparent_white.png")}
         />
         <Text
           style={{
@@ -203,7 +203,7 @@ LoginScreen.navigationOptions = (navData) => {
             color: "white",
           }}
         >
-          Diamond Case
+          ExhibitU
         </Text>
       </View>
     ),

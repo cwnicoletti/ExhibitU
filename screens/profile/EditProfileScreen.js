@@ -160,7 +160,7 @@ const EditProfileScreen = (props) => {
   const darkModeValue = useSelector((state) => state.switches.darkMode);
   const showResumeValue = useSelector((state) => state.switches.showResume);
   const localId = useSelector((state) => state.auth.userId);
-  const DiamondCaseId = useSelector((state) => state.user.DiamondCaseId);
+  const ExhibitUId = useSelector((state) => state.user.ExhibitUId);
   const profilePictureBase64 = useSelector(
     (state) => state.user.profilePictureBase64
   );
@@ -246,7 +246,7 @@ const EditProfileScreen = (props) => {
     await setIsLoading(true);
     await dispatch(
       uploadUpdateUserProfile(
-        DiamondCaseId,
+        ExhibitUId,
         localId,
         formState.inputValues.fullname,
         formState.inputValues.jobTitle,
@@ -283,7 +283,7 @@ const EditProfileScreen = (props) => {
       } else {
         setFileSizeError(false);
         const base64 = `data:image/png;base64,${result.base64}`;
-        await dispatch(uploadChangeProfilePicture(base64, DiamondCaseId, localId));
+        await dispatch(uploadChangeProfilePicture(base64, ExhibitUId, localId));
       }
     }
     await setIsLoadingTempPicture(false);
@@ -746,7 +746,7 @@ const EditProfileScreen = (props) => {
         label="Show Resume"
         state={showResumeValue}
         onChange={(newValue) => {
-          dispatch(setShowResume(localId, DiamondCaseId, newValue));
+          dispatch(setShowResume(localId, ExhibitUId, newValue));
           setShowResumeField(newValue);
         }}
       />
@@ -948,12 +948,12 @@ EditProfileScreen.navigationOptions = (navData) => {
         {darkModeValue ? (
           <Image
             style={styles.image}
-            source={require("../../assets/DiamondCase_icon_transparent_white.png")}
+            source={require("../../assets/ExhibitU_icon_transparent_white.png")}
           />
         ) : (
           <Image
             style={styles.image}
-            source={require("../../assets/DiamondCase_icon_transparent_black.png")}
+            source={require("../../assets/ExhibitU_icon_transparent_black.png")}
           />
         )}
         <Text

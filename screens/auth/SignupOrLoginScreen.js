@@ -8,8 +8,8 @@ import {
   TouchableOpacity,
   Platform,
 } from "react-native";
-
 import { Fontisto } from "@expo/vector-icons";
+import { useFonts } from "expo-font";
 
 const SignupOrLoginScreen = (props) => {
   let android = null;
@@ -19,12 +19,22 @@ const SignupOrLoginScreen = (props) => {
     android = true;
   }
 
+  const [loaded] = useFonts({
+    CormorantUpright: require("../../assets/fonts/CormorantUpright-Regular.ttf"),
+  });
+
+  if (!loaded) {
+    return null;
+  }
+
   return (
     <View style={styles.screen}>
-      <Text style={styles.titleText}>Diamond Case</Text>
+      <Text style={{ ...styles.titleText, fontFamily: "CormorantUpright" }}>
+        ExhibitU
+      </Text>
       <Image
         style={styles.image}
-        source={require("../../assets/DiamondCase_icon_transparent_white.png")}
+        source={require("../../assets/ExhibitU_icon_transparent_white.png")}
       />
       <View
         style={{
@@ -74,7 +84,7 @@ const SignupOrLoginScreen = (props) => {
           }}
         />
       </View>
-      <Text style={styles.text}>Already have DiamondCase?</Text>
+      <Text style={styles.text}>Already have a ExhibitU account?</Text>
       <View
         style={{
           flexDirection: "row",

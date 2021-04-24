@@ -1,11 +1,11 @@
 import React, { useEffect, useState, useRef } from "react";
 import {
-  Image,
   StyleSheet,
   FlatList,
   View,
   Text,
   RefreshControl,
+  Animated,
 } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 
@@ -16,14 +16,17 @@ import { SimpleLineIcons } from "@expo/vector-icons";
 import { refreshProfile, offScreen } from "../../store/actions/user";
 import useDidMountEffect from "../../components/helper/useDidMountEffect";
 
-import { changeProfileNumberOfColumns } from "../../store/actions/user";
+import {
+  changeProfileNumberOfColumns,
+  showcaseProfile,
+} from "../../store/actions/user";
 
 const ProfileScreen = (props) => {
   const dispatch = useDispatch();
   const [isRefreshing, setIsRefreshing] = useState(false);
   const darkModeValue = useSelector((state) => state.switches.darkMode);
   const localId = useSelector((state) => state.auth.userId);
-  const DiamondCaseId = useSelector((state) => state.user.DiamondCaseId);
+  const ExhibitUId = useSelector((state) => state.user.ExhibitUId);
   const profilePictureBase64 = useSelector(
     (state) => state.user.profilePictureBase64
   );
@@ -31,9 +34,13 @@ const ProfileScreen = (props) => {
   const resetScrollProfile = useSelector(
     (state) => state.user.resetScrollProfile
   );
+  const showcasingProfile = useSelector(
+    (state) => state.user.showcasingProfile
+  );
+  const [hiddenComponent, setHiddenComponent] = useState(false);
 
   const userData = {
-    DiamondCaseId: useSelector((state) => state.user.DiamondCaseId),
+    ExhibitUId: useSelector((state) => state.user.ExhibitUId),
     fullname: useSelector((state) => state.user.fullname),
     username: useSelector((state) => state.user.username),
     jobTitle: useSelector((state) => state.user.jobTitle),
@@ -41,6 +48,32 @@ const ProfileScreen = (props) => {
     profileLinks: useSelector((state) => state.user.profileLinks),
     profileProjects: useSelector((state) => state.user.profileProjects),
   };
+
+  let slideAnim = useRef(new Animated.Value(0)).current;
+
+  const slideDown = () => {
+    Animated.timing(slideAnim, {
+      toValue: 100,
+      duration: 350,
+      useNativeDriver: true,
+    }).start(({ finished }) => (finished ? setHiddenComponent(true) : null));
+  };
+
+  const slideUp = () => {
+    Animated.timing(slideAnim, {
+      toValue: 0,
+      duration: 350,
+      useNativeDriver: true,
+    }).start();
+  };
+
+  useDidMountEffect(() => {
+    if (showcasingProfile === false) {
+      slideAnim.setValue(100);
+      setHiddenComponent(false);
+      slideUp();
+    }
+  }, [showcasingProfile]);
 
   useEffect(() => {
     props.navigation.setParams({ darkMode: darkModeValue });
@@ -101,21 +134,21 @@ const ProfileScreen = (props) => {
         onAddNewProjectPress={() => props.navigation.navigate("AddProject")}
         followersOnPress={() =>
           props.navigation.navigate("Followers", {
-            DiamondCaseId: userData.DiamondCaseId,
+            ExhibitUId: userData.ExhibitUId,
           })
         }
         followingOnPress={() =>
           props.navigation.navigate("Following", {
-            DiamondCaseId: userData.DiamondCaseId,
+            ExhibitUId: userData.ExhibitUId,
           })
         }
         advocatesOnPress={() =>
           props.navigation.navigate("Advocates", {
-            DiamondCaseId: userData.DiamondCaseId,
+            ExhibitUId: userData.ExhibitUId,
           })
         }
         changeColumnToTwo={() => {
-          dispatch(changeProfileNumberOfColumns(localId, DiamondCaseId, 2));
+          dispatch(changeProfileNumberOfColumns(localId, ExhibitUId, 2));
         }}
         columnTwoStyle={{
           borderColor:
@@ -128,7 +161,7 @@ const ProfileScreen = (props) => {
               : "#c9c9c9",
         }}
         changeColumnToThree={() => {
-          dispatch(changeProfileNumberOfColumns(localId, DiamondCaseId, 3));
+          dispatch(changeProfileNumberOfColumns(localId, ExhibitUId, 3));
         }}
         columnThreeStyle={{
           borderColor:
@@ -141,7 +174,7 @@ const ProfileScreen = (props) => {
               : "#c9c9c9",
         }}
         changeColumnToFour={() => {
-          dispatch(changeProfileNumberOfColumns(localId, DiamondCaseId, 4));
+          dispatch(changeProfileNumberOfColumns(localId, ExhibitUId, 4));
         }}
         columnFourStyle={{
           borderColor:
@@ -195,35 +228,45 @@ const ProfileScreen = (props) => {
           />
         )}
       />
-      <TouchableOpacity
-        style={{
-          margin: 10,
-          padding: 10,
-          alignItems: "center",
-          justifyContent: "center",
-          borderWidth: 1,
-          borderColor: darkModeValue ? "gray" : "#c9c9c9",
-          flexDirection: "row",
-        }}
-        onPress={() => {
-          props.navigation.push("ShowcaseProfile");
-        }}
-      >
-        <SimpleLineIcons
-          name="trophy"
-          size={24}
-          color={darkModeValue ? "white" : "black"}
-        />
-        <Text
+      {!hiddenComponent ? (
+        <Animated.View
           style={{
-            color: darkModeValue ? "white" : "black",
-            fontWeight: "bold",
-            marginLeft: 10,
+            transform: [{ translateY: slideAnim }],
           }}
         >
-          Showcase profile
-        </Text>
-      </TouchableOpacity>
+          <TouchableOpacity
+            style={{
+              margin: 10,
+              padding: 10,
+              alignItems: "center",
+              justifyContent: "center",
+              borderWidth: 1,
+              borderColor: darkModeValue ? "gray" : "#c9c9c9",
+              flexDirection: "row",
+            }}
+            onPress={() => {
+              slideDown();
+              dispatch(showcaseProfile());
+              props.navigation.push("ShowcaseProfile");
+            }}
+          >
+            <SimpleLineIcons
+              name="trophy"
+              size={24}
+              color={darkModeValue ? "white" : "black"}
+            />
+            <Text
+              style={{
+                color: darkModeValue ? "white" : "black",
+                fontWeight: "bold",
+                marginLeft: 10,
+              }}
+            >
+              Showcase profile
+            </Text>
+          </TouchableOpacity>
+        </Animated.View>
+      ) : null}
     </View>
   );
 };

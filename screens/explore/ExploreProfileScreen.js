@@ -29,7 +29,7 @@ const ExploreProfileScreen = (props) => {
   const [isRefreshing, setIsRefreshing] = useState(false);
   const darkModeValue = useSelector((state) => state.switches.darkMode);
   const localId = useSelector((state) => state.auth.userId);
-  const DiamondCaseId = useSelector((state) => state.user.DiamondCaseId);
+  const ExhibitUId = useSelector((state) => state.user.ExhibitUId);
   const following = useSelector((state) => state.user.following);
   const projectsAdvocating = useSelector(
     (state) => state.user.projectsAdvocating
@@ -37,7 +37,7 @@ const ExploreProfileScreen = (props) => {
 
   const [exploredUserData, setExploredUserData] = useState({
     text: props.navigation.getParam("text"),
-    exploredDiamondCaseId: props.navigation.getParam("DiamondCaseId"),
+    exploredExhibitUId: props.navigation.getParam("ExhibitUId"),
     profilePictureUrl: props.navigation.getParam("profilePictureUrl"),
     fullname: props.navigation.getParam("fullname"),
     username: props.navigation.getParam("username"),
@@ -65,7 +65,7 @@ const ExploreProfileScreen = (props) => {
   });
 
   const [isfollowing, setIsFollowing] = useState(
-    exploredUserData.followers.includes(DiamondCaseId) ? true : false
+    exploredUserData.followers.includes(ExhibitUId) ? true : false
   );
   const [numberOfFollowersLocal, setNumberOfFollowersLocal] = useState(
     exploredUserData.numberOfFollowers
@@ -86,7 +86,7 @@ const ExploreProfileScreen = (props) => {
     if (exploredUserData.text) {
       index.search(exploredUserData.text).then((responses) => {
         responses.hits.forEach((hit) => {
-          if (hit.objectID === exploredUserData.exploredDiamondCaseId) {
+          if (hit.objectID === exploredUserData.exploredExhibitUId) {
             setNumberOfAdvocatesLocal(hit.numberOfAdvocates);
             const exploredUserDataPrevState = exploredUserData;
             exploredUserDataPrevState.numberOfAdvocates = hit.numberOfAdvocates;
@@ -102,9 +102,9 @@ const ExploreProfileScreen = (props) => {
     if (exploredUserData.text) {
       index.search(exploredUserData.text).then((responses) => {
         responses.hits.forEach((hit) => {
-          if (hit.objectID === exploredUserData.exploredDiamondCaseId) {
+          if (hit.objectID === exploredUserData.exploredExhibitUId) {
             setNumberOfFollowersLocal(hit.numberOfFollowers);
-            if (hit.followers.includes(DiamondCaseId)) {
+            if (hit.followers.includes(ExhibitUId)) {
               setIsFollowing(true);
             } else {
               setIsFollowing(false);
@@ -118,7 +118,7 @@ const ExploreProfileScreen = (props) => {
   const followUserHandler = useCallback(async () => {
     await setIsLoading(true);
     await dispatch(
-      await followUser(exploredUserData.exploredDiamondCaseId, DiamondCaseId, localId)
+      await followUser(exploredUserData.exploredExhibitUId, ExhibitUId, localId)
     );
     await setIsFollowing(true);
     await setIsLoading(false);
@@ -128,8 +128,8 @@ const ExploreProfileScreen = (props) => {
     await setIsLoading(true);
     await dispatch(
       await unfollowUser(
-        exploredUserData.exploredDiamondCaseId,
-        DiamondCaseId,
+        exploredUserData.exploredExhibitUId,
+        ExhibitUId,
         localId
       )
     );
@@ -141,7 +141,7 @@ const ExploreProfileScreen = (props) => {
     setIsRefreshing(true);
     index.search(exploredUserData.text).then((responses) => {
       responses.hits.forEach((hit) => {
-        if (hit.objectID === exploredUserData.exploredDiamondCaseId) {
+        if (hit.objectID === exploredUserData.exploredExhibitUId) {
           const exploredUserDataPrevState = exploredUserData;
           exploredUserDataPrevState.profileProjects = hit.profileProjects;
           exploredUserDataPrevState.following = hit.following;
@@ -170,9 +170,9 @@ const ExploreProfileScreen = (props) => {
   };
 
   useEffect(() => {
-    props.navigation.setParams({ DiamondCaseId: DiamondCaseId });
+    props.navigation.setParams({ ExhibitUId: ExhibitUId });
     props.navigation.setParams({
-      exploredDiamondCaseId: exploredUserData.exploredDiamondCaseId,
+      exploredExhibitUId: exploredUserData.exploredExhibitUId,
     });
     props.navigation.setParams({ followFn: followUserHandler });
     props.navigation.setParams({ unfollowFn: unfollowUserHandler });
@@ -250,21 +250,21 @@ const ExploreProfileScreen = (props) => {
         hideFollowing={exploredUserData.hideFollowing}
         hideFollowers={exploredUserData.hideFollowers}
         hideAdvocates={exploredUserData.hideAdvocates}
-        DiamondCaseId={exploredUserData.exploredDiamondCaseId}
+        ExhibitUId={exploredUserData.exploredExhibitUId}
         links={exploredUserData.profileLinks}
         followersOnPress={() =>
           props.navigation.navigate("ExploreFollowers", {
-            DiamondCaseId: exploredUserData.exploredDiamondCaseId,
+            ExhibitUId: exploredUserData.exploredExhibitUId,
           })
         }
         followingOnPress={() =>
           props.navigation.navigate("ExploreFollowing", {
-            DiamondCaseId: exploredUserData.exploredDiamondCaseId,
+            ExhibitUId: exploredUserData.exploredExhibitUId,
           })
         }
         advocatesOnPress={() =>
           props.navigation.navigate("ExploreAdvocates", {
-            exploredDiamondCaseId: exploredUserData.exploredDiamondCaseId,
+            exploredExhibitUId: exploredUserData.exploredExhibitUId,
           })
         }
       />
@@ -324,8 +324,8 @@ ExploreProfileScreen.navigationOptions = (navData) => {
   const darkModeValue = navData.navigation.getParam("darkMode");
   const isfollowing = navData.navigation.getParam("isfollowing");
   const isLoading = navData.navigation.getParam("isLoading");
-  const DiamondCaseId = navData.navigation.getParam("DiamondCaseId");
-  const exploredDiamondCaseId = navData.navigation.getParam("exploredDiamondCaseId");
+  const ExhibitUId = navData.navigation.getParam("ExhibitUId");
+  const exploredExhibitUId = navData.navigation.getParam("exploredExhibitUId");
   const followFn = navData.navigation.getParam("followFn");
   const unfollowFn = navData.navigation.getParam("unfollowFn");
   return {
@@ -334,12 +334,12 @@ ExploreProfileScreen.navigationOptions = (navData) => {
         {darkModeValue ? (
           <Image
             style={styles.image}
-            source={require("../../assets/DiamondCase_icon_transparent_white.png")}
+            source={require("../../assets/ExhibitU_icon_transparent_white.png")}
           />
         ) : (
           <Image
             style={styles.image}
-            source={require("../../assets/DiamondCase_icon_transparent_black.png")}
+            source={require("../../assets/ExhibitU_icon_transparent_black.png")}
           />
         )}
         <Text
@@ -348,7 +348,7 @@ ExploreProfileScreen.navigationOptions = (navData) => {
             color: darkModeValue ? "white" : "black",
           }}
         >
-          Diamond Case
+          ExhibitU
         </Text>
       </View>
     ),
@@ -373,7 +373,7 @@ ExploreProfileScreen.navigationOptions = (navData) => {
     ),
     headerRight: () => (
       <View>
-        {DiamondCaseId !== exploredDiamondCaseId ? (
+        {ExhibitUId !== exploredExhibitUId ? (
           <View>
             {!isfollowing ? (
               <View>

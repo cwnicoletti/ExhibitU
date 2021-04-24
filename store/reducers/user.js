@@ -35,14 +35,15 @@ import {
   GET_UPDATES,
   REFRESH_PROFILE,
   RESET_SCROLL,
-  SHOWCASE_LOCALLY,
   ON_SCREEN,
   OFF_SCREEN,
+  SHOWCASE_PROFILE,
   RETURN_FROM_SHOWCASING,
+  HIDE_PROFILE_FOOTER,
 } from "../actions/user";
 
 const intialState = {
-  DiamondCaseId: "",
+  ExhibitUId: "",
   email: "",
   profilePictureUrl: "",
   profilePictureBase64: "",
@@ -75,6 +76,8 @@ const intialState = {
   resetScrollFeed: false,
   resetScrollExplore: false,
   resetScrollProfile: false,
+  showcasingProfile: false,
+  hiddenProfileFooter: false,
   onFeedScreen: true,
   onExploreScreen: true,
   onProfileScreen: true,
@@ -85,7 +88,7 @@ export default (state = intialState, action) => {
     case GET_USER_DATA:
       return {
         ...state,
-        DiamondCaseId: action.DiamondCaseId,
+        ExhibitUId: action.ExhibitUId,
         email: action.email,
         profilePictureUrl: action.profilePictureUrl,
         profilePictureBase64: action.profilePictureBase64,
@@ -200,7 +203,7 @@ export default (state = intialState, action) => {
       };
     case ADD_USER_PROJECT:
       Object.entries(state.userFeed).map(([id, value]) => {
-        if (state.userFeed[id].DiamondCaseId === action.DiamondCaseId) {
+        if (state.userFeed[id].ExhibitUId === action.ExhibitUId) {
           Object.assign(state.userFeed[id].profileProjects, {
             ...state.profileProjects,
             [action.projectId]: {
@@ -257,7 +260,7 @@ export default (state = intialState, action) => {
               ...state.profileProjects[action.projectId].projectPosts,
               [action.postId]: {
                 postId: action.postId,
-                DiamondCaseId: action.DiamondCaseId,
+                ExhibitUId: action.ExhibitUId,
                 projectId: action.projectId,
                 fullname: action.fullname,
                 username: action.username,
@@ -287,7 +290,7 @@ export default (state = intialState, action) => {
           ...state.userFeed,
           [action.postId]: {
             postId: action.postId,
-            DiamondCaseId: action.DiamondCaseId,
+            ExhibitUId: action.ExhibitUId,
             projectId: action.projectId,
             fullname: action.fullname,
             username: action.username,
@@ -304,7 +307,7 @@ export default (state = intialState, action) => {
                   ...state.profileProjects[action.projectId].projectPosts,
                   [action.postId]: {
                     postId: action.postId,
-                    DiamondCaseId: action.DiamondCaseId,
+                    ExhibitUId: action.ExhibitUId,
                     projectId: action.projectId,
                     fullname: action.fullname,
                     username: action.username,
@@ -351,7 +354,7 @@ export default (state = intialState, action) => {
     case UPDATE_ALL_POSTS:
       Object.entries(state.userFeed).map(([id, value]) => {
         if (id !== action.postId) {
-          if (state.userFeed[id].DiamondCaseId === action.DiamondCaseId) {
+          if (state.userFeed[id].ExhibitUId === action.ExhibitUId) {
             Object.assign(
               state.userFeed[id].profileProjects,
               state.userFeed[action.postId].profileProjects
@@ -426,21 +429,21 @@ export default (state = intialState, action) => {
     case FOLLOW_USER:
       return {
         ...state,
-        following: state.following.concat(action.exploredDiamondCaseId),
+        following: state.following.concat(action.exploredExhibitUId),
         numberOfFollowing: state.numberOfFollowing + 1,
       };
     case UNFOLLOW_USER:
       return {
         ...state,
         following: state.following.filter(
-          (user) => user !== action.exploredDiamondCaseId
+          (user) => user !== action.exploredExhibitUId
         ),
         numberOfFollowing: state.numberOfFollowing - 1,
       };
     case ADVOCATE_FOR_USER:
       return {
         ...state,
-        advocating: state.advocating.concat(action.exploredDiamondCaseId),
+        advocating: state.advocating.concat(action.exploredExhibitUId),
         projectsAdvocating: state.projectsAdvocating.concat(action.projectId),
         numberOfAdvocating: state.numberOfAdvocating + 1,
       };
@@ -448,7 +451,7 @@ export default (state = intialState, action) => {
       return {
         ...state,
         advocating: state.advocating.filter(
-          (user) => user !== action.exploredDiamondCaseId
+          (user) => user !== action.exploredExhibitUId
         ),
         projectsAdvocating: state.projectsAdvocating.filter(
           (user) => user !== action.projectId
@@ -480,7 +483,7 @@ export default (state = intialState, action) => {
                       ...state.userFeed[action.postId].profileProjects[
                         action.projectId
                       ].projectPosts[action.postId].cheering,
-                      action.DiamondCaseId,
+                      action.ExhibitUId,
                     ],
                     numberOfCheers:
                       state.userFeed[action.postId].profileProjects[
@@ -492,7 +495,7 @@ export default (state = intialState, action) => {
             },
             cheering: [
               ...state.userFeed[action.postId].cheering,
-              action.DiamondCaseId,
+              action.ExhibitUId,
             ],
             numberOfCheers: state.userFeed[action.postId].numberOfCheers + 1,
           },
@@ -543,7 +546,7 @@ export default (state = intialState, action) => {
                   ...state.profileProjects[action.projectId].projectPosts[
                     action.postId
                   ].cheering,
-                  action.DiamondCaseId,
+                  action.ExhibitUId,
                 ],
               },
             },
@@ -571,7 +574,7 @@ export default (state = intialState, action) => {
                   ...state.profileProjects[action.projectId].projectPosts[
                     action.postId
                   ].cheering,
-                  action.DiamondCaseId,
+                  action.ExhibitUId,
                 ],
               },
             },
@@ -599,7 +602,7 @@ export default (state = intialState, action) => {
                       ...state.userFeed[action.postId].profileProjects[
                         action.projectId
                       ].projectPosts[action.postId].cheering,
-                      action.DiamondCaseId,
+                      action.ExhibitUId,
                     ],
                     numberOfCheers:
                       state.userFeed[action.postId].profileProjects[
@@ -611,7 +614,7 @@ export default (state = intialState, action) => {
             },
             cheering: [
               ...state.userFeed[action.postId].cheering,
-              action.DiamondCaseId,
+              action.ExhibitUId,
             ],
             numberOfCheers: state.userFeed[action.postId].numberOfCheers + 1,
           },
@@ -642,7 +645,7 @@ export default (state = intialState, action) => {
                     cheering: state.userFeed[action.postId].profileProjects[
                       action.projectId
                     ].projectPosts[action.postId].cheering.filter(
-                      (DiamondCaseId) => DiamondCaseId !== action.DiamondCaseId
+                      (ExhibitUId) => ExhibitUId !== action.ExhibitUId
                     ),
                     numberOfCheers:
                       state.userFeed[action.postId].profileProjects[
@@ -653,7 +656,7 @@ export default (state = intialState, action) => {
               },
             },
             cheering: state.userFeed[action.postId].cheering.filter(
-              (DiamondCaseId) => DiamondCaseId !== action.DiamondCaseId
+              (ExhibitUId) => ExhibitUId !== action.ExhibitUId
             ),
             numberOfCheers: state.userFeed[action.postId].numberOfCheers - 1,
           },
@@ -705,7 +708,8 @@ export default (state = intialState, action) => {
                 cheering: state.profileProjects[action.projectId].projectPosts[
                   action.postId
                 ].cheering.filter(
-                  (listDiamondCaseId) => listDiamondCaseId !== action.DiamondCaseId
+                  (listExhibitUId) =>
+                    listExhibitUId !== action.ExhibitUId
                 ),
               },
             },
@@ -732,7 +736,8 @@ export default (state = intialState, action) => {
                 cheering: state.profileProjects[action.projectId].projectPosts[
                   action.postId
                 ].cheering.filter(
-                  (listDiamondCaseId) => listDiamondCaseId !== action.DiamondCaseId
+                  (listExhibitUId) =>
+                    listExhibitUId !== action.ExhibitUId
                 ),
               },
             },
@@ -759,7 +764,7 @@ export default (state = intialState, action) => {
                     cheering: state.userFeed[action.postId].profileProjects[
                       action.projectId
                     ].projectPosts[action.postId].cheering.filter(
-                      (DiamondCaseId) => DiamondCaseId !== action.DiamondCaseId
+                      (ExhibitUId) => ExhibitUId !== action.ExhibitUId
                     ),
                     numberOfCheers:
                       state.userFeed[action.postId].profileProjects[
@@ -770,7 +775,7 @@ export default (state = intialState, action) => {
               },
             },
             cheering: state.userFeed[action.postId].cheering.filter(
-              (DiamondCaseId) => DiamondCaseId !== action.DiamondCaseId
+              (ExhibitUId) => ExhibitUId !== action.ExhibitUId
             ),
             numberOfCheers: state.userFeed[action.postId].numberOfCheers - 1,
           },
@@ -825,10 +830,21 @@ export default (state = intialState, action) => {
         ...state,
         [`on${action.tab}Screen`]: false,
       };
-    case SHOWCASE_LOCALLY:
+    case SHOWCASE_PROFILE:
       return {
         ...state,
-        showcasingLocally: !state.showcasingLocally,
+        showcasingProfile: true,
+      };
+    case RETURN_FROM_SHOWCASING:
+      return {
+        ...state,
+        showcasingProfile: false,
+      };
+
+    case HIDE_PROFILE_FOOTER:
+      return {
+        ...state,
+        hiddenProfileFooter: action.value,
       };
   }
   return state;

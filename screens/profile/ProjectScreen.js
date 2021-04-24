@@ -19,7 +19,7 @@ const ProjectScreen = (props) => {
   const dispatch = useDispatch();
   const darkModeValue = useSelector((state) => state.switches.darkMode);
   const localId = useSelector((state) => state.auth.userId);
-  const DiamondCaseId = useSelector((state) => state.user.DiamondCaseId);
+  const ExhibitUId = useSelector((state) => state.user.ExhibitUId);
   const profileProjects = useSelector((state) => state.user.profileProjects);
   const currentProjectId = props.navigation.getParam("projectId");
   const project = profileProjects[currentProjectId];
@@ -30,7 +30,7 @@ const ProjectScreen = (props) => {
   }
 
   const viewCommentsHandler = (
-    DiamondCaseId,
+    ExhibitUId,
     projectId,
     postId,
     fullname,
@@ -47,7 +47,7 @@ const ProjectScreen = (props) => {
     links
   ) => {
     props.navigation.push("PictureScreen", {
-      DiamondCaseId,
+      ExhibitUId,
       projectId,
       postId,
       fullname,
@@ -127,7 +127,7 @@ const ProjectScreen = (props) => {
           dispatch(
             changeProjectNumberOfColumns(
               localId,
-              DiamondCaseId,
+              ExhibitUId,
               currentProjectId,
               2
             )
@@ -147,7 +147,7 @@ const ProjectScreen = (props) => {
           dispatch(
             changeProjectNumberOfColumns(
               localId,
-              DiamondCaseId,
+              ExhibitUId,
               currentProjectId,
               3
             )
@@ -167,7 +167,7 @@ const ProjectScreen = (props) => {
           dispatch(
             changeProjectNumberOfColumns(
               localId,
-              DiamondCaseId,
+              ExhibitUId,
               currentProjectId,
               4
             )
@@ -221,7 +221,7 @@ const ProjectScreen = (props) => {
             imageContainer={styles.imageContainer}
             onSelect={() =>
               viewCommentsHandler(
-                itemData.item.DiamondCaseId,
+                itemData.item.ExhibitUId,
                 itemData.item.projectId,
                 itemData.item.postId,
                 itemData.item.fullname,
@@ -265,24 +265,14 @@ ProjectScreen.navigationOptions = (navData) => {
   return {
     headerTitle: () => (
       <View style={styles.logo}>
-        {darkModeValue ? (
-          <Image
-            style={styles.image}
-            source={require("../../assets/DiamondCase_icon_transparent_white.png")}
-          />
-        ) : (
-          <Image
-            style={styles.image}
-            source={require("../../assets/DiamondCase_icon_transparent_black.png")}
-          />
-        )}
         <Text
           style={{
             ...styles.logoTitle,
             color: darkModeValue ? "white" : "black",
+            fontFamily: "CormorantUpright",
           }}
         >
-          Diamond Case
+          ExhibitU
         </Text>
       </View>
     ),
@@ -350,7 +340,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   logoTitle: {
-    fontSize: 22,
+    fontSize: 26,
   },
   details: {
     height: 0,

@@ -52,10 +52,10 @@ const FeedItem = (props) => {
   const darkModeValue = useSelector((state) => state.switches.darkMode);
   const cheeredPosts = useSelector((state) => state.user.cheeredPosts);
   const localId = useSelector((state) => state.auth.userId);
-  const DiamondCaseId = useSelector((state) => state.user.DiamondCaseId);
+  const ExhibitUId = useSelector((state) => state.user.ExhibitUId);
   const projectId = props.projectId;
   const postId = props.postId;
-  const posterDiamondCaseId = props.posterDiamondCaseId;
+  const posterExhibitUId = props.posterExhibitUId;
   const links = props.links ? props.links : {};
   const fullname = props.fullname;
   const defaultPostIcon = require("../../assets/default-profile-icon.jpg");
@@ -150,10 +150,16 @@ const FeedItem = (props) => {
       if (!cheeredPosts.includes(postId)) {
         await setLoadingCheer(true);
         await dispatch(
-          cheerPost(localId, DiamondCaseId, projectId, postId, posterDiamondCaseId)
+          cheerPost(
+            localId,
+            ExhibitUId,
+            projectId,
+            postId,
+            posterExhibitUId
+          )
         );
-        if (DiamondCaseId === posterDiamondCaseId) {
-          await dispatch(cheerOwnFeedPost(DiamondCaseId, projectId, postId));
+        if (ExhibitUId === posterExhibitUId) {
+          await dispatch(cheerOwnFeedPost(ExhibitUId, projectId, postId));
         }
         await setLoadingCheer(false);
       }
@@ -167,10 +173,16 @@ const FeedItem = (props) => {
     if (cheeredPosts.includes(postId)) {
       await setLoadingCheer(true);
       await dispatch(
-        uncheerPost(localId, DiamondCaseId, projectId, postId, posterDiamondCaseId)
+        uncheerPost(
+          localId,
+          ExhibitUId,
+          projectId,
+          postId,
+          posterExhibitUId
+        )
       );
-      if (DiamondCaseId === posterDiamondCaseId) {
-        await dispatch(uncheerOwnFeedPost(DiamondCaseId, projectId, postId));
+      if (ExhibitUId === posterExhibitUId) {
+        await dispatch(uncheerOwnFeedPost(ExhibitUId, projectId, postId));
       }
       await setLoadingCheer(false);
     }
@@ -497,8 +509,20 @@ const FeedItem = (props) => {
         </View>
       ) : null}
       <View style={{ ...styles.dateContainer, ...props.dateContainer }}>
-        <Text style={{ ...styles.date, ...props.dateStyle }}>
-          {`${postDateCreated.toLocaleString()}`}
+        <Text
+          style={{ ...styles.date, ...props.dateStyle, flexDirection: "row" }}
+        >
+          {`${postDateCreated.toLocaleString("UTC", {
+            weekday: "long",
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+          })}`}
+          {", "}
+          {`${postDateCreated.toLocaleString("UTC", {
+            hour: "numeric",
+            minute: "numeric",
+          })}`}
         </Text>
       </View>
     </View>

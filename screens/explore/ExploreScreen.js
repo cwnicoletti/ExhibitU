@@ -61,7 +61,7 @@ const ExploreScreen = (props) => {
 
   const viewProfileHandler = (
     text,
-    DiamondCaseId,
+    ExhibitUId,
     profilePictureUrl,
     fullname,
     username,
@@ -87,7 +87,7 @@ const ExploreScreen = (props) => {
     dispatch(offScreen("Explore"));
     props.navigation.push("ExploreProfile", {
       text,
-      DiamondCaseId,
+      ExhibitUId,
       profilePictureUrl,
       fullname,
       username,
@@ -222,12 +222,12 @@ ExploreScreen.navigationOptions = (navData) => {
         {darkModeValue ? (
           <Image
             style={styles.image}
-            source={require("../../assets/DiamondCase_icon_transparent_white.png")}
+            source={require("../../assets/ExhibitU_icon_transparent_white.png")}
           />
         ) : (
           <Image
             style={styles.image}
-            source={require("../../assets/DiamondCase_icon_transparent_black.png")}
+            source={require("../../assets/ExhibitU_icon_transparent_black.png")}
           />
         )}
         <Text
@@ -236,7 +236,7 @@ ExploreScreen.navigationOptions = (navData) => {
             color: darkModeValue ? "white" : "black",
           }}
         >
-          Diamond Case
+          ExhibitU
         </Text>
       </View>
     ),

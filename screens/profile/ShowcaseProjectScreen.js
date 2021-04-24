@@ -16,11 +16,11 @@ import { HeaderButtons, Item } from "react-navigation-header-buttons";
 
 const ShowcaseProjectScreen = (props) => {
   const darkModeValue = useSelector((state) => state.switches.darkMode);
-  const DiamondCaseId = useSelector((state) => state.switches.DiamondCaseId);
+  const ExhibitUId = useSelector((state) => state.switches.ExhibitUId);
   const currentProjectId = props.navigation.getParam("projectId");
   const profileProjects = props.navigation.getParam("profileProjects");
   const profilePictureBase64 =
-    props.navigation.getParam("DiamondCaseId") === DiamondCaseId ||
+    props.navigation.getParam("ExhibitUId") === ExhibitUId ||
     props.navigation.getParam("profilePictureBase64") === undefined
       ? useSelector((state) => state.user.profilePictureBase64)
       : props.navigation.getParam("profilePictureBase64");
@@ -33,7 +33,7 @@ const ShowcaseProjectScreen = (props) => {
   }
 
   const viewCommentsHandler = (
-    DiamondCaseId,
+    ExhibitUId,
     projectId,
     postId,
     fullname,
@@ -50,7 +50,7 @@ const ShowcaseProjectScreen = (props) => {
     links
   ) => {
     props.navigation.push("ShowcasePictureScreen", {
-      DiamondCaseId,
+      ExhibitUId,
       projectId,
       postId,
       fullname,
@@ -134,7 +134,7 @@ const ShowcaseProjectScreen = (props) => {
             imageContainer={styles.imageContainer}
             onSelect={() =>
               viewCommentsHandler(
-                itemData.item.DiamondCaseId,
+                itemData.item.ExhibitUId,
                 itemData.item.projectId,
                 itemData.item.postId,
                 itemData.item.fullname,
@@ -163,24 +163,14 @@ ShowcaseProjectScreen.navigationOptions = (navData) => {
   return {
     headerTitle: () => (
       <View style={styles.logo}>
-        {darkModeValue ? (
-          <Image
-            style={styles.image}
-            source={require("../../assets/DiamondCase_icon_transparent_white.png")}
-          />
-        ) : (
-          <Image
-            style={styles.image}
-            source={require("../../assets/DiamondCase_icon_transparent_black.png")}
-          />
-        )}
         <Text
           style={{
             ...styles.logoTitle,
             color: darkModeValue ? "white" : "black",
+            fontFamily: "CormorantUpright",
           }}
         >
-          Diamond Case
+          ExhibitU
         </Text>
       </View>
     ),
@@ -228,7 +218,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   logoTitle: {
-    fontSize: 22,
+    fontSize: 26,
   },
   details: {
     height: 0,

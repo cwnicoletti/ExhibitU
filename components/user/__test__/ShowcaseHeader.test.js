@@ -1,5 +1,5 @@
 import React from "react";
-import DiamondCaseHeader from "../DiamondCaseHeader";
+import ExhibitUHeader from "../ExhibitUHeader";
 import renderer from "react-test-renderer";
 
 import { createStore, combineReducers, applyMiddleware } from "redux";
@@ -26,7 +26,7 @@ test("renders correctly", () => {
     .create(
       <Provider store={store}>
         <SafeAreaProvider>
-          <DiamondCaseHeader />
+          <ExhibitUHeader />
         </SafeAreaProvider>
       </Provider>
     )

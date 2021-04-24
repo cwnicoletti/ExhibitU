@@ -7,7 +7,7 @@ import { createBottomTabNavigator } from "react-navigation-tabs";
 import { createDrawerNavigator, DrawerActions } from "react-navigation-drawer";
 
 import ProfileScreen from "../screens/profile/ProfileScreen";
-import DiamondCaseSettingsScreen from "../screens/drawers/DiamondCaseSettingsScreen";
+import ShowcaseSettingsScreen from "../screens/drawers/ShowcaseSettingsScreen";
 import VoteUpdatesSettingsScreen from "../screens/drawers/VoteUpdatesSettingsScreen";
 import EditProfileScreen from "../screens/profile/EditProfileScreen";
 import SignupOrLoginScreen from "../screens/auth/SignupOrLoginScreen";
@@ -59,24 +59,22 @@ import TitleOnlyHeader from "../components/headers/TitleOnlyHeader";
 
 import { logout } from "../store/actions/auth";
 
-const FeedandViewNavigator = createStackNavigator(
-  {
-    Feed: {
-      screen: FeedScreen,
-      navigationOptions: ({ navigation }) => ({
-        header: () => <TitleOnlyHeader navigation={navigation} />,
-      }),
-    },
-    ViewCheering: FeedCheeringScreen,
-    ViewComments: FeedCommentsScreen,
-    ViewProfile: FeedProfileScreen,
-    ViewFollowers: FeedFollowersScreen,
-    ViewFollowing: FeedFollowingScreen,
-    ViewAdvocates: FeedAdvocatesScreen,
-    ViewFeedProject: FeedProjectScreen,
-    ViewFeedProfileProject: FeedProjectScreen,
-  }
-);
+const FeedandViewNavigator = createStackNavigator({
+  Feed: {
+    screen: FeedScreen,
+    navigationOptions: ({ navigation }) => ({
+      header: () => <TitleOnlyHeader navigation={navigation} />,
+    }),
+  },
+  ViewCheering: FeedCheeringScreen,
+  ViewComments: FeedCommentsScreen,
+  ViewProfile: FeedProfileScreen,
+  ViewFollowers: FeedFollowersScreen,
+  ViewFollowing: FeedFollowingScreen,
+  ViewAdvocates: FeedAdvocatesScreen,
+  ViewFeedProject: FeedProjectScreen,
+  ViewFeedProfileProject: FeedProjectScreen,
+});
 
 const RightFeedDrawerNavigator = createDrawerNavigator(
   {
@@ -107,9 +105,9 @@ const FeedNavigator = createDrawerNavigator(
         <RightDrawer
           navData={navData}
           component={FeedNavigator}
-          DiamondCaseOnPress={() => {
+          ShowcaseOnPress={() => {
             navData.navigation.closeRightDrawer();
-            navData.navigation.navigate("DiamondCaseSettings");
+            navData.navigation.navigate("ShowcaseSettings");
           }}
           updatesOnPress={() => {
             navData.navigation.closeRightDrawer();
@@ -134,23 +132,21 @@ const FeedNavigator = createDrawerNavigator(
   }
 );
 
-const ExploreNavigator = createStackNavigator(
-  {
-    Explore: {
-      screen: ExploreScreen,
-      navigationOptions: ({ navigation }) => ({
-        header: () => <TitleOnlyHeader navigation={navigation} />,
-      }),
-    },
-    ExploreProfile: ExploreProfileScreen,
-    ViewExploredProfileProject: ExploreProjectScreen,
-    ViewExploredProfileProjectPicture: ExplorePictureScreen,
-    ExploreCheering: ExploreCheeringScreen,
-    ExploreFollowers: ExploreFollowersScreen,
-    ExploreFollowing: ExploreFollowingScreen,
-    ExploreAdvocates: ExploreAdvocatesScreen,
-  }
-);
+const ExploreNavigator = createStackNavigator({
+  Explore: {
+    screen: ExploreScreen,
+    navigationOptions: ({ navigation }) => ({
+      header: () => <TitleOnlyHeader navigation={navigation} />,
+    }),
+  },
+  ExploreProfile: ExploreProfileScreen,
+  ViewExploredProfileProject: ExploreProjectScreen,
+  ViewExploredProfileProjectPicture: ExplorePictureScreen,
+  ExploreCheering: ExploreCheeringScreen,
+  ExploreFollowers: ExploreFollowersScreen,
+  ExploreFollowing: ExploreFollowingScreen,
+  ExploreAdvocates: ExploreAdvocatesScreen,
+});
 
 const RightExploreDrawerNavigator = createDrawerNavigator(
   {
@@ -186,7 +182,7 @@ const ProfileandSettingsNavigator = createStackNavigator({
   ShowcaseProject: ShowcaseProjectScreen,
   ShowcasePictureScreen: ShowcasePictureScreen,
   EditProfile: EditProfileScreen,
-  DiamondCaseSettings: DiamondCaseSettingsScreen,
+  ShowcaseSettings: ShowcaseSettingsScreen,
   Updates: VoteUpdatesSettingsScreen,
   Advocates: AdvocatesScreen,
   Following: FollowingScreen,
@@ -226,9 +222,9 @@ const ProfileNavigator = createDrawerNavigator(
         <RightDrawer
           navData={navData}
           component={ProfileNavigator}
-          DiamondCaseOnPress={() => {
+          ShowcaseOnPress={() => {
             navData.navigation.closeRightDrawer();
-            navData.navigation.navigate("DiamondCaseSettings");
+            navData.navigation.navigate("ShowcaseSettings");
           }}
           updatesOnPress={() => {
             navData.navigation.closeRightDrawer();
@@ -280,9 +276,7 @@ const tabScreenConfig = {
   },
 };
 
-const FullAppNavigator = createBottomTabNavigator(tabScreenConfig, {
-  lazy: false,
-});
+const FullAppNavigator = createBottomTabNavigator(tabScreenConfig);
 
 const StartSignup = createStackNavigator({
   SignupOrLogin: SignupOrLoginScreen,
