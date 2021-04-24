@@ -1,5 +1,5 @@
-# Diamond Case
-<a href="https://github.com/cwnicoletti/Diamond-Case/blob/main/LICENSE"><img src="https://img.shields.io/badge/License-CC%20BY--NC%204.0-critical" alt="CC BY-NC 4.0"></a>  <img src="https://img.shields.io/github/repo-size/cwnicoletti/Diamond-Case" alt="Repo Size">  [![Codacy Badge](https://app.codacy.com/project/badge/Grade/6749da8aa61a4e6c80c7c72138157fd5)](https://www.codacy.com/gh/cwnicoletti/Diamond-Case/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=cwnicoletti/Diamond-Case&amp;utm_campaign=Badge_Grade)
+# ExhibitU
+<a href="https://github.com/cwnicoletti/ExhibitU/blob/main/LICENSE"><img src="https://img.shields.io/badge/License-CC%20BY--NC%204.0-critical" alt="CC BY-NC 4.0"></a>  <img src="https://img.shields.io/github/repo-size/cwnicoletti/ExhibitU" alt="Repo Size">  [![Codacy Badge](https://app.codacy.com/project/badge/Grade/6749da8aa61a4e6c80c7c72138157fd5)](https://www.codacy.com/gh/cwnicoletti/ExhibitU/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=cwnicoletti/Diamond-Case&amp;utm_campaign=Badge_Grade)
 
 This is a mobile app built using React Native and Expo. Designs were made via Adobe Xd.
 
