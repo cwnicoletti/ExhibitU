@@ -38,7 +38,7 @@ const StartupScreen = (props) => {
 
   return (
     <View style={styles.screen}>
-      <ActivityIndicator size="large" />
+      <ActivityIndicator size="large" color="white" />
     </View>
   );
 };

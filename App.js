@@ -1,4 +1,5 @@
 import React from "react";
+import { View } from "react-native";
 import { createStore, combineReducers, applyMiddleware } from "redux";
 import { Provider } from "react-redux";
 import { SafeAreaProvider } from "react-native-safe-area-context";
@@ -34,7 +35,9 @@ export default App = () => {
   return (
     <Provider store={store}>
       <SafeAreaProvider>
-        <NavigationContainer />
+        <View style={{ flex: 1, backgroundColor: "#000000" }}>
+          <NavigationContainer />
+        </View>
       </SafeAreaProvider>
     </Provider>
   );
