@@ -3,10 +3,12 @@
 
 This is a mobile app built using React Native and Expo. Designs were made via Adobe Xd.
 
-<img src="https://res.cloudinary.com/personaluse1234/image/upload/v1619141399/image4_lxnmd1.png" width="200">&nbsp;
-<img src="https://res.cloudinary.com/personaluse1234/image/upload/v1619143304/image0_6_gvodax.png" width="200">&nbsp;
-<img src="https://res.cloudinary.com/personaluse1234/image/upload/v1619141616/image0_5_a2jila.png" width="200">&nbsp;
-<img src="https://res.cloudinary.com/personaluse1234/image/upload/v1619144139/image4_1_es2epq.png" width="200">&nbsp;
+<img src="https://res.cloudinary.com/personaluse1234/image/upload/v1619238001/image4_2_xpn0qs.png" width="200">&nbsp;
+<img src="https://res.cloudinary.com/personaluse1234/image/upload/v1619238001/image5_x11qcs.png" width="200">&nbsp;
+<img src="https://res.cloudinary.com/personaluse1234/image/upload/v1619238007/image2_3_g9tytz.png" width="200">&nbsp;
+<img src="https://res.cloudinary.com/personaluse1234/image/upload/v1619238006/image1_3_c7nddw.png" width="200">&nbsp;
+<img src="https://res.cloudinary.com/personaluse1234/image/upload/v1619238008/image0_7_iqm774.png" width="200">&nbsp;
+<img src="https://res.cloudinary.com/personaluse1234/image/upload/v1619238010/image3_1_vvayxg.png" width="200">&nbsp;
 
 ## Getting started
 
