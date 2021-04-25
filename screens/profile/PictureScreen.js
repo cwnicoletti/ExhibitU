@@ -192,21 +192,11 @@ PictureScreen.navigationOptions = (navData) => {
   return {
     headerTitle: () => (
       <View style={styles.logo}>
-        {darkModeValue ? (
-          <Image
-            style={styles.image}
-            source={require("../../assets/ExhibitU_icon_transparent_white.png")}
-          />
-        ) : (
-          <Image
-            style={styles.image}
-            source={require("../../assets/ExhibitU_icon_transparent_black.png")}
-          />
-        )}
         <Text
           style={{
             ...styles.logoTitle,
             color: darkModeValue ? "white" : "black",
+fontFamily: "CormorantUpright",
           }}
         >
           ExhibitU

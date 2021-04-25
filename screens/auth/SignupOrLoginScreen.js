@@ -84,7 +84,7 @@ const SignupOrLoginScreen = (props) => {
           }}
         />
       </View>
-      <Text style={styles.text}>Already have a ExhibitU account?</Text>
+      <Text style={styles.text}>Already have ExhibitU?</Text>
       <View
         style={{
           flexDirection: "row",
