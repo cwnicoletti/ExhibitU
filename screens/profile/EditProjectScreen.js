@@ -758,10 +758,9 @@ EditProjectScreen.navigationOptions = (navData) => {
           style={{
             ...styles.logoTitle,
             color: darkModeValue ? "white" : "black",
-fontFamily: "CormorantUpright",
           }}
         >
-          Edit {projectTitle}
+          Edit Exhibit
         </Text>
       </SafeAreaView>
     ),

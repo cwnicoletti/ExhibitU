@@ -225,7 +225,6 @@ FollowersScreen.navigationOptions = (navData) => {
           style={{
             ...styles.logoTitle,
             color: darkModeValue ? "white" : "black",
-fontFamily: "CormorantUpright",
           }}
         >
           Followers

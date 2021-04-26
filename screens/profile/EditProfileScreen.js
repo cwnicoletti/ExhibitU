@@ -945,15 +945,13 @@ EditProfileScreen.navigationOptions = (navData) => {
         forceInset={{ top: "always", horizontal: "never" }}
         style={styles.logo}
       >
-        
         <Text
           style={{
             ...styles.logoTitle,
             color: darkModeValue ? "white" : "black",
-fontFamily: "CormorantUpright",
           }}
         >
-          Edit Profile
+          Edit profile
         </Text>
       </SafeAreaView>
     ),

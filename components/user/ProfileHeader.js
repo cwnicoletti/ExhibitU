@@ -262,7 +262,7 @@ const Profile = (props) => {
                 color: darkModeValue ? "white" : "black",
               }}
             >
-              Add a New Case
+              Add a new exhibit
             </Text>
           </View>
         </TouchableCmp>

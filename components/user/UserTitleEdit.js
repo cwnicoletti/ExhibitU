@@ -42,7 +42,7 @@ const UserTitleEdit = (props) => {
           />
         </View>
       </View>
-      <EditButton editText="Edit Profile" onPress={props.onEditProfilePress} />
+      <EditButton editText="Edit profile" onPress={props.onEditProfilePress} />
     </View>
   );
 };

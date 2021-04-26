@@ -781,10 +781,9 @@ AddProjectScreen.navigationOptions = (navData) => {
           style={{
             ...styles.logoTitle,
             color: darkModeValue ? "white" : "black",
-            fontFamily: "CormorantUpright",
           }}
         >
-          Add a new project
+          Add an Exhibit
         </Text>
       </SafeAreaView>
     ),

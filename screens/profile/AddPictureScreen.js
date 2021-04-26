@@ -701,10 +701,9 @@ EditProfileScreen.navigationOptions = (navData) => {
           style={{
             ...styles.logoTitle,
             color: darkModeValue ? "white" : "black",
-fontFamily: "CormorantUpright",
           }}
         >
-          Create Post
+          Create a post
         </Text>
       </SafeAreaView>
     ),
