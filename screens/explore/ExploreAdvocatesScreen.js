@@ -12,7 +12,7 @@ import {
 import { useSelector } from "react-redux";
 import { SearchBar } from "react-native-elements";
 import algoliasearch from "algoliasearch";
-import { EvilIcons } from "@expo/vector-icons";
+import { EvilIcons, Feather } from "@expo/vector-icons";
 
 import IoniconsHeaderButton from "../../components/UI/IoniconsHeaderButton";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
@@ -152,6 +152,18 @@ const ExploreAdvocatesScreen = (props) => {
               borderBottomWidth: 1,
             }}
             searchIcon={<EvilIcons name="search" size={24} color="white" />}
+            clearIcon={
+              search ? (
+                <Feather
+                  name="x"
+                  size={24}
+                  color="white"
+                  onPress={() => {
+                    searchFilterFunction("");
+                  }}
+                />
+              ) : null
+            }
             onChangeText={(text) => searchFilterFunction(text)}
             onClear={() => {
               searchFilterFunction("");
@@ -229,12 +241,11 @@ ExploreAdvocatesScreen.navigationOptions = (navData) => {
         forceInset={{ top: "always", horizontal: "never" }}
         style={styles.logo}
       >
-        
         <Text
           style={{
             ...styles.logoTitle,
             color: darkModeValue ? "white" : "black",
-fontFamily: "CormorantUpright",
+            fontFamily: "CormorantUpright",
           }}
         >
           Advocates
