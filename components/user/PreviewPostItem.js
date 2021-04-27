@@ -48,7 +48,6 @@ const ProjectItem = (props) => {
   }, []);
 
   useEffect(() => {
-    LogBox.ignoreLogs(["VirtualizedLists should never be nested"]);
     Image.getSize(props.image ? props.image : source, (width, height) => {
       // calculate image width and height
       const screenWidth = Dimensions.get("window").width;
