@@ -81,7 +81,7 @@ const RightDrawer = (props) => {
             size={20}
             color={darkModeValue ? "white" : "black"}
           />
-          <TouchableCmp onPress={props.ExhibitUOnPress}>
+          <TouchableCmp onPress={props.ShowcaseOnPress}>
             <View>
               <Text
                 style={{
