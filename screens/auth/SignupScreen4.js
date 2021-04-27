@@ -209,14 +209,11 @@ SignupScreen2.navigationOptions = (navData) => {
   return {
     headerTitle: () => (
       <View style={styles.logo}>
-        <Image
-          style={styles.logoImage}
-          source={require("../../assets/ExhibitU_icon_transparent_white.png")}
-        />
         <Text
           style={{
             ...styles.logoTitle,
             color: "white",
+            fontFamily: "CormorantUpright",
           }}
         >
           ExhibitU
@@ -269,7 +266,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   logoTitle: {
-    fontSize: 22,
+    fontSize: 26,
   },
   fullname: {
     color: "white",
