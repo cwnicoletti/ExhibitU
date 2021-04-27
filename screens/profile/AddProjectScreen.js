@@ -783,7 +783,7 @@ AddProjectScreen.navigationOptions = (navData) => {
             color: darkModeValue ? "white" : "black",
           }}
         >
-          Add an Exhibit
+          Add a new exhibit
         </Text>
       </SafeAreaView>
     ),
@@ -845,7 +845,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   logoTitle: {
-    fontSize: 22,
+    fontSize: 26,
   },
 });
 

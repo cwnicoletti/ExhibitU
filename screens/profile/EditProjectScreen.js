@@ -841,7 +841,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   logoTitle: {
-    fontSize: 22,
+    fontSize: 26,
   },
 });
 
