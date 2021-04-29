@@ -1,6 +1,5 @@
 import React, { useEffect, useCallback, useReducer, useState } from "react";
 import {
-  Image,
   StyleSheet,
   View,
   Text,
@@ -261,6 +260,7 @@ const EditProfileScreen = (props) => {
         projectLastUpdated,
         projectDescription,
         profilePictureUrl,
+        profilePictureBase64,
         tempPhotoPostId,
         tempPhotoPostUrl,
         tempPhotoPostBase64,
@@ -340,9 +340,12 @@ const EditProfileScreen = (props) => {
 
   useEffect(() => {
     props.navigation.setParams({ submit: submitHandler });
-    props.navigation.setParams({ darkMode: darkModeValue });
     props.navigation.setParams({ android: android });
-  }, [submitHandler, darkModeValue, android]);
+  }, []);
+
+  useEffect(() => {
+    props.navigation.setParams({ darkMode: darkModeValue });
+  }, [darkModeValue]);
 
   return (
     <KeyboardAvoidingView
@@ -696,7 +699,6 @@ EditProfileScreen.navigationOptions = (navData) => {
         forceInset={{ top: "always", horizontal: "never" }}
         style={styles.logo}
       >
-        
         <Text
           style={{
             ...styles.logoTitle,
