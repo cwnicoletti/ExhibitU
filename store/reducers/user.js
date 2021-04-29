@@ -271,6 +271,7 @@ export default (state = intialState, action) => {
                 profileBiography: action.profileBiography,
                 projectTitle: action.projectTitle,
                 profilePictureUrl: action.profilePictureUrl,
+                profilePictureBase64: action.profilePictureBase64,
                 postDateCreated: action.postDateCreated,
                 postLastUpdated: action.postLastUpdated,
                 postPhotoUrl: action.postPhotoUrl,
@@ -318,6 +319,7 @@ export default (state = intialState, action) => {
                     profileBiography: action.profileBiography,
                     projectTitle: action.projectTitle,
                     profilePictureUrl: action.profilePictureUrl,
+                    profilePictureBase64: action.profilePictureBase64,
                     postDateCreated: action.postDateCreated,
                     postLastUpdated: action.postLastUpdated,
                     postPhotoUrl: action.postPhotoUrl,
@@ -336,6 +338,7 @@ export default (state = intialState, action) => {
             },
             projectTitle: action.projectTitle,
             profilePictureUrl: action.profilePictureUrl,
+            profilePictureBase64: action.profilePictureBase64,
             postDateCreated: action.postDateCreated,
             postLastUpdated: action.postLastUpdated,
             postPhotoUrl: action.postPhotoUrl,
@@ -708,8 +711,7 @@ export default (state = intialState, action) => {
                 cheering: state.profileProjects[action.projectId].projectPosts[
                   action.postId
                 ].cheering.filter(
-                  (listExhibitUId) =>
-                    listExhibitUId !== action.ExhibitUId
+                  (listExhibitUId) => listExhibitUId !== action.ExhibitUId
                 ),
               },
             },
@@ -736,8 +738,7 @@ export default (state = intialState, action) => {
                 cheering: state.profileProjects[action.projectId].projectPosts[
                   action.postId
                 ].cheering.filter(
-                  (listExhibitUId) =>
-                    listExhibitUId !== action.ExhibitUId
+                  (listExhibitUId) => listExhibitUId !== action.ExhibitUId
                 ),
               },
             },
