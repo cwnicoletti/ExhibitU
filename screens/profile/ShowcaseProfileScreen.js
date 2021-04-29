@@ -88,6 +88,21 @@ const ShowcaseProfileScreen = (props) => {
       props.navigation.getParam("resumeLink") === trueUndefined
         ? useSelector((state) => state.user.resumeLink)
         : props.navigation.getParam("resumeLink"),
+    hideFollowing:
+      props.navigation.getParam("ExhibitUId") === ExhibitUId ||
+      props.navigation.getParam("hideFollowing") === trueUndefined
+        ? useSelector((state) => state.switches.hideFollowing)
+        : props.navigation.getParam("hideFollowing"),
+    hideFollowers:
+      props.navigation.getParam("ExhibitUId") === ExhibitUId ||
+      props.navigation.getParam("hideFollowers") === trueUndefined
+        ? useSelector((state) => state.switches.hideFollowers)
+        : props.navigation.getParam("hideFollowers"),
+    hideAdovcates:
+      props.navigation.getParam("ExhibitUId") === ExhibitUId ||
+      props.navigation.getParam("hideAdovcates") === trueUndefined
+        ? useSelector((state) => state.switches.hideAdovcates)
+        : props.navigation.getParam("hideAdovcates"),
   };
 
   useEffect(() => {
@@ -130,9 +145,9 @@ const ShowcaseProfileScreen = (props) => {
         imgSource={profilePictureBase64}
         description={userData.profileBiography}
         links={userData.profileLinks}
-        followingValue={userData.followingValue}
-        followersValue={userData.followersValue}
-        advocatesValue={userData.advocatesValue}
+        followingValue={userData.hideFollowing}
+        followersValue={userData.hideFollowers}
+        advocatesValue={userData.hideAdovcates}
         showResumeValue={userData.showResumeValue}
         resumeLink={userData.resumeLink}
         numberOfFollowers={userData.numberOfFollowers}
@@ -212,7 +227,7 @@ ShowcaseProfileScreen.navigationOptions = (navData) => {
           style={{
             ...styles.logoTitle,
             color: darkModeValue ? "white" : "black",
-fontFamily: "CormorantUpright",
+            fontFamily: "CormorantUpright",
             fontFamily: "CormorantUpright",
           }}
         >
