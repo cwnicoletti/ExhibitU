@@ -65,7 +65,6 @@ const FeedandViewNavigator = createStackNavigator({
     navigationOptions: ({ navigation }) => ({
       header: () => <TitleOnlyHeader navigation={navigation} />,
     }),
-    detachPreviousScreen: false,
   },
   ViewCheering: FeedCheeringScreen,
   ViewComments: FeedCommentsScreen,
@@ -139,7 +138,6 @@ const ExploreNavigator = createStackNavigator({
     navigationOptions: ({ navigation }) => ({
       header: () => <TitleOnlyHeader navigation={navigation} />,
     }),
-    detachPreviousScreen: false,
   },
   ExploreProfile: ExploreProfileScreen,
   ViewExploredProfileProject: ExploreProjectScreen,
@@ -177,7 +175,6 @@ const ProfileandSettingsNavigator = createStackNavigator({
     navigationOptions: ({ navigation }) => ({
       header: () => <ProfileHeader navigation={navigation} />,
     }),
-    detachPreviousScreen: false,
   },
   ViewProfileProject: ProjectScreen,
   PictureScreen: PictureScreen,
