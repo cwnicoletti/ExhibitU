@@ -102,6 +102,10 @@ export const login = (email, password) => {
       loginForm
     );
 
+    const profilePictureBase64 = await getBase64FromUrl(
+      getLoginResponse.data.docData.profilePictureUrl
+    );
+
     let profileProjects = await getLoginResponse.data.docData.profileProjects;
 
     if (profileProjects) {
@@ -131,6 +135,11 @@ export const login = (email, password) => {
           userFeed[key]["postPhotoUrl"]
         );
         userFeed[key]["postPhotoBase64"] = postPhotoBase64;
+        if (
+          userFeed[key].ExhibitUId === getLoginResponse.data.docData.ExhibitUId
+        ) {
+          userFeed[key]["profilePictureBase64"] = profilePictureBase64;
+        }
         const feedProjectKeys = Object.keys(userFeed[key].profileProjects);
         for (const projectKey of feedProjectKeys) {
           const postKeys = Object.keys(
@@ -151,14 +160,13 @@ export const login = (email, password) => {
             userFeed[key].profileProjects[projectKey].projectPosts[postKey][
               "postPhotoBase64"
             ] = postPhotoBase64;
+            if (userFeed[key].ExhibitUId === getLoginResponse.data.docData.ExhibitUId) {
+              userFeed[key].profileProjects[projectKey].projectPosts[postKey]["profilePictureBase64"] = profilePictureBase64;
+            }
           }
         }
       }
     }
-
-    const profilePictureBase64 = await getBase64FromUrl(
-      getLoginResponse.data.docData.profilePictureUrl
-    );
 
     const projectTempCoverPhotoBase64 = await getBase64FromUrl(
       getLoginResponse.data.docData.projectTempCoverPhotoUrl

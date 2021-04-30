@@ -24,6 +24,9 @@ const UserFeedScreen = (props) => {
   const ExhibitUId = useSelector((state) => state.user.ExhibitUId);
   const localId = useSelector((state) => state.auth.userId);
   const userFeed = useSelector((state) => state.user.userFeed);
+  const profilePictureBase64 = useSelector(
+    (state) => state.user.profilePictureBase64
+  );
   const profileProjects = useSelector((state) => state.user.profileProjects);
   const resetScrollFeed = useSelector((state) => state.user.resetScrollFeed);
 
@@ -184,6 +187,7 @@ const UserFeedScreen = (props) => {
     >
       <StatusBar barStyle={setStatusBarStyle(darkModeValue)} />
       <FlatList
+        extraData={profilePictureBase64}
         data={filteredOutEmptyUserFeed}
         ref={flatlistFeed}
         refreshControl={
@@ -313,12 +317,11 @@ UserFeedScreen.navigationOptions = (navData) => {
         forceInset={{ top: "always", horizontal: "never" }}
         style={styles.logo}
       >
-        
         <Text
           style={{
             ...styles.logoTitle,
             color: darkModeValue ? "white" : "black",
-fontFamily: "CormorantUpright",
+            fontFamily: "CormorantUpright",
           }}
         >
           ExhibitU
