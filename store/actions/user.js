@@ -604,6 +604,15 @@ export const uploadChangeProfilePicture = (base64, ExhibitUId, localId) => {
       data = JSON.parse(data);
       data.profilePictureUrl = uploadedPictureUrlResponse.data.url;
       data.profilePictureBase64 = base64;
+
+      if (data.userFeed) {
+        Object.entries(data.userFeed).map(([id, value]) => {
+          if (data.userFeed[id].ExhibitUId === ExhibitUId) {
+            data.userFeed[id].profilePictureBase64 = data.profilePictureBase64;
+          }
+        });
+      }
+
       await AsyncStorage.setItem("userDocData", JSON.stringify(data));
     });
 
@@ -611,6 +620,7 @@ export const uploadChangeProfilePicture = (base64, ExhibitUId, localId) => {
       type: CHANGE_PROFILE_PICTURE,
       profilePictureUrl: uploadedPictureUrlResponse.data.url,
       profilePictureBase64: base64,
+      ExhibitUId,
     });
   };
 };
@@ -1463,11 +1473,7 @@ export const uncheerOwnProfilePost = (
   };
 };
 
-export const changeProfileNumberOfColumns = (
-  localId,
-  ExhibitUId,
-  number
-) => {
+export const changeProfileNumberOfColumns = (localId, ExhibitUId, number) => {
   return async (dispatch) => {
     const picture = { localId, ExhibitUId, number };
 

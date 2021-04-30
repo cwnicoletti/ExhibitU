@@ -41,9 +41,8 @@ const FeedCommentsScreen = (props) => {
     userExhibitUId === ExhibitUId
       ? useSelector((state) => state.user.profileBiography)
       : props.navigation.getParam("profileBiography");
-  const profilePictureBase64 = props.navigation.getParam(
-    "profilePictureBase64"
-  );
+  const profilePictureBase64 =
+    profileProjects[projectId].projectPosts[postId].profilePictureBase64;
   const numberOfFollowers =
     userExhibitUId === ExhibitUId
       ? useSelector((state) => state.user.numberOfFollowers)
@@ -268,12 +267,11 @@ FeedCommentsScreen.navigationOptions = (navData) => {
   return {
     headerTitle: () => (
       <View style={styles.logo}>
-        
         <Text
           style={{
             ...styles.logoTitle,
             color: darkModeValue ? "white" : "black",
-fontFamily: "CormorantUpright",
+            fontFamily: "CormorantUpright",
           }}
         >
           ExhibitU

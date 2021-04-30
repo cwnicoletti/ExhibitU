@@ -156,6 +156,24 @@ export default (state = intialState, action) => {
         profileLinks: action.profileLinks,
       };
     case CHANGE_PROFILE_PICTURE:
+      if (state.userFeed) {
+        Object.entries(state.userFeed).map(([id, value]) => {
+          if (state.userFeed[id].ExhibitUId === action.ExhibitUId) {
+            state.userFeed[id].profilePictureBase64 =
+              action.profilePictureBase64;
+            Object.entries(state.userFeed[id].profileProjects).map(
+              ([projectId, value]) => {
+                state.profileProjects[projectId].projectPosts[
+                  id
+                ].profilePictureBase64 = action.profilePictureBase64;
+                state.userFeed[id].profileProjects[projectId].projectPosts[
+                  id
+                ].profilePictureBase64 = action.profilePictureBase64;
+              }
+            );
+          }
+        });
+      }
       return {
         ...state,
         profilePictureUrl: action.profilePictureUrl,
