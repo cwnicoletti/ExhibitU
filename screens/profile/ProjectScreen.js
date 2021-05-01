@@ -1,12 +1,5 @@
 import React, { useEffect } from "react";
-import {
-  Image,
-  StyleSheet,
-  FlatList,
-  View,
-  Text,
-  Platform,
-} from "react-native";
+import { StyleSheet, FlatList, View, Text, Platform } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 
 import ProjectPictures from "../../components/UI/ProjectPictures";
@@ -22,7 +15,6 @@ const ProjectScreen = (props) => {
   const ExhibitUId = useSelector((state) => state.user.ExhibitUId);
   const profileProjects = useSelector((state) => state.user.profileProjects);
   const currentProjectId = props.navigation.getParam("projectId");
-  const project = profileProjects[currentProjectId];
 
   let android = null;
   if (Platform.OS === "android") {
@@ -75,28 +67,31 @@ const ProjectScreen = (props) => {
   }, [darkModeValue]);
 
   useEffect(() => {
-    props.navigation.setParams({ projectTitle: project.projectTitle });
     props.navigation.setParams({
-      projectDescription: project.projectDescription,
+      projectTitle: profileProjects[currentProjectId].projectTitle,
     });
     props.navigation.setParams({
-      projectCoverPhotoUrl: project.projectCoverPhotoUrl,
+      projectDescription: profileProjects[currentProjectId].projectDescription,
     });
     props.navigation.setParams({
-      projectDateCreated: project.projectDateCreated,
+      projectCoverPhotoUrl:
+        profileProjects[currentProjectId].projectCoverPhotoUrl,
     });
     props.navigation.setParams({
-      projectLastUpdated: project.projectLastUpdated,
+      projectDateCreated: profileProjects[currentProjectId].projectDateCreated,
     });
     props.navigation.setParams({
-      projectLinks: project.projectLinks,
+      projectLastUpdated: profileProjects[currentProjectId].projectLastUpdated,
+    });
+    props.navigation.setParams({
+      projectLinks: profileProjects[currentProjectId].projectLinks,
     });
   }, [
-    project.projectTitle,
-    project.projectDescription,
-    project.projectDateCreated,
-    project.projectLastUpdated,
-    project.projectLinks,
+    profileProjects[currentProjectId].projectTitle,
+    profileProjects[currentProjectId].projectDescription,
+    profileProjects[currentProjectId].projectDateCreated,
+    profileProjects[currentProjectId].projectLastUpdated,
+    profileProjects[currentProjectId].projectLinks,
   ]);
 
   const topHeader = () => {
@@ -106,21 +101,23 @@ const ProjectScreen = (props) => {
           ...styles.profileContainerStyle,
           borderBottomColor: darkModeValue ? "white" : "black",
         }}
-        imgSource={project.projectCoverPhotoBase64}
+        imgSource={profileProjects[currentProjectId].projectCoverPhotoBase64}
         descriptionStyle={{
           ...styles.profileDescriptionStyle,
           color: darkModeValue ? "white" : "black",
         }}
-        title={project.projectTitle}
-        description={project.projectDescription}
-        links={project.projectLinks}
+        title={profileProjects[currentProjectId].projectTitle}
+        description={profileProjects[currentProjectId].projectDescription}
+        links={profileProjects[currentProjectId].projectLinks}
         onEditProfilePress={() =>
           props.navigation.navigate("EditProjectScreen", {
             projectId: currentProjectId,
-            projectTitle: project.projectTitle,
-            projectCoverPhotoUrl: project.projectCoverPhotoUrl,
-            projectDescription: project.projectDescription,
-            links: project.projectLinks,
+            projectTitle: profileProjects[currentProjectId].projectTitle,
+            projectCoverPhotoUrl:
+              profileProjects[currentProjectId].projectCoverPhotoUrl,
+            projectDescription:
+              profileProjects[currentProjectId].projectDescription,
+            links: profileProjects[currentProjectId].projectLinks,
           })
         }
         changeColumnToTwo={() => {
@@ -135,7 +132,7 @@ const ProjectScreen = (props) => {
         }}
         columnTwoStyle={{
           borderColor:
-            project.projectColumns === 2
+            profileProjects[currentProjectId].projectColumns === 2
               ? darkModeValue
                 ? "#c9c9c9"
                 : "#3d3d3d"
@@ -155,7 +152,7 @@ const ProjectScreen = (props) => {
         }}
         columnThreeStyle={{
           borderColor:
-            project.projectColumns === 3
+            profileProjects[currentProjectId].projectColumns === 3
               ? darkModeValue
                 ? "#c9c9c9"
                 : "#3d3d3d"
@@ -175,7 +172,7 @@ const ProjectScreen = (props) => {
         }}
         columnFourStyle={{
           borderColor:
-            project.projectColumns === 4
+            profileProjects[currentProjectId].projectColumns === 4
               ? darkModeValue
                 ? "#c9c9c9"
                 : "#3d3d3d"
@@ -195,25 +192,28 @@ const ProjectScreen = (props) => {
       }}
     >
       <FlatList
-        data={Object.values(project.projectPosts)}
+        data={Object.values(profileProjects[currentProjectId].projectPosts)}
         keyExtractor={(item) => item.postId}
         ListHeaderComponent={topHeader}
-        key={project.projectColumns}
-        numColumns={project.projectColumns}
+        key={profileProjects[currentProjectId].projectColumns}
+        numColumns={profileProjects[currentProjectId].projectColumns}
         renderItem={(itemData) => (
           <ProjectPictures
             image={itemData.item.postPhotoBase64}
             projectContainer={{
               backgroundColor: darkModeValue ? "black" : "white",
               width:
-                project.projectColumns === 2
+                profileProjects[currentProjectId].projectColumns === 2
                   ? "50%"
-                  : project.projectColumns === 3
+                  : profileProjects[currentProjectId].projectColumns === 3
                   ? "33.33%"
-                  : project.projectColumns === 4
+                  : profileProjects[currentProjectId].projectColumns === 4
                   ? "25%"
                   : "25%",
-              aspectRatio: project.projectColumns === 1 ? null : 3 / 3,
+              aspectRatio:
+                profileProjects[currentProjectId].projectColumns === 1
+                  ? null
+                  : 3 / 3,
             }}
             titleStyle={{
               color: darkModeValue ? "white" : "black",

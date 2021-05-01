@@ -123,6 +123,9 @@ export const login = (email, password) => {
           profileProjects[k].projectPosts[id][
             "postPhotoBase64"
           ] = postPhotoBase64;
+          profileProjects[k].projectPosts[id][
+            "profilePictureBase64"
+          ] = profilePictureBase64;
         }
       }
     }
@@ -160,8 +163,13 @@ export const login = (email, password) => {
             userFeed[key].profileProjects[projectKey].projectPosts[postKey][
               "postPhotoBase64"
             ] = postPhotoBase64;
-            if (userFeed[key].ExhibitUId === getLoginResponse.data.docData.ExhibitUId) {
-              userFeed[key].profileProjects[projectKey].projectPosts[postKey]["profilePictureBase64"] = profilePictureBase64;
+            if (
+              userFeed[key].ExhibitUId ===
+              getLoginResponse.data.docData.ExhibitUId
+            ) {
+              userFeed[key].profileProjects[projectKey].projectPosts[postKey][
+                "profilePictureBase64"
+              ] = profilePictureBase64;
             }
           }
         }
