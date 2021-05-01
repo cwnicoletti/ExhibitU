@@ -1485,10 +1485,19 @@ export const changeProfileNumberOfColumns = (localId, ExhibitUId, number) => {
     AsyncStorage.getItem("userDocData").then(async (data) => {
       data = JSON.parse(data);
       data.profileColumns = number;
+
+      if (data.userFeed) {
+        Object.entries(data.userFeed).map(([id, value]) => {
+          if (data.userFeed[id].ExhibitUId === ExhibitUId) {
+            data.userFeed[id].profileColumns = number;
+          }
+        });
+      }
+
       await AsyncStorage.setItem("userDocData", JSON.stringify(data));
     });
 
-    dispatch({ type: CHANGE_PROFILE_COLUMNS, number });
+    dispatch({ type: CHANGE_PROFILE_COLUMNS, number, ExhibitUId });
   };
 };
 

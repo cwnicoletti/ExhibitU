@@ -814,6 +814,13 @@ export default (state = intialState, action) => {
         bugs: action.bug,
       };
     case CHANGE_PROFILE_COLUMNS:
+      if (state.userFeed) {
+        Object.entries(state.userFeed).map(([id, value]) => {
+          if (state.userFeed[id].ExhibitUId === action.ExhibitUId) {
+            state.userFeed[id].profileColumns = action.number;
+          }
+        });
+      }
       return {
         ...state,
         profileColumns: action.number,
