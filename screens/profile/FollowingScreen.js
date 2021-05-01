@@ -93,7 +93,7 @@ const FollowingScreen = (props) => {
     profileColumns,
     showCheering
   ) => {
-    props.navigation.push("ExhibitUProfile", {
+    props.navigation.push("ShowcaseProfile", {
       ExhibitUId,
       profilePictureUrl,
       fullname,
