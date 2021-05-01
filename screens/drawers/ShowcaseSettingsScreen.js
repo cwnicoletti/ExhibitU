@@ -113,7 +113,7 @@ ShowcaseSettingsScreen.navigationOptions = (navData) => {
             color: "white",
           }}
         >
-          ExhibitU
+          Profile Settings
         </Text>
       </View>
     ),
