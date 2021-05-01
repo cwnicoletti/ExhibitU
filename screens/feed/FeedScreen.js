@@ -52,6 +52,7 @@ const UserFeedScreen = (props) => {
   const viewProjectHandler = (
     ExhibitUId,
     projectId,
+    profilePictureBase64,
     profileProjects,
     postLinks
   ) => {
@@ -59,6 +60,7 @@ const UserFeedScreen = (props) => {
     props.navigation.navigate("ViewFeedProject", {
       feedExhibitUId: ExhibitUId,
       projectId,
+      profilePictureBase64,
       profileProjects,
       postLinks,
     });
@@ -267,6 +269,7 @@ const UserFeedScreen = (props) => {
               viewProjectHandler(
                 itemData.item.ExhibitUId,
                 itemData.item.projectId,
+                itemData.item.profilePictureBase64,
                 itemData.item.profileProjects,
                 itemData.item.postLinks
               );

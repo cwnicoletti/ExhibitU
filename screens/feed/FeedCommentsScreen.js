@@ -42,7 +42,9 @@ const FeedCommentsScreen = (props) => {
       ? useSelector((state) => state.user.profileBiography)
       : props.navigation.getParam("profileBiography");
   const profilePictureBase64 =
-    profileProjects[projectId].projectPosts[postId].profilePictureBase64;
+    userExhibitUId === ExhibitUId
+      ? profileProjects[projectId].projectPosts[postId].profilePictureBase64
+      : props.navigation.getParam("profilePictureBase64");
   const numberOfFollowers =
     userExhibitUId === ExhibitUId
       ? useSelector((state) => state.user.numberOfFollowers)
