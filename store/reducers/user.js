@@ -95,6 +95,7 @@ export default (state = intialState, action) => {
         projectTempCoverPhotoId: action.projectTempCoverPhotoId,
         projectTempCoverPhotoUrl: action.projectTempCoverPhotoUrl,
         projectTempCoverPhotoBase64: action.projectTempCoverPhotoBase64,
+        tempPhotoPostId: action.tempPhotoPostId,
         tempPhotoPostUrl: action.tempPhotoPostUrl,
         tempPhotoPostBase64: action.tempPhotoPostBase64,
         fullname: action.fullname,
