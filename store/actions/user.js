@@ -1524,10 +1524,21 @@ export const changeProjectNumberOfColumns = (
           projectColumns: number,
         },
       };
+
+      if (data.userFeed) {
+        Object.entries(data.userFeed).map(([id, value]) => {
+          if (data.userFeed[id].ExhibitUId === ExhibitUId) {
+            data.userFeed[id].profileProjects[
+              projectId
+            ].projectColumns = number;
+          }
+        });
+      }
+
       await AsyncStorage.setItem("userDocData", JSON.stringify(data));
     });
 
-    dispatch({ type: CHANGE_PROJECT_COLUMNS, projectId, number });
+    dispatch({ type: CHANGE_PROJECT_COLUMNS, ExhibitUId, projectId, number });
   };
 };
 

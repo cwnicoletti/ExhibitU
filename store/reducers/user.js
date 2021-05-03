@@ -827,6 +827,16 @@ export default (state = intialState, action) => {
         profileColumns: action.number,
       };
     case CHANGE_PROJECT_COLUMNS:
+      if (state.userFeed) {
+        Object.entries(state.userFeed).map(([id, value]) => {
+          if (state.userFeed[id].ExhibitUId === action.ExhibitUId) {
+            state.userFeed[id].profileProjects[
+              action.projectId
+            ].projectColumns = action.number;
+          }
+        });
+      }
+
       return {
         ...state,
         profileProjects: {
