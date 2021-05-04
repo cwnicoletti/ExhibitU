@@ -16,6 +16,8 @@ const ProjectScreen = (props) => {
   const profileProjects = useSelector((state) => state.user.profileProjects);
   const currentProjectId = props.navigation.getParam("projectId");
 
+  const postIds = Object.keys(profileProjects[currentProjectId].projectPosts);
+
   let android = null;
   if (Platform.OS === "android") {
     android = true;
@@ -126,6 +128,7 @@ const ProjectScreen = (props) => {
               localId,
               ExhibitUId,
               currentProjectId,
+              postIds,
               2
             )
           );
@@ -146,6 +149,7 @@ const ProjectScreen = (props) => {
               localId,
               ExhibitUId,
               currentProjectId,
+              postIds,
               3
             )
           );
@@ -166,6 +170,7 @@ const ProjectScreen = (props) => {
               localId,
               ExhibitUId,
               currentProjectId,
+              postIds,
               4
             )
           );

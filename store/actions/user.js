@@ -1505,10 +1505,11 @@ export const changeProjectNumberOfColumns = (
   localId,
   ExhibitUId,
   projectId,
+  postIds,
   number
 ) => {
   return async (dispatch) => {
-    const picture = { localId, ExhibitUId, projectId, number };
+    const picture = { localId, ExhibitUId, projectId, postIds, number };
 
     axios.post(
       "https://us-central1-showcase-79c28.cloudfunctions.net/changeProjectNumberOfColumns",
