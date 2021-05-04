@@ -1473,9 +1473,14 @@ export const uncheerOwnProfilePost = (
   };
 };
 
-export const changeProfileNumberOfColumns = (localId, ExhibitUId, number) => {
+export const changeProfileNumberOfColumns = (
+  localId,
+  ExhibitUId,
+  postIds,
+  number
+) => {
   return async (dispatch) => {
-    const picture = { localId, ExhibitUId, number };
+    const picture = { localId, ExhibitUId, postIds, number };
 
     axios.post(
       "https://us-central1-showcase-79c28.cloudfunctions.net/changeProfileNumberOfColumns",

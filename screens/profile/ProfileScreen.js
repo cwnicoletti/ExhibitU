@@ -49,6 +49,15 @@ const ProfileScreen = (props) => {
     profileProjects: useSelector((state) => state.user.profileProjects),
   };
 
+  let postIds = [];
+  for (const projectId of Object.keys(userData.profileProjects)) {
+    for (const postId of Object.keys(
+      userData.profileProjects[projectId].projectPosts
+    )) {
+      postIds.push(postId);
+    }
+  }
+
   let slideAnim = useRef(new Animated.Value(0)).current;
 
   const slideDown = () => {
@@ -148,7 +157,9 @@ const ProfileScreen = (props) => {
           })
         }
         changeColumnToTwo={() => {
-          dispatch(changeProfileNumberOfColumns(localId, ExhibitUId, 2));
+          dispatch(
+            changeProfileNumberOfColumns(localId, ExhibitUId, postIds, 2)
+          );
         }}
         columnTwoStyle={{
           borderColor:
@@ -161,7 +172,9 @@ const ProfileScreen = (props) => {
               : "#c9c9c9",
         }}
         changeColumnToThree={() => {
-          dispatch(changeProfileNumberOfColumns(localId, ExhibitUId, 3));
+          dispatch(
+            changeProfileNumberOfColumns(localId, ExhibitUId, postIds, 3)
+          );
         }}
         columnThreeStyle={{
           borderColor:
@@ -174,7 +187,9 @@ const ProfileScreen = (props) => {
               : "#c9c9c9",
         }}
         changeColumnToFour={() => {
-          dispatch(changeProfileNumberOfColumns(localId, ExhibitUId, 4));
+          dispatch(
+            changeProfileNumberOfColumns(localId, ExhibitUId, postIds, 4)
+          );
         }}
         columnFourStyle={{
           borderColor:
