@@ -1,15 +1,14 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState } from "react";
 import {
   StyleSheet,
   View,
   Text,
-  Image,
   TouchableWithoutFeedback,
   Keyboard,
   FlatList,
   SafeAreaView,
 } from "react-native";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { SearchBar } from "react-native-elements";
 import algoliasearch from "algoliasearch";
 import { EvilIcons, Feather } from "@expo/vector-icons";
@@ -18,10 +17,13 @@ import IoniconsHeaderButton from "../../components/UI/IoniconsHeaderButton";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import ExploreCard from "../../components/explore/ExploreCard";
 
-const client = algoliasearch("EXC8LH5MAX", "2d8cedcaab4cb2b351e90679963fbd92");
-const index = client.initIndex("users");
-
 const ExploreFollowingScreen = (props) => {
+  const client = algoliasearch(
+    "EXC8LH5MAX",
+    "2d8cedcaab4cb2b351e90679963fbd92"
+  );
+  const index = client.initIndex("users");
+
   const darkModeValue = useSelector((state) => state.switches.darkMode);
   const [returnedIndex, setReturnedIndex] = useState([]);
   const [search, setSearch] = useState("");

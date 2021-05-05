@@ -3,7 +3,6 @@ import {
   StyleSheet,
   View,
   Text,
-  Image,
   TouchableWithoutFeedback,
   Keyboard,
   FlatList,
@@ -18,10 +17,13 @@ import { EvilIcons, Feather } from "@expo/vector-icons";
 import IoniconsHeaderButton from "../../components/UI/IoniconsHeaderButton";
 import ExploreCard from "../../components/explore/ExploreCard";
 
-const client = algoliasearch("EXC8LH5MAX", "2d8cedcaab4cb2b351e90679963fbd92");
-const index = client.initIndex("users");
-
 const FollowersScreen = (props) => {
+  const client = algoliasearch(
+    "EXC8LH5MAX",
+    "2d8cedcaab4cb2b351e90679963fbd92"
+  );
+  const index = client.initIndex("users");
+
   const darkModeValue = useSelector((state) => state.switches.darkMode);
   const [returnedIndex, setReturnedIndex] = useState([]);
   const [search, setSearch] = useState("");

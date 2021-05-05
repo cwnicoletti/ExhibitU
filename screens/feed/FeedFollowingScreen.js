@@ -3,7 +3,6 @@ import {
   StyleSheet,
   View,
   Text,
-  Image,
   TouchableWithoutFeedback,
   Keyboard,
   FlatList,
@@ -18,10 +17,13 @@ import IoniconsHeaderButton from "../../components/UI/IoniconsHeaderButton";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import ExploreCard from "../../components/explore/ExploreCard";
 
-const client = algoliasearch("EXC8LH5MAX", "2d8cedcaab4cb2b351e90679963fbd92");
-const index = client.initIndex("users");
-
 const FeedFollowingScreen = (props) => {
+  const client = algoliasearch(
+    "EXC8LH5MAX",
+    "2d8cedcaab4cb2b351e90679963fbd92"
+  );
+  const index = client.initIndex("users");
+
   const darkModeValue = useSelector((state) => state.switches.darkMode);
   const [returnedIndex, setReturnedIndex] = useState([]);
   const [search, setSearch] = useState("");
@@ -209,12 +211,11 @@ FeedFollowingScreen.navigationOptions = (navData) => {
         forceInset={{ top: "always", horizontal: "never" }}
         style={styles.logo}
       >
-        
         <Text
           style={{
             ...styles.logoTitle,
             color: darkModeValue ? "white" : "black",
-fontFamily: "CormorantUpright",
+            fontFamily: "CormorantUpright",
           }}
         >
           Following
