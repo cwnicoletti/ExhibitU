@@ -7,6 +7,7 @@ import {
   Keyboard,
   FlatList,
   SafeAreaView,
+  RefreshControl,
 } from "react-native";
 import { useSelector } from "react-redux";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
@@ -175,6 +176,13 @@ const FollowersScreen = (props) => {
       <FlatList
         data={returnedIndex}
         onRefresh={() => refreshSearchIndex(search)}
+        refreshControl={
+          <RefreshControl
+            refreshing={isRefreshing}
+            onRefresh={() => refreshSearchIndex(search)}
+            tintColor={darkModeValue ? "white" : "black"}
+          />
+        }
         refreshing={isRefreshing}
         keyExtractor={(item) => item.objectID}
         renderItem={(itemData) => (
@@ -234,7 +242,6 @@ FollowersScreen.navigationOptions = (navData) => {
         forceInset={{ top: "always", horizontal: "never" }}
         style={styles.logo}
       >
-        
         <Text
           style={{
             ...styles.logoTitle,

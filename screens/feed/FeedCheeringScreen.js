@@ -3,11 +3,11 @@ import {
   StyleSheet,
   View,
   Text,
-  Image,
   TouchableWithoutFeedback,
   Keyboard,
   FlatList,
   SafeAreaView,
+  RefreshControl,
 } from "react-native";
 import { useSelector } from "react-redux";
 import { SearchBar } from "react-native-elements";
@@ -18,10 +18,13 @@ import IoniconsHeaderButton from "../../components/UI/IoniconsHeaderButton";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import ExploreCard from "../../components/explore/ExploreCard";
 
-const client = algoliasearch("EXC8LH5MAX", "2d8cedcaab4cb2b351e90679963fbd92");
-const index = client.initIndex("users");
-
 const FeedCheeringScreen = (props) => {
+  const client = algoliasearch(
+    "EXC8LH5MAX",
+    "2d8cedcaab4cb2b351e90679963fbd92"
+  );
+  const index = client.initIndex("users");
+
   const [returnedIndex, setReturnedIndex] = useState([]);
   const [search, setSearch] = useState("");
   const [isRefreshing, setIsRefreshing] = useState(false);
@@ -55,6 +58,7 @@ const FeedCheeringScreen = (props) => {
       const filteredIndex = responses.hits.filter((object) =>
         cheering.includes(object.objectID)
       );
+      console.log(filteredIndex);
       setReturnedIndex(filteredIndex);
     });
   };
@@ -169,6 +173,13 @@ const FeedCheeringScreen = (props) => {
       <FlatList
         data={returnedIndex}
         onRefresh={() => refreshSearchIndex(search)}
+        refreshControl={
+          <RefreshControl
+            refreshing={isRefreshing}
+            onRefresh={() => refreshSearchIndex(search)}
+            tintColor={darkModeValue ? "white" : "black"}
+          />
+        }
         refreshing={isRefreshing}
         keyExtractor={(item) => item.objectID}
         renderItem={(itemData) => (
@@ -219,12 +230,11 @@ FeedCheeringScreen.navigationOptions = (navData) => {
         forceInset={{ top: "always", horizontal: "never" }}
         style={styles.logo}
       >
-        
         <Text
           style={{
             ...styles.logoTitle,
             color: darkModeValue ? "white" : "black",
-fontFamily: "CormorantUpright",
+            fontFamily: "CormorantUpright",
           }}
         >
           ExhibitU

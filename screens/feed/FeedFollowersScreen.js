@@ -7,6 +7,7 @@ import {
   Keyboard,
   FlatList,
   SafeAreaView,
+  RefreshControl,
 } from "react-native";
 import { useSelector } from "react-redux";
 import { SearchBar } from "react-native-elements";
@@ -165,6 +166,13 @@ const FeedFollowersScreen = (props) => {
       <FlatList
         data={returnedIndex}
         onRefresh={() => refreshSearchIndex(search)}
+        refreshControl={
+          <RefreshControl
+            refreshing={isRefreshing}
+            onRefresh={() => refreshSearchIndex(search)}
+            tintColor={darkModeValue ? "white" : "black"}
+          />
+        }
         refreshing={isRefreshing}
         keyExtractor={(item) => item.objectID}
         renderItem={(itemData) => (
