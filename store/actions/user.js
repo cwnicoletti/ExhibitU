@@ -1021,12 +1021,14 @@ export const cheerPost = (
       cheeringForm
     );
 
-    await AsyncStorage.getItem("userDocData").then(async (data) => {
+    AsyncStorage.getItem("userDocData").then(async (data) => {
       data = JSON.parse(data);
       data.userFeed = {
         ...data.userFeed,
         [postId]: {
           ...data.userFeed[postId],
+          numberOfCheers: data.userFeed[postId].numberOfCheers + 1,
+          cheering: [...data.userFeed[postId].cheering, ExhibitUId],
           profileProjects: {
             ...data.userFeed[postId].profileProjects,
             [projectId]: {
@@ -1079,14 +1081,14 @@ export const cheerPost = (
       await AsyncStorage.setItem("userDocData", JSON.stringify(data));
     });
 
-    await dispatch({
+    dispatch({
       type: CHEER_POST,
       ExhibitUId,
       projectId,
       postId,
     });
 
-    await dispatch({ type: CHEER_UPDATE_POSTS, projectId, postId });
+    dispatch({ type: CHEER_UPDATE_POSTS, projectId, postId });
   };
 };
 
@@ -1147,7 +1149,7 @@ export const cheerOwnProfilePost = (
       cheeringForm
     );
 
-    await AsyncStorage.getItem("userDocData").then(async (data) => {
+    AsyncStorage.getItem("userDocData").then(async (data) => {
       data = JSON.parse(data);
       data.profileProjects = {
         ...data.profileProjects,
@@ -1226,14 +1228,14 @@ export const cheerOwnProfilePost = (
       await AsyncStorage.setItem("userDocData", JSON.stringify(data));
     });
 
-    await dispatch({
+    dispatch({
       type: CHEER_OWN_PROFILE_POST,
       ExhibitUId,
       projectId,
       postId,
     });
 
-    await dispatch({ type: CHEER_UPDATE_POSTS, projectId, postId });
+    dispatch({ type: CHEER_UPDATE_POSTS, projectId, postId });
   };
 };
 
@@ -1258,7 +1260,7 @@ export const uncheerPost = (
       uncheeringForm
     );
 
-    await AsyncStorage.getItem("userDocData").then(async (data) => {
+    AsyncStorage.getItem("userDocData").then(async (data) => {
       data = JSON.parse(data);
       data.userFeed = {
         ...data.userFeed,
@@ -1316,14 +1318,14 @@ export const uncheerPost = (
       await AsyncStorage.setItem("userDocData", JSON.stringify(data));
     });
 
-    await dispatch({
+    dispatch({
       type: UNCHEER_POST,
       ExhibitUId,
       projectId,
       postId,
     });
 
-    await dispatch({ type: UNCHEER_UPDATE_POSTS, projectId, postId });
+    dispatch({ type: UNCHEER_UPDATE_POSTS, projectId, postId });
   };
 };
 
@@ -1384,7 +1386,7 @@ export const uncheerOwnProfilePost = (
       uncheeringForm
     );
 
-    await AsyncStorage.getItem("userDocData").then(async (data) => {
+    AsyncStorage.getItem("userDocData").then(async (data) => {
       data = JSON.parse(data);
       data.profileProjects = {
         ...data.profileProjects,
@@ -1462,14 +1464,14 @@ export const uncheerOwnProfilePost = (
       await AsyncStorage.setItem("userDocData", JSON.stringify(data));
     });
 
-    await dispatch({
+    dispatch({
       type: UNCHEER_OWN_PROFILE_POST,
       ExhibitUId,
       projectId,
       postId,
     });
 
-    await dispatch({ type: UNCHEER_UPDATE_POSTS, projectId, postId });
+    dispatch({ type: UNCHEER_UPDATE_POSTS, projectId, postId });
   };
 };
 

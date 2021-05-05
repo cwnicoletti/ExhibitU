@@ -487,6 +487,11 @@ export default (state = intialState, action) => {
           ...state.userFeed,
           [action.postId]: {
             ...state.userFeed[action.postId],
+            cheering: [
+              ...state.userFeed[action.postId].cheering,
+              action.ExhibitUId,
+            ],
+            numberOfCheers: state.userFeed[action.postId].numberOfCheers + 1,
             profileProjects: {
               ...state.userFeed[action.postId].profileProjects,
               [action.projectId]: {
