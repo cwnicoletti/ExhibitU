@@ -14,7 +14,7 @@ import ProfileHeader from "../../components/user/ProfileHeader";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { SimpleLineIcons } from "@expo/vector-icons";
 import { refreshProfile, offScreen } from "../../store/actions/user";
-import useDidMountEffect from "../../components/helper/useDidMountEffect";
+import useDidMountEffect from "../../helper/useDidMountEffect";
 
 import {
   changeProfileNumberOfColumns,
@@ -76,18 +76,6 @@ const ProfileScreen = (props) => {
     }).start();
   };
 
-  useDidMountEffect(() => {
-    if (showcasingProfile === false) {
-      slideAnim.setValue(100);
-      setHiddenComponent(false);
-      slideUp();
-    }
-  }, [showcasingProfile]);
-
-  useEffect(() => {
-    props.navigation.setParams({ darkMode: darkModeValue });
-  }, [darkModeValue]);
-
   const viewProjectHandler = (projectId) => {
     dispatch(offScreen("Profile"));
     props.navigation.push("ViewProfileProject", {
@@ -100,6 +88,18 @@ const ProfileScreen = (props) => {
     await dispatch(refreshProfile(localId));
     await setIsRefreshing(false);
   };
+
+  useEffect(() => {
+    props.navigation.setParams({ darkMode: darkModeValue });
+  }, [darkModeValue]);
+
+  useDidMountEffect(() => {
+    if (showcasingProfile === false) {
+      slideAnim.setValue(100);
+      setHiddenComponent(false);
+      slideUp();
+    }
+  }, [showcasingProfile]);
 
   const profileFlatlist = useRef();
   useDidMountEffect(() => {

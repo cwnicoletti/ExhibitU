@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { View, TouchableWithoutFeedback, Animated } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
-import useDidMountEffect from "../helper/useDidMountEffect";
+import useDidMountEffect from "../../helper/useDidMountEffect";
 
 import { Ionicons, SimpleLineIcons } from "@expo/vector-icons";
 

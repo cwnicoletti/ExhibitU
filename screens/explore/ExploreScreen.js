@@ -16,7 +16,7 @@ import { offScreen } from "../../store/actions/user";
 import { EvilIcons, Feather } from "@expo/vector-icons";
 
 import ExploreCard from "../../components/explore/ExploreCard";
-import useDidMountEffect from "../../components/helper/useDidMountEffect";
+import useDidMountEffect from "../../helper/useDidMountEffect";
 
 const client = algoliasearch("EXC8LH5MAX", "2d8cedcaab4cb2b351e90679963fbd92");
 const index = client.initIndex("users");
