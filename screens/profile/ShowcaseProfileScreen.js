@@ -22,7 +22,6 @@ const ShowcaseProfileScreen = (props) => {
         ? useSelector((state) => state.user.profilePictureBase64)
         : props.navigation.getParam("profilePictureUrl")
       : props.navigation.getParam("profilePictureBase64");
-
   const profileColumns =
     props.navigation.getParam("ExhibitUId") === ExhibitUId ||
     props.navigation.getParam("profileColumns") === trueUndefined
@@ -199,7 +198,11 @@ const ShowcaseProfileScreen = (props) => {
         numColumns={profileColumns}
         renderItem={(itemData) => (
           <ProjectItem
-            image={itemData.item.projectCoverPhotoBase64}
+            image={
+              itemData.item.projectCoverPhotoBase64
+                ? itemData.item.projectCoverPhotoBase64
+                : itemData.item.projectCoverPhotoUrl
+            }
             title={itemData.item.projectTitle}
             projectContainer={{
               backgroundColor: darkModeValue ? "black" : "white",

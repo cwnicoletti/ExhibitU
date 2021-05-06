@@ -83,7 +83,11 @@ const ShowcaseProjectScreen = (props) => {
           ...styles.profileContainerStyle,
           borderBottomColor: darkModeValue ? "white" : "black",
         }}
-        imgSource={project.projectCoverPhotoBase64}
+        imgSource={
+          project.projectCoverPhotoBase64
+            ? project.projectCoverPhotoBase64
+            : project.projectCoverPhotoUrl
+        }
         descriptionStyle={{
           ...styles.profileDescriptionStyle,
           color: darkModeValue ? "white" : "black",
@@ -167,7 +171,7 @@ ShowcaseProjectScreen.navigationOptions = (navData) => {
           style={{
             ...styles.logoTitle,
             color: darkModeValue ? "white" : "black",
-fontFamily: "CormorantUpright",
+            fontFamily: "CormorantUpright",
             fontFamily: "CormorantUpright",
           }}
         >
