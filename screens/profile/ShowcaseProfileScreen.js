@@ -19,6 +19,8 @@ const ShowcaseProfileScreen = (props) => {
     props.navigation.getParam("ExhibitUId") === ExhibitUId ||
     props.navigation.getParam("profilePictureBase64") === trueUndefined
       ? useSelector((state) => state.user.profilePictureBase64)
+        ? useSelector((state) => state.user.profilePictureBase64)
+        : props.navigation.getParam("profilePictureUrl")
       : props.navigation.getParam("profilePictureBase64");
 
   const profileColumns =
@@ -26,7 +28,6 @@ const ShowcaseProfileScreen = (props) => {
     props.navigation.getParam("profileColumns") === trueUndefined
       ? useSelector((state) => state.user.profileColumns)
       : props.navigation.getParam("profileColumns");
-
   const userData = {
     ExhibitUId:
       props.navigation.getParam("ExhibitUId") === ExhibitUId ||
@@ -62,6 +63,8 @@ const ShowcaseProfileScreen = (props) => {
       props.navigation.getParam("ExhibitUId") === ExhibitUId ||
       props.navigation.getParam("profileProjects") === trueUndefined
         ? useSelector((state) => state.user.profileProjects)
+          ? useSelector((state) => state.user.profileProjects)
+          : props.navigation.getParam("profileProjects")
         : props.navigation.getParam("profileProjects"),
     numberOfAdvocates:
       props.navigation.getParam("ExhibitUId") === ExhibitUId ||
