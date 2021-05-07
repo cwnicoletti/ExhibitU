@@ -36,12 +36,12 @@ const SignupOrLoginScreen = (props) => {
         style={styles.image}
         source={require("../../assets/ExhibitU_icon_transparent_white.png")}
       />
-      <View
-        style={{
-          justifyContent: "center",
+      <TouchableCmp
+        onPress={() => {
+          props.navigation.navigate("Signup1");
         }}
       >
-        <TouchableCmp
+        <View
           style={{
             borderColor: "#00a0db",
             borderWidth: 1,
@@ -49,9 +49,6 @@ const SignupOrLoginScreen = (props) => {
             alignItems: "center",
             flexDirection: "row",
             paddingHorizontal: "20%",
-          }}
-          onPress={() => {
-            props.navigation.navigate("Signup1");
           }}
         >
           <Fontisto
@@ -63,8 +60,8 @@ const SignupOrLoginScreen = (props) => {
           <Text style={{ margin: 10, color: "#00a0db" }}>
             Signup with Email
           </Text>
-        </TouchableCmp>
-      </View>
+        </View>
+      </TouchableCmp>
       <View style={{ flexDirection: "row" }}>
         <View
           style={{
@@ -85,27 +82,29 @@ const SignupOrLoginScreen = (props) => {
         />
       </View>
       <Text style={styles.text}>Already have ExhibitU?</Text>
-      <View
+      <TouchableCmp
         style={{
-          flexDirection: "row",
-          justifyContent: "center",
+          alignItems: "center",
+          width: "80%",
+        }}
+        onPress={() => {
+          props.navigation.navigate("Login");
         }}
       >
-        <TouchableCmp
+        <View
           style={{
+            flexDirection: "row",
+            justifyContent: "center",
             borderColor: "#00a0db",
             borderWidth: 1,
             margin: 10,
             alignItems: "center",
             width: "80%",
           }}
-          onPress={() => {
-            props.navigation.navigate("Login");
-          }}
         >
           <Text style={{ margin: 10, color: "#00a0db" }}>Login</Text>
-        </TouchableCmp>
-      </View>
+        </View>
+      </TouchableCmp>
     </View>
   );
 };
