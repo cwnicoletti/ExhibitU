@@ -16,14 +16,11 @@ import { HeaderButtons, Item } from "react-navigation-header-buttons";
 
 const ShowcaseProjectScreen = (props) => {
   const darkModeValue = useSelector((state) => state.switches.darkMode);
-  const ExhibitUId = useSelector((state) => state.switches.ExhibitUId);
   const currentProjectId = props.navigation.getParam("projectId");
   const profileProjects = props.navigation.getParam("profileProjects");
-  const profilePictureBase64 =
-    props.navigation.getParam("ExhibitUId") === ExhibitUId ||
-    props.navigation.getParam("profilePictureBase64") === undefined
-      ? useSelector((state) => state.user.profilePictureBase64)
-      : props.navigation.getParam("profilePictureBase64");
+  const profilePictureBase64 = props.navigation.getParam(
+    "profilePictureBase64"
+  );
 
   const project = profileProjects[currentProjectId];
 

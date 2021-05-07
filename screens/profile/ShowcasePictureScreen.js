@@ -16,19 +16,28 @@ import IoniconsHeaderButton from "../../components/UI/IoniconsHeaderButton";
 import { LogBox } from "react-native";
 
 const ShowcasePictureScreen = (props) => {
+  const trueUndefined = void 0;
   const darkModeValue = useSelector((state) => state.switches.darkMode);
-  const profileProjects = useSelector((state) => state.user.profileProjects);
-
   const ExhibitUId = props.navigation.getParam("ExhibitUId");
+
+  const profileProjects =
+    props.navigation.getParam("ExhibitUId") === ExhibitUId ||
+    props.navigation.getParam("profileProjects") === trueUndefined
+      ? useSelector((state) => state.user.profileProjects)
+        ? useSelector((state) => state.user.profileProjects)
+        : props.navigation.getParam("profileProjects")
+      : props.navigation.getParam("profileProjects");
+
   const projectId = props.navigation.getParam("projectId");
   const postId = props.navigation.getParam("postId");
   const fullname = props.navigation.getParam("fullname");
   const username = props.navigation.getParam("username");
   const jobTitle = props.navigation.getParam("jobTitle");
   const profileBiography = props.navigation.getParam("profileBiography");
-  const profilePictureBase64 = props.navigation.getParam("profilePictureBase64")
-    ? props.navigation.getParam("profilePictureBase64")
-    : useSelector((state) => state.user.profilePictureBase64);
+  const profilePictureBase64 = props.navigation.getParam(
+    "profilePictureBase64"
+  );
+
   const postPhoto = props.navigation.getParam("postPhotoBase64")
     ? props.navigation.getParam("postPhotoBase64")
     : props.navigation.getParam("postPhotoUrl");
@@ -176,12 +185,11 @@ ShowcasePictureScreen.navigationOptions = (navData) => {
   return {
     headerTitle: () => (
       <View style={styles.logo}>
-        
         <Text
           style={{
             ...styles.logoTitle,
             color: darkModeValue ? "white" : "black",
-fontFamily: "CormorantUpright",
+            fontFamily: "CormorantUpright",
           }}
         >
           ExhibitU

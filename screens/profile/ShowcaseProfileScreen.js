@@ -118,6 +118,7 @@ const ShowcaseProfileScreen = (props) => {
   const viewProjectHandler = (projectId) => {
     props.navigation.push("ShowcaseProject", {
       projectId,
+      profilePictureBase64,
       profileProjects: userData.profileProjects,
     });
   };
