@@ -161,25 +161,29 @@ const LoginScreen = (props) => {
               </View>
             ) : (
               <TouchableCmp
-                style={{
-                  borderColor:
-                    formState.formIsValid === false ? "gray" : "#007AFF",
-                  borderWidth: 1,
-                  margin: 10,
-                  alignItems: "center",
-                }}
                 onPress={authHandler}
                 disabled={formState.formIsValid === false}
               >
-                <Text
+                <View
                   style={{
+                    borderColor:
+                      formState.formIsValid === false ? "gray" : "#007AFF",
+                    borderWidth: 1,
                     margin: 10,
-                    color: formState.formIsValid === false ? "gray" : "#007AFF",
-                    fontSize: 16,
+                    alignItems: "center",
                   }}
                 >
-                  Login
-                </Text>
+                  <Text
+                    style={{
+                      margin: 10,
+                      color:
+                        formState.formIsValid === false ? "gray" : "#007AFF",
+                      fontSize: 16,
+                    }}
+                  >
+                    Login
+                  </Text>
+                </View>
               </TouchableCmp>
             )}
           </Card>
