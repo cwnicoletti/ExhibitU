@@ -89,6 +89,7 @@ const SignupScreen2 = (props) => {
       <KeyboardAwareScrollView
         enableResetScrollToCoords={false}
         extraHeight={200}
+        keyboardShouldPersistTaps="handled"
       >
         <View style={styles.inner}>
           <Text style={styles.text}>Enter a username</Text>

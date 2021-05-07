@@ -92,6 +92,7 @@ const LoginScreen = (props) => {
       <KeyboardAwareScrollView
         enableResetScrollToCoords={false}
         extraHeight={200}
+        keyboardShouldPersistTaps="handled"
       >
         <View style={styles.inner}>
           <Image
