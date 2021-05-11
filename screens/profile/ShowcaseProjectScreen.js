@@ -1,12 +1,5 @@
 import React, { useEffect } from "react";
-import {
-  Image,
-  StyleSheet,
-  FlatList,
-  View,
-  Text,
-  Platform,
-} from "react-native";
+import { StyleSheet, FlatList, View, Text, Platform } from "react-native";
 import { useSelector } from "react-redux";
 
 import ProjectPictures from "../../components/UI/ProjectPictures";
@@ -17,12 +10,9 @@ import { HeaderButtons, Item } from "react-navigation-header-buttons";
 const ShowcaseProjectScreen = (props) => {
   const darkModeValue = useSelector((state) => state.switches.darkMode);
   const currentProjectId = props.navigation.getParam("projectId");
-  const profileProjects = props.navigation.getParam("profileProjects");
-  const profilePictureBase64 = props.navigation.getParam(
-    "profilePictureBase64"
-  );
+  const userData = props.navigation.getParam("userData");
 
-  const project = profileProjects[currentProjectId];
+  const project = userData.profileProjects[currentProjectId];
 
   let android = null;
   if (Platform.OS === "android") {
@@ -30,38 +20,21 @@ const ShowcaseProjectScreen = (props) => {
   }
 
   const viewCommentsHandler = (
-    ExhibitUId,
-    projectId,
-    postId,
-    fullname,
-    username,
-    jobTitle,
-    profileBiography,
-    profileProjects,
-    profilePictureBase64,
     postPhotoUrl,
     postPhotoBase64,
     numberOfCheers,
     numberOfComments,
     caption,
-    links
+    postLinks
   ) => {
     props.navigation.push("ShowcasePictureScreen", {
-      ExhibitUId,
-      projectId,
-      postId,
-      fullname,
-      username,
-      jobTitle,
-      profileBiography,
-      profileProjects,
-      profilePictureBase64,
       postPhotoUrl,
       postPhotoBase64,
       numberOfCheers,
       numberOfComments,
       caption,
-      links,
+      postLinks,
+      userData,
     });
   };
 
@@ -135,15 +108,6 @@ const ShowcaseProjectScreen = (props) => {
             imageContainer={styles.imageContainer}
             onSelect={() =>
               viewCommentsHandler(
-                itemData.item.ExhibitUId,
-                itemData.item.projectId,
-                itemData.item.postId,
-                itemData.item.fullname,
-                itemData.item.username,
-                itemData.item.jobTitle,
-                itemData.item.profileBiography,
-                itemData.item.profileProjects,
-                profilePictureBase64,
                 itemData.item.postPhotoUrl,
                 itemData.item.postPhotoBase64,
                 itemData.item.numberOfCheers,

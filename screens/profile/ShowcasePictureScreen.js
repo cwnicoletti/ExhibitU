@@ -1,12 +1,5 @@
 import React, { useEffect } from "react";
-import {
-  Image,
-  StyleSheet,
-  View,
-  Text,
-  ScrollView,
-  Platform,
-} from "react-native";
+import { StyleSheet, View, Text, ScrollView, Platform } from "react-native";
 import { useSelector } from "react-redux";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 
@@ -16,37 +9,16 @@ import IoniconsHeaderButton from "../../components/UI/IoniconsHeaderButton";
 import { LogBox } from "react-native";
 
 const ShowcasePictureScreen = (props) => {
-  const trueUndefined = void 0;
   const darkModeValue = useSelector((state) => state.switches.darkMode);
-  const ExhibitUId = props.navigation.getParam("ExhibitUId");
+  const userData = props.navigation.getParam("userData");
+  console.log(userData);
 
-  const profileProjects =
-    props.navigation.getParam("ExhibitUId") === ExhibitUId ||
-    props.navigation.getParam("profileProjects") === trueUndefined
-      ? useSelector((state) => state.user.profileProjects)
-        ? useSelector((state) => state.user.profileProjects)
-        : props.navigation.getParam("profileProjects")
-      : props.navigation.getParam("profileProjects");
-
-  const projectId = props.navigation.getParam("projectId");
-  const postId = props.navigation.getParam("postId");
-  const fullname = props.navigation.getParam("fullname");
-  const username = props.navigation.getParam("username");
-  const jobTitle = props.navigation.getParam("jobTitle");
-  const profileBiography = props.navigation.getParam("profileBiography");
-  const profilePictureBase64 = props.navigation.getParam(
-    "profilePictureBase64"
-  );
-
-  const postPhoto = props.navigation.getParam("postPhotoBase64")
-    ? props.navigation.getParam("postPhotoBase64")
-    : props.navigation.getParam("postPhotoUrl");
+  const postPhotoUrl = props.navigation.getParam("postPhotoUrl");
+  const postPhotoBase64 = props.navigation.getParam("postPhotoBase64");
   const numberOfCheers = props.navigation.getParam("numberOfCheers");
   const numberOfComments = props.navigation.getParam("numberOfComments");
   const caption = props.navigation.getParam("caption");
-  const links = props.navigation.getParam("links")
-    ? props.navigation.getParam("links")
-    : {};
+  const postLinks = props.navigation.getParam("postLinks");
 
   let android = null;
   if (Platform.OS === "android") {
@@ -62,25 +34,31 @@ const ShowcasePictureScreen = (props) => {
     });
   };
 
-  const viewProfileHandler = (
-    ExhibitUId,
-    projectId,
-    fullname,
-    username,
-    jobTitle,
-    profileBiography,
-    profileProjects,
-    profilePictureBase64
-  ) => {
-    props.navigation.push("ViewProfile", {
-      ExhibitUId,
-      projectId,
-      fullname,
-      username,
-      jobTitle,
-      profileBiography,
-      profileProjects,
-      profilePictureBase64,
+  const viewProfileHandler = () => {
+    props.navigation.push("ShowcaseProfile", {
+      ExhibitUId: userData.ExhibitUId,
+      profilePictureUrl: userData.profilePictureUrl,
+      fullname: userData.fullname,
+      username: userData.username,
+      jobTitle: userData.jobTitle,
+      resumeLinkUrl: userData.resumeLinkUrl,
+      profileBiography: userData.profileBiography,
+      numberOfFollowers: userData.numberOfFollowers,
+      numberOfFollowing: userData.numberOfFollowing,
+      numberOfAdvocates: userData.numberOfAdvocates,
+      showResume: userData.showResume,
+      hideFollowing: userData.hideFollowing,
+      hideFollowers: userData.hideFollowers,
+      hideAdvocates: userData.hideAdvocates,
+      followers: userData.followers,
+      following: userData.following,
+      advocates: userData.advocates,
+      profileProjects: userData.profileProjects,
+      profileLinks: userData.profileLinks,
+      projectLinks: userData.projectLinks,
+      profileColumns: userData.profileColumns,
+      showCheering: userData.showCheering,
+      profilePictureUrl: userData.profilePictureUrl,
     });
   };
 
@@ -105,16 +83,20 @@ const ShowcasePictureScreen = (props) => {
           ...styles.profileContainerStyle,
           borderBottomColor: darkModeValue ? "white" : "black",
         }}
-        image={postPhoto}
+        image={postPhotoBase64 ? postPhotoBase64 : postPhotoUrl}
         descriptionStyle={{
           ...styles.profileDescriptionStyle,
           color: darkModeValue ? "white" : "black",
         }}
         caption={caption}
-        profileImageSource={profilePictureBase64}
+        profileImageSource={
+          userData.profilePictureBase64
+            ? userData.profilePictureBase64
+            : userData.profilePictureUrl
+        }
         numberOfCheers={numberOfCheers}
         numberOfComments={numberOfComments}
-        links={links}
+        links={postLinks}
         nameStyle={{
           color: darkModeValue ? "white" : "black",
         }}
@@ -162,16 +144,7 @@ const ShowcasePictureScreen = (props) => {
           viewCheeringHandler();
         }}
         onSelectProfile={() => {
-          viewProfileHandler(
-            ExhibitUId,
-            projectId,
-            fullname,
-            username,
-            jobTitle,
-            profileBiography,
-            profileProjects,
-            profilePictureBase64
-          );
+          viewProfileHandler();
         }}
       />
     </ScrollView>

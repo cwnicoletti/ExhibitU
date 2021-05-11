@@ -13,99 +13,63 @@ const ShowcaseProfileScreen = (props) => {
   const dispatch = useDispatch();
   const darkModeValue = useSelector((state) => state.switches.darkMode);
   const ExhibitUId = useSelector((state) => state.user.ExhibitUId);
-  const trueUndefined = void 0;
 
-  const profilePictureBase64 =
+  console.log(ExhibitUId);
+  console.log(props.navigation.getParam("ExhibitUId"));
+
+  const userData =
     props.navigation.getParam("ExhibitUId") === ExhibitUId ||
-    props.navigation.getParam("profilePictureBase64") === trueUndefined
-      ? useSelector((state) => state.user.profilePictureBase64)
-        ? useSelector((state) => state.user.profilePictureBase64)
-        : props.navigation.getParam("profilePictureUrl")
-      : props.navigation.getParam("profilePictureBase64");
-  const profileColumns =
-    props.navigation.getParam("ExhibitUId") === ExhibitUId ||
-    props.navigation.getParam("profileColumns") === trueUndefined
-      ? useSelector((state) => state.user.profileColumns)
-      : props.navigation.getParam("profileColumns");
-  const userData = {
-    ExhibitUId:
-      props.navigation.getParam("ExhibitUId") === ExhibitUId ||
-      props.navigation.getParam("ExhibitUId") === trueUndefined
-        ? useSelector((state) => state.user.ExhibitUId)
-        : props.navigation.getParam("ExhibitUId"),
-    fullname:
-      props.navigation.getParam("ExhibitUId") === ExhibitUId ||
-      props.navigation.getParam("fullname") === trueUndefined
-        ? useSelector((state) => state.user.fullname)
-        : props.navigation.getParam("fullname"),
-    username:
-      props.navigation.getParam("ExhibitUId") === ExhibitUId ||
-      props.navigation.getParam("username") === trueUndefined
-        ? useSelector((state) => state.user.username)
-        : props.navigation.getParam("username"),
-    jobTitle:
-      props.navigation.getParam("ExhibitUId") === ExhibitUId ||
-      props.navigation.getParam("jobTitle") === trueUndefined
-        ? useSelector((state) => state.user.jobTitle)
-        : props.navigation.getParam("jobTitle"),
-    profileBiography:
-      props.navigation.getParam("ExhibitUId") === ExhibitUId ||
-      props.navigation.getParam("profileBiography") === trueUndefined
-        ? useSelector((state) => state.user.profileBiography)
-        : props.navigation.getParam("profileBiography"),
-    profileLinks:
-      props.navigation.getParam("ExhibitUId") === ExhibitUId ||
-      props.navigation.getParam("profileLinks") === trueUndefined
-        ? useSelector((state) => state.user.profileLinks)
-        : props.navigation.getParam("profileLinks"),
-    profileProjects:
-      props.navigation.getParam("ExhibitUId") === ExhibitUId ||
-      props.navigation.getParam("profileProjects") === trueUndefined
-        ? useSelector((state) => state.user.profileProjects)
-          ? useSelector((state) => state.user.profileProjects)
-          : props.navigation.getParam("profileProjects")
-        : props.navigation.getParam("profileProjects"),
-    numberOfAdvocates:
-      props.navigation.getParam("ExhibitUId") === ExhibitUId ||
-      props.navigation.getParam("numberOfAdvocates") === trueUndefined
-        ? useSelector((state) => state.user.numberOfAdvocates)
-        : props.navigation.getParam("numberOfAdvocates"),
-    numberOfFollowers:
-      props.navigation.getParam("ExhibitUId") === ExhibitUId ||
-      props.navigation.getParam("numberOfFollowers") === trueUndefined
-        ? useSelector((state) => state.user.numberOfFollowers)
-        : props.navigation.getParam("numberOfFollowers"),
-    numberOfFollowing:
-      props.navigation.getParam("ExhibitUId") === ExhibitUId ||
-      props.navigation.getParam("numberOfFollowing") === trueUndefined
-        ? useSelector((state) => state.user.numberOfFollowing)
-        : props.navigation.getParam("numberOfFollowing"),
-    showResumeValue:
-      props.navigation.getParam("ExhibitUId") === ExhibitUId ||
-      props.navigation.getParam("showResumeValue") === trueUndefined
-        ? useSelector((state) => state.user.showResumeValue)
-        : props.navigation.getParam("showResumeValue"),
-    resumeLink:
-      props.navigation.getParam("ExhibitUId") === ExhibitUId ||
-      props.navigation.getParam("resumeLink") === trueUndefined
-        ? useSelector((state) => state.user.resumeLink)
-        : props.navigation.getParam("resumeLink"),
-    hideFollowing:
-      props.navigation.getParam("ExhibitUId") === ExhibitUId ||
-      props.navigation.getParam("hideFollowing") === trueUndefined
-        ? useSelector((state) => state.switches.hideFollowing)
-        : props.navigation.getParam("hideFollowing"),
-    hideFollowers:
-      props.navigation.getParam("ExhibitUId") === ExhibitUId ||
-      props.navigation.getParam("hideFollowers") === trueUndefined
-        ? useSelector((state) => state.switches.hideFollowers)
-        : props.navigation.getParam("hideFollowers"),
-    hideAdovcates:
-      props.navigation.getParam("ExhibitUId") === ExhibitUId ||
-      props.navigation.getParam("hideAdovcates") === trueUndefined
-        ? useSelector((state) => state.switches.hideAdovcates)
-        : props.navigation.getParam("hideAdovcates"),
-  };
+    props.navigation.getParam("ExhibitUId") === void 0
+      ? {
+          profilePictureBase64: useSelector(
+            (state) => state.user.profilePictureBase64
+          )
+            ? useSelector((state) => state.user.profilePictureBase64)
+            : props.navigation.getParam("profilePictureUrl"),
+          profileColumns: useSelector((state) => state.user.profileColumns),
+          ExhibitUId: useSelector((state) => state.user.ExhibitUId),
+          fullname: useSelector((state) => state.user.fullname),
+          username: useSelector((state) => state.user.username),
+          jobTitle: useSelector((state) => state.user.jobTitle),
+          profileBiography: useSelector((state) => state.user.profileBiography),
+          profileLinks: useSelector((state) => state.user.profileLinks),
+          profileProjects: useSelector((state) => state.user.profileProjects)
+            ? useSelector((state) => state.user.profileProjects)
+            : props.navigation.getParam("profileProjects"),
+          numberOfAdvocates: useSelector(
+            (state) => state.user.numberOfAdvocates
+          ),
+          numberOfFollowers: useSelector(
+            (state) => state.user.numberOfFollowers
+          ),
+          numberOfFollowing: useSelector(
+            (state) => state.user.numberOfFollowing
+          ),
+          showResumeValue: useSelector((state) => state.user.showResumeValue),
+          resumeLink: useSelector((state) => state.user.resumeLink),
+          hideFollowing: useSelector((state) => state.switches.hideFollowing),
+          hideFollowers: useSelector((state) => state.switches.hideFollowers),
+          hideAdovcates: useSelector((state) => state.switches.hideAdovcates),
+        }
+      : {
+          profilePictureUrl: props.navigation.getParam("profilePictureUrl"),
+          profileColumns: props.navigation.getParam("profileColumns"),
+          ExhibitUId: props.navigation.getParam("ExhibitUId"),
+          fullname: props.navigation.getParam("fullname"),
+          username: props.navigation.getParam("username"),
+          jobTitle: props.navigation.getParam("jobTitle"),
+          profileBiography: props.navigation.getParam("profileBiography"),
+          profileLinks: props.navigation.getParam("profileLinks"),
+          profileProjects: props.navigation.getParam("profileProjects"),
+          numberOfAdvocates: props.navigation.getParam("numberOfAdvocates"),
+          numberOfFollowers: props.navigation.getParam("numberOfFollowers"),
+          numberOfFollowing: props.navigation.getParam("numberOfFollowing"),
+          showResumeValue: props.navigation.getParam("showResumeValue"),
+          resumeLink: props.navigation.getParam("resumeLink"),
+          hideFollowing: props.navigation.getParam("hideFollowing"),
+          hideFollowers: props.navigation.getParam("hideFollowers"),
+          hideAdovcates: props.navigation.getParam("hideAdovcates"),
+        };
 
   useEffect(() => {
     props.navigation.setParams({ dispatch: dispatch });
@@ -118,8 +82,7 @@ const ShowcaseProfileScreen = (props) => {
   const viewProjectHandler = (projectId) => {
     props.navigation.push("ShowcaseProject", {
       projectId,
-      profilePictureBase64,
-      profileProjects: userData.profileProjects,
+      userData,
     });
   };
 
@@ -145,7 +108,11 @@ const ShowcaseProfileScreen = (props) => {
         fullname={userData.fullname}
         username={`@${userData.username}`}
         jobTitle={userData.jobTitle}
-        imgSource={profilePictureBase64}
+        imgSource={
+          userData.profilePictureBase64
+            ? userData.profilePictureBase64
+            : userData.profilePictureUrl
+        }
         description={userData.profileBiography}
         links={userData.profileLinks}
         followingValue={userData.hideFollowing}
@@ -196,7 +163,7 @@ const ShowcaseProfileScreen = (props) => {
         data={Object.values(userData.profileProjects)}
         keyExtractor={(item) => item.projectId}
         ListHeaderComponent={topHeader}
-        numColumns={profileColumns}
+        numColumns={userData.profileColumns}
         renderItem={(itemData) => (
           <ProjectItem
             image={
