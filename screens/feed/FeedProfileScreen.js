@@ -98,7 +98,11 @@ const FeedProfileScreen = (props) => {
         numColumns={userData.profileColumns}
         renderItem={(itemData) => (
           <ProjectItem
-            image={itemData.item.projectCoverPhotoBase64}
+            image={
+              itemData.item.projectCoverPhotoBase64
+                ? itemData.item.projectCoverPhotoBase64
+                : itemData.item.projectCoverPhotoUrl
+            }
             title={itemData.item.projectTitle}
             projectContainer={{
               backgroundColor: darkModeValue ? "black" : "white",

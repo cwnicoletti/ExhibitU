@@ -81,7 +81,6 @@ const FeedAdvocatesScreen = (props) => {
 
   const viewProjectHandler = (
     ExhibitUId,
-    projectId,
     fullname,
     username,
     jobTitle,
@@ -95,27 +94,26 @@ const FeedAdvocatesScreen = (props) => {
     hideFollowers,
     hideAdvocates,
     profileLinks,
-    postLinks,
     profileColumns
   ) => {
     props.navigation.push("ViewProfile", {
-      ExhibitUId,
-      projectId,
-      fullname,
-      username,
-      jobTitle,
-      profileBiography,
-      profileProjects,
-      profilePictureUrl,
-      numberOfFollowers,
-      numberOfFollowing,
-      numberOfAdvocates,
-      hideFollowing,
-      hideFollowers,
-      hideAdvocates,
-      profileLinks,
-      postLinks,
-      profileColumns,
+      userData: {
+        ExhibitUId,
+        fullname,
+        username,
+        jobTitle,
+        profileBiography,
+        profileProjects,
+        profilePictureUrl,
+        numberOfFollowers,
+        numberOfFollowing,
+        numberOfAdvocates,
+        hideFollowing,
+        hideFollowers,
+        hideAdvocates,
+        profileLinks,
+        profileColumns,
+      },
     });
   };
 
@@ -200,7 +198,6 @@ const FeedAdvocatesScreen = (props) => {
             onSelect={() => {
               viewProjectHandler(
                 itemData.item.objectID,
-                itemData.item.projectId,
                 itemData.item.fullname,
                 itemData.item.username,
                 itemData.item.jobTitle,
@@ -214,7 +211,6 @@ const FeedAdvocatesScreen = (props) => {
                 itemData.item.hideFollowers,
                 itemData.item.hideAdvocates,
                 itemData.item.profileLinks,
-                itemData.item.postLinks,
                 itemData.item.profileColumns
               );
             }}

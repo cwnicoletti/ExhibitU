@@ -72,7 +72,6 @@ const FeedFollowingScreen = (props) => {
 
   const viewProfileHandler = (
     ExhibitUId,
-    projectId,
     fullname,
     username,
     jobTitle,
@@ -86,27 +85,26 @@ const FeedFollowingScreen = (props) => {
     hideFollowers,
     hideAdvocates,
     profileLinks,
-    postLinks,
     profileColumns
   ) => {
     props.navigation.push("ViewProfile", {
-      ExhibitUId,
-      projectId,
-      fullname,
-      username,
-      jobTitle,
-      profileBiography,
-      profileProjects,
-      profilePictureUrl,
-      numberOfFollowers,
-      numberOfFollowing,
-      numberOfAdvocates,
-      hideFollowing,
-      hideFollowers,
-      hideAdvocates,
-      profileLinks,
-      postLinks,
-      profileColumns,
+      userData: {
+        ExhibitUId,
+        fullname,
+        username,
+        jobTitle,
+        profileBiography,
+        profileProjects,
+        profilePictureUrl,
+        numberOfFollowers,
+        numberOfFollowing,
+        numberOfAdvocates,
+        hideFollowing,
+        hideFollowers,
+        hideAdvocates,
+        profileLinks,
+        profileColumns,
+      },
     });
   };
 
@@ -186,7 +184,6 @@ const FeedFollowingScreen = (props) => {
             onSelect={() => {
               viewProfileHandler(
                 itemData.item.objectID,
-                itemData.item.projectId,
                 itemData.item.fullname,
                 itemData.item.username,
                 itemData.item.jobTitle,
@@ -200,7 +197,6 @@ const FeedFollowingScreen = (props) => {
                 itemData.item.hideFollowers,
                 itemData.item.hideAdvocates,
                 itemData.item.profileLinks,
-                itemData.item.postLinks,
                 itemData.item.profileColumns
               );
             }}

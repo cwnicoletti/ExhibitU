@@ -21,7 +21,7 @@ const FeedCommentsScreen = (props) => {
   const ExhibitUId = props.navigation.getParam("ExhibitUId");
   const projectId = props.navigation.getParam("projectId");
   const postId = props.navigation.getParam("postId");
-  const postPhoto = props.navigation.getParam("postPhotoBase64");
+  const postPhoto = props.navigation.getParam("postPhoto");
 
   const userData =
     userExhibitUId === ExhibitUId

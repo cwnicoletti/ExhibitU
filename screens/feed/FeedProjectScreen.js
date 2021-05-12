@@ -11,10 +11,14 @@ import { HeaderButtons, Item } from "react-navigation-header-buttons";
 const FeedProjectScreen = (props) => {
   const darkModeValue = useSelector((state) => state.switches.darkMode);
   const userData = props.navigation.getParam("userData");
+  const projectId = userData.projectId
+    ? userData.projectId
+    : props.navigation.getParam("projectId");
+
   const ExhibitUId = useSelector((state) => state.user.ExhibitUId);
 
   const project = Object.values(userData.profileProjects).find(
-    (project) => project.projectId === userData.projectId
+    (project) => project.projectId === projectId
   );
 
   let android = null;
@@ -30,7 +34,7 @@ const FeedProjectScreen = (props) => {
     username,
     jobTitle,
     profileBiography,
-    postPhotoBase64,
+    postPhoto,
     numberOfCheers,
     numberOfComments,
     caption,
@@ -52,7 +56,7 @@ const FeedProjectScreen = (props) => {
       username,
       jobTitle,
       profileBiography,
-      postPhotoBase64,
+      postPhoto,
       numberOfCheers,
       numberOfComments,
       caption,
@@ -87,7 +91,11 @@ const FeedProjectScreen = (props) => {
           ...styles.profileContainerStyle,
           borderBottomColor: darkModeValue ? "white" : "black",
         }}
-        imgSource={project.projectCoverPhotoBase64}
+        imgSource={
+          project.projectCoverPhotoBase64
+            ? project.projectCoverPhotoBase64
+            : project.projectCoverPhotoUrl
+        }
         descriptionStyle={{
           ...styles.profileDescriptionStyle,
           color: darkModeValue ? "white" : "black",
@@ -113,7 +121,11 @@ const FeedProjectScreen = (props) => {
         numColumns={project.projectColumns}
         renderItem={(itemData) => (
           <ProjectPictures
-            image={itemData.item.postPhotoBase64}
+            image={
+              itemData.item.postPhotoBase64
+                ? itemData.item.postPhotoBase64
+                : itemData.item.postPhotoUrl
+            }
             projectContainer={{
               backgroundColor: darkModeValue ? "black" : "white",
               width:
@@ -141,7 +153,9 @@ const FeedProjectScreen = (props) => {
                 itemData.item.username,
                 itemData.item.jobTitle,
                 itemData.item.profileBiography,
-                itemData.item.postPhotoBase64,
+                itemData.item.postPhotoBase64
+                  ? itemData.item.postPhotoBase64
+                  : itemData.item.postPhotoUrl,
                 itemData.item.numberOfCheers,
                 itemData.item.numberOfComments,
                 itemData.item.caption,
