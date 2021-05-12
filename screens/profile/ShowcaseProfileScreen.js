@@ -49,7 +49,7 @@ const ShowcaseProfileScreen = (props) => {
           resumeLink: useSelector((state) => state.user.resumeLink),
           hideFollowing: useSelector((state) => state.switches.hideFollowing),
           hideFollowers: useSelector((state) => state.switches.hideFollowers),
-          hideAdovcates: useSelector((state) => state.switches.hideAdovcates),
+          hideAdvocates: useSelector((state) => state.switches.hideAdvocates),
         }
       : {
           profilePictureUrl: props.navigation.getParam("profilePictureUrl"),
@@ -68,7 +68,7 @@ const ShowcaseProfileScreen = (props) => {
           resumeLink: props.navigation.getParam("resumeLink"),
           hideFollowing: props.navigation.getParam("hideFollowing"),
           hideFollowers: props.navigation.getParam("hideFollowers"),
-          hideAdovcates: props.navigation.getParam("hideAdovcates"),
+          hideAdvocates: props.navigation.getParam("hideAdvocates"),
         };
 
   useEffect(() => {
@@ -117,7 +117,7 @@ const ShowcaseProfileScreen = (props) => {
         links={userData.profileLinks}
         followingValue={userData.hideFollowing}
         followersValue={userData.hideFollowers}
-        advocatesValue={userData.hideAdovcates}
+        advocatesValue={userData.hideAdvocates}
         showResumeValue={userData.showResumeValue}
         resumeLink={userData.resumeLink}
         numberOfFollowers={userData.numberOfFollowers}
