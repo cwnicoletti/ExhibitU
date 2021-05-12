@@ -52,7 +52,11 @@ const FeedProfileScreen = (props) => {
         hideFollowers={userData.hideFollowers}
         hideAdvocates={userData.hideAdvocates}
         links={userData.profileLinks}
-        imgSource={userData.profilePictureBase64}
+        imgSource={
+          userData.profilePictureBase64
+            ? userData.profilePictureBase64
+            : userData.profilePictureUrl
+        }
         descriptionStyle={{
           ...styles.profileDescriptionStyle,
           color: darkModeValue ? "white" : "black",
