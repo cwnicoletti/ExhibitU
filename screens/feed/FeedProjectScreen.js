@@ -1,12 +1,5 @@
 import React, { useEffect } from "react";
-import {
-  Image,
-  StyleSheet,
-  FlatList,
-  View,
-  Text,
-  Platform,
-} from "react-native";
+import { StyleSheet, FlatList, View, Text, Platform } from "react-native";
 import { useSelector } from "react-redux";
 
 import ProjectPictures from "../../components/UI/ProjectPictures";
@@ -17,16 +10,11 @@ import { HeaderButtons, Item } from "react-navigation-header-buttons";
 
 const FeedProjectScreen = (props) => {
   const darkModeValue = useSelector((state) => state.switches.darkMode);
-  const feedExhibitUId = props.navigation.getParam("feedExhibitUId");
+  const userData = props.navigation.getParam("userData");
   const ExhibitUId = useSelector((state) => state.user.ExhibitUId);
-  const currentProjectId = props.navigation.getParam("projectId");
-  const profilePictureBase64 = props.navigation.getParam(
-    "profilePictureBase64"
-  );
-  const profileProjects = props.navigation.getParam("profileProjects");
 
-  const project = Object.values(profileProjects).find(
-    (project) => project.projectId === currentProjectId
+  const project = Object.values(userData.profileProjects).find(
+    (project) => project.projectId === userData.projectId
   );
 
   let android = null;
@@ -42,8 +30,6 @@ const FeedProjectScreen = (props) => {
     username,
     jobTitle,
     profileBiography,
-    profileProjects,
-    profilePictureBase64,
     postPhotoBase64,
     numberOfCheers,
     numberOfComments,
@@ -66,8 +52,6 @@ const FeedProjectScreen = (props) => {
       username,
       jobTitle,
       profileBiography,
-      profileProjects,
-      profilePictureBase64,
       postPhotoBase64,
       numberOfCheers,
       numberOfComments,
@@ -81,12 +65,14 @@ const FeedProjectScreen = (props) => {
       profileLinks,
       profileColumns,
       postLinks,
+      profileProjects: userData.profileProjects,
+      profilePictureBase64: userData.profilePictureBase64,
     });
   };
 
   useEffect(() => {
     props.navigation.setParams({ ExhibitUId: ExhibitUId });
-    props.navigation.setParams({ feedExhibitUId: feedExhibitUId });
+    props.navigation.setParams({ feedExhibitUId: userData.ExhibitUId });
     props.navigation.setParams({ android });
   }, []);
 
@@ -155,8 +141,6 @@ const FeedProjectScreen = (props) => {
                 itemData.item.username,
                 itemData.item.jobTitle,
                 itemData.item.profileBiography,
-                profileProjects,
-                profilePictureBase64,
                 itemData.item.postPhotoBase64,
                 itemData.item.numberOfCheers,
                 itemData.item.numberOfComments,

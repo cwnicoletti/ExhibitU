@@ -21,83 +21,67 @@ const FeedCommentsScreen = (props) => {
   const ExhibitUId = props.navigation.getParam("ExhibitUId");
   const projectId = props.navigation.getParam("projectId");
   const postId = props.navigation.getParam("postId");
-  const profileProjects =
+
+  const userData =
     userExhibitUId === ExhibitUId
-      ? useSelector((state) => state.user.profileProjects)
-      : props.navigation.getParam("profileProjects");
-  const fullname =
-    userExhibitUId === ExhibitUId
-      ? useSelector((state) => state.user.fullname)
-      : props.navigation.getParam("fullname");
-  const username =
-    userExhibitUId === ExhibitUId
-      ? useSelector((state) => state.user.username)
-      : props.navigation.getParam("username");
-  const jobTitle =
-    userExhibitUId === ExhibitUId
-      ? useSelector((state) => state.user.jobTitle)
-      : props.navigation.getParam("jobTitle");
-  const profileBiography =
-    userExhibitUId === ExhibitUId
-      ? useSelector((state) => state.user.profileBiography)
-      : props.navigation.getParam("profileBiography");
-  const profilePictureBase64 =
-    userExhibitUId === ExhibitUId
-      ? profileProjects[projectId].projectPosts[postId].profilePictureBase64
-      : props.navigation.getParam("profilePictureBase64");
-  const numberOfFollowers =
-    userExhibitUId === ExhibitUId
-      ? useSelector((state) => state.user.numberOfFollowers)
-      : props.navigation.getParam("numberOfFollowers");
-  const numberOfFollowing =
-    userExhibitUId === ExhibitUId
-      ? useSelector((state) => state.user.numberOfFollowing)
-      : props.navigation.getParam("numberOfFollowing");
-  const numberOfAdvocates =
-    userExhibitUId === ExhibitUId
-      ? useSelector((state) => state.user.numberOfAdvocates)
-      : props.navigation.getParam("numberOfAdvocates");
-  const postPhoto = props.navigation.getParam("postPhotoBase64");
-  const numberOfCheers =
-    userExhibitUId === ExhibitUId
-      ? profileProjects[projectId].projectPosts[postId].numberOfCheers
-      : props.navigation.getParam("numberOfCheers");
-  const numberOfComments =
-    userExhibitUId === ExhibitUId
-      ? profileProjects[projectId].projectPosts[postId].numberOfComments
-      : props.navigation.getParam("numberOfComments");
-  const caption =
-    userExhibitUId === ExhibitUId
-      ? profileProjects[projectId].projectPosts[postId].caption
-      : props.navigation.getParam("caption");
-  const hideFollowing =
-    userExhibitUId === ExhibitUId
-      ? profileProjects[projectId].projectPosts[postId].hideFollowing
-      : props.navigation.getParam("hideFollowing");
-  const hideFollowers =
-    userExhibitUId === ExhibitUId
-      ? profileProjects[projectId].projectPosts[postId].hideFollowers
-      : props.navigation.getParam("hideFollowers");
-  const hideAdvocates =
-    userExhibitUId === ExhibitUId
-      ? profileProjects[projectId].projectPosts[postId].hideAdvocates
-      : props.navigation.getParam("hideAdvocates");
-  const profileLinks =
-    userExhibitUId === ExhibitUId
-      ? useSelector((state) => state.user.profileLinks)
-      : props.navigation.getParam("profileLinks");
-  const postLinks =
-    userExhibitUId === ExhibitUId
-      ? profileProjects[projectId].projectPosts[postId].postLinks
-        ? profileProjects[projectId].projectPosts[postId].postLinks
-        : {}
-      : props.navigation.getParam("postLinks")
-      ? props.navigation.getParam("postLinks")
-      : {};
-  const profileColumns =
-    userExhibitUId === ExhibitUId
-      ? useSelector((state) => state.user.profileColumns)
-      : props.navigation.getParam("profileColumns");
+      ? {
+          profileProjects: useSelector((state) => state.user.profileProjects),
+          fullname: useSelector((state) => state.user.fullname),
+          username: useSelector((state) => state.user.username),
+          jobTitle: useSelector((state) => state.user.jobTitle),
+          profileBiography: useSelector((state) => state.user.profileBiography),
+          profilePictureBase64:
+            profileProjects[projectId].projectPosts[postId]
+              .profilePictureBase64,
+          numberOfFollowers: useSelector(
+            (state) => state.user.numberOfFollowers
+          ),
+          numberOfFollowing: useSelector(
+            (state) => state.user.numberOfFollowing
+          ),
+          numberOfAdvocates: useSelector(
+            (state) => state.user.numberOfAdvocates
+          ),
+          numberOfCheers:
+            profileProjects[projectId].projectPosts[postId].numberOfCheers,
+          numberOfComments:
+            profileProjects[projectId].projectPosts[postId].numberOfComments,
+          caption: profileProjects[projectId].projectPosts[postId].caption,
+          hideFollowing:
+            profileProjects[projectId].projectPosts[postId].hideFollowing,
+          hideFollowers:
+            profileProjects[projectId].projectPosts[postId].hideFollowers,
+          hideAdvocates:
+            profileProjects[projectId].projectPosts[postId].hideAdvocates,
+          profileLinks: useSelector((state) => state.user.profileLinks),
+          postLinks: profileProjects[projectId].projectPosts[postId].postLinks
+            ? profileProjects[projectId].projectPosts[postId].postLinks
+            : {},
+          profileColumns: useSelector((state) => state.user.profileColumns),
+        }
+      : {
+          profileProjects: props.navigation.getParam("profileProjects"),
+          fullname: props.navigation.getParam("fullname"),
+          username: props.navigation.getParam("username"),
+          jobTitle: props.navigation.getParam("jobTitle"),
+          profilePictureBase64: props.navigation.getParam(
+            "profilePictureBase64"
+          ),
+          numberOfFollowers: props.navigation.getParam("numberOfFollowers"),
+          numberOfFollowing: props.navigation.getParam("numberOfFollowing"),
+          numberOfAdvocates: props.navigation.getParam("numberOfAdvocates"),
+          numberOfCheers: props.navigation.getParam("numberOfCheers"),
+          numberOfComments: props.navigation.getParam("numberOfComments"),
+          caption: props.navigation.getParam("caption"),
+          hideFollowing: props.navigation.getParam("hideFollowing"),
+          hideFollowers: props.navigation.getParam("hideFollowers"),
+          hideAdvocates: props.navigation.getParam("hideAdvocates"),
+          profileLinks: props.navigation.getParam("profileLinks"),
+          postLinks: props.navigation.getParam("postLinks")
+            ? props.navigation.getParam("postLinks")
+            : {},
+          profileColumns: props.navigation.getParam("profileColumns"),
+        };
 
   let android = null;
   if (Platform.OS === "android") {
@@ -180,11 +164,11 @@ const FeedCommentsScreen = (props) => {
           ...styles.profileDescriptionStyle,
           color: darkModeValue ? "white" : "black",
         }}
-        caption={caption}
-        fullname={fullname}
-        profileImageSource={profilePictureBase64}
-        numberOfCheers={numberOfCheers}
-        numberOfComments={numberOfComments}
+        caption={userData.caption}
+        fullname={userData.fullname}
+        profileImageSource={userData.profilePictureBase64}
+        numberOfCheers={userData.numberOfCheers}
+        numberOfComments={userData.numberOfComments}
         postId={postId}
         projectId={projectId}
         posterExhibitUId={ExhibitUId}

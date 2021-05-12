@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Image, StyleSheet, FlatList, View, Text } from "react-native";
+import { StyleSheet, FlatList, View, Text } from "react-native";
 import { useSelector } from "react-redux";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import IoniconsHeaderButton from "../../components/UI/IoniconsHeaderButton";
@@ -9,71 +9,18 @@ import FeedProfileHeader from "../../components/feed/FeedProfileHeader";
 
 const FeedProfileScreen = (props) => {
   const darkModeValue = useSelector((state) => state.switches.darkMode);
-  const userData = {
-    ExhibitUId: props.navigation.getParam("ExhibitUId"),
-    projectId: props.navigation.getParam("projectId"),
-    fullname: props.navigation.getParam("fullname"),
-    username: props.navigation.getParam("username"),
-    jobTitle: props.navigation.getParam("jobTitle"),
-    profileBiography: props.navigation.getParam("profileBiography"),
-    profilePictureBase64: props.navigation.getParam("profilePictureBase64"),
-    numberOfFollowers: props.navigation.getParam("numberOfFollowers"),
-    numberOfFollowing: props.navigation.getParam("numberOfFollowing"),
-    numberOfAdvocates: props.navigation.getParam("numberOfAdvocates"),
-    hideFollowing: props.navigation.getParam("hideFollowing"),
-    hideFollowers: props.navigation.getParam("hideFollowers"),
-    hideAdvocates: props.navigation.getParam("hideAdvocates"),
-    profileProjects: props.navigation.getParam("profileProjects")
-      ? props.navigation.getParam("profileProjects")
-      : {},
-    profileLinks: props.navigation.getParam("profileLinks")
-      ? props.navigation.getParam("profileLinks")
-      : {},
-    postLinks: props.navigation.getParam("postLinks")
-      ? props.navigation.getParam("postLinks")
-      : {},
-    profileColumns: props.navigation.getParam("profileColumns"),
-  };
+  let userData = props.navigation.getParam("userData");
+  userData.profileLinks = userData.profileLinks ? userData.profileLinks : {};
+  console.log(userData);
 
   useEffect(() => {
     props.navigation.setParams({ darkMode: darkModeValue });
   }, [darkModeValue]);
 
-  const viewProjectHandler = (
-    ExhibitUId,
-    projectId,
-    fullname,
-    username,
-    jobTitle,
-    profileBiography,
-    profileProjects,
-    profilePictureBase64,
-    numberOfFollowers,
-    numberOfFollowing,
-    numberOfAdvocates,
-    hideFollowing,
-    hideFollowers,
-    hideAdvocates,
-    profileLinks,
-    postLinks
-  ) => {
+  const viewProjectHandler = (projectId) => {
     props.navigation.navigate("ViewFeedProfileProject", {
-      ExhibitUId,
       projectId,
-      fullname,
-      username,
-      jobTitle,
-      profileBiography,
-      profileProjects,
-      profilePictureBase64,
-      numberOfFollowers,
-      numberOfFollowing,
-      numberOfAdvocates,
-      hideFollowing,
-      hideFollowers,
-      hideAdvocates,
-      profileLinks,
-      postLinks,
+      userData,
     });
   };
 
@@ -162,24 +109,7 @@ const FeedProfileScreen = (props) => {
               color: darkModeValue ? "white" : "black",
             }}
             onSelect={() => {
-              viewProjectHandler(
-                userData.ExhibitUId,
-                itemData.item.projectId,
-                userData.fullname,
-                userData.username,
-                userData.jobTitle,
-                userData.profileBiography,
-                userData.profileProjects,
-                userData.profilePictureBase64,
-                userData.numberOfFollowers,
-                userData.numberOfFollowing,
-                userData.numberOfAdvocates,
-                userData.hideFollowing,
-                userData.hideFollowers,
-                userData.hideAdvocates,
-                userData.profileLinks,
-                userData.postLinks
-              );
+              viewProjectHandler(itemData.item.projectId);
             }}
           />
         )}
@@ -193,12 +123,11 @@ FeedProfileScreen.navigationOptions = (navData) => {
   return {
     headerTitle: () => (
       <View style={styles.logo}>
-        
         <Text
           style={{
             ...styles.logoTitle,
             color: darkModeValue ? "white" : "black",
-fontFamily: "CormorantUpright",
+            fontFamily: "CormorantUpright",
           }}
         >
           ExhibitU
