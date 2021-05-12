@@ -11,7 +11,6 @@ const FeedProfileScreen = (props) => {
   const darkModeValue = useSelector((state) => state.switches.darkMode);
   let userData = props.navigation.getParam("userData");
   userData.profileLinks = userData.profileLinks ? userData.profileLinks : {};
-  console.log(userData);
 
   useEffect(() => {
     props.navigation.setParams({ darkMode: darkModeValue });

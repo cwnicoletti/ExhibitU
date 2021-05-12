@@ -14,8 +14,6 @@ const ShowcaseProfileScreen = (props) => {
   const darkModeValue = useSelector((state) => state.switches.darkMode);
   const ExhibitUId = useSelector((state) => state.user.ExhibitUId);
 
-  console.log(ExhibitUId);
-  console.log(props.navigation.getParam("ExhibitUId"));
 
   const userData =
     props.navigation.getParam("ExhibitUId") === ExhibitUId ||

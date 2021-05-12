@@ -11,7 +11,6 @@ import { LogBox } from "react-native";
 const ShowcasePictureScreen = (props) => {
   const darkModeValue = useSelector((state) => state.switches.darkMode);
   const userData = props.navigation.getParam("userData");
-  console.log(userData);
 
   const postPhotoUrl = props.navigation.getParam("postPhotoUrl");
   const postPhotoBase64 = props.navigation.getParam("postPhotoBase64");

@@ -58,7 +58,6 @@ const FeedCheeringScreen = (props) => {
       const filteredIndex = responses.hits.filter((object) =>
         cheering.includes(object.objectID)
       );
-      console.log(filteredIndex);
       setReturnedIndex(filteredIndex);
     });
   };

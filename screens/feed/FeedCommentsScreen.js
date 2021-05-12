@@ -21,6 +21,7 @@ const FeedCommentsScreen = (props) => {
   const ExhibitUId = props.navigation.getParam("ExhibitUId");
   const projectId = props.navigation.getParam("projectId");
   const postId = props.navigation.getParam("postId");
+  const postPhoto = props.navigation.getParam("postPhotoBase64");
 
   const userData =
     userExhibitUId === ExhibitUId
@@ -53,7 +54,9 @@ const FeedCommentsScreen = (props) => {
             profileProjects[projectId].projectPosts[postId].hideFollowers,
           hideAdvocates:
             profileProjects[projectId].projectPosts[postId].hideAdvocates,
-          profileLinks: useSelector((state) => state.user.profileLinks),
+          profileLinks: useSelector((state) => state.user.profileLinks)
+            ? useSelector((state) => state.user.profileLinks)
+            : {},
           postLinks: profileProjects[projectId].projectPosts[postId].postLinks
             ? profileProjects[projectId].projectPosts[postId].postLinks
             : {},
@@ -76,7 +79,9 @@ const FeedCommentsScreen = (props) => {
           hideFollowing: props.navigation.getParam("hideFollowing"),
           hideFollowers: props.navigation.getParam("hideFollowers"),
           hideAdvocates: props.navigation.getParam("hideAdvocates"),
-          profileLinks: props.navigation.getParam("profileLinks"),
+          profileLinks: props.navigation.getParam("profileLinks")
+            ? props.navigation.getParam("profileLinks")
+            : {},
           postLinks: props.navigation.getParam("postLinks")
             ? props.navigation.getParam("postLinks")
             : {},
@@ -93,47 +98,31 @@ const FeedCommentsScreen = (props) => {
       ExhibitUId: ExhibitUId,
       projectId: projectId,
       postId: postId,
-      numberOfCheers: numberOfCheers,
+      numberOfCheers: userData.numberOfCheers,
     });
   };
 
-  const viewProfileHandler = (
-    ExhibitUId,
-    projectId,
-    fullname,
-    username,
-    jobTitle,
-    profileBiography,
-    profileProjects,
-    profilePictureBase64,
-    numberOfFollowers,
-    numberOfFollowing,
-    numberOfAdvocates,
-    hideFollowing,
-    hideFollowers,
-    hideAdvocates,
-    profileLinks,
-    postLinks,
-    profileColumns
-  ) => {
+  const viewProfileHandler = () => {
     props.navigation.push("ViewProfile", {
-      ExhibitUId,
-      projectId,
-      fullname,
-      username,
-      jobTitle,
-      profileBiography,
-      profileProjects,
-      profilePictureBase64,
-      numberOfFollowers,
-      numberOfFollowing,
-      numberOfAdvocates,
-      hideFollowing,
-      hideFollowers,
-      hideAdvocates,
-      profileLinks,
-      postLinks,
-      profileColumns,
+      userData: {
+        ExhibitUId,
+        projectId,
+        fullname: userData.fullname,
+        username: userData.username,
+        jobTitle: userData.jobTitle,
+        profileBiography: userData.profileBiography,
+        profileProjects: userData.profileProjects,
+        profilePictureBase64: userData.profilePictureBase64,
+        numberOfFollowers: userData.numberOfFollowers,
+        numberOfFollowing: userData.numberOfFollowing,
+        numberOfAdvocates: userData.numberOfAdvocates,
+        hideFollowing: userData.hideFollowing,
+        hideFollowers: userData.hideFollowers,
+        hideAdvocates: userData.hideAdvocates,
+        profileLinks: userData.profileLinks,
+        postLinks: userData.postLinks,
+        profileColumns: userData.profileColumns,
+      },
     });
   };
 
@@ -172,7 +161,7 @@ const FeedCommentsScreen = (props) => {
         postId={postId}
         projectId={projectId}
         posterExhibitUId={ExhibitUId}
-        links={postLinks}
+        links={userData.postLinks}
         nameStyle={{
           color: darkModeValue ? "white" : "black",
         }}
@@ -221,25 +210,7 @@ const FeedCommentsScreen = (props) => {
           viewCheeringHandler();
         }}
         onSelectProfile={() => {
-          viewProfileHandler(
-            ExhibitUId,
-            projectId,
-            fullname,
-            username,
-            jobTitle,
-            profileBiography,
-            profileProjects,
-            profilePictureBase64,
-            numberOfFollowers,
-            numberOfFollowing,
-            numberOfAdvocates,
-            hideFollowing,
-            hideFollowers,
-            hideAdvocates,
-            profileLinks,
-            postLinks,
-            profileColumns
-          );
+          viewProfileHandler();
         }}
       />
     </ScrollView>
