@@ -4,7 +4,6 @@ import {
   FlatList,
   View,
   Text,
-  Image,
   StatusBar,
   RefreshControl,
 } from "react-native";
@@ -30,15 +29,8 @@ const UserFeedScreen = (props) => {
   const profileProjects = useSelector((state) => state.user.profileProjects);
   const resetScrollFeed = useSelector((state) => state.user.resetScrollFeed);
 
-  let filteredOutEmptyUserFeed = [];
-  Object.entries(userFeed).forEach(([k, value]) => {
-    if (Object.keys(value).length > 0) {
-      filteredOutEmptyUserFeed.push(value);
-    }
-  });
-
   // Sort the array based on the second element
-  filteredOutEmptyUserFeed.sort((first, second) => {
+  Object.values(userFeed).sort((first, second) => {
     return (
       second["postDateCreated"]["_seconds"] -
       first["postDateCreated"]["_seconds"]
@@ -52,17 +44,43 @@ const UserFeedScreen = (props) => {
   const viewProjectHandler = (
     ExhibitUId,
     projectId,
-    profilePictureBase64,
+    fullname,
+    username,
+    jobTitle,
+    profileBiography,
     profileProjects,
-    postLinks
+    profilePictureBase64,
+    numberOfFollowers,
+    numberOfFollowing,
+    numberOfAdvocates,
+    hideFollowing,
+    hideFollowers,
+    hideAdvocates,
+    profileLinks,
+    postLinks,
+    profileColumns
   ) => {
     dispatch(offScreen("Feed"));
     props.navigation.navigate("ViewFeedProject", {
-      feedExhibitUId: ExhibitUId,
-      projectId,
-      profilePictureBase64,
-      profileProjects,
-      postLinks,
+      userData: {
+        ExhibitUId,
+        projectId,
+        fullname,
+        username,
+        jobTitle,
+        profileBiography,
+        profileProjects,
+        profilePictureBase64,
+        numberOfFollowers,
+        numberOfFollowing,
+        numberOfAdvocates,
+        hideFollowing,
+        hideFollowers,
+        hideAdvocates,
+        profileLinks,
+        postLinks,
+        profileColumns,
+      },
     });
   };
 
@@ -102,23 +120,25 @@ const UserFeedScreen = (props) => {
   ) => {
     dispatch(offScreen("Feed"));
     props.navigation.navigate("ViewProfile", {
-      ExhibitUId,
-      projectId,
-      fullname,
-      username,
-      jobTitle,
-      profileBiography,
-      profileProjects,
-      profilePictureBase64,
-      numberOfFollowers,
-      numberOfFollowing,
-      numberOfAdvocates,
-      hideFollowing,
-      hideFollowers,
-      hideAdvocates,
-      profileLinks,
-      postLinks,
-      profileColumns,
+      userData: {
+        ExhibitUId,
+        projectId,
+        fullname,
+        username,
+        jobTitle,
+        profileBiography,
+        profileProjects,
+        profilePictureBase64,
+        numberOfFollowers,
+        numberOfFollowing,
+        numberOfAdvocates,
+        hideFollowing,
+        hideFollowers,
+        hideAdvocates,
+        profileLinks,
+        postLinks,
+        profileColumns,
+      },
     });
   };
 
@@ -131,25 +151,18 @@ const UserFeedScreen = (props) => {
   };
 
   const refreshFeed = async () => {
-    let filteredOutEmptyUserFeed = [];
-    Object.entries(userFeed).forEach(([k, value]) => {
-      if (Object.keys(value).length > 0) {
-        filteredOutEmptyUserFeed.push(value);
-      }
-    });
-
     setIsRefreshing(true);
     await dispatch(getUserFeed(localId, ExhibitUId));
     setIsRefreshing(false);
   };
 
   useEffect(() => {
-    if (filteredOutEmptyUserFeed.length === 0) {
+    if (Object.values(userFeed).length === 0) {
       setEmptyFeed(true);
     } else {
       setEmptyFeed(false);
     }
-  }, [filteredOutEmptyUserFeed]);
+  }, [userFeed]);
 
   const flatlistFeed = useRef();
 
@@ -190,7 +203,7 @@ const UserFeedScreen = (props) => {
       <StatusBar barStyle={setStatusBarStyle(darkModeValue)} />
       <FlatList
         extraData={profilePictureBase64}
-        data={filteredOutEmptyUserFeed}
+        data={Object.values(userFeed)}
         ref={flatlistFeed}
         refreshControl={
           <RefreshControl
@@ -269,9 +282,23 @@ const UserFeedScreen = (props) => {
               viewProjectHandler(
                 itemData.item.ExhibitUId,
                 itemData.item.projectId,
+                itemData.item.fullname,
+                itemData.item.username,
+                itemData.item.jobTitle,
+                itemData.item.profileBiography,
+                itemData.item.ExhibitUId === ExhibitUId
+                  ? profileProjects
+                  : itemData.item.profileProjects,
                 itemData.item.profilePictureBase64,
-                itemData.item.profileProjects,
-                itemData.item.postLinks
+                itemData.item.numberOfFollowers,
+                itemData.item.numberOfFollowing,
+                itemData.item.numberOfAdvocates,
+                itemData.item.hideFollowing,
+                itemData.item.hideFollowers,
+                itemData.item.hideAdvocates,
+                itemData.item.profileLinks,
+                itemData.item.postLinks,
+                itemData.item.profileColumns
               );
             }}
             onSelectCheering={() => {
