@@ -62,13 +62,13 @@ const ShowcasePictureScreen = (props) => {
   };
 
   useEffect(() => {
-    props.navigation.setParams({ darkMode: darkModeValue });
+    LogBox.ignoreLogs(["VirtualizedLists should never be nested"]);
     props.navigation.setParams({ android: android });
-  }, [darkModeValue, android]);
+  }, []);
 
   useEffect(() => {
-    LogBox.ignoreLogs(["VirtualizedLists should never be nested"]);
-  }, []);
+    props.navigation.setParams({ darkMode: darkModeValue });
+  }, [darkModeValue]);
 
   return (
     <ScrollView
