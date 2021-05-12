@@ -93,23 +93,25 @@ const FeedCheeringScreen = (props) => {
     profileColumns
   ) => {
     props.navigation.push("ViewProfile", {
-      ExhibitUId,
-      projectId,
-      fullname,
-      username,
-      jobTitle,
-      profileBiography,
-      profileProjects,
-      profilePictureUrl,
-      numberOfFollowers,
-      numberOfFollowing,
-      numberOfAdvocates,
-      hideFollowing,
-      hideFollowers,
-      hideAdvocates,
-      profileLinks,
-      postLinks,
-      profileColumns,
+      userData: {
+        ExhibitUId,
+        projectId,
+        fullname,
+        username,
+        jobTitle,
+        profileBiography,
+        profileProjects,
+        profilePictureUrl,
+        numberOfFollowers,
+        numberOfFollowing,
+        numberOfAdvocates,
+        hideFollowing,
+        hideFollowers,
+        hideAdvocates,
+        profileLinks,
+        postLinks,
+        profileColumns,
+      },
     });
   };
 
