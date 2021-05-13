@@ -96,7 +96,7 @@ const ExploreFollowingScreen = (props) => {
     showCheering
   ) => {
     props.navigation.push("ExploreProfile", {
-      text: text,
+      text,
       ExhibitUId,
       profilePictureUrl,
       fullname,
@@ -181,14 +181,7 @@ const ExploreFollowingScreen = (props) => {
         keyExtractor={(item) => item.objectID}
         renderItem={(itemData) => (
           <ExploreCard
-            image={
-              itemData.item.profilePictureUrl
-                ? { uri: itemData.item.profilePictureUrl }
-                : {
-                    uri:
-                      "https://res.cloudinary.com/ExhibitU-79c28/image/upload/v1608714145/white-profile-icon-24_r0veeu.png",
-                  }
-            }
+            image={itemData.item.profilePictureUrl}
             fullname={itemData.item.fullname}
             username={itemData.item.username}
             jobTitle={itemData.item.jobTitle}
@@ -248,7 +241,6 @@ ExploreFollowingScreen.navigationOptions = (navData) => {
           style={{
             ...styles.logoTitle,
             color: darkModeValue ? "white" : "black",
-            fontFamily: "CormorantUpright",
           }}
         >
           Following

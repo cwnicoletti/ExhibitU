@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { View, StyleSheet, ActivityIndicator } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useDispatch } from "react-redux";
-import { authenticate, logout } from "../store/actions/auth";
+import { authenticate } from "../store/actions/auth";
 import { getUserData } from "../store/actions/user";
 
 const StartupScreen = (props) => {
