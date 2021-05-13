@@ -11,9 +11,7 @@ import { HeaderButtons, Item } from "react-navigation-header-buttons";
 const FeedProjectScreen = (props) => {
   const darkModeValue = useSelector((state) => state.switches.darkMode);
   const userData = props.navigation.getParam("userData");
-  const projectId = userData.projectId
-    ? userData.projectId
-    : props.navigation.getParam("projectId");
+  const projectId = props.navigation.getParam("projectId");
 
   const ExhibitUId = useSelector((state) => state.user.ExhibitUId);
 
