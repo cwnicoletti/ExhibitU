@@ -58,7 +58,8 @@ const UserFeedScreen = (props) => {
     hideAdvocates,
     profileLinks,
     postLinks,
-    profileColumns
+    profileColumns,
+    postDateCreated
   ) => {
     dispatch(offScreen("Feed"));
     props.navigation.navigate("ViewFeedProject", {
@@ -80,6 +81,7 @@ const UserFeedScreen = (props) => {
         profileLinks,
         postLinks,
         profileColumns,
+        postDateCreated,
       },
     });
   };
@@ -116,7 +118,8 @@ const UserFeedScreen = (props) => {
     hideAdvocates,
     profileLinks,
     postLinks,
-    profileColumns
+    profileColumns,
+    postDateCreated
   ) => {
     dispatch(offScreen("Feed"));
     props.navigation.navigate("ViewProfile", {
@@ -138,6 +141,7 @@ const UserFeedScreen = (props) => {
         profileLinks,
         postLinks,
         profileColumns,
+        postDateCreated,
       },
     });
   };
@@ -248,6 +252,9 @@ const UserFeedScreen = (props) => {
             dateContainer={{
               backgroundColor: darkModeValue ? "#121212" : "white",
             }}
+            dateStyle={{
+              color: "gray",
+            }}
             titleStyle={{
               color: "white",
             }}
@@ -274,9 +281,6 @@ const UserFeedScreen = (props) => {
             captionStyle={{
               color: darkModeValue ? "white" : "black",
             }}
-            dateStyle={{
-              color: "gray",
-            }}
             arrowColor={"white"}
             onSelect={() => {
               viewProjectHandler(
@@ -298,7 +302,8 @@ const UserFeedScreen = (props) => {
                 itemData.item.hideAdvocates,
                 itemData.item.profileLinks,
                 itemData.item.postLinks,
-                itemData.item.profileColumns
+                itemData.item.profileColumns,
+                itemData.item.postDateCreated._seconds
               );
             }}
             onSelectCheering={() => {
@@ -329,7 +334,8 @@ const UserFeedScreen = (props) => {
                 itemData.item.hideAdvocates,
                 itemData.item.profileLinks,
                 itemData.item.postLinks,
-                itemData.item.profileColumns
+                itemData.item.profileColumns,
+                itemData.item.postDateCreated._seconds
               );
             }}
           />

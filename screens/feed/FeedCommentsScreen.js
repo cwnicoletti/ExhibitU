@@ -99,6 +99,7 @@ const FeedCommentsScreen = (props) => {
         projectId={userData.projectId}
         posterExhibitUId={userData.ExhibitUId}
         links={userData.postLinks}
+        postDateCreated={userData.postDateCreated}
         nameStyle={{
           color: darkModeValue ? "white" : "black",
         }}
@@ -115,6 +116,12 @@ const FeedCommentsScreen = (props) => {
         threeDotsStyle={darkModeValue ? "white" : "black"}
         captionContainer={{
           backgroundColor: darkModeValue ? "#121212" : "white",
+        }}
+        dateContainer={{
+          backgroundColor: darkModeValue ? "#121212" : "white",
+        }}
+        dateStyle={{
+          color: "gray",
         }}
         titleStyle={{
           color: "white",

@@ -29,6 +29,12 @@ import {
 
 import { LogBox } from "react-native";
 
+const toDateTime = (seconds) => {
+  let t = new Date(0); // Epoch
+  t.setUTCSeconds(seconds);
+  return t;
+};
+
 const handleLinkOnPress = async (url) => {
   await WebBrowser.openBrowserAsync(url);
 };
@@ -51,6 +57,7 @@ const FeedPostView = (props) => {
   const links = props.links;
   const postId = props.postId;
   const projectId = props.projectId;
+  const postDateCreated = toDateTime(props.postDateCreated);
 
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const slideAnim = useRef(new Animated.Value(0)).current;
@@ -461,6 +468,23 @@ const FeedPostView = (props) => {
           {props.caption}
         </Text>
       </View>
+      <View style={{ ...styles.dateContainer, ...props.dateContainer }}>
+        <Text
+          style={{ ...styles.date, ...props.dateStyle, flexDirection: "row" }}
+        >
+          {`${postDateCreated.toLocaleString("UTC", {
+            weekday: "long",
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+          })}`}
+          {", "}
+          {`${postDateCreated.toLocaleString("UTC", {
+            hour: "numeric",
+            minute: "numeric",
+          })}`}
+        </Text>
+      </View>
     </View>
   );
 };
@@ -507,6 +531,13 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     padding: 10,
     borderTopWidth: 1,
+  },
+  date: {
+    margin: 10,
+    fontSize: 13,
+  },
+  dateContainer: {
+    alignItems: "flex-end",
   },
   pictureCheerContainer: {
     padding: 10,

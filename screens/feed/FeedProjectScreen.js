@@ -46,7 +46,8 @@ const FeedProjectScreen = (props) => {
     hideAdvocates,
     profileLinks,
     profileColumns,
-    postLinks
+    postLinks,
+    postDateCreated
   ) => {
     props.navigation.navigate("ViewComments", {
       userData: {
@@ -74,6 +75,7 @@ const FeedProjectScreen = (props) => {
         profilePictureBase64: userData.profilePictureBase64
           ? userData.profilePictureBase64
           : userData.profilePictureUrl,
+        postDateCreated,
       },
     });
   };
@@ -171,7 +173,8 @@ const FeedProjectScreen = (props) => {
                 itemData.item.hideAdvocates,
                 itemData.item.profileLinks,
                 itemData.item.profileColumns,
-                itemData.item.postLinks
+                itemData.item.postLinks,
+                itemData.item.postDateCreated._seconds
               )
             }
           />
