@@ -16,14 +16,15 @@ import ExploreAdvocatesProjectsIcons from "./ExploreAdvocatesProjectsIcons";
 const ExploreAdvocatesCard = (props) => {
   const projects = props.projects;
   const projectsAdvocating = props.projectsAdvocating;
+
   const image = props.image
     ? { uri: props.image }
     : require("../../assets/default-profile-icon.jpg");
 
   let projectsAdvocatingFor = [];
-  [projects].filter((object) => {
-    if (projectsAdvocating.includes(Object.values(object)[0].projectId)) {
-      projectsAdvocatingFor.push(Object.values(object)[0]);
+  Object.values(projects).filter((object) => {
+    if (projectsAdvocating.includes(object.projectId)) {
+      projectsAdvocatingFor.push(object);
     }
   });
 
