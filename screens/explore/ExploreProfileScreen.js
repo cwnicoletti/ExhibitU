@@ -20,10 +20,13 @@ import ExploreProfileHeader from "../../components/explore/ExploreProfileHeader"
 
 import { followUser, unfollowUser } from "../../store/actions/user";
 
-const client = algoliasearch("EXC8LH5MAX", "2d8cedcaab4cb2b351e90679963fbd92");
-const index = client.initIndex("users");
-
 const ExploreProfileScreen = (props) => {
+  const client = algoliasearch(
+    "EXC8LH5MAX",
+    "2d8cedcaab4cb2b351e90679963fbd92"
+  );
+  const index = client.initIndex("users");
+
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false);
   const [isRefreshing, setIsRefreshing] = useState(false);
@@ -331,12 +334,11 @@ ExploreProfileScreen.navigationOptions = (navData) => {
   return {
     headerTitle: () => (
       <View style={styles.logo}>
-        
         <Text
           style={{
             ...styles.logoTitle,
             color: darkModeValue ? "white" : "black",
-fontFamily: "CormorantUpright",
+            fontFamily: "CormorantUpright",
           }}
         >
           ExhibitU
