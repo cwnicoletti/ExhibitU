@@ -1,12 +1,5 @@
 import React, { useEffect } from "react";
-import {
-  Image,
-  StyleSheet,
-  View,
-  Text,
-  ScrollView,
-  Platform,
-} from "react-native";
+import { StyleSheet, View, Text, ScrollView, Platform } from "react-native";
 import { useSelector } from "react-redux";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 
@@ -29,7 +22,7 @@ const FeedCommentsScreen = (props) => {
   const viewCheeringHandler = () => {
     props.navigation.push("ViewCheering", {
       ExhibitUId: userData.ExhibitUId,
-      projectId: userData.projectId,
+      projectId: projectId,
       postId: userData.postId,
       numberOfCheers: userData.numberOfCheers,
     });
@@ -39,7 +32,7 @@ const FeedCommentsScreen = (props) => {
     props.navigation.push("ViewProfile", {
       userData: {
         ExhibitUId: userData.ExhibitUId,
-        projectId: userData.projectId,
+        projectId: projectId,
         fullname: userData.fullname,
         username: userData.username,
         jobTitle: userData.jobTitle,

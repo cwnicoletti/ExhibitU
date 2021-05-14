@@ -61,11 +61,12 @@ const UserFeedScreen = (props) => {
     profileColumns,
     postDateCreated
   ) => {
+    console.log(projectId);
     dispatch(offScreen("Feed"));
     props.navigation.navigate("ViewFeedProject", {
+      projectId,
       userData: {
         ExhibitUId,
-        projectId,
         fullname,
         username,
         jobTitle,
@@ -125,7 +126,6 @@ const UserFeedScreen = (props) => {
     props.navigation.navigate("ViewProfile", {
       userData: {
         ExhibitUId,
-        projectId,
         fullname,
         username,
         jobTitle,
@@ -290,9 +290,7 @@ const UserFeedScreen = (props) => {
                 itemData.item.username,
                 itemData.item.jobTitle,
                 itemData.item.profileBiography,
-                itemData.item.ExhibitUId === ExhibitUId
-                  ? profileProjects
-                  : itemData.item.profileProjects,
+                itemData.item.profileProjects,
                 itemData.item.profilePictureBase64,
                 itemData.item.numberOfFollowers,
                 itemData.item.numberOfFollowing,
@@ -322,9 +320,7 @@ const UserFeedScreen = (props) => {
                 itemData.item.username,
                 itemData.item.jobTitle,
                 itemData.item.profileBiography,
-                itemData.item.ExhibitUId === ExhibitUId
-                  ? profileProjects
-                  : itemData.item.profileProjects,
+                itemData.item.profileProjects,
                 itemData.item.profilePictureBase64,
                 itemData.item.numberOfFollowers,
                 itemData.item.numberOfFollowing,

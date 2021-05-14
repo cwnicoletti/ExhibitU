@@ -48,9 +48,9 @@ const FeedProjectScreen = (props) => {
     postDateCreated
   ) => {
     props.navigation.navigate("ViewComments", {
+      projectId,
       userData: {
         ExhibitUId,
-        projectId,
         postId,
         fullname,
         username,
