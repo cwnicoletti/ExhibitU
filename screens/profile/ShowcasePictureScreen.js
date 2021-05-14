@@ -59,7 +59,6 @@ const ShowcasePictureScreen = (props) => {
       projectLinks: userData.projectLinks,
       profileColumns: userData.profileColumns,
       showCheering: userData.showCheering,
-      profilePictureUrl: userData.profilePictureUrl,
     });
   };
 

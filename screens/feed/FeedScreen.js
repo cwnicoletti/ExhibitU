@@ -60,7 +60,6 @@ const UserFeedScreen = (props) => {
     profileColumns,
     postDateCreated
   ) => {
-    console.log(projectId);
     dispatch(offScreen("Feed"));
     props.navigation.navigate("ViewFeedProject", {
       projectId,

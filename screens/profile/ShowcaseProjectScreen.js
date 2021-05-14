@@ -133,7 +133,6 @@ ShowcaseProjectScreen.navigationOptions = (navData) => {
             ...styles.logoTitle,
             color: darkModeValue ? "white" : "black",
             fontFamily: "CormorantUpright",
-            fontFamily: "CormorantUpright",
           }}
         >
           ExhibitU

@@ -1051,8 +1051,6 @@ export const cheerPost = (
               },
             },
           },
-          numberOfCheers: data.userFeed[postId].numberOfCheers + 1,
-          cheering: [...data.userFeed[postId].cheering, ExhibitUId],
         },
       };
       Object.entries(data.userFeed).map(([id, value]) => {
