@@ -27,6 +27,12 @@ import {
 
 import { LogBox } from "react-native";
 
+const toDateTime = (seconds) => {
+  let t = new Date(0); // Epoch
+  t.setUTCSeconds(seconds);
+  return t;
+};
+
 const ProfileProjectPostView = (props) => {
   const dispatch = useDispatch();
   const darkModeValue = useSelector((state) => state.switches.darkMode);
@@ -47,6 +53,7 @@ const ProfileProjectPostView = (props) => {
   const links = props.links;
   const postId = props.postId;
   const projectId = props.projectId;
+  const postDateCreated = toDateTime(props.postDateCreated);
 
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const slideAnim = useRef(new Animated.Value(0)).current;
@@ -483,6 +490,23 @@ const ProfileProjectPostView = (props) => {
           {props.caption}
         </Text>
       </View>
+      <View style={{ ...styles.dateContainer, ...props.dateContainer }}>
+        <Text
+          style={{ ...styles.date, ...props.dateStyle, flexDirection: "row" }}
+        >
+          {`${postDateCreated.toLocaleString("UTC", {
+            weekday: "long",
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+          })}`}
+          {", "}
+          {`${postDateCreated.toLocaleString("UTC", {
+            hour: "numeric",
+            minute: "numeric",
+          })}`}
+        </Text>
+      </View>
     </View>
   );
 };
@@ -514,6 +538,10 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 14,
     fontWeight: "bold",
+  },
+  date: {
+    margin: 10,
+    fontSize: 13,
   },
   caption: {
     textAlign: "center",
@@ -556,6 +584,9 @@ const styles = StyleSheet.create({
     paddingTop: 15,
     paddingRight: 15,
     paddingLeft: 15,
+  },
+  dateContainer: {
+    alignItems: "flex-end",
   },
   titleTextContainer: {
     flex: 1,

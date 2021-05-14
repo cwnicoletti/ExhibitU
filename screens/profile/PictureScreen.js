@@ -39,6 +39,7 @@ const PictureScreen = (props) => {
   const numberOfCheers = props.navigation.getParam("numberOfCheers");
   const numberOfComments = props.navigation.getParam("numberOfComments");
   const caption = props.navigation.getParam("caption");
+  const postDateCreated = props.navigation.getParam("postDateCreated");
   const links = props.navigation.getParam("links")
     ? props.navigation.getParam("links")
     : {};
@@ -121,6 +122,7 @@ const PictureScreen = (props) => {
         links={links}
         postId={postId}
         projectId={projectId}
+        postDateCreated={postDateCreated}
         nameStyle={{
           color: darkModeValue ? "white" : "black",
         }}
@@ -132,6 +134,12 @@ const PictureScreen = (props) => {
         }}
         titleContainer={{
           color: darkModeValue ? "white" : "black",
+        }}
+        dateContainer={{
+          backgroundColor: darkModeValue ? "#121212" : "white",
+        }}
+        dateStyle={{
+          color: "gray",
         }}
         threeDotsStyle={darkModeValue ? "white" : "black"}
         captionContainer={{
@@ -196,7 +204,7 @@ PictureScreen.navigationOptions = (navData) => {
           style={{
             ...styles.logoTitle,
             color: darkModeValue ? "white" : "black",
-fontFamily: "CormorantUpright",
+            fontFamily: "CormorantUpright",
           }}
         >
           ExhibitU

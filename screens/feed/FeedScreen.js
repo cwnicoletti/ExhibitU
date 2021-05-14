@@ -26,7 +26,6 @@ const UserFeedScreen = (props) => {
   const profilePictureBase64 = useSelector(
     (state) => state.user.profilePictureBase64
   );
-  const profileProjects = useSelector((state) => state.user.profileProjects);
   const resetScrollFeed = useSelector((state) => state.user.resetScrollFeed);
 
   // Sort the array based on the second element
@@ -169,7 +168,6 @@ const UserFeedScreen = (props) => {
   }, [userFeed]);
 
   const flatlistFeed = useRef();
-
   useDidMountEffect(() => {
     flatlistFeed.current.scrollToOffset({ animated: true, offset: 0 });
   }, [resetScrollFeed]);

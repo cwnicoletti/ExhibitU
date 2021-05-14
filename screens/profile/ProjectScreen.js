@@ -38,7 +38,8 @@ const ProjectScreen = (props) => {
     numberOfCheers,
     numberOfComments,
     caption,
-    links
+    links,
+    postDateCreated
   ) => {
     props.navigation.push("PictureScreen", {
       ExhibitUId,
@@ -56,6 +57,7 @@ const ProjectScreen = (props) => {
       numberOfComments,
       caption,
       links,
+      postDateCreated,
     });
   };
 
@@ -240,7 +242,8 @@ const ProjectScreen = (props) => {
                 itemData.item.numberOfCheers,
                 itemData.item.numberOfComments,
                 itemData.item.caption,
-                itemData.item.postLinks
+                itemData.item.postLinks,
+                itemData.item.postDateCreated._seconds
               )
             }
           />
@@ -257,15 +260,12 @@ ProjectScreen.navigationOptions = (navData) => {
   const projectCoverPhotoUrlParam = navData.navigation.getParam(
     "projectCoverPhotoUrl"
   );
-  const projectDateCreatedParam = navData.navigation.getParam(
-    "projectDateCreated"
-  );
-  const projectLastUpdatedParam = navData.navigation.getParam(
-    "projectLastUpdated"
-  );
-  const projectDescriptionParam = navData.navigation.getParam(
-    "projectDescription"
-  );
+  const projectDateCreatedParam =
+    navData.navigation.getParam("projectDateCreated");
+  const projectLastUpdatedParam =
+    navData.navigation.getParam("projectLastUpdated");
+  const projectDescriptionParam =
+    navData.navigation.getParam("projectDescription");
   const projectLinksParam = navData.navigation.getParam("projectLinks");
   return {
     headerTitle: () => (
