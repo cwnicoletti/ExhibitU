@@ -52,12 +52,10 @@ const ProfileBottomTab = (props) => {
     }
   }, [hiddenProfileFooter]);
 
-  useEffect(() => {
-    if (showcasingProfile === true && hiddenProfileFooter === false) {
-      slideDown();
-      setHiddenProfileFooter(true);
-    }
-  }, []);
+  if (showcasingProfile === true && hiddenProfileFooter === false) {
+    slideDown();
+    setHiddenProfileFooter(true);
+  }
 
   return (
     <View>
