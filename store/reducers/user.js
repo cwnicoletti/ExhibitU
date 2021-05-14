@@ -520,11 +520,6 @@ export default (state = intialState, action) => {
                 },
               },
             },
-            cheering: [
-              ...state.userFeed[action.postId].cheering,
-              action.ExhibitUId,
-            ],
-            numberOfCheers: state.userFeed[action.postId].numberOfCheers + 1,
           },
         },
         cheeredPosts: [...state.cheeredPosts, action.postId],
