@@ -17,7 +17,9 @@ const ShowcasePictureScreen = (props) => {
   const numberOfCheers = props.navigation.getParam("numberOfCheers");
   const numberOfComments = props.navigation.getParam("numberOfComments");
   const caption = props.navigation.getParam("caption");
-  const postLinks = props.navigation.getParam("postLinks");
+  const postLinks = props.navigation.getParam("postLinks")
+    ? props.navigation.getParam("postLinks")
+    : {};
 
   let android = null;
   if (Platform.OS === "android") {
