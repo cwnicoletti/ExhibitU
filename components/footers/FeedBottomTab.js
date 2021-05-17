@@ -1,47 +1,21 @@
 import React from "react";
 import { View, TouchableWithoutFeedback } from "react-native";
-import { useSelector, useDispatch } from "react-redux";
-
+import { useSelector } from "react-redux";
 import { Ionicons, SimpleLineIcons } from "@expo/vector-icons";
 
-import { resetScroll, onScreen } from "../../store/actions/user";
+import Feed from "../footers_components/Feed";
 
 const FeedBottomTab = (props) => {
-  const dispatch = useDispatch();
   const darkModeValue = useSelector((state) => state.switches.darkMode);
-  const onFeedScreen = useSelector((state) => state.user.onFeedScreen);
 
   return (
     <View>
       <View style={{ flexDirection: "row" }}>
-        <TouchableWithoutFeedback
-          onPress={() => {
-            if (onFeedScreen) {
-              dispatch(resetScroll("Feed"));
-            } else {
-              dispatch(onScreen("Feed"));
-            }
-            props.navigation.navigate("Feed");
-          }}
-        >
-          <View
-            style={{
-              flex: 1,
-              padding: 20,
-              borderTopWidth: 1,
-              borderColor: "gray",
-              backgroundColor: darkModeValue ? "black" : "white",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <Ionicons
-              name="ios-home"
-              size={25}
-              color={darkModeValue ? "white" : "black"}
-            />
-          </View>
-        </TouchableWithoutFeedback>
+        <Feed
+          parentProps={props}
+          darkModeValue={darkModeValue}
+          isFeedScreen={true}
+        />
         <TouchableWithoutFeedback
           onPress={() => {
             props.navigation.navigate("Explore");
