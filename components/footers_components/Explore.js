@@ -4,22 +4,21 @@ import { Ionicons } from "@expo/vector-icons";
 import { resetScroll, onScreen } from "../../store/actions/user";
 import { useSelector, useDispatch } from "react-redux";
 
-const Feed = (props) => {
+const Explore = (props) => {
   const dispatch = useDispatch();
-  const onFeedScreen = useSelector((state) => state.user.onFeedScreen);
-
+  const onExploreScreen = useSelector((state) => state.user.onExploreScreen);
   return (
     <TouchableWithoutFeedback
       onPress={() => {
         if (props.isCurrentScreen) {
-          if (onFeedScreen) {
-            dispatch(resetScroll("Feed"));
+          if (onExploreScreen) {
+            dispatch(resetScroll("Explore"));
           } else {
-            dispatch(onScreen("Feed"));
+            dispatch(onScreen("Explore"));
           }
-          props.parentProps.navigation.navigate("Feed");
+          props.parentProps.navigation.navigate("Explore");
         } else {
-          props.parentProps.navigation.navigate("Feed");
+          props.parentProps.navigation.navigate("Explore");
         }
       }}
     >
@@ -35,7 +34,7 @@ const Feed = (props) => {
         }}
       >
         <Ionicons
-          name="ios-home"
+          name="ios-search"
           size={25}
           color={
             props.isCurrentScreen
@@ -52,4 +51,4 @@ const Feed = (props) => {
   );
 };
 
-export default Feed;
+export default Explore;

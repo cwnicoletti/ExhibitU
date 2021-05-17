@@ -1,25 +1,25 @@
 import React from "react";
 import { View, TouchableWithoutFeedback } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
+import { SimpleLineIcons } from "@expo/vector-icons";
 import { resetScroll, onScreen } from "../../store/actions/user";
 import { useSelector, useDispatch } from "react-redux";
 
-const Feed = (props) => {
+const Explore = (props) => {
   const dispatch = useDispatch();
-  const onFeedScreen = useSelector((state) => state.user.onFeedScreen);
+  const onProfileScreen = useSelector((state) => state.user.onProfileScreen);
 
   return (
     <TouchableWithoutFeedback
       onPress={() => {
         if (props.isCurrentScreen) {
-          if (onFeedScreen) {
-            dispatch(resetScroll("Feed"));
+          if (onProfileScreen) {
+            dispatch(resetScroll("Profile"));
           } else {
-            dispatch(onScreen("Feed"));
+            dispatch(onScreen("Profile"));
           }
-          props.parentProps.navigation.navigate("Feed");
+          props.parentProps.navigation.navigate("Profile");
         } else {
-          props.parentProps.navigation.navigate("Feed");
+          props.parentProps.navigation.navigate("Profile");
         }
       }}
     >
@@ -34,8 +34,8 @@ const Feed = (props) => {
           alignItems: "center",
         }}
       >
-        <Ionicons
-          name="ios-home"
+        <SimpleLineIcons
+          name="trophy"
           size={25}
           color={
             props.isCurrentScreen
@@ -52,4 +52,4 @@ const Feed = (props) => {
   );
 };
 
-export default Feed;
+export default Explore;
