@@ -25,7 +25,8 @@ const ShowcaseProjectScreen = (props) => {
     numberOfCheers,
     numberOfComments,
     caption,
-    postLinks
+    postLinks,
+    postDateCreated
   ) => {
     props.navigation.push("ShowcasePictureScreen", {
       postPhotoUrl,
@@ -34,6 +35,7 @@ const ShowcaseProjectScreen = (props) => {
       numberOfComments,
       caption,
       postLinks,
+      postDateCreated,
       userData,
     });
   };
@@ -113,7 +115,8 @@ const ShowcaseProjectScreen = (props) => {
                 itemData.item.numberOfCheers,
                 itemData.item.numberOfComments,
                 itemData.item.caption,
-                itemData.item.postLinks
+                itemData.item.postLinks,
+                itemData.item.postDateCreated._seconds
               )
             }
           />

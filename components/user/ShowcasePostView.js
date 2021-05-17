@@ -26,6 +26,12 @@ const handleLinkOnPress = async (url) => {
   await WebBrowser.openBrowserAsync(url);
 };
 
+const toDateTime = (seconds) => {
+  let t = new Date(0); // Epoch
+  t.setUTCSeconds(seconds);
+  return t;
+};
+
 const ExhibitUPostView = (props) => {
   const [photoHeight, setHeight] = useState(null);
   const [photoWidth, setWidth] = useState(null);
@@ -38,6 +44,7 @@ const ExhibitUPostView = (props) => {
   const defaultPostIcon = require("../../assets/default-profile-icon.jpg");
   const source = resolveAssetSource(defaultPostIcon);
   const links = props.links;
+  const postDateCreated = toDateTime(props.postDateCreated);
 
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const slideAnim = useRef(new Animated.Value(0)).current;
@@ -419,6 +426,23 @@ const ExhibitUPostView = (props) => {
           {props.caption}
         </Text>
       </View>
+      <View style={{ ...styles.dateContainer, ...props.dateContainer }}>
+        <Text
+          style={{ ...styles.date, ...props.dateStyle, flexDirection: "row" }}
+        >
+          {`${postDateCreated.toLocaleString("UTC", {
+            weekday: "long",
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+          })}`}
+          {", "}
+          {`${postDateCreated.toLocaleString("UTC", {
+            hour: "numeric",
+            minute: "numeric",
+          })}`}
+        </Text>
+      </View>
     </View>
   );
 };
@@ -475,6 +499,10 @@ const styles = StyleSheet.create({
     marginLeft: 5,
     marginTop: 5,
   },
+  date: {
+    margin: 10,
+    fontSize: 13,
+  },
   pictureCommentNumber: {
     fontWeight: "bold",
     fontSize: 15,
@@ -496,6 +524,9 @@ const styles = StyleSheet.create({
     paddingTop: 15,
     paddingRight: 15,
     paddingLeft: 15,
+  },
+  dateContainer: {
+    alignItems: "flex-end",
   },
   titleTextContainer: {
     flex: 1,

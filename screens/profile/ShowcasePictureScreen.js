@@ -17,6 +17,7 @@ const ShowcasePictureScreen = (props) => {
   const numberOfCheers = props.navigation.getParam("numberOfCheers");
   const numberOfComments = props.navigation.getParam("numberOfComments");
   const caption = props.navigation.getParam("caption");
+  const postDateCreated = props.navigation.getParam("postDateCreated");
   const postLinks = props.navigation.getParam("postLinks")
     ? props.navigation.getParam("postLinks")
     : {};
@@ -97,6 +98,7 @@ const ShowcasePictureScreen = (props) => {
         numberOfCheers={numberOfCheers}
         numberOfComments={numberOfComments}
         links={postLinks}
+        postDateCreated={postDateCreated}
         nameStyle={{
           color: darkModeValue ? "white" : "black",
         }}
@@ -112,6 +114,12 @@ const ShowcasePictureScreen = (props) => {
         threeDotsStyle={darkModeValue ? "white" : "black"}
         captionContainer={{
           backgroundColor: darkModeValue ? "#121212" : "white",
+        }}
+        dateContainer={{
+          backgroundColor: darkModeValue ? "#121212" : "white",
+        }}
+        dateStyle={{
+          color: "gray",
         }}
         titleStyle={{
           color: "white",
