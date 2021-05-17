@@ -3,7 +3,7 @@ import { View } from "react-native";
 import { useSelector } from "react-redux";
 import MainBottomTabContainer from "../footers_components/MainBottomTabContainer";
 
-const ExploreBottomTab = (props) => {
+const NotificationBottomTab = (props) => {
   const darkModeValue = useSelector((state) => state.switches.darkMode);
 
   return (
@@ -11,7 +11,7 @@ const ExploreBottomTab = (props) => {
       <MainBottomTabContainer
         parentProps={props}
         darkModeValue={darkModeValue}
-        screen={"Explore"}
+        screen={"Notifications"}
       />
       <View
         style={{
@@ -23,4 +23,4 @@ const ExploreBottomTab = (props) => {
   );
 };
 
-export default ExploreBottomTab;
+export default NotificationBottomTab;

@@ -2,9 +2,7 @@ import React, { useRef, useState } from "react";
 import { View, Animated } from "react-native";
 import { useSelector } from "react-redux";
 import useDidMountEffect from "../../helper/useDidMountEffect";
-import Feed from "../footers_components/Feed";
-import Explore from "../footers_components/Explore";
-import Profile from "../footers_components/Profile";
+import MainBottomTabContainer from "../footers_components/MainBottomTabContainer";
 
 const ProfileBottomTab = (props) => {
   const darkModeValue = useSelector((state) => state.switches.darkMode);
@@ -54,23 +52,11 @@ const ProfileBottomTab = (props) => {
     <View>
       {!hiddenProfileFooter ? (
         <Animated.View style={{ transform: [{ translateY: slideAnim }] }}>
-          <View style={{ flexDirection: "row" }}>
-            <Feed
-              parentProps={props}
-              darkModeValue={darkModeValue}
-              isCurrentScreen={false}
-            />
-            <Explore
-              parentProps={props}
-              darkModeValue={darkModeValue}
-              isCurrentScreen={false}
-            />
-            <Profile
-              parentProps={props}
-              darkModeValue={darkModeValue}
-              isCurrentScreen={true}
-            />
-          </View>
+          <MainBottomTabContainer
+            parentProps={props}
+            darkModeValue={darkModeValue}
+            screen={"Profile"}
+          />
           <View
             style={{
               padding: 10,

@@ -46,12 +46,14 @@ import CheeringScreen from "../screens/profile/CheeringScreen";
 import ShowcaseProfileScreen from "../screens/profile/ShowcaseProfileScreen";
 import ShowcaseProjectScreen from "../screens/profile/ShowcaseProjectScreen";
 import ShowcasePictureScreen from "../screens/profile/ShowcasePictureScreen";
+import NotificationsScreen from "../screens/notifications/NotificationsScreen";
 
 import LeftDrawer from "../components/drawers/LeftDrawer";
 import RightDrawer from "../components/drawers/RightDrawer";
 
 import FeedBottomTab from "../components/footers/FeedBottomTab";
 import ExploreBottomTab from "../components/footers/ExploreBottomTab";
+import NotificationsBottomTab from "../components/footers/NotificationsBottomTab";
 import ProfileBottomTab from "../components/footers/ProfileBottomTab";
 
 import ProfileHeader from "../components/headers/ProfileHeader";
@@ -169,6 +171,36 @@ const ExplorerNavigator = createDrawerNavigator({
   RightDrawer: RightExploreDrawerNavigator,
 });
 
+const NotificationNavigator = createStackNavigator({
+  Notifications: {
+    screen: NotificationsScreen,
+    navigationOptions: ({ navigation }) => ({
+      header: () => <TitleOnlyHeader navigation={navigation} />,
+    }),
+  },
+});
+
+const RightNotificationsDrawerNavigator = createDrawerNavigator(
+  {
+    "My Profile": NotificationNavigator,
+  },
+  {
+    drawerPosition: "left",
+    contentComponent: (navData) => {
+      return <LeftDrawer navData={navData} />;
+    },
+    getCustomActionCreators: (_route, key) => ({
+      openLeftDrawer: () => DrawerActions.openDrawer({ key }),
+      closeLeftDrawer: () => DrawerActions.closeDrawer({ key }),
+      toggleLeftDrawer: () => DrawerActions.toggleDrawer({ key }),
+    }),
+  }
+);
+
+const NotificationsNavigator = createDrawerNavigator({
+  RightDrawer: RightNotificationsDrawerNavigator,
+});
+
 const ProfileandSettingsNavigator = createStackNavigator({
   Profile: {
     screen: ProfileScreen,
@@ -263,6 +295,14 @@ const tabScreenConfig = {
     navigationOptions: () => ({
       tabBarComponent: ({ navigation }) => {
         return <ExploreBottomTab navigation={navigation} />;
+      },
+    }),
+  },
+  Notifications: {
+    screen: NotificationsNavigator,
+    navigationOptions: () => ({
+      tabBarComponent: ({ navigation }) => {
+        return <NotificationsBottomTab navigation={navigation} />;
       },
     }),
   },
