@@ -46,13 +46,17 @@ const FeedPostView = (props) => {
   const [loadingCheer, setLoadingCheer] = useState(false);
   const [showClapping, setShowClapping] = useState(false);
   const [clap, setClap] = useState(false);
+  const showCheering = useSelector((state) => state.switches.showCheering);
   const cheeredPosts = useSelector((state) => state.user.cheeredPosts);
   const localId = useSelector((state) => state.auth.userId);
-  const ExhibitUId = useSelector((state) => state.user.ExhibitUId);
   const darkModeValue = useSelector((state) => state.switches.darkMode);
   const defaultPostIcon = require("../../assets/default-profile-icon.jpg");
   const source = resolveAssetSource(defaultPostIcon);
+  const ExhibitUId = useSelector((state) => state.user.ExhibitUId);
   const posterExhibitUId = props.posterExhibitUId;
+  const currentUsersPost = ExhibitUId === posterExhibitUId ? true : false;
+  console.log(currentUsersPost);
+  console.log(showCheering);
   const fullname = props.fullname;
   const links = props.links;
   const postId = props.postId;
@@ -68,14 +72,14 @@ const FeedPostView = (props) => {
   }
 
   useEffect(() => {
+    LogBox.ignoreLogs(["VirtualizedLists should never be nested"]);
+  }, []);
+
+  useEffect(() => {
     if (cheeredPosts.includes(postId)) {
       setClap(true);
     }
   }, [cheeredPosts]);
-
-  useEffect(() => {
-    LogBox.ignoreLogs(["VirtualizedLists should never be nested"]);
-  }, []);
 
   useEffect(() => {
     Image.getSize(props.image ? props.image : source, (width, height) => {
@@ -154,7 +158,7 @@ const FeedPostView = (props) => {
         await dispatch(
           cheerPost(localId, ExhibitUId, projectId, postId, posterExhibitUId)
         );
-        if (ExhibitUId === posterExhibitUId) {
+        if (currentUsersPost) {
           await dispatch(cheerOwnPost(ExhibitUId, projectId, postId));
         }
         await setLoadingCheer(false);
@@ -170,7 +174,7 @@ const FeedPostView = (props) => {
       await dispatch(
         uncheerPost(localId, ExhibitUId, projectId, postId, posterExhibitUId)
       );
-      if (ExhibitUId === posterExhibitUId) {
+      if (currentUsersPost) {
         await dispatch(uncheerOwnPost(ExhibitUId, projectId, postId));
       }
       await setLoadingCheer(false);
@@ -341,26 +345,51 @@ const FeedPostView = (props) => {
             alignItems: "center",
           }}
         >
-          <TouchableCmp onPress={props.onSelectCheering}>
-            <View style={{ flexDirection: "row" }}>
-              <Text
-                style={{
-                  ...styles.pictureCheerNumber,
-                  ...props.pictureCheerNumber,
-                }}
-              >
-                {props.numberOfCheers}
-              </Text>
-              <Text
-                style={{
-                  ...styles.pictureCheerText,
-                  ...props.pictureCheerText,
-                }}
-              >
-                cheering
-              </Text>
-            </View>
-          </TouchableCmp>
+          {currentUsersPost ? (
+            showCheering ? (
+              <TouchableCmp onPress={props.onSelectCheering}>
+                <View style={{ flexDirection: "row" }}>
+                  <Text
+                    style={{
+                      ...styles.pictureCheerNumber,
+                      ...props.pictureCheerNumber,
+                    }}
+                  >
+                    {props.numberOfCheers}
+                  </Text>
+                  <Text
+                    style={{
+                      ...styles.pictureCheerText,
+                      ...props.pictureCheerText,
+                    }}
+                  >
+                    cheering
+                  </Text>
+                </View>
+              </TouchableCmp>
+            ) : null
+          ) : (
+            <TouchableCmp onPress={props.onSelectCheering}>
+              <View style={{ flexDirection: "row" }}>
+                <Text
+                  style={{
+                    ...styles.pictureCheerNumber,
+                    ...props.pictureCheerNumber,
+                  }}
+                >
+                  {props.numberOfCheers}
+                </Text>
+                <Text
+                  style={{
+                    ...styles.pictureCheerText,
+                    ...props.pictureCheerText,
+                  }}
+                >
+                  cheering
+                </Text>
+              </View>
+            </TouchableCmp>
+          )}
           <View style={{ justifyContent: "center" }}>
             <FlatList
               data={Object.values(links)}

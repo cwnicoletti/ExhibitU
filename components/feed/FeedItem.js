@@ -51,11 +51,13 @@ const FeedItem = (props) => {
   const [clap, setClap] = useState(false);
   const darkModeValue = useSelector((state) => state.switches.darkMode);
   const cheeredPosts = useSelector((state) => state.user.cheeredPosts);
+  const showCheering = useSelector((state) => state.switches.showCheering);
   const localId = useSelector((state) => state.auth.userId);
   const ExhibitUId = useSelector((state) => state.user.ExhibitUId);
   const projectId = props.projectId;
   const postId = props.postId;
   const posterExhibitUId = props.posterExhibitUId;
+  const currentUsersPost = ExhibitUId === posterExhibitUId ? true : false;
   const links = props.links ? props.links : {};
   const fullname = props.fullname;
   const defaultPostIcon = require("../../assets/default-profile-icon.jpg");
@@ -150,13 +152,7 @@ const FeedItem = (props) => {
       if (!cheeredPosts.includes(postId)) {
         await setLoadingCheer(true);
         await dispatch(
-          cheerPost(
-            localId,
-            ExhibitUId,
-            projectId,
-            postId,
-            posterExhibitUId
-          )
+          cheerPost(localId, ExhibitUId, projectId, postId, posterExhibitUId)
         );
         if (ExhibitUId === posterExhibitUId) {
           await dispatch(cheerOwnFeedPost(ExhibitUId, projectId, postId));
@@ -173,13 +169,7 @@ const FeedItem = (props) => {
     if (cheeredPosts.includes(postId)) {
       await setLoadingCheer(true);
       await dispatch(
-        uncheerPost(
-          localId,
-          ExhibitUId,
-          projectId,
-          postId,
-          posterExhibitUId
-        )
+        uncheerPost(localId, ExhibitUId, projectId, postId, posterExhibitUId)
       );
       if (ExhibitUId === posterExhibitUId) {
         await dispatch(uncheerOwnFeedPost(ExhibitUId, projectId, postId));
@@ -380,26 +370,51 @@ const FeedItem = (props) => {
             alignItems: "center",
           }}
         >
-          <TouchableCmp onPress={props.onSelectCheering}>
-            <View style={{ flexDirection: "row" }}>
-              <Text
-                style={{
-                  ...styles.pictureCheerNumber,
-                  ...props.pictureCheerNumber,
-                }}
-              >
-                {props.numberOfCheers}
-              </Text>
-              <Text
-                style={{
-                  ...styles.pictureCheerText,
-                  ...props.pictureCheerText,
-                }}
-              >
-                cheering
-              </Text>
-            </View>
-          </TouchableCmp>
+          {currentUsersPost ? (
+            showCheering ? (
+              <TouchableCmp onPress={props.onSelectCheering}>
+                <View style={{ flexDirection: "row" }}>
+                  <Text
+                    style={{
+                      ...styles.pictureCheerNumber,
+                      ...props.pictureCheerNumber,
+                    }}
+                  >
+                    {props.numberOfCheers}
+                  </Text>
+                  <Text
+                    style={{
+                      ...styles.pictureCheerText,
+                      ...props.pictureCheerText,
+                    }}
+                  >
+                    cheering
+                  </Text>
+                </View>
+              </TouchableCmp>
+            ) : null
+          ) : (
+            <TouchableCmp onPress={props.onSelectCheering}>
+              <View style={{ flexDirection: "row" }}>
+                <Text
+                  style={{
+                    ...styles.pictureCheerNumber,
+                    ...props.pictureCheerNumber,
+                  }}
+                >
+                  {props.numberOfCheers}
+                </Text>
+                <Text
+                  style={{
+                    ...styles.pictureCheerText,
+                    ...props.pictureCheerText,
+                  }}
+                >
+                  cheering
+                </Text>
+              </View>
+            </TouchableCmp>
+          )}
           <View style={{ alignItems: "center" }}>
             <FlatList
               data={Object.values(links)}
