@@ -36,6 +36,7 @@ const toDateTime = (seconds) => {
 const ProfileProjectPostView = (props) => {
   const dispatch = useDispatch();
   const darkModeValue = useSelector((state) => state.switches.darkMode);
+  const showCheering = useSelector((state) => state.switches.showCheering);
   const [photoHeight, setHeight] = useState(null);
   const [photoWidth, setWidth] = useState(null);
   const [showClapping, setShowClapping] = useState(false);
@@ -353,26 +354,28 @@ const ProfileProjectPostView = (props) => {
             alignItems: "center",
           }}
         >
-          <TouchableCmp onPress={props.onSelectCheering}>
-            <View style={{ flexDirection: "row" }}>
-              <Text
-                style={{
-                  ...styles.pictureCheerNumber,
-                  ...props.pictureCheerNumber,
-                }}
-              >
-                {numberOfCheers}
-              </Text>
-              <Text
-                style={{
-                  ...styles.pictureCheerText,
-                  ...props.pictureCheerText,
-                }}
-              >
-                cheering
-              </Text>
-            </View>
-          </TouchableCmp>
+          {showCheering ? (
+            <TouchableCmp onPress={props.onSelectCheering}>
+              <View style={{ flexDirection: "row" }}>
+                <Text
+                  style={{
+                    ...styles.pictureCheerNumber,
+                    ...props.pictureCheerNumber,
+                  }}
+                >
+                  {numberOfCheers}
+                </Text>
+                <Text
+                  style={{
+                    ...styles.pictureCheerText,
+                    ...props.pictureCheerText,
+                  }}
+                >
+                  cheering
+                </Text>
+              </View>
+            </TouchableCmp>
+          ) : null}
           <View style={{ justifyContent: "center" }}>
             <FlatList
               data={Object.values(links)}
