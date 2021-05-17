@@ -237,7 +237,6 @@ const UserFeedScreen = (props) => {
             }}
             projectContainer={{
               borderColor: darkModeValue ? "#616161" : "#e8e8e8",
-              marginBottom: 10,
             }}
             titleContainer={{
               color: darkModeValue ? "white" : "black",
