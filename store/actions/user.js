@@ -742,6 +742,9 @@ export const addUserPost = (
   numberOfFollowers,
   numberOfFollowing,
   numberOfAdvocates,
+  followingValue,
+  followersValue,
+  advocatesValue,
   profileBiography,
   projectTitle,
   projectCoverPhotoUrl,
@@ -770,6 +773,9 @@ export const addUserPost = (
       numberOfFollowers,
       numberOfFollowing,
       numberOfAdvocates,
+      followingValue,
+      followersValue,
+      advocatesValue,
       profileBiography,
       projectTitle,
       projectCoverPhotoUrl,
@@ -847,6 +853,9 @@ export const addUserPost = (
           numberOfFollowers,
           numberOfFollowing,
           numberOfAdvocates,
+          followingValue,
+          followersValue,
+          advocatesValue,
           profileBiography,
           profileProjects: {
             ...data.profileProjects,
@@ -864,6 +873,9 @@ export const addUserPost = (
                   numberOfFollowers,
                   numberOfFollowing,
                   numberOfAdvocates,
+                  followingValue,
+                  followersValue,
+                  advocatesValue,
                   profileBiography,
                   projectTitle,
                   profilePictureUrl,
@@ -927,6 +939,9 @@ export const addUserPost = (
       numberOfFollowers,
       numberOfFollowing,
       numberOfAdvocates,
+      followingValue,
+      followersValue,
+      advocatesValue,
       profilePictureUrl,
       profilePictureBase64,
       projectId,
@@ -1534,9 +1549,8 @@ export const changeProjectNumberOfColumns = (
       if (data.userFeed) {
         Object.entries(data.userFeed).map(([id, value]) => {
           if (data.userFeed[id].ExhibitUId === ExhibitUId) {
-            data.userFeed[id].profileProjects[
-              projectId
-            ].projectColumns = number;
+            data.userFeed[id].profileProjects[projectId].projectColumns =
+              number;
           }
         });
       }

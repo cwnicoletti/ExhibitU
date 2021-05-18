@@ -135,9 +135,8 @@ const formReducer = (state, action) => {
           ([links, v]) => links !== `link${action.linkNum}`
         )
       );
-      const reorderedRemainingLinkValues = updateDictionaryOnRemove(
-        remainingLinkValues
-      );
+      const reorderedRemainingLinkValues =
+        updateDictionaryOnRemove(remainingLinkValues);
       return {
         inputValues: { ...reorderedRemainingLinkValues },
       };
@@ -189,6 +188,9 @@ const EditProfileScreen = (props) => {
   const profileColumns = useSelector((state) => state.user.profileColumns);
   const profileBiography = useSelector((state) => state.user.profileBiography);
   const profileLinks = useSelector((state) => state.user.profileLinks);
+  const followingValue = useSelector((state) => state.switches.hideFollowing);
+  const followersValue = useSelector((state) => state.switches.hideFollowers);
+  const advocatesValue = useSelector((state) => state.switches.hideAdvocates);
 
   let TouchableCmp = TouchableOpacity;
   if (Platform.OS === "android") {
@@ -253,6 +255,9 @@ const EditProfileScreen = (props) => {
         numberOfFollowers,
         numberOfFollowing,
         numberOfAdvocates,
+        followingValue,
+        followersValue,
+        advocatesValue,
         profileBiography,
         projectTitle,
         projectCoverPhotoUrl,
@@ -328,9 +333,8 @@ const EditProfileScreen = (props) => {
   useEffect(() => {
     (async () => {
       if (Platform.OS !== "web") {
-        const {
-          status,
-        } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+        const { status } =
+          await ImagePicker.requestMediaLibraryPermissionsAsync();
         if (status !== "granted") {
           alert("Sorry, we need camera roll permissions to make this work!");
         }
