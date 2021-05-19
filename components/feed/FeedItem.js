@@ -546,8 +546,6 @@ const FeedItem = (props) => {
 
 const styles = StyleSheet.create({
   project: {
-    borderTopWidth: 1,
-    borderBottomWidth: 1,
   },
   profileImage: {
     borderWidth: 1,

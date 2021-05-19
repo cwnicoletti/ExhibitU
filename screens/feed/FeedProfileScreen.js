@@ -12,6 +12,42 @@ const FeedProfileScreen = (props) => {
   let userData = props.navigation.getParam("userData");
   userData.profileLinks = userData.profileLinks ? userData.profileLinks : {};
 
+  const ExhibitUId = useSelector((state) => state.user.ExhibitUId);
+  userData =
+    userData.ExhibitUId === ExhibitUId
+      ? {
+          profilePictureBase64: useSelector(
+            (state) => state.user.profilePictureBase64
+          )
+            ? useSelector((state) => state.user.profilePictureBase64)
+            : props.navigation.getParam("profilePictureUrl"),
+          profileColumns: useSelector((state) => state.user.profileColumns),
+          ExhibitUId: useSelector((state) => state.user.ExhibitUId),
+          fullname: useSelector((state) => state.user.fullname),
+          username: useSelector((state) => state.user.username),
+          jobTitle: useSelector((state) => state.user.jobTitle),
+          profileBiography: useSelector((state) => state.user.profileBiography),
+          profileLinks: useSelector((state) => state.user.profileLinks),
+          profileProjects: useSelector((state) => state.user.profileProjects)
+            ? useSelector((state) => state.user.profileProjects)
+            : props.navigation.getParam("profileProjects"),
+          numberOfAdvocates: useSelector(
+            (state) => state.user.numberOfAdvocates
+          ),
+          numberOfFollowers: useSelector(
+            (state) => state.user.numberOfFollowers
+          ),
+          numberOfFollowing: useSelector(
+            (state) => state.user.numberOfFollowing
+          ),
+          showResumeValue: useSelector((state) => state.user.showResumeValue),
+          resumeLink: useSelector((state) => state.user.resumeLink),
+          hideFollowing: useSelector((state) => state.user.hideFollowing),
+          hideFollowers: useSelector((state) => state.user.hideFollowers),
+          hideAdvocates: useSelector((state) => state.user.hideAdvocates),
+        }
+      : userData;
+
   useEffect(() => {
     props.navigation.setParams({ darkMode: darkModeValue });
   }, [darkModeValue]);
