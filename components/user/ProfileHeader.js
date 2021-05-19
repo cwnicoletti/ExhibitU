@@ -251,18 +251,24 @@ const Profile = (props) => {
               margin: 20,
               marginTop: 10,
               paddingHorizontal: "20%",
+              flexDirection: "row",
               borderColor: darkModeValue ? "gray" : "#c9c9c9",
               borderWidth: 1,
               alignItems: "center",
             }}
           >
+            <Ionicons
+              name="ios-add"
+              size={14}
+              color={darkModeValue ? "white" : "black"}
+            />
             <Text
               style={{
                 margin: 7,
                 color: darkModeValue ? "white" : "black",
               }}
             >
-              Add a new exhibit
+              Create exhibit
             </Text>
           </View>
         </TouchableCmp>
