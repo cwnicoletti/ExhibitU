@@ -277,7 +277,7 @@ const ProfileScreen = (props) => {
                 marginLeft: 10,
               }}
             >
-              Showcase profile
+              Showcase exhibits
             </Text>
           </TouchableOpacity>
         </Animated.View>

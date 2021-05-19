@@ -710,7 +710,7 @@ const EditProjectScreen = (props) => {
             onPress={submitHandler}
           >
             <Text style={{ margin: 10, color: "#007AFF" }}>
-              Confirm project edits
+              Confirm exhibit edits
             </Text>
             <Ionicons name="ios-checkmark" size={18} color="#007AFF" />
           </TouchableCmp>
@@ -731,7 +731,7 @@ const EditProjectScreen = (props) => {
                 margin: 10,
               }}
             >
-              Uploading project edits...
+              Uploading exhibit edits...
             </Text>
             <ActivityIndicator size="small" color="white" />
           </View>

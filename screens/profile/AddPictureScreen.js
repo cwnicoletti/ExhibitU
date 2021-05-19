@@ -709,7 +709,7 @@ EditProfileScreen.navigationOptions = (navData) => {
             color: darkModeValue ? "white" : "black",
           }}
         >
-          Create a post
+          Create post
         </Text>
       </SafeAreaView>
     ),
