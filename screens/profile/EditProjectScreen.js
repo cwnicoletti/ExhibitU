@@ -140,9 +140,8 @@ const formReducer = (state, action) => {
           ([links, v]) => links !== `link${action.linkNum}`
         )
       );
-      const reorderedRemainingLinkValues = updateDictionaryOnRemove(
-        remainingLinkValues
-      );
+      const reorderedRemainingLinkValues =
+        updateDictionaryOnRemove(remainingLinkValues);
       return {
         inputValues: { ...reorderedRemainingLinkValues },
       };
@@ -159,7 +158,7 @@ const EditProjectScreen = (props) => {
   const [linksState, setLinksState] = useState(Object.values(prevLinks));
   const darkModeValue = useSelector((state) => state.user.darkMode);
   const localId = useSelector((state) => state.auth.userId);
-  const projectTitle = props.navigation.getParam("projectTitle");
+  const exhibitTitle = props.navigation.getParam("projectTitle");
   const projectId = props.navigation.getParam("projectId");
   const projectDescription = props.navigation.getParam("projectDescription");
   const projectCoverPhotoId = props.navigation.getParam("projectCoverPhotoId");
@@ -178,11 +177,11 @@ const EditProjectScreen = (props) => {
 
   let initialState = {
     inputValues: {
-      projectTitle: projectTitle ? projectTitle : "",
+      exhibitTitle: exhibitTitle ? exhibitTitle : "",
       projectDescription: projectDescription ? projectDescription : "",
     },
     inputValidities: {
-      projectTitle: false,
+      exhibitTitle: false,
       projectDescription: false,
     },
     formIsValid: false,
@@ -233,7 +232,7 @@ const EditProjectScreen = (props) => {
         projectTempCoverPhotoUrl
           ? projectTempCoverPhotoUrl
           : projectCoverPhotoUrl,
-        formState.inputValues.projectTitle,
+        formState.inputValues.exhibitTitle,
         formState.inputValues.projectDescription,
         newLinks
       )
@@ -270,9 +269,9 @@ const EditProjectScreen = (props) => {
 
   useEffect(() => {
     props.navigation.setParams({
-      projectTitle: formState.inputValues.projectTitle,
+      exhibitTitle: formState.inputValues.exhibitTitle,
     });
-  }, [formState.inputValues.projectTitle]);
+  }, [formState.inputValues.exhibitTitle]);
 
   const changeProjectCoverPicture = async () => {
     const result = await ImagePicker.launchImageLibraryAsync({
@@ -386,7 +385,7 @@ const EditProjectScreen = (props) => {
                   margin: 10,
                 }}
               >
-                {formState.inputValues.projectTitle}
+                {formState.inputValues.exhibitTitle}
               </Text>
             </View>
             <Text
@@ -513,7 +512,7 @@ const EditProjectScreen = (props) => {
               >
                 <Octicons name="pencil" size={14} color="#007AFF" />
                 <Text style={{ margin: 10, color: "#007AFF" }}>
-                  Change Project Cover Photo
+                  Change Exhibit Cover Photo
                 </Text>
               </View>
             </TouchableCmp>
@@ -555,22 +554,22 @@ const EditProjectScreen = (props) => {
           ) : null}
           <Input
             textLabel={{ color: darkModeValue ? "white" : "black" }}
-            id="projectTitle"
-            label="Project Title"
-            errorText="Please enter a valid project title!"
+            id="exhibitTitle"
+            label="Exhibit Title"
+            errorText="Please enter a valid exhibit title!"
             keyboardType="default"
             autoCapitalize="sentences"
             returnKeyType="next"
             onInputChange={inputChangeHandler}
-            initialValue={projectTitle ? projectTitle : ""}
+            initialValue={exhibitTitle ? exhibitTitle : ""}
             initiallyValid={true}
             required
           />
           <Input
             textLabel={{ color: darkModeValue ? "white" : "black" }}
             id="projectDescription"
-            label="Project Description"
-            errorText="Please enter a valid project description!"
+            label="Exhibit Description"
+            errorText="Please enter a valid exhibit description!"
             keyboardType="default"
             multiline
             styleInput={{ height: 50 }}
@@ -670,7 +669,7 @@ const EditProjectScreen = (props) => {
               >
                 <Ionicons name="ios-add" size={14} color="green" />
                 <Text style={{ margin: 10, color: "green" }}>
-                  Add a link to project
+                  Add a link to exhibit
                 </Text>
               </TouchableCmp>
             </View>
@@ -746,14 +745,13 @@ EditProjectScreen.navigationOptions = (navData) => {
   const darkModeValue = navData.navigation.getParam("darkMode");
   const android = navData.navigation.getParam("android");
   const deleteFn = navData.navigation.getParam("deleteFn");
-  const projectTitle = navData.navigation.getParam("projectTitle");
+  const exhibitTitle = navData.navigation.getParam("exhibitTitle");
   return {
     headerTitle: () => (
       <SafeAreaView
         forceInset={{ top: "always", horizontal: "never" }}
         style={styles.logo}
       >
-        
         <Text
           style={{
             ...styles.logoTitle,
