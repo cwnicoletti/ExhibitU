@@ -25,7 +25,7 @@ const CheeringScreen = (props) => {
   );
   const index = client.initIndex("users");
 
-  const darkModeValue = useSelector((state) => state.switches.darkMode);
+  const darkModeValue = useSelector((state) => state.user.darkMode);
   const [search, setSearch] = useState("");
   const [returnedIndex, setReturnedIndex] = useState([]);
   const [isRefreshing, setIsRefreshing] = useState(false);

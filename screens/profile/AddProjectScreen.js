@@ -155,7 +155,7 @@ const AddProjectScreen = (props) => {
   const [linksState, setLinksState] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadingTempPicture, setIsLoadingTempPicture] = useState(false);
-  const darkModeValue = useSelector((state) => state.switches.darkMode);
+  const darkModeValue = useSelector((state) => state.user.darkMode);
   const localId = useSelector((state) => state.auth.userId);
   const ExhibitUId = useSelector((state) => state.user.ExhibitUId);
   const projectTempCoverPhotoId = useSelector(

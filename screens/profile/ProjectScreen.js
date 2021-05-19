@@ -10,7 +10,7 @@ import { changeProjectNumberOfColumns } from "../../store/actions/user";
 
 const ProjectScreen = (props) => {
   const dispatch = useDispatch();
-  const darkModeValue = useSelector((state) => state.switches.darkMode);
+  const darkModeValue = useSelector((state) => state.user.darkMode);
   const localId = useSelector((state) => state.auth.userId);
   const ExhibitUId = useSelector((state) => state.user.ExhibitUId);
   const profileProjects = useSelector((state) => state.user.profileProjects);

@@ -9,7 +9,7 @@ import IoniconsHeaderButton from "../../components/UI/IoniconsHeaderButton";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 
 const FeedProjectScreen = (props) => {
-  const darkModeValue = useSelector((state) => state.switches.darkMode);
+  const darkModeValue = useSelector((state) => state.user.darkMode);
   const userData = props.navigation.getParam("userData");
   const projectId = props.navigation.getParam("projectId");
 

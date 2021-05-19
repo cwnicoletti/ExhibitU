@@ -49,9 +49,9 @@ const FeedItem = (props) => {
   const [loadingCheer, setLoadingCheer] = useState(false);
   const [showClapping, setShowClapping] = useState(false);
   const [clap, setClap] = useState(false);
-  const darkModeValue = useSelector((state) => state.switches.darkMode);
+  const darkModeValue = useSelector((state) => state.user.darkMode);
   const cheeredPosts = useSelector((state) => state.user.cheeredPosts);
-  const showCheering = useSelector((state) => state.switches.showCheering);
+  const showCheering = useSelector((state) => state.user.showCheering);
   const localId = useSelector((state) => state.auth.userId);
   const ExhibitUId = useSelector((state) => state.user.ExhibitUId);
   const projectId = props.projectId;

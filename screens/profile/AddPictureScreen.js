@@ -150,7 +150,7 @@ const EditProfileScreen = (props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadingTempPicture, setIsLoadingTempPicture] = useState(false);
   const [linksState, setLinksState] = useState([]);
-  const darkModeValue = useSelector((state) => state.switches.darkMode);
+  const darkModeValue = useSelector((state) => state.user.darkMode);
   const localId = useSelector((state) => state.auth.userId);
   const ExhibitUId = useSelector((state) => state.user.ExhibitUId);
   const profilePictureUrl = useSelector(
@@ -188,9 +188,9 @@ const EditProfileScreen = (props) => {
   const profileColumns = useSelector((state) => state.user.profileColumns);
   const profileBiography = useSelector((state) => state.user.profileBiography);
   const profileLinks = useSelector((state) => state.user.profileLinks);
-  const followingValue = useSelector((state) => state.switches.hideFollowing);
-  const followersValue = useSelector((state) => state.switches.hideFollowers);
-  const advocatesValue = useSelector((state) => state.switches.hideAdvocates);
+  const followingValue = useSelector((state) => state.user.hideFollowing);
+  const followersValue = useSelector((state) => state.user.hideFollowers);
+  const advocatesValue = useSelector((state) => state.user.hideAdvocates);
 
   let TouchableCmp = TouchableOpacity;
   if (Platform.OS === "android") {

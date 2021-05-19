@@ -17,11 +17,11 @@ import LinkButton from "../UI/LinkButton";
 
 const Profile = (props) => {
   const links = props.links;
-  const darkModeValue = useSelector((state) => state.switches.darkMode);
-  const followingValue = useSelector((state) => state.switches.hideFollowing);
-  const followersValue = useSelector((state) => state.switches.hideFollowers);
-  const advocatesValue = useSelector((state) => state.switches.hideAdvocates);
-  const showResumeValue = useSelector((state) => state.switches.showResume);
+  const darkModeValue = useSelector((state) => state.user.darkMode);
+  const followingValue = useSelector((state) => state.user.hideFollowing);
+  const followersValue = useSelector((state) => state.user.hideFollowers);
+  const advocatesValue = useSelector((state) => state.user.hideAdvocates);
+  const showResumeValue = useSelector((state) => state.user.showResume);
 
   const userDataProfileHeader = {
     resumeLink: useSelector((state) => state.user.resumeLink),

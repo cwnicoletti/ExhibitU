@@ -29,7 +29,7 @@ const FeedAdvocatesScreen = (props) => {
   const [projects, setProjects] = useState({});
   const [search, setSearch] = useState("");
   const [isRefreshing, setIsRefreshing] = useState(false);
-  const darkModeValue = useSelector((state) => state.switches.darkMode);
+  const darkModeValue = useSelector((state) => state.user.darkMode);
   const ExhibitUId = props.navigation.getParam("ExhibitUId");
 
   useEffect(() => {

@@ -20,7 +20,7 @@ const handleLinkOnPress = (url) => {
 };
 
 const ExploreProfileHeader = (props) => {
-  const darkModeValue = useSelector((state) => state.switches.darkMode);
+  const darkModeValue = useSelector((state) => state.user.darkMode);
   const followingValue = props.hideFollowing;
   const followersValue = props.hideFollowers;
   const advocatesValue = props.hideAdvocates;

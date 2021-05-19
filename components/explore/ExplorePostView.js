@@ -32,7 +32,7 @@ const ExplorePostView = (props) => {
   const [doubleTapped, setDoubleTapped] = useState(false);
   const [showClapping, setShowClapping] = useState(false);
   const [clap, setClap] = useState(false);
-  const darkModeValue = useSelector((state) => state.switches.darkMode);
+  const darkModeValue = useSelector((state) => state.user.darkMode);
   const defaultPostIcon = require("../../assets/default-profile-icon.jpg");
   const source = resolveAssetSource(defaultPostIcon);
   const fullname = props.fullname;

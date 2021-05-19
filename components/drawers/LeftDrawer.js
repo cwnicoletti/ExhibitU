@@ -4,11 +4,11 @@ import { useSelector, useDispatch } from "react-redux";
 
 import FilterSwitch from "../UI/FilterSwitch";
 
-import { setDarkMode } from "../../store/actions/switches";
+import { setDarkMode } from "../../store/actions/user";
 
 const LeftDrawer = (props) => {
   const dispatch = useDispatch();
-  const darkModeValue = useSelector((state) => state.switches.darkMode);
+  const darkModeValue = useSelector((state) => state.user.darkMode);
   const localId = useSelector((state) => state.auth.userId);
   const ExhibitUId = useSelector((state) => state.user.ExhibitUId);
   const fullname = useSelector((state) => state.user.fullname);

@@ -157,7 +157,7 @@ const EditProjectScreen = (props) => {
   const [isLoadingTempPicture, setIsLoadingTempPicture] = useState(false);
   const prevLinks = props.navigation.getParam("links");
   const [linksState, setLinksState] = useState(Object.values(prevLinks));
-  const darkModeValue = useSelector((state) => state.switches.darkMode);
+  const darkModeValue = useSelector((state) => state.user.darkMode);
   const localId = useSelector((state) => state.auth.userId);
   const projectTitle = props.navigation.getParam("projectTitle");
   const projectId = props.navigation.getParam("projectId");

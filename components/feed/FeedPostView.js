@@ -46,10 +46,10 @@ const FeedPostView = (props) => {
   const [loadingCheer, setLoadingCheer] = useState(false);
   const [showClapping, setShowClapping] = useState(false);
   const [clap, setClap] = useState(false);
-  const showCheering = useSelector((state) => state.switches.showCheering);
+  const showCheering = useSelector((state) => state.user.showCheering);
   const cheeredPosts = useSelector((state) => state.user.cheeredPosts);
   const localId = useSelector((state) => state.auth.userId);
-  const darkModeValue = useSelector((state) => state.switches.darkMode);
+  const darkModeValue = useSelector((state) => state.user.darkMode);
   const defaultPostIcon = require("../../assets/default-profile-icon.jpg");
   const source = resolveAssetSource(defaultPostIcon);
   const ExhibitUId = useSelector((state) => state.user.ExhibitUId);

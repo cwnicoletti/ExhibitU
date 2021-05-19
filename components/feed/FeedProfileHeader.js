@@ -20,7 +20,7 @@ const handleLinkOnPress = (url) => {
 };
 
 const FeedProfileHeader = (props) => {
-  const darkModeValue = useSelector((state) => state.switches.darkMode);
+  const darkModeValue = useSelector((state) => state.user.darkMode);
   const links = props.links;
   const followingValue = props.hideFollowing;
   const followersValue = props.hideFollowers;

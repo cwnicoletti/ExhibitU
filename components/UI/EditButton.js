@@ -10,7 +10,7 @@ import {
 import { useSelector } from "react-redux";
 
 const EditButton = (props) => {
-  const darkModeValue = useSelector((state) => state.switches.darkMode);
+  const darkModeValue = useSelector((state) => state.user.darkMode);
 
   let TouchableCmp = TouchableOpacity;
   if (Platform.OS === "android") {

@@ -35,8 +35,8 @@ const toDateTime = (seconds) => {
 
 const ProfileProjectPostView = (props) => {
   const dispatch = useDispatch();
-  const darkModeValue = useSelector((state) => state.switches.darkMode);
-  const showCheering = useSelector((state) => state.switches.showCheering);
+  const darkModeValue = useSelector((state) => state.user.darkMode);
+  const showCheering = useSelector((state) => state.user.showCheering);
   const [photoHeight, setHeight] = useState(null);
   const [photoWidth, setWidth] = useState(null);
   const [showClapping, setShowClapping] = useState(false);

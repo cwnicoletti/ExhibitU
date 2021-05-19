@@ -28,7 +28,7 @@ const FeedCheeringScreen = (props) => {
   const [returnedIndex, setReturnedIndex] = useState([]);
   const [search, setSearch] = useState("");
   const [isRefreshing, setIsRefreshing] = useState(false);
-  const darkModeValue = useSelector((state) => state.switches.darkMode);
+  const darkModeValue = useSelector((state) => state.user.darkMode);
   const ExhibitUId = props.navigation.getParam("ExhibitUId");
   const projectId = props.navigation.getParam("projectId");
   const postId = props.navigation.getParam("postId");

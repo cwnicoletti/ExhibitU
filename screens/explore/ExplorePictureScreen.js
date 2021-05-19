@@ -14,7 +14,7 @@ import ExplorePostView from "../../components/explore/ExplorePostView";
 import IoniconsHeaderButton from "../../components/UI/IoniconsHeaderButton";
 
 const ExplorePictureScreen = (props) => {
-  const darkModeValue = useSelector((state) => state.switches.darkMode);
+  const darkModeValue = useSelector((state) => state.user.darkMode);
   const ExhibitUId = props.navigation.getParam("ExhibitUId");
   const currentProjectId = props.navigation.getParam("projectId");
   const postId = props.navigation.getParam("postId");

@@ -10,6 +10,12 @@ export const ON_SCREEN = "ON_SCREEN";
 export const OFF_SCREEN = "OFF_SCREEN";
 
 export const GET_SWITCHES = "GET_SWITCHES";
+export const SET_DARKMODE = "SET_DARKMODE";
+export const SHOW_RESUME = "SHOW_RESUME";
+export const SHOW_CHEERING = "SHOW_CHEERING";
+export const HIDE_FOLLOWING = "HIDE_FOLLOWING";
+export const HIDE_FOLLOWERS = "HIDE_FOLLOWERS";
+export const HIDE_ADVOCATES = "HIDE_ADVOCATES";
 
 export const CHEER_POST = "CHEER_POST";
 export const CHEER_UPDATE_POSTS = "CHEER_UPDATE_POSTS";
@@ -202,6 +208,12 @@ export const getUserData = () => {
       numberOfAdvocates: transformedData.numberOfAdvocates,
       numberOfAdvocating: transformedData.numberOfAdvocating,
       profileColumns: transformedData.profileColumns,
+      darkMode: transformedData.darkMode,
+      showResume: transformedData.showResume,
+      showCheering: transformedData.showCheering,
+      hideFollowing: transformedData.hideFollowing,
+      hideFollowers: transformedData.hideFollowers,
+      hideAdvocates: transformedData.hideAdvocates,
       followers,
       following,
       advocates,
@@ -217,7 +229,6 @@ export const getUserData = () => {
     await dispatch({
       type: GET_SWITCHES,
       darkMode: transformedData.darkMode,
-      ExhibitULocalMode: transformedData.ExhibitULocalMode,
       showResume: transformedData.showResume,
       showCheering: transformedData.showCheering,
       hideFollowing: transformedData.hideFollowing,
@@ -1612,5 +1623,144 @@ export const returnFromShowcasing = (value) => {
 export const setHideProfileFooter = (value) => {
   return async (dispatch) => {
     await dispatch({ type: HIDE_PROFILE_FOOTER, value });
+  };
+};
+
+export const setDarkMode = (localId, ExhibitUId, value) => {
+  return async (dispatch) => {
+    const darkModeData = { localId, ExhibitUId, value, switchName: "darkMode" };
+
+    axios.post(
+      `https://us-central1-showcase-79c28.cloudfunctions.net/setSwitchCurrentUserOnly`,
+      darkModeData
+    );
+
+    AsyncStorage.getItem("userDocData").then(async (data) => {
+      data = JSON.parse(data);
+      data.darkMode = value;
+      await AsyncStorage.setItem("userDocData", JSON.stringify(data));
+    });
+
+    dispatch({ type: SET_DARKMODE, darkMode: value });
+  };
+};
+
+export const setShowResume = (localId, ExhibitUId, value) => {
+  return async (dispatch) => {
+    const showResumeData = {
+      localId,
+      ExhibitUId,
+      value,
+      switchName: "showResume",
+    };
+
+    axios.post(
+      `https://us-central1-showcase-79c28.cloudfunctions.net/setSwitchPublicInfo`,
+      showResumeData
+    );
+
+    AsyncStorage.getItem("userDocData").then(async (data) => {
+      data = JSON.parse(data);
+      data.showResume = value;
+      await AsyncStorage.setItem("userDocData", JSON.stringify(data));
+    });
+
+    dispatch({ type: SHOW_RESUME, ExhibitUId, showResumeValue: value });
+  };
+};
+
+export const setShowCheering = (localId, ExhibitUId, value) => {
+  return async (dispatch) => {
+    const showCheeringData = {
+      localId,
+      ExhibitUId,
+      value,
+      switchName: "showCheering",
+    };
+
+    axios.post(
+      `https://us-central1-showcase-79c28.cloudfunctions.net/setSwitchPublicInfo`,
+      showCheeringData
+    );
+
+    AsyncStorage.getItem("userDocData").then(async (data) => {
+      data = JSON.parse(data);
+      data.showCheering = value;
+      await AsyncStorage.setItem("userDocData", JSON.stringify(data));
+    });
+
+    dispatch({ type: SHOW_CHEERING, ExhibitUId, showCheering: value });
+  };
+};
+
+export const setHideFollowing = (localId, ExhibitUId, value) => {
+  return async (dispatch) => {
+    const hideFollowingData = {
+      localId,
+      ExhibitUId,
+      value,
+      switchName: "hideFollowing",
+    };
+
+    axios.post(
+      `https://us-central1-showcase-79c28.cloudfunctions.net/setSwitchPublicInfo`,
+      hideFollowingData
+    );
+
+    AsyncStorage.getItem("userDocData").then(async (data) => {
+      data = JSON.parse(data);
+      data.hideFollowing = value;
+      await AsyncStorage.setItem("userDocData", JSON.stringify(data));
+    });
+
+    dispatch({ type: HIDE_FOLLOWING, ExhibitUId, hideFollowingValue: value });
+  };
+};
+
+export const setHideFollowers = (localId, ExhibitUId, value) => {
+  return async (dispatch) => {
+    const hideFollowersData = {
+      localId,
+      ExhibitUId,
+      value,
+      switchName: "hideFollowers",
+    };
+
+    axios.post(
+      `https://us-central1-showcase-79c28.cloudfunctions.net/setSwitchPublicInfo`,
+      hideFollowersData
+    );
+
+    AsyncStorage.getItem("userDocData").then(async (data) => {
+      data = JSON.parse(data);
+      data.hideFollowers = value;
+      await AsyncStorage.setItem("userDocData", JSON.stringify(data));
+    });
+
+    dispatch({ type: HIDE_FOLLOWERS, ExhibitUId, hideFollowersValue: value });
+  };
+};
+
+export const setHideAdvocates = (localId, ExhibitUId, value) => {
+  return async (dispatch) => {
+    const hideAdvocatesData = {
+      localId,
+      ExhibitUId,
+      value,
+      switchName: "hideAdvocates",
+    };
+
+    axios.post(
+      `https://us-central1-showcase-79c28.cloudfunctions.net/setSwitchPublicInfo`,
+      hideAdvocatesData
+    );
+
+    AsyncStorage.getItem("userDocData").then(async (data) => {
+      data = JSON.parse(data);
+      data.hideAdvocates = value;
+      await AsyncStorage.setItem("userDocData", JSON.stringify(data));
+    });
+
+    dispatch({ type: HIDE_ADVOCATES, ExhibitUId, hideAdvocatesValue: value });
   };
 };

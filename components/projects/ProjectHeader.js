@@ -20,7 +20,7 @@ const handleLinkOnPress = async (url) => {
 };
 
 const ProjectHeader = (props) => {
-  const darkModeValue = useSelector((state) => state.switches.darkMode);
+  const darkModeValue = useSelector((state) => state.user.darkMode);
   const links = props.links;
 
   let TouchableCmp = TouchableOpacity;

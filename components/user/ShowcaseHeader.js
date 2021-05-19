@@ -16,7 +16,7 @@ import UserTitleShowcaseLocal from "./UserTitleShowcaseLocal";
 import LinkButton from "../UI/LinkButton";
 
 const ExhibitUHeader = (props) => {
-  const darkModeValue = useSelector((state) => state.switches.darkMode);
+  const darkModeValue = useSelector((state) => state.user.darkMode);
   const links = props.links;
   const followingValue = props.followingValue;
   const followersValue = props.followersValue;

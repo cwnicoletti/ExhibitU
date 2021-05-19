@@ -29,7 +29,7 @@ const toDateTime = (seconds) => {
 
 const ProjectItem = (props) => {
   const [height, setHeight] = useState(null);
-  const darkModeValue = useSelector((state) => state.switches.darkMode);
+  const darkModeValue = useSelector((state) => state.user.darkMode);
   const fullname = useSelector((state) => state.user.fullname);
   const defaultPostIcon = require("../../assets/default-post-icon.png");
   const source = resolveAssetSource(defaultPostIcon);

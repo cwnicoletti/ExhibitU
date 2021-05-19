@@ -8,13 +8,13 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 import ReduxThunk from "redux-thunk";
 
 import authReducer from "../../../store/reducers/auth";
-import switchesReducer from "../../../store/reducers/switches";
+import switchesReducer from "../../../store/reducers/user";
 import userReducer from "../../../store/reducers/user";
 import signupReducer from "../../../store/reducers/signup";
 
 test("renders default", () => {
   const rootReducer = combineReducers({
-    switches: switchesReducer,
+    user: switchesReducer,
     signup: signupReducer,
     auth: authReducer,
     user: userReducer,
@@ -36,7 +36,7 @@ test("renders default", () => {
 
 test("renders with dummy links", () => {
   const rootReducer = combineReducers({
-    switches: switchesReducer,
+    user: switchesReducer,
     signup: signupReducer,
     auth: authReducer,
     user: userReducer,

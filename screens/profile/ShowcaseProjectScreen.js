@@ -8,7 +8,7 @@ import IoniconsHeaderButton from "../../components/UI/IoniconsHeaderButton";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 
 const ShowcaseProjectScreen = (props) => {
-  const darkModeValue = useSelector((state) => state.switches.darkMode);
+  const darkModeValue = useSelector((state) => state.user.darkMode);
   const currentProjectId = props.navigation.getParam("projectId");
   const userData = props.navigation.getParam("userData");
 

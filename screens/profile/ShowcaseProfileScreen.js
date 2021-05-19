@@ -11,7 +11,7 @@ import { returnFromShowcasing } from "../../store/actions/user";
 
 const ShowcaseProfileScreen = (props) => {
   const dispatch = useDispatch();
-  const darkModeValue = useSelector((state) => state.switches.darkMode);
+  const darkModeValue = useSelector((state) => state.user.darkMode);
   const ExhibitUId = useSelector((state) => state.user.ExhibitUId);
 
 
@@ -45,9 +45,9 @@ const ShowcaseProfileScreen = (props) => {
           ),
           showResumeValue: useSelector((state) => state.user.showResumeValue),
           resumeLink: useSelector((state) => state.user.resumeLink),
-          hideFollowing: useSelector((state) => state.switches.hideFollowing),
-          hideFollowers: useSelector((state) => state.switches.hideFollowers),
-          hideAdvocates: useSelector((state) => state.switches.hideAdvocates),
+          hideFollowing: useSelector((state) => state.user.hideFollowing),
+          hideFollowers: useSelector((state) => state.user.hideFollowers),
+          hideAdvocates: useSelector((state) => state.user.hideAdvocates),
         }
       : {
           profilePictureUrl: props.navigation.getParam("profilePictureUrl"),

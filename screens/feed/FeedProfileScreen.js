@@ -8,7 +8,7 @@ import ProjectItem from "../../components/projectItems/ProfileProjectItem";
 import FeedProfileHeader from "../../components/feed/FeedProfileHeader";
 
 const FeedProfileScreen = (props) => {
-  const darkModeValue = useSelector((state) => state.switches.darkMode);
+  const darkModeValue = useSelector((state) => state.user.darkMode);
   let userData = props.navigation.getParam("userData");
   userData.profileLinks = userData.profileLinks ? userData.profileLinks : {};
 

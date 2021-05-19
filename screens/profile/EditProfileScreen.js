@@ -24,7 +24,7 @@ import FilterSwitch from "../../components/UI/FilterSwitch";
 import IoniconsHeaderButton from "../../components/UI/IoniconsHeaderButton";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 
-import { setShowResume } from "../../store/actions/switches";
+import { setShowResume } from "../../store/actions/user";
 import {
   uploadUpdateUserProfile,
   uploadChangeProfilePicture,
@@ -157,16 +157,16 @@ const EditProfileScreen = (props) => {
   const prevLinks = useSelector((state) => state.user.profileLinks);
   const [linksState, setLinksState] = useState(Object.values(prevLinks));
   const [isLoadingTempPicture, setIsLoadingTempPicture] = useState(false);
-  const darkModeValue = useSelector((state) => state.switches.darkMode);
-  const showResumeValue = useSelector((state) => state.switches.showResume);
+  const darkModeValue = useSelector((state) => state.user.darkMode);
+  const showResumeValue = useSelector((state) => state.user.showResume);
   const localId = useSelector((state) => state.auth.userId);
   const ExhibitUId = useSelector((state) => state.user.ExhibitUId);
   const profilePictureBase64 = useSelector(
     (state) => state.user.profilePictureBase64
   );
-  const followingValue = useSelector((state) => state.switches.hideFollowing);
-  const followersValue = useSelector((state) => state.switches.hideFollowers);
-  const advocatesValue = useSelector((state) => state.switches.hideAdvocates);
+  const followingValue = useSelector((state) => state.user.hideFollowing);
+  const followersValue = useSelector((state) => state.user.hideFollowers);
+  const advocatesValue = useSelector((state) => state.user.hideAdvocates);
 
   let userData = {
     fullname: useSelector((state) => state.user.fullname),

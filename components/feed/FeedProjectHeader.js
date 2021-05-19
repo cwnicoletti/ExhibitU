@@ -7,7 +7,7 @@ import LinkButton from "../UI/LinkButton";
 import EditButton from "../UI/EditButton";
 
 const FeedProjectHeader = (props) => {
-  const darkModeValue = useSelector((state) => state.switches.darkMode);
+  const darkModeValue = useSelector((state) => state.user.darkMode);
   const links = props.links;
 
   const handleLinkOnPress = (url) => {

@@ -11,15 +11,15 @@ import {
   setHideFollowing,
   setHideFollowers,
   setHideAdvocates,
-} from "../../store/actions/switches";
+} from "../../store/actions/user";
 
 const ShowcaseSettingsScreen = (props) => {
   const dispatch = useDispatch();
-  const darkModeValue = useSelector((state) => state.switches.darkMode);
-  const showCheeringValue = useSelector((state) => state.switches.showCheering);
-  const followingValue = useSelector((state) => state.switches.hideFollowing);
-  const followersValue = useSelector((state) => state.switches.hideFollowers);
-  const advocatesValue = useSelector((state) => state.switches.hideAdvocates);
+  const darkModeValue = useSelector((state) => state.user.darkMode);
+  const showCheeringValue = useSelector((state) => state.user.showCheering);
+  const followingValue = useSelector((state) => state.user.hideFollowing);
+  const followersValue = useSelector((state) => state.user.hideFollowers);
+  const advocatesValue = useSelector((state) => state.user.hideAdvocates);
   const localId = useSelector((state) => state.auth.userId);
   const ExhibitUId = useSelector((state) => state.user.ExhibitUId);
 

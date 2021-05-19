@@ -38,8 +38,8 @@ const ExhibitUPostView = (props) => {
   const [doubleTapped, setDoubleTapped] = useState(false);
   const [showClapping, setShowClapping] = useState(false);
   const [clap, setClap] = useState(false);
-  const darkModeValue = useSelector((state) => state.switches.darkMode);
-  const showCheering = useSelector((state) => state.switches.showCheering);
+  const darkModeValue = useSelector((state) => state.user.darkMode);
+  const showCheering = useSelector((state) => state.user.showCheering);
   const fullname = useSelector((state) => state.user.fullname);
   const defaultPostIcon = require("../../assets/default-profile-icon.jpg");
   const source = resolveAssetSource(defaultPostIcon);

@@ -19,7 +19,7 @@ import { uploadRemovePost } from "../../store/actions/user";
 
 const PictureScreen = (props) => {
   const dispatch = useDispatch();
-  const darkModeValue = useSelector((state) => state.switches.darkMode);
+  const darkModeValue = useSelector((state) => state.user.darkMode);
   const localId = useSelector((state) => state.auth.userId);
   const profileProjects = useSelector((state) => state.user.profileProjects);
   const profilePictureUrl = useSelector(

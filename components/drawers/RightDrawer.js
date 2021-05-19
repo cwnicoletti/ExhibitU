@@ -15,7 +15,7 @@ import { Feather } from "@expo/vector-icons";
 import { SimpleLineIcons } from "@expo/vector-icons";
 
 const RightDrawer = (props) => {
-  const darkModeValue = useSelector((state) => state.switches.darkMode);
+  const darkModeValue = useSelector((state) => state.user.darkMode);
 
   let TouchableCmp = TouchableOpacity;
   if (Platform.OS === "android") {

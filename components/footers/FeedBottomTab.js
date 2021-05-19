@@ -8,7 +8,7 @@ import { resetScroll, onScreen } from "../../store/actions/user";
 
 const FeedBottomTab = (props) => {
   const dispatch = useDispatch();
-  const darkModeValue = useSelector((state) => state.switches.darkMode);
+  const darkModeValue = useSelector((state) => state.user.darkMode);
   const onFeedScreen = useSelector((state) => state.user.onFeedScreen);
 
   return (

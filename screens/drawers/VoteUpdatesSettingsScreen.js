@@ -19,7 +19,7 @@ import { getUpdates } from "../../store/actions/user";
 
 const VoteUpdatesSettingsScreen = (props) => {
   const dispatch = useDispatch();
-  const darkModeValue = useSelector((state) => state.switches.darkMode);
+  const darkModeValue = useSelector((state) => state.user.darkMode);
   const updates = useSelector((state) => state.user.updates);
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [emptyFeed, setEmptyFeed] = useState(false);

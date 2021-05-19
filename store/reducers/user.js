@@ -1,3 +1,4 @@
+import { DataTable } from "react-native-paper";
 import {
   GET_USER_DATA,
   GET_USER_FEED,
@@ -40,6 +41,13 @@ import {
   SHOWCASE_PROFILE,
   RETURN_FROM_SHOWCASING,
   HIDE_PROFILE_FOOTER,
+  SET_DARKMODE,
+  SHOW_RESUME,
+  SHOW_CHEERING,
+  HIDE_FOLLOWING,
+  HIDE_FOLLOWERS,
+  HIDE_ADVOCATES,
+  GET_SWITCHES,
 } from "../actions/user";
 
 const intialState = {
@@ -81,6 +89,12 @@ const intialState = {
   onFeedScreen: true,
   onExploreScreen: true,
   onProfileScreen: true,
+  darkMode: false,
+  showResume: false,
+  showCheering: true,
+  hideFollowing: false,
+  hideFollowers: false,
+  hideAdvocates: false,
 };
 
 export default (state = intialState, action) => {
@@ -118,6 +132,12 @@ export default (state = intialState, action) => {
         profileLinks: action.profileLinks,
         userFeed: action.userFeed,
         updates: action.updates,
+        darkMode: action.darkMode,
+        showResume: action.showResume,
+        showCheering: action.showCheering,
+        hideFollowing: action.hideFollowing,
+        hideFollowers: action.hideFollowers,
+        hideAdvocates: action.hideAdvocates,
       };
     case GET_USER_FEED:
       return {
@@ -888,6 +908,116 @@ export default (state = intialState, action) => {
       return {
         ...state,
         hiddenProfileFooter: action.value,
+      };
+    case SHOW_RESUME:
+      if (state.userFeed) {
+        Object.entries(state.userFeed).map(([id, value]) => {
+          if (state.userFeed[id].ExhibitUId === action.ExhibitUId) {
+            state.userFeed[id].showResumeValue = action.showResumeValue;
+            Object.entries(state.userFeed[id].profileProjects).map(
+              ([projectId, value]) => {
+                state.userFeed[id].profileProjects[projectId].projectPosts[
+                  id
+                ].showResumeValue = action.showResumeValue;
+              }
+            );
+          }
+        });
+      }
+      return {
+        ...state,
+        showResume: action.showResumeValue,
+      };
+    case SHOW_CHEERING:
+      if (state.userFeed) {
+        Object.entries(state.userFeed).map(([id, value]) => {
+          if (state.userFeed[id].ExhibitUId === action.ExhibitUId) {
+            state.userFeed[id].showCheering = action.showCheering;
+            Object.entries(state.userFeed[id].profileProjects).map(
+              ([projectId, value]) => {
+                state.userFeed[id].profileProjects[projectId].projectPosts[
+                  id
+                ].showCheering = action.showCheering;
+              }
+            );
+          }
+        });
+      }
+      return {
+        ...state,
+        showCheering: action.showCheering,
+      };
+    case HIDE_FOLLOWING:
+      if (state.userFeed) {
+        Object.entries(state.userFeed).map(([id, value]) => {
+          if (state.userFeed[id].ExhibitUId === action.ExhibitUId) {
+            state.userFeed[id].hideFollowing = action.hideFollowingValue;
+            Object.entries(state.userFeed[id].profileProjects).map(
+              ([projectId, value]) => {
+                state.userFeed[id].profileProjects[projectId].projectPosts[
+                  id
+                ].hideFollowing = action.hideFollowingValue;
+              }
+            );
+          }
+        });
+      }
+      return {
+        ...state,
+        hideFollowing: action.hideFollowingValue,
+      };
+    case HIDE_FOLLOWERS:
+      if (state.userFeed) {
+        Object.entries(state.userFeed).map(([id, value]) => {
+          if (state.userFeed[id].ExhibitUId === action.ExhibitUId) {
+            state.userFeed[id].hideFollowers = action.hideFollowersValue;
+            Object.entries(state.userFeed[id].profileProjects).map(
+              ([projectId, value]) => {
+                state.userFeed[id].profileProjects[projectId].projectPosts[
+                  id
+                ].hideFollowers = action.hideFollowersValue;
+              }
+            );
+          }
+        });
+      }
+      return {
+        ...state,
+        hideFollowers: action.hideFollowersValue,
+      };
+    case HIDE_ADVOCATES:
+      if (state.userFeed) {
+        Object.entries(state.userFeed).map(([id, value]) => {
+          if (state.userFeed[id].ExhibitUId === action.ExhibitUId) {
+            state.userFeed[id].hideAdvocates = action.hideAdvocatesValue;
+            Object.entries(state.userFeed[id].profileProjects).map(
+              ([projectId, value]) => {
+                state.userFeed[id].profileProjects[projectId].projectPosts[
+                  id
+                ].hideAdvocates = action.hideAdvocatesValue;
+              }
+            );
+          }
+        });
+      }
+      return {
+        ...state,
+        hideAdvocates: action.hideAdvocatesValue,
+      };
+    case GET_SWITCHES:
+      return {
+        ...state,
+        darkMode: action.darkMode,
+        showResume: action.showResume,
+        showCheering: action.showCheering,
+        hideFollowing: action.hideFollowing,
+        hideFollowers: action.hideFollowers,
+        hideAdvocates: action.hideAdvocates,
+      };
+    case SET_DARKMODE:
+      return {
+        ...state,
+        darkMode: action.darkMode,
       };
   }
   return state;

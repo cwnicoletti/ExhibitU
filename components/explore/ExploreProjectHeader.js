@@ -6,7 +6,7 @@ import * as WebBrowser from "expo-web-browser";
 import LinkButton from "../UI/LinkButton";
 
 const ExploreProjectHeader = (props) => {
-  const darkModeValue = useSelector((state) => state.switches.darkMode);
+  const darkModeValue = useSelector((state) => state.user.darkMode);
   const links = props.links;
 
   const handleLinkOnPress = (url) => {

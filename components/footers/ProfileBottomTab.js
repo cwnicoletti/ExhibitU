@@ -13,7 +13,7 @@ import {
 
 const ProfileBottomTab = (props) => {
   const dispatch = useDispatch();
-  const darkModeValue = useSelector((state) => state.switches.darkMode);
+  const darkModeValue = useSelector((state) => state.user.darkMode);
   const onProfileScreen = useSelector((state) => state.user.onProfileScreen);
   const showcasingProfile = useSelector(
     (state) => state.user.showcasingProfile

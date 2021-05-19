@@ -19,7 +19,7 @@ const UserFeedScreen = (props) => {
   const styleTypes = ["dark-content", "light-content"];
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [emptyFeed, setEmptyFeed] = useState(false);
-  const darkModeValue = useSelector((state) => state.switches.darkMode);
+  const darkModeValue = useSelector((state) => state.user.darkMode);
   const ExhibitUId = useSelector((state) => state.user.ExhibitUId);
   const localId = useSelector((state) => state.auth.userId);
   const userFeed = useSelector((state) => state.user.userFeed);

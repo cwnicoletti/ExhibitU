@@ -9,7 +9,7 @@ import IoniconsHeaderButton from "../../components/UI/IoniconsHeaderButton";
 import { LogBox } from "react-native";
 
 const FeedCommentsScreen = (props) => {
-  const darkModeValue = useSelector((state) => state.switches.darkMode);
+  const darkModeValue = useSelector((state) => state.user.darkMode);
   const projectId = props.navigation.getParam("projectId");
   const userData = props.navigation.getParam("userData");
   userData.postLinks = userData.postLinks ? userData.postLinks : {};

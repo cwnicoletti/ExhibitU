@@ -25,7 +25,7 @@ const ExploreAdvocatesScreen = (props) => {
   );
   const index = client.initIndex("users");
 
-  const darkModeValue = useSelector((state) => state.switches.darkMode);
+  const darkModeValue = useSelector((state) => state.user.darkMode);
   const [returnedIndex, setReturnedIndex] = useState([]);
   const [projects, setProjects] = useState({});
   const [search, setSearch] = useState("");

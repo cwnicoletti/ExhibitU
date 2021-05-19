@@ -9,7 +9,7 @@ import IoniconsHeaderButton from "../../components/UI/IoniconsHeaderButton";
 import { LogBox } from "react-native";
 
 const ShowcasePictureScreen = (props) => {
-  const darkModeValue = useSelector((state) => state.switches.darkMode);
+  const darkModeValue = useSelector((state) => state.user.darkMode);
   const userData = props.navigation.getParam("userData");
 
   const postPhotoUrl = props.navigation.getParam("postPhotoUrl");

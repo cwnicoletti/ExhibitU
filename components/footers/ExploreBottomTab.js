@@ -8,7 +8,7 @@ import { resetScroll, onScreen } from "../../store/actions/user";
 
 const ExploreBottomTab = ({ navigation }) => {
   const dispatch = useDispatch();
-  const darkModeValue = useSelector((state) => state.switches.darkMode);
+  const darkModeValue = useSelector((state) => state.user.darkMode);
   const onExploreScreen = useSelector((state) => state.user.onExploreScreen);
 
   return (
