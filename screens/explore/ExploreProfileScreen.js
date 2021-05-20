@@ -97,8 +97,7 @@ const ExploreProfileScreen = (props) => {
         responses.hits.forEach((hit) => {
           if (hit.objectID === exploredUserData.exploredExhibitUId) {
             const exploredUserDataNewState = exploredUserData;
-            exploredUserDataNewState.numberOfFollowers =
-              hit.numberOfFollowers + 1;
+            exploredUserDataNewState.numberOfFollowers += 1;
             setExploredUserData(exploredUserDataNewState);
             setIsFollowing(true);
           }
@@ -123,8 +122,7 @@ const ExploreProfileScreen = (props) => {
         responses.hits.forEach((hit) => {
           if (hit.objectID === exploredUserData.exploredExhibitUId) {
             const exploredUserDataNewState = exploredUserData;
-            exploredUserDataNewState.numberOfFollowers =
-              hit.numberOfFollowers - 1;
+            exploredUserDataNewState.numberOfFollowers -= 1;
             setExploredUserData(exploredUserDataNewState);
             setIsFollowing(false);
           }
