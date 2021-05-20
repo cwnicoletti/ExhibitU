@@ -1,15 +1,13 @@
 import algoliasearch from "algoliasearch";
 import React, { useCallback, useEffect, useState } from "react";
 import {
-    ActivityIndicator, FlatList,
-
-
-
-
-    Platform, RefreshControl, StyleSheet,
-
-
-    Text, View
+  ActivityIndicator,
+  FlatList,
+  Platform,
+  RefreshControl,
+  StyleSheet,
+  Text,
+  View,
 } from "react-native";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import { useDispatch, useSelector } from "react-redux";
@@ -18,8 +16,6 @@ import ProjectItem from "../../components/projectItems/ProfileProjectItem";
 import IoniconsHeaderButton from "../../components/UI/IoniconsHeaderButton";
 import SimpleLineIconsHeaderButton from "../../components/UI/SimpleLineIconsHeaderButton";
 import { followUser, unfollowUser } from "../../store/actions/user";
-
-
 
 const ExploreProfileScreen = (props) => {
   const client = algoliasearch(
@@ -34,7 +30,6 @@ const ExploreProfileScreen = (props) => {
   const darkModeValue = useSelector((state) => state.user.darkMode);
   const localId = useSelector((state) => state.auth.userId);
   const ExhibitUId = useSelector((state) => state.user.ExhibitUId);
-  const following = useSelector((state) => state.user.following);
   const projectsAdvocating = useSelector(
     (state) => state.user.projectsAdvocating
   );
@@ -71,15 +66,6 @@ const ExploreProfileScreen = (props) => {
   const [isfollowing, setIsFollowing] = useState(
     exploredUserData.followers.includes(ExhibitUId) ? true : false
   );
-  const [numberOfFollowersLocal, setNumberOfFollowersLocal] = useState(
-    exploredUserData.numberOfFollowers
-  );
-  const [numberOfFollowingLocal, setNumberOfFollowingLocal] = useState(
-    exploredUserData.numberOfFollowing
-  );
-  const [numberOfAdvocatesLocal, setNumberOfAdvocatesLocal] = useState(
-    exploredUserData.numberOfAdvocates
-  );
 
   let android = null;
   if (Platform.OS === "android") {
@@ -91,39 +77,34 @@ const ExploreProfileScreen = (props) => {
       index.search(exploredUserData.text).then((responses) => {
         responses.hits.forEach((hit) => {
           if (hit.objectID === exploredUserData.exploredExhibitUId) {
-            setNumberOfAdvocatesLocal(hit.numberOfAdvocates);
-            const exploredUserDataPrevState = exploredUserData;
-            exploredUserDataPrevState.numberOfAdvocates = hit.numberOfAdvocates;
-            exploredUserDataPrevState.advocates = hit.advocates;
-            setExploredUserData(exploredUserDataPrevState);
+            const exploredUserDataNewState = exploredUserData;
+            exploredUserDataNewState.numberOfAdvocates = hit.numberOfAdvocates;
+            exploredUserDataNewState.advocates = hit.advocates;
+            setExploredUserData(exploredUserDataNewState);
           }
         });
       });
     }
   }, [projectsAdvocating]);
 
-  useEffect(() => {
-    if (exploredUserData.text) {
-      index.search(exploredUserData.text).then((responses) => {
-        responses.hits.forEach((hit) => {
-          if (hit.objectID === exploredUserData.exploredExhibitUId) {
-            setNumberOfFollowersLocal(hit.numberOfFollowers);
-            if (hit.followers.includes(ExhibitUId)) {
-              setIsFollowing(true);
-            } else {
-              setIsFollowing(false);
-            }
-          }
-        });
-      });
-    }
-  }, [following]);
-
   const followUserHandler = useCallback(async () => {
     await setIsLoading(true);
     await dispatch(
       await followUser(exploredUserData.exploredExhibitUId, ExhibitUId, localId)
     );
+    if (exploredUserData.text) {
+      index.search(exploredUserData.text).then((responses) => {
+        responses.hits.forEach((hit) => {
+          if (hit.objectID === exploredUserData.exploredExhibitUId) {
+            const exploredUserDataNewState = exploredUserData;
+            exploredUserDataNewState.numberOfFollowers =
+              hit.numberOfFollowers + 1;
+            setExploredUserData(exploredUserDataNewState);
+            setIsFollowing(true);
+          }
+        });
+      });
+    }
     await setIsFollowing(true);
     await setIsLoading(false);
   }, [setIsLoading, followUser, setIsFollowing]);
@@ -137,6 +118,19 @@ const ExploreProfileScreen = (props) => {
         localId
       )
     );
+    if (exploredUserData.text) {
+      index.search(exploredUserData.text).then((responses) => {
+        responses.hits.forEach((hit) => {
+          if (hit.objectID === exploredUserData.exploredExhibitUId) {
+            const exploredUserDataNewState = exploredUserData;
+            exploredUserDataNewState.numberOfFollowers =
+              hit.numberOfFollowers - 1;
+            setExploredUserData(exploredUserDataNewState);
+            setIsFollowing(false);
+          }
+        });
+      });
+    }
     await setIsFollowing(false);
     await setIsLoading(false);
   }, [setIsLoading, unfollowUser, setIsFollowing]);
@@ -146,27 +140,27 @@ const ExploreProfileScreen = (props) => {
     index.search(exploredUserData.text).then((responses) => {
       responses.hits.forEach((hit) => {
         if (hit.objectID === exploredUserData.exploredExhibitUId) {
-          const exploredUserDataPrevState = exploredUserData;
-          exploredUserDataPrevState.profileProjects = hit.profileProjects;
-          exploredUserDataPrevState.following = hit.following;
-          exploredUserDataPrevState.followers = hit.followers;
-          exploredUserDataPrevState.advocates = hit.advocates;
-          exploredUserDataPrevState.fullname = hit.fullname;
-          exploredUserDataPrevState.username = hit.username;
-          exploredUserDataPrevState.jobTitle = hit.jobTitle;
-          exploredUserDataPrevState.profilePictureUrl = hit.profilePictureUrl;
-          exploredUserDataPrevState.hideFollowing = hit.hideFollowing;
-          exploredUserDataPrevState.hideFollowers = hit.hideFollowers;
-          exploredUserDataPrevState.hideAdvocates = hit.hideAdvocates;
-          exploredUserDataPrevState.profileLinks = hit.profileLinks;
-          exploredUserDataPrevState.profileColumns = hit.profileColumns;
-          exploredUserDataPrevState.showResume = hit.showResume;
-          exploredUserDataPrevState.resumeLinkUrl = hit.resumeLinkUrl;
-          exploredUserDataPrevState.showCheering = hit.showCheering;
-          setNumberOfFollowersLocal(hit.numberOfFollowers);
-          setNumberOfFollowingLocal(hit.numberOfFollowing);
-          setNumberOfAdvocatesLocal(hit.numberOfAdvocates);
-          setExploredUserData(exploredUserDataPrevState);
+          const exploredUserDataNewState = exploredUserData;
+          exploredUserDataNewState.profileProjects = hit.profileProjects;
+          exploredUserDataNewState.following = hit.following;
+          exploredUserDataNewState.followers = hit.followers;
+          exploredUserDataNewState.advocates = hit.advocates;
+          exploredUserDataNewState.fullname = hit.fullname;
+          exploredUserDataNewState.username = hit.username;
+          exploredUserDataNewState.jobTitle = hit.jobTitle;
+          exploredUserDataNewState.profilePictureUrl = hit.profilePictureUrl;
+          exploredUserDataNewState.hideFollowing = hit.hideFollowing;
+          exploredUserDataNewState.hideFollowers = hit.hideFollowers;
+          exploredUserDataNewState.hideAdvocates = hit.hideAdvocates;
+          exploredUserDataNewState.profileLinks = hit.profileLinks;
+          exploredUserDataNewState.profileColumns = hit.profileColumns;
+          exploredUserDataNewState.showResume = hit.showResume;
+          exploredUserDataNewState.resumeLinkUrl = hit.resumeLinkUrl;
+          exploredUserDataNewState.showCheering = hit.showCheering;
+          exploredUserDataNewState.numberOfFollowers = hit.numberOfFollowers;
+          exploredUserDataNewState.numberOfFollowing = hit.numberOfFollowing;
+          exploredUserDataNewState.numberOfAdvocates = hit.numberOfAdvocates;
+          setExploredUserData(exploredUserDataNewState);
         }
       });
     });
@@ -248,9 +242,9 @@ const ExploreProfileScreen = (props) => {
         }}
         iconResumeStyle={darkModeValue ? "white" : "black"}
         description={exploredUserData.profileBiography}
-        numberOfFollowers={numberOfFollowersLocal}
-        numberOfFollowing={numberOfFollowingLocal}
-        numberOfAdvocates={numberOfAdvocatesLocal}
+        numberOfFollowers={exploredUserData.numberOfFollowers}
+        numberOfFollowing={exploredUserData.numberOfFollowing}
+        numberOfAdvocates={exploredUserData.numberOfAdvocates}
         hideFollowing={exploredUserData.hideFollowing}
         hideFollowers={exploredUserData.hideFollowers}
         hideAdvocates={exploredUserData.hideAdvocates}
