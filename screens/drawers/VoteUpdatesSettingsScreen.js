@@ -1,21 +1,24 @@
+import { AntDesign } from "@expo/vector-icons";
 import React, { useEffect, useState } from "react";
 import {
-  StyleSheet,
-  View,
-  FlatList,
-  SafeAreaView,
-  Image,
-  Text,
-  RefreshControl,
+    FlatList,
+
+
+
+    RefreshControl, SafeAreaView, StyleSheet,
+
+
+
+
+    Text, View
 } from "react-native";
-import { useSelector, useDispatch } from "react-redux";
-
-import IoniconsHeaderButton from "../../components/UI/IoniconsHeaderButton";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
+import { useDispatch, useSelector } from "react-redux";
 import UpdateCard from "../../components/drawers/UpdateCard";
-import { AntDesign } from "@expo/vector-icons";
-
+import IoniconsHeaderButton from "../../components/UI/IoniconsHeaderButton";
 import { getUpdates } from "../../store/actions/user";
+
+
 
 const VoteUpdatesSettingsScreen = (props) => {
   const dispatch = useDispatch();

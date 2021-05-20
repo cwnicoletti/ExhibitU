@@ -1,15 +1,15 @@
 import React from "react";
 import { View } from "react-native";
-import { createStore, combineReducers, applyMiddleware } from "redux";
-import { Provider } from "react-redux";
 import { SafeAreaProvider } from "react-native-safe-area-context";
+import { Provider } from "react-redux";
+import { applyMiddleware, combineReducers, createStore } from "redux";
 import ReduxThunk from "redux-thunk";
-
-import authReducer from "./store/reducers/auth";
-import userReducer from "./store/reducers/user";
-import signupReducer from "./store/reducers/signup";
-
 import NavigationContainer from "./navigation/NavigationContainer";
+import authReducer from "./store/reducers/auth";
+import signupReducer from "./store/reducers/signup";
+import userReducer from "./store/reducers/user";
+
+
 
 // Clapping, default project icon made by Freepik (https://www.flaticon.com/authors/freepik)
 

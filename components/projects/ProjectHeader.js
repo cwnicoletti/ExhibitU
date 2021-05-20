@@ -1,19 +1,21 @@
+import * as WebBrowser from "expo-web-browser";
 import React from "react";
 import {
-  View,
-  Text,
-  StyleSheet,
-  Image,
-  FlatList,
-  TouchableOpacity,
-  TouchableNativeFeedback,
-  Platform,
+    FlatList, Image,
+
+
+
+    Platform, StyleSheet, Text,
+
+
+
+
+    TouchableNativeFeedback, TouchableOpacity, View
 } from "react-native";
 import { useSelector } from "react-redux";
-import * as WebBrowser from "expo-web-browser";
-
-import LinkButton from "../UI/LinkButton";
 import EditButton from "../UI/EditButton";
+import LinkButton from "../UI/LinkButton";
+
 
 const handleLinkOnPress = async (url) => {
   await WebBrowser.openBrowserAsync(url);

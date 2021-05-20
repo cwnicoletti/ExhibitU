@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Image, Text } from "react-native";
+import { Image, Text, View } from "react-native";
 import { useSelector } from "react-redux";
 import Title from "../headers_components/Title";
 

@@ -1,6 +1,6 @@
-import React from "react";
-import { Text, StyleSheet, TouchableOpacity } from "react-native";
 import { EvilIcons } from "@expo/vector-icons";
+import React from "react";
+import { StyleSheet, Text, TouchableOpacity } from "react-native";
 import { useSelector } from "react-redux";
 
 const LinkButton = (props) => {

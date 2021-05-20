@@ -1,10 +1,10 @@
 import React from "react";
-import { View, Text, StyleSheet, SafeAreaView, Image } from "react-native";
-import { useSelector, useDispatch } from "react-redux";
-
+import { Image, SafeAreaView, StyleSheet, Text, View } from "react-native";
+import { useDispatch, useSelector } from "react-redux";
+import { setDarkMode } from "../../store/actions/user";
 import FilterSwitch from "../UI/FilterSwitch";
 
-import { setDarkMode } from "../../store/actions/user";
+
 
 const LeftDrawer = (props) => {
   const dispatch = useDispatch();

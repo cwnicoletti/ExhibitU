@@ -1,10 +1,9 @@
-import React from "react";
-import { View, Text, StyleSheet, Image, FlatList } from "react-native";
-import { useSelector } from "react-redux";
 import * as WebBrowser from "expo-web-browser";
-
+import React from "react";
+import { FlatList, Image, StyleSheet, Text, View } from "react-native";
+import { useSelector } from "react-redux";
 import LinkButton from "../UI/LinkButton";
-import EditButton from "../UI/EditButton";
+
 
 const FeedProjectHeader = (props) => {
   const darkModeValue = useSelector((state) => state.user.darkMode);

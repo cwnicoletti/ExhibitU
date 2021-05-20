@@ -1,22 +1,21 @@
-import React, { useEffect, useState, useRef } from "react";
-import {
-  StyleSheet,
-  View,
-  Text,
-  Image,
-  TouchableWithoutFeedback,
-  Keyboard,
-  FlatList,
-  RefreshControl,
-} from "react-native";
-import { useSelector, useDispatch } from "react-redux";
-import { SearchBar } from "react-native-elements";
-import algoliasearch from "algoliasearch";
-import { offScreen } from "../../store/actions/user";
 import { EvilIcons, Feather } from "@expo/vector-icons";
+import algoliasearch from "algoliasearch";
+import React, { useEffect, useRef, useState } from "react";
+import {
+    FlatList, Keyboard,
 
+    RefreshControl, StyleSheet,
+
+    Text,
+
+    TouchableWithoutFeedback, View
+} from "react-native";
+import { SearchBar } from "react-native-elements";
+import { useDispatch, useSelector } from "react-redux";
 import ExploreCard from "../../components/explore/ExploreCard";
 import useDidMountEffect from "../../helper/useDidMountEffect";
+import { offScreen } from "../../store/actions/user";
+
 
 const ExploreScreen = (props) => {
   const client = algoliasearch(

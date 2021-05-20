@@ -1,18 +1,14 @@
+import { Feather, MaterialCommunityIcons, SimpleLineIcons } from "@expo/vector-icons";
 import React from "react";
 import {
-  View,
-  Text,
-  StyleSheet,
-  SafeAreaView,
-  TouchableOpacity,
-  TouchableNativeFeedback,
-  Platform,
+    Platform, SafeAreaView, StyleSheet, Text,
+
+
+
+    TouchableNativeFeedback, TouchableOpacity, View
 } from "react-native";
 import { useSelector } from "react-redux";
 
-import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { Feather } from "@expo/vector-icons";
-import { SimpleLineIcons } from "@expo/vector-icons";
 
 const RightDrawer = (props) => {
   const darkModeValue = useSelector((state) => state.user.darkMode);

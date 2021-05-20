@@ -1,8 +1,8 @@
 import React, { useEffect, useRef } from "react";
-import { useSelector } from "react-redux";
 import { NavigationActions } from "react-navigation";
-
+import { useSelector } from "react-redux";
 import MainNavigator from "./MainNavigator";
+
 
 const NavigationContainer = (props) => {
   const navRef = useRef();

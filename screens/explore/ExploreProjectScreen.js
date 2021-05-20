@@ -1,22 +1,23 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import {
-  Image,
-  StyleSheet,
-  FlatList,
-  View,
-  Text,
-  ActivityIndicator,
-  Platform,
-} from "react-native";
-import { useSelector, useDispatch } from "react-redux";
+    ActivityIndicator, FlatList,
 
-import ProjectPictures from "../../components/UI/ProjectPictures";
+
+
+    Platform, StyleSheet,
+
+
+    Text, View
+} from "react-native";
+import { HeaderButtons, Item } from "react-navigation-header-buttons";
+import { useDispatch, useSelector } from "react-redux";
 import ExploreProjectHeader from "../../components/explore/ExploreProjectHeader";
 import FontAwesomeHeaderButton from "../../components/UI/FontAwesomeHeaderButton";
 import IoniconsHeaderButton from "../../components/UI/IoniconsHeaderButton";
-import { HeaderButtons, Item } from "react-navigation-header-buttons";
-
+import ProjectPictures from "../../components/UI/ProjectPictures";
 import { advocateForUser, unadvocateForUser } from "../../store/actions/user";
+
+
 
 const ExploreProjectScreen = (props) => {
   const dispatch = useDispatch();

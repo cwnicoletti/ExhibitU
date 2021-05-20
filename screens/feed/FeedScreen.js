@@ -1,18 +1,20 @@
-import React, { useEffect, useState, useRef } from "react";
-import {
-  StyleSheet,
-  FlatList,
-  View,
-  Text,
-  StatusBar,
-  RefreshControl,
-} from "react-native";
-import { useSelector, useDispatch } from "react-redux";
 import { AntDesign } from "@expo/vector-icons";
+import React, { useEffect, useRef, useState } from "react";
+import {
+    FlatList,
 
-import { getUserFeed, offScreen } from "../../store/actions/user";
+
+
+    RefreshControl, StatusBar, StyleSheet,
+
+
+    Text, View
+} from "react-native";
+import { useDispatch, useSelector } from "react-redux";
 import FeedItem from "../../components/feed/FeedItem";
 import useDidMountEffect from "../../helper/useDidMountEffect";
+import { getUserFeed, offScreen } from "../../store/actions/user";
+
 
 const UserFeedScreen = (props) => {
   const dispatch = useDispatch();

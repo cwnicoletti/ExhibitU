@@ -1,31 +1,31 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
-  View,
-  Text,
-  Image,
-  ImageBackground,
-  StyleSheet,
-  TouchableOpacity,
-  TouchableNativeFeedback,
-  Platform,
-  Dimensions,
-  TouchableWithoutFeedback,
-  Animated,
-  FlatList,
-  ActivityIndicator,
+    ActivityIndicator, Animated, Dimensions,
+
+
+    FlatList, Image,
+    ImageBackground, LogBox, Platform, StyleSheet, Text,
+
+
+
+
+    TouchableNativeFeedback, TouchableOpacity,
+
+
+
+    TouchableWithoutFeedback, View
 } from "react-native";
-import { useSelector, useDispatch } from "react-redux";
-import Cheer from "../../assets/Icons/clap.svg";
-import Cheerfill from "../../assets/Icons/clap-fill.svg";
-import LinkButton from "../UI/LinkButton";
 import resolveAssetSource from "react-native/Libraries/Image/resolveAssetSource";
-
+import { useDispatch, useSelector } from "react-redux";
+import Cheerfill from "../../assets/Icons/clap-fill.svg";
+import Cheer from "../../assets/Icons/clap.svg";
 import {
-  cheerOwnProfilePost,
-  uncheerOwnProfilePost,
+    cheerOwnProfilePost,
+    uncheerOwnProfilePost
 } from "../../store/actions/user";
+import LinkButton from "../UI/LinkButton";
 
-import { LogBox } from "react-native";
+
 
 const toDateTime = (seconds) => {
   let t = new Date(0); // Epoch

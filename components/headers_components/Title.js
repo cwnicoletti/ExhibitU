@@ -1,6 +1,6 @@
+import { useFonts } from "expo-font";
 import React from "react";
 import { StyleSheet } from "react-native";
-import { useFonts } from "expo-font";
 
 const Title = (props) => {
   const [loaded] = useFonts({

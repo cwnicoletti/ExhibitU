@@ -1,9 +1,8 @@
 import {
-  INTROING,
-  SIGNUP_EMAIL,
-  SIGNUP_FULLNAME,
-  SIGNUP_USERNAME,
-  SIGNUP_PASSWORD,
+    INTROING,
+    SIGNUP_EMAIL,
+    SIGNUP_FULLNAME,
+    SIGNUP_USERNAME
 } from "../actions/signup";
 
 const intialState = {

@@ -1,14 +1,12 @@
 import React from "react";
 import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  TouchableNativeFeedback,
-  Platform,
-} from "react-native";
+    Platform, StyleSheet, Text,
 
+
+    TouchableNativeFeedback, TouchableOpacity, View
+} from "react-native";
 import Card from "../UI/Card";
+
 
 const UpdateCard = (props) => {
   let TouchableCmp = TouchableOpacity;

@@ -1,17 +1,14 @@
 import React, { useEffect } from "react";
 import {
-  Image,
-  StyleSheet,
-  View,
-  Text,
-  ScrollView,
-  Platform,
-} from "react-native";
-import { useSelector } from "react-redux";
-import { HeaderButtons, Item } from "react-navigation-header-buttons";
+    Platform, ScrollView, StyleSheet,
 
+    Text, View
+} from "react-native";
+import { HeaderButtons, Item } from "react-navigation-header-buttons";
+import { useSelector } from "react-redux";
 import ExplorePostView from "../../components/explore/ExplorePostView";
 import IoniconsHeaderButton from "../../components/UI/IoniconsHeaderButton";
+
 
 const ExplorePictureScreen = (props) => {
   const darkModeValue = useSelector((state) => state.user.darkMode);

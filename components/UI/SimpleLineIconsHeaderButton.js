@@ -1,6 +1,6 @@
+import { SimpleLineIcons } from "@expo/vector-icons";
 import React from "react";
 import { HeaderButton } from "react-navigation-header-buttons";
-import { SimpleLineIcons } from "@expo/vector-icons";
 
 const SimpleLineIconsHeaderButton = (props) => {
   return (

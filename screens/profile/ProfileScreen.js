@@ -1,25 +1,22 @@
-import React, { useEffect, useState, useRef } from "react";
+import { SimpleLineIcons } from "@expo/vector-icons";
+import React, { useEffect, useRef, useState } from "react";
 import {
-  StyleSheet,
-  FlatList,
-  View,
-  Text,
-  RefreshControl,
-  Animated,
-} from "react-native";
-import { useSelector, useDispatch } from "react-redux";
+    Animated, FlatList,
 
+
+    RefreshControl, StyleSheet,
+
+
+    Text, View
+} from "react-native";
+import { TouchableOpacity } from "react-native-gesture-handler";
+import { useDispatch, useSelector } from "react-redux";
 import ProjectItem from "../../components/projectItems/ProfileProjectItem";
 import ProfileHeader from "../../components/user/ProfileHeader";
-import { TouchableOpacity } from "react-native-gesture-handler";
-import { SimpleLineIcons } from "@expo/vector-icons";
-import { refreshProfile, offScreen } from "../../store/actions/user";
 import useDidMountEffect from "../../helper/useDidMountEffect";
+import { changeProfileNumberOfColumns, offScreen, refreshProfile, showcaseProfile } from "../../store/actions/user";
 
-import {
-  changeProfileNumberOfColumns,
-  showcaseProfile,
-} from "../../store/actions/user";
+
 
 const ProfileScreen = (props) => {
   const dispatch = useDispatch();

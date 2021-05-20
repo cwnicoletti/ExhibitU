@@ -1,25 +1,22 @@
-import React, { useEffect, useState, useRef } from "react";
-import {
-  View,
-  Text,
-  Image,
-  ImageBackground,
-  StyleSheet,
-  TouchableOpacity,
-  TouchableNativeFeedback,
-  Platform,
-  Dimensions,
-  FlatList,
-} from "react-native";
-import { LinearGradient } from "expo-linear-gradient";
-import LinkButton from "../UI/LinkButton";
-import { useSelector } from "react-redux";
-import resolveAssetSource from "react-native/Libraries/Image/resolveAssetSource";
-
 import { AntDesign } from "@expo/vector-icons";
-import Cheer from "../../assets/Icons/clap.svg";
+import { LinearGradient } from "expo-linear-gradient";
+import React, { useEffect, useState } from "react";
+import {
+    Dimensions,
+    FlatList, Image,
+    ImageBackground, LogBox, Platform, StyleSheet, Text,
 
-import { LogBox } from "react-native";
+
+
+
+    TouchableNativeFeedback, TouchableOpacity, View
+} from "react-native";
+import resolveAssetSource from "react-native/Libraries/Image/resolveAssetSource";
+import { useSelector } from "react-redux";
+import Cheer from "../../assets/Icons/clap.svg";
+import LinkButton from "../UI/LinkButton";
+
+
 
 const toDateTime = (seconds) => {
   let t = new Date(0); // Epoch

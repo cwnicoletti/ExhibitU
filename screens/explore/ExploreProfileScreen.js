@@ -1,24 +1,25 @@
-import React, { useEffect, useCallback, useState } from "react";
-import {
-  Image,
-  StyleSheet,
-  FlatList,
-  View,
-  Text,
-  ActivityIndicator,
-  RefreshControl,
-  Platform,
-} from "react-native";
-import { useSelector, useDispatch } from "react-redux";
 import algoliasearch from "algoliasearch";
+import React, { useCallback, useEffect, useState } from "react";
+import {
+    ActivityIndicator, FlatList,
 
-import ProjectItem from "../../components/projectItems/ProfileProjectItem";
-import SimpleLineIconsHeaderButton from "../../components/UI/SimpleLineIconsHeaderButton";
-import IoniconsHeaderButton from "../../components/UI/IoniconsHeaderButton";
+
+
+
+    Platform, RefreshControl, StyleSheet,
+
+
+    Text, View
+} from "react-native";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
+import { useDispatch, useSelector } from "react-redux";
 import ExploreProfileHeader from "../../components/explore/ExploreProfileHeader";
-
+import ProjectItem from "../../components/projectItems/ProfileProjectItem";
+import IoniconsHeaderButton from "../../components/UI/IoniconsHeaderButton";
+import SimpleLineIconsHeaderButton from "../../components/UI/SimpleLineIconsHeaderButton";
 import { followUser, unfollowUser } from "../../store/actions/user";
+
+
 
 const ExploreProfileScreen = (props) => {
   const client = algoliasearch(

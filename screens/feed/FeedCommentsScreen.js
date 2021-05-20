@@ -1,12 +1,11 @@
 import React, { useEffect } from "react";
-import { StyleSheet, View, Text, ScrollView, Platform } from "react-native";
-import { useSelector } from "react-redux";
+import { LogBox, Platform, ScrollView, StyleSheet, Text, View } from "react-native";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
-
+import { useSelector } from "react-redux";
 import FeedPostView from "../../components/feed/FeedPostView";
 import IoniconsHeaderButton from "../../components/UI/IoniconsHeaderButton";
 
-import { LogBox } from "react-native";
+
 
 const FeedCommentsScreen = (props) => {
   const darkModeValue = useSelector((state) => state.user.darkMode);

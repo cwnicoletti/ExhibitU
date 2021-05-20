@@ -1,12 +1,12 @@
 import React from "react";
-import { View, Image, Text, Platform } from "react-native";
-import { useSelector } from "react-redux";
+import { Image, Platform, Text, View } from "react-native";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
+import { useSelector } from "react-redux";
+import Menu from "../headers_components/Menu";
+import Settings from "../headers_components/Settings";
+import Title from "../headers_components/Title";
 import FeatherHeaderButton from "../UI/FeatherHeaderButton";
 import IoniconsHeaderButton from "../UI/IoniconsHeaderButton";
-import Menu from "../headers_components/Menu";
-import Title from "../headers_components/Title";
-import Settings from "../headers_components/Settings";
 
 const ProfileHeader = ({ navigation }) => {
   const darkModeValue = useSelector((state) => state.user.darkMode);

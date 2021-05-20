@@ -1,26 +1,27 @@
-import React, { useEffect, useState, useRef } from "react";
-import {
-  View,
-  Text,
-  Image,
-  ImageBackground,
-  StyleSheet,
-  TouchableOpacity,
-  TouchableNativeFeedback,
-  Platform,
-  Dimensions,
-  TouchableWithoutFeedback,
-  Animated,
-  FlatList,
-} from "react-native";
-import { useSelector } from "react-redux";
 import * as WebBrowser from "expo-web-browser";
-import Cheer from "../../assets/Icons/clap.svg";
-import Cheerfill from "../../assets/Icons/clap-fill.svg";
-import LinkButton from "../UI/LinkButton";
-import resolveAssetSource from "react-native/Libraries/Image/resolveAssetSource";
+import React, { useEffect, useRef, useState } from "react";
+import {
+    Animated, Dimensions,
 
-import { LogBox } from "react-native";
+
+    FlatList, Image,
+    ImageBackground, LogBox, Platform, StyleSheet, Text,
+
+
+
+
+    TouchableNativeFeedback, TouchableOpacity,
+
+
+
+    TouchableWithoutFeedback, View
+} from "react-native";
+import resolveAssetSource from "react-native/Libraries/Image/resolveAssetSource";
+import { useSelector } from "react-redux";
+import Cheerfill from "../../assets/Icons/clap-fill.svg";
+import Cheer from "../../assets/Icons/clap.svg";
+import LinkButton from "../UI/LinkButton";
+
 
 const handleLinkOnPress = async (url) => {
   await WebBrowser.openBrowserAsync(url);

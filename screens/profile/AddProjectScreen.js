@@ -1,34 +1,33 @@
-import React, { useEffect, useCallback, useReducer, useState } from "react";
+import { Ionicons } from "@expo/vector-icons";
+import * as ImagePicker from "expo-image-picker";
+import React, { useCallback, useEffect, useReducer, useState } from "react";
 import {
-  Image,
-  StyleSheet,
-  View,
-  Text,
-  KeyboardAvoidingView,
-  SafeAreaView,
-  TouchableOpacity,
-  TouchableNativeFeedback,
-  ActivityIndicator,
-  FlatList,
-  Platform,
+    ActivityIndicator,
+    FlatList, Image,
+
+
+
+    KeyboardAvoidingView, LogBox, Platform, SafeAreaView, StyleSheet,
+
+    Text,
+
+
+
+    TouchableNativeFeedback, TouchableOpacity, View
 } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import { useSelector, useDispatch } from "react-redux";
-import * as ImagePicker from "expo-image-picker";
-import LinkButton from "../../components/UI/LinkButton";
+import { HeaderButtons, Item } from "react-navigation-header-buttons";
+import { useDispatch, useSelector } from "react-redux";
 import DefaultPicture from "../../assets/Icons/picture.svg";
-import { Ionicons } from "@expo/vector-icons";
-
 import Input from "../../components/UI/Input";
 import IoniconsHeaderButton from "../../components/UI/IoniconsHeaderButton";
-import { HeaderButtons, Item } from "react-navigation-header-buttons";
-
-import { LogBox } from "react-native";
-
+import LinkButton from "../../components/UI/LinkButton";
 import {
-  uploadNewProject,
-  uploadAddTempProjectCoverPicture,
+    uploadAddTempProjectCoverPicture, uploadNewProject
 } from "../../store/actions/user";
+
+
+
 
 const FORM_INPUT_UPDATE = "FORM_INPUT_UPDATE";
 const FORM_INPUT_LINKS_UPDATE = "FORM_INPUT_LINKS_UPDATE";

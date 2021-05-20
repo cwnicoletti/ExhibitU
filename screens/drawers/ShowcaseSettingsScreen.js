@@ -1,17 +1,14 @@
 import React, { useEffect } from "react";
-import { StyleSheet, View, Text, Image } from "react-native";
-import { useSelector, useDispatch } from "react-redux";
-
+import { StyleSheet, Text, View } from "react-native";
+import { HeaderButtons, Item } from "react-navigation-header-buttons";
+import { useDispatch, useSelector } from "react-redux";
 import FilterSwitch from "../../components/UI/FilterSwitch";
 import IoniconsHeaderButton from "../../components/UI/IoniconsHeaderButton";
-import { HeaderButtons, Item } from "react-navigation-header-buttons";
-
 import {
-  setShowCheering,
-  setHideFollowing,
-  setHideFollowers,
-  setHideAdvocates,
+    setHideAdvocates, setHideFollowers, setHideFollowing, setShowCheering
 } from "../../store/actions/user";
+
+
 
 const ShowcaseSettingsScreen = (props) => {
   const dispatch = useDispatch();

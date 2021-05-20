@@ -1,22 +1,21 @@
+import { EvilIcons, Feather } from "@expo/vector-icons";
+import algoliasearch from "algoliasearch";
 import React, { useEffect, useState } from "react";
 import {
-  StyleSheet,
-  View,
-  Text,
-  TouchableWithoutFeedback,
-  Keyboard,
-  FlatList,
-  SafeAreaView,
-  RefreshControl,
-} from "react-native";
-import { useSelector } from "react-redux";
-import { SearchBar } from "react-native-elements";
-import algoliasearch from "algoliasearch";
-import { EvilIcons, Feather } from "@expo/vector-icons";
+    FlatList, Keyboard,
 
-import IoniconsHeaderButton from "../../components/UI/IoniconsHeaderButton";
+
+    RefreshControl, SafeAreaView, StyleSheet,
+
+    Text,
+    TouchableWithoutFeedback, View
+} from "react-native";
+import { SearchBar } from "react-native-elements";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
+import { useSelector } from "react-redux";
 import ExploreAdvocatesCard from "../../components/explore/ExploreAdvocatesCard";
+import IoniconsHeaderButton from "../../components/UI/IoniconsHeaderButton";
+
 
 const FeedAdvocatesScreen = (props) => {
   const client = algoliasearch(

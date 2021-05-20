@@ -1,17 +1,18 @@
 import React from "react";
 import {
-  View,
-  Text,
-  Image,
-  StyleSheet,
-  TouchableOpacity,
-  TouchableNativeFeedback,
-  Platform,
-  FlatList,
-} from "react-native";
+  FlatList, Image,
 
+
+
+  Platform, StyleSheet, Text,
+
+
+
+  TouchableNativeFeedback, TouchableOpacity, View
+} from "react-native";
 import Card from "../UI/Card";
 import ExploreAdvocatesProjectsIcons from "./ExploreAdvocatesProjectsIcons";
+
 
 const ExploreAdvocatesCard = (props) => {
   const projects = props.projects;

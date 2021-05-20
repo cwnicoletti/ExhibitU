@@ -1,12 +1,12 @@
 import React, { useEffect } from "react";
-import { StyleSheet, FlatList, View, Text, Platform } from "react-native";
-import { useSelector, useDispatch } from "react-redux";
-
-import ProjectPictures from "../../components/UI/ProjectPictures";
+import { FlatList, Platform, StyleSheet, Text, View } from "react-native";
+import { HeaderButtons, Item } from "react-navigation-header-buttons";
+import { useDispatch, useSelector } from "react-redux";
 import ProjectHeader from "../../components/projects/ProjectHeader";
 import IoniconsHeaderButton from "../../components/UI/IoniconsHeaderButton";
-import { HeaderButtons, Item } from "react-navigation-header-buttons";
+import ProjectPictures from "../../components/UI/ProjectPictures";
 import { changeProjectNumberOfColumns } from "../../store/actions/user";
+
 
 const ProjectScreen = (props) => {
   const dispatch = useDispatch();

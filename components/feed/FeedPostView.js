@@ -1,33 +1,33 @@
-import React, { useEffect, useState, useRef } from "react";
-import {
-  View,
-  Text,
-  Image,
-  ImageBackground,
-  StyleSheet,
-  TouchableOpacity,
-  TouchableNativeFeedback,
-  Platform,
-  Dimensions,
-  TouchableWithoutFeedback,
-  Animated,
-  FlatList,
-} from "react-native";
 import * as WebBrowser from "expo-web-browser";
-import { useDispatch, useSelector } from "react-redux";
-import Cheer from "../../assets/Icons/clap.svg";
-import Cheerfill from "../../assets/Icons/clap-fill.svg";
-import LinkButton from "../UI/LinkButton";
-import resolveAssetSource from "react-native/Libraries/Image/resolveAssetSource";
-
+import React, { useEffect, useRef, useState } from "react";
 import {
-  uncheerPost,
-  cheerPost,
-  cheerOwnPost,
-  uncheerOwnPost,
-} from "../../store/actions/user";
+    Animated, Dimensions,
 
-import { LogBox } from "react-native";
+
+    FlatList, Image,
+    ImageBackground, LogBox, Platform, StyleSheet, Text,
+
+
+
+
+    TouchableNativeFeedback, TouchableOpacity,
+
+
+
+    TouchableWithoutFeedback, View
+} from "react-native";
+import resolveAssetSource from "react-native/Libraries/Image/resolveAssetSource";
+import { useDispatch, useSelector } from "react-redux";
+import Cheerfill from "../../assets/Icons/clap-fill.svg";
+import Cheer from "../../assets/Icons/clap.svg";
+import {
+    cheerOwnPost, cheerPost,
+
+    uncheerOwnPost, uncheerPost
+} from "../../store/actions/user";
+import LinkButton from "../UI/LinkButton";
+
+
 
 const toDateTime = (seconds) => {
   let t = new Date(0); // Epoch

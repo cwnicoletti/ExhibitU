@@ -1,19 +1,20 @@
+import { Ionicons } from "@expo/vector-icons";
+import * as WebBrowser from "expo-web-browser";
 import React from "react";
 import {
-  View,
-  Text,
-  StyleSheet,
-  FlatList,
-  TouchableNativeFeedback,
-  TouchableOpacity,
-  Platform,
+    FlatList,
+
+
+    Platform, StyleSheet, Text,
+
+
+    TouchableNativeFeedback,
+    TouchableOpacity, View
 } from "react-native";
 import { useSelector } from "react-redux";
-import * as WebBrowser from "expo-web-browser";
-import { Ionicons } from "@expo/vector-icons";
-
-import UserTitleShowcaseLocal from "../user/UserTitleShowcaseLocal";
 import LinkButton from "../UI/LinkButton";
+import UserTitleShowcaseLocal from "../user/UserTitleShowcaseLocal";
+
 
 const handleLinkOnPress = (url) => {
   WebBrowser.openBrowserAsync(url);

@@ -1,16 +1,18 @@
-import React, { useState } from "react";
+import React from "react";
 import {
-  View,
-  Text,
-  Image,
-  StyleSheet,
-  TouchableOpacity,
-  TouchableNativeFeedback,
-  Platform,
+    Image,
+
+
+
+    Platform, StyleSheet, Text,
+
+
+
+    TouchableNativeFeedback, TouchableOpacity, View
 } from "react-native";
 import { useSelector } from "react-redux";
-
 import Card from "../UI/Card";
+
 
 const ProjectItem = (props) => {
   const profileColumns = useSelector((state) => state.user.profileColumns);

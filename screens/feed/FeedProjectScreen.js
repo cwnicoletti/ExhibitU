@@ -1,12 +1,12 @@
 import React, { useEffect } from "react";
-import { StyleSheet, FlatList, View, Text, Platform } from "react-native";
+import { FlatList, Platform, StyleSheet, Text, View } from "react-native";
+import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import { useSelector } from "react-redux";
-
-import ProjectPictures from "../../components/UI/ProjectPictures";
 import FeedProjectHeader from "../../components/feed/FeedProjectHeader";
 import FontAwesomeHeaderButton from "../../components/UI/FontAwesomeHeaderButton";
 import IoniconsHeaderButton from "../../components/UI/IoniconsHeaderButton";
-import { HeaderButtons, Item } from "react-navigation-header-buttons";
+import ProjectPictures from "../../components/UI/ProjectPictures";
+
 
 const FeedProjectScreen = (props) => {
   const darkModeValue = useSelector((state) => state.user.darkMode);

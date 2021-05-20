@@ -1,11 +1,9 @@
 import React from "react";
 import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  TouchableNativeFeedback,
-  Platform,
+    Platform, StyleSheet, Text,
+
+
+    TouchableNativeFeedback, TouchableOpacity, View
 } from "react-native";
 import { useSelector } from "react-redux";
 

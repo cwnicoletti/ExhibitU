@@ -1,12 +1,11 @@
 import React, { useEffect } from "react";
-import { StyleSheet, View, Text, ScrollView, Platform } from "react-native";
-import { useSelector } from "react-redux";
+import { LogBox, Platform, ScrollView, StyleSheet, Text, View } from "react-native";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
-
-import ShowcasePostView from "../../components/user/ShowcasePostView";
+import { useSelector } from "react-redux";
 import IoniconsHeaderButton from "../../components/UI/IoniconsHeaderButton";
+import ShowcasePostView from "../../components/user/ShowcasePostView";
 
-import { LogBox } from "react-native";
+
 
 const ShowcasePictureScreen = (props) => {
   const darkModeValue = useSelector((state) => state.user.darkMode);

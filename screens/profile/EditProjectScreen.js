@@ -1,35 +1,33 @@
-import React, { useEffect, useCallback, useReducer, useState } from "react";
-import {
-  Image,
-  StyleSheet,
-  View,
-  Text,
-  KeyboardAvoidingView,
-  SafeAreaView,
-  TouchableOpacity,
-  TouchableNativeFeedback,
-  ActivityIndicator,
-  FlatList,
-  Platform,
-} from "react-native";
-import { useSelector, useDispatch } from "react-redux";
-import { HeaderButtons, Item } from "react-navigation-header-buttons";
-import { Octicons, Ionicons } from "@expo/vector-icons";
-import LinkButton from "../../components/UI/LinkButton";
-import DefaultPicture from "../../assets/Icons/picture.svg";
+import { Ionicons, Octicons } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
-
-import { LogBox } from "react-native";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-
-import IoniconsHeaderButton from "../../components/UI/IoniconsHeaderButton";
-import Input from "../../components/UI/Input";
-
+import React, { useCallback, useEffect, useReducer, useState } from "react";
 import {
-  uploadUpdatedProject,
-  uploadRemoveProject,
-  uploadChangeProjectCoverPicture,
+    ActivityIndicator,
+    FlatList, Image,
+
+
+
+    KeyboardAvoidingView, LogBox, Platform, SafeAreaView, StyleSheet,
+
+    Text,
+
+
+
+    TouchableNativeFeedback, TouchableOpacity, View
+} from "react-native";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import { HeaderButtons, Item } from "react-navigation-header-buttons";
+import { useDispatch, useSelector } from "react-redux";
+import DefaultPicture from "../../assets/Icons/picture.svg";
+import Input from "../../components/UI/Input";
+import IoniconsHeaderButton from "../../components/UI/IoniconsHeaderButton";
+import LinkButton from "../../components/UI/LinkButton";
+import {
+    uploadChangeProjectCoverPicture, uploadRemoveProject, uploadUpdatedProject
 } from "../../store/actions/user";
+
+
+
 
 const FORM_INPUT_UPDATE = "FORM_INPUT_UPDATE";
 const FORM_INPUT_LINKS_UPDATE = "FORM_INPUT_LINKS_UPDATE";

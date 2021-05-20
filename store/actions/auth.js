@@ -1,8 +1,8 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
+import { getUserData } from "./user";
 global.Buffer = global.Buffer || require("buffer").Buffer;
 
-import { getUserData } from "./user";
 
 export const AUTHENTICATE = "AUTHENTICATE";
 export const LOGOUT = "LOGOUT";

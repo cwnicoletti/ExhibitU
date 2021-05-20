@@ -1,15 +1,13 @@
-import React, { useEffect, useRef, useState } from "react";
-import { View, TouchableWithoutFeedback, Animated } from "react-native";
-import { useSelector, useDispatch } from "react-redux";
-import useDidMountEffect from "../../helper/useDidMountEffect";
-
 import { Ionicons, SimpleLineIcons } from "@expo/vector-icons";
-
+import React, { useRef, useState } from "react";
+import { Animated, TouchableWithoutFeedback, View } from "react-native";
+import { useDispatch, useSelector } from "react-redux";
+import useDidMountEffect from "../../helper/useDidMountEffect";
 import {
-  resetScroll,
-  onScreen,
-  setHideProfileFooter,
+    onScreen, resetScroll
 } from "../../store/actions/user";
+
+
 
 const ProfileBottomTab = (props) => {
   const dispatch = useDispatch();

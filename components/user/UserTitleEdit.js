@@ -1,15 +1,16 @@
 import React from "react";
 import {
-  View,
-  Text,
-  StyleSheet,
-  Image,
-  TouchableNativeFeedback,
-  TouchableOpacity,
-  Platform,
-} from "react-native";
+    Image,
 
+
+    Platform, StyleSheet, Text,
+
+
+    TouchableNativeFeedback,
+    TouchableOpacity, View
+} from "react-native";
 import EditButton from "../UI/EditButton";
+
 
 const UserTitleEdit = (props) => {
   let TouchableCmp = TouchableOpacity;
