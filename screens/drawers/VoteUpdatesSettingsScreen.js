@@ -1,24 +1,18 @@
 import { AntDesign } from "@expo/vector-icons";
 import React, { useEffect, useState } from "react";
 import {
-    FlatList,
-
-
-
-    RefreshControl, SafeAreaView, StyleSheet,
-
-
-
-
-    Text, View
+  FlatList,
+  RefreshControl,
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  View,
 } from "react-native";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import { useDispatch, useSelector } from "react-redux";
 import UpdateCard from "../../components/drawers/UpdateCard";
 import IoniconsHeaderButton from "../../components/UI/IoniconsHeaderButton";
 import { getUpdates } from "../../store/actions/user";
-
-
 
 const VoteUpdatesSettingsScreen = (props) => {
   const dispatch = useDispatch();
@@ -87,6 +81,9 @@ const VoteUpdatesSettingsScreen = (props) => {
           <UpdateCard
             updateTitle={itemData.item.title}
             updateBody={itemData.item.body}
+            iconFamily={itemData.item.iconFamily}
+            iconName={itemData.item.iconName}
+            darkModeValue={darkModeValue}
             projectContainer={{
               backgroundColor: darkModeValue ? "black" : "white",
               borderColor: darkModeValue ? "gray" : "#c9c9c9",
