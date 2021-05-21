@@ -1,13 +1,11 @@
 import React, { useCallback, useEffect, useState } from "react";
 import {
-    ActivityIndicator, FlatList,
-
-
-
-    Platform, StyleSheet,
-
-
-    Text, View
+  ActivityIndicator,
+  FlatList,
+  Platform,
+  StyleSheet,
+  Text,
+  View,
 } from "react-native";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import { useDispatch, useSelector } from "react-redux";
@@ -17,15 +15,16 @@ import IoniconsHeaderButton from "../../components/UI/IoniconsHeaderButton";
 import ProjectPictures from "../../components/UI/ProjectPictures";
 import { advocateForUser, unadvocateForUser } from "../../store/actions/user";
 
-
-
 const ExploreProjectScreen = (props) => {
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false);
   const darkModeValue = useSelector((state) => state.user.darkMode);
   const localId = useSelector((state) => state.auth.userId);
   const ExhibitUId = useSelector((state) => state.user.ExhibitUId);
-  const exploredUserData = props.navigation.getParam("exploredUserData");
+  const index = props.navigation.getParam("index");
+  const [exploredUserData, setExploredUserData] = useState(
+    props.navigation.getParam("exploredUserData")
+  );
 
   const exploredProjectData = {
     projectId: props.navigation.getParam("projectId"),
@@ -60,7 +59,18 @@ const ExploreProjectScreen = (props) => {
         exploredProjectData.projectId
       )
     );
-    await setIsAdvocating(true);
+    if (exploredUserData.text) {
+      index.search(exploredUserData.text).then((responses) => {
+        responses.hits.forEach((hit) => {
+          if (hit.objectID === exploredUserData.exploredExhibitUId) {
+            const exploredUserDataNewState = exploredUserData;
+            exploredUserDataNewState.numberOfAdvocates += 1;
+            setExploredUserData(exploredUserDataNewState);
+            setIsAdvocating(true);
+          }
+        });
+      });
+    }
     await setIsLoading(false);
   }, [setIsLoading, advocateForUser, setIsAdvocating]);
 
@@ -74,6 +84,18 @@ const ExploreProjectScreen = (props) => {
         exploredProjectData.projectId
       )
     );
+    if (exploredUserData.text) {
+      index.search(exploredUserData.text).then((responses) => {
+        responses.hits.forEach((hit) => {
+          if (hit.objectID === exploredUserData.exploredExhibitUId) {
+            const exploredUserDataNewState = exploredUserData;
+            exploredUserDataNewState.numberOfAdvocates -= 1;
+            setExploredUserData(exploredUserDataNewState);
+            setIsAdvocating(false);
+          }
+        });
+      });
+    }
     await setIsAdvocating(false);
     await setIsLoading(false);
   }, [setIsLoading, unadvocateForUser, setIsAdvocating]);
@@ -132,6 +154,10 @@ const ExploreProjectScreen = (props) => {
   useEffect(() => {
     props.navigation.setParams({ isAdvocating: isAdvocating });
   }, [isAdvocating]);
+
+  useEffect(() => {
+    props.navigation.setParams({ exploredUserData: exploredUserData });
+  }, [exploredUserData]);
 
   const topHeader = () => {
     return (
@@ -213,6 +239,7 @@ const ExploreProjectScreen = (props) => {
 ExploreProjectScreen.navigationOptions = (navData) => {
   const darkModeValue = navData.navigation.getParam("darkMode");
   const ExhibitUId = navData.navigation.getParam("ExhibitUId");
+  const exploredUserData = navData.navigation.getParam("exploredUserData");
   const exploredExhibitUId = navData.navigation.getParam("exploredExhibitUId");
   const isAdvocating = navData.navigation.getParam("isAdvocating");
   const isLoading = navData.navigation.getParam("isLoading");
@@ -222,12 +249,11 @@ ExploreProjectScreen.navigationOptions = (navData) => {
   return {
     headerTitle: () => (
       <View style={styles.logo}>
-        
         <Text
           style={{
             ...styles.logoTitle,
             color: darkModeValue ? "white" : "black",
-fontFamily: "CormorantUpright",
+            fontFamily: "CormorantUpright",
           }}
         >
           ExhibitU
@@ -248,7 +274,9 @@ fontFamily: "CormorantUpright",
           iconName={"ios-arrow-back"}
           color={darkModeValue ? "white" : "black"}
           onPress={() => {
-            navData.navigation.goBack();
+            navData.navigation.navigate("ExploreProfile", {
+              exploreData: exploredUserData,
+            });
           }}
         />
       </HeaderButtons>

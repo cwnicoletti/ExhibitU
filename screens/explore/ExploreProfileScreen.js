@@ -33,35 +33,9 @@ const ExploreProfileScreen = (props) => {
   const projectsAdvocating = useSelector(
     (state) => state.user.projectsAdvocating
   );
-
-  const [exploredUserData, setExploredUserData] = useState({
-    text: props.navigation.getParam("text"),
-    exploredExhibitUId: props.navigation.getParam("ExhibitUId"),
-    profilePictureUrl: props.navigation.getParam("profilePictureUrl"),
-    fullname: props.navigation.getParam("fullname"),
-    username: props.navigation.getParam("username"),
-    jobTitle: props.navigation.getParam("jobTitle"),
-    resumeLinkUrl: props.navigation.getParam("resumeLinkUrl"),
-    profileBiography: props.navigation.getParam("profileBiography"),
-    numberOfFollowers: props.navigation.getParam("numberOfFollowers"),
-    numberOfFollowing: props.navigation.getParam("numberOfFollowing"),
-    numberOfAdvocates: props.navigation.getParam("numberOfAdvocates"),
-    showResume: props.navigation.getParam("showResume"),
-    showCheering: props.navigation.getParam("showCheering"),
-    hideFollowing: props.navigation.getParam("hideFollowing"),
-    hideFollowers: props.navigation.getParam("hideFollowers"),
-    hideAdvocates: props.navigation.getParam("hideAdvocates"),
-    followers: props.navigation.getParam("followers"),
-    following: props.navigation.getParam("following"),
-    advocates: props.navigation.getParam("advocates")
-      ? props.navigation.getParam("advocates")
-      : {},
-    profileLinks: props.navigation.getParam("profileLinks"),
-    profileProjects: props.navigation.getParam("profileProjects")
-      ? props.navigation.getParam("profileProjects")
-      : {},
-    profileColumns: props.navigation.getParam("profileColumns"),
-  });
+  const [exploredUserData, setExploredUserData] = useState(
+    props.navigation.getParam("exploreData")
+  );
 
   const [isfollowing, setIsFollowing] = useState(
     exploredUserData.followers.includes(ExhibitUId) ? true : false
@@ -205,6 +179,7 @@ const ExploreProfileScreen = (props) => {
       projectPosts,
       projectId,
       projectColumns,
+      index,
       exploredUserData: exploredUserData,
     });
   };
