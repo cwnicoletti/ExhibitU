@@ -2,13 +2,14 @@ import { EvilIcons, Feather } from "@expo/vector-icons";
 import algoliasearch from "algoliasearch";
 import React, { useEffect, useState } from "react";
 import {
-    FlatList, Keyboard,
-
-
-    RefreshControl, SafeAreaView, StyleSheet,
-
-    Text,
-    TouchableWithoutFeedback, View
+  FlatList,
+  Keyboard,
+  RefreshControl,
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  TouchableWithoutFeedback,
+  View,
 } from "react-native";
 import { SearchBar } from "react-native-elements";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
@@ -16,14 +17,7 @@ import { useSelector } from "react-redux";
 import ExploreCard from "../../components/explore/ExploreCard";
 import IoniconsHeaderButton from "../../components/UI/IoniconsHeaderButton";
 
-
 const ExploreCheeringScreen = (props) => {
-  const client = algoliasearch(
-    "EXC8LH5MAX",
-    "2d8cedcaab4cb2b351e90679963fbd92"
-  );
-  const index = client.initIndex("users");
-
   const [returnedIndex, setReturnedIndex] = useState([]);
   const [search, setSearch] = useState("");
   const [isRefreshing, setIsRefreshing] = useState(false);
@@ -38,6 +32,12 @@ const ExploreCheeringScreen = (props) => {
   }, [darkModeValue]);
 
   useEffect(() => {
+    const client = algoliasearch(
+      "EXC8LH5MAX",
+      "2d8cedcaab4cb2b351e90679963fbd92"
+    );
+    const index = client.initIndex("users");
+
     index.search("").then((responses) => {
       const cheering = responses.hits.find(
         (object) => object.objectID === ExhibitUId
@@ -50,6 +50,12 @@ const ExploreCheeringScreen = (props) => {
   }, []);
 
   const returnIndex = (text) => {
+    const client = algoliasearch(
+      "EXC8LH5MAX",
+      "2d8cedcaab4cb2b351e90679963fbd92"
+    );
+    const index = client.initIndex("users");
+
     index.search(text).then((responses) => {
       const cheering = responses.hits.find(
         (object) => object.objectID === ExhibitUId

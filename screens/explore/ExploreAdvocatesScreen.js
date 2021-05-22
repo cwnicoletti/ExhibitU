@@ -2,13 +2,14 @@ import { EvilIcons, Feather } from "@expo/vector-icons";
 import algoliasearch from "algoliasearch";
 import React, { useEffect, useState } from "react";
 import {
-    FlatList, Keyboard,
-
-
-    RefreshControl, SafeAreaView, StyleSheet,
-
-    Text,
-    TouchableWithoutFeedback, View
+  FlatList,
+  Keyboard,
+  RefreshControl,
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  TouchableWithoutFeedback,
+  View,
 } from "react-native";
 import { SearchBar } from "react-native-elements";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
@@ -16,14 +17,7 @@ import { useSelector } from "react-redux";
 import ExploreAdvocatesCard from "../../components/explore/ExploreAdvocatesCard";
 import IoniconsHeaderButton from "../../components/UI/IoniconsHeaderButton";
 
-
 const ExploreAdvocatesScreen = (props) => {
-  const client = algoliasearch(
-    "EXC8LH5MAX",
-    "2d8cedcaab4cb2b351e90679963fbd92"
-  );
-  const index = client.initIndex("users");
-
   const darkModeValue = useSelector((state) => state.user.darkMode);
   const [returnedIndex, setReturnedIndex] = useState([]);
   const [projects, setProjects] = useState({});
@@ -36,6 +30,12 @@ const ExploreAdvocatesScreen = (props) => {
   }, [darkModeValue]);
 
   useEffect(() => {
+    const client = algoliasearch(
+      "EXC8LH5MAX",
+      "2d8cedcaab4cb2b351e90679963fbd92"
+    );
+    const index = client.initIndex("users");
+
     index.search("").then((responses) => {
       const advocates = responses.hits.find(
         (object) => object.objectID === exploredExhibitUId
@@ -52,6 +52,12 @@ const ExploreAdvocatesScreen = (props) => {
   }, []);
 
   const returnIndex = (text) => {
+    const client = algoliasearch(
+      "EXC8LH5MAX",
+      "2d8cedcaab4cb2b351e90679963fbd92"
+    );
+    const index = client.initIndex("users");
+
     index.search(text).then((responses) => {
       const advocates = responses.hits.find(
         (object) => object.objectID === exploredExhibitUId
