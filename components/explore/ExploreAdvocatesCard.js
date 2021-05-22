@@ -1,18 +1,16 @@
 import React from "react";
 import {
-  FlatList, Image,
-
-
-
-  Platform, StyleSheet, Text,
-
-
-
-  TouchableNativeFeedback, TouchableOpacity, View
+  FlatList,
+  Image,
+  Platform,
+  StyleSheet,
+  Text,
+  TouchableNativeFeedback,
+  TouchableOpacity,
+  View,
 } from "react-native";
 import Card from "../UI/Card";
 import ExploreAdvocatesProjectsIcons from "./ExploreAdvocatesProjectsIcons";
-
 
 const ExploreAdvocatesCard = (props) => {
   const projects = props.projects;
@@ -44,7 +42,9 @@ const ExploreAdvocatesCard = (props) => {
             </View>
             <View style={{ ...styles.details, ...props.details }}>
               <Text style={{ ...styles.fullname, ...props.fullNameStyle }}>
-                {props.fullname}
+                {props.fullname.length > 15
+                  ? props.fullname.substring(0, 15) + "..."
+                  : props.fullname}
               </Text>
               {props.jobTitle ? (
                 <Text style={{ ...styles.jobTitle, ...props.jobTitleStyle }}>
