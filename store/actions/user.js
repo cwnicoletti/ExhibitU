@@ -494,7 +494,7 @@ export const followUser = (exploredExhibitUId, ExhibitUId, localId) => {
   return async (dispatch) => {
     const user = { exploredExhibitUId, ExhibitUId, localId };
 
-    await axios.post(
+    axios.post(
       "https://us-central1-showcase-79c28.cloudfunctions.net/followUser",
       user
     );
@@ -517,7 +517,7 @@ export const unfollowUser = (exploredExhibitUId, ExhibitUId, localId) => {
   return async (dispatch) => {
     const user = { exploredExhibitUId, ExhibitUId, localId };
 
-    await axios.post(
+    axios.post(
       "https://us-central1-showcase-79c28.cloudfunctions.net/unfollowUser",
       user
     );
@@ -547,7 +547,7 @@ export const advocateForUser = (
   return async (dispatch) => {
     const user = { exploredExhibitUId, ExhibitUId, localId, projectId };
 
-    await axios.post(
+    axios.post(
       "https://us-central1-showcase-79c28.cloudfunctions.net/advocateForUser",
       user
     );
@@ -577,7 +577,7 @@ export const unadvocateForUser = (
   return async (dispatch) => {
     const user = { exploredExhibitUId, ExhibitUId, localId, projectId };
 
-    await axios.post(
+    axios.post(
       "https://us-central1-showcase-79c28.cloudfunctions.net/unadvocateForUser",
       user
     );
