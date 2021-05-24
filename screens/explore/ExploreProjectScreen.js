@@ -21,10 +21,7 @@ const ExploreProjectScreen = (props) => {
   const darkModeValue = useSelector((state) => state.user.darkMode);
   const localId = useSelector((state) => state.auth.userId);
   const ExhibitUId = useSelector((state) => state.user.ExhibitUId);
-  const index = props.navigation.getParam("index");
-  const [exploredUserData, setExploredUserData] = useState(
-    props.navigation.getParam("exploredUserData")
-  );
+  const exploredUserDataLocal = props.navigation.getParam("exploredUserData");
 
   const exploredProjectData = {
     projectId: props.navigation.getParam("projectId"),
@@ -46,31 +43,20 @@ const ExploreProjectScreen = (props) => {
   }
 
   const [isAdvocating, setIsAdvocating] = useState(
-    exploredUserData.advocates.includes(ExhibitUId) ? true : false
+    exploredUserDataLocal.advocates.includes(ExhibitUId) ? true : false
   );
 
   const advocateUserHandler = useCallback(async () => {
     await setIsLoading(true);
     await dispatch(
       await advocateForUser(
-        exploredUserData.exploredExhibitUId,
+        exploredUserDataLocal.exploredExhibitUId,
         ExhibitUId,
         localId,
         exploredProjectData.projectId
       )
     );
-    if (exploredUserData.text) {
-      index.search(exploredUserData.text).then((responses) => {
-        responses.hits.forEach((hit) => {
-          if (hit.objectID === exploredUserData.exploredExhibitUId) {
-            const exploredUserDataNewState = exploredUserData;
-            exploredUserDataNewState.numberOfAdvocates += 1;
-            setExploredUserData(exploredUserDataNewState);
-            setIsAdvocating(true);
-          }
-        });
-      });
-    }
+    setIsAdvocating(true);
     await setIsLoading(false);
   }, [setIsLoading, advocateForUser, setIsAdvocating]);
 
@@ -78,24 +64,13 @@ const ExploreProjectScreen = (props) => {
     await setIsLoading(true);
     await dispatch(
       await unadvocateForUser(
-        exploredUserData.exploredExhibitUId,
+        exploredUserDataLocal.exploredExhibitUId,
         ExhibitUId,
         localId,
         exploredProjectData.projectId
       )
     );
-    if (exploredUserData.text) {
-      index.search(exploredUserData.text).then((responses) => {
-        responses.hits.forEach((hit) => {
-          if (hit.objectID === exploredUserData.exploredExhibitUId) {
-            const exploredUserDataNewState = exploredUserData;
-            exploredUserDataNewState.numberOfAdvocates -= 1;
-            setExploredUserData(exploredUserDataNewState);
-            setIsAdvocating(false);
-          }
-        });
-      });
-    }
+    setIsAdvocating(false);
     await setIsAdvocating(false);
     await setIsLoading(false);
   }, [setIsLoading, unadvocateForUser, setIsAdvocating]);
@@ -129,7 +104,7 @@ const ExploreProjectScreen = (props) => {
       numberOfCheers,
       numberOfComments,
       caption,
-      exploredUserData: exploredUserData,
+      exploredUserData: exploredUserDataLocal,
       postLinks,
     });
   };
@@ -137,7 +112,7 @@ const ExploreProjectScreen = (props) => {
   useEffect(() => {
     props.navigation.setParams({ ExhibitUId: ExhibitUId });
     props.navigation.setParams({
-      exploredExhibitUId: exploredUserData.exploredExhibitUId,
+      exploredExhibitUId: exploredUserDataLocal.exploredExhibitUId,
     });
     props.navigation.setParams({ advocateFn: advocateUserHandler });
     props.navigation.setParams({ unadvocateFn: unadvocateUserHandler });
@@ -156,8 +131,8 @@ const ExploreProjectScreen = (props) => {
   }, [isAdvocating]);
 
   useEffect(() => {
-    props.navigation.setParams({ exploredUserData: exploredUserData });
-  }, [exploredUserData]);
+    props.navigation.setParams({ exploreData: exploredUserDataLocal });
+  }, [exploredUserDataLocal]);
 
   const topHeader = () => {
     return (
@@ -239,7 +214,6 @@ const ExploreProjectScreen = (props) => {
 ExploreProjectScreen.navigationOptions = (navData) => {
   const darkModeValue = navData.navigation.getParam("darkMode");
   const ExhibitUId = navData.navigation.getParam("ExhibitUId");
-  const exploredUserData = navData.navigation.getParam("exploredUserData");
   const exploredExhibitUId = navData.navigation.getParam("exploredExhibitUId");
   const isAdvocating = navData.navigation.getParam("isAdvocating");
   const isLoading = navData.navigation.getParam("isLoading");
@@ -274,9 +248,7 @@ ExploreProjectScreen.navigationOptions = (navData) => {
           iconName={"ios-arrow-back"}
           color={darkModeValue ? "white" : "black"}
           onPress={() => {
-            navData.navigation.navigate("ExploreProfile", {
-              exploreData: exploredUserData,
-            });
+            navData.navigation.goBack();
           }}
         />
       </HeaderButtons>

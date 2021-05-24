@@ -1,4 +1,3 @@
-import algoliasearch from "algoliasearch";
 import React, { useCallback, useEffect, useState } from "react";
 import {
   ActivityIndicator,
@@ -15,15 +14,10 @@ import ExploreProfileHeader from "../../components/explore/ExploreProfileHeader"
 import ProjectItem from "../../components/projectItems/ProfileProjectItem";
 import IoniconsHeaderButton from "../../components/UI/IoniconsHeaderButton";
 import SimpleLineIconsHeaderButton from "../../components/UI/SimpleLineIconsHeaderButton";
+import useDidMountEffect from "../../helper/useDidMountEffect";
 import { followUser, unfollowUser } from "../../store/actions/user";
 
 const ExploreProfileScreen = (props) => {
-  const client = algoliasearch(
-    "EXC8LH5MAX",
-    "2d8cedcaab4cb2b351e90679963fbd92"
-  );
-  const index = client.initIndex("users");
-
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false);
   const [isRefreshing, setIsRefreshing] = useState(false);
@@ -40,26 +34,14 @@ const ExploreProfileScreen = (props) => {
   const [isfollowing, setIsFollowing] = useState(
     exploredUserData.followers.includes(ExhibitUId) ? true : false
   );
+  const [isAdvocating, setIsAdvocating] = useState(
+    exploredUserData.advocates.includes(ExhibitUId) ? true : false
+  );
 
   let android = null;
   if (Platform.OS === "android") {
     android = true;
   }
-
-  useEffect(() => {
-    if (exploredUserData.text) {
-      index.search(exploredUserData.text).then((responses) => {
-        responses.hits.forEach((hit) => {
-          if (hit.objectID === exploredUserData.exploredExhibitUId) {
-            const exploredUserDataNewState = exploredUserData;
-            exploredUserDataNewState.numberOfAdvocates = hit.numberOfAdvocates;
-            exploredUserDataNewState.advocates = hit.advocates;
-            setExploredUserData(exploredUserDataNewState);
-          }
-        });
-      });
-    }
-  }, [projectsAdvocating]);
 
   const followUserHandler = useCallback(async () => {
     await setIsLoading(true);
@@ -67,13 +49,22 @@ const ExploreProfileScreen = (props) => {
       await followUser(exploredUserData.exploredExhibitUId, ExhibitUId, localId)
     );
     if (exploredUserData.text) {
-      index.search(exploredUserData.text).then((responses) => {
+      const algoliasearch = require("algoliasearch");
+      const client = algoliasearch(
+        "EXC8LH5MAX",
+        "2d8cedcaab4cb2b351e90679963fbd92"
+      );
+      const index = client.initIndex("users");
+
+      await index.search(exploredUserData.text).then((responses) => {
         responses.hits.forEach((hit) => {
           if (hit.objectID === exploredUserData.exploredExhibitUId) {
-            const exploredUserDataNewState = exploredUserData;
-            exploredUserDataNewState.numberOfFollowers += 1;
-            setExploredUserData(exploredUserDataNewState);
-            setIsFollowing(true);
+            exploredUserData.followers = [
+              ...exploredUserData.followers,
+              ExhibitUId,
+            ];
+            exploredUserData.numberOfFollowers += 1;
+            setExploredUserData(exploredUserData);
           }
         });
       });
@@ -92,13 +83,21 @@ const ExploreProfileScreen = (props) => {
       )
     );
     if (exploredUserData.text) {
-      index.search(exploredUserData.text).then((responses) => {
+      const algoliasearch = require("algoliasearch");
+      const client = algoliasearch(
+        "EXC8LH5MAX",
+        "2d8cedcaab4cb2b351e90679963fbd92"
+      );
+      const index = client.initIndex("users");
+
+      await index.search(exploredUserData.text).then((responses) => {
         responses.hits.forEach((hit) => {
           if (hit.objectID === exploredUserData.exploredExhibitUId) {
-            const exploredUserDataNewState = exploredUserData;
-            exploredUserDataNewState.numberOfFollowers -= 1;
-            setExploredUserData(exploredUserDataNewState);
-            setIsFollowing(false);
+            exploredUserData.followers = exploredUserData.followers.filter(
+              (userId) => userId !== ExhibitUId
+            );
+            exploredUserData.numberOfFollowers -= 1;
+            setExploredUserData(exploredUserData);
           }
         });
       });
@@ -109,11 +108,19 @@ const ExploreProfileScreen = (props) => {
 
   const refreshProfile = () => {
     setIsRefreshing(true);
+    const algoliasearch = require("algoliasearch");
+    const client = algoliasearch(
+      "EXC8LH5MAX",
+      "2d8cedcaab4cb2b351e90679963fbd92"
+    );
+    const index = client.initIndex("users");
+
     index.search(exploredUserData.text).then((responses) => {
       responses.hits.forEach((hit) => {
         if (hit.objectID === exploredUserData.exploredExhibitUId) {
           const exploredUserDataNewState = exploredUserData;
           exploredUserDataNewState.profileProjects = hit.profileProjects;
+          exploredUserDataNewState.profileBiography = hit.profileBiography;
           exploredUserDataNewState.following = hit.following;
           exploredUserDataNewState.followers = hit.followers;
           exploredUserDataNewState.advocates = hit.advocates;
@@ -125,6 +132,7 @@ const ExploreProfileScreen = (props) => {
           exploredUserDataNewState.hideFollowers = hit.hideFollowers;
           exploredUserDataNewState.hideAdvocates = hit.hideAdvocates;
           exploredUserDataNewState.profileLinks = hit.profileLinks;
+          exploredUserDataNewState.projectLinks = hit.projectLinks;
           exploredUserDataNewState.profileColumns = hit.profileColumns;
           exploredUserDataNewState.showResume = hit.showResume;
           exploredUserDataNewState.resumeLinkUrl = hit.resumeLinkUrl;
@@ -160,6 +168,54 @@ const ExploreProfileScreen = (props) => {
     props.navigation.setParams({ isfollowing: isfollowing });
   }, [isfollowing]);
 
+  useDidMountEffect(() => {
+    if (isAdvocating) {
+      const algoliasearch = require("algoliasearch");
+      const client = algoliasearch(
+        "EXC8LH5MAX",
+        "2d8cedcaab4cb2b351e90679963fbd92"
+      );
+      const index = client.initIndex("users");
+
+      index.search(exploredUserData.text).then((responses) => {
+        responses.hits.forEach((hit) => {
+          if (hit.objectID === exploredUserData.exploredExhibitUId) {
+            const exploredUserDataNewState = exploredUserData;
+            exploredUserDataNewState.advocates =
+              exploredUserDataNewState.advocates.filter(
+                (user) => user !== ExhibitUId
+              );
+            exploredUserDataNewState.numberOfAdvocates -= 1;
+            setIsAdvocating(false);
+            setExploredUserData(exploredUserDataNewState);
+          }
+        });
+      });
+    } else {
+      const algoliasearch = require("algoliasearch");
+      const client = algoliasearch(
+        "EXC8LH5MAX",
+        "2d8cedcaab4cb2b351e90679963fbd92"
+      );
+      const index = client.initIndex("users");
+
+      index.search(exploredUserData.text).then((responses) => {
+        responses.hits.forEach((hit) => {
+          if (hit.objectID === exploredUserData.exploredExhibitUId) {
+            const exploredUserDataNewState = exploredUserData;
+            exploredUserDataNewState.advocates = [
+              ...exploredUserDataNewState.advocates,
+              ExhibitUId,
+            ];
+            exploredUserDataNewState.numberOfAdvocates += 1;
+            setIsAdvocating(true);
+            setExploredUserData(exploredUserDataNewState);
+          }
+        });
+      });
+    }
+  }, [projectsAdvocating]);
+
   const viewProjectHandler = (
     projectTitle,
     projectCoverPhotoUrl,
@@ -179,7 +235,6 @@ const ExploreProfileScreen = (props) => {
       projectPosts,
       projectId,
       projectColumns,
-      index,
       exploredUserData: exploredUserData,
     });
   };

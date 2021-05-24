@@ -1,5 +1,4 @@
 import { EvilIcons, Feather } from "@expo/vector-icons";
-import algoliasearch from "algoliasearch";
 import React, { useEffect, useRef, useState } from "react";
 import {
   FlatList,
@@ -17,20 +16,24 @@ import useDidMountEffect from "../../helper/useDidMountEffect";
 import { offScreen } from "../../store/actions/user";
 
 const ExploreScreen = (props) => {
-  const client = algoliasearch(
-    "EXC8LH5MAX",
-    "2d8cedcaab4cb2b351e90679963fbd92"
-  );
-  const index = client.initIndex("users");
-
   const dispatch = useDispatch();
   const darkModeValue = useSelector((state) => state.user.darkMode);
+  const ExhibitUId = useSelector((state) => state.user.ExhibitUId);
   const [search, setSearch] = useState("");
   const [returnedIndex, setReturnedIndex] = useState([]);
   const [isRefreshing, setIsRefreshing] = useState(false);
+  const advocating = useSelector((state) => state.user.advocating);
+  const [intialAdvocating, setIntialAdvocating] = useState([]);
+  const following = useSelector((state) => state.user.following);
+  const [intialFollowing, setIntialFollowing] = useState([]);
   const resetScrollExplore = useSelector(
     (state) => state.user.resetScrollExplore
   );
+
+  useEffect(() => {
+    setIntialAdvocating(advocating);
+    setIntialFollowing(following);
+  }, []);
 
   useEffect(() => {
     props.navigation.setParams({ darkMode: darkModeValue });
@@ -39,6 +42,13 @@ const ExploreScreen = (props) => {
   const searchFilterFunction = (text) => {
     setSearch(text);
     if (text) {
+      const algoliasearch = require("algoliasearch");
+      const client = algoliasearch(
+        "EXC8LH5MAX",
+        "2d8cedcaab4cb2b351e90679963fbd92"
+      );
+      const index = client.initIndex("users");
+
       index.search(text).then((responses) => {
         setReturnedIndex(responses.hits);
       });
@@ -51,6 +61,13 @@ const ExploreScreen = (props) => {
     setIsRefreshing(true);
     setSearch(text);
     if (text) {
+      const algoliasearch = require("algoliasearch");
+      const client = algoliasearch(
+        "EXC8LH5MAX",
+        "2d8cedcaab4cb2b351e90679963fbd92"
+      );
+      const index = client.initIndex("users");
+
       index.search(text).then((responses) => {
         setReturnedIndex(responses.hits);
       });
@@ -115,6 +132,78 @@ const ExploreScreen = (props) => {
     });
   };
 
+  const getExlusiveBothSetsDifference = (arr1, arr2) => {
+    const difference = arr1
+      .filter((x) => !arr2.includes(x))
+      .concat(arr2.filter((x) => !arr1.includes(x)));
+    return difference;
+  };
+
+  useDidMountEffect(() => {
+    const difference = getExlusiveBothSetsDifference(
+      intialAdvocating,
+      advocating
+    );
+    if (search) {
+      const algoliasearch = require("algoliasearch");
+      const client = algoliasearch(
+        "EXC8LH5MAX",
+        "2d8cedcaab4cb2b351e90679963fbd92"
+      );
+      const index = client.initIndex("users");
+      index.search(search).then((responses) => {
+        for (const object of responses.hits) {
+          if (object.objectID === difference[0]) {
+            console.log(object.advocates)
+            if (intialAdvocating.length < advocating.length) {
+              object.numberOfAdvocates += 1;
+              object.advocates = [...object.advocates, ExhibitUId];
+            } else {
+              object.numberOfAdvocates -= 1;
+              object.advocates = object.advocates.filter(
+                (userId) => userId !== ExhibitUId
+              );
+            }
+          }
+        }
+        setReturnedIndex(responses.hits);
+      });
+    }
+    setIntialAdvocating(advocating);
+  }, [advocating]);
+
+  useDidMountEffect(() => {
+    const difference = getExlusiveBothSetsDifference(
+      intialFollowing,
+      following
+    );
+    if (search) {
+      const algoliasearch = require("algoliasearch");
+      const client = algoliasearch(
+        "EXC8LH5MAX",
+        "2d8cedcaab4cb2b351e90679963fbd92"
+      );
+      const index = client.initIndex("users");
+      index.search(search).then((responses) => {
+        for (const object of responses.hits) {
+          if (object.objectID === difference[0]) {
+            if (intialFollowing.length < following.length) {
+              object.numberOfFollowers += 1;
+              object.followers = [...object.followers, ExhibitUId];
+            } else {
+              object.numberOfFollowers -= 1;
+              object.followers = object.followers.filter(
+                (userId) => userId !== ExhibitUId
+              );
+            }
+          }
+        }
+        setReturnedIndex(responses.hits);
+      });
+    }
+    setIntialFollowing(following);
+  }, [following]);
+
   const flatlistExplore = useRef();
   useDidMountEffect(() => {
     flatlistExplore.current.scrollToOffset({ animated: true, offset: 0 });
@@ -166,6 +255,7 @@ const ExploreScreen = (props) => {
         </View>
       </TouchableWithoutFeedback>
       <FlatList
+        extraData={returnedIndex}
         data={returnedIndex}
         refreshControl={
           <RefreshControl
