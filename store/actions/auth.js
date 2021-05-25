@@ -3,7 +3,6 @@ import axios from "axios";
 import { getUserData } from "./user";
 global.Buffer = global.Buffer || require("buffer").Buffer;
 
-
 export const AUTHENTICATE = "AUTHENTICATE";
 export const LOGOUT = "LOGOUT";
 
@@ -119,12 +118,10 @@ export const login = (email, password) => {
           const postPhotoBase64 = await getBase64FromUrl(
             profileProjects[k].projectPosts[id]["postPhotoUrl"]
           );
-          profileProjects[k].projectPosts[id][
-            "postPhotoBase64"
-          ] = postPhotoBase64;
-          profileProjects[k].projectPosts[id][
-            "profilePictureBase64"
-          ] = profilePictureBase64;
+          profileProjects[k].projectPosts[id]["postPhotoBase64"] =
+            postPhotoBase64;
+          profileProjects[k].projectPosts[id]["profilePictureBase64"] =
+            profilePictureBase64;
         }
       }
     }
@@ -141,6 +138,10 @@ export const login = (email, password) => {
           userFeed[key].ExhibitUId === getLoginResponse.data.docData.ExhibitUId
         ) {
           userFeed[key]["profilePictureBase64"] = profilePictureBase64;
+        } else {
+          userFeed[key]["profilePictureBase64"] = await getBase64FromUrl(
+            userFeed[key]["profilePictureUrl"]
+          );
         }
         const feedProjectKeys = Object.keys(userFeed[key].profileProjects);
         for (const projectKey of feedProjectKeys) {
@@ -150,9 +151,8 @@ export const login = (email, password) => {
           const projectCoverPhotoBase64 = await getBase64FromUrl(
             userFeed[key].profileProjects[projectKey]["projectCoverPhotoUrl"]
           );
-          userFeed[key].profileProjects[projectKey][
-            "projectCoverPhotoBase64"
-          ] = projectCoverPhotoBase64;
+          userFeed[key].profileProjects[projectKey]["projectCoverPhotoBase64"] =
+            projectCoverPhotoBase64;
           for (const postKey of postKeys) {
             const postPhotoBase64 = await getBase64FromUrl(
               userFeed[key].profileProjects[projectKey].projectPosts[postKey][
