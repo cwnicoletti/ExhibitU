@@ -12,7 +12,7 @@ const FeedProjectScreen = (props) => {
   const ExhibitUId = useSelector((state) => state.user.ExhibitUId);
   const projectId = props.navigation.getParam("projectId");
   let userData = props.navigation.getParam("userData");
-  userData.projectLinks ? userData.projectLinks : {};
+  userData.projectLinks = userData.projectLinks ? userData.projectLinks : {};
   userData =
     userData.ExhibitUId === ExhibitUId
       ? {
