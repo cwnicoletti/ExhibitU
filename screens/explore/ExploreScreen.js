@@ -154,7 +154,6 @@ const ExploreScreen = (props) => {
       index.search(search).then((responses) => {
         for (const object of responses.hits) {
           if (object.objectID === difference[0]) {
-            console.log(object.advocates)
             if (intialAdvocating.length < advocating.length) {
               object.numberOfAdvocates += 1;
               object.advocates = [...object.advocates, ExhibitUId];

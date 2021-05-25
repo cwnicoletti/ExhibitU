@@ -6,7 +6,6 @@ import FeedProfileHeader from "../../components/feed/FeedProfileHeader";
 import ProjectItem from "../../components/projectItems/ProfileProjectItem";
 import IoniconsHeaderButton from "../../components/UI/IoniconsHeaderButton";
 
-
 const FeedProfileScreen = (props) => {
   const darkModeValue = useSelector((state) => state.user.darkMode);
   let userData = props.navigation.getParam("userData");

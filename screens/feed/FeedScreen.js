@@ -1,20 +1,17 @@
 import { AntDesign } from "@expo/vector-icons";
 import React, { useEffect, useRef, useState } from "react";
 import {
-    FlatList,
-
-
-
-    RefreshControl, StatusBar, StyleSheet,
-
-
-    Text, View
+  FlatList,
+  RefreshControl,
+  StatusBar,
+  StyleSheet,
+  Text,
+  View,
 } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import FeedItem from "../../components/feed/FeedItem";
 import useDidMountEffect from "../../helper/useDidMountEffect";
 import { getUserFeed, offScreen } from "../../store/actions/user";
-
 
 const UserFeedScreen = (props) => {
   const dispatch = useDispatch();
@@ -25,18 +22,23 @@ const UserFeedScreen = (props) => {
   const ExhibitUId = useSelector((state) => state.user.ExhibitUId);
   const localId = useSelector((state) => state.auth.userId);
   const userFeed = useSelector((state) => state.user.userFeed);
+  const [userFeedState, setUserFeedState] = useState([]);
   const profilePictureBase64 = useSelector(
     (state) => state.user.profilePictureBase64
   );
   const resetScrollFeed = useSelector((state) => state.user.resetScrollFeed);
 
-  // Sort the array based on the second element
-  Object.values(userFeed).sort((first, second) => {
-    return (
-      second["postDateCreated"]["_seconds"] -
-      first["postDateCreated"]["_seconds"]
+  useEffect(() => {
+    // Sort the array based on the second element
+    setUserFeedState(
+      Object.values(userFeed).sort((first, second) => {
+        return (
+          second["postDateCreated"]["_seconds"] -
+          first["postDateCreated"]["_seconds"]
+        );
+      })
     );
-  });
+  }, [userFeed]);
 
   useEffect(() => {
     props.navigation.setParams({ darkMode: darkModeValue });
@@ -58,6 +60,7 @@ const UserFeedScreen = (props) => {
     hideFollowers,
     hideAdvocates,
     profileLinks,
+    projectLinks,
     postLinks,
     profileColumns,
     postDateCreated
@@ -80,6 +83,7 @@ const UserFeedScreen = (props) => {
         hideFollowers,
         hideAdvocates,
         profileLinks,
+        projectLinks,
         postLinks,
         profileColumns,
         postDateCreated,
@@ -104,7 +108,6 @@ const UserFeedScreen = (props) => {
 
   const viewProfileHandler = (
     ExhibitUId,
-    projectId,
     fullname,
     username,
     jobTitle,
@@ -118,6 +121,7 @@ const UserFeedScreen = (props) => {
     hideFollowers,
     hideAdvocates,
     profileLinks,
+    projectLinks,
     postLinks,
     profileColumns,
     postDateCreated
@@ -139,6 +143,7 @@ const UserFeedScreen = (props) => {
         hideFollowers,
         hideAdvocates,
         profileLinks,
+        projectLinks,
         postLinks,
         profileColumns,
         postDateCreated,
@@ -206,7 +211,7 @@ const UserFeedScreen = (props) => {
       <StatusBar barStyle={setStatusBarStyle(darkModeValue)} />
       <FlatList
         extraData={profilePictureBase64}
-        data={Object.values(userFeed)}
+        data={userFeedState}
         ref={flatlistFeed}
         refreshControl={
           <RefreshControl
@@ -297,6 +302,7 @@ const UserFeedScreen = (props) => {
                 itemData.item.hideFollowers,
                 itemData.item.hideAdvocates,
                 itemData.item.profileLinks,
+                itemData.item.projectLinks,
                 itemData.item.postLinks,
                 itemData.item.profileColumns,
                 itemData.item.postDateCreated._seconds
@@ -313,7 +319,6 @@ const UserFeedScreen = (props) => {
             onSelectProfile={() => {
               viewProfileHandler(
                 itemData.item.ExhibitUId,
-                itemData.item.projectId,
                 itemData.item.fullname,
                 itemData.item.username,
                 itemData.item.jobTitle,
@@ -327,6 +332,7 @@ const UserFeedScreen = (props) => {
                 itemData.item.hideFollowers,
                 itemData.item.hideAdvocates,
                 itemData.item.profileLinks,
+                itemData.item.projectLinks,
                 itemData.item.postLinks,
                 itemData.item.profileColumns,
                 itemData.item.postDateCreated._seconds

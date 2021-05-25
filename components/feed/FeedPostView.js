@@ -55,8 +55,6 @@ const FeedPostView = (props) => {
   const ExhibitUId = useSelector((state) => state.user.ExhibitUId);
   const posterExhibitUId = props.posterExhibitUId;
   const currentUsersPost = ExhibitUId === posterExhibitUId ? true : false;
-  console.log(currentUsersPost);
-  console.log(showCheering);
   const fullname = props.fullname;
   const links = props.links;
   const postId = props.postId;

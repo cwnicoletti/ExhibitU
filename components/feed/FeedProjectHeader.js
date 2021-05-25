@@ -4,7 +4,6 @@ import { FlatList, Image, StyleSheet, Text, View } from "react-native";
 import { useSelector } from "react-redux";
 import LinkButton from "../UI/LinkButton";
 
-
 const FeedProjectHeader = (props) => {
   const darkModeValue = useSelector((state) => state.user.darkMode);
   const links = props.links;

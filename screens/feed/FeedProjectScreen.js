@@ -7,13 +7,47 @@ import FontAwesomeHeaderButton from "../../components/UI/FontAwesomeHeaderButton
 import IoniconsHeaderButton from "../../components/UI/IoniconsHeaderButton";
 import ProjectPictures from "../../components/UI/ProjectPictures";
 
-
 const FeedProjectScreen = (props) => {
   const darkModeValue = useSelector((state) => state.user.darkMode);
-  const userData = props.navigation.getParam("userData");
-  const projectId = props.navigation.getParam("projectId");
-
   const ExhibitUId = useSelector((state) => state.user.ExhibitUId);
+  const projectId = props.navigation.getParam("projectId");
+  let userData = props.navigation.getParam("userData");
+  userData.projectLinks ? userData.projectLinks : {};
+  userData =
+    userData.ExhibitUId === ExhibitUId
+      ? {
+          ...userData,
+          profilePictureBase64: useSelector(
+            (state) => state.user.profilePictureBase64
+          )
+            ? useSelector((state) => state.user.profilePictureBase64)
+            : props.navigation.getParam("profilePictureUrl"),
+          profileColumns: useSelector((state) => state.user.profileColumns),
+          ExhibitUId: useSelector((state) => state.user.ExhibitUId),
+          fullname: useSelector((state) => state.user.fullname),
+          username: useSelector((state) => state.user.username),
+          jobTitle: useSelector((state) => state.user.jobTitle),
+          profileBiography: useSelector((state) => state.user.profileBiography),
+          profileLinks: useSelector((state) => state.user.profileLinks),
+          profileProjects: useSelector((state) => state.user.profileProjects)
+            ? useSelector((state) => state.user.profileProjects)
+            : props.navigation.getParam("profileProjects"),
+          numberOfAdvocates: useSelector(
+            (state) => state.user.numberOfAdvocates
+          ),
+          numberOfFollowers: useSelector(
+            (state) => state.user.numberOfFollowers
+          ),
+          numberOfFollowing: useSelector(
+            (state) => state.user.numberOfFollowing
+          ),
+          showResumeValue: useSelector((state) => state.user.showResumeValue),
+          resumeLink: useSelector((state) => state.user.resumeLink),
+          hideFollowing: useSelector((state) => state.user.hideFollowing),
+          hideFollowers: useSelector((state) => state.user.hideFollowers),
+          hideAdvocates: useSelector((state) => state.user.hideAdvocates),
+        }
+      : userData;
 
   const project = Object.values(userData.profileProjects).find(
     (project) => project.projectId === projectId
@@ -106,7 +140,7 @@ const FeedProjectScreen = (props) => {
         }}
         title={project.projectTitle}
         description={project.projectDescription}
-        links={project.projectLinks}
+        links={userData.projectLinks}
       />
     );
   };
