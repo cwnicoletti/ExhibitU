@@ -127,53 +127,53 @@ export const login = (email, password) => {
     }
 
     let userFeed = await getLoginResponse.data.docData.userFeed;
-    if (userFeed) {
-      const feedKeys = Object.keys(userFeed);
-      for (const key of feedKeys) {
-        const postPhotoBase64 = await getBase64FromUrl(
-          userFeed[key]["postPhotoUrl"]
-        );
-        userFeed[key]["postPhotoBase64"] = postPhotoBase64;
-        if (
-          userFeed[key].ExhibitUId === getLoginResponse.data.docData.ExhibitUId
-        ) {
-          userFeed[key]["profilePictureBase64"] = profilePictureBase64;
-        } else {
-          userFeed[key]["profilePictureBase64"] = await getBase64FromUrl(
-            userFeed[key]["profilePictureUrl"]
-          );
-        }
-        const feedProjectKeys = Object.keys(userFeed[key].profileProjects);
-        for (const projectKey of feedProjectKeys) {
-          const postKeys = Object.keys(
-            userFeed[key].profileProjects[projectKey].projectPosts
-          );
-          const projectCoverPhotoBase64 = await getBase64FromUrl(
-            userFeed[key].profileProjects[projectKey]["projectCoverPhotoUrl"]
-          );
-          userFeed[key].profileProjects[projectKey]["projectCoverPhotoBase64"] =
-            projectCoverPhotoBase64;
-          for (const postKey of postKeys) {
-            const postPhotoBase64 = await getBase64FromUrl(
-              userFeed[key].profileProjects[projectKey].projectPosts[postKey][
-                "postPhotoUrl"
-              ]
-            );
-            userFeed[key].profileProjects[projectKey].projectPosts[postKey][
-              "postPhotoBase64"
-            ] = postPhotoBase64;
-            if (
-              userFeed[key].ExhibitUId ===
-              getLoginResponse.data.docData.ExhibitUId
-            ) {
-              userFeed[key].profileProjects[projectKey].projectPosts[postKey][
-                "profilePictureBase64"
-              ] = profilePictureBase64;
-            }
-          }
-        }
-      }
-    }
+    // if (userFeed) {
+    //   const feedKeys = Object.keys(userFeed);
+    //   for (const key of feedKeys) {
+    //     const postPhotoBase64 = await getBase64FromUrl(
+    //       userFeed[key]["postPhotoUrl"]
+    //     );
+    //     userFeed[key]["postPhotoBase64"] = postPhotoBase64;
+    //     if (
+    //       userFeed[key].ExhibitUId === getLoginResponse.data.docData.ExhibitUId
+    //     ) {
+    //       userFeed[key]["profilePictureBase64"] = profilePictureBase64;
+    //     } else {
+    //       userFeed[key]["profilePictureBase64"] = await getBase64FromUrl(
+    //         userFeed[key]["profilePictureUrl"]
+    //       );
+    //     }
+    //     const feedProjectKeys = Object.keys(userFeed[key].profileProjects);
+    //     for (const projectKey of feedProjectKeys) {
+    //       const postKeys = Object.keys(
+    //         userFeed[key].profileProjects[projectKey].projectPosts
+    //       );
+    //       const projectCoverPhotoBase64 = await getBase64FromUrl(
+    //         userFeed[key].profileProjects[projectKey]["projectCoverPhotoUrl"]
+    //       );
+    //       userFeed[key].profileProjects[projectKey]["projectCoverPhotoBase64"] =
+    //         projectCoverPhotoBase64;
+    //       for (const postKey of postKeys) {
+    //         const postPhotoBase64 = await getBase64FromUrl(
+    //           userFeed[key].profileProjects[projectKey].projectPosts[postKey][
+    //             "postPhotoUrl"
+    //           ]
+    //         );
+    //         userFeed[key].profileProjects[projectKey].projectPosts[postKey][
+    //           "postPhotoBase64"
+    //         ] = postPhotoBase64;
+    //         if (
+    //           userFeed[key].ExhibitUId ===
+    //           getLoginResponse.data.docData.ExhibitUId
+    //         ) {
+    //           userFeed[key].profileProjects[projectKey].projectPosts[postKey][
+    //             "profilePictureBase64"
+    //           ] = profilePictureBase64;
+    //         }
+    //       }
+    //     }
+    //   }
+    // }
 
     const projectTempCoverPhotoBase64 = await getBase64FromUrl(
       getLoginResponse.data.docData.projectTempCoverPhotoUrl
@@ -211,7 +211,9 @@ export const login = (email, password) => {
       getLoginResponse.data.docData.projectsAdvocating,
       getLoginResponse.data.docData.cheeredPosts,
       profileProjects ? profileProjects : {},
-      getLoginResponse.data.docData.profileLinks,
+      getLoginResponse.data.docData.profileLinks
+        ? getLoginResponse.data.docData.profileLinks
+        : {},
       userFeed ? userFeed : {},
       getLoginResponse.data.docData.darkMode,
       getLoginResponse.data.docData.showResume,
