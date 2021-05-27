@@ -8,13 +8,15 @@ import IoniconsHeaderButton from "../../components/UI/IoniconsHeaderButton";
 
 const FeedProfileScreen = (props) => {
   const darkModeValue = useSelector((state) => state.user.darkMode);
+  const ExhibitUId = useSelector((state) => state.user.ExhibitUId);
   let userData = props.navigation.getParam("userData");
   userData.profileLinks = userData.profileLinks ? userData.profileLinks : {};
+  userData.projectLinks = userData.projectLinks ? userData.projectLinks : {};
 
-  const ExhibitUId = useSelector((state) => state.user.ExhibitUId);
   userData =
     userData.ExhibitUId === ExhibitUId
       ? {
+          ...userData,
           profilePictureBase64: useSelector(
             (state) => state.user.profilePictureBase64
           )
