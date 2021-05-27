@@ -114,6 +114,7 @@ const UserFeedScreen = (props) => {
     profileBiography,
     profileProjects,
     profilePictureBase64,
+    profilePictureUrl,
     numberOfFollowers,
     numberOfFollowing,
     numberOfAdvocates,
@@ -136,6 +137,7 @@ const UserFeedScreen = (props) => {
         profileBiography,
         profileProjects,
         profilePictureBase64,
+        profilePictureUrl,
         numberOfFollowers,
         numberOfFollowing,
         numberOfAdvocates,
@@ -224,8 +226,16 @@ const UserFeedScreen = (props) => {
         keyExtractor={(item) => item.postId}
         renderItem={(itemData) => (
           <FeedItem
-            image={itemData.item.postPhotoBase64}
-            profileImageSource={itemData.item.profilePictureBase64}
+            image={
+              itemData.item.postPhotoBase64
+                ? itemData.item.postPhotoBase64
+                : itemData.item.postPhotoUrl
+            }
+            profileImageSource={
+              itemData.item.profilePictureBase64
+                ? itemData.item.profilePictureBase64
+                : itemData.item.profilePictureUrl
+            }
             projectTitle={itemData.item.projectTitle}
             caption={itemData.item.caption}
             numberOfCheers={itemData.item.numberOfCheers}
@@ -325,6 +335,7 @@ const UserFeedScreen = (props) => {
                 itemData.item.profileBiography,
                 itemData.item.profileProjects,
                 itemData.item.profilePictureBase64,
+                itemData.item.profilePictureUrl,
                 itemData.item.numberOfFollowers,
                 itemData.item.numberOfFollowing,
                 itemData.item.numberOfAdvocates,
