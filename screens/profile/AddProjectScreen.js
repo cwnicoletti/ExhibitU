@@ -528,7 +528,7 @@ const AddProjectScreen = (props) => {
                   margin: 10,
                 }}
               >
-                Loading project cover photo...
+                Loading exhibit cover photo...
               </Text>
               <ActivityIndicator size="small" color="white" />
             </View>
@@ -725,7 +725,7 @@ const AddProjectScreen = (props) => {
                       : "#007AFF",
                 }}
               >
-                Create project
+                Create exhibit
               </Text>
               <Ionicons
                 name="ios-checkmark"
@@ -755,7 +755,7 @@ const AddProjectScreen = (props) => {
                 margin: 10,
               }}
             >
-              Creating project...
+              Creating exhibit...
             </Text>
             <ActivityIndicator size="small" color="white" />
           </View>
