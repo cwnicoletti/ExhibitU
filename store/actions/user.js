@@ -267,7 +267,7 @@ export const uploadUpdateUserProfile = (
       uploadForm
     );
 
-    AsyncStorage.getItem("userDocData").then(async (data) => {
+    await AsyncStorage.getItem("userDocData").then(async (data) => {
       data = JSON.parse(data);
       data.fullname = fullname;
       data.jobTitle = jobTitle;
@@ -333,7 +333,7 @@ export const uploadNewProject = (
       "https://us-central1-showcase-79c28.cloudfunctions.net/uploadNewProject",
       uploadForm
     );
-    AsyncStorage.getItem("userDocData").then(async (data) => {
+    await AsyncStorage.getItem("userDocData").then(async (data) => {
       data = JSON.parse(data);
       data.profileProjects = {
         ...data.profileProjects,
@@ -410,7 +410,7 @@ export const uploadUpdatedProject = (
       uploadForm
     );
 
-    AsyncStorage.getItem("userDocData").then(async (data) => {
+    await AsyncStorage.getItem("userDocData").then(async (data) => {
       data = JSON.parse(data);
       data.profileProjects = {
         ...data.profileProjects,
@@ -447,7 +447,7 @@ export const uploadRemoveProject = (ExhibitUId, localId, projectId) => {
       uploadForm
     );
 
-    AsyncStorage.getItem("userDocData").then(async (data) => {
+    await AsyncStorage.getItem("userDocData").then(async (data) => {
       data = JSON.parse(data);
       const postIds = Object.keys(data.profileProjects[projectId].projectPosts);
       delete data.profileProjects[projectId];
@@ -1513,7 +1513,7 @@ export const changeProfileNumberOfColumns = (
       picture
     );
 
-    AsyncStorage.getItem("userDocData").then(async (data) => {
+    await AsyncStorage.getItem("userDocData").then(async (data) => {
       data = JSON.parse(data);
       data.profileColumns = number;
 
@@ -1547,7 +1547,7 @@ export const changeProjectNumberOfColumns = (
       picture
     );
 
-    AsyncStorage.getItem("userDocData").then(async (data) => {
+    await AsyncStorage.getItem("userDocData").then(async (data) => {
       data = JSON.parse(data);
       data.profileProjects = {
         ...data.profileProjects,
@@ -1635,7 +1635,7 @@ export const setDarkMode = (localId, ExhibitUId, value) => {
       darkModeData
     );
 
-    AsyncStorage.getItem("userDocData").then(async (data) => {
+    await AsyncStorage.getItem("userDocData").then(async (data) => {
       data = JSON.parse(data);
       data.darkMode = value;
       await AsyncStorage.setItem("userDocData", JSON.stringify(data));
@@ -1659,7 +1659,7 @@ export const setShowResume = (localId, ExhibitUId, value) => {
       showResumeData
     );
 
-    AsyncStorage.getItem("userDocData").then(async (data) => {
+    await AsyncStorage.getItem("userDocData").then(async (data) => {
       data = JSON.parse(data);
       data.showResume = value;
       await AsyncStorage.setItem("userDocData", JSON.stringify(data));
@@ -1707,7 +1707,7 @@ export const setHideFollowing = (localId, ExhibitUId, value) => {
       hideFollowingData
     );
 
-    AsyncStorage.getItem("userDocData").then(async (data) => {
+    await AsyncStorage.getItem("userDocData").then(async (data) => {
       data = JSON.parse(data);
       data.hideFollowing = value;
       await AsyncStorage.setItem("userDocData", JSON.stringify(data));
@@ -1731,7 +1731,7 @@ export const setHideFollowers = (localId, ExhibitUId, value) => {
       hideFollowersData
     );
 
-    AsyncStorage.getItem("userDocData").then(async (data) => {
+    await AsyncStorage.getItem("userDocData").then(async (data) => {
       data = JSON.parse(data);
       data.hideFollowers = value;
       await AsyncStorage.setItem("userDocData", JSON.stringify(data));
@@ -1755,7 +1755,7 @@ export const setHideAdvocates = (localId, ExhibitUId, value) => {
       hideAdvocatesData
     );
 
-    AsyncStorage.getItem("userDocData").then(async (data) => {
+    await AsyncStorage.getItem("userDocData").then(async (data) => {
       data = JSON.parse(data);
       data.hideAdvocates = value;
       await AsyncStorage.setItem("userDocData", JSON.stringify(data));
