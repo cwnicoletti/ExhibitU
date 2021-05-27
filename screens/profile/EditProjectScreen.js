@@ -2,18 +2,18 @@ import { Ionicons, Octicons } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
 import React, { useCallback, useEffect, useReducer, useState } from "react";
 import {
-    ActivityIndicator,
-    FlatList, Image,
-
-
-
-    KeyboardAvoidingView, LogBox, Platform, SafeAreaView, StyleSheet,
-
-    Text,
-
-
-
-    TouchableNativeFeedback, TouchableOpacity, View
+  ActivityIndicator,
+  FlatList,
+  Image,
+  KeyboardAvoidingView,
+  LogBox,
+  Platform,
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  TouchableNativeFeedback,
+  TouchableOpacity,
+  View,
 } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
@@ -22,12 +22,12 @@ import DefaultPicture from "../../assets/Icons/picture.svg";
 import Input from "../../components/UI/Input";
 import IoniconsHeaderButton from "../../components/UI/IoniconsHeaderButton";
 import LinkButton from "../../components/UI/LinkButton";
+import useDidMountEffect from "../../helper/useDidMountEffect";
 import {
-    uploadChangeProjectCoverPicture, uploadRemoveProject, uploadUpdatedProject
+  uploadChangeProjectCoverPicture,
+  uploadRemoveProject,
+  uploadUpdatedProject,
 } from "../../store/actions/user";
-
-
-
 
 const FORM_INPUT_UPDATE = "FORM_INPUT_UPDATE";
 const FORM_INPUT_LINKS_UPDATE = "FORM_INPUT_LINKS_UPDATE";
@@ -160,8 +160,8 @@ const EditProjectScreen = (props) => {
   const projectId = props.navigation.getParam("projectId");
   const projectDescription = props.navigation.getParam("projectDescription");
   const projectCoverPhotoId = props.navigation.getParam("projectCoverPhotoId");
-  const projectCoverPhotoUrl = props.navigation.getParam(
-    "projectCoverPhotoUrl"
+  const [projectCoverPhotoUrl, setProjectCoverPhotoUrl] = useState(
+    props.navigation.getParam("projectCoverPhotoUrl")
   );
   const projectTempCoverPhotoUrl = useSelector(
     (state) => state.user.projectTempCoverPhotoUrl
@@ -319,6 +319,10 @@ const EditProjectScreen = (props) => {
       linkNum: linkNumber,
     });
   };
+
+  useDidMountEffect(() => {
+    setProjectCoverPhotoUrl(projectTempCoverPhotoUrl);
+  }, [projectTempCoverPhotoUrl]);
 
   return (
     <KeyboardAvoidingView

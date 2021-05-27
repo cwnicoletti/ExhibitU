@@ -721,6 +721,9 @@ export const uploadChangeProjectCoverPicture = (
 
     await AsyncStorage.getItem("userDocData").then(async (data) => {
       data = JSON.parse(data);
+      data.projectTempCoverPhotoId = uploadedPictureUrlResponse.data.photoId;
+      data.projectTempCoverPhotoUrl = uploadedPictureUrlResponse.data.url;
+      data.projectTempCoverPhotoBase64 = base64;
       data.profileProjects = {
         ...data.profileProjects,
         [projectId]: {

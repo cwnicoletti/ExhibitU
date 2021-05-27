@@ -1,232 +1,52 @@
 import {
-    ADD_TEMP_POST_PICTURE, ADD_TEMP_PROJECT_PICTURE,
-
-
-
-    ADD_USER_POST, ADD_USER_PROJECT,
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    ADVOCATE_FOR_USER,
-
-
-
-    CHANGE_PROFILE_COLUMNS, CHANGE_PROFILE_PICTURE,
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    CHANGE_PROJECT_COLUMNS, CHANGE_PROJECT_PICTURE,
-
-
-
-
-
-
-
-
-    CHEER_OWN_FEED_POST,
-    CHEER_OWN_PROFILE_POST, CHEER_POST,
-    CHEER_UPDATE_POSTS, CLEAR_TEMP_POST_PICTURE, CLEAR_TEMP_PROJECT_PICTURE, FOLLOW_USER,
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    GET_SWITCHES, GET_UPDATES, GET_USER_DATA,
-    GET_USER_FEED,
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    HIDE_ADVOCATES, HIDE_FOLLOWERS, HIDE_FOLLOWING, HIDE_PROFILE_FOOTER, OFF_SCREEN, ON_SCREEN, REFRESH_PROFILE, REMOVE_USER_POST, REMOVE_USER_PROJECT,
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    RESET_SCROLL,
-
-
-
-    RETURN_FROM_SHOWCASING,
-
-    SET_DARKMODE, SHOWCASE_PROFILE,
-
-
-
-
-    SHOW_CHEERING, SHOW_RESUME, UNADVOCATE_FOR_USER, UNCHEER_OWN_FEED_POST,
-    UNCHEER_OWN_PROFILE_POST,
-    UNCHEER_POST,
-    UNCHEER_UPDATE_POSTS, UNFOLLOW_USER,
-
-
-
-
-
-
-
-    UPDATE_ALL_POSTS, UPDATE_PROFILE_LINKS,
-
-
-    UPDATE_PROJECT_LINKS, UPDATE_USER_PROFILE,
-
-
-    UPDATE_USER_PROJECT,
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    UPLOAD_FEEDBACK,
-    UPLOAD_REPORT_BUG
+  ADD_TEMP_POST_PICTURE,
+  ADD_TEMP_PROJECT_PICTURE,
+  ADD_USER_POST,
+  ADD_USER_PROJECT,
+  ADVOCATE_FOR_USER,
+  CHANGE_PROFILE_COLUMNS,
+  CHANGE_PROFILE_PICTURE,
+  CHANGE_PROJECT_COLUMNS,
+  CHANGE_PROJECT_PICTURE,
+  CHEER_OWN_FEED_POST,
+  CHEER_OWN_PROFILE_POST,
+  CHEER_POST,
+  CHEER_UPDATE_POSTS,
+  CLEAR_TEMP_POST_PICTURE,
+  CLEAR_TEMP_PROJECT_PICTURE,
+  FOLLOW_USER,
+  GET_SWITCHES,
+  GET_UPDATES,
+  GET_USER_DATA,
+  GET_USER_FEED,
+  HIDE_ADVOCATES,
+  HIDE_FOLLOWERS,
+  HIDE_FOLLOWING,
+  HIDE_PROFILE_FOOTER,
+  OFF_SCREEN,
+  ON_SCREEN,
+  REFRESH_PROFILE,
+  REMOVE_USER_POST,
+  REMOVE_USER_PROJECT,
+  RESET_SCROLL,
+  RETURN_FROM_SHOWCASING,
+  SET_DARKMODE,
+  SHOWCASE_PROFILE,
+  SHOW_CHEERING,
+  SHOW_RESUME,
+  UNADVOCATE_FOR_USER,
+  UNCHEER_OWN_FEED_POST,
+  UNCHEER_OWN_PROFILE_POST,
+  UNCHEER_POST,
+  UNCHEER_UPDATE_POSTS,
+  UNFOLLOW_USER,
+  UPDATE_ALL_POSTS,
+  UPDATE_PROFILE_LINKS,
+  UPDATE_PROJECT_LINKS,
+  UPDATE_USER_PROFILE,
+  UPDATE_USER_PROJECT,
+  UPLOAD_FEEDBACK,
+  UPLOAD_REPORT_BUG,
 } from "../actions/user";
 
 const intialState = {
@@ -382,13 +202,16 @@ export default (state = intialState, action) => {
     case CHANGE_PROJECT_PICTURE:
       return {
         ...state,
+        projectTempCoverPhotoUrl: action.projectCoverPhotoUrl,
+        projectTempCoverPhotoId: action.projectCoverPhotoId,
+        projectTempCoverPhotoBase64: action.projectCoverPhotoBase64,
         profileProjects: {
           ...state.profileProjects,
           [action.projectId]: {
             ...state.profileProjects[action.projectId],
             projectCoverPhotoUrl: action.projectCoverPhotoUrl,
+            projectCoverPhotoBase64: action.projectCoverPhotoBase64,
             projectCoverPhotoId: action.projectCoverPhotoId,
-            projectTempCoverPhotoBase64: action.projectTempCoverPhotoBase64,
           },
         },
       };
