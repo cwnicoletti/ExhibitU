@@ -983,38 +983,38 @@ export const getUserFeed = (localId, ExhibitUId) => {
 
     let returnData = uploadedUserPost.data.returnData;
 
-    if (returnData) {
-      for (const key of Object.keys(returnData)) {
-        const postPhotoBase64 = await getBase64FromUrl(
-          returnData[key]["postPhotoUrl"]
-        );
-        const profilePictureBase64 = await getBase64FromUrl(
-          returnData[key]["profilePictureUrl"]
-        );
-        returnData[key]["postPhotoBase64"] = postPhotoBase64;
-        returnData[key]["profilePictureBase64"] = profilePictureBase64;
-        for (const projectKey of Object.keys(returnData[key].profileProjects)) {
-          const projectCoverPhotoBase64 = await getBase64FromUrl(
-            returnData[key].profileProjects[projectKey]["projectCoverPhotoUrl"]
-          );
-          returnData[key].profileProjects[projectKey][
-            "projectCoverPhotoBase64"
-          ] = projectCoverPhotoBase64;
-          for (const postKey of Object.keys(
-            returnData[key].profileProjects[projectKey].projectPosts
-          )) {
-            const postPhotoBase64 = await getBase64FromUrl(
-              returnData[key].profileProjects[projectKey].projectPosts[postKey][
-                "postPhotoUrl"
-              ]
-            );
-            returnData[key].profileProjects[projectKey].projectPosts[postKey][
-              "postPhotoBase64"
-            ] = postPhotoBase64;
-          }
-        }
-      }
-    }
+    // if (returnData) {
+    //   for (const key of Object.keys(returnData)) {
+    //     const postPhotoBase64 = await getBase64FromUrl(
+    //       returnData[key]["postPhotoUrl"]
+    //     );
+    //     const profilePictureBase64 = await getBase64FromUrl(
+    //       returnData[key]["profilePictureUrl"]
+    //     );
+    //     returnData[key]["postPhotoBase64"] = postPhotoBase64;
+    //     returnData[key]["profilePictureBase64"] = profilePictureBase64;
+    //     for (const projectKey of Object.keys(returnData[key].profileProjects)) {
+    //       const projectCoverPhotoBase64 = await getBase64FromUrl(
+    //         returnData[key].profileProjects[projectKey]["projectCoverPhotoUrl"]
+    //       );
+    //       returnData[key].profileProjects[projectKey][
+    //         "projectCoverPhotoBase64"
+    //       ] = projectCoverPhotoBase64;
+    //       for (const postKey of Object.keys(
+    //         returnData[key].profileProjects[projectKey].projectPosts
+    //       )) {
+    //         const postPhotoBase64 = await getBase64FromUrl(
+    //           returnData[key].profileProjects[projectKey].projectPosts[postKey][
+    //             "postPhotoUrl"
+    //           ]
+    //         );
+    //         returnData[key].profileProjects[projectKey].projectPosts[postKey][
+    //           "postPhotoBase64"
+    //         ] = postPhotoBase64;
+    //       }
+    //     }
+    //   }
+    // }
 
     await AsyncStorage.getItem("userDocData").then(async (data) => {
       data = JSON.parse(data);
@@ -1047,7 +1047,7 @@ export const cheerPost = (
       cheeringForm
     );
 
-    AsyncStorage.getItem("userDocData").then(async (data) => {
+    await AsyncStorage.getItem("userDocData").then(async (data) => {
       data = JSON.parse(data);
       data.userFeed = {
         ...data.userFeed,
@@ -1173,7 +1173,7 @@ export const cheerOwnProfilePost = (
       cheeringForm
     );
 
-    AsyncStorage.getItem("userDocData").then(async (data) => {
+    await AsyncStorage.getItem("userDocData").then(async (data) => {
       data = JSON.parse(data);
       data.profileProjects = {
         ...data.profileProjects,
@@ -1284,7 +1284,7 @@ export const uncheerPost = (
       uncheeringForm
     );
 
-    AsyncStorage.getItem("userDocData").then(async (data) => {
+    await AsyncStorage.getItem("userDocData").then(async (data) => {
       data = JSON.parse(data);
       data.userFeed = {
         ...data.userFeed,
@@ -1410,7 +1410,7 @@ export const uncheerOwnProfilePost = (
       uncheeringForm
     );
 
-    AsyncStorage.getItem("userDocData").then(async (data) => {
+    await AsyncStorage.getItem("userDocData").then(async (data) => {
       data = JSON.parse(data);
       data.profileProjects = {
         ...data.profileProjects,
