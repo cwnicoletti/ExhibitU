@@ -41,7 +41,7 @@ const ExploreScreen = (props) => {
 
   const searchFilterFunction = (text) => {
     setSearch(text);
-    if (text) {
+    if (!(/^ *$/.test(text))) {
       const algoliasearch = require("algoliasearch");
       const client = algoliasearch(
         "EXC8LH5MAX",
@@ -60,7 +60,7 @@ const ExploreScreen = (props) => {
   const refreshSearchIndex = (text) => {
     setIsRefreshing(true);
     setSearch(text);
-    if (text) {
+    if (!(/^ *$/.test(text))) {
       const algoliasearch = require("algoliasearch");
       const client = algoliasearch(
         "EXC8LH5MAX",
