@@ -535,7 +535,7 @@ const EditProjectScreen = (props) => {
                   margin: 10,
                 }}
               >
-                Loading project cover photo
+                Loading ehxibit cover photo
               </Text>
               <ActivityIndicator size="small" color="white" />
             </View>
