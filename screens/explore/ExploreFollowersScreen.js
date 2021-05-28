@@ -2,20 +2,20 @@ import { EvilIcons, Feather } from "@expo/vector-icons";
 import algoliasearch from "algoliasearch";
 import React, { useEffect, useState } from "react";
 import {
-    FlatList, Keyboard,
-
-
-    RefreshControl, SafeAreaView, StyleSheet,
-
-    Text,
-    TouchableWithoutFeedback, View
+  FlatList,
+  Keyboard,
+  RefreshControl,
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  TouchableWithoutFeedback,
+  View,
 } from "react-native";
 import { SearchBar } from "react-native-elements";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import { useSelector } from "react-redux";
 import ExploreCard from "../../components/explore/ExploreCard";
 import IoniconsHeaderButton from "../../components/UI/IoniconsHeaderButton";
-
 
 const ExploreFollowersScreen = (props) => {
   const client = algoliasearch(
@@ -95,29 +95,31 @@ const ExploreFollowersScreen = (props) => {
     showCheering
   ) => {
     props.navigation.push("ExploreProfile", {
-      text,
-      ExhibitUId,
-      profilePictureUrl,
-      fullname,
-      username,
-      jobTitle,
-      resumeLinkUrl,
-      profileBiography,
-      numberOfFollowers,
-      numberOfFollowing,
-      numberOfAdvocates,
-      showResume,
-      hideFollowing,
-      hideFollowers,
-      hideAdvocates,
-      followers,
-      following,
-      advocates,
-      profileProjects,
-      profileLinks,
-      projectLinks,
-      profileColumns,
-      showCheering,
+      exploreData: {
+        text,
+        ExhibitUId,
+        profilePictureUrl,
+        fullname,
+        username,
+        jobTitle,
+        resumeLinkUrl,
+        profileBiography,
+        numberOfFollowers,
+        numberOfFollowing,
+        numberOfAdvocates,
+        showResume,
+        hideFollowing,
+        hideFollowers,
+        hideAdvocates,
+        followers,
+        following,
+        advocates,
+        profileProjects,
+        profileLinks,
+        projectLinks,
+        profileColumns,
+        showCheering,
+      },
     });
   };
 
