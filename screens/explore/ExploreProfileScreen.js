@@ -31,6 +31,11 @@ const ExploreProfileScreen = (props) => {
     props.navigation.getParam("exploreData")
   );
 
+  // Empty dict if user doesn't have any projects yet
+  exploredUserData.profileProjects = exploredUserData.profileProjects
+    ? exploredUserData.profileProjects
+    : {};
+
   const [isfollowing, setIsFollowing] = useState(
     exploredUserData.followers.includes(ExhibitUId) ? true : false
   );
