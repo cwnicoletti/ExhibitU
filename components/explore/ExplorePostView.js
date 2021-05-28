@@ -1,20 +1,19 @@
 import * as WebBrowser from "expo-web-browser";
 import React, { useEffect, useRef, useState } from "react";
 import {
-    Animated, Dimensions,
-
-
-    FlatList, Image,
-    ImageBackground, LogBox, Platform, StyleSheet, Text,
-
-
-
-
-    TouchableNativeFeedback, TouchableOpacity,
-
-
-
-    TouchableWithoutFeedback, View
+  Animated,
+  Dimensions,
+  FlatList,
+  Image,
+  ImageBackground,
+  LogBox,
+  Platform,
+  StyleSheet,
+  Text,
+  TouchableNativeFeedback,
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+  View,
 } from "react-native";
 import resolveAssetSource from "react-native/Libraries/Image/resolveAssetSource";
 import { useSelector } from "react-redux";
@@ -22,9 +21,14 @@ import Cheerfill from "../../assets/Icons/clap-fill.svg";
 import Cheer from "../../assets/Icons/clap.svg";
 import LinkButton from "../UI/LinkButton";
 
-
 const handleLinkOnPress = async (url) => {
   await WebBrowser.openBrowserAsync(url);
+};
+
+const toDateTime = (seconds) => {
+  let t = new Date(0); // Epoch
+  t.setUTCSeconds(seconds);
+  return t;
 };
 
 const ExplorePostView = (props) => {
@@ -36,9 +40,9 @@ const ExplorePostView = (props) => {
   const darkModeValue = useSelector((state) => state.user.darkMode);
   const defaultPostIcon = require("../../assets/default-profile-icon.jpg");
   const source = resolveAssetSource(defaultPostIcon);
-  const fullname = props.fullname;
   const showCheering = props.showCheering;
   const links = props.links;
+  const postDateCreated = toDateTime(props.postDateCreated);
 
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const slideAnim = useRef(new Animated.Value(0)).current;
@@ -194,53 +198,6 @@ const ExplorePostView = (props) => {
                   paddingBottom: 10,
                 }}
               >
-                <View
-                  style={{
-                    flex: 1,
-                    alignItems: "flex-start",
-                  }}
-                >
-                  <TouchableCmp onPress={props.onSelectProfile}>
-                    <View
-                      style={{
-                        marginLeft: 15,
-                        alignSelf: "center",
-                      }}
-                    >
-                      <View
-                        style={{
-                          height: 50,
-                          width: 50,
-                          borderRadius: 50 / 2,
-                        }}
-                      >
-                        <Image
-                          style={{
-                            ...styles.profileImage,
-                            ...props.profileImageStyle,
-                            alignSelf: "center",
-                          }}
-                          source={
-                            props.profileImageSource
-                              ? { uri: props.profileImageSource }
-                              : require("../../assets/default-profile-icon.jpg")
-                          }
-                        />
-                      </View>
-                      <Text
-                        style={{
-                          color: darkModeValue ? "white" : "black",
-                          marginTop: 3,
-                          textAlign: "center",
-                        }}
-                      >
-                        {fullname.split(" ")[0].length > 10
-                          ? fullname.substring(0, 10) + "..."
-                          : fullname.split(" ")[0]}
-                      </Text>
-                    </View>
-                  </TouchableCmp>
-                </View>
                 {!doubleTapped ? (
                   <TouchableWithoutFeedback onPress={unCheer}>
                     <View>
@@ -357,6 +314,23 @@ const ExplorePostView = (props) => {
           {props.caption}
         </Text>
       </View>
+      <View style={{ ...styles.dateContainer, ...props.dateContainer }}>
+        <Text
+          style={{ ...styles.date, ...props.dateStyle, flexDirection: "row" }}
+        >
+          {`${postDateCreated.toLocaleString("UTC", {
+            weekday: "long",
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+          })}`}
+          {", "}
+          {`${postDateCreated.toLocaleString("UTC", {
+            hour: "numeric",
+            minute: "numeric",
+          })}`}
+        </Text>
+      </View>
     </View>
   );
 };
@@ -392,6 +366,13 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 14,
     fontWeight: "bold",
+  },
+  date: {
+    margin: 10,
+    fontSize: 13,
+  },
+  dateContainer: {
+    alignItems: "flex-end",
   },
   caption: {
     textAlign: "center",

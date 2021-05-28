@@ -1,33 +1,32 @@
 import * as WebBrowser from "expo-web-browser";
 import React, { useEffect, useRef, useState } from "react";
 import {
-    Animated, Dimensions,
-
-
-    FlatList, Image,
-    ImageBackground, LogBox, Platform, StyleSheet, Text,
-
-
-
-
-    TouchableNativeFeedback, TouchableOpacity,
-
-
-
-    TouchableWithoutFeedback, View
+  ActivityIndicator,
+  Animated,
+  Dimensions,
+  FlatList,
+  Image,
+  ImageBackground,
+  LogBox,
+  Platform,
+  StyleSheet,
+  Text,
+  TouchableNativeFeedback,
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+  View,
 } from "react-native";
 import resolveAssetSource from "react-native/Libraries/Image/resolveAssetSource";
 import { useDispatch, useSelector } from "react-redux";
 import Cheerfill from "../../assets/Icons/clap-fill.svg";
 import Cheer from "../../assets/Icons/clap.svg";
 import {
-    cheerOwnPost, cheerPost,
-
-    uncheerOwnPost, uncheerPost
+  cheerOwnPost,
+  cheerPost,
+  uncheerOwnPost,
+  uncheerPost,
 } from "../../store/actions/user";
 import LinkButton from "../UI/LinkButton";
-
-
 
 const toDateTime = (seconds) => {
   let t = new Date(0); // Epoch
@@ -243,53 +242,6 @@ const FeedPostView = (props) => {
                   paddingBottom: 10,
                 }}
               >
-                <View
-                  style={{
-                    flex: 1,
-                    alignItems: "flex-start",
-                  }}
-                >
-                  <TouchableCmp onPress={props.onSelectProfile}>
-                    <View
-                      style={{
-                        marginLeft: 15,
-                        alignSelf: "center",
-                      }}
-                    >
-                      <View
-                        style={{
-                          height: 50,
-                          width: 50,
-                          borderRadius: 50 / 2,
-                        }}
-                      >
-                        <Image
-                          style={{
-                            ...styles.profileImage,
-                            ...props.profileImageStyle,
-                            alignSelf: "center",
-                          }}
-                          source={
-                            props.profileImageSource
-                              ? { uri: props.profileImageSource }
-                              : require("../../assets/default-profile-icon.jpg")
-                          }
-                        />
-                      </View>
-                      <Text
-                        style={{
-                          color: darkModeValue ? "white" : "black",
-                          marginTop: 3,
-                          textAlign: "center",
-                        }}
-                      >
-                        {fullname.split(" ")[0].length > 10
-                          ? fullname.substring(0, 10) + "..."
-                          : fullname.split(" ")[0]}
-                      </Text>
-                    </View>
-                  </TouchableCmp>
-                </View>
                 {loadingCheer ? (
                   <ActivityIndicator
                     size="small"
