@@ -2,20 +2,20 @@ import { EvilIcons, Feather } from "@expo/vector-icons";
 import algoliasearch from "algoliasearch";
 import React, { useEffect, useState } from "react";
 import {
-    FlatList, Keyboard,
-
-
-    RefreshControl, SafeAreaView, StyleSheet,
-
-    Text,
-    TouchableWithoutFeedback, View
+  FlatList,
+  Keyboard,
+  RefreshControl,
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  TouchableWithoutFeedback,
+  View,
 } from "react-native";
 import { SearchBar } from "react-native-elements";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import { useSelector } from "react-redux";
 import ExploreCard from "../../components/explore/ExploreCard";
 import IoniconsHeaderButton from "../../components/UI/IoniconsHeaderButton";
-
 
 const CheeringScreen = (props) => {
   const client = algoliasearch(
@@ -83,13 +83,20 @@ const CheeringScreen = (props) => {
     numberOfFollowers,
     numberOfFollowing,
     numberOfAdvocates,
-    showResumeValue,
+    showResume,
+    hideFollowing,
+    hideFollowers,
+    hideAdvocates,
     followers,
     following,
     advocates,
-    profileProjects
+    profileProjects,
+    profileLinks,
+    projectLinks,
+    profileColumns,
+    showCheering
   ) => {
-    props.navigation.push("ViewProfile", {
+    props.navigation.push("ShowcaseProfile", {
       ExhibitUId,
       profilePictureUrl,
       fullname,
@@ -100,11 +107,18 @@ const CheeringScreen = (props) => {
       numberOfFollowers,
       numberOfFollowing,
       numberOfAdvocates,
-      showResumeValue,
+      showResume,
+      hideFollowing,
+      hideFollowers,
+      hideAdvocates,
       followers,
       following,
       advocates,
       profileProjects,
+      profileLinks,
+      projectLinks,
+      profileColumns,
+      showCheering,
     });
   };
 
@@ -115,6 +129,18 @@ const CheeringScreen = (props) => {
         backgroundColor: darkModeValue ? "black" : "white",
       }}
     >
+      <View style={{ alignItems: "center" }}>
+        <Text
+          style={{
+            color: darkModeValue ? "white" : "black",
+            margin: 20,
+            marginBottom: 0,
+            fontSize: 18,
+          }}
+        >
+          {numberOfCheers} cheering
+        </Text>
+      </View>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
         <View style={{ alignItems: "center" }}>
           <Text style={{ marginTop: 10 }}>{numberOfCheers} Cheering</Text>
@@ -170,14 +196,18 @@ const CheeringScreen = (props) => {
           <ExploreCard
             image={
               itemData.item.profilePictureUrl
-                ? { uri: itemData.item.profilePictureUrl }
+                ? itemData.item.profilePictureUrl
                 : require("../../assets/default-profile-icon.jpg")
             }
             fullname={itemData.item.fullname}
             username={itemData.item.username}
+            jobTitle={itemData.item.jobTitle}
             projectContainer={{
               backgroundColor: darkModeValue ? "black" : "white",
               borderColor: darkModeValue ? "gray" : "#c9c9c9",
+            }}
+            jobTitleStyle={{
+              color: darkModeValue ? "white" : "black",
             }}
             fullNameStyle={{
               color: darkModeValue ? "white" : "black",
@@ -194,11 +224,18 @@ const CheeringScreen = (props) => {
                 itemData.item.numberOfFollowers,
                 itemData.item.numberOfFollowing,
                 itemData.item.numberOfAdvocates,
-                itemData.item.showResumeValue,
+                itemData.item.showResume,
+                itemData.item.hideFollowing,
+                itemData.item.hideFollowers,
+                itemData.item.hideAdvocates,
                 itemData.item.followers,
                 itemData.item.following,
                 itemData.item.advocates,
-                itemData.item.profileProjects
+                itemData.item.profileProjects,
+                itemData.item.profileLinks,
+                itemData.item.projectLinks,
+                itemData.item.profileColumns,
+                itemData.item.showCheering
               );
             }}
           />
@@ -220,6 +257,7 @@ CheeringScreen.navigationOptions = (navData) => {
           style={{
             ...styles.logoTitle,
             color: darkModeValue ? "white" : "black",
+            fontFamily: "CormorantUpright",
           }}
         >
           ExhibitU

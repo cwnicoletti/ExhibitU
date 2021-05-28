@@ -6,7 +6,6 @@ import ShowcaseProjectHeader from "../../components/projects/ShowcaseProjectHead
 import IoniconsHeaderButton from "../../components/UI/IoniconsHeaderButton";
 import ProjectPictures from "../../components/UI/ProjectPictures";
 
-
 const ShowcaseProjectScreen = (props) => {
   const darkModeValue = useSelector((state) => state.user.darkMode);
   const currentProjectId = props.navigation.getParam("projectId");
@@ -20,6 +19,7 @@ const ShowcaseProjectScreen = (props) => {
   }
 
   const viewCommentsHandler = (
+    postId,
     postPhotoUrl,
     postPhotoBase64,
     numberOfCheers,
@@ -29,7 +29,7 @@ const ShowcaseProjectScreen = (props) => {
     postDateCreated
   ) => {
     props.navigation.push("ShowcasePictureScreen", {
-      postPhotoUrl,
+      postId,
       postPhotoBase64,
       numberOfCheers,
       numberOfComments,
@@ -110,6 +110,7 @@ const ShowcaseProjectScreen = (props) => {
             imageContainer={styles.imageContainer}
             onSelect={() =>
               viewCommentsHandler(
+                itemData.item.postId,
                 itemData.item.postPhotoUrl,
                 itemData.item.postPhotoBase64,
                 itemData.item.numberOfCheers,

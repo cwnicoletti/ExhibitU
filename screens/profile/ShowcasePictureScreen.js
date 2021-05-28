@@ -1,16 +1,22 @@
 import React, { useEffect } from "react";
-import { LogBox, Platform, ScrollView, StyleSheet, Text, View } from "react-native";
+import {
+  LogBox,
+  Platform,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import { useSelector } from "react-redux";
 import IoniconsHeaderButton from "../../components/UI/IoniconsHeaderButton";
 import ShowcasePostView from "../../components/user/ShowcasePostView";
 
-
-
 const ShowcasePictureScreen = (props) => {
   const darkModeValue = useSelector((state) => state.user.darkMode);
   const userData = props.navigation.getParam("userData");
 
+  const postId = props.navigation.getParam("postId");
   const postPhotoUrl = props.navigation.getParam("postPhotoUrl");
   const postPhotoBase64 = props.navigation.getParam("postPhotoBase64");
   const numberOfCheers = props.navigation.getParam("numberOfCheers");
@@ -28,8 +34,8 @@ const ShowcasePictureScreen = (props) => {
 
   const viewCheeringHandler = () => {
     props.navigation.push("CheeringScreen", {
-      ExhibitUId: ExhibitUId,
-      projectId: projectId,
+      ExhibitUId: userData.ExhibitUId,
+      projectId: userData.projectId,
       postId: postId,
       numberOfCheers: numberOfCheers,
     });
