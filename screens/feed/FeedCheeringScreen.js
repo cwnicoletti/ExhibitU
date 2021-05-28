@@ -2,20 +2,20 @@ import { EvilIcons, Feather } from "@expo/vector-icons";
 import algoliasearch from "algoliasearch";
 import React, { useEffect, useState } from "react";
 import {
-    FlatList, Keyboard,
-
-
-    RefreshControl, SafeAreaView, StyleSheet,
-
-    Text,
-    TouchableWithoutFeedback, View
+  FlatList,
+  Keyboard,
+  RefreshControl,
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  TouchableWithoutFeedback,
+  View,
 } from "react-native";
 import { SearchBar } from "react-native-elements";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import { useSelector } from "react-redux";
 import ExploreCard from "../../components/explore/ExploreCard";
 import IoniconsHeaderButton from "../../components/UI/IoniconsHeaderButton";
-
 
 const FeedCheeringScreen = (props) => {
   const client = algoliasearch(
@@ -126,6 +126,7 @@ const FeedCheeringScreen = (props) => {
           style={{
             color: darkModeValue ? "white" : "black",
             margin: 20,
+            marginBottom: 0,
             fontSize: 18,
           }}
         >
@@ -187,9 +188,13 @@ const FeedCheeringScreen = (props) => {
             image={itemData.item.profilePictureUrl}
             fullname={itemData.item.fullname}
             username={itemData.item.username}
+            jobTitle={itemData.item.jobTitle}
             projectContainer={{
               backgroundColor: darkModeValue ? "black" : "white",
               borderColor: darkModeValue ? "gray" : "#c9c9c9",
+            }}
+            jobTitleStyle={{
+              color: darkModeValue ? "white" : "black",
             }}
             fullNameStyle={{
               color: darkModeValue ? "white" : "black",
