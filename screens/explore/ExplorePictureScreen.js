@@ -1,14 +1,9 @@
 import React, { useEffect } from "react";
-import {
-    Platform, ScrollView, StyleSheet,
-
-    Text, View
-} from "react-native";
+import { Platform, ScrollView, StyleSheet, Text, View } from "react-native";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import { useSelector } from "react-redux";
 import ExplorePostView from "../../components/explore/ExplorePostView";
 import IoniconsHeaderButton from "../../components/UI/IoniconsHeaderButton";
-
 
 const ExplorePictureScreen = (props) => {
   const darkModeValue = useSelector((state) => state.user.darkMode);
@@ -23,6 +18,7 @@ const ExplorePictureScreen = (props) => {
   const caption = props.navigation.getParam("caption");
   const exploredUserData = props.navigation.getParam("exploredUserData");
   const links = props.navigation.getParam("postLinks");
+  const postDateCreated = props.navigation.getParam("postDateCreated");
 
   let android = null;
   if (Platform.OS === "android") {
@@ -78,6 +74,7 @@ const ExplorePictureScreen = (props) => {
         numberOfComments={numberOfComments}
         links={links}
         showCheering={exploredUserData.showCheering}
+        postDateCreated={postDateCreated}
         nameStyle={{
           color: darkModeValue ? "white" : "black",
         }}
@@ -91,12 +88,18 @@ const ExplorePictureScreen = (props) => {
         titleContainer={{
           color: darkModeValue ? "white" : "black",
         }}
+        dateContainer={{
+          backgroundColor: darkModeValue ? "#121212" : "white",
+        }}
         threeDotsStyle={darkModeValue ? "white" : "black"}
         captionContainer={{
           backgroundColor: darkModeValue ? "#121212" : "white",
         }}
         titleStyle={{
           color: "white",
+        }}
+        dateStyle={{
+          color: "gray",
         }}
         nameTitleColors={["rgba(0,0,0,1)", "rgba(0,0,0,0.00)"]}
         projectTitleColors={["rgba(0,0,0,0.00)", "rgba(0,0,0,1)"]}
@@ -140,12 +143,11 @@ ExplorePictureScreen.navigationOptions = (navData) => {
   return {
     headerTitle: () => (
       <View style={styles.logo}>
-        
         <Text
           style={{
             ...styles.logoTitle,
             color: darkModeValue ? "white" : "black",
-fontFamily: "CormorantUpright",
+            fontFamily: "CormorantUpright",
           }}
         >
           ExhibitU

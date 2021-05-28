@@ -88,7 +88,8 @@ const ExploreProjectScreen = (props) => {
     numberOfCheers,
     numberOfComments,
     caption,
-    postLinks
+    postLinks,
+    postDateCreated
   ) => {
     props.navigation.push("ViewExploredProfileProjectPicture", {
       ExhibitUId,
@@ -106,6 +107,7 @@ const ExploreProjectScreen = (props) => {
       caption,
       exploredUserData: exploredUserDataLocal,
       postLinks,
+      postDateCreated,
     });
   };
 
@@ -201,7 +203,8 @@ const ExploreProjectScreen = (props) => {
                 itemData.item.numberOfCheers,
                 itemData.item.numberOfComments,
                 itemData.item.caption,
-                itemData.item.postLinks
+                itemData.item.postLinks,
+                itemData.item.postDateCreated._seconds
               )
             }
           />
