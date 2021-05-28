@@ -89,28 +89,44 @@ const ExploreCheeringScreen = (props) => {
     numberOfFollowers,
     numberOfFollowing,
     numberOfAdvocates,
-    showResumeValue,
+    showResume,
+    hideFollowing,
+    hideFollowers,
+    hideAdvocates,
     followers,
     following,
     advocates,
-    profileProjects
+    profileProjects,
+    profileLinks,
+    projectLinks,
+    profileColumns,
+    showCheering
   ) => {
-    props.navigation.push("ViewProfile", {
-      ExhibitUId,
-      profilePictureUrl,
-      fullname,
-      username,
-      jobTitle,
-      resumeLinkUrl,
-      profileBiography,
-      numberOfFollowers,
-      numberOfFollowing,
-      numberOfAdvocates,
-      showResumeValue,
-      followers,
-      following,
-      advocates,
-      profileProjects,
+    props.navigation.push("ExploreProfile", {
+      exploreData: {
+        ExhibitUId,
+        profilePictureUrl,
+        fullname,
+        username,
+        jobTitle,
+        resumeLinkUrl,
+        profileBiography,
+        numberOfFollowers,
+        numberOfFollowing,
+        numberOfAdvocates,
+        showResume,
+        hideFollowing,
+        hideFollowers,
+        hideAdvocates,
+        followers,
+        following,
+        advocates,
+        profileProjects,
+        profileLinks,
+        projectLinks,
+        profileColumns,
+        showCheering,
+      },
     });
   };
 
@@ -121,6 +137,18 @@ const ExploreCheeringScreen = (props) => {
         backgroundColor: darkModeValue ? "black" : "white",
       }}
     >
+      <View style={{ alignItems: "center" }}>
+        <Text
+          style={{
+            color: darkModeValue ? "white" : "black",
+            margin: 20,
+            marginBottom: 0,
+            fontSize: 18,
+          }}
+        >
+          {numberOfCheers} cheering
+        </Text>
+      </View>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
         <View style={{ alignItems: "center" }}>
           <Text style={{ marginTop: 10 }}>{numberOfCheers} Cheering</Text>
@@ -176,7 +204,7 @@ const ExploreCheeringScreen = (props) => {
           <ExploreCard
             image={
               itemData.item.profilePictureUrl
-                ? { uri: itemData.item.profilePictureUrl }
+                ? itemData.item.profilePictureUrl
                 : require("../../assets/default-profile-icon.jpg")
             }
             fullname={itemData.item.fullname}
@@ -185,6 +213,9 @@ const ExploreCheeringScreen = (props) => {
             projectContainer={{
               backgroundColor: darkModeValue ? "black" : "white",
               borderColor: darkModeValue ? "gray" : "#c9c9c9",
+            }}
+            jobTitleStyle={{
+              color: darkModeValue ? "white" : "black",
             }}
             fullNameStyle={{
               color: darkModeValue ? "white" : "black",
@@ -201,11 +232,18 @@ const ExploreCheeringScreen = (props) => {
                 itemData.item.numberOfFollowers,
                 itemData.item.numberOfFollowing,
                 itemData.item.numberOfAdvocates,
-                itemData.item.showResumeValue,
+                itemData.item.showResume,
+                itemData.item.hideFollowing,
+                itemData.item.hideFollowers,
+                itemData.item.hideAdvocates,
                 itemData.item.followers,
                 itemData.item.following,
                 itemData.item.advocates,
-                itemData.item.profileProjects
+                itemData.item.profileProjects,
+                itemData.item.profileLinks,
+                itemData.item.projectLinks,
+                itemData.item.profileColumns,
+                itemData.item.showCheering
               );
             }}
           />
