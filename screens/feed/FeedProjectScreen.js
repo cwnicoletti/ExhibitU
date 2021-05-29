@@ -254,22 +254,6 @@ FeedProjectScreen.navigationOptions = (navData) => {
         />
       </HeaderButtons>
     ),
-    headerRight: () => (
-      <View>
-        {ExhibitUId !== feedExhibitUId ? (
-          <HeaderButtons HeaderButtonComponent={FontAwesomeHeaderButton}>
-            <Item
-              title="Advocate"
-              iconName={"handshake-o"}
-              color={darkModeValue ? "white" : "black"}
-              onPress={() => {
-                navData.navigation.toggleRightDrawer();
-              }}
-            />
-          </HeaderButtons>
-        ) : null}
-      </View>
-    ),
   };
 };
 
