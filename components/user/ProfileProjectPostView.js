@@ -218,8 +218,8 @@ const ProfileProjectPostView = (props) => {
                       marginTop: photoHeight,
                       ...props.clapContainer,
                     }}
-                    height={height / 5}
-                    width={width / 5}
+                    height={photoHeight / 5}
+                    width={photoWidth / 5}
                     fill="white"
                   />
                 ) : (
