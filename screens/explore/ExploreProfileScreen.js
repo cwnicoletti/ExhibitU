@@ -284,17 +284,17 @@ const ExploreProfileScreen = (props) => {
         ExhibitUId={exploredUserData.exploredExhibitUId}
         links={exploredUserData.profileLinks}
         followersOnPress={() =>
-          props.navigation.navigate("ExploreFollowers", {
+          props.navigation.push("ExploreFollowers", {
             ExhibitUId: exploredUserData.exploredExhibitUId,
           })
         }
         followingOnPress={() =>
-          props.navigation.navigate("ExploreFollowing", {
+          props.navigation.push("ExploreFollowing", {
             ExhibitUId: exploredUserData.exploredExhibitUId,
           })
         }
         advocatesOnPress={() =>
-          props.navigation.navigate("ExploreAdvocates", {
+          props.navigation.push("ExploreAdvocates", {
             exploredExhibitUId: exploredUserData.exploredExhibitUId,
           })
         }

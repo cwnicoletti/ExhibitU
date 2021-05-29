@@ -102,21 +102,19 @@ const FeedProfileScreen = (props) => {
           color: darkModeValue ? "white" : "black",
         }}
         iconResumeStyle={darkModeValue ? "white" : "black"}
-        onEditProfilePress={() => props.navigation.navigate("EditProfile")}
         description={userData.profileBiography}
-        onAddNewProjectPress={() => props.navigation.navigate("AddProject")}
         followersOnPress={() =>
-          props.navigation.navigate("ViewFollowers", {
+          props.navigation.push("ViewFollowers", {
             ExhibitUId: userData.ExhibitUId,
           })
         }
         followingOnPress={() =>
-          props.navigation.navigate("ViewFollowing", {
+          props.navigation.push("ViewFollowing", {
             ExhibitUId: userData.ExhibitUId,
           })
         }
         advocatesOnPress={() =>
-          props.navigation.navigate("ViewAdvocates", {
+          props.navigation.push("ViewAdvocates", {
             ExhibitUId: userData.ExhibitUId,
           })
         }
