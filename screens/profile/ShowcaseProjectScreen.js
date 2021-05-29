@@ -29,7 +29,9 @@ const ShowcaseProjectScreen = (props) => {
     postDateCreated
   ) => {
     props.navigation.push("ShowcasePictureScreen", {
+      projectId: currentProjectId,
       postId,
+      postPhotoUrl,
       postPhotoBase64,
       numberOfCheers,
       numberOfComments,

@@ -17,6 +17,7 @@ const ShowcasePictureScreen = (props) => {
   const userData = props.navigation.getParam("userData");
 
   const postId = props.navigation.getParam("postId");
+  const projectId = props.navigation.getParam("projectId");
   const postPhotoUrl = props.navigation.getParam("postPhotoUrl");
   const postPhotoBase64 = props.navigation.getParam("postPhotoBase64");
   const numberOfCheers = props.navigation.getParam("numberOfCheers");
@@ -35,7 +36,7 @@ const ShowcasePictureScreen = (props) => {
   const viewCheeringHandler = () => {
     props.navigation.push("CheeringScreen", {
       ExhibitUId: userData.ExhibitUId,
-      projectId: userData.projectId,
+      projectId: projectId,
       postId: postId,
       numberOfCheers: numberOfCheers,
     });
