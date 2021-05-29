@@ -1,11 +1,16 @@
 import React, { useEffect } from "react";
-import { LogBox, Platform, ScrollView, StyleSheet, Text, View } from "react-native";
+import {
+  LogBox,
+  Platform,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import { useSelector } from "react-redux";
 import FeedPostView from "../../components/feed/FeedPostView";
 import IoniconsHeaderButton from "../../components/UI/IoniconsHeaderButton";
-
-
 
 const FeedCommentsScreen = (props) => {
   const darkModeValue = useSelector((state) => state.user.darkMode);
@@ -88,7 +93,7 @@ const FeedCommentsScreen = (props) => {
         numberOfCheers={userData.numberOfCheers}
         numberOfComments={userData.numberOfComments}
         postId={userData.postId}
-        projectId={userData.projectId}
+        projectId={projectId}
         posterExhibitUId={userData.ExhibitUId}
         links={userData.postLinks}
         postDateCreated={userData.postDateCreated}

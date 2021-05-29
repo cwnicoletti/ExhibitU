@@ -14,17 +14,17 @@ import {
   TouchableNativeFeedback,
   TouchableOpacity,
   TouchableWithoutFeedback,
-  View,
+  View
 } from "react-native";
 import resolveAssetSource from "react-native/Libraries/Image/resolveAssetSource";
 import { useDispatch, useSelector } from "react-redux";
 import Cheerfill from "../../assets/Icons/clap-fill.svg";
 import Cheer from "../../assets/Icons/clap.svg";
 import {
-  cheerOwnPost,
+  cheerOwnFeedPost,
   cheerPost,
-  uncheerOwnPost,
-  uncheerPost,
+  uncheerOwnFeedPost,
+  uncheerPost
 } from "../../store/actions/user";
 import LinkButton from "../UI/LinkButton";
 
@@ -42,6 +42,7 @@ const FeedPostView = (props) => {
   const dispatch = useDispatch();
   const [photoHeight, setHeight] = useState(null);
   const [photoWidth, setWidth] = useState(null);
+  const [processingWholeCheer, setProcessingWholeCheer] = useState(false);
   const [loadingCheer, setLoadingCheer] = useState(false);
   const [showClapping, setShowClapping] = useState(false);
   const [clap, setClap] = useState(false);
@@ -54,7 +55,6 @@ const FeedPostView = (props) => {
   const ExhibitUId = useSelector((state) => state.user.ExhibitUId);
   const posterExhibitUId = props.posterExhibitUId;
   const currentUsersPost = ExhibitUId === posterExhibitUId ? true : false;
-  const fullname = props.fullname;
   const links = props.links;
   const postId = props.postId;
   const projectId = props.projectId;
@@ -138,6 +138,7 @@ const FeedPostView = (props) => {
   const handleToubleTap = async () => {
     const now = Date.now();
     if (now - secondnow < 200) {
+      await setProcessingWholeCheer(true);
       await setShowClapping(true);
       await fadeIn();
       await slideUp();
@@ -156,10 +157,11 @@ const FeedPostView = (props) => {
           cheerPost(localId, ExhibitUId, projectId, postId, posterExhibitUId)
         );
         if (currentUsersPost) {
-          await dispatch(cheerOwnPost(ExhibitUId, projectId, postId));
+          await dispatch(cheerOwnFeedPost(ExhibitUId, projectId, postId));
         }
         await setLoadingCheer(false);
       }
+      await setProcessingWholeCheer(false);
     } else {
       secondnow = now;
     }
@@ -172,7 +174,7 @@ const FeedPostView = (props) => {
         uncheerPost(localId, ExhibitUId, projectId, postId, posterExhibitUId)
       );
       if (currentUsersPost) {
-        await dispatch(uncheerOwnPost(ExhibitUId, projectId, postId));
+        await dispatch(uncheerOwnFeedPost(ExhibitUId, projectId, postId));
       }
       await setLoadingCheer(false);
     }
@@ -180,7 +182,13 @@ const FeedPostView = (props) => {
 
   return (
     <View style={{ ...styles.project, ...props.projectContainer }}>
-      <TouchableWithoutFeedback onPress={handleToubleTap}>
+      <TouchableWithoutFeedback
+        onPress={() => {
+          if (!processingWholeCheer) {
+            handleToubleTap();
+          }
+        }}
+      >
         <View>
           <ImageBackground
             style={{
