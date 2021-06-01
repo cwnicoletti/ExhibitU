@@ -509,49 +509,56 @@ export default (state = intialState, action) => {
         numberOfAdvocating: state.numberOfAdvocating - 1,
       };
     case CHEER_POST:
-      return {
-        ...state,
-        userFeed: {
-          ...state.userFeed,
-          [action.postId]: {
-            ...state.userFeed[action.postId],
-            cheering: [
-              ...state.userFeed[action.postId].cheering,
-              action.ExhibitUId,
-            ],
-            numberOfCheers: state.userFeed[action.postId].numberOfCheers + 1,
-            profileProjects: {
-              ...state.userFeed[action.postId].profileProjects,
-              [action.projectId]: {
-                ...state.userFeed[action.postId].profileProjects[
-                  action.projectId
-                ],
-                projectPosts: {
+      if (state.userFeed[action.postId]) {
+        return {
+          ...state,
+          userFeed: {
+            ...state.userFeed,
+            [action.postId]: {
+              ...state.userFeed[action.postId],
+              cheering: [
+                ...state.userFeed[action.postId].cheering,
+                action.ExhibitUId,
+              ],
+              numberOfCheers: state.userFeed[action.postId].numberOfCheers + 1,
+              profileProjects: {
+                ...state.userFeed[action.postId].profileProjects,
+                [action.projectId]: {
                   ...state.userFeed[action.postId].profileProjects[
                     action.projectId
-                  ].projectPosts,
-                  [action.postId]: {
+                  ],
+                  projectPosts: {
                     ...state.userFeed[action.postId].profileProjects[
                       action.projectId
-                    ].projectPosts[action.postId],
-                    cheering: [
+                    ].projectPosts,
+                    [action.postId]: {
                       ...state.userFeed[action.postId].profileProjects[
                         action.projectId
-                      ].projectPosts[action.postId].cheering,
-                      action.ExhibitUId,
-                    ],
-                    numberOfCheers:
-                      state.userFeed[action.postId].profileProjects[
-                        action.projectId
-                      ].projectPosts[action.postId].numberOfCheers + 1,
+                      ].projectPosts[action.postId],
+                      cheering: [
+                        ...state.userFeed[action.postId].profileProjects[
+                          action.projectId
+                        ].projectPosts[action.postId].cheering,
+                        action.ExhibitUId,
+                      ],
+                      numberOfCheers:
+                        state.userFeed[action.postId].profileProjects[
+                          action.projectId
+                        ].projectPosts[action.postId].numberOfCheers + 1,
+                    },
                   },
                 },
               },
             },
           },
-        },
-        cheeredPosts: [...state.cheeredPosts, action.postId],
-      };
+          cheeredPosts: [...state.cheeredPosts, action.postId],
+        };
+      } else {
+        return {
+          ...state,
+          cheeredPosts: [...state.cheeredPosts, action.postId],
+        };
+      }
     case CHEER_UPDATE_POSTS:
       Object.entries(state.userFeed).map(([id, value]) => {
         Object.entries(state.userFeed[id].profileProjects).map(
@@ -672,49 +679,58 @@ export default (state = intialState, action) => {
         cheeredPosts: [...state.cheeredPosts, action.postId],
       };
     case UNCHEER_POST:
-      return {
-        ...state,
-        userFeed: {
-          ...state.userFeed,
-          [action.postId]: {
-            ...state.userFeed[action.postId],
-            profileProjects: {
-              ...state.userFeed[action.postId].profileProjects,
-              [action.projectId]: {
-                ...state.userFeed[action.postId].profileProjects[
-                  action.projectId
-                ],
-                projectPosts: {
+      if (state.userFeed[action.postId]) {
+        return {
+          ...state,
+          userFeed: {
+            ...state.userFeed,
+            [action.postId]: {
+              ...state.userFeed[action.postId],
+              profileProjects: {
+                ...state.userFeed[action.postId].profileProjects,
+                [action.projectId]: {
                   ...state.userFeed[action.postId].profileProjects[
                     action.projectId
-                  ].projectPosts,
-                  [action.postId]: {
+                  ],
+                  projectPosts: {
                     ...state.userFeed[action.postId].profileProjects[
                       action.projectId
-                    ].projectPosts[action.postId],
-                    cheering: state.userFeed[action.postId].profileProjects[
-                      action.projectId
-                    ].projectPosts[action.postId].cheering.filter(
-                      (ExhibitUId) => ExhibitUId !== action.ExhibitUId
-                    ),
-                    numberOfCheers:
-                      state.userFeed[action.postId].profileProjects[
+                    ].projectPosts,
+                    [action.postId]: {
+                      ...state.userFeed[action.postId].profileProjects[
                         action.projectId
-                      ].projectPosts[action.postId].numberOfCheers - 1,
+                      ].projectPosts[action.postId],
+                      cheering: state.userFeed[action.postId].profileProjects[
+                        action.projectId
+                      ].projectPosts[action.postId].cheering.filter(
+                        (ExhibitUId) => ExhibitUId !== action.ExhibitUId
+                      ),
+                      numberOfCheers:
+                        state.userFeed[action.postId].profileProjects[
+                          action.projectId
+                        ].projectPosts[action.postId].numberOfCheers - 1,
+                    },
                   },
                 },
               },
+              cheering: state.userFeed[action.postId].cheering.filter(
+                (ExhibitUId) => ExhibitUId !== action.ExhibitUId
+              ),
+              numberOfCheers: state.userFeed[action.postId].numberOfCheers - 1,
             },
-            cheering: state.userFeed[action.postId].cheering.filter(
-              (ExhibitUId) => ExhibitUId !== action.ExhibitUId
-            ),
-            numberOfCheers: state.userFeed[action.postId].numberOfCheers - 1,
           },
-        },
-        cheeredPosts: state.cheeredPosts.filter(
-          (post) => post !== action.postId
-        ),
-      };
+          cheeredPosts: state.cheeredPosts.filter(
+            (post) => post !== action.postId
+          ),
+        };
+      } else {
+        return {
+          ...state,
+          cheeredPosts: state.cheeredPosts.filter(
+            (post) => post !== action.postId
+          ),
+        };
+      }
     case UNCHEER_UPDATE_POSTS:
       Object.entries(state.userFeed).map(([id, value]) => {
         Object.entries(state.userFeed[id].profileProjects).map(
