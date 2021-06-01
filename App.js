@@ -1,3 +1,4 @@
+// Clapping icon & default project icon made by Freepik (https://www.flaticon.com/authors/freepik)
 import React from "react";
 import { View } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
@@ -8,10 +9,20 @@ import NavigationContainer from "./navigation/NavigationContainer";
 import authReducer from "./store/reducers/auth";
 import signupReducer from "./store/reducers/signup";
 import userReducer from "./store/reducers/user";
+import * as firebase from "firebase";
+import { apikey, authDomain, databaseURL, storageBucket } from "./config";
 
+// Initialize Firebase
+const firebaseConfig = {
+  apiKey: apikey,
+  authDomain: authDomain,
+  databaseURL: databaseURL,
+  storageBucket: storageBucket,
+};
 
-
-// Clapping, default project icon made by Freepik (https://www.flaticon.com/authors/freepik)
+if (firebase.apps.length === 0) {
+  firebase.initializeApp(firebaseConfig);
+}
 
 // Notifications.setNotificationHandler({
 //   handleNotification: async () => {
