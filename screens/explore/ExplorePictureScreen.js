@@ -73,6 +73,9 @@ const ExplorePictureScreen = (props) => {
         numberOfCheers={numberOfCheers}
         numberOfComments={numberOfComments}
         links={links}
+        postId={postId}
+        projectId={currentProjectId}
+        posterExhibitUId={ExhibitUId}
         showCheering={exploredUserData.showCheering}
         postDateCreated={postDateCreated}
         nameStyle={{

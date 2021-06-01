@@ -13,13 +13,20 @@ import {
   TouchableNativeFeedback,
   TouchableOpacity,
   TouchableWithoutFeedback,
+  ActivityIndicator,
   View,
 } from "react-native";
 import resolveAssetSource from "react-native/Libraries/Image/resolveAssetSource";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Cheerfill from "../../assets/Icons/clap-fill.svg";
 import Cheer from "../../assets/Icons/clap.svg";
 import LinkButton from "../UI/LinkButton";
+import {
+  cheerOwnFeedPost,
+  cheerPost,
+  uncheerOwnFeedPost,
+  uncheerPost,
+} from "../../store/actions/user";
 
 const handleLinkOnPress = async (url) => {
   await WebBrowser.openBrowserAsync(url);
@@ -32,16 +39,25 @@ const toDateTime = (seconds) => {
 };
 
 const ExplorePostView = (props) => {
+  const dispatch = useDispatch();
   const [photoHeight, setHeight] = useState(null);
   const [photoWidth, setWidth] = useState(null);
-  const [doubleTapped, setDoubleTapped] = useState(false);
+  const [processingWholeCheer, setProcessingWholeCheer] = useState(false);
+  const [loadingCheer, setLoadingCheer] = useState(false);
   const [showClapping, setShowClapping] = useState(false);
   const [clap, setClap] = useState(false);
+  const showCheering = useSelector((state) => state.user.showCheering);
+  const cheeredPosts = useSelector((state) => state.user.cheeredPosts);
+  const localId = useSelector((state) => state.auth.userId);
   const darkModeValue = useSelector((state) => state.user.darkMode);
   const defaultPostIcon = require("../../assets/default-profile-icon.jpg");
   const source = resolveAssetSource(defaultPostIcon);
-  const showCheering = props.showCheering;
+  const ExhibitUId = useSelector((state) => state.user.ExhibitUId);
+  const posterExhibitUId = props.posterExhibitUId;
+  const currentUsersPost = ExhibitUId === posterExhibitUId ? true : false;
   const links = props.links;
+  const postId = props.postId;
+  const projectId = props.projectId;
   const postDateCreated = toDateTime(props.postDateCreated);
 
   const fadeAnim = useRef(new Animated.Value(0)).current;
@@ -51,6 +67,12 @@ const ExplorePostView = (props) => {
   if (Platform.OS === "android") {
     TouchableCmp = TouchableNativeFeedback;
   }
+
+  useEffect(() => {
+    if (cheeredPosts.includes(postId)) {
+      setClap(true);
+    }
+  }, [cheeredPosts]);
 
   useEffect(() => {
     Image.getSize(props.image ? props.image : source, (width, height) => {
@@ -113,34 +135,60 @@ const ExplorePostView = (props) => {
   };
 
   let secondnow = null;
-  const handleToubleTap = () => {
+  const handleToubleTap = async () => {
     const now = Date.now();
     if (now - secondnow < 200) {
-      setDoubleTapped(true);
-      setShowClapping(true);
-
-      fadeIn();
-      slideUp();
-      update();
-      setTimeout(() => {
+      await setProcessingWholeCheer(true);
+      await setShowClapping(true);
+      await fadeIn();
+      await slideUp();
+      await update();
+      await setTimeout(() => {
         fadeOut();
       }, 750);
 
-      setTimeout(() => {
-        setShowClapping(false);
+      await setTimeout(async () => {
+        await setShowClapping(false);
       }, 1500);
+
+      if (!cheeredPosts.includes(postId)) {
+        await setLoadingCheer(true);
+        await dispatch(
+          cheerPost(localId, ExhibitUId, projectId, postId, posterExhibitUId)
+        );
+        if (currentUsersPost) {
+          await dispatch(cheerOwnFeedPost(ExhibitUId, projectId, postId));
+        }
+        await setLoadingCheer(false);
+      }
+      await setProcessingWholeCheer(false);
     } else {
       secondnow = now;
     }
   };
 
-  const unCheer = () => {
-    setDoubleTapped((prevState) => !prevState);
+  const unCheer = async () => {
+    if (cheeredPosts.includes(postId)) {
+      await setLoadingCheer(true);
+      await dispatch(
+        uncheerPost(localId, ExhibitUId, projectId, postId, posterExhibitUId)
+      );
+      if (currentUsersPost) {
+        await dispatch(uncheerOwnFeedPost(ExhibitUId, projectId, postId));
+      }
+      await setLoadingCheer(false);
+    }
   };
 
   return (
     <View style={{ ...styles.project, ...props.projectContainer }}>
-      <TouchableWithoutFeedback onPress={handleToubleTap}>
+      <TouchableWithoutFeedback
+        onPress={() => {
+          if (!processingWholeCheer) {
+            handleToubleTap();
+          }
+        }}
+      >
         <View>
           <ImageBackground
             style={{
@@ -198,34 +246,44 @@ const ExplorePostView = (props) => {
                   paddingBottom: 10,
                 }}
               >
-                {!doubleTapped ? (
-                  <TouchableWithoutFeedback onPress={unCheer}>
-                    <View>
-                      <Cheer
-                        style={{
-                          ...styles.clapContainer,
-                          ...props.clapContainer,
-                        }}
-                        height={30}
-                        width={30}
-                        fill="white"
-                      />
-                    </View>
-                  </TouchableWithoutFeedback>
+                {loadingCheer ? (
+                  <ActivityIndicator
+                    size="small"
+                    color="white"
+                    style={{ marginRight: 20 }}
+                  />
                 ) : (
-                  <TouchableWithoutFeedback onPress={unCheer}>
-                    <View>
-                      <Cheerfill
-                        style={{
-                          ...styles.clapContainer,
-                          ...props.clapContainer,
-                        }}
-                        height={30}
-                        width={30}
-                        fill="white"
-                      />
-                    </View>
-                  </TouchableWithoutFeedback>
+                  <View>
+                    {!cheeredPosts.includes(postId) ? (
+                      <TouchableCmp onPress={unCheer}>
+                        <View>
+                          <Cheer
+                            style={{
+                              ...styles.clapContainer,
+                              ...props.clapContainer,
+                            }}
+                            height={30}
+                            width={30}
+                            fill="white"
+                          />
+                        </View>
+                      </TouchableCmp>
+                    ) : (
+                      <TouchableCmp onPress={unCheer}>
+                        <View>
+                          <Cheerfill
+                            style={{
+                              ...styles.clapContainer,
+                              ...props.clapContainer,
+                            }}
+                            height={30}
+                            width={30}
+                            fill="white"
+                          />
+                        </View>
+                      </TouchableCmp>
+                    )}
+                  </View>
                 )}
               </View>
             </View>
