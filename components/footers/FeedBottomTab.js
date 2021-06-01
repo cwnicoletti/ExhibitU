@@ -99,7 +99,7 @@ const FeedBottomTab = (props) => {
       </View>
       <View
         style={{
-          padding: 10,
+          padding: 8,
           backgroundColor: darkModeValue ? "black" : "white",
         }}
       />

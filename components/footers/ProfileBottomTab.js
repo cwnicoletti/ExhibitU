@@ -3,11 +3,7 @@ import React, { useRef, useState } from "react";
 import { Animated, TouchableWithoutFeedback, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import useDidMountEffect from "../../helper/useDidMountEffect";
-import {
-    onScreen, resetScroll
-} from "../../store/actions/user";
-
-
+import { onScreen, resetScroll } from "../../store/actions/user";
 
 const ProfileBottomTab = (props) => {
   const dispatch = useDispatch();
@@ -145,7 +141,7 @@ const ProfileBottomTab = (props) => {
           </View>
           <View
             style={{
-              padding: 10,
+              padding: 8,
               backgroundColor: darkModeValue ? "black" : "white",
             }}
           />
