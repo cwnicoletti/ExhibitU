@@ -14,7 +14,7 @@ import {
   TouchableNativeFeedback,
   TouchableOpacity,
   TouchableWithoutFeedback,
-  View
+  View,
 } from "react-native";
 import resolveAssetSource from "react-native/Libraries/Image/resolveAssetSource";
 import { useDispatch, useSelector } from "react-redux";
@@ -24,7 +24,7 @@ import {
   cheerOwnFeedPost,
   cheerPost,
   uncheerOwnFeedPost,
-  uncheerPost
+  uncheerPost,
 } from "../../store/actions/user";
 import LinkButton from "../UI/LinkButton";
 

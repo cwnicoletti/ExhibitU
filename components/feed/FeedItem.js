@@ -3,38 +3,31 @@ import { LinearGradient } from "expo-linear-gradient";
 import * as WebBrowser from "expo-web-browser";
 import React, { useEffect, useRef, useState } from "react";
 import {
-    ActivityIndicator, Animated, Dimensions,
-
-
-
-    FlatList, Image,
-    ImageBackground,
-
-
-
-    Platform, StyleSheet, Text,
-
-
-
-
-    TouchableNativeFeedback, TouchableOpacity,
-
-
-
-    TouchableWithoutFeedback, View
+  ActivityIndicator,
+  Animated,
+  Dimensions,
+  FlatList,
+  Image,
+  ImageBackground,
+  Platform,
+  StyleSheet,
+  Text,
+  TouchableNativeFeedback,
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+  View,
 } from "react-native";
 import resolveAssetSource from "react-native/Libraries/Image/resolveAssetSource";
 import { useDispatch, useSelector } from "react-redux";
 import Cheerfill from "../../assets/Icons/clap-fill.svg";
 import Cheer from "../../assets/Icons/clap.svg";
 import {
-    cheerOwnFeedPost, cheerPost,
-
-    uncheerOwnFeedPost, uncheerPost
+  cheerOwnFeedPost,
+  cheerPost,
+  uncheerOwnFeedPost,
+  uncheerPost,
 } from "../../store/actions/user";
 import LinkButton from "../UI/LinkButton";
-
-
 
 const toDateTime = (seconds) => {
   let t = new Date(0); // Epoch
@@ -550,8 +543,7 @@ const FeedItem = (props) => {
 };
 
 const styles = StyleSheet.create({
-  project: {
-  },
+  project: {},
   profileImage: {
     borderWidth: 1,
     borderColor: "white",
