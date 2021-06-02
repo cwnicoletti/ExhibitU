@@ -269,7 +269,7 @@ const ExploreProfileScreen = (props) => {
         }
         advocatesOnPress={() =>
           props.navigation.push("ExploreAdvocates", {
-            exploredExhibitUId: exploredUserData.exploredExhibitUId,
+            ExhibitUId: exploredUserData.exploredExhibitUId,
           })
         }
       />

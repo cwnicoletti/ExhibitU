@@ -112,7 +112,7 @@ const ExploreAdvocatesScreen = (props) => {
     props.navigation.push("ExploreProfile", {
       exploreData: {
         text,
-        ExhibitUId,
+        exploredExhibitUId: ExhibitUId,
         profilePictureUrl,
         fullname,
         username,
