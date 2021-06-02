@@ -13,6 +13,7 @@ import ExploreProjectHeader from "../../components/explore/ExploreProjectHeader"
 import FontAwesomeHeaderButton from "../../components/UI/FontAwesomeHeaderButton";
 import IoniconsHeaderButton from "../../components/UI/IoniconsHeaderButton";
 import ProjectPictures from "../../components/UI/ProjectPictures";
+import useDidMountEffect from "../../helper/useDidMountEffect";
 import { advocateForUser, unadvocateForUser } from "../../store/actions/user";
 
 const ExploreProjectScreen = (props) => {
@@ -21,7 +22,11 @@ const ExploreProjectScreen = (props) => {
   const darkModeValue = useSelector((state) => state.user.darkMode);
   const localId = useSelector((state) => state.auth.userId);
   const ExhibitUId = useSelector((state) => state.user.ExhibitUId);
-  const exploredUserDataLocal = props.navigation.getParam("exploredUserData");
+  const cheeredPosts = useSelector((state) => state.user.cheeredPosts);
+  const [intialCheeredPosts, setIntialCheeredPosts] = useState([]);
+  const [exploredUserDataLocal, setExploredUserDataLocal] = useState(
+    props.navigation.getParam("exploredUserData")
+  );
 
   const exploredProjectData = {
     projectId: props.navigation.getParam("projectId"),
@@ -41,6 +46,13 @@ const ExploreProjectScreen = (props) => {
   if (Platform.OS === "android") {
     android = true;
   }
+
+  const getExlusiveBothSetsDifference = (arr1, arr2) => {
+    const difference = arr1
+      .filter((x) => !arr2.includes(x))
+      .concat(arr2.filter((x) => !arr1.includes(x)));
+    return difference;
+  };
 
   const [isAdvocating, setIsAdvocating] = useState(
     exploredUserDataLocal.advocates.includes(ExhibitUId) ? true : false
@@ -135,6 +147,49 @@ const ExploreProjectScreen = (props) => {
   useEffect(() => {
     props.navigation.setParams({ exploreData: exploredUserDataLocal });
   }, [exploredUserDataLocal]);
+
+  useDidMountEffect(() => {
+    const difference = getExlusiveBothSetsDifference(
+      intialCheeredPosts,
+      cheeredPosts
+    );
+    const exploredUserDataNewState = exploredUserDataLocal;
+    for (const projectId of Object.keys(
+      exploredUserDataNewState.profileProjects
+    )) {
+      for (const postId of Object.keys(
+        exploredUserDataNewState.profileProjects[projectId].projectPosts
+      )) {
+        if (postId === difference[0]) {
+          if (intialCheeredPosts.length < cheeredPosts.length) {
+            exploredUserDataNewState.profileProjects[projectId].projectPosts[
+              postId
+            ].numberOfCheers += 1;
+            exploredUserDataNewState.profileProjects[projectId].projectPosts[
+              postId
+            ].cheering = [
+              ...exploredUserDataNewState.profileProjects[projectId]
+                .projectPosts[postId].cheering,
+              ExhibitUId,
+            ];
+          } else {
+            exploredUserDataNewState.profileProjects[projectId].projectPosts[
+              postId
+            ].numberOfCheers -= 1;
+            exploredUserDataNewState.profileProjects[projectId].projectPosts[
+              postId
+            ].cheering = exploredUserDataNewState.profileProjects[
+              projectId
+            ].projectPosts[postId].cheering.filter(
+              (userId) => userId !== ExhibitUId
+            );
+          }
+        }
+      }
+    }
+    setExploredUserDataLocal(exploredUserDataNewState);
+    setIntialCheeredPosts(cheeredPosts);
+  }, [cheeredPosts]);
 
   const topHeader = () => {
     return (

@@ -26,6 +26,8 @@ const ExploreScreen = (props) => {
   const [intialAdvocating, setIntialAdvocating] = useState([]);
   const following = useSelector((state) => state.user.following);
   const [intialFollowing, setIntialFollowing] = useState([]);
+  const cheeredPosts = useSelector((state) => state.user.cheeredPosts);
+  const [intialCheeredPosts, setIntialCheeredPosts] = useState([]);
   const resetScrollExplore = useSelector(
     (state) => state.user.resetScrollExplore
   );
@@ -33,6 +35,7 @@ const ExploreScreen = (props) => {
   useEffect(() => {
     setIntialAdvocating(advocating);
     setIntialFollowing(following);
+    setIntialCheeredPosts(cheeredPosts);
   }, []);
 
   useEffect(() => {
@@ -41,7 +44,7 @@ const ExploreScreen = (props) => {
 
   const searchFilterFunction = (text) => {
     setSearch(text);
-    if (!(/^ *$/.test(text))) {
+    if (!/^ *$/.test(text)) {
       const algoliasearch = require("algoliasearch");
       const client = algoliasearch(
         "EXC8LH5MAX",
@@ -60,7 +63,7 @@ const ExploreScreen = (props) => {
   const refreshSearchIndex = (text) => {
     setIsRefreshing(true);
     setSearch(text);
-    if (!(/^ *$/.test(text))) {
+    if (!/^ *$/.test(text)) {
       const algoliasearch = require("algoliasearch");
       const client = algoliasearch(
         "EXC8LH5MAX",
@@ -202,6 +205,57 @@ const ExploreScreen = (props) => {
     }
     setIntialFollowing(following);
   }, [following]);
+
+  useDidMountEffect(() => {
+    const difference = getExlusiveBothSetsDifference(
+      intialCheeredPosts,
+      cheeredPosts
+    );
+    if (search) {
+      const algoliasearch = require("algoliasearch");
+      const client = algoliasearch(
+        "EXC8LH5MAX",
+        "2d8cedcaab4cb2b351e90679963fbd92"
+      );
+      const index = client.initIndex("users");
+      index.search(search).then((responses) => {
+        for (const object of responses.hits) {
+          for (const projectId of Object.keys(object.profileProjects)) {
+            for (const postId of Object.keys(
+              object.profileProjects[projectId].projectPosts
+            )) {
+              if (postId === difference[0]) {
+                if (intialCheeredPosts.length < cheeredPosts.length) {
+                  console.log("HIT");
+                  object.profileProjects[projectId].projectPosts[
+                    postId
+                  ].numberOfCheers += 1;
+                  object.profileProjects[projectId].projectPosts[
+                    postId
+                  ].cheering = [
+                    ...object.profileProjects[projectId].projectPosts[postId]
+                      .cheering,
+                    ExhibitUId,
+                  ];
+                } else {
+                  object.profileProjects[projectId].projectPosts[
+                    postId
+                  ].numberOfCheers -= 1;
+                  object.profileProjects[projectId].projectPosts[
+                    postId
+                  ].cheering = object.profileProjects[projectId].projectPosts[
+                    postId
+                  ].cheering.filter((userId) => userId !== ExhibitUId);
+                }
+              }
+            }
+          }
+        }
+        setReturnedIndex(responses.hits);
+      });
+    }
+    setIntialCheeredPosts(cheeredPosts);
+  }, [cheeredPosts]);
 
   const flatlistExplore = useRef();
   useDidMountEffect(() => {

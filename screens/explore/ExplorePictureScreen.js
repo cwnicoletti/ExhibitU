@@ -1,9 +1,10 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Platform, ScrollView, StyleSheet, Text, View } from "react-native";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import { useSelector } from "react-redux";
 import ExplorePostView from "../../components/explore/ExplorePostView";
 import IoniconsHeaderButton from "../../components/UI/IoniconsHeaderButton";
+import useDidMountEffect from "../../helper/useDidMountEffect";
 
 const ExplorePictureScreen = (props) => {
   const darkModeValue = useSelector((state) => state.user.darkMode);
@@ -13,17 +14,28 @@ const ExplorePictureScreen = (props) => {
   const fullname = props.navigation.getParam("fullname");
   const profilePictureUrl = props.navigation.getParam("profilePictureUrl");
   const postPhotoUrl = props.navigation.getParam("postPhotoUrl");
-  const numberOfCheers = props.navigation.getParam("numberOfCheers");
+  const [numberOfCheers, setNumberOfCheers] = useState(
+    props.navigation.getParam("numberOfCheers")
+  );
   const numberOfComments = props.navigation.getParam("numberOfComments");
   const caption = props.navigation.getParam("caption");
-  const exploredUserData = props.navigation.getParam("exploredUserData");
   const links = props.navigation.getParam("postLinks");
   const postDateCreated = props.navigation.getParam("postDateCreated");
+  const exploredUserData = props.navigation.getParam("exploredUserData");
+  const cheeredPosts = useSelector((state) => state.user.cheeredPosts);
+  const [intialCheeredPosts, setIntialCheeredPosts] = useState([]);
 
   let android = null;
   if (Platform.OS === "android") {
     android = true;
   }
+
+  const getExlusiveBothSetsDifference = (arr1, arr2) => {
+    const difference = arr1
+      .filter((x) => !arr2.includes(x))
+      .concat(arr2.filter((x) => !arr1.includes(x)));
+    return difference;
+  };
 
   const viewCheeringHandler = () => {
     props.navigation.navigate("ExploreCheering", {
@@ -49,6 +61,30 @@ const ExplorePictureScreen = (props) => {
   useEffect(() => {
     props.navigation.setParams({ darkMode: darkModeValue });
   }, [darkModeValue]);
+
+  useDidMountEffect(() => {
+    const difference = getExlusiveBothSetsDifference(
+      intialCheeredPosts,
+      cheeredPosts
+    );
+    const exploredUserDataNewState = exploredUserData;
+    for (const projectId of Object.keys(
+      exploredUserDataNewState.profileProjects
+    )) {
+      for (const postId of Object.keys(
+        exploredUserDataNewState.profileProjects[projectId].projectPosts
+      )) {
+        if (postId === difference[0]) {
+          if (intialCheeredPosts.length < cheeredPosts.length) {
+            setNumberOfCheers((prevState) => prevState + 1);
+          } else {
+            setNumberOfCheers((prevState) => prevState - 1);
+          }
+        }
+      }
+    }
+    setIntialCheeredPosts(cheeredPosts);
+  }, [cheeredPosts]);
 
   return (
     <ScrollView
