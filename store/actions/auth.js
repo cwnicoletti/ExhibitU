@@ -29,6 +29,7 @@ export const signup = (email, fullname, username, password) => {
     await saveUserDocumentToStorage(
       getSignupResponse.data.docData.ExhibitUId,
       getSignupResponse.data.docData.email,
+      getSignupResponse.data.docData.profilePictureId,
       getSignupResponse.data.docData.profilePictureUrl,
       "",
       getSignupResponse.data.docData.projectTempCoverPhotoId,
@@ -186,6 +187,7 @@ export const login = (email, password) => {
     await saveUserDocumentToStorage(
       getLoginResponse.data.docData.ExhibitUId,
       getLoginResponse.data.docData.email,
+      getLoginResponse.data.docData.profilePictureId,
       getLoginResponse.data.docData.profilePictureUrl,
       profilePictureBase64,
       getLoginResponse.data.docData.projectTempCoverPhotoId,
@@ -255,6 +257,7 @@ const saveDataToStorage = async (localId, token, introing) => {
 const saveUserDocumentToStorage = async (
   ExhibitUId,
   email,
+  profilePictureId,
   profilePictureUrl,
   profilePictureBase64,
   projectTempCoverPhotoId,
@@ -295,6 +298,7 @@ const saveUserDocumentToStorage = async (
     JSON.stringify({
       ExhibitUId,
       email,
+      profilePictureId,
       profilePictureUrl,
       profilePictureBase64,
       projectTempCoverPhotoId,

@@ -52,6 +52,7 @@ import {
 const intialState = {
   ExhibitUId: "",
   email: "",
+  profilePictureId: "",
   profilePictureUrl: "",
   profilePictureBase64: "",
   projectTempCoverPhotoId: "",
@@ -103,6 +104,7 @@ export default (state = intialState, action) => {
         ...state,
         ExhibitUId: action.ExhibitUId,
         email: action.email,
+        profilePictureId: action.profilePictureId,
         profilePictureUrl: action.profilePictureUrl,
         profilePictureBase64: action.profilePictureBase64,
         projectTempCoverPhotoId: action.projectTempCoverPhotoId,
@@ -196,6 +198,7 @@ export default (state = intialState, action) => {
       }
       return {
         ...state,
+        profilePictureId: action.profilePictureId,
         profilePictureUrl: action.profilePictureUrl,
         profilePictureBase64: action.profilePictureBase64,
       };

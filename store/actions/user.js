@@ -190,6 +190,7 @@ export const getUserData = () => {
       type: GET_USER_DATA,
       ExhibitUId: transformedData.ExhibitUId,
       email: transformedData.email,
+      profilePictureId: transformedData.profilePictureId,
       profilePictureUrl: transformedData.profilePictureUrl,
       profilePictureBase64: transformedData.profilePictureBase64,
       projectTempCoverPhotoId: transformedData.projectTempCoverPhotoId,
@@ -602,9 +603,14 @@ export const unadvocateForUser = (
   };
 };
 
-export const uploadChangeProfilePicture = (base64, ExhibitUId, localId) => {
+export const uploadChangeProfilePicture = (
+  base64,
+  ExhibitUId,
+  localId,
+  profilePictureId
+) => {
   return async (dispatch) => {
-    const picture = { base64, ExhibitUId, localId };
+    const picture = { base64, ExhibitUId, localId, profilePictureId };
 
     const uploadedPictureUrlResponse = await axios.post(
       "https://us-central1-showcase-79c28.cloudfunctions.net/uploadChangeProfilePicture",
@@ -613,6 +619,7 @@ export const uploadChangeProfilePicture = (base64, ExhibitUId, localId) => {
 
     await AsyncStorage.getItem("userDocData").then(async (data) => {
       data = JSON.parse(data);
+      data.profilePictureId = uploadedPictureUrlResponse.data.pictureId;
       data.profilePictureUrl = uploadedPictureUrlResponse.data.url;
       data.profilePictureBase64 = base64;
 
@@ -629,6 +636,7 @@ export const uploadChangeProfilePicture = (base64, ExhibitUId, localId) => {
 
     await dispatch({
       type: CHANGE_PROFILE_PICTURE,
+      profilePictureId: uploadedPictureUrlResponse.data.pictureId,
       profilePictureUrl: uploadedPictureUrlResponse.data.url,
       profilePictureBase64: base64,
       ExhibitUId,
@@ -1347,7 +1355,7 @@ export const uncheerPost = (
       }
 
       data.cheeredPosts = data.cheeredPosts.filter((post) => post !== postId);
-      
+
       await AsyncStorage.setItem("userDocData", JSON.stringify(data));
     });
 

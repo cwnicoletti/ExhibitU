@@ -2,13 +2,17 @@ import { Ionicons, Octicons } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
 import React, { useCallback, useEffect, useReducer, useState } from "react";
 import {
-    ActivityIndicator,
-    FlatList, Image, LogBox, Platform, SafeAreaView, StyleSheet,
-
-    Text,
-
-
-    TouchableNativeFeedback, TouchableOpacity, View
+  ActivityIndicator,
+  FlatList,
+  Image,
+  LogBox,
+  Platform,
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  TouchableNativeFeedback,
+  TouchableOpacity,
+  View,
 } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
@@ -17,10 +21,11 @@ import FilterSwitch from "../../components/UI/FilterSwitch";
 import Input from "../../components/UI/Input";
 import IoniconsHeaderButton from "../../components/UI/IoniconsHeaderButton";
 import LinkButton from "../../components/UI/LinkButton";
-import { setShowResume, uploadChangeProfilePicture, uploadUpdateUserProfile } from "../../store/actions/user";
-
-
-
+import {
+  setShowResume,
+  uploadChangeProfilePicture,
+  uploadUpdateUserProfile,
+} from "../../store/actions/user";
 
 const FORM_INPUT_UPDATE = "FORM_INPUT_UPDATE";
 const FORM_INPUT_LINKS_UPDATE = "FORM_INPUT_LINKS_UPDATE";
@@ -131,9 +136,8 @@ const formReducer = (state, action) => {
           ([links, v]) => links !== `link${action.linkNum}`
         )
       );
-      const reorderedRemainingLinkValues = updateDictionaryOnRemove(
-        remainingLinkValues
-      );
+      const reorderedRemainingLinkValues =
+        updateDictionaryOnRemove(remainingLinkValues);
       return {
         inputValues: { ...reorderedRemainingLinkValues },
       };
@@ -153,6 +157,7 @@ const EditProfileScreen = (props) => {
   const showResumeValue = useSelector((state) => state.user.showResume);
   const localId = useSelector((state) => state.auth.userId);
   const ExhibitUId = useSelector((state) => state.user.ExhibitUId);
+  const profilePictureId = useSelector((state) => state.user.profilePictureId);
   const profilePictureBase64 = useSelector(
     (state) => state.user.profilePictureBase64
   );
@@ -275,7 +280,14 @@ const EditProfileScreen = (props) => {
       } else {
         setFileSizeError(false);
         const base64 = `data:image/png;base64,${result.base64}`;
-        await dispatch(uploadChangeProfilePicture(base64, ExhibitUId, localId));
+        await dispatch(
+          uploadChangeProfilePicture(
+            base64,
+            ExhibitUId,
+            localId,
+            profilePictureId
+          )
+        );
       }
     }
     await setIsLoadingTempPicture(false);
@@ -309,9 +321,8 @@ const EditProfileScreen = (props) => {
   useEffect(() => {
     (async () => {
       if (Platform.OS !== "web") {
-        const {
-          status,
-        } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+        const { status } =
+          await ImagePicker.requestMediaLibraryPermissionsAsync();
         if (status !== "granted") {
           alert("Sorry, we need camera roll permissions to make this work!");
         }
