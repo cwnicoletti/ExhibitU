@@ -7,7 +7,9 @@ const ExploreUserTitle = (props) => {
     : require("../../assets/default-profile-icon.jpg");
 
   return (
-    <View style={{ justifyContent: "center", alignItems: "center" }}>
+    <View
+      style={{ justifyContent: "center", alignItems: "center", margin: 10 }}
+    >
       <Image
         style={{ ...styles.showCaseLocalImage, ...props.style }}
         source={sourceImg}

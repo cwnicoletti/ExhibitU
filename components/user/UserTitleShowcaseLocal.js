@@ -3,7 +3,7 @@ import { Image, StyleSheet, Text, View } from "react-native";
 
 const UserTitleExhibitULocal = (props) => {
   return (
-    <View style={{ justifyContent: "center", alignItems: "center" }}>
+    <View style={{ justifyContent: "center", alignItems: "center", margin: 10 }}>
       <Image
         style={{ ...styles.showCaseLocalImage, ...props.style }}
         source={
