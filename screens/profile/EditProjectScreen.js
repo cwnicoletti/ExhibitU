@@ -156,12 +156,16 @@ const EditProjectScreen = (props) => {
   const [linksState, setLinksState] = useState(Object.values(prevLinks));
   const darkModeValue = useSelector((state) => state.user.darkMode);
   const localId = useSelector((state) => state.auth.userId);
-  const exhibitTitle = props.navigation.getParam("projectTitle");
+  const profileProjects = useSelector((state) => state.user.profileProjects);
+  const currentProjectId = props.navigation.getParam("projectId");
+  const exhibitTitle = profileProjects[currentProjectId].projectTitle;
   const projectId = props.navigation.getParam("projectId");
-  const projectDescription = props.navigation.getParam("projectDescription");
-  const projectCoverPhotoId = props.navigation.getParam("projectCoverPhotoId");
+  const projectDescription =
+    profileProjects[currentProjectId].projectDescription;
+  const projectCoverPhotoId =
+    profileProjects[currentProjectId].projectCoverPhotoId;
   const [projectCoverPhotoUrl, setProjectCoverPhotoUrl] = useState(
-    props.navigation.getParam("projectCoverPhotoUrl")
+    profileProjects[currentProjectId].projectCoverPhotoUrl
   );
   const projectTempCoverPhotoUrl = useSelector(
     (state) => state.user.projectTempCoverPhotoUrl

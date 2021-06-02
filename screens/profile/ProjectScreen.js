@@ -7,7 +7,6 @@ import IoniconsHeaderButton from "../../components/UI/IoniconsHeaderButton";
 import ProjectPictures from "../../components/UI/ProjectPictures";
 import { changeProjectNumberOfColumns } from "../../store/actions/user";
 
-
 const ProjectScreen = (props) => {
   const dispatch = useDispatch();
   const darkModeValue = useSelector((state) => state.user.darkMode);
@@ -116,11 +115,6 @@ const ProjectScreen = (props) => {
         onEditProfilePress={() =>
           props.navigation.navigate("EditProjectScreen", {
             projectId: currentProjectId,
-            projectTitle: profileProjects[currentProjectId].projectTitle,
-            projectCoverPhotoUrl:
-              profileProjects[currentProjectId].projectCoverPhotoUrl,
-            projectDescription:
-              profileProjects[currentProjectId].projectDescription,
             links: profileProjects[currentProjectId].projectLinks,
           })
         }
