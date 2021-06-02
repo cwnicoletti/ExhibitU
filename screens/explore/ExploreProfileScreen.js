@@ -175,49 +175,23 @@ const ExploreProfileScreen = (props) => {
 
   useDidMountEffect(() => {
     if (isAdvocating) {
-      const algoliasearch = require("algoliasearch");
-      const client = algoliasearch(
-        "EXC8LH5MAX",
-        "2d8cedcaab4cb2b351e90679963fbd92"
-      );
-      const index = client.initIndex("users");
-
-      index.search(exploredUserData.text).then((responses) => {
-        responses.hits.forEach((hit) => {
-          if (hit.objectID === exploredUserData.exploredExhibitUId) {
-            const exploredUserDataNewState = exploredUserData;
-            exploredUserDataNewState.advocates =
-              exploredUserDataNewState.advocates.filter(
-                (user) => user !== ExhibitUId
-              );
-            exploredUserDataNewState.numberOfAdvocates -= 1;
-            setIsAdvocating(false);
-            setExploredUserData(exploredUserDataNewState);
-          }
-        });
-      });
+      const exploredUserDataNewState = exploredUserData;
+      exploredUserDataNewState.advocates =
+        exploredUserDataNewState.advocates.filter(
+          (user) => user !== ExhibitUId
+        );
+      exploredUserDataNewState.numberOfAdvocates -= 1;
+      setIsAdvocating(false);
+      setExploredUserData(exploredUserDataNewState);
     } else {
-      const algoliasearch = require("algoliasearch");
-      const client = algoliasearch(
-        "EXC8LH5MAX",
-        "2d8cedcaab4cb2b351e90679963fbd92"
-      );
-      const index = client.initIndex("users");
-
-      index.search(exploredUserData.text).then((responses) => {
-        responses.hits.forEach((hit) => {
-          if (hit.objectID === exploredUserData.exploredExhibitUId) {
-            const exploredUserDataNewState = exploredUserData;
-            exploredUserDataNewState.advocates = [
-              ...exploredUserDataNewState.advocates,
-              ExhibitUId,
-            ];
-            exploredUserDataNewState.numberOfAdvocates += 1;
-            setIsAdvocating(true);
-            setExploredUserData(exploredUserDataNewState);
-          }
-        });
-      });
+      const exploredUserDataNewState = exploredUserData;
+      exploredUserDataNewState.advocates = [
+        ...exploredUserDataNewState.advocates,
+        ExhibitUId,
+      ];
+      exploredUserDataNewState.numberOfAdvocates += 1;
+      setIsAdvocating(true);
+      setExploredUserData(exploredUserDataNewState);
     }
   }, [projectsAdvocating]);
 
