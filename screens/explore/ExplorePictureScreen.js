@@ -54,6 +54,10 @@ const ExplorePictureScreen = (props) => {
   };
 
   useEffect(() => {
+    setIntialCheeredPosts(cheeredPosts);
+  }, []);
+
+  useEffect(() => {
     props.navigation.setParams({ android: android });
     props.navigation.setParams({ projectId: currentProjectId });
   }, []);
