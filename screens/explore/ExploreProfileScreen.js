@@ -394,7 +394,7 @@ ExploreProfileScreen.navigationOptions = (navData) => {
                   >
                     <Item
                       title="Follow"
-                      iconName={"user-follow"}
+                      iconName={"user-unfollow"}
                       color={"red"}
                       onPress={unfollowFn}
                     />
