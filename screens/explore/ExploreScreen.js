@@ -14,6 +14,7 @@ import { useDispatch, useSelector } from "react-redux";
 import ExploreCard from "../../components/explore/ExploreCard";
 import useDidMountEffect from "../../helper/useDidMountEffect";
 import { offScreen } from "../../store/actions/user";
+import { FontAwesome5 } from "@expo/vector-icons";
 
 const ExploreScreen = (props) => {
   const dispatch = useDispatch();
@@ -365,6 +366,25 @@ const ExploreScreen = (props) => {
           />
         )}
       />
+      <View
+        style={{
+          flexDirection: "row",
+          alignSelf: "center",
+          alignItems: "center",
+          margin: 10,
+        }}
+      >
+        <Text
+          style={{
+            color: "grey",
+            fontWeight: "bold",
+            marginRight: 10,
+          }}
+        >
+          Searches powered by Algolia
+        </Text>
+        <FontAwesome5 name="algolia" size={24} color={"grey"} />
+      </View>
     </View>
   );
 };
