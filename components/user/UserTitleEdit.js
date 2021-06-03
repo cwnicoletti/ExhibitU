@@ -1,16 +1,14 @@
 import React from "react";
 import {
-    Image,
-
-
-    Platform, StyleSheet, Text,
-
-
-    TouchableNativeFeedback,
-    TouchableOpacity, View
+  Image,
+  Platform,
+  StyleSheet,
+  Text,
+  TouchableNativeFeedback,
+  TouchableOpacity,
+  View,
 } from "react-native";
 import EditButton from "../UI/EditButton";
-
 
 const UserTitleEdit = (props) => {
   let TouchableCmp = TouchableOpacity;
@@ -20,7 +18,12 @@ const UserTitleEdit = (props) => {
 
   return (
     <View
-      style={{ alignItems: "center", justifyContent: "center", width: "100%" }}
+      style={{
+        alignItems: "center",
+        justifyContent: "center",
+        width: "100%",
+        margin: 5,
+      }}
     >
       <View style={{ ...styles.secondContainer }}>
         <View style={{ ...styles.thirdContainer }}>
