@@ -202,7 +202,6 @@ export const getUserData = () => {
       fullname: transformedData.fullname,
       jobTitle: transformedData.jobTitle,
       username: transformedData.username,
-      resumeLinkUrl: transformedData.resumeLinkUrl,
       profileBiography: transformedData.profileBiography,
       numberOfFollowers: transformedData.numberOfFollowers,
       numberOfFollowing: transformedData.numberOfFollowing,
@@ -210,7 +209,6 @@ export const getUserData = () => {
       numberOfAdvocating: transformedData.numberOfAdvocating,
       profileColumns: transformedData.profileColumns,
       darkMode: transformedData.darkMode,
-      showResume: transformedData.showResume,
       showCheering: transformedData.showCheering,
       hideFollowing: transformedData.hideFollowing,
       hideFollowers: transformedData.hideFollowers,
@@ -246,8 +244,6 @@ export const uploadUpdateUserProfile = (
   jobTitle,
   username,
   bio,
-  resumeLink,
-  showResumeValue,
   links
 ) => {
   return async (dispatch) => {
@@ -258,8 +254,6 @@ export const uploadUpdateUserProfile = (
       jobTitle,
       username,
       bio,
-      resumeLink,
-      showResumeValue,
       links,
     };
 
@@ -274,8 +268,6 @@ export const uploadUpdateUserProfile = (
       data.jobTitle = jobTitle;
       data.username = username;
       data.profileBiography = bio;
-      data.resumeLink = resumeLink;
-      data.showResumeValue = showResumeValue;
       data.profileLinks = links;
       if (Object.keys(data.userFeed) > 0) {
         const feedPosts = Object.keys(data.userFeed);
@@ -287,8 +279,6 @@ export const uploadUpdateUserProfile = (
               jobTitle: data.jobTitle,
               username: data.username,
               profileBiography: data.bio,
-              resumeLink: data.resumeLink,
-              showResumeValue: data.showResumeValue,
               profileLinks: data.links,
             },
           };
@@ -303,8 +293,6 @@ export const uploadUpdateUserProfile = (
       jobTitle,
       username,
       bio,
-      resumeLink,
-      showResumeValue,
       profileLinks: links,
     });
   };

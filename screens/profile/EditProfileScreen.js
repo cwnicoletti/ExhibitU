@@ -22,7 +22,6 @@ import Input from "../../components/UI/Input";
 import IoniconsHeaderButton from "../../components/UI/IoniconsHeaderButton";
 import LinkButton from "../../components/UI/LinkButton";
 import {
-  setShowResume,
   uploadChangeProfilePicture,
   uploadUpdateUserProfile,
 } from "../../store/actions/user";
@@ -148,13 +147,11 @@ const formReducer = (state, action) => {
 const EditProfileScreen = (props) => {
   const dispatch = useDispatch();
   const [fileSizeError, setFileSizeError] = useState(false);
-  const [showResumeField, setShowResumeField] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const prevLinks = useSelector((state) => state.user.profileLinks);
   const [linksState, setLinksState] = useState(Object.values(prevLinks));
   const [isLoadingTempPicture, setIsLoadingTempPicture] = useState(false);
   const darkModeValue = useSelector((state) => state.user.darkMode);
-  const showResumeValue = useSelector((state) => state.user.showResume);
   const localId = useSelector((state) => state.auth.userId);
   const ExhibitUId = useSelector((state) => state.user.ExhibitUId);
   const profilePictureId = useSelector((state) => state.user.profilePictureId);
@@ -169,7 +166,6 @@ const EditProfileScreen = (props) => {
     fullname: useSelector((state) => state.user.fullname),
     username: useSelector((state) => state.user.username),
     jobTitle: useSelector((state) => state.user.jobTitle),
-    resumeLinkUrl: useSelector((state) => state.user.resumeLinkUrl),
     profileBiography: useSelector((state) => state.user.profileBiography),
   };
 
@@ -189,7 +185,6 @@ const EditProfileScreen = (props) => {
       fullname: userData.fullname ? userData.fullname : "",
       jobTitle: userData.jobTitle ? userData.jobTitle : "",
       username: userData.username ? userData.username : "",
-      resumeLink: userData.resumeLinkUrl ? userData.resumeLinkUrl : "",
       bio: userData.profileBiography ? userData.profileBiography : "",
       ...prevLinks,
     },
@@ -197,7 +192,6 @@ const EditProfileScreen = (props) => {
       fullname: userData.fullname ? true : false,
       jobTitle: userData.jobTitle ? true : false,
       username: userData.username ? true : false,
-      resumeLink: userData.resumeLinkUrl ? true : false,
       bio: userData.profileBiography ? true : false,
     },
     formIsValid: userData ? true : false,
@@ -249,8 +243,6 @@ const EditProfileScreen = (props) => {
         formState.inputValues.jobTitle,
         formState.inputValues.username,
         formState.inputValues.bio,
-        formState.inputValues.resumeLink,
-        showResumeValue,
         newLinks
       )
     );
@@ -259,7 +251,6 @@ const EditProfileScreen = (props) => {
       username: formState.inputValues.jobTitle,
       jobTitle: formState.inputValues.username,
       profileBiography: formState.inputValues.bio,
-      resumeLinkUrl: formState.inputValues.resumeLink,
     };
     await setIsLoading(false);
   }, [dispatch, formState]);
@@ -538,46 +529,6 @@ const EditProfileScreen = (props) => {
             </TouchableCmp>
           ) : null}
         </View>
-        {showResumeValue ? (
-          <TouchableCmp
-            style={{
-              flexDirection: "row",
-              borderWidth: 1,
-              width: "96%",
-              alignItems: "center",
-              justifyContent: "center",
-              marginBottom: 10,
-              ...props.resumeLink,
-              borderColor: darkModeValue ? "gray" : "#c9c9c9",
-            }}
-            onPress={() => handleLinkOnPress(linktoresume)}
-          >
-            <View
-              style={{
-                flexDirection: "row",
-                width: "96%",
-                alignItems: "center",
-                justifyContent: "center",
-                ...props.resumeLink,
-                borderColor: darkModeValue ? "gray" : "#c9c9c9",
-              }}
-            >
-              <Ionicons
-                name="ios-list-outline"
-                size={24}
-                color={darkModeValue ? "white" : "black"}
-              />
-              <Text
-                style={{
-                  margin: 10,
-                  color: darkModeValue ? "white" : "black",
-                }}
-              >
-                Resume
-              </Text>
-            </View>
-          </TouchableCmp>
-        ) : null}
         {formState.inputValues.bio ? (
           <Text
             style={{ color: darkModeValue ? "white" : "black", padding: 20 }}
@@ -735,38 +686,6 @@ const EditProfileScreen = (props) => {
         initiallyValid={userData.jobTitle}
         required
       />
-      <FilterSwitch
-        viewStyle={{
-          flexDirection: "row",
-          justifyContent: "space-between",
-          alignItems: "center",
-          margin: 10,
-          paddingLeft: 5,
-        }}
-        labelStyle={{
-          color: darkModeValue ? "white" : "black",
-        }}
-        label="Show Resume"
-        state={showResumeValue}
-        onChange={(newValue) => {
-          dispatch(setShowResume(localId, ExhibitUId, newValue));
-          setShowResumeField(newValue);
-        }}
-      />
-      {showResumeField || showResumeValue ? (
-        <Input
-          textLabel={{ color: darkModeValue ? "white" : "black" }}
-          id="resumeLink"
-          label="Resume Link"
-          errorText="Please enter a valid resume url!"
-          keyboardType={Platform.OS === "ios" ? "url" : "default"}
-          returnKeyType="next"
-          onInputChange={inputChangeHandler}
-          initialValue={userData.resumeLinkUrl ? userData.resumeLinkUrl : ""}
-          initiallyValid={userData.resumeLinkUrl}
-          required
-        />
-      ) : null}
       <Input
         textLabel={{ color: darkModeValue ? "white" : "black" }}
         id="bio"
