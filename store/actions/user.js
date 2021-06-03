@@ -11,7 +11,6 @@ export const OFF_SCREEN = "OFF_SCREEN";
 
 export const GET_SWITCHES = "GET_SWITCHES";
 export const SET_DARKMODE = "SET_DARKMODE";
-export const SHOW_RESUME = "SHOW_RESUME";
 export const SHOW_CHEERING = "SHOW_CHEERING";
 export const HIDE_FOLLOWING = "HIDE_FOLLOWING";
 export const HIDE_FOLLOWERS = "HIDE_FOLLOWERS";
@@ -228,7 +227,6 @@ export const getUserData = () => {
     await dispatch({
       type: GET_SWITCHES,
       darkMode: transformedData.darkMode,
-      showResume: transformedData.showResume,
       showCheering: transformedData.showCheering,
       hideFollowing: transformedData.hideFollowing,
       hideFollowers: transformedData.hideFollowers,
@@ -1647,30 +1645,6 @@ export const setDarkMode = (localId, ExhibitUId, value) => {
     });
 
     dispatch({ type: SET_DARKMODE, darkMode: value });
-  };
-};
-
-export const setShowResume = (localId, ExhibitUId, value) => {
-  return async (dispatch) => {
-    const showResumeData = {
-      localId,
-      ExhibitUId,
-      value,
-      switchName: "showResume",
-    };
-
-    axios.post(
-      `https://us-central1-showcase-79c28.cloudfunctions.net/setSwitchPublicInfo`,
-      showResumeData
-    );
-
-    await AsyncStorage.getItem("userDocData").then(async (data) => {
-      data = JSON.parse(data);
-      data.showResume = value;
-      await AsyncStorage.setItem("userDocData", JSON.stringify(data));
-    });
-
-    dispatch({ type: SHOW_RESUME, ExhibitUId, showResumeValue: value });
   };
 };
 

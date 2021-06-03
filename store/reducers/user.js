@@ -33,7 +33,6 @@ import {
   SET_DARKMODE,
   SHOWCASE_PROFILE,
   SHOW_CHEERING,
-  SHOW_RESUME,
   UNADVOCATE_FOR_USER,
   UNCHEER_OWN_FEED_POST,
   UNCHEER_OWN_PROFILE_POST,
@@ -924,25 +923,6 @@ export default (state = intialState, action) => {
         ...state,
         hiddenProfileFooter: action.value,
       };
-    case SHOW_RESUME:
-      if (state.userFeed) {
-        Object.entries(state.userFeed).map(([id, value]) => {
-          if (state.userFeed[id].ExhibitUId === action.ExhibitUId) {
-            state.userFeed[id].showResumeValue = action.showResumeValue;
-            Object.entries(state.userFeed[id].profileProjects).map(
-              ([projectId, value]) => {
-                state.userFeed[id].profileProjects[projectId].projectPosts[
-                  id
-                ].showResumeValue = action.showResumeValue;
-              }
-            );
-          }
-        });
-      }
-      return {
-        ...state,
-        showResume: action.showResumeValue,
-      };
     case SHOW_CHEERING:
       if (state.userFeed) {
         Object.entries(state.userFeed).map(([id, value]) => {
@@ -1023,7 +1003,6 @@ export default (state = intialState, action) => {
       return {
         ...state,
         darkMode: action.darkMode,
-        showResume: action.showResume,
         showCheering: action.showCheering,
         hideFollowing: action.hideFollowing,
         hideFollowers: action.hideFollowers,

@@ -40,8 +40,6 @@ const FeedProjectScreen = (props) => {
           numberOfFollowing: useSelector(
             (state) => state.user.numberOfFollowing
           ),
-          showResumeValue: useSelector((state) => state.user.showResumeValue),
-          resumeLink: useSelector((state) => state.user.resumeLink),
           hideFollowing: useSelector((state) => state.user.hideFollowing),
           hideFollowers: useSelector((state) => state.user.hideFollowers),
           hideAdvocates: useSelector((state) => state.user.hideAdvocates),

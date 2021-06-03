@@ -139,8 +139,6 @@ const ExploreProfileScreen = (props) => {
           exploredUserDataNewState.profileLinks = hit.profileLinks;
           exploredUserDataNewState.projectLinks = hit.projectLinks;
           exploredUserDataNewState.profileColumns = hit.profileColumns;
-          exploredUserDataNewState.showResume = hit.showResume;
-          exploredUserDataNewState.resumeLinkUrl = hit.resumeLinkUrl;
           exploredUserDataNewState.showCheering = hit.showCheering;
           exploredUserDataNewState.numberOfFollowers = hit.numberOfFollowers;
           exploredUserDataNewState.numberOfFollowing = hit.numberOfFollowing;
@@ -244,10 +242,6 @@ const ExploreProfileScreen = (props) => {
           ...styles.profileDescriptionStyle,
           color: darkModeValue ? "white" : "black",
         }}
-        resumeText={{
-          color: darkModeValue ? "white" : "black",
-        }}
-        iconResumeStyle={darkModeValue ? "white" : "black"}
         description={exploredUserData.profileBiography}
         numberOfFollowers={exploredUserData.numberOfFollowers}
         numberOfFollowing={exploredUserData.numberOfFollowing}

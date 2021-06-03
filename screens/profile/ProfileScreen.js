@@ -131,10 +131,6 @@ const ProfileScreen = (props) => {
           ...styles.profileDescriptionStyle,
           color: darkModeValue ? "white" : "black",
         }}
-        resumeText={{
-          color: darkModeValue ? "white" : "black",
-        }}
-        iconResumeStyle={darkModeValue ? "white" : "black"}
         onEditProfilePress={() => props.navigation.navigate("EditProfile")}
         description={userData.profileBiography}
         onAddNewProjectPress={() => props.navigation.navigate("AddProject")}

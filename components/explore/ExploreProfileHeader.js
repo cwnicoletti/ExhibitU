@@ -25,11 +25,9 @@ const ExploreProfileHeader = (props) => {
   const followingValue = props.hideFollowing;
   const followersValue = props.hideFollowers;
   const advocatesValue = props.hideAdvocates;
-  const showResumeValue = props.showResumeValue;
   const links = props.links;
 
   const userDataProfileHeader = {
-    resumeLink: props.resumeLink,
     numberOfFollowers: props.numberOfFollowers,
     numberOfFollowing: props.numberOfFollowing,
     numberOfAdvocates: props.numberOfAdvocates,
@@ -169,36 +167,6 @@ const ExploreProfileHeader = (props) => {
             </TouchableCmp>
           ) : null}
         </View>
-        {showResumeValue ? (
-          <TouchableCmp
-            style={{
-              ...styles.resumeLink,
-              ...props.resumeLink,
-              borderColor: darkModeValue ? "gray" : "#c9c9c9",
-            }}
-            onPress={() => handleLinkOnPress(linktoresume)}
-          >
-            <View
-              style={{
-                flexDirection: "row",
-                width: "96%",
-                alignItems: "center",
-                justifyContent: "center",
-                ...props.resumeLink,
-                borderColor: darkModeValue ? "gray" : "#c9c9c9",
-              }}
-            >
-              <Ionicons
-                name="ios-paper"
-                size={24}
-                color={props.iconResumeStyle}
-              />
-              <Text style={{ ...styles.resumeText, ...props.resumeText }}>
-                Resume
-              </Text>
-            </View>
-          </TouchableCmp>
-        ) : null}
         {props.description ? (
           <Text style={props.descriptionStyle}>{props.description}</Text>
         ) : null}
@@ -269,17 +237,6 @@ const styles = StyleSheet.create({
     height: 100,
     width: 100,
     borderRadius: 100 / 2,
-  },
-  resumeLink: {
-    flexDirection: "row",
-    borderWidth: 1,
-    width: "96%",
-    alignItems: "center",
-    justifyContent: "center",
-    marginBottom: 10,
-  },
-  resumeText: {
-    margin: 10,
   },
 });
 

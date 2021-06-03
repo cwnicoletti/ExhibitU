@@ -22,16 +22,12 @@ const Profile = (props) => {
   const followingValue = useSelector((state) => state.user.hideFollowing);
   const followersValue = useSelector((state) => state.user.hideFollowers);
   const advocatesValue = useSelector((state) => state.user.hideAdvocates);
-  const showResumeValue = useSelector((state) => state.user.showResume);
 
   const userDataProfileHeader = {
-    resumeLink: useSelector((state) => state.user.resumeLink),
     numberOfFollowers: useSelector((state) => state.user.numberOfFollowers),
     numberOfFollowing: useSelector((state) => state.user.numberOfFollowing),
     numberOfAdvocates: useSelector((state) => state.user.numberOfAdvocates),
   };
-
-  const linktoresume = userDataProfileHeader.resumeLink;
 
   let TouchableCmp = TouchableOpacity;
   if (Platform.OS === "android") {
@@ -168,36 +164,6 @@ const Profile = (props) => {
             </TouchableCmp>
           ) : null}
         </View>
-        {showResumeValue ? (
-          <TouchableCmp
-            style={{
-              ...styles.resumeLink,
-              ...props.resumeLink,
-              borderColor: darkModeValue ? "gray" : "#c9c9c9",
-            }}
-            onPress={() => handleLinkOnPress(linktoresume)}
-          >
-            <View
-              style={{
-                flexDirection: "row",
-                width: "96%",
-                alignItems: "center",
-                justifyContent: "center",
-                ...props.resumeLink,
-                borderColor: darkModeValue ? "gray" : "#c9c9c9",
-              }}
-            >
-              <Ionicons
-                name="ios-paper"
-                size={24}
-                color={props.iconResumeStyle}
-              />
-              <Text style={{ ...styles.resumeText, ...props.resumeText }}>
-                Resume
-              </Text>
-            </View>
-          </TouchableCmp>
-        ) : null}
         {props.description ? (
           <Text style={props.descriptionStyle}>{props.description}</Text>
         ) : null}
@@ -438,17 +404,6 @@ const styles = StyleSheet.create({
     height: 100,
     width: 100,
     borderRadius: 100 / 2,
-  },
-  resumeLink: {
-    flexDirection: "row",
-    borderWidth: 1,
-    width: "96%",
-    alignItems: "center",
-    justifyContent: "center",
-    marginBottom: 10,
-  },
-  resumeText: {
-    margin: 10,
   },
 });
 

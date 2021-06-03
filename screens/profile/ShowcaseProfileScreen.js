@@ -43,8 +43,6 @@ const ShowcaseProfileScreen = (props) => {
           numberOfFollowing: useSelector(
             (state) => state.user.numberOfFollowing
           ),
-          showResumeValue: useSelector((state) => state.user.showResumeValue),
-          resumeLink: useSelector((state) => state.user.resumeLink),
           hideFollowing: useSelector((state) => state.user.hideFollowing),
           hideFollowers: useSelector((state) => state.user.hideFollowers),
           hideAdvocates: useSelector((state) => state.user.hideAdvocates),
@@ -62,8 +60,6 @@ const ShowcaseProfileScreen = (props) => {
           numberOfAdvocates: props.navigation.getParam("numberOfAdvocates"),
           numberOfFollowers: props.navigation.getParam("numberOfFollowers"),
           numberOfFollowing: props.navigation.getParam("numberOfFollowing"),
-          showResumeValue: props.navigation.getParam("showResumeValue"),
-          resumeLink: props.navigation.getParam("resumeLink"),
           hideFollowing: props.navigation.getParam("hideFollowing"),
           hideFollowers: props.navigation.getParam("hideFollowers"),
           hideAdvocates: props.navigation.getParam("hideAdvocates"),
@@ -116,8 +112,6 @@ const ShowcaseProfileScreen = (props) => {
         followingValue={userData.hideFollowing}
         followersValue={userData.hideFollowers}
         advocatesValue={userData.hideAdvocates}
-        showResumeValue={userData.showResumeValue}
-        resumeLink={userData.resumeLink}
         numberOfFollowers={userData.numberOfFollowers}
         numberOfFollowing={userData.numberOfFollowing}
         numberOfAdvocates={userData.numberOfAdvocates}
@@ -125,10 +119,6 @@ const ShowcaseProfileScreen = (props) => {
           ...styles.profileDescriptionStyle,
           color: darkModeValue ? "white" : "black",
         }}
-        resumeText={{
-          color: darkModeValue ? "white" : "black",
-        }}
-        iconResumeStyle={darkModeValue ? "white" : "black"}
         onEditProfilePress={() => props.navigation.navigate("EditProfile")}
         onAddNewProjectPress={() => props.navigation.navigate("AddProject")}
         followersOnPress={() =>
