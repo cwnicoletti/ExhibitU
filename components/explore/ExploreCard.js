@@ -1,17 +1,14 @@
 import React from "react";
 import {
-    Image,
-
-
-
-    Platform, StyleSheet, Text,
-
-
-
-    TouchableNativeFeedback, TouchableOpacity, View
+  Image,
+  Platform,
+  StyleSheet,
+  Text,
+  TouchableNativeFeedback,
+  TouchableOpacity,
+  View,
 } from "react-native";
 import Card from "../UI/Card";
-
 
 const ExploreCard = (props) => {
   let TouchableCmp = TouchableOpacity;
@@ -57,7 +54,6 @@ const ExploreCard = (props) => {
 const styles = StyleSheet.create({
   project: {
     marginVertical: 2,
-    borderWidth: 1,
     width: "100%",
     justifyContent: "center",
   },
