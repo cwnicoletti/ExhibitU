@@ -190,11 +190,7 @@ const CheeringScreen = (props) => {
         keyExtractor={(item) => item.objectID}
         renderItem={(itemData) => (
           <ExploreCard
-            image={
-              itemData.item.profilePictureUrl
-                ? itemData.item.profilePictureUrl
-                : require("../../assets/default-profile-icon.jpg")
-            }
+            image={itemData.item.profilePictureUrl}
             fullname={itemData.item.fullname}
             username={itemData.item.username}
             jobTitle={itemData.item.jobTitle}
