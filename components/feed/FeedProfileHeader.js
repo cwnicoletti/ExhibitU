@@ -1,20 +1,17 @@
-import { Ionicons } from "@expo/vector-icons";
 import * as WebBrowser from "expo-web-browser";
 import React from "react";
 import {
-    FlatList,
-
-
-    Platform, StyleSheet, Text,
-
-
-    TouchableNativeFeedback,
-    TouchableOpacity, View
+  FlatList,
+  Platform,
+  StyleSheet,
+  Text,
+  TouchableNativeFeedback,
+  TouchableOpacity,
+  View,
 } from "react-native";
 import { useSelector } from "react-redux";
 import LinkButton from "../UI/LinkButton";
 import UserTitleShowcaseLocal from "../user/UserTitleShowcaseLocal";
-
 
 const handleLinkOnPress = (url) => {
   WebBrowser.openBrowserAsync(url);
@@ -33,7 +30,6 @@ const FeedProfileHeader = (props) => {
     numberOfAdvocates: props.numberOfAdvocates,
   };
 
-
   let TouchableCmp = TouchableOpacity;
   if (Platform.OS === "android") {
     TouchableCmp = TouchableNativeFeedback;
@@ -50,7 +46,7 @@ const FeedProfileHeader = (props) => {
         <UserTitleShowcaseLocal {...props} />
         <View
           style={{
-            margin: 10,
+            marginTop: 5,
             flexDirection: "row",
           }}
         >
@@ -147,7 +143,16 @@ const FeedProfileHeader = (props) => {
         <FlatList
           data={Object.values(links)}
           keyExtractor={(item) => item.linkId}
-          numColumns={Object.keys(links).length > 1 ? 2 : 1}
+          columnWrapperStyle={
+            Object.keys(links).length > 1 ? { justifyContent: "center" } : null
+          }
+          numColumns={
+            Object.keys(links).length === 1
+              ? 1
+              : Object.keys(links).length === 2
+              ? 2
+              : 3
+          }
           renderItem={(itemData) => (
             <LinkButton
               imageUrl={itemData.item[`linkImageUrl${itemData.item.linkId}`]}
@@ -155,7 +160,12 @@ const FeedProfileHeader = (props) => {
               textStyle={{ color: darkModeValue ? "white" : "black" }}
               linkContainer={{
                 borderColor: "gray",
-                width: Object.keys(links).length > 1 ? "46%" : "96%",
+                width:
+                  Object.keys(links).length === 1
+                    ? "96%"
+                    : Object.keys(links).length === 2
+                    ? "46%"
+                    : "28%",
               }}
               imageStyle={{
                 backgroundColor: "white",

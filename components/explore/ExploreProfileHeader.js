@@ -1,20 +1,17 @@
-import { Ionicons } from "@expo/vector-icons";
 import * as WebBrowser from "expo-web-browser";
 import React from "react";
 import {
-    FlatList,
-
-
-    Platform, StyleSheet, Text,
-
-
-    TouchableNativeFeedback,
-    TouchableOpacity, View
+  FlatList,
+  Platform,
+  StyleSheet,
+  Text,
+  TouchableNativeFeedback,
+  TouchableOpacity,
+  View,
 } from "react-native";
 import { useSelector } from "react-redux";
 import LinkButton from "../UI/LinkButton";
 import ExploreUserTitle from "./ExploreUserTitle";
-
 
 const handleLinkOnPress = (url) => {
   WebBrowser.openBrowserAsync(url);
@@ -52,7 +49,7 @@ const ExploreProfileHeader = (props) => {
         <ExploreUserTitle {...props} />
         <View
           style={{
-            margin: 10,
+            marginTop: 5,
             flexDirection: "row",
           }}
         >
@@ -173,15 +170,15 @@ const ExploreProfileHeader = (props) => {
         <FlatList
           data={Object.values(links)}
           keyExtractor={(item) => item.linkId}
+          columnWrapperStyle={
+            Object.keys(links).length > 1 ? { justifyContent: "center" } : null
+          }
           numColumns={
             Object.keys(links).length === 1
               ? 1
               : Object.keys(links).length === 2
               ? 2
               : 3
-          }
-          columnWrapperStyle={
-            Object.keys(links).length > 1 ? { justifyContent: "center" } : null
           }
           renderItem={(itemData) => (
             <LinkButton

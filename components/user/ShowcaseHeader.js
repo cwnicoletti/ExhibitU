@@ -49,7 +49,7 @@ const ExhibitUHeader = (props) => {
         <UserTitleShowcaseLocal {...props} />
         <View
           style={{
-            margin: 10,
+            marginTop: 5,
             flexDirection: "row",
           }}
         >

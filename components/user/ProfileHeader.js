@@ -2,19 +2,17 @@ import { Ionicons } from "@expo/vector-icons";
 import * as WebBrowser from "expo-web-browser";
 import React from "react";
 import {
-    FlatList,
-
-
-    Platform, StyleSheet, Text,
-
-
-    TouchableNativeFeedback,
-    TouchableOpacity, View
+  FlatList,
+  Platform,
+  StyleSheet,
+  Text,
+  TouchableNativeFeedback,
+  TouchableOpacity,
+  View,
 } from "react-native";
 import { useSelector } from "react-redux";
 import LinkButton from "../UI/LinkButton";
 import UserTitleEdit from "./UserTitleEdit";
-
 
 const Profile = (props) => {
   const links = props.links;
@@ -49,7 +47,7 @@ const Profile = (props) => {
         <UserTitleEdit {...props} />
         <View
           style={{
-            margin: 10,
+            marginTop: 5,
             flexDirection: "row",
           }}
         >

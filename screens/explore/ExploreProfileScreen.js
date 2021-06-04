@@ -436,7 +436,7 @@ const styles = StyleSheet.create({
     paddingTop: 5,
   },
   profileDescriptionStyle: {
-    paddingBottom: 20,
+    padding: 20,
   },
   profileContainerStyle: {
     justifyContent: "flex-start",
