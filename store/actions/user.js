@@ -87,6 +87,7 @@ export const refreshProfile = (localId) => {
     let advocating = [];
     let projectsAdvocating = [];
     let cheeredPosts = [];
+    let profileProjects = {};
 
     if (profileInfo.data.data.followers) {
       followers = profileInfo.data.data.followers;
@@ -106,6 +107,24 @@ export const refreshProfile = (localId) => {
     if (profileInfo.data.data.cheeredPosts) {
       cheeredPosts = profileInfo.data.data.cheeredPosts;
     }
+    if (profileInfo.data.data.profileProjects) {
+      profileProjects = profileInfo.data.data.profileProjects;
+      const projectKeys = Object.keys(profileProjects);
+      for (const k of projectKeys) {
+        const projectCoverPhotoBase64 = await getBase64FromUrl(
+          profileProjects[k]["projectCoverPhotoUrl"]
+        );
+        profileProjects[k]["projectCoverPhotoBase64"] = projectCoverPhotoBase64;
+        const postKeys = Object.keys(profileProjects[k].projectPosts);
+        for (const id of postKeys) {
+          const postPhotoBase64 = await getBase64FromUrl(
+            profileProjects[k].projectPosts[id]["postPhotoUrl"]
+          );
+          profileProjects[k].projectPosts[id]["postPhotoBase64"] =
+            postPhotoBase64;
+        }
+      }
+    }
 
     await AsyncStorage.getItem("userDocData").then(async (data) => {
       data = JSON.parse(data);
@@ -119,6 +138,23 @@ export const refreshProfile = (localId) => {
       data.advocating = advocating;
       data.projectsAdvocating = projectsAdvocating;
       data.cheeredPosts = cheeredPosts;
+      if (profileProjects) {
+        for (const project of Object.keys(profileProjects)) {
+          for (const post of Object.keys(profileProjects[project].projectPosts))
+            data.profileProjects = {
+              ...data.profileProjects,
+              ...profileProjects,
+              [project]: {
+                ...data.profileProjects[project],
+                ...profileProjects[project],
+                [post]: {
+                  ...data.profileProjects[project].projectPosts[post],
+                  ...profileProjects[project].projectPosts[post],
+                },
+              },
+            };
+        }
+      }
       await AsyncStorage.setItem("userDocData", JSON.stringify(data));
     });
 
@@ -134,6 +170,7 @@ export const refreshProfile = (localId) => {
       advocating,
       projectsAdvocating,
       cheeredPosts,
+      profileProjects,
     });
   };
 };

@@ -143,6 +143,25 @@ export default (state = intialState, action) => {
         },
       };
     case REFRESH_PROFILE:
+      if (action.profileProjects) {
+        for (const project of Object.keys(action.profileProjects)) {
+          for (const post of Object.keys(
+            action.profileProjects[project].projectPosts
+          ))
+            state.profileProjects = {
+              ...state.profileProjects,
+              ...action.profileProjects,
+              [project]: {
+                ...state.profileProjects[project],
+                ...action.profileProjects[project],
+                [post]: {
+                  ...state.profileProjects[project].projectPosts[post],
+                  ...action.profileProjects[project].projectPosts[post],
+                },
+              },
+            };
+        }
+      }
       return {
         ...state,
         numberOfFollowers: action.numberOfFollowers,
