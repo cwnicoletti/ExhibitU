@@ -44,6 +44,7 @@ const ExhibitUPostView = (props) => {
   if (Platform.OS === "android") {
     TouchableCmp = TouchableNativeFeedback;
   }
+  console.log(props.numberOfCheers);
 
   useEffect(() => {
     LogBox.ignoreLogs(["VirtualizedLists should never be nested"]);
@@ -93,26 +94,28 @@ const ExhibitUPostView = (props) => {
           }}
         >
           {showCheering ? (
-            <TouchableCmp onPress={props.onSelectCheering}>
-              <View style={{ flexDirection: "row" }}>
-                <Text
-                  style={{
-                    ...styles.pictureCheerNumber,
-                    ...props.pictureCheerNumber,
-                  }}
-                >
-                  {props.numberOfCheers}
-                </Text>
-                <Text
-                  style={{
-                    ...styles.pictureCheerText,
-                    ...props.pictureCheerText,
-                  }}
-                >
-                  cheering
-                </Text>
-              </View>
-            </TouchableCmp>
+            props.numberOfCheers >= 1 ? (
+              <TouchableCmp onPress={props.onSelectCheering}>
+                <View style={{ flexDirection: "row" }}>
+                  <Text
+                    style={{
+                      ...styles.pictureCheerNumber,
+                      ...props.pictureCheerNumber,
+                    }}
+                  >
+                    {props.numberOfCheers}
+                  </Text>
+                  <Text
+                    style={{
+                      ...styles.pictureCheerText,
+                      ...props.pictureCheerText,
+                    }}
+                  >
+                    cheering
+                  </Text>
+                </View>
+              </TouchableCmp>
+            ) : null
           ) : null}
           <View style={{ justifyContent: "center" }}>
             <FlatList
@@ -192,26 +195,28 @@ const ExhibitUPostView = (props) => {
             )}
           />
           {showCheering ? (
-            <TouchableCmp onPress={props.onSelectCheering}>
-              <View style={{ flexDirection: "row" }}>
-                <Text
-                  style={{
-                    ...styles.pictureCheerNumber,
-                    ...props.pictureCheerNumber,
-                  }}
-                >
-                  {props.numberOfCheers}
-                </Text>
-                <Text
-                  style={{
-                    ...styles.pictureCheerText,
-                    ...props.pictureCheerText,
-                  }}
-                >
-                  cheering
-                </Text>
-              </View>
-            </TouchableCmp>
+            props.numberOfCheers >= 1 ? (
+              <TouchableCmp onPress={props.onSelectCheering}>
+                <View style={{ flexDirection: "row" }}>
+                  <Text
+                    style={{
+                      ...styles.pictureCheerNumber,
+                      ...props.pictureCheerNumber,
+                    }}
+                  >
+                    {props.numberOfCheers}
+                  </Text>
+                  <Text
+                    style={{
+                      ...styles.pictureCheerText,
+                      ...props.pictureCheerText,
+                    }}
+                  >
+                    cheering
+                  </Text>
+                </View>
+              </TouchableCmp>
+            ) : null
           ) : null}
         </View>
       )}

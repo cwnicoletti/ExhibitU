@@ -340,26 +340,28 @@ const ExplorePostView = (props) => {
           />
         </View>
         {showCheering ? (
-          <TouchableCmp onPress={props.onSelectCheering}>
-            <View style={{ flexDirection: "row" }}>
-              <Text
-                style={{
-                  ...styles.pictureCheerNumber,
-                  ...props.pictureCheerNumber,
-                }}
-              >
-                {props.numberOfCheers}
-              </Text>
-              <Text
-                style={{
-                  ...styles.pictureCheerText,
-                  ...props.pictureCheerText,
-                }}
-              >
-                cheering
-              </Text>
-            </View>
-          </TouchableCmp>
+          props.numberOfCheers >= 1 ? (
+            <TouchableCmp onPress={props.onSelectCheering}>
+              <View style={{ flexDirection: "row" }}>
+                <Text
+                  style={{
+                    ...styles.pictureCheerNumber,
+                    ...props.pictureCheerNumber,
+                  }}
+                >
+                  {props.numberOfCheers}
+                </Text>
+                <Text
+                  style={{
+                    ...styles.pictureCheerText,
+                    ...props.pictureCheerText,
+                  }}
+                >
+                  cheering
+                </Text>
+              </View>
+            </TouchableCmp>
+          ) : null
         ) : null}
       </View>
       <View style={{ ...styles.captionContainer, ...props.captionContainer }}>

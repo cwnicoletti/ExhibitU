@@ -305,26 +305,28 @@ const ProfileProjectPostView = (props) => {
           }}
         >
           {showCheering ? (
-            <TouchableCmp onPress={props.onSelectCheering}>
-              <View style={{ flexDirection: "row" }}>
-                <Text
-                  style={{
-                    ...styles.pictureCheerNumber,
-                    ...props.pictureCheerNumber,
-                  }}
-                >
-                  {numberOfCheers}
-                </Text>
-                <Text
-                  style={{
-                    ...styles.pictureCheerText,
-                    ...props.pictureCheerText,
-                  }}
-                >
-                  cheering
-                </Text>
-              </View>
-            </TouchableCmp>
+            numberOfCheers >= 1 ? (
+              <TouchableCmp onPress={props.onSelectCheering}>
+                <View style={{ flexDirection: "row" }}>
+                  <Text
+                    style={{
+                      ...styles.pictureCheerNumber,
+                      ...props.pictureCheerNumber,
+                    }}
+                  >
+                    {numberOfCheers}
+                  </Text>
+                  <Text
+                    style={{
+                      ...styles.pictureCheerText,
+                      ...props.pictureCheerText,
+                    }}
+                  >
+                    cheering
+                  </Text>
+                </View>
+              </TouchableCmp>
+            ) : null
           ) : null}
           <View style={{ justifyContent: "center" }}>
             <FlatList

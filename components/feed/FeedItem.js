@@ -391,7 +391,7 @@ const FeedItem = (props) => {
                 </View>
               </TouchableCmp>
             ) : null
-          ) : (
+          ) : props.numberOfCheers >= 1 ? (
             <TouchableCmp onPress={props.onSelectCheering}>
               <View style={{ flexDirection: "row" }}>
                 <Text
@@ -412,7 +412,7 @@ const FeedItem = (props) => {
                 </Text>
               </View>
             </TouchableCmp>
-          )}
+          ) : null}
           <View style={{ alignItems: "center" }}>
             <FlatList
               data={Object.values(links)}
