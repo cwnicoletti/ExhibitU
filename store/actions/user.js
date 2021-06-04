@@ -88,6 +88,7 @@ export const refreshProfile = (localId) => {
     let projectsAdvocating = [];
     let cheeredPosts = [];
     let profileProjects = {};
+    let profileLinks = {};
 
     if (profileInfo.data.data.followers) {
       followers = profileInfo.data.data.followers;
@@ -125,6 +126,9 @@ export const refreshProfile = (localId) => {
         }
       }
     }
+    if (profileInfo.data.data.profileLinks) {
+      profileLinks = profileInfo.data.data.profileLinks;
+    }
 
     await AsyncStorage.getItem("userDocData").then(async (data) => {
       data = JSON.parse(data);
@@ -137,24 +141,9 @@ export const refreshProfile = (localId) => {
       data.advocates = advocates;
       data.advocating = advocating;
       data.projectsAdvocating = projectsAdvocating;
+      data.profileLinks = profileLinks;
       data.cheeredPosts = cheeredPosts;
-      if (profileProjects) {
-        for (const project of Object.keys(profileProjects)) {
-          for (const post of Object.keys(profileProjects[project].projectPosts))
-            data.profileProjects = {
-              ...data.profileProjects,
-              ...profileProjects,
-              [project]: {
-                ...data.profileProjects[project],
-                ...profileProjects[project],
-                [post]: {
-                  ...data.profileProjects[project].projectPosts[post],
-                  ...profileProjects[project].projectPosts[post],
-                },
-              },
-            };
-        }
-      }
+      data.profileProjects = profileProjects;
       await AsyncStorage.setItem("userDocData", JSON.stringify(data));
     });
 
@@ -171,6 +160,7 @@ export const refreshProfile = (localId) => {
       projectsAdvocating,
       cheeredPosts,
       profileProjects,
+      profileLinks,
     });
   };
 };
