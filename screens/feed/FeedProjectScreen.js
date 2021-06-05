@@ -1,10 +1,10 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { FlatList, Platform, StyleSheet, Text, View } from "react-native";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import { useSelector } from "react-redux";
 import FeedProjectHeader from "../../components/feed/FeedProjectHeader";
-import FontAwesomeHeaderButton from "../../components/UI/FontAwesomeHeaderButton";
 import IoniconsHeaderButton from "../../components/UI/IoniconsHeaderButton";
+import useDidMountEffect from "../../helper/useDidMountEffect";
 import ProjectPictures from "../../components/UI/ProjectPictures";
 
 const FeedProjectScreen = (props) => {
@@ -48,6 +48,15 @@ const FeedProjectScreen = (props) => {
 
   const project = Object.values(userData.profileProjects).find(
     (project) => project.projectId === projectId
+  );
+
+  const [projectPostsState, setProjectPostsState] = useState(
+    Object.values(project.projectPosts).sort((first, second) => {
+      return (
+        second["postDateCreated"]["_seconds"] -
+        first["postDateCreated"]["_seconds"]
+      );
+    })
   );
 
   let android = null;
@@ -119,6 +128,18 @@ const FeedProjectScreen = (props) => {
     props.navigation.setParams({ darkMode: darkModeValue });
   }, [darkModeValue]);
 
+  useDidMountEffect(() => {
+    // Sort the array based on the second element
+    setProjectPostsState(
+      Object.values(project.projectPosts).sort((first, second) => {
+        return (
+          second["postDateCreated"]["_seconds"] -
+          first["postDateCreated"]["_seconds"]
+        );
+      })
+    );
+  }, [project.projectPosts]);
+
   const topHeader = () => {
     return (
       <FeedProjectHeader
@@ -150,7 +171,7 @@ const FeedProjectScreen = (props) => {
       }}
     >
       <FlatList
-        data={Object.values(project.projectPosts)}
+        data={projectPostsState}
         keyExtractor={(item) => item.postId}
         ListHeaderComponent={topHeader}
         numColumns={project.projectColumns}

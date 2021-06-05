@@ -22,23 +22,18 @@ const UserFeedScreen = (props) => {
   const ExhibitUId = useSelector((state) => state.user.ExhibitUId);
   const localId = useSelector((state) => state.auth.userId);
   const userFeed = useSelector((state) => state.user.userFeed);
-  const [userFeedState, setUserFeedState] = useState([]);
+  const [userFeedState, setUserFeedState] = useState(
+    Object.values(userFeed).sort((first, second) => {
+      return (
+        second["postDateCreated"]["_seconds"] -
+        first["postDateCreated"]["_seconds"]
+      );
+    })
+  );
   const profilePictureBase64 = useSelector(
     (state) => state.user.profilePictureBase64
   );
   const resetScrollFeed = useSelector((state) => state.user.resetScrollFeed);
-
-  useEffect(() => {
-    // Sort the array based on the second element
-    setUserFeedState(
-      Object.values(userFeed).sort((first, second) => {
-        return (
-          second["postDateCreated"]["_seconds"] -
-          first["postDateCreated"]["_seconds"]
-        );
-      })
-    );
-  }, [userFeed]);
 
   useEffect(() => {
     props.navigation.setParams({ darkMode: darkModeValue });
@@ -175,6 +170,18 @@ const UserFeedScreen = (props) => {
     } else {
       setEmptyFeed(false);
     }
+  }, [userFeed]);
+
+  useDidMountEffect(() => {
+    // Sort the array based on the second element
+    setUserFeedState(
+      Object.values(userFeed).sort((first, second) => {
+        return (
+          second["postDateCreated"]["_seconds"] -
+          first["postDateCreated"]["_seconds"]
+        );
+      })
+    );
   }, [userFeed]);
 
   const flatlistFeed = useRef();

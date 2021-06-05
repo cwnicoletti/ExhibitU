@@ -42,6 +42,15 @@ const ExploreProjectScreen = (props) => {
       : {},
   };
 
+  const [projectPostsState, setProjectPostsState] = useState(
+    Object.values(exploredProjectData.projectPosts).sort((first, second) => {
+      return (
+        second["postDateCreated"]["_seconds"] -
+        first["postDateCreated"]["_seconds"]
+      );
+    })
+  );
+
   let android = null;
   if (Platform.OS === "android") {
     android = true;
@@ -149,6 +158,18 @@ const ExploreProjectScreen = (props) => {
   }, [exploredUserDataLocal]);
 
   useDidMountEffect(() => {
+    // Sort the array based on the second element
+    setProjectPostsState(
+      Object.values(exploredProjectData.projectPosts).sort((first, second) => {
+        return (
+          second["postDateCreated"]["_seconds"] -
+          first["postDateCreated"]["_seconds"]
+        );
+      })
+    );
+  }, [exploredProjectData.projectPosts]);
+
+  useDidMountEffect(() => {
     const difference = getExlusiveBothSetsDifference(
       intialCheeredPosts,
       cheeredPosts
@@ -218,7 +239,7 @@ const ExploreProjectScreen = (props) => {
       }}
     >
       <FlatList
-        data={Object.values(exploredProjectData.projectPosts)}
+        data={projectPostsState}
         keyExtractor={(item) => item.postId}
         ListHeaderComponent={topHeader}
         numColumns={exploredProjectData.projectColumns}

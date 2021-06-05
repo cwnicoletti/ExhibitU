@@ -50,6 +50,14 @@ const ProfileScreen = (props) => {
     profileLinks: useSelector((state) => state.user.profileLinks),
     profileProjects: useSelector((state) => state.user.profileProjects),
   };
+  const [profileProjectsState, setProfileProjectsState] = useState(
+    Object.values(userData.profileProjects).sort((first, second) => {
+      return (
+        second["projectDateCreated"]["_seconds"] -
+        first["projectDateCreated"]["_seconds"]
+      );
+    })
+  );
 
   let postIds = [];
   for (const projectId of Object.keys(userData.profileProjects)) {
@@ -94,6 +102,18 @@ const ProfileScreen = (props) => {
   useEffect(() => {
     props.navigation.setParams({ darkMode: darkModeValue });
   }, [darkModeValue]);
+
+  useDidMountEffect(() => {
+    // Sort the array based on the second element
+    setProfileProjectsState(
+      Object.values(userData.profileProjects).sort((first, second) => {
+        return (
+          second["projectDateCreated"]["_seconds"] -
+          first["projectDateCreated"]["_seconds"]
+        );
+      })
+    );
+  }, [userData.profileProjects]);
 
   useDidMountEffect(() => {
     if (showcasingProfile === false) {
@@ -220,7 +240,7 @@ const ProfileScreen = (props) => {
       }}
     >
       <FlatList
-        data={Object.values(userData.profileProjects)}
+        data={profileProjectsState}
         keyExtractor={(item) => item.projectId}
         key={profileColumns}
         ListHeaderComponent={topHeader}

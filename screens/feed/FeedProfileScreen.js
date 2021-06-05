@@ -1,9 +1,10 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { FlatList, StyleSheet, Text, View } from "react-native";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import { useSelector } from "react-redux";
 import FeedProfileHeader from "../../components/feed/FeedProfileHeader";
 import ProjectItem from "../../components/projectItems/ProfileProjectItem";
+import useDidMountEffect from "../../helper/useDidMountEffect";
 import IoniconsHeaderButton from "../../components/UI/IoniconsHeaderButton";
 
 const FeedProfileScreen = (props) => {
@@ -47,9 +48,30 @@ const FeedProfileScreen = (props) => {
         }
       : userData;
 
+  const [profileProjectsState, setProfileProjectsState] = useState(
+    Object.values(userData.profileProjects).sort((first, second) => {
+      return (
+        second["projectDateCreated"]["_seconds"] -
+        first["projectDateCreated"]["_seconds"]
+      );
+    })
+  );
+
   useEffect(() => {
     props.navigation.setParams({ darkMode: darkModeValue });
   }, [darkModeValue]);
+
+  useDidMountEffect(() => {
+    // Sort the array based on the second element
+    setProfileProjectsState(
+      Object.values(userData.profileProjects).sort((first, second) => {
+        return (
+          second["projectDateCreated"]["_seconds"] -
+          first["projectDateCreated"]["_seconds"]
+        );
+      })
+    );
+  }, [userData.profileProjects]);
 
   const viewProjectHandler = (projectId) => {
     props.navigation.navigate("ViewFeedProfileProject", {
@@ -124,7 +146,7 @@ const FeedProfileScreen = (props) => {
       }}
     >
       <FlatList
-        data={Object.values(userData.profileProjects)}
+        data={profileProjectsState}
         keyExtractor={(item) => item.projectId}
         key={userData.profileColumns}
         ListHeaderComponent={topHeader}

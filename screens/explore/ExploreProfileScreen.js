@@ -31,6 +31,15 @@ const ExploreProfileScreen = (props) => {
     props.navigation.getParam("exploreData")
   );
 
+  const [profileProjectsState, setProfileProjectsState] = useState(
+    Object.values(exploredUserData.profileProjects).sort((first, second) => {
+      return (
+        second["projectDateCreated"]["_seconds"] -
+        first["projectDateCreated"]["_seconds"]
+      );
+    })
+  );
+
   // Empty dict if user doesn't have any projects yet
   exploredUserData.profileProjects = exploredUserData.profileProjects
     ? exploredUserData.profileProjects
@@ -172,6 +181,18 @@ const ExploreProfileScreen = (props) => {
   }, [isfollowing]);
 
   useDidMountEffect(() => {
+    // Sort the array based on the second element
+    setProfileProjectsState(
+      Object.values(exploredUserData.profileProjects).sort((first, second) => {
+        return (
+          second["projectDateCreated"]["_seconds"] -
+          first["projectDateCreated"]["_seconds"]
+        );
+      })
+    );
+  }, [exploredUserData.profileProjects]);
+
+  useDidMountEffect(() => {
     if (isAdvocating) {
       const exploredUserDataNewState = exploredUserData;
       exploredUserDataNewState.advocates =
@@ -278,7 +299,7 @@ const ExploreProfileScreen = (props) => {
       }}
     >
       <FlatList
-        data={Object.values(exploredUserData.profileProjects)}
+        data={profileProjectsState}
         keyExtractor={(item) => item.projectId}
         ListHeaderComponent={topHeader}
         refreshControl={

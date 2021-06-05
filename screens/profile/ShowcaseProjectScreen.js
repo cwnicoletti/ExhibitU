@@ -1,17 +1,26 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { FlatList, Platform, StyleSheet, Text, View } from "react-native";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import { useSelector } from "react-redux";
 import ShowcaseProjectHeader from "../../components/projects/ShowcaseProjectHeader";
 import IoniconsHeaderButton from "../../components/UI/IoniconsHeaderButton";
+import useDidMountEffect from "../../helper/useDidMountEffect";
 import ProjectPictures from "../../components/UI/ProjectPictures";
 
 const ShowcaseProjectScreen = (props) => {
   const darkModeValue = useSelector((state) => state.user.darkMode);
   const currentProjectId = props.navigation.getParam("projectId");
   const userData = props.navigation.getParam("userData");
-
   const project = userData.profileProjects[currentProjectId];
+
+  const [projectPostsState, setProjectPostsState] = useState(
+    Object.values(project.projectPosts).sort((first, second) => {
+      return (
+        second["postDateCreated"]["_seconds"] -
+        first["postDateCreated"]["_seconds"]
+      );
+    })
+  );
 
   let android = null;
   if (Platform.OS === "android") {
@@ -43,12 +52,24 @@ const ShowcaseProjectScreen = (props) => {
   };
 
   useEffect(() => {
+    props.navigation.setParams({ android: android });
+  }, []);
+
+  useEffect(() => {
     props.navigation.setParams({ darkMode: darkModeValue });
   }, [darkModeValue]);
 
-  useEffect(() => {
-    props.navigation.setParams({ android: android });
-  }, []);
+  useDidMountEffect(() => {
+    // Sort the array based on the second element
+    setProjectPostsState(
+      Object.values(project.projectPosts).sort((first, second) => {
+        return (
+          second["postDateCreated"]["_seconds"] -
+          first["postDateCreated"]["_seconds"]
+        );
+      })
+    );
+  }, [project.projectPosts]);
 
   const topHeader = () => {
     return (
@@ -81,7 +102,7 @@ const ShowcaseProjectScreen = (props) => {
       }}
     >
       <FlatList
-        data={Object.values(project.projectPosts)}
+        data={projectPostsState}
         keyExtractor={(item) => item.postId}
         ListHeaderComponent={topHeader}
         numColumns={project.projectColumns}

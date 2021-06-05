@@ -1,19 +1,17 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { FlatList, StyleSheet, Text, View } from "react-native";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import { useDispatch, useSelector } from "react-redux";
 import ProjectItem from "../../components/projectItems/ProfileProjectItem";
 import IoniconsHeaderButton from "../../components/UI/IoniconsHeaderButton";
 import ShowcaseHeader from "../../components/user/ShowcaseHeader";
+import useDidMountEffect from "../../helper/useDidMountEffect";
 import { returnFromShowcasing } from "../../store/actions/user";
-
-
 
 const ShowcaseProfileScreen = (props) => {
   const dispatch = useDispatch();
   const darkModeValue = useSelector((state) => state.user.darkMode);
   const ExhibitUId = useSelector((state) => state.user.ExhibitUId);
-
 
   const userData =
     props.navigation.getParam("ExhibitUId") === ExhibitUId ||
@@ -65,6 +63,15 @@ const ShowcaseProfileScreen = (props) => {
           hideAdvocates: props.navigation.getParam("hideAdvocates"),
         };
 
+  const [profileProjectsState, setProfileProjectsState] = useState(
+    Object.values(userData.profileProjects).sort((first, second) => {
+      return (
+        second["projectDateCreated"]["_seconds"] -
+        first["projectDateCreated"]["_seconds"]
+      );
+    })
+  );
+
   useEffect(() => {
     props.navigation.setParams({ dispatch: dispatch });
   }, []);
@@ -72,6 +79,18 @@ const ShowcaseProfileScreen = (props) => {
   useEffect(() => {
     props.navigation.setParams({ darkMode: darkModeValue });
   }, [darkModeValue]);
+
+  useDidMountEffect(() => {
+    // Sort the array based on the second element
+    setProfileProjectsState(
+      Object.values(userData.profileProjects).sort((first, second) => {
+        return (
+          second["projectDateCreated"]["_seconds"] -
+          first["projectDateCreated"]["_seconds"]
+        );
+      })
+    );
+  }, [userData.profileProjects]);
 
   const viewProjectHandler = (projectId) => {
     props.navigation.push("ShowcaseProject", {
@@ -148,7 +167,7 @@ const ShowcaseProfileScreen = (props) => {
       }}
     >
       <FlatList
-        data={Object.values(userData.profileProjects)}
+        data={profileProjectsState}
         keyExtractor={(item) => item.projectId}
         ListHeaderComponent={topHeader}
         numColumns={userData.profileColumns}

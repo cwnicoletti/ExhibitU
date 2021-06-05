@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import ProjectHeader from "../../components/projects/ProjectHeader";
 import IoniconsHeaderButton from "../../components/UI/IoniconsHeaderButton";
 import ProjectPictures from "../../components/UI/ProjectPictures";
+import useDidMountEffect from "../../helper/useDidMountEffect";
 import { changeProjectNumberOfColumns } from "../../store/actions/user";
 
 const ProjectScreen = (props) => {
@@ -17,6 +18,16 @@ const ProjectScreen = (props) => {
   const ExhibitUId = useSelector((state) => state.user.ExhibitUId);
   const profileProjects = useSelector((state) => state.user.profileProjects);
   const currentProjectId = props.navigation.getParam("projectId");
+  const [projectPostsState, setProjectPostsState] = useState(
+    Object.values(profileProjects[currentProjectId].projectPosts).sort(
+      (first, second) => {
+        return (
+          second["postDateCreated"]["_seconds"] -
+          first["postDateCreated"]["_seconds"]
+        );
+      }
+    )
+  );
 
   const postIds = Object.keys(profileProjects[currentProjectId].projectPosts);
 
@@ -99,6 +110,20 @@ const ProjectScreen = (props) => {
     profileProjects[currentProjectId].projectLastUpdated,
     profileProjects[currentProjectId].projectLinks,
   ]);
+
+  useDidMountEffect(() => {
+    // Sort the array based on the second element
+    setProjectPostsState(
+      Object.values(profileProjects[currentProjectId].projectPosts).sort(
+        (first, second) => {
+          return (
+            second["postDateCreated"]["_seconds"] -
+            first["postDateCreated"]["_seconds"]
+          );
+        }
+      )
+    );
+  }, [profileProjects[currentProjectId].projectPosts]);
 
   const topHeader = () => {
     return (
@@ -205,7 +230,7 @@ const ProjectScreen = (props) => {
       }}
     >
       <FlatList
-        data={Object.values(profileProjects[currentProjectId].projectPosts)}
+        data={projectPostsState}
         keyExtractor={(item) => item.postId}
         ListHeaderComponent={topHeader}
         key={profileProjects[currentProjectId].projectColumns}
