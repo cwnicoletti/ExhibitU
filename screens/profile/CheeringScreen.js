@@ -154,13 +154,13 @@ const CheeringScreen = (props) => {
               borderBottomColor: "gray",
               borderBottomWidth: 1,
             }}
-            searchIcon={<EvilIcons name="search" size={24} color="white" />}
+            searchIcon={<EvilIcons name="search" size={24} color={darkModeValue ? "white" : "black"} />}
             clearIcon={
               search ? (
                 <Feather
                   name="x"
                   size={24}
-                  color="white"
+                  color={darkModeValue ? "white" : "black"}
                   onPress={() => {
                     searchFilterFunction("");
                   }}

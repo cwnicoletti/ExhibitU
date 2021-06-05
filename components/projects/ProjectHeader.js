@@ -158,7 +158,10 @@ const ProjectHeader = (props) => {
               ...props.columnTwoStyle,
             }}
           >
-            <ActivityIndicator size="small" color="white" />
+            <ActivityIndicator
+              size="small"
+              color={darkModeValue ? "white" : "black"}
+            />
           </View>
         )}
         {!props.isLoadingThreeColumns ? (
@@ -216,7 +219,10 @@ const ProjectHeader = (props) => {
               ...props.columnThreeStyle,
             }}
           >
-            <ActivityIndicator size="small" color="white" />
+            <ActivityIndicator
+              size="small"
+              color={darkModeValue ? "white" : "black"}
+            />
           </View>
         )}
         {!props.isLoadingFourColumns ? (
@@ -283,7 +289,10 @@ const ProjectHeader = (props) => {
               ...props.columnFourStyle,
             }}
           >
-            <ActivityIndicator size="small" color="white" />
+            <ActivityIndicator
+              size="small"
+              color={darkModeValue ? "white" : "black"}
+            />
           </View>
         )}
       </View>

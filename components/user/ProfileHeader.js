@@ -295,7 +295,10 @@ const Profile = (props) => {
               ...props.columnTwoStyle,
             }}
           >
-            <ActivityIndicator size="small" color="white" />
+            <ActivityIndicator
+              size="small"
+              color={darkModeValue ? "white" : "black"}
+            />
           </View>
         )}
         {!props.isLoadingThreeColumns ? (
@@ -353,7 +356,10 @@ const Profile = (props) => {
               ...props.columnThreeStyle,
             }}
           >
-            <ActivityIndicator size="small" color="white" />
+            <ActivityIndicator
+              size="small"
+              color={darkModeValue ? "white" : "black"}
+            />
           </View>
         )}
         {!props.isLoadingFourColumns ? (
@@ -420,7 +426,10 @@ const Profile = (props) => {
               ...props.columnFourStyle,
             }}
           >
-            <ActivityIndicator size="small" color="white" />
+            <ActivityIndicator
+              size="small"
+              color={darkModeValue ? "white" : "black"}
+            />
           </View>
         )}
       </View>
