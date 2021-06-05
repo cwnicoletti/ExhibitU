@@ -304,7 +304,7 @@ const FeedPostView = (props) => {
           }}
         >
           {currentUsersPost ? (
-            showCheering ? (
+            showCheering && props.numberOfCheers >= 1 ? (
               <TouchableCmp onPress={props.onSelectCheering}>
                 <View style={{ flexDirection: "row" }}>
                   <Text
@@ -326,7 +326,7 @@ const FeedPostView = (props) => {
                 </View>
               </TouchableCmp>
             ) : null
-          ) : (
+          ) : props.numberOfCheers >= 1 ? (
             <TouchableCmp onPress={props.onSelectCheering}>
               <View style={{ flexDirection: "row" }}>
                 <Text
@@ -347,7 +347,7 @@ const FeedPostView = (props) => {
                 </Text>
               </View>
             </TouchableCmp>
-          )}
+          ) : null}
           <View style={{ justifyContent: "center" }}>
             <FlatList
               data={Object.values(links)}
@@ -423,26 +423,28 @@ const FeedPostView = (props) => {
               />
             )}
           />
-          <TouchableCmp onPress={props.onSelectCheering}>
-            <View style={{ flexDirection: "row", padding: 10 }}>
-              <Text
-                style={{
-                  ...styles.pictureCheerNumber,
-                  ...props.pictureCheerNumber,
-                }}
-              >
-                {props.numberOfCheers}
-              </Text>
-              <Text
-                style={{
-                  ...styles.pictureCheerText,
-                  ...props.pictureCheerText,
-                }}
-              >
-                cheering
-              </Text>
-            </View>
-          </TouchableCmp>
+          {showCheering && props.numberOfCheers >= 1 ? (
+            <TouchableCmp onPress={props.onSelectCheering}>
+              <View style={{ flexDirection: "row", padding: 10 }}>
+                <Text
+                  style={{
+                    ...styles.pictureCheerNumber,
+                    ...props.pictureCheerNumber,
+                  }}
+                >
+                  {props.numberOfCheers}
+                </Text>
+                <Text
+                  style={{
+                    ...styles.pictureCheerText,
+                    ...props.pictureCheerText,
+                  }}
+                >
+                  cheering
+                </Text>
+              </View>
+            </TouchableCmp>
+          ) : null}
         </View>
       )}
       <View style={{ ...styles.captionContainer, ...props.captionContainer }}>

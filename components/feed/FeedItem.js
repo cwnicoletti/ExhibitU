@@ -369,7 +369,7 @@ const FeedItem = (props) => {
           }}
         >
           {currentUsersPost ? (
-            showCheering ? (
+            showCheering && props.numberOfCheers >= 1 ? (
               <TouchableCmp onPress={props.onSelectCheering}>
                 <View style={{ flexDirection: "row" }}>
                   <Text
@@ -492,26 +492,28 @@ const FeedItem = (props) => {
               )}
             />
           </View>
-          <TouchableCmp onPress={props.onSelectCheering}>
-            <View style={{ flexDirection: "row", padding: 10 }}>
-              <Text
-                style={{
-                  ...styles.pictureCheerNumber,
-                  ...props.pictureCheerNumber,
-                }}
-              >
-                {props.numberOfCheers}
-              </Text>
-              <Text
-                style={{
-                  ...styles.pictureCheerText,
-                  ...props.pictureCheerText,
-                }}
-              >
-                cheering
-              </Text>
-            </View>
-          </TouchableCmp>
+          {showCheering && props.numberOfCheers >= 1 ? (
+            <TouchableCmp onPress={props.onSelectCheering}>
+              <View style={{ flexDirection: "row", padding: 10 }}>
+                <Text
+                  style={{
+                    ...styles.pictureCheerNumber,
+                    ...props.pictureCheerNumber,
+                  }}
+                >
+                  {props.numberOfCheers}
+                </Text>
+                <Text
+                  style={{
+                    ...styles.pictureCheerText,
+                    ...props.pictureCheerText,
+                  }}
+                >
+                  cheering
+                </Text>
+              </View>
+            </TouchableCmp>
+          ) : null}
         </View>
       )}
       {props.caption ? (

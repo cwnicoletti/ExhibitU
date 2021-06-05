@@ -2,21 +2,22 @@ import { AntDesign } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import React, { useEffect, useState } from "react";
 import {
-    Dimensions,
-    FlatList, Image,
-    ImageBackground, LogBox, Platform, StyleSheet, Text,
-
-
-
-
-    TouchableNativeFeedback, TouchableOpacity, View
+  Dimensions,
+  FlatList,
+  Image,
+  ImageBackground,
+  LogBox,
+  Platform,
+  StyleSheet,
+  Text,
+  TouchableNativeFeedback,
+  TouchableOpacity,
+  View,
 } from "react-native";
 import resolveAssetSource from "react-native/Libraries/Image/resolveAssetSource";
 import { useSelector } from "react-redux";
 import Cheer from "../../assets/Icons/clap.svg";
 import LinkButton from "../UI/LinkButton";
-
-
 
 const toDateTime = (seconds) => {
   let t = new Date(0); // Epoch
