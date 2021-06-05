@@ -1,26 +1,31 @@
 import { SimpleLineIcons } from "@expo/vector-icons";
 import React, { useEffect, useRef, useState } from "react";
 import {
-    Animated, FlatList,
-
-
-    RefreshControl, StyleSheet,
-
-
-    Text, View
+  Animated,
+  FlatList,
+  RefreshControl,
+  StyleSheet,
+  Text,
+  View,
 } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { useDispatch, useSelector } from "react-redux";
 import ProjectItem from "../../components/projectItems/ProfileProjectItem";
 import ProfileHeader from "../../components/user/ProfileHeader";
 import useDidMountEffect from "../../helper/useDidMountEffect";
-import { changeProfileNumberOfColumns, offScreen, refreshProfile, showcaseProfile } from "../../store/actions/user";
-
-
+import {
+  changeProfileNumberOfColumns,
+  offScreen,
+  refreshProfile,
+  showcaseProfile,
+} from "../../store/actions/user";
 
 const ProfileScreen = (props) => {
   const dispatch = useDispatch();
   const [isRefreshing, setIsRefreshing] = useState(false);
+  const [isLoadingTwoColumns, setIsLoadingTwoColumns] = useState(false);
+  const [isLoadingThreeColumns, setIsLoadingThreeColumns] = useState(false);
+  const [isLoadingFourColumns, setIsLoadingFourColumns] = useState(false);
   const darkModeValue = useSelector((state) => state.user.darkMode);
   const localId = useSelector((state) => state.auth.userId);
   const ExhibitUId = useSelector((state) => state.user.ExhibitUId);
@@ -149,11 +154,14 @@ const ProfileScreen = (props) => {
             ExhibitUId: userData.ExhibitUId,
           })
         }
-        changeColumnToTwo={() => {
-          dispatch(
+        changeColumnToTwo={async () => {
+          await setIsLoadingTwoColumns(true);
+          await dispatch(
             changeProfileNumberOfColumns(localId, ExhibitUId, postIds, 2)
           );
+          await setIsLoadingTwoColumns(false);
         }}
+        isLoadingTwoColumns={isLoadingTwoColumns}
         columnTwoStyle={{
           borderColor:
             profileColumns === 2
@@ -164,11 +172,14 @@ const ProfileScreen = (props) => {
               ? "gray"
               : "#c9c9c9",
         }}
-        changeColumnToThree={() => {
-          dispatch(
+        changeColumnToThree={async () => {
+          await setIsLoadingThreeColumns(true);
+          await dispatch(
             changeProfileNumberOfColumns(localId, ExhibitUId, postIds, 3)
           );
+          await setIsLoadingThreeColumns(false);
         }}
+        isLoadingThreeColumns={isLoadingThreeColumns}
         columnThreeStyle={{
           borderColor:
             profileColumns === 3
@@ -179,10 +190,12 @@ const ProfileScreen = (props) => {
               ? "gray"
               : "#c9c9c9",
         }}
-        changeColumnToFour={() => {
-          dispatch(
+        changeColumnToFour={async () => {
+          await setIsLoadingFourColumns(true);
+          await dispatch(
             changeProfileNumberOfColumns(localId, ExhibitUId, postIds, 4)
           );
+          await setIsLoadingFourColumns(false);
         }}
         columnFourStyle={{
           borderColor:
@@ -194,6 +207,7 @@ const ProfileScreen = (props) => {
               ? "gray"
               : "#c9c9c9",
         }}
+        isLoadingFourColumns={isLoadingFourColumns}
       />
     );
   };

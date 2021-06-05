@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { FlatList, Platform, StyleSheet, Text, View } from "react-native";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import { useDispatch, useSelector } from "react-redux";
@@ -9,6 +9,9 @@ import { changeProjectNumberOfColumns } from "../../store/actions/user";
 
 const ProjectScreen = (props) => {
   const dispatch = useDispatch();
+  const [isLoadingTwoColumns, setIsLoadingTwoColumns] = useState(false);
+  const [isLoadingThreeColumns, setIsLoadingThreeColumns] = useState(false);
+  const [isLoadingFourColumns, setIsLoadingFourColumns] = useState(false);
   const darkModeValue = useSelector((state) => state.user.darkMode);
   const localId = useSelector((state) => state.auth.userId);
   const ExhibitUId = useSelector((state) => state.user.ExhibitUId);
@@ -118,8 +121,9 @@ const ProjectScreen = (props) => {
             links: profileProjects[currentProjectId].projectLinks,
           })
         }
-        changeColumnToTwo={() => {
-          dispatch(
+        changeColumnToTwo={async () => {
+          await setIsLoadingTwoColumns(true);
+          await dispatch(
             changeProjectNumberOfColumns(
               localId,
               ExhibitUId,
@@ -128,6 +132,7 @@ const ProjectScreen = (props) => {
               2
             )
           );
+          await setIsLoadingTwoColumns(false);
         }}
         columnTwoStyle={{
           borderColor:
@@ -139,8 +144,10 @@ const ProjectScreen = (props) => {
               ? "gray"
               : "#c9c9c9",
         }}
-        changeColumnToThree={() => {
-          dispatch(
+        isLoadingTwoColumns={isLoadingTwoColumns}
+        changeColumnToThree={async () => {
+          await setIsLoadingThreeColumns(true);
+          await dispatch(
             changeProjectNumberOfColumns(
               localId,
               ExhibitUId,
@@ -149,6 +156,7 @@ const ProjectScreen = (props) => {
               3
             )
           );
+          await setIsLoadingThreeColumns(false);
         }}
         columnThreeStyle={{
           borderColor:
@@ -160,8 +168,10 @@ const ProjectScreen = (props) => {
               ? "gray"
               : "#c9c9c9",
         }}
-        changeColumnToFour={() => {
-          dispatch(
+        isLoadingThreeColumns={isLoadingThreeColumns}
+        changeColumnToFour={async () => {
+          await setIsLoadingFourColumns(true);
+          await dispatch(
             changeProjectNumberOfColumns(
               localId,
               ExhibitUId,
@@ -170,6 +180,7 @@ const ProjectScreen = (props) => {
               4
             )
           );
+          await setIsLoadingFourColumns(false);
         }}
         columnFourStyle={{
           borderColor:
@@ -181,6 +192,7 @@ const ProjectScreen = (props) => {
               ? "gray"
               : "#c9c9c9",
         }}
+        isLoadingFourColumns={isLoadingFourColumns}
       />
     );
   };
