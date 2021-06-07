@@ -284,7 +284,7 @@ const ExploreProfileScreen = (props) => {
         }
         advocatesOnPress={() =>
           props.navigation.push("ExploreAdvocates", {
-            ExhibitUId: exploredUserData.exploredExhibitUId,
+            exploredExhibitUId: exploredUserData.exploredExhibitUId,
           })
         }
       />
