@@ -48,11 +48,15 @@ const ExploreAdvocatesCard = (props) => {
               </Text>
               {props.jobTitle ? (
                 <Text style={{ ...styles.jobTitle, ...props.jobTitleStyle }}>
-                  {props.jobTitle}
+                  {props.jobTitle.length > 15
+                    ? props.jobTitle.substring(0, 15) + "..."
+                    : props.jobTitle}
                 </Text>
               ) : null}
               <Text style={{ ...styles.username, ...props.userNameStyle }}>
-                {`@${props.username}`}
+                {props.username.length > 15
+                  ? `@${props.username.substring(0, 15)}...}`
+                  : `@${props.username}`}
               </Text>
             </View>
             <View
@@ -101,7 +105,6 @@ const ExploreAdvocatesCard = (props) => {
 const styles = StyleSheet.create({
   project: {
     height: "100%",
-    borderWidth: 1,
     width: "100%",
     justifyContent: "center",
   },
