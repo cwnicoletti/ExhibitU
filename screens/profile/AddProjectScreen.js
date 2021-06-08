@@ -2,18 +2,18 @@ import { Ionicons } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
 import React, { useCallback, useEffect, useReducer, useState } from "react";
 import {
-    ActivityIndicator,
-    FlatList, Image,
-
-
-
-    KeyboardAvoidingView, LogBox, Platform, SafeAreaView, StyleSheet,
-
-    Text,
-
-
-
-    TouchableNativeFeedback, TouchableOpacity, View
+  ActivityIndicator,
+  FlatList,
+  Image,
+  KeyboardAvoidingView,
+  LogBox,
+  Platform,
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  TouchableNativeFeedback,
+  TouchableOpacity,
+  View,
 } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
@@ -23,11 +23,9 @@ import Input from "../../components/UI/Input";
 import IoniconsHeaderButton from "../../components/UI/IoniconsHeaderButton";
 import LinkButton from "../../components/UI/LinkButton";
 import {
-    uploadAddTempProjectCoverPicture, uploadNewProject
+  uploadAddTempProjectCoverPicture,
+  uploadNewProject,
 } from "../../store/actions/user";
-
-
-
 
 const FORM_INPUT_UPDATE = "FORM_INPUT_UPDATE";
 const FORM_INPUT_LINKS_UPDATE = "FORM_INPUT_LINKS_UPDATE";
@@ -528,7 +526,7 @@ const AddProjectScreen = (props) => {
                   margin: 10,
                 }}
               >
-                Loading exhibit cover photo...
+                Loading exhibit cover photo, please wait...
               </Text>
               <ActivityIndicator size="small" color="white" />
             </View>
@@ -725,7 +723,7 @@ const AddProjectScreen = (props) => {
                       : "#007AFF",
                 }}
               >
-                Create exhibit
+                Confirm and create exhibit
               </Text>
               <Ionicons
                 name="ios-checkmark"

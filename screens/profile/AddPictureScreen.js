@@ -484,7 +484,7 @@ const EditProfileScreen = (props) => {
                   margin: 10,
                 }}
               >
-                Loading picture...
+                Loading picture, please wait...
               </Text>
               <ActivityIndicator size="small" color="white" />
             </View>
@@ -658,7 +658,7 @@ const EditProfileScreen = (props) => {
                     : "#007AFF",
               }}
             >
-              Create post
+              Confirm and post
             </Text>
             <Ionicons
               name="ios-checkmark"
