@@ -1,10 +1,7 @@
-import { Ionicons, SimpleLineIcons } from "@expo/vector-icons";
 import React from "react";
-import { TouchableWithoutFeedback, View } from "react-native";
+import { View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
-import { onScreen, resetScroll } from "../../store/actions/user";
-
-
+import MainBottomTabContainer from "../footers_components/MainBottomTabContainer";
 
 const FeedBottomTab = (props) => {
   const dispatch = useDispatch();

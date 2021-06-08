@@ -1,9 +1,8 @@
-import { Ionicons, SimpleLineIcons } from "@expo/vector-icons";
 import React, { useRef, useState } from "react";
-import { Animated, TouchableWithoutFeedback, View } from "react-native";
+import { Animated, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import useDidMountEffect from "../../helper/useDidMountEffect";
-import { onScreen, resetScroll } from "../../store/actions/user";
+import MainBottomTabContainer from "../footers_components/MainBottomTabContainer";
 
 const ProfileBottomTab = (props) => {
   const dispatch = useDispatch();

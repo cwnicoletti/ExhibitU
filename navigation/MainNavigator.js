@@ -6,9 +6,6 @@ import { createBottomTabNavigator } from "react-navigation-tabs";
 import { useDispatch } from "react-redux";
 import LeftDrawer from "../components/drawers/LeftDrawer";
 import RightDrawer from "../components/drawers/RightDrawer";
-import ExploreBottomTab from "../components/footers/ExploreBottomTab";
-import FeedBottomTab from "../components/footers/FeedBottomTab";
-import ProfileBottomTab from "../components/footers/ProfileBottomTab";
 import ProfileHeader from "../components/headers/ProfileHeader";
 import TitleOnlyHeader from "../components/headers/TitleOnlyHeader";
 import IntroScreen from "../screens/auth/IntroScreen";
@@ -50,6 +47,12 @@ import ProjectScreen from "../screens/profile/ProjectScreen";
 import ShowcasePictureScreen from "../screens/profile/ShowcasePictureScreen";
 import ShowcaseProfileScreen from "../screens/profile/ShowcaseProfileScreen";
 import ShowcaseProjectScreen from "../screens/profile/ShowcaseProjectScreen";
+import NotificationsScreen from "../screens/notifications/NotificationsScreen";
+
+import ProfileBottomTab from "../components/footers/ProfileBottomTab";
+import NotificationsBottomTab from "../components/footers/NotificationsBottomTab";
+import FeedBottomTab from "../components/footers/FeedBottomTab";
+import ExploreBottomTab from "../components/footers/ExploreBottomTab";
 import StartupScreen from "../screens/StartupScreen";
 import { logout } from "../store/actions/auth";
 

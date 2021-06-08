@@ -1,15 +1,10 @@
-import { Ionicons, SimpleLineIcons } from "@expo/vector-icons";
 import React from "react";
-import { TouchableWithoutFeedback, View } from "react-native";
-import { useDispatch, useSelector } from "react-redux";
-import { onScreen, resetScroll } from "../../store/actions/user";
+import { View } from "react-native";
+import { useSelector } from "react-redux";
+import MainBottomTabContainer from "../footers_components/MainBottomTabContainer";
 
-
-
-const ExploreBottomTab = ({ navigation }) => {
-  const dispatch = useDispatch();
+const ExploreBottomTab = (props) => {
   const darkModeValue = useSelector((state) => state.user.darkMode);
-  const onExploreScreen = useSelector((state) => state.user.onExploreScreen);
 
   return (
     <View>

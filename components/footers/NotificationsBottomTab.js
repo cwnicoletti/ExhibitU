@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import MainBottomTabContainer from "../footers_components/MainBottomTabContainer";
 
 const NotificationBottomTab = (props) => {
-  const darkModeValue = useSelector((state) => state.switches.darkMode);
+  const darkModeValue = useSelector((state) => state.user.darkMode);
 
   return (
     <View>
@@ -15,7 +15,7 @@ const NotificationBottomTab = (props) => {
       />
       <View
         style={{
-          padding: 10,
+          padding: 8,
           backgroundColor: darkModeValue ? "black" : "white",
         }}
       />
