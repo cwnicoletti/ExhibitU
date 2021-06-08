@@ -6,14 +6,13 @@ import { applyMiddleware, combineReducers, createStore } from "redux";
 import ReduxThunk from "redux-thunk";
 import authReducer from "../../../store/reducers/auth";
 import signupReducer from "../../../store/reducers/signup";
-import { default as switchesReducer, default as userReducer } from "../../../store/reducers/user";
+import userReducer from "../../../store/reducers/user";
 import ExhibitUPostView from "../ExhibitUPostView";
 
 
 
 test("renders correctly", () => {
   const rootReducer = combineReducers({
-    user: switchesReducer,
     signup: signupReducer,
     auth: authReducer,
     user: userReducer,

@@ -224,7 +224,6 @@ const ExploreScreen = (props) => {
               )) {
                 if (postId === difference[0]) {
                   if (intialCheeredPosts.length < cheeredPosts.length) {
-                    console.log("HIT");
                     object.profileProjects[projectId].projectPosts[
                       postId
                     ].numberOfCheers += 1;

@@ -44,7 +44,6 @@ const ExhibitUPostView = (props) => {
   if (Platform.OS === "android") {
     TouchableCmp = TouchableNativeFeedback;
   }
-  console.log(props.numberOfCheers);
 
   useEffect(() => {
     LogBox.ignoreLogs(["VirtualizedLists should never be nested"]);
