@@ -1,5 +1,6 @@
 import React, { useEffect, useReducer } from "react";
-import { View, Text, TextInput, StyleSheet } from "react-native";
+import { StyleSheet, Text, TextInput, View } from "react-native";
+import { useSelector } from "react-redux";
 
 const INPUT_CHANGE = "INPUT_CHANGE";
 const INPUT_BLUR = "INPUT_BLUR";
@@ -30,6 +31,7 @@ const Input = (props) => {
     isValid: props.initiallyValid,
     touched: false,
   });
+  const darkModeValue = useSelector((state) => state.user.darkMode);
 
   const { onInputChange, id } = props;
 
@@ -38,7 +40,8 @@ const Input = (props) => {
   }, [inputState, onInputChange, id]);
 
   const textChangeHandler = (text) => {
-    const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    const emailRegex =
+      /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     let isValid = true;
     let error = props.errorText;
     const realUndefined = void 0;
@@ -66,7 +69,7 @@ const Input = (props) => {
       isValid = false;
       error = "Password not long enough!";
     }
-    
+
     dispatch({
       type: INPUT_CHANGE,
       value: text,
@@ -86,7 +89,12 @@ const Input = (props) => {
       <Text style={{ ...styles.label, ...props.textLabel }}>{props.label}</Text>
       <TextInput
         {...props}
-        style={{ ...styles.input, ...props.styleInput, color: "white" }}
+        style={{
+          ...styles.input,
+          ...props.styleInput,
+          color: darkModeValue ? "white" : "black",
+          backgroundColor: darkModeValue ? "#222222" : "#eeeeee",
+        }}
         value={inputState.value}
         placeholder="type here..."
         placeholderTextColor={"grey"}
@@ -114,11 +122,9 @@ const styles = StyleSheet.create({
     color: "white",
   },
   input: {
-    borderBottomWidth: 1,
-    borderColor: "grey",
     paddingHorizontal: 10,
+    borderRadius: 10,
     paddingVertical: 10,
-    backgroundColor: "black",
     margin: 10,
   },
   errorContainer: {

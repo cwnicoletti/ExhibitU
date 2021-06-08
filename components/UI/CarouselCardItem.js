@@ -1,8 +1,7 @@
+import { FontAwesome, SimpleLineIcons } from "@expo/vector-icons";
 import React from "react";
-import { View, Text, StyleSheet, Image } from "react-native";
+import { Image, StyleSheet, Text, View } from "react-native";
 import Cheer from "../../assets/Icons/clap.svg";
-import { SimpleLineIcons } from "@expo/vector-icons";
-import { FontAwesome } from "@expo/vector-icons";
 
 const CarouselCardItem = ({ item, index }) => {
   return (

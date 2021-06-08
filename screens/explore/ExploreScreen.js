@@ -1,38 +1,43 @@
-import React, { useEffect, useState, useRef } from "react";
-import {
-  StyleSheet,
-  View,
-  Text,
-  Image,
-  TouchableWithoutFeedback,
-  Keyboard,
-  FlatList,
-  RefreshControl,
-} from "react-native";
-import { useSelector, useDispatch } from "react-redux";
-import { SearchBar } from "react-native-elements";
-import algoliasearch from "algoliasearch";
-import { offScreen } from "../../store/actions/user";
 import { EvilIcons, Feather } from "@expo/vector-icons";
-
+import React, { useEffect, useRef, useState } from "react";
+import {
+  FlatList,
+  Keyboard,
+  RefreshControl,
+  StyleSheet,
+  Text,
+  TouchableWithoutFeedback,
+  View,
+} from "react-native";
+import { SearchBar } from "react-native-elements";
+import { useDispatch, useSelector } from "react-redux";
 import ExploreCard from "../../components/explore/ExploreCard";
 import useDidMountEffect from "../../helper/useDidMountEffect";
+import { offScreen } from "../../store/actions/user";
+import { FontAwesome5 } from "@expo/vector-icons";
 
 const ExploreScreen = (props) => {
-  const client = algoliasearch(
-    "EXC8LH5MAX",
-    "2d8cedcaab4cb2b351e90679963fbd92"
-  );
-  const index = client.initIndex("users");
-
   const dispatch = useDispatch();
-  const darkModeValue = useSelector((state) => state.switches.darkMode);
+  const darkModeValue = useSelector((state) => state.user.darkMode);
+  const ExhibitUId = useSelector((state) => state.user.ExhibitUId);
   const [search, setSearch] = useState("");
   const [returnedIndex, setReturnedIndex] = useState([]);
   const [isRefreshing, setIsRefreshing] = useState(false);
+  const advocating = useSelector((state) => state.user.advocating);
+  const [intialAdvocating, setIntialAdvocating] = useState([]);
+  const following = useSelector((state) => state.user.following);
+  const [intialFollowing, setIntialFollowing] = useState([]);
+  const cheeredPosts = useSelector((state) => state.user.cheeredPosts);
+  const [intialCheeredPosts, setIntialCheeredPosts] = useState([]);
   const resetScrollExplore = useSelector(
     (state) => state.user.resetScrollExplore
   );
+
+  useEffect(() => {
+    setIntialAdvocating(advocating);
+    setIntialFollowing(following);
+    setIntialCheeredPosts(cheeredPosts);
+  }, []);
 
   useEffect(() => {
     props.navigation.setParams({ darkMode: darkModeValue });
@@ -40,7 +45,14 @@ const ExploreScreen = (props) => {
 
   const searchFilterFunction = (text) => {
     setSearch(text);
-    if (text) {
+    if (!/^ *$/.test(text)) {
+      const algoliasearch = require("algoliasearch");
+      const client = algoliasearch(
+        "EXC8LH5MAX",
+        "2d8cedcaab4cb2b351e90679963fbd92"
+      );
+      const index = client.initIndex("users");
+
       index.search(text).then((responses) => {
         setReturnedIndex(responses.hits);
       });
@@ -52,7 +64,14 @@ const ExploreScreen = (props) => {
   const refreshSearchIndex = (text) => {
     setIsRefreshing(true);
     setSearch(text);
-    if (text) {
+    if (!/^ *$/.test(text)) {
+      const algoliasearch = require("algoliasearch");
+      const client = algoliasearch(
+        "EXC8LH5MAX",
+        "2d8cedcaab4cb2b351e90679963fbd92"
+      );
+      const index = client.initIndex("users");
+
       index.search(text).then((responses) => {
         setReturnedIndex(responses.hits);
       });
@@ -69,12 +88,10 @@ const ExploreScreen = (props) => {
     fullname,
     username,
     jobTitle,
-    resumeLinkUrl,
     profileBiography,
     numberOfFollowers,
     numberOfFollowing,
     numberOfAdvocates,
-    showResume,
     hideFollowing,
     hideFollowers,
     hideAdvocates,
@@ -89,31 +106,154 @@ const ExploreScreen = (props) => {
   ) => {
     dispatch(offScreen("Explore"));
     props.navigation.push("ExploreProfile", {
-      text,
-      ExhibitUId,
-      profilePictureUrl,
-      fullname,
-      username,
-      jobTitle,
-      resumeLinkUrl,
-      profileBiography,
-      numberOfFollowers,
-      numberOfFollowing,
-      numberOfAdvocates,
-      showResume,
-      hideFollowing,
-      hideFollowers,
-      hideAdvocates,
-      followers,
-      following,
-      advocates,
-      profileProjects,
-      profileLinks,
-      projectLinks,
-      profileColumns,
-      showCheering,
+      exploreData: {
+        text,
+        exploredExhibitUId: ExhibitUId,
+        profilePictureUrl,
+        fullname,
+        username,
+        jobTitle,
+        profileBiography,
+        numberOfFollowers,
+        numberOfFollowing,
+        numberOfAdvocates,
+        hideFollowing,
+        hideFollowers,
+        hideAdvocates,
+        followers,
+        following,
+        advocates,
+        profileProjects,
+        profileLinks,
+        projectLinks,
+        profileColumns,
+        showCheering,
+      },
     });
   };
+
+  const getExlusiveBothSetsDifference = (arr1, arr2) => {
+    const difference = arr1
+      .filter((x) => !arr2.includes(x))
+      .concat(arr2.filter((x) => !arr1.includes(x)));
+    return difference;
+  };
+
+  useDidMountEffect(() => {
+    const difference = getExlusiveBothSetsDifference(
+      intialAdvocating,
+      advocating
+    );
+    if (search) {
+      const algoliasearch = require("algoliasearch");
+      const client = algoliasearch(
+        "EXC8LH5MAX",
+        "2d8cedcaab4cb2b351e90679963fbd92"
+      );
+      const index = client.initIndex("users");
+      index.search(search).then((responses) => {
+        for (const object of responses.hits) {
+          if (object.objectID === difference[0]) {
+            if (intialAdvocating.length < advocating.length) {
+              object.numberOfAdvocates += 1;
+              object.advocates = [...object.advocates, ExhibitUId];
+            } else {
+              object.numberOfAdvocates -= 1;
+              object.advocates = object.advocates.filter(
+                (userId) => userId !== ExhibitUId
+              );
+            }
+          }
+        }
+        setReturnedIndex(responses.hits);
+      });
+    }
+    setIntialAdvocating(advocating);
+  }, [advocating]);
+
+  useDidMountEffect(() => {
+    const difference = getExlusiveBothSetsDifference(
+      intialFollowing,
+      following
+    );
+    if (search) {
+      const algoliasearch = require("algoliasearch");
+      const client = algoliasearch(
+        "EXC8LH5MAX",
+        "2d8cedcaab4cb2b351e90679963fbd92"
+      );
+      const index = client.initIndex("users");
+      index.search(search).then((responses) => {
+        for (const object of responses.hits) {
+          if (object.objectID === difference[0]) {
+            if (intialFollowing.length < following.length) {
+              object.numberOfFollowers += 1;
+              object.followers = [...object.followers, ExhibitUId];
+            } else {
+              object.numberOfFollowers -= 1;
+              object.followers = object.followers.filter(
+                (userId) => userId !== ExhibitUId
+              );
+            }
+          }
+        }
+        setReturnedIndex(responses.hits);
+      });
+    }
+    setIntialFollowing(following);
+  }, [following]);
+
+  useDidMountEffect(() => {
+    const difference = getExlusiveBothSetsDifference(
+      intialCheeredPosts,
+      cheeredPosts
+    );
+    if (search) {
+      const algoliasearch = require("algoliasearch");
+      const client = algoliasearch(
+        "EXC8LH5MAX",
+        "2d8cedcaab4cb2b351e90679963fbd92"
+      );
+      const index = client.initIndex("users");
+      index.search(search).then((responses) => {
+        for (const object of responses.hits) {
+          if (object) {
+            for (const projectId of Object.keys(object.profileProjects)) {
+              for (const postId of Object.keys(
+                object.profileProjects[projectId].projectPosts
+              )) {
+                if (postId === difference[0]) {
+                  if (intialCheeredPosts.length < cheeredPosts.length) {
+                    object.profileProjects[projectId].projectPosts[
+                      postId
+                    ].numberOfCheers += 1;
+                    object.profileProjects[projectId].projectPosts[
+                      postId
+                    ].cheering = [
+                      ...object.profileProjects[projectId].projectPosts[postId]
+                        .cheering,
+                      ExhibitUId,
+                    ];
+                  } else {
+                    object.profileProjects[projectId].projectPosts[
+                      postId
+                    ].numberOfCheers -= 1;
+                    object.profileProjects[projectId].projectPosts[
+                      postId
+                    ].cheering = object.profileProjects[projectId].projectPosts[
+                      postId
+                    ].cheering.filter((userId) => userId !== ExhibitUId);
+                  }
+                }
+              }
+            }
+          }
+        }
+        setReturnedIndex(responses.hits);
+      });
+    }
+    setIntialCheeredPosts(cheeredPosts);
+  }, [cheeredPosts]);
 
   const flatlistExplore = useRef();
   useDidMountEffect(() => {
@@ -143,13 +283,19 @@ const ExploreScreen = (props) => {
               borderBottomColor: "gray",
               borderBottomWidth: 1,
             }}
-            searchIcon={<EvilIcons name="search" size={24} color="white" />}
+            searchIcon={
+              <EvilIcons
+                name="search"
+                size={24}
+                color={darkModeValue ? "white" : "black"}
+              />
+            }
             clearIcon={
               search ? (
                 <Feather
                   name="x"
                   size={24}
-                  color="white"
+                  color={darkModeValue ? "white" : "black"}
                   onPress={() => {
                     searchFilterFunction("");
                   }}
@@ -166,6 +312,7 @@ const ExploreScreen = (props) => {
         </View>
       </TouchableWithoutFeedback>
       <FlatList
+        extraData={returnedIndex}
         data={returnedIndex}
         refreshControl={
           <RefreshControl
@@ -200,12 +347,10 @@ const ExploreScreen = (props) => {
                 itemData.item.fullname,
                 itemData.item.username,
                 itemData.item.jobTitle,
-                itemData.item.resumeLinkUrl,
                 itemData.item.profileBiography,
                 itemData.item.numberOfFollowers,
                 itemData.item.numberOfFollowing,
                 itemData.item.numberOfAdvocates,
-                itemData.item.showResume,
                 itemData.item.hideFollowing,
                 itemData.item.hideFollowers,
                 itemData.item.hideAdvocates,
@@ -222,6 +367,25 @@ const ExploreScreen = (props) => {
           />
         )}
       />
+      <View
+        style={{
+          flexDirection: "row",
+          alignSelf: "center",
+          alignItems: "center",
+          margin: 10,
+        }}
+      >
+        <Text
+          style={{
+            color: "grey",
+            fontWeight: "bold",
+            marginRight: 10,
+          }}
+        >
+          Searches powered by Algolia
+        </Text>
+        <FontAwesome5 name="algolia" size={24} color={"grey"} />
+      </View>
     </View>
   );
 };

@@ -1,17 +1,25 @@
-import React, { useEffect } from "react";
-import { StyleSheet, View, Text, ScrollView, Platform } from "react-native";
-import { useSelector } from "react-redux";
+import React, { useEffect, useState } from "react";
+import {
+  LogBox,
+  Platform,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
-
+import { useSelector } from "react-redux";
+import useDidMountEffect from "../../helper/useDidMountEffect";
 import FeedPostView from "../../components/feed/FeedPostView";
 import IoniconsHeaderButton from "../../components/UI/IoniconsHeaderButton";
 
-import { LogBox } from "react-native";
-
 const FeedCommentsScreen = (props) => {
-  const darkModeValue = useSelector((state) => state.switches.darkMode);
+  const darkModeValue = useSelector((state) => state.user.darkMode);
   const projectId = props.navigation.getParam("projectId");
   const userData = props.navigation.getParam("userData");
+  const cheeredPosts = useSelector((state) => state.user.cheeredPosts);
+  const [intialCheeredPosts, setIntialCheeredPosts] = useState([]);
+  const [numberOfCheers, setNumberOfCheers] = useState(userData.numberOfCheers);
   userData.postLinks = userData.postLinks ? userData.postLinks : {};
 
   let android = null;
@@ -19,12 +27,23 @@ const FeedCommentsScreen = (props) => {
     android = true;
   }
 
+  useEffect(() => {
+    setIntialCheeredPosts(cheeredPosts);
+  }, []);
+
+  const getExlusiveBothSetsDifference = (arr1, arr2) => {
+    const difference = arr1
+      .filter((x) => !arr2.includes(x))
+      .concat(arr2.filter((x) => !arr1.includes(x)));
+    return difference;
+  };
+
   const viewCheeringHandler = () => {
     props.navigation.push("ViewCheering", {
       ExhibitUId: userData.ExhibitUId,
       projectId: projectId,
       postId: userData.postId,
-      numberOfCheers: userData.numberOfCheers,
+      numberOfCheers: numberOfCheers,
     });
   };
 
@@ -53,14 +72,29 @@ const FeedCommentsScreen = (props) => {
   };
 
   useEffect(() => {
-    props.navigation.setParams({ darkMode: darkModeValue });
-  }, [darkModeValue]);
-
-  useEffect(() => {
     LogBox.ignoreLogs(["VirtualizedLists should never be nested"]);
     props.navigation.setParams({ android });
     props.navigation.setParams({ projectId: projectId });
   }, []);
+
+  useEffect(() => {
+    props.navigation.setParams({ darkMode: darkModeValue });
+  }, [darkModeValue]);
+
+  useDidMountEffect(() => {
+    const difference = getExlusiveBothSetsDifference(
+      intialCheeredPosts,
+      cheeredPosts
+    );
+    if (userData.postId === difference[0]) {
+      if (intialCheeredPosts.length < cheeredPosts.length) {
+        setNumberOfCheers((prevState) => prevState + 1);
+      } else {
+        setNumberOfCheers((prevState) => prevState - 1);
+      }
+    }
+    setIntialCheeredPosts(cheeredPosts);
+  }, [cheeredPosts]);
 
   return (
     <ScrollView
@@ -86,10 +120,10 @@ const FeedCommentsScreen = (props) => {
             ? userData.profilePictureBase64
             : userData.profilePictureUrl
         }
-        numberOfCheers={userData.numberOfCheers}
+        numberOfCheers={numberOfCheers}
         numberOfComments={userData.numberOfComments}
         postId={userData.postId}
-        projectId={userData.projectId}
+        projectId={projectId}
         posterExhibitUId={userData.ExhibitUId}
         links={userData.postLinks}
         postDateCreated={userData.postDateCreated}

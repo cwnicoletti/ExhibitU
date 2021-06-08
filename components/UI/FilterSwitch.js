@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, Switch, StyleSheet } from "react-native";
+import { StyleSheet, Switch, Text, View } from "react-native";
 
 const FilterSwitch = (props) => {
   return (

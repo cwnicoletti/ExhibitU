@@ -1,25 +1,23 @@
-import React, { useEffect, useState, useRef } from "react";
+import { AntDesign } from "@expo/vector-icons";
+import { LinearGradient } from "expo-linear-gradient";
+import React, { useEffect, useState } from "react";
 import {
-  View,
-  Text,
-  Image,
-  ImageBackground,
-  StyleSheet,
-  TouchableOpacity,
-  TouchableNativeFeedback,
-  Platform,
   Dimensions,
   FlatList,
+  Image,
+  ImageBackground,
+  LogBox,
+  Platform,
+  StyleSheet,
+  Text,
+  TouchableNativeFeedback,
+  TouchableOpacity,
+  View,
 } from "react-native";
-import { LinearGradient } from "expo-linear-gradient";
-import LinkButton from "../UI/LinkButton";
-import { useSelector } from "react-redux";
 import resolveAssetSource from "react-native/Libraries/Image/resolveAssetSource";
-
-import { AntDesign } from "@expo/vector-icons";
+import { useSelector } from "react-redux";
 import Cheer from "../../assets/Icons/clap.svg";
-
-import { LogBox } from "react-native";
+import LinkButton from "../UI/LinkButton";
 
 const toDateTime = (seconds) => {
   let t = new Date(0); // Epoch
@@ -29,7 +27,7 @@ const toDateTime = (seconds) => {
 
 const ProjectItem = (props) => {
   const [height, setHeight] = useState(null);
-  const darkModeValue = useSelector((state) => state.switches.darkMode);
+  const darkModeValue = useSelector((state) => state.user.darkMode);
   const fullname = useSelector((state) => state.user.fullname);
   const defaultPostIcon = require("../../assets/default-post-icon.png");
   const source = resolveAssetSource(defaultPostIcon);

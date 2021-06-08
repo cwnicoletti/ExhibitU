@@ -1,20 +1,33 @@
-import React, { useEffect } from "react";
-import { StyleSheet, FlatList, View, Text, Platform } from "react-native";
-import { useSelector, useDispatch } from "react-redux";
-
-import ProjectPictures from "../../components/UI/ProjectPictures";
+import React, { useEffect, useState } from "react";
+import { FlatList, Platform, StyleSheet, Text, View } from "react-native";
+import { HeaderButtons, Item } from "react-navigation-header-buttons";
+import { useDispatch, useSelector } from "react-redux";
 import ProjectHeader from "../../components/projects/ProjectHeader";
 import IoniconsHeaderButton from "../../components/UI/IoniconsHeaderButton";
-import { HeaderButtons, Item } from "react-navigation-header-buttons";
+import ProjectPictures from "../../components/UI/ProjectPictures";
+import useDidMountEffect from "../../helper/useDidMountEffect";
 import { changeProjectNumberOfColumns } from "../../store/actions/user";
 
 const ProjectScreen = (props) => {
   const dispatch = useDispatch();
-  const darkModeValue = useSelector((state) => state.switches.darkMode);
+  const [isLoadingTwoColumns, setIsLoadingTwoColumns] = useState(false);
+  const [isLoadingThreeColumns, setIsLoadingThreeColumns] = useState(false);
+  const [isLoadingFourColumns, setIsLoadingFourColumns] = useState(false);
+  const darkModeValue = useSelector((state) => state.user.darkMode);
   const localId = useSelector((state) => state.auth.userId);
   const ExhibitUId = useSelector((state) => state.user.ExhibitUId);
   const profileProjects = useSelector((state) => state.user.profileProjects);
   const currentProjectId = props.navigation.getParam("projectId");
+  const [projectPostsState, setProjectPostsState] = useState(
+    Object.values(profileProjects[currentProjectId].projectPosts).sort(
+      (first, second) => {
+        return (
+          second["postDateCreated"]["_seconds"] -
+          first["postDateCreated"]["_seconds"]
+        );
+      }
+    )
+  );
 
   const postIds = Object.keys(profileProjects[currentProjectId].projectPosts);
 
@@ -98,6 +111,20 @@ const ProjectScreen = (props) => {
     profileProjects[currentProjectId].projectLinks,
   ]);
 
+  useDidMountEffect(() => {
+    // Sort the array based on the second element
+    setProjectPostsState(
+      Object.values(profileProjects[currentProjectId].projectPosts).sort(
+        (first, second) => {
+          return (
+            second["postDateCreated"]["_seconds"] -
+            first["postDateCreated"]["_seconds"]
+          );
+        }
+      )
+    );
+  }, [profileProjects[currentProjectId].projectPosts]);
+
   const topHeader = () => {
     return (
       <ProjectHeader
@@ -116,16 +143,12 @@ const ProjectScreen = (props) => {
         onEditProfilePress={() =>
           props.navigation.navigate("EditProjectScreen", {
             projectId: currentProjectId,
-            projectTitle: profileProjects[currentProjectId].projectTitle,
-            projectCoverPhotoUrl:
-              profileProjects[currentProjectId].projectCoverPhotoUrl,
-            projectDescription:
-              profileProjects[currentProjectId].projectDescription,
             links: profileProjects[currentProjectId].projectLinks,
           })
         }
-        changeColumnToTwo={() => {
-          dispatch(
+        changeColumnToTwo={async () => {
+          await setIsLoadingTwoColumns(true);
+          await dispatch(
             changeProjectNumberOfColumns(
               localId,
               ExhibitUId,
@@ -134,6 +157,7 @@ const ProjectScreen = (props) => {
               2
             )
           );
+          await setIsLoadingTwoColumns(false);
         }}
         columnTwoStyle={{
           borderColor:
@@ -145,8 +169,10 @@ const ProjectScreen = (props) => {
               ? "gray"
               : "#c9c9c9",
         }}
-        changeColumnToThree={() => {
-          dispatch(
+        isLoadingTwoColumns={isLoadingTwoColumns}
+        changeColumnToThree={async () => {
+          await setIsLoadingThreeColumns(true);
+          await dispatch(
             changeProjectNumberOfColumns(
               localId,
               ExhibitUId,
@@ -155,6 +181,7 @@ const ProjectScreen = (props) => {
               3
             )
           );
+          await setIsLoadingThreeColumns(false);
         }}
         columnThreeStyle={{
           borderColor:
@@ -166,8 +193,10 @@ const ProjectScreen = (props) => {
               ? "gray"
               : "#c9c9c9",
         }}
-        changeColumnToFour={() => {
-          dispatch(
+        isLoadingThreeColumns={isLoadingThreeColumns}
+        changeColumnToFour={async () => {
+          await setIsLoadingFourColumns(true);
+          await dispatch(
             changeProjectNumberOfColumns(
               localId,
               ExhibitUId,
@@ -176,6 +205,7 @@ const ProjectScreen = (props) => {
               4
             )
           );
+          await setIsLoadingFourColumns(false);
         }}
         columnFourStyle={{
           borderColor:
@@ -187,6 +217,7 @@ const ProjectScreen = (props) => {
               ? "gray"
               : "#c9c9c9",
         }}
+        isLoadingFourColumns={isLoadingFourColumns}
       />
     );
   };
@@ -199,7 +230,7 @@ const ProjectScreen = (props) => {
       }}
     >
       <FlatList
-        data={Object.values(profileProjects[currentProjectId].projectPosts)}
+        data={projectPostsState}
         keyExtractor={(item) => item.postId}
         ListHeaderComponent={topHeader}
         key={profileProjects[currentProjectId].projectColumns}

@@ -1,50 +1,57 @@
 import {
-  GET_USER_DATA,
-  GET_USER_FEED,
-  UPDATE_PROFILE_LINKS,
-  UPDATE_USER_PROFILE,
-  ADD_USER_PROJECT,
-  UPDATE_PROJECT_LINKS,
-  UPDATE_USER_PROJECT,
-  REMOVE_USER_PROJECT,
-  REMOVE_USER_POST,
-  FOLLOW_USER,
-  UNFOLLOW_USER,
-  CHANGE_PROFILE_PICTURE,
-  CHANGE_PROJECT_PICTURE,
-  ADD_TEMP_PROJECT_PICTURE,
-  CLEAR_TEMP_PROJECT_PICTURE,
   ADD_TEMP_POST_PICTURE,
-  CLEAR_TEMP_POST_PICTURE,
+  ADD_TEMP_PROJECT_PICTURE,
   ADD_USER_POST,
-  UPDATE_ALL_POSTS,
-  CHEER_POST,
-  CHEER_UPDATE_POSTS,
+  ADD_USER_PROJECT,
+  ADVOCATE_FOR_USER,
+  CHANGE_PROFILE_COLUMNS,
+  CHANGE_PROFILE_PICTURE,
+  CHANGE_PROJECT_COLUMNS,
+  CHANGE_PROJECT_PICTURE,
   CHEER_OWN_FEED_POST,
   CHEER_OWN_PROFILE_POST,
+  CHEER_POST,
+  CHEER_UPDATE_POSTS,
+  CLEAR_TEMP_POST_PICTURE,
+  CLEAR_TEMP_PROJECT_PICTURE,
+  FOLLOW_USER,
+  GET_SWITCHES,
+  GET_UPDATES,
+  GET_USER_DATA,
+  GET_USER_FEED,
+  HIDE_ADVOCATES,
+  HIDE_FOLLOWERS,
+  HIDE_FOLLOWING,
+  HIDE_PROFILE_FOOTER,
+  OFF_SCREEN,
+  ON_SCREEN,
+  REFRESH_PROFILE,
+  REMOVE_USER_POST,
+  REMOVE_USER_PROJECT,
+  RESET_SCROLL,
+  RETURN_FROM_SHOWCASING,
+  SET_DARKMODE,
+  SHOWCASE_PROFILE,
+  SHOW_CHEERING,
+  UNADVOCATE_FOR_USER,
   UNCHEER_OWN_FEED_POST,
   UNCHEER_OWN_PROFILE_POST,
   UNCHEER_POST,
   UNCHEER_UPDATE_POSTS,
-  ADVOCATE_FOR_USER,
-  UNADVOCATE_FOR_USER,
+  UNFOLLOW_USER,
+  UPDATE_ALL_POSTS,
+  UPDATE_PROFILE_LINKS,
+  UPDATE_PROJECT_LINKS,
+  UPDATE_USER_PROFILE,
+  UPDATE_USER_PROJECT,
   UPLOAD_FEEDBACK,
   UPLOAD_REPORT_BUG,
-  CHANGE_PROFILE_COLUMNS,
-  CHANGE_PROJECT_COLUMNS,
-  GET_UPDATES,
-  REFRESH_PROFILE,
-  RESET_SCROLL,
-  ON_SCREEN,
-  OFF_SCREEN,
-  SHOWCASE_PROFILE,
-  RETURN_FROM_SHOWCASING,
-  HIDE_PROFILE_FOOTER,
 } from "../actions/user";
 
 const intialState = {
   ExhibitUId: "",
   email: "",
+  profilePictureId: "",
   profilePictureUrl: "",
   profilePictureBase64: "",
   projectTempCoverPhotoId: "",
@@ -56,7 +63,6 @@ const intialState = {
   fullname: "",
   jobTitle: "",
   username: "",
-  resumeLinkUrl: "",
   profileBiography: "",
   numberOfFollowers: 0,
   numberOfFollowing: 0,
@@ -81,6 +87,11 @@ const intialState = {
   onFeedScreen: true,
   onExploreScreen: true,
   onProfileScreen: true,
+  darkMode: false,
+  showCheering: true,
+  hideFollowing: false,
+  hideFollowers: false,
+  hideAdvocates: false,
 };
 
 export default (state = intialState, action) => {
@@ -90,6 +101,7 @@ export default (state = intialState, action) => {
         ...state,
         ExhibitUId: action.ExhibitUId,
         email: action.email,
+        profilePictureId: action.profilePictureId,
         profilePictureUrl: action.profilePictureUrl,
         profilePictureBase64: action.profilePictureBase64,
         projectTempCoverPhotoId: action.projectTempCoverPhotoId,
@@ -101,7 +113,6 @@ export default (state = intialState, action) => {
         fullname: action.fullname,
         jobTitle: action.jobTitle,
         username: action.username,
-        resumeLinkUrl: action.resumeLinkUrl,
         profileBiography: action.profileBiography,
         numberOfFollowers: action.numberOfFollowers,
         numberOfFollowing: action.numberOfFollowing,
@@ -118,6 +129,11 @@ export default (state = intialState, action) => {
         profileLinks: action.profileLinks,
         userFeed: action.userFeed,
         updates: action.updates,
+        darkMode: action.darkMode,
+        showCheering: action.showCheering,
+        hideFollowing: action.hideFollowing,
+        hideFollowers: action.hideFollowers,
+        hideAdvocates: action.hideAdvocates,
       };
     case GET_USER_FEED:
       return {
@@ -139,6 +155,8 @@ export default (state = intialState, action) => {
         advocating: action.advocating,
         projectsAdvocating: action.projectsAdvocating,
         cheeredPosts: action.cheeredPosts,
+        profileProjects: action.profileProjects,
+        profileLinks: action.profileLinks,
       };
     case UPDATE_PROFILE_LINKS:
       return {
@@ -152,8 +170,6 @@ export default (state = intialState, action) => {
         jobTitle: action.jobTitle,
         username: action.username,
         profileBiography: action.bio,
-        resumeLinkUrl: action.resumeLink,
-        showResumeValue: action.showResumeValue,
         profileLinks: action.profileLinks,
       };
     case CHANGE_PROFILE_PICTURE:
@@ -177,19 +193,23 @@ export default (state = intialState, action) => {
       }
       return {
         ...state,
+        profilePictureId: action.profilePictureId,
         profilePictureUrl: action.profilePictureUrl,
         profilePictureBase64: action.profilePictureBase64,
       };
     case CHANGE_PROJECT_PICTURE:
       return {
         ...state,
+        projectTempCoverPhotoUrl: action.projectCoverPhotoUrl,
+        projectTempCoverPhotoId: action.projectCoverPhotoId,
+        projectTempCoverPhotoBase64: action.projectCoverPhotoBase64,
         profileProjects: {
           ...state.profileProjects,
           [action.projectId]: {
             ...state.profileProjects[action.projectId],
             projectCoverPhotoUrl: action.projectCoverPhotoUrl,
+            projectCoverPhotoBase64: action.projectCoverPhotoBase64,
             projectCoverPhotoId: action.projectCoverPhotoId,
-            projectTempCoverPhotoBase64: action.projectTempCoverPhotoBase64,
           },
         },
       };
@@ -318,6 +338,9 @@ export default (state = intialState, action) => {
             numberOfFollowers: action.numberOfFollowers,
             numberOfFollowing: action.numberOfFollowing,
             numberOfAdvocates: action.numberOfAdvocates,
+            followingValue: action.followingValue,
+            followersValue: action.followersValue,
+            advocatesValue: action.advocatesValue,
             profileBiography: action.profileBiography,
             profileProjects: {
               ...state.profileProjects,
@@ -335,6 +358,9 @@ export default (state = intialState, action) => {
                     numberOfFollowers: action.numberOfFollowers,
                     numberOfFollowing: action.numberOfFollowing,
                     numberOfAdvocates: action.numberOfAdvocates,
+                    followingValue: action.followingValue,
+                    followersValue: action.followersValue,
+                    advocatesValue: action.advocatesValue,
                     profileBiography: action.profileBiography,
                     projectTitle: action.projectTitle,
                     profilePictureUrl: action.profilePictureUrl,
@@ -481,49 +507,56 @@ export default (state = intialState, action) => {
         numberOfAdvocating: state.numberOfAdvocating - 1,
       };
     case CHEER_POST:
-      return {
-        ...state,
-        userFeed: {
-          ...state.userFeed,
-          [action.postId]: {
-            ...state.userFeed[action.postId],
-            cheering: [
-              ...state.userFeed[action.postId].cheering,
-              action.ExhibitUId,
-            ],
-            numberOfCheers: state.userFeed[action.postId].numberOfCheers + 1,
-            profileProjects: {
-              ...state.userFeed[action.postId].profileProjects,
-              [action.projectId]: {
-                ...state.userFeed[action.postId].profileProjects[
-                  action.projectId
-                ],
-                projectPosts: {
+      if (state.userFeed[action.postId]) {
+        return {
+          ...state,
+          userFeed: {
+            ...state.userFeed,
+            [action.postId]: {
+              ...state.userFeed[action.postId],
+              cheering: [
+                ...state.userFeed[action.postId].cheering,
+                action.ExhibitUId,
+              ],
+              numberOfCheers: state.userFeed[action.postId].numberOfCheers + 1,
+              profileProjects: {
+                ...state.userFeed[action.postId].profileProjects,
+                [action.projectId]: {
                   ...state.userFeed[action.postId].profileProjects[
                     action.projectId
-                  ].projectPosts,
-                  [action.postId]: {
+                  ],
+                  projectPosts: {
                     ...state.userFeed[action.postId].profileProjects[
                       action.projectId
-                    ].projectPosts[action.postId],
-                    cheering: [
+                    ].projectPosts,
+                    [action.postId]: {
                       ...state.userFeed[action.postId].profileProjects[
                         action.projectId
-                      ].projectPosts[action.postId].cheering,
-                      action.ExhibitUId,
-                    ],
-                    numberOfCheers:
-                      state.userFeed[action.postId].profileProjects[
-                        action.projectId
-                      ].projectPosts[action.postId].numberOfCheers + 1,
+                      ].projectPosts[action.postId],
+                      cheering: [
+                        ...state.userFeed[action.postId].profileProjects[
+                          action.projectId
+                        ].projectPosts[action.postId].cheering,
+                        action.ExhibitUId,
+                      ],
+                      numberOfCheers:
+                        state.userFeed[action.postId].profileProjects[
+                          action.projectId
+                        ].projectPosts[action.postId].numberOfCheers + 1,
+                    },
                   },
                 },
               },
             },
           },
-        },
-        cheeredPosts: [...state.cheeredPosts, action.postId],
-      };
+          cheeredPosts: [...state.cheeredPosts, action.postId],
+        };
+      } else {
+        return {
+          ...state,
+          cheeredPosts: [...state.cheeredPosts, action.postId],
+        };
+      }
     case CHEER_UPDATE_POSTS:
       Object.entries(state.userFeed).map(([id, value]) => {
         Object.entries(state.userFeed[id].profileProjects).map(
@@ -644,49 +677,58 @@ export default (state = intialState, action) => {
         cheeredPosts: [...state.cheeredPosts, action.postId],
       };
     case UNCHEER_POST:
-      return {
-        ...state,
-        userFeed: {
-          ...state.userFeed,
-          [action.postId]: {
-            ...state.userFeed[action.postId],
-            profileProjects: {
-              ...state.userFeed[action.postId].profileProjects,
-              [action.projectId]: {
-                ...state.userFeed[action.postId].profileProjects[
-                  action.projectId
-                ],
-                projectPosts: {
+      if (state.userFeed[action.postId]) {
+        return {
+          ...state,
+          userFeed: {
+            ...state.userFeed,
+            [action.postId]: {
+              ...state.userFeed[action.postId],
+              profileProjects: {
+                ...state.userFeed[action.postId].profileProjects,
+                [action.projectId]: {
                   ...state.userFeed[action.postId].profileProjects[
                     action.projectId
-                  ].projectPosts,
-                  [action.postId]: {
+                  ],
+                  projectPosts: {
                     ...state.userFeed[action.postId].profileProjects[
                       action.projectId
-                    ].projectPosts[action.postId],
-                    cheering: state.userFeed[action.postId].profileProjects[
-                      action.projectId
-                    ].projectPosts[action.postId].cheering.filter(
-                      (ExhibitUId) => ExhibitUId !== action.ExhibitUId
-                    ),
-                    numberOfCheers:
-                      state.userFeed[action.postId].profileProjects[
+                    ].projectPosts,
+                    [action.postId]: {
+                      ...state.userFeed[action.postId].profileProjects[
                         action.projectId
-                      ].projectPosts[action.postId].numberOfCheers - 1,
+                      ].projectPosts[action.postId],
+                      cheering: state.userFeed[action.postId].profileProjects[
+                        action.projectId
+                      ].projectPosts[action.postId].cheering.filter(
+                        (ExhibitUId) => ExhibitUId !== action.ExhibitUId
+                      ),
+                      numberOfCheers:
+                        state.userFeed[action.postId].profileProjects[
+                          action.projectId
+                        ].projectPosts[action.postId].numberOfCheers - 1,
+                    },
                   },
                 },
               },
+              cheering: state.userFeed[action.postId].cheering.filter(
+                (ExhibitUId) => ExhibitUId !== action.ExhibitUId
+              ),
+              numberOfCheers: state.userFeed[action.postId].numberOfCheers - 1,
             },
-            cheering: state.userFeed[action.postId].cheering.filter(
-              (ExhibitUId) => ExhibitUId !== action.ExhibitUId
-            ),
-            numberOfCheers: state.userFeed[action.postId].numberOfCheers - 1,
           },
-        },
-        cheeredPosts: state.cheeredPosts.filter(
-          (post) => post !== action.postId
-        ),
-      };
+          cheeredPosts: state.cheeredPosts.filter(
+            (post) => post !== action.postId
+          ),
+        };
+      } else {
+        return {
+          ...state,
+          cheeredPosts: state.cheeredPosts.filter(
+            (post) => post !== action.postId
+          ),
+        };
+      }
     case UNCHEER_UPDATE_POSTS:
       Object.entries(state.userFeed).map(([id, value]) => {
         Object.entries(state.userFeed[id].profileProjects).map(
@@ -882,6 +924,96 @@ export default (state = intialState, action) => {
       return {
         ...state,
         hiddenProfileFooter: action.value,
+      };
+    case SHOW_CHEERING:
+      if (state.userFeed) {
+        Object.entries(state.userFeed).map(([id, value]) => {
+          if (state.userFeed[id].ExhibitUId === action.ExhibitUId) {
+            state.userFeed[id].showCheering = action.showCheering;
+            Object.entries(state.userFeed[id].profileProjects).map(
+              ([projectId, value]) => {
+                state.userFeed[id].profileProjects[projectId].projectPosts[
+                  id
+                ].showCheering = action.showCheering;
+              }
+            );
+          }
+        });
+      }
+      return {
+        ...state,
+        showCheering: action.showCheering,
+      };
+    case HIDE_FOLLOWING:
+      if (state.userFeed) {
+        Object.entries(state.userFeed).map(([id, value]) => {
+          if (state.userFeed[id].ExhibitUId === action.ExhibitUId) {
+            state.userFeed[id].hideFollowing = action.hideFollowingValue;
+            Object.entries(state.userFeed[id].profileProjects).map(
+              ([projectId, value]) => {
+                state.userFeed[id].profileProjects[projectId].projectPosts[
+                  id
+                ].hideFollowing = action.hideFollowingValue;
+              }
+            );
+          }
+        });
+      }
+      return {
+        ...state,
+        hideFollowing: action.hideFollowingValue,
+      };
+    case HIDE_FOLLOWERS:
+      if (state.userFeed) {
+        Object.entries(state.userFeed).map(([id, value]) => {
+          if (state.userFeed[id].ExhibitUId === action.ExhibitUId) {
+            state.userFeed[id].hideFollowers = action.hideFollowersValue;
+            Object.entries(state.userFeed[id].profileProjects).map(
+              ([projectId, value]) => {
+                state.userFeed[id].profileProjects[projectId].projectPosts[
+                  id
+                ].hideFollowers = action.hideFollowersValue;
+              }
+            );
+          }
+        });
+      }
+      return {
+        ...state,
+        hideFollowers: action.hideFollowersValue,
+      };
+    case HIDE_ADVOCATES:
+      if (state.userFeed) {
+        Object.entries(state.userFeed).map(([id, value]) => {
+          if (state.userFeed[id].ExhibitUId === action.ExhibitUId) {
+            state.userFeed[id].hideAdvocates = action.hideAdvocatesValue;
+            Object.entries(state.userFeed[id].profileProjects).map(
+              ([projectId, value]) => {
+                state.userFeed[id].profileProjects[projectId].projectPosts[
+                  id
+                ].hideAdvocates = action.hideAdvocatesValue;
+              }
+            );
+          }
+        });
+      }
+      return {
+        ...state,
+        hideAdvocates: action.hideAdvocatesValue,
+      };
+    case GET_SWITCHES:
+      return {
+        ...state,
+        darkMode: action.darkMode,
+        showCheering: action.showCheering,
+        hideFollowing: action.hideFollowing,
+        hideFollowers: action.hideFollowers,
+        hideAdvocates: action.hideAdvocates,
+      };
+    case SET_DARKMODE:
+      return {
+        ...state,
+        darkMode: action.darkMode,
       };
   }
   return state;

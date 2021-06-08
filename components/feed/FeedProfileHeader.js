@@ -1,40 +1,34 @@
+import * as WebBrowser from "expo-web-browser";
 import React from "react";
 import {
-  View,
-  Text,
-  StyleSheet,
   FlatList,
+  Platform,
+  StyleSheet,
+  Text,
   TouchableNativeFeedback,
   TouchableOpacity,
-  Platform,
+  View,
 } from "react-native";
 import { useSelector } from "react-redux";
-import * as WebBrowser from "expo-web-browser";
-import { Ionicons } from "@expo/vector-icons";
-
-import UserTitleShowcaseLocal from "../user/UserTitleShowcaseLocal";
 import LinkButton from "../UI/LinkButton";
+import UserTitleShowcaseLocal from "../user/UserTitleShowcaseLocal";
 
 const handleLinkOnPress = (url) => {
   WebBrowser.openBrowserAsync(url);
 };
 
 const FeedProfileHeader = (props) => {
-  const darkModeValue = useSelector((state) => state.switches.darkMode);
+  const darkModeValue = useSelector((state) => state.user.darkMode);
   const links = props.links;
   const followingValue = props.hideFollowing;
   const followersValue = props.hideFollowers;
   const advocatesValue = props.hideAdvocates;
-  const showResumeValue = props.showResume;
 
   const userDataProfileHeader = {
-    resumeLink: props.resumeLink,
     numberOfFollowers: props.numberOfFollowers,
     numberOfFollowing: props.numberOfFollowing,
     numberOfAdvocates: props.numberOfAdvocates,
   };
-
-  const linktoresume = userDataProfileHeader.resumeLink;
 
   let TouchableCmp = TouchableOpacity;
   if (Platform.OS === "android") {
@@ -52,7 +46,7 @@ const FeedProfileHeader = (props) => {
         <UserTitleShowcaseLocal {...props} />
         <View
           style={{
-            margin: 10,
+            marginTop: 5,
             flexDirection: "row",
           }}
         >
@@ -143,32 +137,22 @@ const FeedProfileHeader = (props) => {
             </TouchableCmp>
           ) : null}
         </View>
-        {showResumeValue ? (
-          <TouchableCmp
-            style={{
-              ...styles.resumeLink,
-              ...props.resumeLink,
-              borderColor: darkModeValue ? "gray" : "#c9c9c9",
-            }}
-            onPress={() => handleLinkOnPress(linktoresume)}
-          >
-            <Ionicons
-              name="ios-paper"
-              size={24}
-              color={props.iconResumeStyle}
-            />
-            <Text style={{ ...styles.resumeText, ...props.resumeText }}>
-              Resume
-            </Text>
-          </TouchableCmp>
-        ) : null}
         {props.description ? (
           <Text style={props.descriptionStyle}>{props.description}</Text>
         ) : null}
         <FlatList
           data={Object.values(links)}
           keyExtractor={(item) => item.linkId}
-          numColumns={Object.keys(links).length > 1 ? 2 : 1}
+          columnWrapperStyle={
+            Object.keys(links).length > 1 ? { justifyContent: "center" } : null
+          }
+          numColumns={
+            Object.keys(links).length === 1
+              ? 1
+              : Object.keys(links).length === 2
+              ? 2
+              : 3
+          }
           renderItem={(itemData) => (
             <LinkButton
               imageUrl={itemData.item[`linkImageUrl${itemData.item.linkId}`]}
@@ -176,7 +160,12 @@ const FeedProfileHeader = (props) => {
               textStyle={{ color: darkModeValue ? "white" : "black" }}
               linkContainer={{
                 borderColor: "gray",
-                width: Object.keys(links).length > 1 ? "46%" : "96%",
+                width:
+                  Object.keys(links).length === 1
+                    ? "96%"
+                    : Object.keys(links).length === 2
+                    ? "46%"
+                    : "28%",
               }}
               imageStyle={{
                 backgroundColor: "white",
@@ -218,17 +207,6 @@ const styles = StyleSheet.create({
     height: 100,
     width: 100,
     borderRadius: 100 / 2,
-  },
-  resumeLink: {
-    flexDirection: "row",
-    borderWidth: 1,
-    width: "96%",
-    alignItems: "center",
-    justifyContent: "center",
-    marginBottom: 10,
-  },
-  resumeText: {
-    margin: 10,
   },
 });
 

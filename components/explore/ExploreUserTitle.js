@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, StyleSheet, Image } from "react-native";
+import { Image, StyleSheet, Text, View } from "react-native";
 
 const ExploreUserTitle = (props) => {
   const sourceImg = props.imgSource
@@ -7,7 +7,9 @@ const ExploreUserTitle = (props) => {
     : require("../../assets/default-profile-icon.jpg");
 
   return (
-    <View style={{ justifyContent: "center", alignItems: "center" }}>
+    <View
+      style={{ justifyContent: "center", alignItems: "center", margin: 10 }}
+    >
       <Image
         style={{ ...styles.showCaseLocalImage, ...props.style }}
         source={sourceImg}

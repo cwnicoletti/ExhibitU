@@ -1,17 +1,23 @@
 import React, { useEffect } from "react";
-import { StyleSheet, View, Text, ScrollView, Platform } from "react-native";
-import { useSelector } from "react-redux";
+import {
+  LogBox,
+  Platform,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
-
-import ShowcasePostView from "../../components/user/ShowcasePostView";
+import { useSelector } from "react-redux";
 import IoniconsHeaderButton from "../../components/UI/IoniconsHeaderButton";
-
-import { LogBox } from "react-native";
+import ShowcasePostView from "../../components/user/ShowcasePostView";
 
 const ShowcasePictureScreen = (props) => {
-  const darkModeValue = useSelector((state) => state.switches.darkMode);
+  const darkModeValue = useSelector((state) => state.user.darkMode);
   const userData = props.navigation.getParam("userData");
 
+  const postId = props.navigation.getParam("postId");
+  const projectId = props.navigation.getParam("projectId");
   const postPhotoUrl = props.navigation.getParam("postPhotoUrl");
   const postPhotoBase64 = props.navigation.getParam("postPhotoBase64");
   const numberOfCheers = props.navigation.getParam("numberOfCheers");
@@ -29,7 +35,7 @@ const ShowcasePictureScreen = (props) => {
 
   const viewCheeringHandler = () => {
     props.navigation.push("CheeringScreen", {
-      ExhibitUId: ExhibitUId,
+      ExhibitUId: userData.ExhibitUId,
       projectId: projectId,
       postId: postId,
       numberOfCheers: numberOfCheers,
@@ -43,12 +49,10 @@ const ShowcasePictureScreen = (props) => {
       fullname: userData.fullname,
       username: userData.username,
       jobTitle: userData.jobTitle,
-      resumeLinkUrl: userData.resumeLinkUrl,
       profileBiography: userData.profileBiography,
       numberOfFollowers: userData.numberOfFollowers,
       numberOfFollowing: userData.numberOfFollowing,
       numberOfAdvocates: userData.numberOfAdvocates,
-      showResume: userData.showResume,
       hideFollowing: userData.hideFollowing,
       hideFollowers: userData.hideFollowers,
       hideAdvocates: userData.hideAdvocates,

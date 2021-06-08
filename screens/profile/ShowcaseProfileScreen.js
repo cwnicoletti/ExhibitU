@@ -1,19 +1,17 @@
-import React, { useEffect } from "react";
-import { StyleSheet, FlatList, View, Text } from "react-native";
-import { useSelector, useDispatch } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { FlatList, StyleSheet, Text, View } from "react-native";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
-
+import { useDispatch, useSelector } from "react-redux";
 import ProjectItem from "../../components/projectItems/ProfileProjectItem";
-import ShowcaseHeader from "../../components/user/ShowcaseHeader";
 import IoniconsHeaderButton from "../../components/UI/IoniconsHeaderButton";
-
+import ShowcaseHeader from "../../components/user/ShowcaseHeader";
+import useDidMountEffect from "../../helper/useDidMountEffect";
 import { returnFromShowcasing } from "../../store/actions/user";
 
 const ShowcaseProfileScreen = (props) => {
   const dispatch = useDispatch();
-  const darkModeValue = useSelector((state) => state.switches.darkMode);
+  const darkModeValue = useSelector((state) => state.user.darkMode);
   const ExhibitUId = useSelector((state) => state.user.ExhibitUId);
-
 
   const userData =
     props.navigation.getParam("ExhibitUId") === ExhibitUId ||
@@ -43,11 +41,9 @@ const ShowcaseProfileScreen = (props) => {
           numberOfFollowing: useSelector(
             (state) => state.user.numberOfFollowing
           ),
-          showResumeValue: useSelector((state) => state.user.showResumeValue),
-          resumeLink: useSelector((state) => state.user.resumeLink),
-          hideFollowing: useSelector((state) => state.switches.hideFollowing),
-          hideFollowers: useSelector((state) => state.switches.hideFollowers),
-          hideAdvocates: useSelector((state) => state.switches.hideAdvocates),
+          hideFollowing: useSelector((state) => state.user.hideFollowing),
+          hideFollowers: useSelector((state) => state.user.hideFollowers),
+          hideAdvocates: useSelector((state) => state.user.hideAdvocates),
         }
       : {
           profilePictureUrl: props.navigation.getParam("profilePictureUrl"),
@@ -62,12 +58,19 @@ const ShowcaseProfileScreen = (props) => {
           numberOfAdvocates: props.navigation.getParam("numberOfAdvocates"),
           numberOfFollowers: props.navigation.getParam("numberOfFollowers"),
           numberOfFollowing: props.navigation.getParam("numberOfFollowing"),
-          showResumeValue: props.navigation.getParam("showResumeValue"),
-          resumeLink: props.navigation.getParam("resumeLink"),
           hideFollowing: props.navigation.getParam("hideFollowing"),
           hideFollowers: props.navigation.getParam("hideFollowers"),
           hideAdvocates: props.navigation.getParam("hideAdvocates"),
         };
+
+  const [profileProjectsState, setProfileProjectsState] = useState(
+    Object.values(userData.profileProjects).sort((first, second) => {
+      return (
+        second["projectDateCreated"]["_seconds"] -
+        first["projectDateCreated"]["_seconds"]
+      );
+    })
+  );
 
   useEffect(() => {
     props.navigation.setParams({ dispatch: dispatch });
@@ -76,6 +79,18 @@ const ShowcaseProfileScreen = (props) => {
   useEffect(() => {
     props.navigation.setParams({ darkMode: darkModeValue });
   }, [darkModeValue]);
+
+  useDidMountEffect(() => {
+    // Sort the array based on the second element
+    setProfileProjectsState(
+      Object.values(userData.profileProjects).sort((first, second) => {
+        return (
+          second["projectDateCreated"]["_seconds"] -
+          first["projectDateCreated"]["_seconds"]
+        );
+      })
+    );
+  }, [userData.profileProjects]);
 
   const viewProjectHandler = (projectId) => {
     props.navigation.push("ShowcaseProject", {
@@ -116,8 +131,6 @@ const ShowcaseProfileScreen = (props) => {
         followingValue={userData.hideFollowing}
         followersValue={userData.hideFollowers}
         advocatesValue={userData.hideAdvocates}
-        showResumeValue={userData.showResumeValue}
-        resumeLink={userData.resumeLink}
         numberOfFollowers={userData.numberOfFollowers}
         numberOfFollowing={userData.numberOfFollowing}
         numberOfAdvocates={userData.numberOfAdvocates}
@@ -125,10 +138,6 @@ const ShowcaseProfileScreen = (props) => {
           ...styles.profileDescriptionStyle,
           color: darkModeValue ? "white" : "black",
         }}
-        resumeText={{
-          color: darkModeValue ? "white" : "black",
-        }}
-        iconResumeStyle={darkModeValue ? "white" : "black"}
         onEditProfilePress={() => props.navigation.navigate("EditProfile")}
         onAddNewProjectPress={() => props.navigation.navigate("AddProject")}
         followersOnPress={() =>
@@ -158,7 +167,7 @@ const ShowcaseProfileScreen = (props) => {
       }}
     >
       <FlatList
-        data={Object.values(userData.profileProjects)}
+        data={profileProjectsState}
         keyExtractor={(item) => item.projectId}
         ListHeaderComponent={topHeader}
         numColumns={userData.profileColumns}

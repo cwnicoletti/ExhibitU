@@ -1,18 +1,28 @@
+// Clapping icon & default project icon made by Freepik (https://www.flaticon.com/authors/freepik)
 import React from "react";
 import { View } from "react-native";
-import { createStore, combineReducers, applyMiddleware } from "redux";
-import { Provider } from "react-redux";
 import { SafeAreaProvider } from "react-native-safe-area-context";
+import { Provider } from "react-redux";
+import { applyMiddleware, combineReducers, createStore } from "redux";
 import ReduxThunk from "redux-thunk";
-
-import authReducer from "./store/reducers/auth";
-import switchesReducer from "./store/reducers/switches";
-import userReducer from "./store/reducers/user";
-import signupReducer from "./store/reducers/signup";
-
 import NavigationContainer from "./navigation/NavigationContainer";
+import authReducer from "./store/reducers/auth";
+import signupReducer from "./store/reducers/signup";
+import userReducer from "./store/reducers/user";
+import * as firebase from "firebase";
+import { apikey, authDomain, databaseURL, storageBucket } from "./config";
 
-// Clapping, default project icon made by Freepik (https://www.flaticon.com/authors/freepik)
+// Initialize Firebase
+const firebaseConfig = {
+  apiKey: apikey,
+  authDomain: authDomain,
+  databaseURL: databaseURL,
+  storageBucket: storageBucket,
+};
+
+if (firebase.apps.length === 0) {
+  firebase.initializeApp(firebaseConfig);
+}
 
 // Notifications.setNotificationHandler({
 //   handleNotification: async () => {
@@ -23,7 +33,6 @@ import NavigationContainer from "./navigation/NavigationContainer";
 // });
 
 const rootReducer = combineReducers({
-  switches: switchesReducer,
   signup: signupReducer,
   auth: authReducer,
   user: userReducer,

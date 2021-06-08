@@ -1,22 +1,21 @@
+import { EvilIcons, Feather } from "@expo/vector-icons";
+import algoliasearch from "algoliasearch";
 import React, { useEffect, useState } from "react";
 import {
+  FlatList,
+  Keyboard,
+  RefreshControl,
+  SafeAreaView,
   StyleSheet,
-  View,
   Text,
   TouchableWithoutFeedback,
-  Keyboard,
-  FlatList,
-  SafeAreaView,
-  RefreshControl,
+  View,
 } from "react-native";
-import { useSelector } from "react-redux";
 import { SearchBar } from "react-native-elements";
-import algoliasearch from "algoliasearch";
-import { EvilIcons, Feather } from "@expo/vector-icons";
-
-import IoniconsHeaderButton from "../../components/UI/IoniconsHeaderButton";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
+import { useSelector } from "react-redux";
 import ExploreCard from "../../components/explore/ExploreCard";
+import IoniconsHeaderButton from "../../components/UI/IoniconsHeaderButton";
 
 const CheeringScreen = (props) => {
   const client = algoliasearch(
@@ -25,7 +24,7 @@ const CheeringScreen = (props) => {
   );
   const index = client.initIndex("users");
 
-  const darkModeValue = useSelector((state) => state.switches.darkMode);
+  const darkModeValue = useSelector((state) => state.user.darkMode);
   const [search, setSearch] = useState("");
   const [returnedIndex, setReturnedIndex] = useState([]);
   const [isRefreshing, setIsRefreshing] = useState(false);
@@ -79,33 +78,43 @@ const CheeringScreen = (props) => {
     fullname,
     username,
     jobTitle,
-    resumeLinkUrl,
     profileBiography,
     numberOfFollowers,
     numberOfFollowing,
     numberOfAdvocates,
-    showResumeValue,
+    hideFollowing,
+    hideFollowers,
+    hideAdvocates,
     followers,
     following,
     advocates,
-    profileProjects
+    profileProjects,
+    profileLinks,
+    projectLinks,
+    profileColumns,
+    showCheering
   ) => {
-    props.navigation.push("ViewProfile", {
+    props.navigation.push("ShowcaseProfile", {
       ExhibitUId,
       profilePictureUrl,
       fullname,
       username,
       jobTitle,
-      resumeLinkUrl,
       profileBiography,
       numberOfFollowers,
       numberOfFollowing,
       numberOfAdvocates,
-      showResumeValue,
+      hideFollowing,
+      hideFollowers,
+      hideAdvocates,
       followers,
       following,
       advocates,
       profileProjects,
+      profileLinks,
+      projectLinks,
+      profileColumns,
+      showCheering,
     });
   };
 
@@ -116,6 +125,18 @@ const CheeringScreen = (props) => {
         backgroundColor: darkModeValue ? "black" : "white",
       }}
     >
+      <View style={{ alignItems: "center" }}>
+        <Text
+          style={{
+            color: darkModeValue ? "white" : "black",
+            margin: 20,
+            marginBottom: 0,
+            fontSize: 18,
+          }}
+        >
+          {numberOfCheers} cheering
+        </Text>
+      </View>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
         <View style={{ alignItems: "center" }}>
           <Text style={{ marginTop: 10 }}>{numberOfCheers} Cheering</Text>
@@ -133,13 +154,13 @@ const CheeringScreen = (props) => {
               borderBottomColor: "gray",
               borderBottomWidth: 1,
             }}
-            searchIcon={<EvilIcons name="search" size={24} color="white" />}
+            searchIcon={<EvilIcons name="search" size={24} color={darkModeValue ? "white" : "black"} />}
             clearIcon={
               search ? (
                 <Feather
                   name="x"
                   size={24}
-                  color="white"
+                  color={darkModeValue ? "white" : "black"}
                   onPress={() => {
                     searchFilterFunction("");
                   }}
@@ -169,16 +190,16 @@ const CheeringScreen = (props) => {
         keyExtractor={(item) => item.objectID}
         renderItem={(itemData) => (
           <ExploreCard
-            image={
-              itemData.item.profilePictureUrl
-                ? { uri: itemData.item.profilePictureUrl }
-                : require("../../assets/default-profile-icon.jpg")
-            }
+            image={itemData.item.profilePictureUrl}
             fullname={itemData.item.fullname}
             username={itemData.item.username}
+            jobTitle={itemData.item.jobTitle}
             projectContainer={{
               backgroundColor: darkModeValue ? "black" : "white",
               borderColor: darkModeValue ? "gray" : "#c9c9c9",
+            }}
+            jobTitleStyle={{
+              color: darkModeValue ? "white" : "black",
             }}
             fullNameStyle={{
               color: darkModeValue ? "white" : "black",
@@ -190,16 +211,21 @@ const CheeringScreen = (props) => {
                 itemData.item.fullname,
                 itemData.item.username,
                 itemData.item.jobTitle,
-                itemData.item.resumeLinkUrl,
                 itemData.item.profileBiography,
                 itemData.item.numberOfFollowers,
                 itemData.item.numberOfFollowing,
                 itemData.item.numberOfAdvocates,
-                itemData.item.showResumeValue,
+                itemData.item.hideFollowing,
+                itemData.item.hideFollowers,
+                itemData.item.hideAdvocates,
                 itemData.item.followers,
                 itemData.item.following,
                 itemData.item.advocates,
-                itemData.item.profileProjects
+                itemData.item.profileProjects,
+                itemData.item.profileLinks,
+                itemData.item.projectLinks,
+                itemData.item.profileColumns,
+                itemData.item.showCheering
               );
             }}
           />
@@ -221,6 +247,7 @@ CheeringScreen.navigationOptions = (navData) => {
           style={{
             ...styles.logoTitle,
             color: darkModeValue ? "white" : "black",
+            fontFamily: "CormorantUpright",
           }}
         >
           ExhibitU

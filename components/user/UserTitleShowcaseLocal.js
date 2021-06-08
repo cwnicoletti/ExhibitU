@@ -1,22 +1,22 @@
 import React from "react";
-import { View, Text, StyleSheet, Image } from "react-native";
+import { Image, StyleSheet, Text, View } from "react-native";
 
 const UserTitleExhibitULocal = (props) => {
+  const sourceImg = props.imgSource
+    ? { uri: props.imgSource }
+    : require("../../assets/default-profile-icon.jpg");
+
   return (
-    <View style={{ justifyContent: "center", alignItems: "center" }}>
+    <View
+      style={{ justifyContent: "center", alignItems: "center", margin: 10 }}
+    >
       <Image
         style={{ ...styles.showCaseLocalImage, ...props.style }}
-        source={
-          props.imgSource
-            ? { uri: props.imgSource }
-            : require("../../assets/default-profile-icon.jpg")
-        }
+        source={sourceImg}
       />
       <Text style={props.fullnameStyle}>{props.fullname}</Text>
       {props.jobTitle ? (
-        <Text style={{ ...props.jobTitleStyle, textAlign: "center" }}>
-          {props.jobTitle}
-        </Text>
+        <Text style={props.jobTitleStyle}>{props.jobTitle}</Text>
       ) : null}
       {props.username ? (
         <Text style={props.usernameStyle}>{props.username}</Text>

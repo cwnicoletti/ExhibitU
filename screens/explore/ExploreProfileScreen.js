@@ -1,83 +1,55 @@
-import React, { useEffect, useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import {
-  Image,
-  StyleSheet,
-  FlatList,
-  View,
-  Text,
   ActivityIndicator,
-  RefreshControl,
+  FlatList,
   Platform,
+  RefreshControl,
+  StyleSheet,
+  Text,
+  View,
 } from "react-native";
-import { useSelector, useDispatch } from "react-redux";
-import algoliasearch from "algoliasearch";
-
-import ProjectItem from "../../components/projectItems/ProfileProjectItem";
-import SimpleLineIconsHeaderButton from "../../components/UI/SimpleLineIconsHeaderButton";
-import IoniconsHeaderButton from "../../components/UI/IoniconsHeaderButton";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
+import { useDispatch, useSelector } from "react-redux";
 import ExploreProfileHeader from "../../components/explore/ExploreProfileHeader";
-
+import ProjectItem from "../../components/projectItems/ProfileProjectItem";
+import IoniconsHeaderButton from "../../components/UI/IoniconsHeaderButton";
+import SimpleLineIconsHeaderButton from "../../components/UI/SimpleLineIconsHeaderButton";
+import useDidMountEffect from "../../helper/useDidMountEffect";
 import { followUser, unfollowUser } from "../../store/actions/user";
 
 const ExploreProfileScreen = (props) => {
-  const client = algoliasearch(
-    "EXC8LH5MAX",
-    "2d8cedcaab4cb2b351e90679963fbd92"
-  );
-  const index = client.initIndex("users");
-
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false);
   const [isRefreshing, setIsRefreshing] = useState(false);
-  const darkModeValue = useSelector((state) => state.switches.darkMode);
+  const darkModeValue = useSelector((state) => state.user.darkMode);
   const localId = useSelector((state) => state.auth.userId);
   const ExhibitUId = useSelector((state) => state.user.ExhibitUId);
-  const following = useSelector((state) => state.user.following);
   const projectsAdvocating = useSelector(
     (state) => state.user.projectsAdvocating
   );
+  const [exploredUserData, setExploredUserData] = useState(
+    props.navigation.getParam("exploreData")
+  );
 
-  const [exploredUserData, setExploredUserData] = useState({
-    text: props.navigation.getParam("text"),
-    exploredExhibitUId: props.navigation.getParam("ExhibitUId"),
-    profilePictureUrl: props.navigation.getParam("profilePictureUrl"),
-    fullname: props.navigation.getParam("fullname"),
-    username: props.navigation.getParam("username"),
-    jobTitle: props.navigation.getParam("jobTitle"),
-    resumeLinkUrl: props.navigation.getParam("resumeLinkUrl"),
-    profileBiography: props.navigation.getParam("profileBiography"),
-    numberOfFollowers: props.navigation.getParam("numberOfFollowers"),
-    numberOfFollowing: props.navigation.getParam("numberOfFollowing"),
-    numberOfAdvocates: props.navigation.getParam("numberOfAdvocates"),
-    showResume: props.navigation.getParam("showResume"),
-    showCheering: props.navigation.getParam("showCheering"),
-    hideFollowing: props.navigation.getParam("hideFollowing"),
-    hideFollowers: props.navigation.getParam("hideFollowers"),
-    hideAdvocates: props.navigation.getParam("hideAdvocates"),
-    followers: props.navigation.getParam("followers"),
-    following: props.navigation.getParam("following"),
-    advocates: props.navigation.getParam("advocates")
-      ? props.navigation.getParam("advocates")
-      : {},
-    profileLinks: props.navigation.getParam("profileLinks"),
-    profileProjects: props.navigation.getParam("profileProjects")
-      ? props.navigation.getParam("profileProjects")
-      : {},
-    profileColumns: props.navigation.getParam("profileColumns"),
-  });
+  const [profileProjectsState, setProfileProjectsState] = useState(
+    Object.values(exploredUserData.profileProjects).sort((first, second) => {
+      return (
+        second["projectDateCreated"]["_seconds"] -
+        first["projectDateCreated"]["_seconds"]
+      );
+    })
+  );
+
+  // Empty dict if user doesn't have any projects yet
+  exploredUserData.profileProjects = exploredUserData.profileProjects
+    ? exploredUserData.profileProjects
+    : {};
 
   const [isfollowing, setIsFollowing] = useState(
     exploredUserData.followers.includes(ExhibitUId) ? true : false
   );
-  const [numberOfFollowersLocal, setNumberOfFollowersLocal] = useState(
-    exploredUserData.numberOfFollowers
-  );
-  const [numberOfFollowingLocal, setNumberOfFollowingLocal] = useState(
-    exploredUserData.numberOfFollowing
-  );
-  const [numberOfAdvocatesLocal, setNumberOfAdvocatesLocal] = useState(
-    exploredUserData.numberOfAdvocates
+  const [isAdvocating, setIsAdvocating] = useState(
+    exploredUserData.advocates.includes(ExhibitUId) ? true : false
   );
 
   let android = null;
@@ -85,44 +57,32 @@ const ExploreProfileScreen = (props) => {
     android = true;
   }
 
-  useEffect(() => {
-    if (exploredUserData.text) {
-      index.search(exploredUserData.text).then((responses) => {
-        responses.hits.forEach((hit) => {
-          if (hit.objectID === exploredUserData.exploredExhibitUId) {
-            setNumberOfAdvocatesLocal(hit.numberOfAdvocates);
-            const exploredUserDataPrevState = exploredUserData;
-            exploredUserDataPrevState.numberOfAdvocates = hit.numberOfAdvocates;
-            exploredUserDataPrevState.advocates = hit.advocates;
-            setExploredUserData(exploredUserDataPrevState);
-          }
-        });
-      });
-    }
-  }, [projectsAdvocating]);
-
-  useEffect(() => {
-    if (exploredUserData.text) {
-      index.search(exploredUserData.text).then((responses) => {
-        responses.hits.forEach((hit) => {
-          if (hit.objectID === exploredUserData.exploredExhibitUId) {
-            setNumberOfFollowersLocal(hit.numberOfFollowers);
-            if (hit.followers.includes(ExhibitUId)) {
-              setIsFollowing(true);
-            } else {
-              setIsFollowing(false);
-            }
-          }
-        });
-      });
-    }
-  }, [following]);
-
   const followUserHandler = useCallback(async () => {
     await setIsLoading(true);
     await dispatch(
       await followUser(exploredUserData.exploredExhibitUId, ExhibitUId, localId)
     );
+    if (exploredUserData.text) {
+      const algoliasearch = require("algoliasearch");
+      const client = algoliasearch(
+        "EXC8LH5MAX",
+        "2d8cedcaab4cb2b351e90679963fbd92"
+      );
+      const index = client.initIndex("users");
+
+      await index.search(exploredUserData.text).then((responses) => {
+        responses.hits.forEach((hit) => {
+          if (hit.objectID === exploredUserData.exploredExhibitUId) {
+            exploredUserData.followers = [
+              ...exploredUserData.followers,
+              ExhibitUId,
+            ];
+            exploredUserData.numberOfFollowers += 1;
+            setExploredUserData(exploredUserData);
+          }
+        });
+      });
+    }
     await setIsFollowing(true);
     await setIsLoading(false);
   }, [setIsLoading, followUser, setIsFollowing]);
@@ -136,36 +96,63 @@ const ExploreProfileScreen = (props) => {
         localId
       )
     );
+    if (exploredUserData.text) {
+      const algoliasearch = require("algoliasearch");
+      const client = algoliasearch(
+        "EXC8LH5MAX",
+        "2d8cedcaab4cb2b351e90679963fbd92"
+      );
+      const index = client.initIndex("users");
+
+      await index.search(exploredUserData.text).then((responses) => {
+        responses.hits.forEach((hit) => {
+          if (hit.objectID === exploredUserData.exploredExhibitUId) {
+            exploredUserData.followers = exploredUserData.followers.filter(
+              (userId) => userId !== ExhibitUId
+            );
+            exploredUserData.numberOfFollowers -= 1;
+            setExploredUserData(exploredUserData);
+          }
+        });
+      });
+    }
     await setIsFollowing(false);
     await setIsLoading(false);
   }, [setIsLoading, unfollowUser, setIsFollowing]);
 
   const refreshProfile = () => {
     setIsRefreshing(true);
+    const algoliasearch = require("algoliasearch");
+    const client = algoliasearch(
+      "EXC8LH5MAX",
+      "2d8cedcaab4cb2b351e90679963fbd92"
+    );
+    const index = client.initIndex("users");
+
     index.search(exploredUserData.text).then((responses) => {
       responses.hits.forEach((hit) => {
         if (hit.objectID === exploredUserData.exploredExhibitUId) {
-          const exploredUserDataPrevState = exploredUserData;
-          exploredUserDataPrevState.profileProjects = hit.profileProjects;
-          exploredUserDataPrevState.following = hit.following;
-          exploredUserDataPrevState.followers = hit.followers;
-          exploredUserDataPrevState.advocates = hit.advocates;
-          exploredUserDataPrevState.fullname = hit.fullname;
-          exploredUserDataPrevState.username = hit.username;
-          exploredUserDataPrevState.jobTitle = hit.jobTitle;
-          exploredUserDataPrevState.profilePictureUrl = hit.profilePictureUrl;
-          exploredUserDataPrevState.hideFollowing = hit.hideFollowing;
-          exploredUserDataPrevState.hideFollowers = hit.hideFollowers;
-          exploredUserDataPrevState.hideAdvocates = hit.hideAdvocates;
-          exploredUserDataPrevState.profileLinks = hit.profileLinks;
-          exploredUserDataPrevState.profileColumns = hit.profileColumns;
-          exploredUserDataPrevState.showResume = hit.showResume;
-          exploredUserDataPrevState.resumeLinkUrl = hit.resumeLinkUrl;
-          exploredUserDataPrevState.showCheering = hit.showCheering;
-          setNumberOfFollowersLocal(hit.numberOfFollowers);
-          setNumberOfFollowingLocal(hit.numberOfFollowing);
-          setNumberOfAdvocatesLocal(hit.numberOfAdvocates);
-          setExploredUserData(exploredUserDataPrevState);
+          const exploredUserDataNewState = exploredUserData;
+          exploredUserDataNewState.profileProjects = hit.profileProjects;
+          exploredUserDataNewState.profileBiography = hit.profileBiography;
+          exploredUserDataNewState.following = hit.following;
+          exploredUserDataNewState.followers = hit.followers;
+          exploredUserDataNewState.advocates = hit.advocates;
+          exploredUserDataNewState.fullname = hit.fullname;
+          exploredUserDataNewState.username = hit.username;
+          exploredUserDataNewState.jobTitle = hit.jobTitle;
+          exploredUserDataNewState.profilePictureUrl = hit.profilePictureUrl;
+          exploredUserDataNewState.hideFollowing = hit.hideFollowing;
+          exploredUserDataNewState.hideFollowers = hit.hideFollowers;
+          exploredUserDataNewState.hideAdvocates = hit.hideAdvocates;
+          exploredUserDataNewState.profileLinks = hit.profileLinks;
+          exploredUserDataNewState.projectLinks = hit.projectLinks;
+          exploredUserDataNewState.profileColumns = hit.profileColumns;
+          exploredUserDataNewState.showCheering = hit.showCheering;
+          exploredUserDataNewState.numberOfFollowers = hit.numberOfFollowers;
+          exploredUserDataNewState.numberOfFollowing = hit.numberOfFollowing;
+          exploredUserDataNewState.numberOfAdvocates = hit.numberOfAdvocates;
+          setExploredUserData(exploredUserDataNewState);
         }
       });
     });
@@ -192,6 +179,40 @@ const ExploreProfileScreen = (props) => {
   useEffect(() => {
     props.navigation.setParams({ isfollowing: isfollowing });
   }, [isfollowing]);
+
+  useDidMountEffect(() => {
+    // Sort the array based on the second element
+    setProfileProjectsState(
+      Object.values(exploredUserData.profileProjects).sort((first, second) => {
+        return (
+          second["projectDateCreated"]["_seconds"] -
+          first["projectDateCreated"]["_seconds"]
+        );
+      })
+    );
+  }, [exploredUserData.profileProjects]);
+
+  useDidMountEffect(() => {
+    if (isAdvocating) {
+      const exploredUserDataNewState = exploredUserData;
+      exploredUserDataNewState.advocates =
+        exploredUserDataNewState.advocates.filter(
+          (user) => user !== ExhibitUId
+        );
+      exploredUserDataNewState.numberOfAdvocates -= 1;
+      setIsAdvocating(false);
+      setExploredUserData(exploredUserDataNewState);
+    } else {
+      const exploredUserDataNewState = exploredUserData;
+      exploredUserDataNewState.advocates = [
+        ...exploredUserDataNewState.advocates,
+        ExhibitUId,
+      ];
+      exploredUserDataNewState.numberOfAdvocates += 1;
+      setIsAdvocating(true);
+      setExploredUserData(exploredUserDataNewState);
+    }
+  }, [projectsAdvocating]);
 
   const viewProjectHandler = (
     projectTitle,
@@ -242,31 +263,27 @@ const ExploreProfileScreen = (props) => {
           ...styles.profileDescriptionStyle,
           color: darkModeValue ? "white" : "black",
         }}
-        resumeText={{
-          color: darkModeValue ? "white" : "black",
-        }}
-        iconResumeStyle={darkModeValue ? "white" : "black"}
         description={exploredUserData.profileBiography}
-        numberOfFollowers={numberOfFollowersLocal}
-        numberOfFollowing={numberOfFollowingLocal}
-        numberOfAdvocates={numberOfAdvocatesLocal}
+        numberOfFollowers={exploredUserData.numberOfFollowers}
+        numberOfFollowing={exploredUserData.numberOfFollowing}
+        numberOfAdvocates={exploredUserData.numberOfAdvocates}
         hideFollowing={exploredUserData.hideFollowing}
         hideFollowers={exploredUserData.hideFollowers}
         hideAdvocates={exploredUserData.hideAdvocates}
         ExhibitUId={exploredUserData.exploredExhibitUId}
         links={exploredUserData.profileLinks}
         followersOnPress={() =>
-          props.navigation.navigate("ExploreFollowers", {
+          props.navigation.push("ExploreFollowers", {
             ExhibitUId: exploredUserData.exploredExhibitUId,
           })
         }
         followingOnPress={() =>
-          props.navigation.navigate("ExploreFollowing", {
+          props.navigation.push("ExploreFollowing", {
             ExhibitUId: exploredUserData.exploredExhibitUId,
           })
         }
         advocatesOnPress={() =>
-          props.navigation.navigate("ExploreAdvocates", {
+          props.navigation.push("ExploreAdvocates", {
             exploredExhibitUId: exploredUserData.exploredExhibitUId,
           })
         }
@@ -282,7 +299,7 @@ const ExploreProfileScreen = (props) => {
       }}
     >
       <FlatList
-        data={Object.values(exploredUserData.profileProjects)}
+        data={profileProjectsState}
         keyExtractor={(item) => item.projectId}
         ListHeaderComponent={topHeader}
         refreshControl={
@@ -398,7 +415,7 @@ ExploreProfileScreen.navigationOptions = (navData) => {
                   >
                     <Item
                       title="Follow"
-                      iconName={"user-follow"}
+                      iconName={"user-unfollow"}
                       color={"red"}
                       onPress={unfollowFn}
                     />
@@ -440,7 +457,7 @@ const styles = StyleSheet.create({
     paddingTop: 5,
   },
   profileDescriptionStyle: {
-    paddingBottom: 20,
+    padding: 20,
   },
   profileContainerStyle: {
     justifyContent: "flex-start",

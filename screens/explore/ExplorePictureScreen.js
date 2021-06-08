@@ -1,36 +1,41 @@
-import React, { useEffect } from "react";
-import {
-  Image,
-  StyleSheet,
-  View,
-  Text,
-  ScrollView,
-  Platform,
-} from "react-native";
-import { useSelector } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { Platform, ScrollView, StyleSheet, Text, View } from "react-native";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
-
+import { useSelector } from "react-redux";
 import ExplorePostView from "../../components/explore/ExplorePostView";
 import IoniconsHeaderButton from "../../components/UI/IoniconsHeaderButton";
+import useDidMountEffect from "../../helper/useDidMountEffect";
 
 const ExplorePictureScreen = (props) => {
-  const darkModeValue = useSelector((state) => state.switches.darkMode);
+  const darkModeValue = useSelector((state) => state.user.darkMode);
   const ExhibitUId = props.navigation.getParam("ExhibitUId");
   const currentProjectId = props.navigation.getParam("projectId");
   const postId = props.navigation.getParam("postId");
   const fullname = props.navigation.getParam("fullname");
   const profilePictureUrl = props.navigation.getParam("profilePictureUrl");
   const postPhotoUrl = props.navigation.getParam("postPhotoUrl");
-  const numberOfCheers = props.navigation.getParam("numberOfCheers");
+  const [numberOfCheers, setNumberOfCheers] = useState(
+    props.navigation.getParam("numberOfCheers")
+  );
   const numberOfComments = props.navigation.getParam("numberOfComments");
   const caption = props.navigation.getParam("caption");
-  const exploredUserData = props.navigation.getParam("exploredUserData");
   const links = props.navigation.getParam("postLinks");
+  const postDateCreated = props.navigation.getParam("postDateCreated");
+  const exploredUserData = props.navigation.getParam("exploredUserData");
+  const cheeredPosts = useSelector((state) => state.user.cheeredPosts);
+  const [intialCheeredPosts, setIntialCheeredPosts] = useState([]);
 
   let android = null;
   if (Platform.OS === "android") {
     android = true;
   }
+
+  const getExlusiveBothSetsDifference = (arr1, arr2) => {
+    const difference = arr1
+      .filter((x) => !arr2.includes(x))
+      .concat(arr2.filter((x) => !arr1.includes(x)));
+    return difference;
+  };
 
   const viewCheeringHandler = () => {
     props.navigation.navigate("ExploreCheering", {
@@ -49,6 +54,10 @@ const ExplorePictureScreen = (props) => {
   };
 
   useEffect(() => {
+    setIntialCheeredPosts(cheeredPosts);
+  }, []);
+
+  useEffect(() => {
     props.navigation.setParams({ android: android });
     props.navigation.setParams({ projectId: currentProjectId });
   }, []);
@@ -56,6 +65,30 @@ const ExplorePictureScreen = (props) => {
   useEffect(() => {
     props.navigation.setParams({ darkMode: darkModeValue });
   }, [darkModeValue]);
+
+  useDidMountEffect(() => {
+    const difference = getExlusiveBothSetsDifference(
+      intialCheeredPosts,
+      cheeredPosts
+    );
+    const exploredUserDataNewState = exploredUserData;
+    for (const projectId of Object.keys(
+      exploredUserDataNewState.profileProjects
+    )) {
+      for (const postId of Object.keys(
+        exploredUserDataNewState.profileProjects[projectId].projectPosts
+      )) {
+        if (postId === difference[0]) {
+          if (intialCheeredPosts.length < cheeredPosts.length) {
+            setNumberOfCheers((prevState) => prevState + 1);
+          } else {
+            setNumberOfCheers((prevState) => prevState - 1);
+          }
+        }
+      }
+    }
+    setIntialCheeredPosts(cheeredPosts);
+  }, [cheeredPosts]);
 
   return (
     <ScrollView
@@ -80,7 +113,11 @@ const ExplorePictureScreen = (props) => {
         numberOfCheers={numberOfCheers}
         numberOfComments={numberOfComments}
         links={links}
+        postId={postId}
+        projectId={currentProjectId}
+        posterExhibitUId={ExhibitUId}
         showCheering={exploredUserData.showCheering}
+        postDateCreated={postDateCreated}
         nameStyle={{
           color: darkModeValue ? "white" : "black",
         }}
@@ -94,12 +131,18 @@ const ExplorePictureScreen = (props) => {
         titleContainer={{
           color: darkModeValue ? "white" : "black",
         }}
+        dateContainer={{
+          backgroundColor: darkModeValue ? "#121212" : "white",
+        }}
         threeDotsStyle={darkModeValue ? "white" : "black"}
         captionContainer={{
           backgroundColor: darkModeValue ? "#121212" : "white",
         }}
         titleStyle={{
           color: "white",
+        }}
+        dateStyle={{
+          color: "gray",
         }}
         nameTitleColors={["rgba(0,0,0,1)", "rgba(0,0,0,0.00)"]}
         projectTitleColors={["rgba(0,0,0,0.00)", "rgba(0,0,0,1)"]}
@@ -143,12 +186,11 @@ ExplorePictureScreen.navigationOptions = (navData) => {
   return {
     headerTitle: () => (
       <View style={styles.logo}>
-        
         <Text
           style={{
             ...styles.logoTitle,
             color: darkModeValue ? "white" : "black",
-fontFamily: "CormorantUpright",
+            fontFamily: "CormorantUpright",
           }}
         >
           ExhibitU

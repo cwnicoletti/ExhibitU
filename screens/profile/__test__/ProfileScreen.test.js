@@ -1,20 +1,19 @@
 import React from "react";
-import ProfileScreen from "../ProfileScreen";
-import renderer from "react-test-renderer";
-
-import { createStore, combineReducers, applyMiddleware } from "redux";
-import { Provider } from "react-redux";
 import { SafeAreaProvider } from "react-native-safe-area-context";
+import { Provider } from "react-redux";
+import renderer from "react-test-renderer";
+import { applyMiddleware, combineReducers, createStore } from "redux";
 import ReduxThunk from "redux-thunk";
-
 import authReducer from "../../../store/reducers/auth";
-import switchesReducer from "../../../store/reducers/switches";
-import userReducer from "../../../store/reducers/user";
 import signupReducer from "../../../store/reducers/signup";
+import { default as switchesReducer, default as userReducer } from "../../../store/reducers/user";
+import ProfileScreen from "../ProfileScreen";
+
+
 
 test("renders default", () => {
   const rootReducer = combineReducers({
-    switches: switchesReducer,
+    user: switchesReducer,
     signup: signupReducer,
     auth: authReducer,
     user: userReducer,

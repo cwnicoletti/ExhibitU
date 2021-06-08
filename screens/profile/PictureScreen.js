@@ -1,25 +1,21 @@
-import React, { useEffect, useCallback } from "react";
+import React, { useCallback, useEffect } from "react";
 import {
-  Image,
-  StyleSheet,
-  View,
-  Text,
-  ScrollView,
-  Platform,
+    LogBox, Platform, ScrollView, StyleSheet,
+
+    Text, View
 } from "react-native";
-import { useSelector, useDispatch } from "react-redux";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
-
-import ProfileProjectPostView from "../../components/user/ProfileProjectPostView";
+import { useDispatch, useSelector } from "react-redux";
 import IoniconsHeaderButton from "../../components/UI/IoniconsHeaderButton";
-
-import { LogBox } from "react-native";
-
+import ProfileProjectPostView from "../../components/user/ProfileProjectPostView";
 import { uploadRemovePost } from "../../store/actions/user";
+
+
+
 
 const PictureScreen = (props) => {
   const dispatch = useDispatch();
-  const darkModeValue = useSelector((state) => state.switches.darkMode);
+  const darkModeValue = useSelector((state) => state.user.darkMode);
   const localId = useSelector((state) => state.auth.userId);
   const profileProjects = useSelector((state) => state.user.profileProjects);
   const profilePictureUrl = useSelector(

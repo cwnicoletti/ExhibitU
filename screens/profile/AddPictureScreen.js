@@ -1,30 +1,33 @@
-import React, { useEffect, useCallback, useReducer, useState } from "react";
+import { Ionicons } from "@expo/vector-icons";
+import * as ImagePicker from "expo-image-picker";
+import React, { useCallback, useEffect, useReducer, useState } from "react";
 import {
-  StyleSheet,
-  View,
-  Text,
-  KeyboardAvoidingView,
-  SafeAreaView,
-  TouchableOpacity,
-  TouchableNativeFeedback,
-  ActivityIndicator,
-  Platform,
+    ActivityIndicator, KeyboardAvoidingView,
+
+
+
+
+    Platform, SafeAreaView, StyleSheet,
+
+    Text,
+
+
+
+    TouchableNativeFeedback, TouchableOpacity, View
 } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import { useSelector, useDispatch } from "react-redux";
-import * as ImagePicker from "expo-image-picker";
-import { Ionicons } from "@expo/vector-icons";
-
-import Input from "../../components/UI/Input";
-import PreviewPostItem from "../../components/user/PreviewPostItem";
-
-import IoniconsHeaderButton from "../../components/UI/IoniconsHeaderButton";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
-
+import { useDispatch, useSelector } from "react-redux";
+import Input from "../../components/UI/Input";
+import IoniconsHeaderButton from "../../components/UI/IoniconsHeaderButton";
+import PreviewPostItem from "../../components/user/PreviewPostItem";
 import {
-  addUserPost,
-  uploadAddTempPostPicture,
+    addUserPost,
+    uploadAddTempPostPicture
 } from "../../store/actions/user";
+
+
+
 
 const FORM_INPUT_UPDATE = "FORM_INPUT_UPDATE";
 const FORM_INPUT_LINKS_UPDATE = "FORM_INPUT_LINKS_UPDATE";
@@ -135,9 +138,8 @@ const formReducer = (state, action) => {
           ([links, v]) => links !== `link${action.linkNum}`
         )
       );
-      const reorderedRemainingLinkValues = updateDictionaryOnRemove(
-        remainingLinkValues
-      );
+      const reorderedRemainingLinkValues =
+        updateDictionaryOnRemove(remainingLinkValues);
       return {
         inputValues: { ...reorderedRemainingLinkValues },
       };
@@ -151,7 +153,7 @@ const EditProfileScreen = (props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadingTempPicture, setIsLoadingTempPicture] = useState(false);
   const [linksState, setLinksState] = useState([]);
-  const darkModeValue = useSelector((state) => state.switches.darkMode);
+  const darkModeValue = useSelector((state) => state.user.darkMode);
   const localId = useSelector((state) => state.auth.userId);
   const ExhibitUId = useSelector((state) => state.user.ExhibitUId);
   const profilePictureUrl = useSelector(
@@ -189,6 +191,9 @@ const EditProfileScreen = (props) => {
   const profileColumns = useSelector((state) => state.user.profileColumns);
   const profileBiography = useSelector((state) => state.user.profileBiography);
   const profileLinks = useSelector((state) => state.user.profileLinks);
+  const followingValue = useSelector((state) => state.user.hideFollowing);
+  const followersValue = useSelector((state) => state.user.hideFollowers);
+  const advocatesValue = useSelector((state) => state.user.hideAdvocates);
 
   let TouchableCmp = TouchableOpacity;
   if (Platform.OS === "android") {
@@ -253,6 +258,9 @@ const EditProfileScreen = (props) => {
         numberOfFollowers,
         numberOfFollowing,
         numberOfAdvocates,
+        followingValue,
+        followersValue,
+        advocatesValue,
         profileBiography,
         projectTitle,
         projectCoverPhotoUrl,
@@ -328,9 +336,8 @@ const EditProfileScreen = (props) => {
   useEffect(() => {
     (async () => {
       if (Platform.OS !== "web") {
-        const {
-          status,
-        } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+        const { status } =
+          await ImagePicker.requestMediaLibraryPermissionsAsync();
         if (status !== "granted") {
           alert("Sorry, we need camera roll permissions to make this work!");
         }
@@ -477,7 +484,7 @@ const EditProfileScreen = (props) => {
                   margin: 10,
                 }}
               >
-                Loading picture...
+                Loading picture, please wait...
               </Text>
               <ActivityIndicator size="small" color="white" />
             </View>
@@ -651,7 +658,7 @@ const EditProfileScreen = (props) => {
                     : "#007AFF",
               }}
             >
-              Create post
+              Confirm and post
             </Text>
             <Ionicons
               name="ios-checkmark"
@@ -705,7 +712,7 @@ EditProfileScreen.navigationOptions = (navData) => {
             color: darkModeValue ? "white" : "black",
           }}
         >
-          Create a post
+          Create post
         </Text>
       </SafeAreaView>
     ),

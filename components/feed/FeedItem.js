@@ -1,35 +1,33 @@
-import React, { useEffect, useState, useRef } from "react";
+import { AntDesign } from "@expo/vector-icons";
+import { LinearGradient } from "expo-linear-gradient";
+import * as WebBrowser from "expo-web-browser";
+import React, { useEffect, useRef, useState } from "react";
 import {
-  View,
-  Text,
+  ActivityIndicator,
+  Animated,
+  Dimensions,
+  FlatList,
   Image,
   ImageBackground,
-  StyleSheet,
-  TouchableOpacity,
-  TouchableNativeFeedback,
   Platform,
-  Dimensions,
+  StyleSheet,
+  Text,
+  TouchableNativeFeedback,
+  TouchableOpacity,
   TouchableWithoutFeedback,
-  Animated,
-  ActivityIndicator,
-  FlatList,
+  View,
 } from "react-native";
-import * as WebBrowser from "expo-web-browser";
-import { useSelector, useDispatch } from "react-redux";
-import { LinearGradient } from "expo-linear-gradient";
-import Cheer from "../../assets/Icons/clap.svg";
-import Cheerfill from "../../assets/Icons/clap-fill.svg";
-import LinkButton from "../UI/LinkButton";
 import resolveAssetSource from "react-native/Libraries/Image/resolveAssetSource";
-
-import { AntDesign } from "@expo/vector-icons";
-
+import { useDispatch, useSelector } from "react-redux";
+import Cheerfill from "../../assets/Icons/clap-fill.svg";
+import Cheer from "../../assets/Icons/clap.svg";
 import {
-  uncheerPost,
-  cheerPost,
   cheerOwnFeedPost,
+  cheerPost,
   uncheerOwnFeedPost,
+  uncheerPost,
 } from "../../store/actions/user";
+import LinkButton from "../UI/LinkButton";
 
 const toDateTime = (seconds) => {
   let t = new Date(0); // Epoch
@@ -49,13 +47,15 @@ const FeedItem = (props) => {
   const [loadingCheer, setLoadingCheer] = useState(false);
   const [showClapping, setShowClapping] = useState(false);
   const [clap, setClap] = useState(false);
-  const darkModeValue = useSelector((state) => state.switches.darkMode);
+  const darkModeValue = useSelector((state) => state.user.darkMode);
   const cheeredPosts = useSelector((state) => state.user.cheeredPosts);
+  const showCheering = useSelector((state) => state.user.showCheering);
   const localId = useSelector((state) => state.auth.userId);
   const ExhibitUId = useSelector((state) => state.user.ExhibitUId);
   const projectId = props.projectId;
   const postId = props.postId;
   const posterExhibitUId = props.posterExhibitUId;
+  const currentUsersPost = ExhibitUId === posterExhibitUId ? true : false;
   const links = props.links ? props.links : {};
   const fullname = props.fullname;
   const defaultPostIcon = require("../../assets/default-profile-icon.jpg");
@@ -150,13 +150,7 @@ const FeedItem = (props) => {
       if (!cheeredPosts.includes(postId)) {
         await setLoadingCheer(true);
         await dispatch(
-          cheerPost(
-            localId,
-            ExhibitUId,
-            projectId,
-            postId,
-            posterExhibitUId
-          )
+          cheerPost(localId, ExhibitUId, projectId, postId, posterExhibitUId)
         );
         if (ExhibitUId === posterExhibitUId) {
           await dispatch(cheerOwnFeedPost(ExhibitUId, projectId, postId));
@@ -173,13 +167,7 @@ const FeedItem = (props) => {
     if (cheeredPosts.includes(postId)) {
       await setLoadingCheer(true);
       await dispatch(
-        uncheerPost(
-          localId,
-          ExhibitUId,
-          projectId,
-          postId,
-          posterExhibitUId
-        )
+        uncheerPost(localId, ExhibitUId, projectId, postId, posterExhibitUId)
       );
       if (ExhibitUId === posterExhibitUId) {
         await dispatch(uncheerOwnFeedPost(ExhibitUId, projectId, postId));
@@ -380,26 +368,51 @@ const FeedItem = (props) => {
             alignItems: "center",
           }}
         >
-          <TouchableCmp onPress={props.onSelectCheering}>
-            <View style={{ flexDirection: "row" }}>
-              <Text
-                style={{
-                  ...styles.pictureCheerNumber,
-                  ...props.pictureCheerNumber,
-                }}
-              >
-                {props.numberOfCheers}
-              </Text>
-              <Text
-                style={{
-                  ...styles.pictureCheerText,
-                  ...props.pictureCheerText,
-                }}
-              >
-                cheering
-              </Text>
-            </View>
-          </TouchableCmp>
+          {currentUsersPost ? (
+            showCheering && props.numberOfCheers >= 1 ? (
+              <TouchableCmp onPress={props.onSelectCheering}>
+                <View style={{ flexDirection: "row" }}>
+                  <Text
+                    style={{
+                      ...styles.pictureCheerNumber,
+                      ...props.pictureCheerNumber,
+                    }}
+                  >
+                    {props.numberOfCheers}
+                  </Text>
+                  <Text
+                    style={{
+                      ...styles.pictureCheerText,
+                      ...props.pictureCheerText,
+                    }}
+                  >
+                    cheering
+                  </Text>
+                </View>
+              </TouchableCmp>
+            ) : null
+          ) : props.numberOfCheers >= 1 ? (
+            <TouchableCmp onPress={props.onSelectCheering}>
+              <View style={{ flexDirection: "row" }}>
+                <Text
+                  style={{
+                    ...styles.pictureCheerNumber,
+                    ...props.pictureCheerNumber,
+                  }}
+                >
+                  {props.numberOfCheers}
+                </Text>
+                <Text
+                  style={{
+                    ...styles.pictureCheerText,
+                    ...props.pictureCheerText,
+                  }}
+                >
+                  cheering
+                </Text>
+              </View>
+            </TouchableCmp>
+          ) : null}
           <View style={{ alignItems: "center" }}>
             <FlatList
               data={Object.values(links)}
@@ -479,26 +492,28 @@ const FeedItem = (props) => {
               )}
             />
           </View>
-          <TouchableCmp onPress={props.onSelectCheering}>
-            <View style={{ flexDirection: "row", padding: 10 }}>
-              <Text
-                style={{
-                  ...styles.pictureCheerNumber,
-                  ...props.pictureCheerNumber,
-                }}
-              >
-                {props.numberOfCheers}
-              </Text>
-              <Text
-                style={{
-                  ...styles.pictureCheerText,
-                  ...props.pictureCheerText,
-                }}
-              >
-                cheering
-              </Text>
-            </View>
-          </TouchableCmp>
+          {showCheering && props.numberOfCheers >= 1 ? (
+            <TouchableCmp onPress={props.onSelectCheering}>
+              <View style={{ flexDirection: "row", padding: 10 }}>
+                <Text
+                  style={{
+                    ...styles.pictureCheerNumber,
+                    ...props.pictureCheerNumber,
+                  }}
+                >
+                  {props.numberOfCheers}
+                </Text>
+                <Text
+                  style={{
+                    ...styles.pictureCheerText,
+                    ...props.pictureCheerText,
+                  }}
+                >
+                  cheering
+                </Text>
+              </View>
+            </TouchableCmp>
+          ) : null}
         </View>
       )}
       {props.caption ? (
@@ -530,10 +545,7 @@ const FeedItem = (props) => {
 };
 
 const styles = StyleSheet.create({
-  project: {
-    borderTopWidth: 1,
-    borderBottomWidth: 1,
-  },
+  project: {},
   profileImage: {
     borderWidth: 1,
     borderColor: "white",

@@ -1,22 +1,21 @@
+import { EvilIcons, Feather } from "@expo/vector-icons";
+import algoliasearch from "algoliasearch";
 import React, { useEffect, useState } from "react";
 import {
+  FlatList,
+  Keyboard,
+  RefreshControl,
+  SafeAreaView,
   StyleSheet,
-  View,
   Text,
   TouchableWithoutFeedback,
-  Keyboard,
-  FlatList,
-  SafeAreaView,
-  RefreshControl,
+  View,
 } from "react-native";
-import { useSelector } from "react-redux";
 import { SearchBar } from "react-native-elements";
-import algoliasearch from "algoliasearch";
-import { EvilIcons, Feather } from "@expo/vector-icons";
-
-import IoniconsHeaderButton from "../../components/UI/IoniconsHeaderButton";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
+import { useSelector } from "react-redux";
 import ExploreCard from "../../components/explore/ExploreCard";
+import IoniconsHeaderButton from "../../components/UI/IoniconsHeaderButton";
 
 const FeedCheeringScreen = (props) => {
   const client = algoliasearch(
@@ -28,7 +27,7 @@ const FeedCheeringScreen = (props) => {
   const [returnedIndex, setReturnedIndex] = useState([]);
   const [search, setSearch] = useState("");
   const [isRefreshing, setIsRefreshing] = useState(false);
-  const darkModeValue = useSelector((state) => state.switches.darkMode);
+  const darkModeValue = useSelector((state) => state.user.darkMode);
   const ExhibitUId = props.navigation.getParam("ExhibitUId");
   const projectId = props.navigation.getParam("projectId");
   const postId = props.navigation.getParam("postId");
@@ -127,6 +126,7 @@ const FeedCheeringScreen = (props) => {
           style={{
             color: darkModeValue ? "white" : "black",
             margin: 20,
+            marginBottom: 0,
             fontSize: 18,
           }}
         >
@@ -149,13 +149,13 @@ const FeedCheeringScreen = (props) => {
               borderBottomColor: "gray",
               borderBottomWidth: 1,
             }}
-            searchIcon={<EvilIcons name="search" size={24} color="white" />}
+            searchIcon={<EvilIcons name="search" size={24} color={darkModeValue ? "white" : "black"} />}
             clearIcon={
               search ? (
                 <Feather
                   name="x"
                   size={24}
-                  color="white"
+                  color={darkModeValue ? "white" : "black"}
                   onPress={() => {
                     searchFilterFunction("");
                   }}
@@ -188,9 +188,13 @@ const FeedCheeringScreen = (props) => {
             image={itemData.item.profilePictureUrl}
             fullname={itemData.item.fullname}
             username={itemData.item.username}
+            jobTitle={itemData.item.jobTitle}
             projectContainer={{
               backgroundColor: darkModeValue ? "black" : "white",
               borderColor: darkModeValue ? "gray" : "#c9c9c9",
+            }}
+            jobTitleStyle={{
+              color: darkModeValue ? "white" : "black",
             }}
             fullNameStyle={{
               color: darkModeValue ? "white" : "black",

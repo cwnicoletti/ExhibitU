@@ -1,34 +1,32 @@
-import React, { useEffect, useCallback, useReducer, useState } from "react";
+import { Ionicons, Octicons } from "@expo/vector-icons";
+import * as ImagePicker from "expo-image-picker";
+import React, { useCallback, useEffect, useReducer, useState } from "react";
 import {
-  Image,
-  StyleSheet,
-  View,
-  Text,
-  KeyboardAvoidingView,
-  SafeAreaView,
-  TouchableOpacity,
-  TouchableNativeFeedback,
   ActivityIndicator,
   FlatList,
+  Image,
+  KeyboardAvoidingView,
+  LogBox,
   Platform,
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  TouchableNativeFeedback,
+  TouchableOpacity,
+  View,
 } from "react-native";
-import { useSelector, useDispatch } from "react-redux";
-import { HeaderButtons, Item } from "react-navigation-header-buttons";
-import { Octicons, Ionicons } from "@expo/vector-icons";
-import LinkButton from "../../components/UI/LinkButton";
-import DefaultPicture from "../../assets/Icons/picture.svg";
-import * as ImagePicker from "expo-image-picker";
-
-import { LogBox } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-
-import IoniconsHeaderButton from "../../components/UI/IoniconsHeaderButton";
+import { HeaderButtons, Item } from "react-navigation-header-buttons";
+import { useDispatch, useSelector } from "react-redux";
+import DefaultPicture from "../../assets/Icons/picture.svg";
 import Input from "../../components/UI/Input";
-
+import IoniconsHeaderButton from "../../components/UI/IoniconsHeaderButton";
+import LinkButton from "../../components/UI/LinkButton";
+import useDidMountEffect from "../../helper/useDidMountEffect";
 import {
-  uploadUpdatedProject,
-  uploadRemoveProject,
   uploadChangeProjectCoverPicture,
+  uploadRemoveProject,
+  uploadUpdatedProject,
 } from "../../store/actions/user";
 
 const FORM_INPUT_UPDATE = "FORM_INPUT_UPDATE";
@@ -140,9 +138,8 @@ const formReducer = (state, action) => {
           ([links, v]) => links !== `link${action.linkNum}`
         )
       );
-      const reorderedRemainingLinkValues = updateDictionaryOnRemove(
-        remainingLinkValues
-      );
+      const reorderedRemainingLinkValues =
+        updateDictionaryOnRemove(remainingLinkValues);
       return {
         inputValues: { ...reorderedRemainingLinkValues },
       };
@@ -157,14 +154,18 @@ const EditProjectScreen = (props) => {
   const [isLoadingTempPicture, setIsLoadingTempPicture] = useState(false);
   const prevLinks = props.navigation.getParam("links");
   const [linksState, setLinksState] = useState(Object.values(prevLinks));
-  const darkModeValue = useSelector((state) => state.switches.darkMode);
+  const darkModeValue = useSelector((state) => state.user.darkMode);
   const localId = useSelector((state) => state.auth.userId);
-  const projectTitle = props.navigation.getParam("projectTitle");
+  const profileProjects = useSelector((state) => state.user.profileProjects);
+  const currentProjectId = props.navigation.getParam("projectId");
+  const exhibitTitle = profileProjects[currentProjectId].projectTitle;
   const projectId = props.navigation.getParam("projectId");
-  const projectDescription = props.navigation.getParam("projectDescription");
-  const projectCoverPhotoId = props.navigation.getParam("projectCoverPhotoId");
-  const projectCoverPhotoUrl = props.navigation.getParam(
-    "projectCoverPhotoUrl"
+  const projectDescription =
+    profileProjects[currentProjectId].projectDescription;
+  const projectCoverPhotoId =
+    profileProjects[currentProjectId].projectCoverPhotoId;
+  const [projectCoverPhotoUrl, setProjectCoverPhotoUrl] = useState(
+    profileProjects[currentProjectId].projectCoverPhotoUrl
   );
   const projectTempCoverPhotoUrl = useSelector(
     (state) => state.user.projectTempCoverPhotoUrl
@@ -178,11 +179,11 @@ const EditProjectScreen = (props) => {
 
   let initialState = {
     inputValues: {
-      projectTitle: projectTitle ? projectTitle : "",
+      exhibitTitle: exhibitTitle ? exhibitTitle : "",
       projectDescription: projectDescription ? projectDescription : "",
     },
     inputValidities: {
-      projectTitle: false,
+      exhibitTitle: false,
       projectDescription: false,
     },
     formIsValid: false,
@@ -233,7 +234,7 @@ const EditProjectScreen = (props) => {
         projectTempCoverPhotoUrl
           ? projectTempCoverPhotoUrl
           : projectCoverPhotoUrl,
-        formState.inputValues.projectTitle,
+        formState.inputValues.exhibitTitle,
         formState.inputValues.projectDescription,
         newLinks
       )
@@ -270,9 +271,9 @@ const EditProjectScreen = (props) => {
 
   useEffect(() => {
     props.navigation.setParams({
-      projectTitle: formState.inputValues.projectTitle,
+      exhibitTitle: formState.inputValues.exhibitTitle,
     });
-  }, [formState.inputValues.projectTitle]);
+  }, [formState.inputValues.exhibitTitle]);
 
   const changeProjectCoverPicture = async () => {
     const result = await ImagePicker.launchImageLibraryAsync({
@@ -322,6 +323,10 @@ const EditProjectScreen = (props) => {
       linkNum: linkNumber,
     });
   };
+
+  useDidMountEffect(() => {
+    setProjectCoverPhotoUrl(projectTempCoverPhotoUrl);
+  }, [projectTempCoverPhotoUrl]);
 
   return (
     <KeyboardAvoidingView
@@ -386,7 +391,7 @@ const EditProjectScreen = (props) => {
                   margin: 10,
                 }}
               >
-                {formState.inputValues.projectTitle}
+                {formState.inputValues.exhibitTitle}
               </Text>
             </View>
             <Text
@@ -513,7 +518,7 @@ const EditProjectScreen = (props) => {
               >
                 <Octicons name="pencil" size={14} color="#007AFF" />
                 <Text style={{ margin: 10, color: "#007AFF" }}>
-                  Change Project Cover Photo
+                  Change Exhibit Cover Photo
                 </Text>
               </View>
             </TouchableCmp>
@@ -534,7 +539,7 @@ const EditProjectScreen = (props) => {
                   margin: 10,
                 }}
               >
-                Loading project cover photo
+                Loading ehxibit cover photo
               </Text>
               <ActivityIndicator size="small" color="white" />
             </View>
@@ -555,22 +560,22 @@ const EditProjectScreen = (props) => {
           ) : null}
           <Input
             textLabel={{ color: darkModeValue ? "white" : "black" }}
-            id="projectTitle"
-            label="Project Title"
-            errorText="Please enter a valid project title!"
+            id="exhibitTitle"
+            label="Exhibit Title"
+            errorText="Please enter a valid exhibit title!"
             keyboardType="default"
             autoCapitalize="sentences"
             returnKeyType="next"
             onInputChange={inputChangeHandler}
-            initialValue={projectTitle ? projectTitle : ""}
+            initialValue={exhibitTitle ? exhibitTitle : ""}
             initiallyValid={true}
             required
           />
           <Input
             textLabel={{ color: darkModeValue ? "white" : "black" }}
             id="projectDescription"
-            label="Project Description"
-            errorText="Please enter a valid project description!"
+            label="Exhibit Description"
+            errorText="Please enter a valid exhibit description!"
             keyboardType="default"
             multiline
             styleInput={{ height: 50 }}
@@ -670,7 +675,7 @@ const EditProjectScreen = (props) => {
               >
                 <Ionicons name="ios-add" size={14} color="green" />
                 <Text style={{ margin: 10, color: "green" }}>
-                  Add a link to project
+                  Add a link to exhibit
                 </Text>
               </TouchableCmp>
             </View>
@@ -711,7 +716,7 @@ const EditProjectScreen = (props) => {
             onPress={submitHandler}
           >
             <Text style={{ margin: 10, color: "#007AFF" }}>
-              Confirm project edits
+              Confirm exhibit edits
             </Text>
             <Ionicons name="ios-checkmark" size={18} color="#007AFF" />
           </TouchableCmp>
@@ -732,7 +737,7 @@ const EditProjectScreen = (props) => {
                 margin: 10,
               }}
             >
-              Uploading project edits...
+              Uploading exhibit edits...
             </Text>
             <ActivityIndicator size="small" color="white" />
           </View>
@@ -746,14 +751,13 @@ EditProjectScreen.navigationOptions = (navData) => {
   const darkModeValue = navData.navigation.getParam("darkMode");
   const android = navData.navigation.getParam("android");
   const deleteFn = navData.navigation.getParam("deleteFn");
-  const projectTitle = navData.navigation.getParam("projectTitle");
+  const exhibitTitle = navData.navigation.getParam("exhibitTitle");
   return {
     headerTitle: () => (
       <SafeAreaView
         forceInset={{ top: "always", horizontal: "never" }}
         style={styles.logo}
       >
-        
         <Text
           style={{
             ...styles.logoTitle,

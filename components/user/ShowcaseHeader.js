@@ -1,36 +1,33 @@
+import { Ionicons } from "@expo/vector-icons";
+import * as WebBrowser from "expo-web-browser";
 import React from "react";
 import {
-  View,
-  Text,
-  StyleSheet,
-  FlatList,
-  TouchableNativeFeedback,
-  TouchableOpacity,
-  Platform,
+    FlatList,
+
+
+    Platform, StyleSheet, Text,
+
+
+    TouchableNativeFeedback,
+    TouchableOpacity, View
 } from "react-native";
 import { useSelector } from "react-redux";
-import * as WebBrowser from "expo-web-browser";
-import { Ionicons } from "@expo/vector-icons";
-
-import UserTitleShowcaseLocal from "./UserTitleShowcaseLocal";
 import LinkButton from "../UI/LinkButton";
+import UserTitleShowcaseLocal from "./UserTitleShowcaseLocal";
+
 
 const ExhibitUHeader = (props) => {
-  const darkModeValue = useSelector((state) => state.switches.darkMode);
+  const darkModeValue = useSelector((state) => state.user.darkMode);
   const links = props.links;
   const followingValue = props.followingValue;
   const followersValue = props.followersValue;
   const advocatesValue = props.advocatesValue;
-  const showResumeValue = props.showResumeValue;
 
   const userDataProfileHeader = {
-    resumeLink: props.resumeLink,
     numberOfFollowers: props.numberOfFollowers,
     numberOfFollowing: props.numberOfFollowing,
     numberOfAdvocates: props.numberOfAdvocates,
   };
-
-  const linktoresume = userDataProfileHeader.resumeLink;
 
   let TouchableCmp = TouchableOpacity;
   if (Platform.OS === "android") {
@@ -52,7 +49,7 @@ const ExhibitUHeader = (props) => {
         <UserTitleShowcaseLocal {...props} />
         <View
           style={{
-            margin: 10,
+            marginTop: 5,
             flexDirection: "row",
           }}
         >
@@ -167,36 +164,6 @@ const ExhibitUHeader = (props) => {
             </TouchableCmp>
           ) : null}
         </View>
-        {showResumeValue ? (
-          <TouchableCmp
-            style={{
-              ...styles.resumeLink,
-              ...props.resumeLink,
-              borderColor: darkModeValue ? "gray" : "#c9c9c9",
-            }}
-            onPress={() => handleLinkOnPress(linktoresume)}
-          >
-            <View
-              style={{
-                flexDirection: "row",
-                width: "96%",
-                alignItems: "center",
-                justifyContent: "center",
-                ...props.resumeLink,
-                borderColor: darkModeValue ? "gray" : "#c9c9c9",
-              }}
-            >
-              <Ionicons
-                name="ios-list-outline"
-                size={24}
-                color={props.iconResumeStyle}
-              />
-              <Text style={{ ...styles.resumeText, ...props.resumeText }}>
-                Resume
-              </Text>
-            </View>
-          </TouchableCmp>
-        ) : null}
         {props.description ? (
           <Text style={props.descriptionStyle}>{props.description}</Text>
         ) : null}
@@ -267,18 +234,6 @@ const styles = StyleSheet.create({
     height: 100,
     width: 100,
     borderRadius: 100 / 2,
-  },
-  resumeLink: {
-    flexDirection: "row",
-    borderWidth: 1,
-    width: "96%",
-    alignItems: "center",
-    justifyContent: "center",
-    marginBottom: 10,
-  },
-  resumeText: {
-    margin: 10,
-    color: "#24a0ed",
   },
 });
 

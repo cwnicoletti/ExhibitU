@@ -1,33 +1,29 @@
-import React, { useEffect, useCallback, useReducer, useState } from "react";
+import { Ionicons, Octicons } from "@expo/vector-icons";
+import * as ImagePicker from "expo-image-picker";
+import React, { useCallback, useEffect, useReducer, useState } from "react";
 import {
-  Image,
-  StyleSheet,
-  View,
-  Text,
-  SafeAreaView,
-  TouchableOpacity,
-  TouchableNativeFeedback,
   ActivityIndicator,
   FlatList,
+  Image,
+  LogBox,
   Platform,
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  TouchableNativeFeedback,
+  TouchableOpacity,
+  View,
 } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import { useSelector, useDispatch } from "react-redux";
-import { Octicons, Ionicons } from "@expo/vector-icons";
-import LinkButton from "../../components/UI/LinkButton";
-import * as ImagePicker from "expo-image-picker";
-
-import { LogBox } from "react-native";
-
-import Input from "../../components/UI/Input";
-import FilterSwitch from "../../components/UI/FilterSwitch";
-import IoniconsHeaderButton from "../../components/UI/IoniconsHeaderButton";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
-
-import { setShowResume } from "../../store/actions/switches";
+import { useDispatch, useSelector } from "react-redux";
+import FilterSwitch from "../../components/UI/FilterSwitch";
+import Input from "../../components/UI/Input";
+import IoniconsHeaderButton from "../../components/UI/IoniconsHeaderButton";
+import LinkButton from "../../components/UI/LinkButton";
 import {
-  uploadUpdateUserProfile,
   uploadChangeProfilePicture,
+  uploadUpdateUserProfile,
 } from "../../store/actions/user";
 
 const FORM_INPUT_UPDATE = "FORM_INPUT_UPDATE";
@@ -139,9 +135,8 @@ const formReducer = (state, action) => {
           ([links, v]) => links !== `link${action.linkNum}`
         )
       );
-      const reorderedRemainingLinkValues = updateDictionaryOnRemove(
-        remainingLinkValues
-      );
+      const reorderedRemainingLinkValues =
+        updateDictionaryOnRemove(remainingLinkValues);
       return {
         inputValues: { ...reorderedRemainingLinkValues },
       };
@@ -152,27 +147,25 @@ const formReducer = (state, action) => {
 const EditProfileScreen = (props) => {
   const dispatch = useDispatch();
   const [fileSizeError, setFileSizeError] = useState(false);
-  const [showResumeField, setShowResumeField] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const prevLinks = useSelector((state) => state.user.profileLinks);
   const [linksState, setLinksState] = useState(Object.values(prevLinks));
   const [isLoadingTempPicture, setIsLoadingTempPicture] = useState(false);
-  const darkModeValue = useSelector((state) => state.switches.darkMode);
-  const showResumeValue = useSelector((state) => state.switches.showResume);
+  const darkModeValue = useSelector((state) => state.user.darkMode);
   const localId = useSelector((state) => state.auth.userId);
   const ExhibitUId = useSelector((state) => state.user.ExhibitUId);
+  const profilePictureId = useSelector((state) => state.user.profilePictureId);
   const profilePictureBase64 = useSelector(
     (state) => state.user.profilePictureBase64
   );
-  const followingValue = useSelector((state) => state.switches.hideFollowing);
-  const followersValue = useSelector((state) => state.switches.hideFollowers);
-  const advocatesValue = useSelector((state) => state.switches.hideAdvocates);
+  const followingValue = useSelector((state) => state.user.hideFollowing);
+  const followersValue = useSelector((state) => state.user.hideFollowers);
+  const advocatesValue = useSelector((state) => state.user.hideAdvocates);
 
   let userData = {
     fullname: useSelector((state) => state.user.fullname),
     username: useSelector((state) => state.user.username),
     jobTitle: useSelector((state) => state.user.jobTitle),
-    resumeLinkUrl: useSelector((state) => state.user.resumeLinkUrl),
     profileBiography: useSelector((state) => state.user.profileBiography),
   };
 
@@ -192,7 +185,6 @@ const EditProfileScreen = (props) => {
       fullname: userData.fullname ? userData.fullname : "",
       jobTitle: userData.jobTitle ? userData.jobTitle : "",
       username: userData.username ? userData.username : "",
-      resumeLink: userData.resumeLinkUrl ? userData.resumeLinkUrl : "",
       bio: userData.profileBiography ? userData.profileBiography : "",
       ...prevLinks,
     },
@@ -200,7 +192,6 @@ const EditProfileScreen = (props) => {
       fullname: userData.fullname ? true : false,
       jobTitle: userData.jobTitle ? true : false,
       username: userData.username ? true : false,
-      resumeLink: userData.resumeLinkUrl ? true : false,
       bio: userData.profileBiography ? true : false,
     },
     formIsValid: userData ? true : false,
@@ -252,8 +243,6 @@ const EditProfileScreen = (props) => {
         formState.inputValues.jobTitle,
         formState.inputValues.username,
         formState.inputValues.bio,
-        formState.inputValues.resumeLink,
-        showResumeValue,
         newLinks
       )
     );
@@ -262,7 +251,6 @@ const EditProfileScreen = (props) => {
       username: formState.inputValues.jobTitle,
       jobTitle: formState.inputValues.username,
       profileBiography: formState.inputValues.bio,
-      resumeLinkUrl: formState.inputValues.resumeLink,
     };
     await setIsLoading(false);
   }, [dispatch, formState]);
@@ -283,7 +271,14 @@ const EditProfileScreen = (props) => {
       } else {
         setFileSizeError(false);
         const base64 = `data:image/png;base64,${result.base64}`;
-        await dispatch(uploadChangeProfilePicture(base64, ExhibitUId, localId));
+        await dispatch(
+          uploadChangeProfilePicture(
+            base64,
+            ExhibitUId,
+            localId,
+            profilePictureId
+          )
+        );
       }
     }
     await setIsLoadingTempPicture(false);
@@ -317,9 +312,8 @@ const EditProfileScreen = (props) => {
   useEffect(() => {
     (async () => {
       if (Platform.OS !== "web") {
-        const {
-          status,
-        } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+        const { status } =
+          await ImagePicker.requestMediaLibraryPermissionsAsync();
         if (status !== "granted") {
           alert("Sorry, we need camera roll permissions to make this work!");
         }
@@ -535,46 +529,6 @@ const EditProfileScreen = (props) => {
             </TouchableCmp>
           ) : null}
         </View>
-        {showResumeValue ? (
-          <TouchableCmp
-            style={{
-              flexDirection: "row",
-              borderWidth: 1,
-              width: "96%",
-              alignItems: "center",
-              justifyContent: "center",
-              marginBottom: 10,
-              ...props.resumeLink,
-              borderColor: darkModeValue ? "gray" : "#c9c9c9",
-            }}
-            onPress={() => handleLinkOnPress(linktoresume)}
-          >
-            <View
-              style={{
-                flexDirection: "row",
-                width: "96%",
-                alignItems: "center",
-                justifyContent: "center",
-                ...props.resumeLink,
-                borderColor: darkModeValue ? "gray" : "#c9c9c9",
-              }}
-            >
-              <Ionicons
-                name="ios-list-outline"
-                size={24}
-                color={darkModeValue ? "white" : "black"}
-              />
-              <Text
-                style={{
-                  margin: 10,
-                  color: darkModeValue ? "white" : "black",
-                }}
-              >
-                Resume
-              </Text>
-            </View>
-          </TouchableCmp>
-        ) : null}
         {formState.inputValues.bio ? (
           <Text
             style={{ color: darkModeValue ? "white" : "black", padding: 20 }}
@@ -732,38 +686,6 @@ const EditProfileScreen = (props) => {
         initiallyValid={userData.jobTitle}
         required
       />
-      <FilterSwitch
-        viewStyle={{
-          flexDirection: "row",
-          justifyContent: "space-between",
-          alignItems: "center",
-          margin: 10,
-          paddingLeft: 5,
-        }}
-        labelStyle={{
-          color: darkModeValue ? "white" : "black",
-        }}
-        label="Show Resume"
-        state={showResumeValue}
-        onChange={(newValue) => {
-          dispatch(setShowResume(localId, ExhibitUId, newValue));
-          setShowResumeField(newValue);
-        }}
-      />
-      {showResumeField || showResumeValue ? (
-        <Input
-          textLabel={{ color: darkModeValue ? "white" : "black" }}
-          id="resumeLink"
-          label="Resume Link"
-          errorText="Please enter a valid resume url!"
-          keyboardType={Platform.OS === "ios" ? "url" : "default"}
-          returnKeyType="next"
-          onInputChange={inputChangeHandler}
-          initialValue={userData.resumeLinkUrl ? userData.resumeLinkUrl : ""}
-          initiallyValid={userData.resumeLinkUrl}
-          required
-        />
-      ) : null}
       <Input
         textLabel={{ color: darkModeValue ? "white" : "black" }}
         id="bio"

@@ -1,15 +1,17 @@
-import React from "react";
-import {
-  View,
-  StyleSheet,
-  Image,
-  Text,
-  TouchableNativeFeedback,
-  TouchableOpacity,
-  Platform,
-} from "react-native";
 import { Fontisto } from "@expo/vector-icons";
 import { useFonts } from "expo-font";
+import React from "react";
+import {
+    Image,
+
+
+
+    Platform, StyleSheet,
+
+    Text,
+    TouchableNativeFeedback,
+    TouchableOpacity, View
+} from "react-native";
 
 const SignupOrLoginScreen = (props) => {
   let android = null;

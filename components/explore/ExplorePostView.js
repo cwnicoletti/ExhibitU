@@ -1,43 +1,64 @@
-import React, { useEffect, useState, useRef } from "react";
+import * as WebBrowser from "expo-web-browser";
+import React, { useEffect, useRef, useState } from "react";
 import {
-  View,
-  Text,
+  Animated,
+  Dimensions,
+  FlatList,
   Image,
   ImageBackground,
-  StyleSheet,
-  TouchableOpacity,
-  TouchableNativeFeedback,
+  LogBox,
   Platform,
-  Dimensions,
+  StyleSheet,
+  Text,
+  TouchableNativeFeedback,
+  TouchableOpacity,
   TouchableWithoutFeedback,
-  Animated,
-  FlatList,
+  ActivityIndicator,
+  View,
 } from "react-native";
-import { useSelector } from "react-redux";
-import * as WebBrowser from "expo-web-browser";
-import Cheer from "../../assets/Icons/clap.svg";
-import Cheerfill from "../../assets/Icons/clap-fill.svg";
-import LinkButton from "../UI/LinkButton";
 import resolveAssetSource from "react-native/Libraries/Image/resolveAssetSource";
-
-import { LogBox } from "react-native";
+import { useDispatch, useSelector } from "react-redux";
+import Cheerfill from "../../assets/Icons/clap-fill.svg";
+import Cheer from "../../assets/Icons/clap.svg";
+import LinkButton from "../UI/LinkButton";
+import {
+  cheerOwnFeedPost,
+  cheerPost,
+  uncheerOwnFeedPost,
+  uncheerPost,
+} from "../../store/actions/user";
 
 const handleLinkOnPress = async (url) => {
   await WebBrowser.openBrowserAsync(url);
 };
 
+const toDateTime = (seconds) => {
+  let t = new Date(0); // Epoch
+  t.setUTCSeconds(seconds);
+  return t;
+};
+
 const ExplorePostView = (props) => {
+  const dispatch = useDispatch();
   const [photoHeight, setHeight] = useState(null);
   const [photoWidth, setWidth] = useState(null);
-  const [doubleTapped, setDoubleTapped] = useState(false);
+  const [processingWholeCheer, setProcessingWholeCheer] = useState(false);
+  const [loadingCheer, setLoadingCheer] = useState(false);
   const [showClapping, setShowClapping] = useState(false);
   const [clap, setClap] = useState(false);
-  const darkModeValue = useSelector((state) => state.switches.darkMode);
+  const showCheering = useSelector((state) => state.user.showCheering);
+  const cheeredPosts = useSelector((state) => state.user.cheeredPosts);
+  const localId = useSelector((state) => state.auth.userId);
+  const darkModeValue = useSelector((state) => state.user.darkMode);
   const defaultPostIcon = require("../../assets/default-profile-icon.jpg");
   const source = resolveAssetSource(defaultPostIcon);
-  const fullname = props.fullname;
-  const showCheering = props.showCheering;
+  const ExhibitUId = useSelector((state) => state.user.ExhibitUId);
+  const posterExhibitUId = props.posterExhibitUId;
+  const currentUsersPost = ExhibitUId === posterExhibitUId ? true : false;
   const links = props.links;
+  const postId = props.postId;
+  const projectId = props.projectId;
+  const postDateCreated = toDateTime(props.postDateCreated);
 
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const slideAnim = useRef(new Animated.Value(0)).current;
@@ -46,6 +67,12 @@ const ExplorePostView = (props) => {
   if (Platform.OS === "android") {
     TouchableCmp = TouchableNativeFeedback;
   }
+
+  useEffect(() => {
+    if (cheeredPosts.includes(postId)) {
+      setClap(true);
+    }
+  }, [cheeredPosts]);
 
   useEffect(() => {
     Image.getSize(props.image ? props.image : source, (width, height) => {
@@ -108,34 +135,60 @@ const ExplorePostView = (props) => {
   };
 
   let secondnow = null;
-  const handleToubleTap = () => {
+  const handleToubleTap = async () => {
     const now = Date.now();
     if (now - secondnow < 200) {
-      setDoubleTapped(true);
-      setShowClapping(true);
-
-      fadeIn();
-      slideUp();
-      update();
-      setTimeout(() => {
+      await setProcessingWholeCheer(true);
+      await setShowClapping(true);
+      await fadeIn();
+      await slideUp();
+      await update();
+      await setTimeout(() => {
         fadeOut();
       }, 750);
 
-      setTimeout(() => {
-        setShowClapping(false);
+      await setTimeout(async () => {
+        await setShowClapping(false);
       }, 1500);
+
+      if (!cheeredPosts.includes(postId)) {
+        await setLoadingCheer(true);
+        await dispatch(
+          cheerPost(localId, ExhibitUId, projectId, postId, posterExhibitUId)
+        );
+        if (currentUsersPost) {
+          await dispatch(cheerOwnFeedPost(ExhibitUId, projectId, postId));
+        }
+        await setLoadingCheer(false);
+      }
+      await setProcessingWholeCheer(false);
     } else {
       secondnow = now;
     }
   };
 
-  const unCheer = () => {
-    setDoubleTapped((prevState) => !prevState);
+  const unCheer = async () => {
+    if (cheeredPosts.includes(postId)) {
+      await setLoadingCheer(true);
+      await dispatch(
+        uncheerPost(localId, ExhibitUId, projectId, postId, posterExhibitUId)
+      );
+      if (currentUsersPost) {
+        await dispatch(uncheerOwnFeedPost(ExhibitUId, projectId, postId));
+      }
+      await setLoadingCheer(false);
+    }
   };
 
   return (
     <View style={{ ...styles.project, ...props.projectContainer }}>
-      <TouchableWithoutFeedback onPress={handleToubleTap}>
+      <TouchableWithoutFeedback
+        onPress={() => {
+          if (!processingWholeCheer) {
+            handleToubleTap();
+          }
+        }}
+      >
         <View>
           <ImageBackground
             style={{
@@ -193,81 +246,44 @@ const ExplorePostView = (props) => {
                   paddingBottom: 10,
                 }}
               >
-                <View
-                  style={{
-                    flex: 1,
-                    alignItems: "flex-start",
-                  }}
-                >
-                  <TouchableCmp onPress={props.onSelectProfile}>
-                    <View
-                      style={{
-                        marginLeft: 15,
-                        alignSelf: "center",
-                      }}
-                    >
-                      <View
-                        style={{
-                          height: 50,
-                          width: 50,
-                          borderRadius: 50 / 2,
-                        }}
-                      >
-                        <Image
-                          style={{
-                            ...styles.profileImage,
-                            ...props.profileImageStyle,
-                            alignSelf: "center",
-                          }}
-                          source={
-                            props.profileImageSource
-                              ? { uri: props.profileImageSource }
-                              : require("../../assets/default-profile-icon.jpg")
-                          }
-                        />
-                      </View>
-                      <Text
-                        style={{
-                          color: darkModeValue ? "white" : "black",
-                          marginTop: 3,
-                          textAlign: "center",
-                        }}
-                      >
-                        {fullname.split(" ")[0].length > 10
-                          ? fullname.substring(0, 10) + "..."
-                          : fullname.split(" ")[0]}
-                      </Text>
-                    </View>
-                  </TouchableCmp>
-                </View>
-                {!doubleTapped ? (
-                  <TouchableWithoutFeedback onPress={unCheer}>
-                    <View>
-                      <Cheer
-                        style={{
-                          ...styles.clapContainer,
-                          ...props.clapContainer,
-                        }}
-                        height={30}
-                        width={30}
-                        fill="white"
-                      />
-                    </View>
-                  </TouchableWithoutFeedback>
+                {loadingCheer ? (
+                  <ActivityIndicator
+                    size="small"
+                    color="white"
+                    style={{ marginRight: 20 }}
+                  />
                 ) : (
-                  <TouchableWithoutFeedback onPress={unCheer}>
-                    <View>
-                      <Cheerfill
-                        style={{
-                          ...styles.clapContainer,
-                          ...props.clapContainer,
-                        }}
-                        height={30}
-                        width={30}
-                        fill="white"
-                      />
-                    </View>
-                  </TouchableWithoutFeedback>
+                  <View>
+                    {!cheeredPosts.includes(postId) ? (
+                      <TouchableCmp onPress={unCheer}>
+                        <View>
+                          <Cheer
+                            style={{
+                              ...styles.clapContainer,
+                              ...props.clapContainer,
+                            }}
+                            height={30}
+                            width={30}
+                            fill="white"
+                          />
+                        </View>
+                      </TouchableCmp>
+                    ) : (
+                      <TouchableCmp onPress={unCheer}>
+                        <View>
+                          <Cheerfill
+                            style={{
+                              ...styles.clapContainer,
+                              ...props.clapContainer,
+                            }}
+                            height={30}
+                            width={30}
+                            fill="white"
+                          />
+                        </View>
+                      </TouchableCmp>
+                    )}
+                  </View>
                 )}
               </View>
             </View>
@@ -324,26 +340,28 @@ const ExplorePostView = (props) => {
           />
         </View>
         {showCheering ? (
-          <TouchableCmp onPress={props.onSelectCheering}>
-            <View style={{ flexDirection: "row" }}>
-              <Text
-                style={{
-                  ...styles.pictureCheerNumber,
-                  ...props.pictureCheerNumber,
-                }}
-              >
-                {props.numberOfCheers}
-              </Text>
-              <Text
-                style={{
-                  ...styles.pictureCheerText,
-                  ...props.pictureCheerText,
-                }}
-              >
-                cheering
-              </Text>
-            </View>
-          </TouchableCmp>
+          props.numberOfCheers >= 1 ? (
+            <TouchableCmp onPress={props.onSelectCheering}>
+              <View style={{ flexDirection: "row" }}>
+                <Text
+                  style={{
+                    ...styles.pictureCheerNumber,
+                    ...props.pictureCheerNumber,
+                  }}
+                >
+                  {props.numberOfCheers}
+                </Text>
+                <Text
+                  style={{
+                    ...styles.pictureCheerText,
+                    ...props.pictureCheerText,
+                  }}
+                >
+                  cheering
+                </Text>
+              </View>
+            </TouchableCmp>
+          ) : null
         ) : null}
       </View>
       <View style={{ ...styles.captionContainer, ...props.captionContainer }}>
@@ -354,6 +372,23 @@ const ExplorePostView = (props) => {
           }}
         >
           {props.caption}
+        </Text>
+      </View>
+      <View style={{ ...styles.dateContainer, ...props.dateContainer }}>
+        <Text
+          style={{ ...styles.date, ...props.dateStyle, flexDirection: "row" }}
+        >
+          {`${postDateCreated.toLocaleString("UTC", {
+            weekday: "long",
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+          })}`}
+          {", "}
+          {`${postDateCreated.toLocaleString("UTC", {
+            hour: "numeric",
+            minute: "numeric",
+          })}`}
         </Text>
       </View>
     </View>
@@ -391,6 +426,13 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 14,
     fontWeight: "bold",
+  },
+  date: {
+    margin: 10,
+    fontSize: 13,
+  },
+  dateContainer: {
+    alignItems: "flex-end",
   },
   caption: {
     textAlign: "center",

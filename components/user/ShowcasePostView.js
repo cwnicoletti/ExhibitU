@@ -1,26 +1,25 @@
-import React, { useEffect, useState, useRef } from "react";
+import * as WebBrowser from "expo-web-browser";
+import React, { useEffect, useRef, useState } from "react";
 import {
-  View,
-  Text,
+  Animated,
+  Dimensions,
+  FlatList,
   Image,
   ImageBackground,
-  StyleSheet,
-  TouchableOpacity,
-  TouchableNativeFeedback,
+  LogBox,
   Platform,
-  Dimensions,
+  StyleSheet,
+  Text,
+  TouchableNativeFeedback,
+  TouchableOpacity,
   TouchableWithoutFeedback,
-  Animated,
-  FlatList,
+  View,
 } from "react-native";
-import { useSelector } from "react-redux";
-import * as WebBrowser from "expo-web-browser";
-import Cheer from "../../assets/Icons/clap.svg";
-import Cheerfill from "../../assets/Icons/clap-fill.svg";
-import LinkButton from "../UI/LinkButton";
 import resolveAssetSource from "react-native/Libraries/Image/resolveAssetSource";
-
-import { LogBox } from "react-native";
+import { useSelector } from "react-redux";
+import Cheerfill from "../../assets/Icons/clap-fill.svg";
+import Cheer from "../../assets/Icons/clap.svg";
+import LinkButton from "../UI/LinkButton";
 
 const handleLinkOnPress = async (url) => {
   await WebBrowser.openBrowserAsync(url);
@@ -35,21 +34,12 @@ const toDateTime = (seconds) => {
 const ExhibitUPostView = (props) => {
   const [photoHeight, setHeight] = useState(null);
   const [photoWidth, setWidth] = useState(null);
-  const [doubleTapped, setDoubleTapped] = useState(false);
-  const [showClapping, setShowClapping] = useState(false);
-  const [clap, setClap] = useState(false);
-  const darkModeValue = useSelector((state) => state.switches.darkMode);
-  const showCheering = useSelector((state) => state.switches.showCheering);
-  const fullname = useSelector((state) => state.user.fullname);
+  const darkModeValue = useSelector((state) => state.user.darkMode);
+  const showCheering = useSelector((state) => state.user.showCheering);
   const defaultPostIcon = require("../../assets/default-profile-icon.jpg");
   const source = resolveAssetSource(defaultPostIcon);
   const links = props.links;
   const postDateCreated = toDateTime(props.postDateCreated);
-
-  const fadeAnim = useRef(new Animated.Value(0)).current;
-  const slideAnim = useRef(new Animated.Value(0)).current;
-
-  let secondnow = null;
   let TouchableCmp = TouchableOpacity;
   if (Platform.OS === "android") {
     TouchableCmp = TouchableNativeFeedback;
@@ -76,73 +66,9 @@ const ExhibitUPostView = (props) => {
     });
   }, [Image]);
 
-  const slideUp = () => {
-    Animated.timing(slideAnim, {
-      toValue: -photoHeight / 2,
-      duration: 750,
-      useNativeDriver: true,
-    }).start();
-  };
-
-  const fadeOut = () => {
-    Animated.timing(fadeAnim, {
-      toValue: 0,
-      duration: 750,
-      useNativeDriver: true,
-    }).start();
-  };
-
-  const fadeIn = () => {
-    Animated.timing(fadeAnim, {
-      toValue: 1,
-      duration: 750,
-      useNativeDriver: true,
-    }).start();
-  };
-
-  let clapCount = 0;
-  const update = () => {
-    setClap((prevState) => !prevState);
-    const maxClap = 20;
-
-    if (clapCount < maxClap) {
-      setTimeout(() => {
-        window.requestAnimationFrame(update);
-        clapCount += 1;
-      }, 75);
-    } else {
-      clapCount = 0;
-    }
-  };
-
-  const handleToubleTap = () => {
-    const now = Date.now();
-    if (now - secondnow < 200) {
-      setDoubleTapped(true);
-      setShowClapping(true);
-
-      fadeIn();
-      slideUp();
-      update();
-      setTimeout(() => {
-        fadeOut();
-      }, 750);
-
-      setTimeout(() => {
-        setShowClapping(false);
-      }, 1500);
-    } else {
-      secondnow = now;
-    }
-  };
-
-  const unCheer = () => {
-    setDoubleTapped((prevState) => !prevState);
-  };
-
   return (
     <View style={{ ...styles.project, ...props.projectContainer }}>
-      <TouchableWithoutFeedback onPress={handleToubleTap}>
+      <TouchableWithoutFeedback>
         <View>
           <ImageBackground
             style={{
@@ -154,134 +80,7 @@ const ExhibitUPostView = (props) => {
                 ? { uri: props.image }
                 : require("../../assets/default-post-icon.png")
             }
-          >
-            {showClapping ? (
-              <Animated.View
-                style={{
-                  flex: 1,
-                  justifyContent: "center",
-                  alignItems: "center",
-                  opacity: fadeAnim,
-                  transform: [{ translateY: slideAnim }],
-                }}
-              >
-                {clap ? (
-                  <Cheerfill
-                    style={{
-                      marginTop: photoHeight,
-                      ...props.clapContainer,
-                    }}
-                    height={photoHeight / 5}
-                    width={photoWidth / 5}
-                    fill="white"
-                  />
-                ) : (
-                  <Cheer
-                    style={{
-                      marginTop: photoHeight,
-                      ...props.clapContainer,
-                      transform: [{ rotate: "5deg" }],
-                    }}
-                    height={photoHeight / 5}
-                    width={photoWidth / 5}
-                    fill="white"
-                  />
-                )}
-              </Animated.View>
-            ) : null}
-            <View
-              style={{
-                flex: 1,
-                justifyContent: "flex-end",
-                alignItems: "flex-end",
-              }}
-            >
-              <View
-                style={{
-                  flexDirection: "row",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  paddingBottom: 10,
-                }}
-              >
-                <View
-                  style={{
-                    flex: 1,
-                    alignItems: "flex-start",
-                  }}
-                >
-                  <TouchableCmp onPress={props.onSelectProfile}>
-                    <View
-                      style={{
-                        marginLeft: 15,
-                        alignItems: "center",
-                      }}
-                    >
-                      <View
-                        style={{
-                          height: 50,
-                          width: 50,
-                          borderRadius: 50 / 2,
-                        }}
-                      >
-                        <Image
-                          style={{
-                            ...styles.profileImage,
-                            ...props.profileImageStyle,
-                          }}
-                          source={
-                            props.profileImageSource
-                              ? { uri: props.profileImageSource }
-                              : require("../../assets/default-profile-icon.jpg")
-                          }
-                        />
-                      </View>
-                      <Text
-                        style={{
-                          color: darkModeValue ? "white" : "black",
-                          marginTop: 3,
-                          textAlign: "center",
-                        }}
-                      >
-                        {fullname.split(" ")[0].length > 10
-                          ? fullname.substring(0, 10) + "..."
-                          : fullname.split(" ")[0]}
-                      </Text>
-                    </View>
-                  </TouchableCmp>
-                </View>
-                {!doubleTapped ? (
-                  <TouchableWithoutFeedback onPress={unCheer}>
-                    <View>
-                      <Cheer
-                        style={{
-                          ...styles.clapContainer,
-                          ...props.clapContainer,
-                        }}
-                        height={30}
-                        width={30}
-                        fill="white"
-                      />
-                    </View>
-                  </TouchableWithoutFeedback>
-                ) : (
-                  <TouchableWithoutFeedback onPress={unCheer}>
-                    <View>
-                      <Cheerfill
-                        style={{
-                          ...styles.clapContainer,
-                          ...props.clapContainer,
-                        }}
-                        height={30}
-                        width={30}
-                        fill="white"
-                      />
-                    </View>
-                  </TouchableWithoutFeedback>
-                )}
-              </View>
-            </View>
-          </ImageBackground>
+          ></ImageBackground>
         </View>
       </TouchableWithoutFeedback>
       {Object.keys(links).length <= 1 ? (
@@ -294,26 +93,28 @@ const ExhibitUPostView = (props) => {
           }}
         >
           {showCheering ? (
-            <TouchableCmp onPress={props.onSelectCheering}>
-              <View style={{ flexDirection: "row" }}>
-                <Text
-                  style={{
-                    ...styles.pictureCheerNumber,
-                    ...props.pictureCheerNumber,
-                  }}
-                >
-                  {props.numberOfCheers}
-                </Text>
-                <Text
-                  style={{
-                    ...styles.pictureCheerText,
-                    ...props.pictureCheerText,
-                  }}
-                >
-                  cheering
-                </Text>
-              </View>
-            </TouchableCmp>
+            props.numberOfCheers >= 1 ? (
+              <TouchableCmp onPress={props.onSelectCheering}>
+                <View style={{ flexDirection: "row" }}>
+                  <Text
+                    style={{
+                      ...styles.pictureCheerNumber,
+                      ...props.pictureCheerNumber,
+                    }}
+                  >
+                    {props.numberOfCheers}
+                  </Text>
+                  <Text
+                    style={{
+                      ...styles.pictureCheerText,
+                      ...props.pictureCheerText,
+                    }}
+                  >
+                    cheering
+                  </Text>
+                </View>
+              </TouchableCmp>
+            ) : null
           ) : null}
           <View style={{ justifyContent: "center" }}>
             <FlatList
@@ -393,26 +194,28 @@ const ExhibitUPostView = (props) => {
             )}
           />
           {showCheering ? (
-            <TouchableCmp onPress={props.onSelectCheering}>
-              <View style={{ flexDirection: "row" }}>
-                <Text
-                  style={{
-                    ...styles.pictureCheerNumber,
-                    ...props.pictureCheerNumber,
-                  }}
-                >
-                  {props.numberOfCheers}
-                </Text>
-                <Text
-                  style={{
-                    ...styles.pictureCheerText,
-                    ...props.pictureCheerText,
-                  }}
-                >
-                  cheering
-                </Text>
-              </View>
-            </TouchableCmp>
+            props.numberOfCheers >= 1 ? (
+              <TouchableCmp onPress={props.onSelectCheering}>
+                <View style={{ flexDirection: "row" }}>
+                  <Text
+                    style={{
+                      ...styles.pictureCheerNumber,
+                      ...props.pictureCheerNumber,
+                    }}
+                  >
+                    {props.numberOfCheers}
+                  </Text>
+                  <Text
+                    style={{
+                      ...styles.pictureCheerText,
+                      ...props.pictureCheerText,
+                    }}
+                  >
+                    cheering
+                  </Text>
+                </View>
+              </TouchableCmp>
+            ) : null
           ) : null}
         </View>
       )}

@@ -1,22 +1,62 @@
-import React, { useEffect } from "react";
-import { StyleSheet, FlatList, View, Text, Platform } from "react-native";
-import { useSelector } from "react-redux";
-
-import ProjectPictures from "../../components/UI/ProjectPictures";
-import FeedProjectHeader from "../../components/feed/FeedProjectHeader";
-import FontAwesomeHeaderButton from "../../components/UI/FontAwesomeHeaderButton";
-import IoniconsHeaderButton from "../../components/UI/IoniconsHeaderButton";
+import React, { useEffect, useState } from "react";
+import { FlatList, Platform, StyleSheet, Text, View } from "react-native";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
+import { useSelector } from "react-redux";
+import FeedProjectHeader from "../../components/feed/FeedProjectHeader";
+import IoniconsHeaderButton from "../../components/UI/IoniconsHeaderButton";
+import useDidMountEffect from "../../helper/useDidMountEffect";
+import ProjectPictures from "../../components/UI/ProjectPictures";
 
 const FeedProjectScreen = (props) => {
-  const darkModeValue = useSelector((state) => state.switches.darkMode);
-  const userData = props.navigation.getParam("userData");
-  const projectId = props.navigation.getParam("projectId");
-
+  const darkModeValue = useSelector((state) => state.user.darkMode);
   const ExhibitUId = useSelector((state) => state.user.ExhibitUId);
+  const projectId = props.navigation.getParam("projectId");
+  let userData = props.navigation.getParam("userData");
+  userData =
+    userData.ExhibitUId === ExhibitUId
+      ? {
+          ...userData,
+          profilePictureBase64: useSelector(
+            (state) => state.user.profilePictureBase64
+          )
+            ? useSelector((state) => state.user.profilePictureBase64)
+            : props.navigation.getParam("profilePictureUrl"),
+          profileColumns: useSelector((state) => state.user.profileColumns),
+          ExhibitUId: useSelector((state) => state.user.ExhibitUId),
+          fullname: useSelector((state) => state.user.fullname),
+          username: useSelector((state) => state.user.username),
+          jobTitle: useSelector((state) => state.user.jobTitle),
+          profileBiography: useSelector((state) => state.user.profileBiography),
+          profileLinks: useSelector((state) => state.user.profileLinks),
+          profileProjects: useSelector((state) => state.user.profileProjects)
+            ? useSelector((state) => state.user.profileProjects)
+            : props.navigation.getParam("profileProjects"),
+          numberOfAdvocates: useSelector(
+            (state) => state.user.numberOfAdvocates
+          ),
+          numberOfFollowers: useSelector(
+            (state) => state.user.numberOfFollowers
+          ),
+          numberOfFollowing: useSelector(
+            (state) => state.user.numberOfFollowing
+          ),
+          hideFollowing: useSelector((state) => state.user.hideFollowing),
+          hideFollowers: useSelector((state) => state.user.hideFollowers),
+          hideAdvocates: useSelector((state) => state.user.hideAdvocates),
+        }
+      : userData;
 
   const project = Object.values(userData.profileProjects).find(
     (project) => project.projectId === projectId
+  );
+
+  const [projectPostsState, setProjectPostsState] = useState(
+    Object.values(project.projectPosts).sort((first, second) => {
+      return (
+        second["postDateCreated"]["_seconds"] -
+        first["postDateCreated"]["_seconds"]
+      );
+    })
   );
 
   let android = null;
@@ -88,6 +128,18 @@ const FeedProjectScreen = (props) => {
     props.navigation.setParams({ darkMode: darkModeValue });
   }, [darkModeValue]);
 
+  useDidMountEffect(() => {
+    // Sort the array based on the second element
+    setProjectPostsState(
+      Object.values(project.projectPosts).sort((first, second) => {
+        return (
+          second["postDateCreated"]["_seconds"] -
+          first["postDateCreated"]["_seconds"]
+        );
+      })
+    );
+  }, [project.projectPosts]);
+
   const topHeader = () => {
     return (
       <FeedProjectHeader
@@ -119,7 +171,7 @@ const FeedProjectScreen = (props) => {
       }}
     >
       <FlatList
-        data={Object.values(project.projectPosts)}
+        data={projectPostsState}
         keyExtractor={(item) => item.postId}
         ListHeaderComponent={topHeader}
         numColumns={project.projectColumns}
@@ -220,22 +272,6 @@ FeedProjectScreen.navigationOptions = (navData) => {
           }}
         />
       </HeaderButtons>
-    ),
-    headerRight: () => (
-      <View>
-        {ExhibitUId !== feedExhibitUId ? (
-          <HeaderButtons HeaderButtonComponent={FontAwesomeHeaderButton}>
-            <Item
-              title="Advocate"
-              iconName={"handshake-o"}
-              color={darkModeValue ? "white" : "black"}
-              onPress={() => {
-                navData.navigation.toggleRightDrawer();
-              }}
-            />
-          </HeaderButtons>
-        ) : null}
-      </View>
     ),
   };
 };

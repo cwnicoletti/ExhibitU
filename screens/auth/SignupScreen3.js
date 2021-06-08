@@ -1,22 +1,25 @@
-import React, { useReducer, useCallback, useState } from "react";
+import React, { useCallback, useReducer, useState } from "react";
 import {
-  View,
-  StyleSheet,
-  ActivityIndicator,
-  Image,
-  Text,
-  TouchableOpacity,
-  TouchableNativeFeedback,
-  Platform,
+    ActivityIndicator,
+    Image,
+
+
+
+    Platform, StyleSheet,
+
+
+    Text,
+
+    TouchableNativeFeedback, TouchableOpacity, View
 } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import { useSelector, useDispatch } from "react-redux";
-
-import Input from "../../components/UI/Input";
-import Card from "../../components/UI/Card";
-import IoniconsHeaderButton from "../../components/UI/IoniconsHeaderButton";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
+import { useDispatch, useSelector } from "react-redux";
+import Card from "../../components/UI/Card";
+import Input from "../../components/UI/Input";
+import IoniconsHeaderButton from "../../components/UI/IoniconsHeaderButton";
 import { setUsername } from "../../store/actions/signup";
+
 
 const FORM_INPUT_UPDATE = "FORM_INPUT_UPDATE";
 

@@ -1,26 +1,26 @@
+import * as WebBrowser from "expo-web-browser";
 import React from "react";
 import {
-  View,
-  Text,
-  StyleSheet,
-  Image,
   FlatList,
-  TouchableOpacity,
-  TouchableNativeFeedback,
+  Image,
   Platform,
+  StyleSheet,
+  Text,
+  TouchableNativeFeedback,
+  TouchableOpacity,
+  View,
+  ActivityIndicator,
 } from "react-native";
 import { useSelector } from "react-redux";
-import * as WebBrowser from "expo-web-browser";
-
-import LinkButton from "../UI/LinkButton";
 import EditButton from "../UI/EditButton";
+import LinkButton from "../UI/LinkButton";
 
 const handleLinkOnPress = async (url) => {
   await WebBrowser.openBrowserAsync(url);
 };
 
 const ProjectHeader = (props) => {
-  const darkModeValue = useSelector((state) => state.switches.darkMode);
+  const darkModeValue = useSelector((state) => state.user.darkMode);
   const links = props.links;
 
   let TouchableCmp = TouchableOpacity;
@@ -111,132 +111,190 @@ const ProjectHeader = (props) => {
         Columns
       </Text>
       <View style={{ flexDirection: "row" }}>
-        <TouchableCmp onPress={props.changeColumnToTwo}>
+        {!props.isLoadingTwoColumns ? (
+          <TouchableCmp onPress={props.changeColumnToTwo}>
+            <View
+              style={{
+                flexDirection: "row",
+                marginBottom: 20,
+                borderColor: darkModeValue ? "gray" : "#c9c9c9",
+                borderWidth: 1,
+                width: 45,
+                alignItems: "center",
+                justifyContent: "center",
+                flexDirection: "row",
+                ...props.columnTwoStyle,
+              }}
+            >
+              <View
+                style={{
+                  width: 9,
+                  marginHorizontal: 2,
+                  marginTop: 5,
+                  height: 12,
+                  backgroundColor: "gray",
+                }}
+              />
+              <View
+                style={{
+                  width: 9,
+                  marginHorizontal: 2,
+                  marginTop: 5,
+                  height: 12,
+                  backgroundColor: "gray",
+                }}
+              />
+            </View>
+          </TouchableCmp>
+        ) : (
           <View
             style={{
               flexDirection: "row",
               marginBottom: 20,
-              borderColor: darkModeValue ? "gray" : "#c9c9c9",
-              borderWidth: 1,
               width: 45,
               alignItems: "center",
               justifyContent: "center",
+              flexDirection: "row",
               ...props.columnTwoStyle,
             }}
           >
-            <View
-              style={{
-                width: 9,
-                marginHorizontal: 2,
-                marginTop: 5,
-                height: 12,
-                backgroundColor: "gray",
-              }}
-            />
-            <View
-              style={{
-                width: 9,
-                marginHorizontal: 2,
-                marginTop: 5,
-                height: 12,
-                backgroundColor: "gray",
-              }}
+            <ActivityIndicator
+              size="small"
+              color={darkModeValue ? "white" : "black"}
             />
           </View>
-        </TouchableCmp>
-        <TouchableCmp onPress={props.changeColumnToThree}>
+        )}
+        {!props.isLoadingThreeColumns ? (
+          <TouchableCmp onPress={props.changeColumnToThree}>
+            <View
+              style={{
+                marginBottom: 20,
+                borderColor: darkModeValue ? "gray" : "#c9c9c9",
+                borderWidth: 1,
+                width: 50,
+                alignItems: "center",
+                justifyContent: "center",
+                flexDirection: "row",
+                ...props.columnThreeStyle,
+              }}
+            >
+              <View
+                style={{
+                  width: 8,
+                  marginHorizontal: 2,
+                  marginTop: 5,
+                  height: 12,
+                  backgroundColor: "gray",
+                }}
+              />
+              <View
+                style={{
+                  width: 8,
+                  marginHorizontal: 2,
+                  marginTop: 5,
+                  height: 12,
+                  backgroundColor: "gray",
+                }}
+              />
+              <View
+                style={{
+                  width: 8,
+                  marginHorizontal: 2,
+                  marginTop: 5,
+                  height: 12,
+                  backgroundColor: "gray",
+                }}
+              />
+            </View>
+          </TouchableCmp>
+        ) : (
           <View
             style={{
+              flexDirection: "row",
               marginBottom: 20,
-              borderColor: darkModeValue ? "gray" : "#c9c9c9",
-              borderWidth: 1,
-              width: 50,
+              width: 45,
               alignItems: "center",
               justifyContent: "center",
               flexDirection: "row",
               ...props.columnThreeStyle,
             }}
           >
-            <View
-              style={{
-                width: 8,
-                marginHorizontal: 2,
-                marginTop: 5,
-                height: 12,
-                backgroundColor: "gray",
-              }}
-            />
-            <View
-              style={{
-                width: 8,
-                marginHorizontal: 2,
-                marginTop: 5,
-                height: 12,
-                backgroundColor: "gray",
-              }}
-            />
-            <View
-              style={{
-                width: 8,
-                marginHorizontal: 2,
-                marginTop: 5,
-                height: 12,
-                backgroundColor: "gray",
-              }}
+            <ActivityIndicator
+              size="small"
+              color={darkModeValue ? "white" : "black"}
             />
           </View>
-        </TouchableCmp>
-        <TouchableCmp onPress={props.changeColumnToFour}>
+        )}
+        {!props.isLoadingFourColumns ? (
+          <TouchableCmp onPress={props.changeColumnToFour}>
+            <View
+              style={{
+                marginBottom: 20,
+                borderColor: darkModeValue ? "gray" : "#c9c9c9",
+                borderWidth: 1,
+                width: 60,
+                alignItems: "center",
+                justifyContent: "center",
+                flexDirection: "row",
+                ...props.columnFourStyle,
+              }}
+            >
+              <View
+                style={{
+                  width: 7,
+                  marginHorizontal: 2,
+                  marginTop: 5,
+                  height: 12,
+                  backgroundColor: "gray",
+                }}
+              />
+              <View
+                style={{
+                  width: 7,
+                  marginHorizontal: 2,
+                  marginTop: 5,
+                  height: 12,
+                  backgroundColor: "gray",
+                }}
+              />
+              <View
+                style={{
+                  width: 7,
+                  marginHorizontal: 2,
+                  marginTop: 5,
+                  height: 12,
+                  backgroundColor: "gray",
+                }}
+              />
+              <View
+                style={{
+                  width: 7,
+                  marginHorizontal: 2,
+                  marginTop: 5,
+                  height: 12,
+                  backgroundColor: "gray",
+                }}
+              />
+            </View>
+          </TouchableCmp>
+        ) : (
           <View
             style={{
+              flexDirection: "row",
               marginBottom: 20,
-              borderColor: darkModeValue ? "gray" : "#c9c9c9",
-              borderWidth: 1,
-              width: 60,
+              width: 45,
               alignItems: "center",
               justifyContent: "center",
               flexDirection: "row",
               ...props.columnFourStyle,
             }}
           >
-            <View
-              style={{
-                width: 7,
-                marginHorizontal: 2,
-                marginTop: 5,
-                height: 12,
-                backgroundColor: "gray",
-              }}
-            />
-            <View
-              style={{
-                width: 7,
-                marginHorizontal: 2,
-                marginTop: 5,
-                height: 12,
-                backgroundColor: "gray",
-              }}
-            />
-            <View
-              style={{
-                width: 7,
-                marginHorizontal: 2,
-                marginTop: 5,
-                height: 12,
-                backgroundColor: "gray",
-              }}
-            />
-            <View
-              style={{
-                width: 7,
-                marginHorizontal: 2,
-                marginTop: 5,
-                height: 12,
-                backgroundColor: "gray",
-              }}
+            <ActivityIndicator
+              size="small"
+              color={darkModeValue ? "white" : "black"}
             />
           </View>
-        </TouchableCmp>
+        )}
       </View>
     </View>
   );

@@ -1,22 +1,21 @@
+import { EvilIcons, Feather } from "@expo/vector-icons";
+import algoliasearch from "algoliasearch";
 import React, { useEffect, useState } from "react";
 import {
+  FlatList,
+  Keyboard,
+  RefreshControl,
+  SafeAreaView,
   StyleSheet,
-  View,
   Text,
   TouchableWithoutFeedback,
-  Keyboard,
-  FlatList,
-  SafeAreaView,
-  RefreshControl,
+  View,
 } from "react-native";
-import { useSelector } from "react-redux";
 import { SearchBar } from "react-native-elements";
-import algoliasearch from "algoliasearch";
-import { EvilIcons, Feather } from "@expo/vector-icons";
-
-import IoniconsHeaderButton from "../../components/UI/IoniconsHeaderButton";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
+import { useSelector } from "react-redux";
 import ExploreCard from "../../components/explore/ExploreCard";
+import IoniconsHeaderButton from "../../components/UI/IoniconsHeaderButton";
 
 const ExploreFollowingScreen = (props) => {
   const client = algoliasearch(
@@ -25,7 +24,7 @@ const ExploreFollowingScreen = (props) => {
   );
   const index = client.initIndex("users");
 
-  const darkModeValue = useSelector((state) => state.switches.darkMode);
+  const darkModeValue = useSelector((state) => state.user.darkMode);
   const [returnedIndex, setReturnedIndex] = useState([]);
   const [search, setSearch] = useState("");
   const [isRefreshing, setIsRefreshing] = useState(false);
@@ -77,12 +76,10 @@ const ExploreFollowingScreen = (props) => {
     fullname,
     username,
     jobTitle,
-    resumeLinkUrl,
     profileBiography,
     numberOfFollowers,
     numberOfFollowing,
     numberOfAdvocates,
-    showResume,
     hideFollowing,
     hideFollowers,
     hideAdvocates,
@@ -96,29 +93,29 @@ const ExploreFollowingScreen = (props) => {
     showCheering
   ) => {
     props.navigation.push("ExploreProfile", {
-      text,
-      ExhibitUId,
-      profilePictureUrl,
-      fullname,
-      username,
-      jobTitle,
-      resumeLinkUrl,
-      profileBiography,
-      numberOfFollowers,
-      numberOfFollowing,
-      numberOfAdvocates,
-      showResume,
-      hideFollowing,
-      hideFollowers,
-      hideAdvocates,
-      followers,
-      following,
-      advocates,
-      profileProjects,
-      profileLinks,
-      projectLinks,
-      profileColumns,
-      showCheering,
+      exploreData: {
+        text,
+        exploredExhibitUId: ExhibitUId,
+        profilePictureUrl,
+        fullname,
+        username,
+        jobTitle,
+        profileBiography,
+        numberOfFollowers,
+        numberOfFollowing,
+        numberOfAdvocates,
+        hideFollowing,
+        hideFollowers,
+        hideAdvocates,
+        followers,
+        following,
+        advocates,
+        profileProjects,
+        profileLinks,
+        projectLinks,
+        profileColumns,
+        showCheering,
+      },
     });
   };
 
@@ -145,13 +142,13 @@ const ExploreFollowingScreen = (props) => {
               borderBottomColor: "gray",
               borderBottomWidth: 1,
             }}
-            searchIcon={<EvilIcons name="search" size={24} color="white" />}
+            searchIcon={<EvilIcons name="search" size={24} color={darkModeValue ? "white" : "black"} />}
             clearIcon={
               search ? (
                 <Feather
                   name="x"
                   size={24}
-                  color="white"
+                  color={darkModeValue ? "white" : "black"}
                   onPress={() => {
                     searchFilterFunction("");
                   }}
@@ -203,12 +200,10 @@ const ExploreFollowingScreen = (props) => {
                 itemData.item.fullname,
                 itemData.item.username,
                 itemData.item.jobTitle,
-                itemData.item.resumeLinkUrl,
                 itemData.item.profileBiography,
                 itemData.item.numberOfFollowers,
                 itemData.item.numberOfFollowing,
                 itemData.item.numberOfAdvocates,
-                itemData.item.showResume,
                 itemData.item.hideFollowing,
                 itemData.item.hideFollowers,
                 itemData.item.hideAdvocates,

@@ -1,31 +1,24 @@
+import { EvilIcons, Feather } from "@expo/vector-icons";
+import algoliasearch from "algoliasearch";
 import React, { useEffect, useState } from "react";
 import {
+  FlatList,
+  Keyboard,
+  RefreshControl,
+  SafeAreaView,
   StyleSheet,
-  View,
   Text,
   TouchableWithoutFeedback,
-  Keyboard,
-  FlatList,
-  SafeAreaView,
-  RefreshControl,
+  View,
 } from "react-native";
-import { useSelector } from "react-redux";
 import { SearchBar } from "react-native-elements";
-import algoliasearch from "algoliasearch";
-import { EvilIcons, Feather } from "@expo/vector-icons";
-
-import IoniconsHeaderButton from "../../components/UI/IoniconsHeaderButton";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
+import { useSelector } from "react-redux";
 import ExploreAdvocatesCard from "../../components/explore/ExploreAdvocatesCard";
+import IoniconsHeaderButton from "../../components/UI/IoniconsHeaderButton";
 
 const ExploreAdvocatesScreen = (props) => {
-  const client = algoliasearch(
-    "EXC8LH5MAX",
-    "2d8cedcaab4cb2b351e90679963fbd92"
-  );
-  const index = client.initIndex("users");
-
-  const darkModeValue = useSelector((state) => state.switches.darkMode);
+  const darkModeValue = useSelector((state) => state.user.darkMode);
   const [returnedIndex, setReturnedIndex] = useState([]);
   const [projects, setProjects] = useState({});
   const [search, setSearch] = useState("");
@@ -37,6 +30,12 @@ const ExploreAdvocatesScreen = (props) => {
   }, [darkModeValue]);
 
   useEffect(() => {
+    const client = algoliasearch(
+      "EXC8LH5MAX",
+      "2d8cedcaab4cb2b351e90679963fbd92"
+    );
+    const index = client.initIndex("users");
+
     index.search("").then((responses) => {
       const advocates = responses.hits.find(
         (object) => object.objectID === exploredExhibitUId
@@ -53,6 +52,12 @@ const ExploreAdvocatesScreen = (props) => {
   }, []);
 
   const returnIndex = (text) => {
+    const client = algoliasearch(
+      "EXC8LH5MAX",
+      "2d8cedcaab4cb2b351e90679963fbd92"
+    );
+    const index = client.initIndex("users");
+
     index.search(text).then((responses) => {
       const advocates = responses.hits.find(
         (object) => object.objectID === exploredExhibitUId
@@ -86,12 +91,10 @@ const ExploreAdvocatesScreen = (props) => {
     fullname,
     username,
     jobTitle,
-    resumeLinkUrl,
     profileBiography,
     numberOfFollowers,
     numberOfFollowing,
     numberOfAdvocates,
-    showResume,
     hideFollowing,
     hideFollowers,
     hideAdvocates,
@@ -105,29 +108,29 @@ const ExploreAdvocatesScreen = (props) => {
     showCheering
   ) => {
     props.navigation.push("ExploreProfile", {
-      text,
-      ExhibitUId,
-      profilePictureUrl,
-      fullname,
-      username,
-      jobTitle,
-      resumeLinkUrl,
-      profileBiography,
-      numberOfFollowers,
-      numberOfFollowing,
-      numberOfAdvocates,
-      showResume,
-      hideFollowing,
-      hideFollowers,
-      hideAdvocates,
-      followers,
-      following,
-      advocates,
-      profileProjects,
-      profileLinks,
-      projectLinks,
-      profileColumns,
-      showCheering,
+      exploreData: {
+        text,
+        exploredExhibitUId: ExhibitUId,
+        profilePictureUrl,
+        fullname,
+        username,
+        jobTitle,
+        profileBiography,
+        numberOfFollowers,
+        numberOfFollowing,
+        numberOfAdvocates,
+        hideFollowing,
+        hideFollowers,
+        hideAdvocates,
+        followers,
+        following,
+        advocates,
+        profileProjects,
+        profileLinks,
+        projectLinks,
+        profileColumns,
+        showCheering,
+      },
     });
   };
 
@@ -154,13 +157,13 @@ const ExploreAdvocatesScreen = (props) => {
               borderBottomColor: "gray",
               borderBottomWidth: 1,
             }}
-            searchIcon={<EvilIcons name="search" size={24} color="white" />}
+            searchIcon={<EvilIcons name="search" size={24} color={darkModeValue ? "white" : "black"} />}
             clearIcon={
               search ? (
                 <Feather
                   name="x"
                   size={24}
-                  color="white"
+                  color={darkModeValue ? "white" : "black"}
                   onPress={() => {
                     searchFilterFunction("");
                   }}
@@ -217,12 +220,10 @@ const ExploreAdvocatesScreen = (props) => {
                 itemData.item.fullname,
                 itemData.item.username,
                 itemData.item.jobTitle,
-                itemData.item.resumeLinkUrl,
                 itemData.item.profileBiography,
                 itemData.item.numberOfFollowers,
                 itemData.item.numberOfFollowing,
                 itemData.item.numberOfAdvocates,
-                itemData.item.showResume,
                 itemData.item.hideFollowing,
                 itemData.item.hideFollowers,
                 itemData.item.hideAdvocates,

@@ -1,11 +1,14 @@
+import { Ionicons, SimpleLineIcons } from "@expo/vector-icons";
 import React, { useRef, useState } from "react";
-import { View, Animated } from "react-native";
-import { useSelector } from "react-redux";
+import { Animated, TouchableWithoutFeedback, View } from "react-native";
+import { useDispatch, useSelector } from "react-redux";
 import useDidMountEffect from "../../helper/useDidMountEffect";
-import MainBottomTabContainer from "../footers_components/MainBottomTabContainer";
+import { onScreen, resetScroll } from "../../store/actions/user";
 
 const ProfileBottomTab = (props) => {
-  const darkModeValue = useSelector((state) => state.switches.darkMode);
+  const dispatch = useDispatch();
+  const darkModeValue = useSelector((state) => state.user.darkMode);
+  const onProfileScreen = useSelector((state) => state.user.onProfileScreen);
   const showcasingProfile = useSelector(
     (state) => state.user.showcasingProfile
   );
@@ -59,7 +62,7 @@ const ProfileBottomTab = (props) => {
           />
           <View
             style={{
-              padding: 10,
+              padding: 8,
               backgroundColor: darkModeValue ? "black" : "white",
             }}
           />

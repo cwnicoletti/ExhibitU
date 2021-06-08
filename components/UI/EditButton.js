@@ -1,16 +1,14 @@
 import React from "react";
 import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  TouchableNativeFeedback,
-  Platform,
+    Platform, StyleSheet, Text,
+
+
+    TouchableNativeFeedback, TouchableOpacity, View
 } from "react-native";
 import { useSelector } from "react-redux";
 
 const EditButton = (props) => {
-  const darkModeValue = useSelector((state) => state.switches.darkMode);
+  const darkModeValue = useSelector((state) => state.user.darkMode);
 
   let TouchableCmp = TouchableOpacity;
   if (Platform.OS === "android") {

@@ -1,64 +1,56 @@
 import React from "react";
-import { useDispatch } from "react-redux";
-
-import { createStackNavigator } from "react-navigation-stack";
 import { createAppContainer, createSwitchNavigator } from "react-navigation";
-import { createBottomTabNavigator } from "react-navigation-tabs";
 import { createDrawerNavigator, DrawerActions } from "react-navigation-drawer";
-
-import ProfileScreen from "../screens/profile/ProfileScreen";
-import ShowcaseSettingsScreen from "../screens/drawers/ShowcaseSettingsScreen";
-import VoteUpdatesSettingsScreen from "../screens/drawers/VoteUpdatesSettingsScreen";
-import EditProfileScreen from "../screens/profile/EditProfileScreen";
+import { createStackNavigator } from "react-navigation-stack";
+import { createBottomTabNavigator } from "react-navigation-tabs";
+import { useDispatch } from "react-redux";
+import LeftDrawer from "../components/drawers/LeftDrawer";
+import RightDrawer from "../components/drawers/RightDrawer";
+import ExploreBottomTab from "../components/footers/ExploreBottomTab";
+import FeedBottomTab from "../components/footers/FeedBottomTab";
+import ProfileBottomTab from "../components/footers/ProfileBottomTab";
+import ProfileHeader from "../components/headers/ProfileHeader";
+import TitleOnlyHeader from "../components/headers/TitleOnlyHeader";
+import IntroScreen from "../screens/auth/IntroScreen";
+import LoginScreen from "../screens/auth/LoginScreen";
 import SignupOrLoginScreen from "../screens/auth/SignupOrLoginScreen";
 import SignupScreen1 from "../screens/auth/SignupScreen1";
 import SignupScreen2 from "../screens/auth/SignupScreen2";
 import SignupScreen3 from "../screens/auth/SignupScreen3";
 import SignupScreen4 from "../screens/auth/SignupScreen4";
-import IntroScreen from "../screens/auth/IntroScreen";
-import LoginScreen from "../screens/auth/LoginScreen";
-import StartupScreen from "../screens/StartupScreen";
-import ExploreScreen from "../screens/explore/ExploreScreen";
+import ShowcaseSettingsScreen from "../screens/drawers/ShowcaseSettingsScreen";
+import VoteUpdatesSettingsScreen from "../screens/drawers/VoteUpdatesSettingsScreen";
+import ExploreAdvocatesScreen from "../screens/explore/ExploreAdvocatesScreen";
+import ExploreCheeringScreen from "../screens/explore/ExploreCheeringScreen";
 import ExploreFollowersScreen from "../screens/explore/ExploreFollowersScreen";
 import ExploreFollowingScreen from "../screens/explore/ExploreFollowingScreen";
-import ExploreAdvocatesScreen from "../screens/explore/ExploreAdvocatesScreen";
+import ExplorePictureScreen from "../screens/explore/ExplorePictureScreen";
 import ExploreProfileScreen from "../screens/explore/ExploreProfileScreen";
 import ExploreProjectScreen from "../screens/explore/ExploreProjectScreen";
-import ExplorePictureScreen from "../screens/explore/ExplorePictureScreen";
-import ExploreCheeringScreen from "../screens/explore/ExploreCheeringScreen";
-import FeedScreen from "../screens/feed/FeedScreen";
-import FeedCommentsScreen from "../screens/feed/FeedCommentsScreen";
-import FeedCheeringScreen from "../screens/feed/FeedCheeringScreen";
-import FeedProfileScreen from "../screens/feed/FeedProfileScreen";
-import FeedProjectScreen from "../screens/feed/FeedProjectScreen";
+import ExploreScreen from "../screens/explore/ExploreScreen";
 import FeedAdvocatesScreen from "../screens/feed/FeedAdvocatesScreen";
+import FeedCheeringScreen from "../screens/feed/FeedCheeringScreen";
+import FeedCommentsScreen from "../screens/feed/FeedCommentsScreen";
 import FeedFollowersScreen from "../screens/feed/FeedFollowersScreen";
 import FeedFollowingScreen from "../screens/feed/FeedFollowingScreen";
-import ProjectScreen from "../screens/profile/ProjectScreen";
-import AddProjectScreen from "../screens/profile/AddProjectScreen";
+import FeedProfileScreen from "../screens/feed/FeedProfileScreen";
+import FeedProjectScreen from "../screens/feed/FeedProjectScreen";
+import FeedScreen from "../screens/feed/FeedScreen";
 import AddPictureScreen from "../screens/profile/AddPictureScreen";
-import EditProjectScreen from "../screens/profile/EditProjectScreen";
+import AddProjectScreen from "../screens/profile/AddProjectScreen";
 import AdvocatesScreen from "../screens/profile/AdvocatesScreen";
+import CheeringScreen from "../screens/profile/CheeringScreen";
+import EditProfileScreen from "../screens/profile/EditProfileScreen";
+import EditProjectScreen from "../screens/profile/EditProjectScreen";
 import FollowersScreen from "../screens/profile/FollowersScreen";
 import FollowingScreen from "../screens/profile/FollowingScreen";
 import PictureScreen from "../screens/profile/PictureScreen";
-import CheeringScreen from "../screens/profile/CheeringScreen";
+import ProfileScreen from "../screens/profile/ProfileScreen";
+import ProjectScreen from "../screens/profile/ProjectScreen";
+import ShowcasePictureScreen from "../screens/profile/ShowcasePictureScreen";
 import ShowcaseProfileScreen from "../screens/profile/ShowcaseProfileScreen";
 import ShowcaseProjectScreen from "../screens/profile/ShowcaseProjectScreen";
-import ShowcasePictureScreen from "../screens/profile/ShowcasePictureScreen";
-import NotificationsScreen from "../screens/notifications/NotificationsScreen";
-
-import LeftDrawer from "../components/drawers/LeftDrawer";
-import RightDrawer from "../components/drawers/RightDrawer";
-
-import FeedBottomTab from "../components/footers/FeedBottomTab";
-import ExploreBottomTab from "../components/footers/ExploreBottomTab";
-import NotificationsBottomTab from "../components/footers/NotificationsBottomTab";
-import ProfileBottomTab from "../components/footers/ProfileBottomTab";
-
-import ProfileHeader from "../components/headers/ProfileHeader";
-import TitleOnlyHeader from "../components/headers/TitleOnlyHeader";
-
+import StartupScreen from "../screens/StartupScreen";
 import { logout } from "../store/actions/auth";
 
 const FeedandViewNavigator = createStackNavigator({

@@ -1,8 +1,7 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
-global.Buffer = global.Buffer || require("buffer").Buffer;
-
 import { getUserData } from "./user";
+global.Buffer = global.Buffer || require("buffer").Buffer;
 
 export const AUTHENTICATE = "AUTHENTICATE";
 export const LOGOUT = "LOGOUT";
@@ -30,6 +29,7 @@ export const signup = (email, fullname, username, password) => {
     await saveUserDocumentToStorage(
       getSignupResponse.data.docData.ExhibitUId,
       getSignupResponse.data.docData.email,
+      getSignupResponse.data.docData.profilePictureId,
       getSignupResponse.data.docData.profilePictureUrl,
       "",
       getSignupResponse.data.docData.projectTempCoverPhotoId,
@@ -41,7 +41,6 @@ export const signup = (email, fullname, username, password) => {
       getSignupResponse.data.docData.fullname,
       getSignupResponse.data.docData.jobTitle,
       getSignupResponse.data.docData.username,
-      getSignupResponse.data.docData.resumeLinkUrl,
       getSignupResponse.data.docData.profileBiography,
       getSignupResponse.data.docData.numberOfFollowers,
       getSignupResponse.data.docData.numberOfFollowing,
@@ -60,8 +59,6 @@ export const signup = (email, fullname, username, password) => {
         ? getSignupResponse.data.docData.userFeed
         : {},
       getSignupResponse.data.docData.darkMode,
-      getSignupResponse.data.docData.ExhibitULocalMode,
-      getSignupResponse.data.docData.showResume,
       getSignupResponse.data.docData.showCheering,
       getSignupResponse.data.docData.hideFollowing,
       getSignupResponse.data.docData.hideFollowers,
@@ -120,61 +117,62 @@ export const login = (email, password) => {
           const postPhotoBase64 = await getBase64FromUrl(
             profileProjects[k].projectPosts[id]["postPhotoUrl"]
           );
-          profileProjects[k].projectPosts[id][
-            "postPhotoBase64"
-          ] = postPhotoBase64;
-          profileProjects[k].projectPosts[id][
-            "profilePictureBase64"
-          ] = profilePictureBase64;
+          profileProjects[k].projectPosts[id]["postPhotoBase64"] =
+            postPhotoBase64;
+          profileProjects[k].projectPosts[id]["profilePictureBase64"] =
+            profilePictureBase64;
         }
       }
     }
 
     let userFeed = await getLoginResponse.data.docData.userFeed;
-    if (userFeed) {
-      const feedKeys = Object.keys(userFeed);
-      for (const key of feedKeys) {
-        const postPhotoBase64 = await getBase64FromUrl(
-          userFeed[key]["postPhotoUrl"]
-        );
-        userFeed[key]["postPhotoBase64"] = postPhotoBase64;
-        if (
-          userFeed[key].ExhibitUId === getLoginResponse.data.docData.ExhibitUId
-        ) {
-          userFeed[key]["profilePictureBase64"] = profilePictureBase64;
-        }
-        const feedProjectKeys = Object.keys(userFeed[key].profileProjects);
-        for (const projectKey of feedProjectKeys) {
-          const postKeys = Object.keys(
-            userFeed[key].profileProjects[projectKey].projectPosts
-          );
-          const projectCoverPhotoBase64 = await getBase64FromUrl(
-            userFeed[key].profileProjects[projectKey]["projectCoverPhotoUrl"]
-          );
-          userFeed[key].profileProjects[projectKey][
-            "projectCoverPhotoBase64"
-          ] = projectCoverPhotoBase64;
-          for (const postKey of postKeys) {
-            const postPhotoBase64 = await getBase64FromUrl(
-              userFeed[key].profileProjects[projectKey].projectPosts[postKey][
-                "postPhotoUrl"
-              ]
-            );
-            userFeed[key].profileProjects[projectKey].projectPosts[postKey][
-              "postPhotoBase64"
-            ] = postPhotoBase64;
-            if (
-              userFeed[key].ExhibitUId ===
-              getLoginResponse.data.docData.ExhibitUId
-            ) {
-              userFeed[key].profileProjects[projectKey].projectPosts[postKey][
-                "profilePictureBase64"
-              ] = profilePictureBase64;
-            }
-          }
-        }
-      }
-    }
+    // if (userFeed) {
+    //   const feedKeys = Object.keys(userFeed);
+    //   for (const key of feedKeys) {
+    //     const postPhotoBase64 = await getBase64FromUrl(
+    //       userFeed[key]["postPhotoUrl"]
+    //     );
+    //     userFeed[key]["postPhotoBase64"] = postPhotoBase64;
+    //     if (
+    //       userFeed[key].ExhibitUId === getLoginResponse.data.docData.ExhibitUId
+    //     ) {
+    //       userFeed[key]["profilePictureBase64"] = profilePictureBase64;
+    //     } else {
+    //       userFeed[key]["profilePictureBase64"] = await getBase64FromUrl(
+    //         userFeed[key]["profilePictureUrl"]
+    //       );
+    //     }
+    //     const feedProjectKeys = Object.keys(userFeed[key].profileProjects);
+    //     for (const projectKey of feedProjectKeys) {
+    //       const postKeys = Object.keys(
+    //         userFeed[key].profileProjects[projectKey].projectPosts
+    //       );
+    //       const projectCoverPhotoBase64 = await getBase64FromUrl(
+    //         userFeed[key].profileProjects[projectKey]["projectCoverPhotoUrl"]
+    //       );
+    //       userFeed[key].profileProjects[projectKey]["projectCoverPhotoBase64"] =
+    //         projectCoverPhotoBase64;
+    //       for (const postKey of postKeys) {
+    //         const postPhotoBase64 = await getBase64FromUrl(
+    //           userFeed[key].profileProjects[projectKey].projectPosts[postKey][
+    //             "postPhotoUrl"
+    //           ]
+    //         );
+    //         userFeed[key].profileProjects[projectKey].projectPosts[postKey][
+    //           "postPhotoBase64"
+    //         ] = postPhotoBase64;
+    //         if (
+    //           userFeed[key].ExhibitUId ===
+    //           getLoginResponse.data.docData.ExhibitUId
+    //         ) {
+    //           userFeed[key].profileProjects[projectKey].projectPosts[postKey][
+    //             "profilePictureBase64"
+    //           ] = profilePictureBase64;
+    //         }
+    //       }
+    //     }
+    //   }
+    // }
 
     const projectTempCoverPhotoBase64 = await getBase64FromUrl(
       getLoginResponse.data.docData.projectTempCoverPhotoUrl
@@ -187,6 +185,7 @@ export const login = (email, password) => {
     await saveUserDocumentToStorage(
       getLoginResponse.data.docData.ExhibitUId,
       getLoginResponse.data.docData.email,
+      getLoginResponse.data.docData.profilePictureId,
       getLoginResponse.data.docData.profilePictureUrl,
       profilePictureBase64,
       getLoginResponse.data.docData.projectTempCoverPhotoId,
@@ -198,7 +197,6 @@ export const login = (email, password) => {
       getLoginResponse.data.docData.fullname,
       getLoginResponse.data.docData.jobTitle,
       getLoginResponse.data.docData.username,
-      getLoginResponse.data.docData.resumeLinkUrl,
       getLoginResponse.data.docData.profileBiography,
       getLoginResponse.data.docData.numberOfFollowers,
       getLoginResponse.data.docData.numberOfFollowing,
@@ -212,11 +210,11 @@ export const login = (email, password) => {
       getLoginResponse.data.docData.projectsAdvocating,
       getLoginResponse.data.docData.cheeredPosts,
       profileProjects ? profileProjects : {},
-      getLoginResponse.data.docData.profileLinks,
+      getLoginResponse.data.docData.profileLinks
+        ? getLoginResponse.data.docData.profileLinks
+        : {},
       userFeed ? userFeed : {},
       getLoginResponse.data.docData.darkMode,
-      getLoginResponse.data.docData.ExhibitULocalMode,
-      getLoginResponse.data.docData.showResume,
       getLoginResponse.data.docData.showCheering,
       getLoginResponse.data.docData.hideFollowing,
       getLoginResponse.data.docData.hideFollowers,
@@ -255,6 +253,7 @@ const saveDataToStorage = async (localId, token, introing) => {
 const saveUserDocumentToStorage = async (
   ExhibitUId,
   email,
+  profilePictureId,
   profilePictureUrl,
   profilePictureBase64,
   projectTempCoverPhotoId,
@@ -266,7 +265,6 @@ const saveUserDocumentToStorage = async (
   fullname,
   jobTitle,
   username,
-  resumeLinkUrl,
   profileBiography,
   numberOfFollowers,
   numberOfFollowing,
@@ -283,8 +281,6 @@ const saveUserDocumentToStorage = async (
   profileLinks,
   userFeed,
   darkMode,
-  ExhibitULocalMode,
-  showResume,
   showCheering,
   hideFollowing,
   hideFollowers,
@@ -296,6 +292,7 @@ const saveUserDocumentToStorage = async (
     JSON.stringify({
       ExhibitUId,
       email,
+      profilePictureId,
       profilePictureUrl,
       profilePictureBase64,
       projectTempCoverPhotoId,
@@ -307,7 +304,6 @@ const saveUserDocumentToStorage = async (
       fullname,
       jobTitle,
       username,
-      resumeLinkUrl,
       profileBiography,
       numberOfFollowers,
       numberOfFollowing,
@@ -324,8 +320,6 @@ const saveUserDocumentToStorage = async (
       profileLinks,
       userFeed,
       darkMode,
-      ExhibitULocalMode,
-      showResume,
       showCheering,
       hideFollowing,
       hideFollowers,

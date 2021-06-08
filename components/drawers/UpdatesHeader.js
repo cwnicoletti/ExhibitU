@@ -1,11 +1,10 @@
 import React from "react";
 import {
-  View,
-  StyleSheet,
-  TouchableNativeFeedback,
-  TouchableOpacity,
-  Text,
-  Platform,
+    Platform, StyleSheet,
+
+
+    Text, TouchableNativeFeedback,
+    TouchableOpacity, View
 } from "react-native";
 
 const UpdatesHeader = (props) => {

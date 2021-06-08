@@ -10,6 +10,11 @@ export const ON_SCREEN = "ON_SCREEN";
 export const OFF_SCREEN = "OFF_SCREEN";
 
 export const GET_SWITCHES = "GET_SWITCHES";
+export const SET_DARKMODE = "SET_DARKMODE";
+export const SHOW_CHEERING = "SHOW_CHEERING";
+export const HIDE_FOLLOWING = "HIDE_FOLLOWING";
+export const HIDE_FOLLOWERS = "HIDE_FOLLOWERS";
+export const HIDE_ADVOCATES = "HIDE_ADVOCATES";
 
 export const CHEER_POST = "CHEER_POST";
 export const CHEER_UPDATE_POSTS = "CHEER_UPDATE_POSTS";
@@ -82,6 +87,8 @@ export const refreshProfile = (localId) => {
     let advocating = [];
     let projectsAdvocating = [];
     let cheeredPosts = [];
+    let profileProjects = {};
+    let profileLinks = {};
 
     if (profileInfo.data.data.followers) {
       followers = profileInfo.data.data.followers;
@@ -101,6 +108,27 @@ export const refreshProfile = (localId) => {
     if (profileInfo.data.data.cheeredPosts) {
       cheeredPosts = profileInfo.data.data.cheeredPosts;
     }
+    if (profileInfo.data.data.profileProjects) {
+      profileProjects = profileInfo.data.data.profileProjects;
+      const projectKeys = Object.keys(profileProjects);
+      for (const k of projectKeys) {
+        const projectCoverPhotoBase64 = await getBase64FromUrl(
+          profileProjects[k]["projectCoverPhotoUrl"]
+        );
+        profileProjects[k]["projectCoverPhotoBase64"] = projectCoverPhotoBase64;
+        const postKeys = Object.keys(profileProjects[k].projectPosts);
+        for (const id of postKeys) {
+          const postPhotoBase64 = await getBase64FromUrl(
+            profileProjects[k].projectPosts[id]["postPhotoUrl"]
+          );
+          profileProjects[k].projectPosts[id]["postPhotoBase64"] =
+            postPhotoBase64;
+        }
+      }
+    }
+    if (profileInfo.data.data.profileLinks) {
+      profileLinks = profileInfo.data.data.profileLinks;
+    }
 
     await AsyncStorage.getItem("userDocData").then(async (data) => {
       data = JSON.parse(data);
@@ -113,7 +141,9 @@ export const refreshProfile = (localId) => {
       data.advocates = advocates;
       data.advocating = advocating;
       data.projectsAdvocating = projectsAdvocating;
+      data.profileLinks = profileLinks;
       data.cheeredPosts = cheeredPosts;
+      data.profileProjects = profileProjects;
       await AsyncStorage.setItem("userDocData", JSON.stringify(data));
     });
 
@@ -129,6 +159,8 @@ export const refreshProfile = (localId) => {
       advocating,
       projectsAdvocating,
       cheeredPosts,
+      profileProjects,
+      profileLinks,
     });
   };
 };
@@ -184,6 +216,7 @@ export const getUserData = () => {
       type: GET_USER_DATA,
       ExhibitUId: transformedData.ExhibitUId,
       email: transformedData.email,
+      profilePictureId: transformedData.profilePictureId,
       profilePictureUrl: transformedData.profilePictureUrl,
       profilePictureBase64: transformedData.profilePictureBase64,
       projectTempCoverPhotoId: transformedData.projectTempCoverPhotoId,
@@ -195,13 +228,17 @@ export const getUserData = () => {
       fullname: transformedData.fullname,
       jobTitle: transformedData.jobTitle,
       username: transformedData.username,
-      resumeLinkUrl: transformedData.resumeLinkUrl,
       profileBiography: transformedData.profileBiography,
       numberOfFollowers: transformedData.numberOfFollowers,
       numberOfFollowing: transformedData.numberOfFollowing,
       numberOfAdvocates: transformedData.numberOfAdvocates,
       numberOfAdvocating: transformedData.numberOfAdvocating,
       profileColumns: transformedData.profileColumns,
+      darkMode: transformedData.darkMode,
+      showCheering: transformedData.showCheering,
+      hideFollowing: transformedData.hideFollowing,
+      hideFollowers: transformedData.hideFollowers,
+      hideAdvocates: transformedData.hideAdvocates,
       followers,
       following,
       advocates,
@@ -217,8 +254,6 @@ export const getUserData = () => {
     await dispatch({
       type: GET_SWITCHES,
       darkMode: transformedData.darkMode,
-      ExhibitULocalMode: transformedData.ExhibitULocalMode,
-      showResume: transformedData.showResume,
       showCheering: transformedData.showCheering,
       hideFollowing: transformedData.hideFollowing,
       hideFollowers: transformedData.hideFollowers,
@@ -234,8 +269,6 @@ export const uploadUpdateUserProfile = (
   jobTitle,
   username,
   bio,
-  resumeLink,
-  showResumeValue,
   links
 ) => {
   return async (dispatch) => {
@@ -246,8 +279,6 @@ export const uploadUpdateUserProfile = (
       jobTitle,
       username,
       bio,
-      resumeLink,
-      showResumeValue,
       links,
     };
 
@@ -256,14 +287,12 @@ export const uploadUpdateUserProfile = (
       uploadForm
     );
 
-    AsyncStorage.getItem("userDocData").then(async (data) => {
+    await AsyncStorage.getItem("userDocData").then(async (data) => {
       data = JSON.parse(data);
       data.fullname = fullname;
       data.jobTitle = jobTitle;
       data.username = username;
       data.profileBiography = bio;
-      data.resumeLink = resumeLink;
-      data.showResumeValue = showResumeValue;
       data.profileLinks = links;
       if (Object.keys(data.userFeed) > 0) {
         const feedPosts = Object.keys(data.userFeed);
@@ -275,8 +304,6 @@ export const uploadUpdateUserProfile = (
               jobTitle: data.jobTitle,
               username: data.username,
               profileBiography: data.bio,
-              resumeLink: data.resumeLink,
-              showResumeValue: data.showResumeValue,
               profileLinks: data.links,
             },
           };
@@ -291,8 +318,6 @@ export const uploadUpdateUserProfile = (
       jobTitle,
       username,
       bio,
-      resumeLink,
-      showResumeValue,
       profileLinks: links,
     });
   };
@@ -322,7 +347,7 @@ export const uploadNewProject = (
       "https://us-central1-showcase-79c28.cloudfunctions.net/uploadNewProject",
       uploadForm
     );
-    AsyncStorage.getItem("userDocData").then(async (data) => {
+    await AsyncStorage.getItem("userDocData").then(async (data) => {
       data = JSON.parse(data);
       data.profileProjects = {
         ...data.profileProjects,
@@ -399,7 +424,7 @@ export const uploadUpdatedProject = (
       uploadForm
     );
 
-    AsyncStorage.getItem("userDocData").then(async (data) => {
+    await AsyncStorage.getItem("userDocData").then(async (data) => {
       data = JSON.parse(data);
       data.profileProjects = {
         ...data.profileProjects,
@@ -436,7 +461,7 @@ export const uploadRemoveProject = (ExhibitUId, localId, projectId) => {
       uploadForm
     );
 
-    AsyncStorage.getItem("userDocData").then(async (data) => {
+    await AsyncStorage.getItem("userDocData").then(async (data) => {
       data = JSON.parse(data);
       const postIds = Object.keys(data.profileProjects[projectId].projectPosts);
       delete data.profileProjects[projectId];
@@ -483,7 +508,7 @@ export const followUser = (exploredExhibitUId, ExhibitUId, localId) => {
   return async (dispatch) => {
     const user = { exploredExhibitUId, ExhibitUId, localId };
 
-    await axios.post(
+    axios.post(
       "https://us-central1-showcase-79c28.cloudfunctions.net/followUser",
       user
     );
@@ -506,7 +531,7 @@ export const unfollowUser = (exploredExhibitUId, ExhibitUId, localId) => {
   return async (dispatch) => {
     const user = { exploredExhibitUId, ExhibitUId, localId };
 
-    await axios.post(
+    axios.post(
       "https://us-central1-showcase-79c28.cloudfunctions.net/unfollowUser",
       user
     );
@@ -536,7 +561,7 @@ export const advocateForUser = (
   return async (dispatch) => {
     const user = { exploredExhibitUId, ExhibitUId, localId, projectId };
 
-    await axios.post(
+    axios.post(
       "https://us-central1-showcase-79c28.cloudfunctions.net/advocateForUser",
       user
     );
@@ -566,7 +591,7 @@ export const unadvocateForUser = (
   return async (dispatch) => {
     const user = { exploredExhibitUId, ExhibitUId, localId, projectId };
 
-    await axios.post(
+    axios.post(
       "https://us-central1-showcase-79c28.cloudfunctions.net/unadvocateForUser",
       user
     );
@@ -591,9 +616,14 @@ export const unadvocateForUser = (
   };
 };
 
-export const uploadChangeProfilePicture = (base64, ExhibitUId, localId) => {
+export const uploadChangeProfilePicture = (
+  base64,
+  ExhibitUId,
+  localId,
+  profilePictureId
+) => {
   return async (dispatch) => {
-    const picture = { base64, ExhibitUId, localId };
+    const picture = { base64, ExhibitUId, localId, profilePictureId };
 
     const uploadedPictureUrlResponse = await axios.post(
       "https://us-central1-showcase-79c28.cloudfunctions.net/uploadChangeProfilePicture",
@@ -602,6 +632,7 @@ export const uploadChangeProfilePicture = (base64, ExhibitUId, localId) => {
 
     await AsyncStorage.getItem("userDocData").then(async (data) => {
       data = JSON.parse(data);
+      data.profilePictureId = uploadedPictureUrlResponse.data.pictureId;
       data.profilePictureUrl = uploadedPictureUrlResponse.data.url;
       data.profilePictureBase64 = base64;
 
@@ -618,6 +649,7 @@ export const uploadChangeProfilePicture = (base64, ExhibitUId, localId) => {
 
     await dispatch({
       type: CHANGE_PROFILE_PICTURE,
+      profilePictureId: uploadedPictureUrlResponse.data.pictureId,
       profilePictureUrl: uploadedPictureUrlResponse.data.url,
       profilePictureBase64: base64,
       ExhibitUId,
@@ -710,6 +742,9 @@ export const uploadChangeProjectCoverPicture = (
 
     await AsyncStorage.getItem("userDocData").then(async (data) => {
       data = JSON.parse(data);
+      data.projectTempCoverPhotoId = uploadedPictureUrlResponse.data.photoId;
+      data.projectTempCoverPhotoUrl = uploadedPictureUrlResponse.data.url;
+      data.projectTempCoverPhotoBase64 = base64;
       data.profileProjects = {
         ...data.profileProjects,
         [projectId]: {
@@ -742,6 +777,9 @@ export const addUserPost = (
   numberOfFollowers,
   numberOfFollowing,
   numberOfAdvocates,
+  followingValue,
+  followersValue,
+  advocatesValue,
   profileBiography,
   projectTitle,
   projectCoverPhotoUrl,
@@ -770,6 +808,9 @@ export const addUserPost = (
       numberOfFollowers,
       numberOfFollowing,
       numberOfAdvocates,
+      followingValue,
+      followersValue,
+      advocatesValue,
       profileBiography,
       projectTitle,
       projectCoverPhotoUrl,
@@ -847,6 +888,9 @@ export const addUserPost = (
           numberOfFollowers,
           numberOfFollowing,
           numberOfAdvocates,
+          followingValue,
+          followersValue,
+          advocatesValue,
           profileBiography,
           profileProjects: {
             ...data.profileProjects,
@@ -864,6 +908,9 @@ export const addUserPost = (
                   numberOfFollowers,
                   numberOfFollowing,
                   numberOfAdvocates,
+                  followingValue,
+                  followersValue,
+                  advocatesValue,
                   profileBiography,
                   projectTitle,
                   profilePictureUrl,
@@ -927,6 +974,9 @@ export const addUserPost = (
       numberOfFollowers,
       numberOfFollowing,
       numberOfAdvocates,
+      followingValue,
+      followersValue,
+      advocatesValue,
       profilePictureUrl,
       profilePictureBase64,
       projectId,
@@ -957,38 +1007,38 @@ export const getUserFeed = (localId, ExhibitUId) => {
 
     let returnData = uploadedUserPost.data.returnData;
 
-    if (returnData) {
-      for (const key of Object.keys(returnData)) {
-        const postPhotoBase64 = await getBase64FromUrl(
-          returnData[key]["postPhotoUrl"]
-        );
-        const profilePictureBase64 = await getBase64FromUrl(
-          returnData[key]["profilePictureUrl"]
-        );
-        returnData[key]["postPhotoBase64"] = postPhotoBase64;
-        returnData[key]["profilePictureBase64"] = profilePictureBase64;
-        for (const projectKey of Object.keys(returnData[key].profileProjects)) {
-          const projectCoverPhotoBase64 = await getBase64FromUrl(
-            returnData[key].profileProjects[projectKey]["projectCoverPhotoUrl"]
-          );
-          returnData[key].profileProjects[projectKey][
-            "projectCoverPhotoBase64"
-          ] = projectCoverPhotoBase64;
-          for (const postKey of Object.keys(
-            returnData[key].profileProjects[projectKey].projectPosts
-          )) {
-            const postPhotoBase64 = await getBase64FromUrl(
-              returnData[key].profileProjects[projectKey].projectPosts[postKey][
-                "postPhotoUrl"
-              ]
-            );
-            returnData[key].profileProjects[projectKey].projectPosts[postKey][
-              "postPhotoBase64"
-            ] = postPhotoBase64;
-          }
-        }
-      }
-    }
+    // if (returnData) {
+    //   for (const key of Object.keys(returnData)) {
+    //     const postPhotoBase64 = await getBase64FromUrl(
+    //       returnData[key]["postPhotoUrl"]
+    //     );
+    //     const profilePictureBase64 = await getBase64FromUrl(
+    //       returnData[key]["profilePictureUrl"]
+    //     );
+    //     returnData[key]["postPhotoBase64"] = postPhotoBase64;
+    //     returnData[key]["profilePictureBase64"] = profilePictureBase64;
+    //     for (const projectKey of Object.keys(returnData[key].profileProjects)) {
+    //       const projectCoverPhotoBase64 = await getBase64FromUrl(
+    //         returnData[key].profileProjects[projectKey]["projectCoverPhotoUrl"]
+    //       );
+    //       returnData[key].profileProjects[projectKey][
+    //         "projectCoverPhotoBase64"
+    //       ] = projectCoverPhotoBase64;
+    //       for (const postKey of Object.keys(
+    //         returnData[key].profileProjects[projectKey].projectPosts
+    //       )) {
+    //         const postPhotoBase64 = await getBase64FromUrl(
+    //           returnData[key].profileProjects[projectKey].projectPosts[postKey][
+    //             "postPhotoUrl"
+    //           ]
+    //         );
+    //         returnData[key].profileProjects[projectKey].projectPosts[postKey][
+    //           "postPhotoBase64"
+    //         ] = postPhotoBase64;
+    //       }
+    //     }
+    //   }
+    // }
 
     await AsyncStorage.getItem("userDocData").then(async (data) => {
       data = JSON.parse(data);
@@ -1021,58 +1071,60 @@ export const cheerPost = (
       cheeringForm
     );
 
-    AsyncStorage.getItem("userDocData").then(async (data) => {
+    await AsyncStorage.getItem("userDocData").then(async (data) => {
       data = JSON.parse(data);
-      data.userFeed = {
-        ...data.userFeed,
-        [postId]: {
-          ...data.userFeed[postId],
-          numberOfCheers: data.userFeed[postId].numberOfCheers + 1,
-          cheering: [...data.userFeed[postId].cheering, ExhibitUId],
-          profileProjects: {
-            ...data.userFeed[postId].profileProjects,
-            [projectId]: {
-              ...data.userFeed[postId].profileProjects[projectId],
-              projectPosts: {
-                ...data.userFeed[postId].profileProjects[projectId]
-                  .projectPosts,
-                [postId]: {
+      if (data.userFeed[postId]) {
+        data.userFeed = {
+          ...data.userFeed,
+          [postId]: {
+            ...data.userFeed[postId],
+            numberOfCheers: data.userFeed[postId].numberOfCheers + 1,
+            cheering: [...data.userFeed[postId].cheering, ExhibitUId],
+            profileProjects: {
+              ...data.userFeed[postId].profileProjects,
+              [projectId]: {
+                ...data.userFeed[postId].profileProjects[projectId],
+                projectPosts: {
                   ...data.userFeed[postId].profileProjects[projectId]
-                    .projectPosts[postId],
-                  numberOfCheers:
-                    data.userFeed[postId].profileProjects[projectId]
-                      .projectPosts[postId].numberOfCheers + 1,
-                  cheering: [
+                    .projectPosts,
+                  [postId]: {
                     ...data.userFeed[postId].profileProjects[projectId]
-                      .projectPosts[postId].cheering,
-                    ExhibitUId,
-                  ],
+                      .projectPosts[postId],
+                    numberOfCheers:
+                      data.userFeed[postId].profileProjects[projectId]
+                        .projectPosts[postId].numberOfCheers + 1,
+                    cheering: [
+                      ...data.userFeed[postId].profileProjects[projectId]
+                        .projectPosts[postId].cheering,
+                      ExhibitUId,
+                    ],
+                  },
                 },
               },
             },
           },
-        },
-      };
-      Object.entries(data.userFeed).map(([id, value]) => {
-        Object.entries(data.userFeed[id].profileProjects).map(
-          ([projId, value]) => {
-            if (
-              Object.keys(
-                data.userFeed[id].profileProjects[projId].projectPosts
-              ).includes(postId)
-            ) {
-              data.userFeed[id].profileProjects[projId].projectPosts[
-                postId
-              ].numberOfCheers = data.userFeed[postId].numberOfCheers;
-              Object.assign(
-                data.userFeed[id].profileProjects[projId].projectPosts[postId]
-                  .cheering,
-                data.userFeed[postId].cheering
-              );
+        };
+        Object.entries(data.userFeed).map(([id, value]) => {
+          Object.entries(data.userFeed[id].profileProjects).map(
+            ([projId, value]) => {
+              if (
+                Object.keys(
+                  data.userFeed[id].profileProjects[projId].projectPosts
+                ).includes(postId)
+              ) {
+                data.userFeed[id].profileProjects[projId].projectPosts[
+                  postId
+                ].numberOfCheers = data.userFeed[postId].numberOfCheers;
+                Object.assign(
+                  data.userFeed[id].profileProjects[projId].projectPosts[postId]
+                    .cheering,
+                  data.userFeed[postId].cheering
+                );
+              }
             }
-          }
-        );
-      });
+          );
+        });
+      }
 
       data.cheeredPosts = [...data.cheeredPosts, postId];
 
@@ -1147,7 +1199,7 @@ export const cheerOwnProfilePost = (
       cheeringForm
     );
 
-    AsyncStorage.getItem("userDocData").then(async (data) => {
+    await AsyncStorage.getItem("userDocData").then(async (data) => {
       data = JSON.parse(data);
       data.profileProjects = {
         ...data.profileProjects,
@@ -1258,61 +1310,65 @@ export const uncheerPost = (
       uncheeringForm
     );
 
-    AsyncStorage.getItem("userDocData").then(async (data) => {
+    await AsyncStorage.getItem("userDocData").then(async (data) => {
       data = JSON.parse(data);
-      data.userFeed = {
-        ...data.userFeed,
-        [postId]: {
-          ...data.userFeed[postId],
-          profileProjects: {
-            ...data.userFeed[postId].profileProjects,
-            [projectId]: {
-              ...data.userFeed[postId].profileProjects[projectId],
-              projectPosts: {
-                ...data.userFeed[postId].profileProjects[projectId]
-                  .projectPosts,
-                [postId]: {
+      if (data.userFeed[postId]) {
+        data.userFeed = {
+          ...data.userFeed,
+          [postId]: {
+            ...data.userFeed[postId],
+            profileProjects: {
+              ...data.userFeed[postId].profileProjects,
+              [projectId]: {
+                ...data.userFeed[postId].profileProjects[projectId],
+                projectPosts: {
                   ...data.userFeed[postId].profileProjects[projectId]
-                    .projectPosts[postId],
-                  numberOfCheers:
-                    data.userFeed[postId].profileProjects[projectId]
-                      .projectPosts[postId].numberOfCheers - 1,
-                  cheering: data.userFeed[postId].profileProjects[
-                    projectId
-                  ].projectPosts[postId].cheering.filter(
-                    (listExhibitUId) => listExhibitUId !== ExhibitUId
-                  ),
+                    .projectPosts,
+                  [postId]: {
+                    ...data.userFeed[postId].profileProjects[projectId]
+                      .projectPosts[postId],
+                    numberOfCheers:
+                      data.userFeed[postId].profileProjects[projectId]
+                        .projectPosts[postId].numberOfCheers - 1,
+                    cheering: data.userFeed[postId].profileProjects[
+                      projectId
+                    ].projectPosts[postId].cheering.filter(
+                      (listExhibitUId) => listExhibitUId !== ExhibitUId
+                    ),
+                  },
                 },
               },
             },
+            numberOfCheers: data.userFeed[postId].numberOfCheers - 1,
+            cheering: data.userFeed[postId].cheering.filter(
+              (listExhibitUId) => listExhibitUId !== ExhibitUId
+            ),
           },
-          numberOfCheers: data.userFeed[postId].numberOfCheers - 1,
-          cheering: data.userFeed[postId].cheering.filter(
-            (listExhibitUId) => listExhibitUId !== ExhibitUId
-          ),
-        },
-      };
-      Object.entries(data.userFeed).map(([id, value]) => {
-        Object.entries(data.userFeed[id].profileProjects).map(
-          ([projId, value]) => {
-            if (
-              Object.keys(
-                data.userFeed[id].profileProjects[projId].projectPosts
-              ).includes(postId)
-            ) {
-              data.userFeed[id].profileProjects[projId].projectPosts[
-                postId
-              ].numberOfCheers = data.userFeed[postId].numberOfCheers;
-              Object.assign(
-                data.userFeed[id].profileProjects[projId].projectPosts[postId]
-                  .cheering,
-                data.userFeed[postId].cheering
-              );
+        };
+        Object.entries(data.userFeed).map(([id, value]) => {
+          Object.entries(data.userFeed[id].profileProjects).map(
+            ([projId, value]) => {
+              if (
+                Object.keys(
+                  data.userFeed[id].profileProjects[projId].projectPosts
+                ).includes(postId)
+              ) {
+                data.userFeed[id].profileProjects[projId].projectPosts[
+                  postId
+                ].numberOfCheers = data.userFeed[postId].numberOfCheers;
+                Object.assign(
+                  data.userFeed[id].profileProjects[projId].projectPosts[postId]
+                    .cheering,
+                  data.userFeed[postId].cheering
+                );
+              }
             }
-          }
-        );
-      });
+          );
+        });
+      }
+
       data.cheeredPosts = data.cheeredPosts.filter((post) => post !== postId);
+
       await AsyncStorage.setItem("userDocData", JSON.stringify(data));
     });
 
@@ -1384,7 +1440,7 @@ export const uncheerOwnProfilePost = (
       uncheeringForm
     );
 
-    AsyncStorage.getItem("userDocData").then(async (data) => {
+    await AsyncStorage.getItem("userDocData").then(async (data) => {
       data = JSON.parse(data);
       data.profileProjects = {
         ...data.profileProjects,
@@ -1487,7 +1543,7 @@ export const changeProfileNumberOfColumns = (
       picture
     );
 
-    AsyncStorage.getItem("userDocData").then(async (data) => {
+    await AsyncStorage.getItem("userDocData").then(async (data) => {
       data = JSON.parse(data);
       data.profileColumns = number;
 
@@ -1521,7 +1577,7 @@ export const changeProjectNumberOfColumns = (
       picture
     );
 
-    AsyncStorage.getItem("userDocData").then(async (data) => {
+    await AsyncStorage.getItem("userDocData").then(async (data) => {
       data = JSON.parse(data);
       data.profileProjects = {
         ...data.profileProjects,
@@ -1534,9 +1590,8 @@ export const changeProjectNumberOfColumns = (
       if (data.userFeed) {
         Object.entries(data.userFeed).map(([id, value]) => {
           if (data.userFeed[id].ExhibitUId === ExhibitUId) {
-            data.userFeed[id].profileProjects[
-              projectId
-            ].projectColumns = number;
+            data.userFeed[id].profileProjects[projectId].projectColumns =
+              number;
           }
         });
       }
@@ -1598,5 +1653,120 @@ export const returnFromShowcasing = (value) => {
 export const setHideProfileFooter = (value) => {
   return async (dispatch) => {
     await dispatch({ type: HIDE_PROFILE_FOOTER, value });
+  };
+};
+
+export const setDarkMode = (localId, ExhibitUId, value) => {
+  return async (dispatch) => {
+    const darkModeData = { localId, ExhibitUId, value, switchName: "darkMode" };
+
+    axios.post(
+      `https://us-central1-showcase-79c28.cloudfunctions.net/setSwitchCurrentUserOnly`,
+      darkModeData
+    );
+
+    await AsyncStorage.getItem("userDocData").then(async (data) => {
+      data = JSON.parse(data);
+      data.darkMode = value;
+      await AsyncStorage.setItem("userDocData", JSON.stringify(data));
+    });
+
+    dispatch({ type: SET_DARKMODE, darkMode: value });
+  };
+};
+
+export const setShowCheering = (localId, ExhibitUId, value) => {
+  return async (dispatch) => {
+    const showCheeringData = {
+      localId,
+      ExhibitUId,
+      value,
+      switchName: "showCheering",
+    };
+
+    axios.post(
+      `https://us-central1-showcase-79c28.cloudfunctions.net/setSwitchPublicInfo`,
+      showCheeringData
+    );
+
+    AsyncStorage.getItem("userDocData").then(async (data) => {
+      data = JSON.parse(data);
+      data.showCheering = value;
+      await AsyncStorage.setItem("userDocData", JSON.stringify(data));
+    });
+
+    dispatch({ type: SHOW_CHEERING, ExhibitUId, showCheering: value });
+  };
+};
+
+export const setHideFollowing = (localId, ExhibitUId, value) => {
+  return async (dispatch) => {
+    const hideFollowingData = {
+      localId,
+      ExhibitUId,
+      value,
+      switchName: "hideFollowing",
+    };
+
+    axios.post(
+      `https://us-central1-showcase-79c28.cloudfunctions.net/setSwitchPublicInfo`,
+      hideFollowingData
+    );
+
+    await AsyncStorage.getItem("userDocData").then(async (data) => {
+      data = JSON.parse(data);
+      data.hideFollowing = value;
+      await AsyncStorage.setItem("userDocData", JSON.stringify(data));
+    });
+
+    dispatch({ type: HIDE_FOLLOWING, ExhibitUId, hideFollowingValue: value });
+  };
+};
+
+export const setHideFollowers = (localId, ExhibitUId, value) => {
+  return async (dispatch) => {
+    const hideFollowersData = {
+      localId,
+      ExhibitUId,
+      value,
+      switchName: "hideFollowers",
+    };
+
+    axios.post(
+      `https://us-central1-showcase-79c28.cloudfunctions.net/setSwitchPublicInfo`,
+      hideFollowersData
+    );
+
+    await AsyncStorage.getItem("userDocData").then(async (data) => {
+      data = JSON.parse(data);
+      data.hideFollowers = value;
+      await AsyncStorage.setItem("userDocData", JSON.stringify(data));
+    });
+
+    dispatch({ type: HIDE_FOLLOWERS, ExhibitUId, hideFollowersValue: value });
+  };
+};
+
+export const setHideAdvocates = (localId, ExhibitUId, value) => {
+  return async (dispatch) => {
+    const hideAdvocatesData = {
+      localId,
+      ExhibitUId,
+      value,
+      switchName: "hideAdvocates",
+    };
+
+    axios.post(
+      `https://us-central1-showcase-79c28.cloudfunctions.net/setSwitchPublicInfo`,
+      hideAdvocatesData
+    );
+
+    await AsyncStorage.getItem("userDocData").then(async (data) => {
+      data = JSON.parse(data);
+      data.hideAdvocates = value;
+      await AsyncStorage.setItem("userDocData", JSON.stringify(data));
+    });
+
+    dispatch({ type: HIDE_ADVOCATES, ExhibitUId, hideAdvocatesValue: value });
   };
 };

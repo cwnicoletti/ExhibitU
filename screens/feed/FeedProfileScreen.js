@@ -1,20 +1,77 @@
-import React, { useEffect } from "react";
-import { StyleSheet, FlatList, View, Text } from "react-native";
-import { useSelector } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { FlatList, StyleSheet, Text, View } from "react-native";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
+import { useSelector } from "react-redux";
+import FeedProfileHeader from "../../components/feed/FeedProfileHeader";
+import ProjectItem from "../../components/projectItems/ProfileProjectItem";
+import useDidMountEffect from "../../helper/useDidMountEffect";
 import IoniconsHeaderButton from "../../components/UI/IoniconsHeaderButton";
 
-import ProjectItem from "../../components/projectItems/ProfileProjectItem";
-import FeedProfileHeader from "../../components/feed/FeedProfileHeader";
-
 const FeedProfileScreen = (props) => {
-  const darkModeValue = useSelector((state) => state.switches.darkMode);
+  const darkModeValue = useSelector((state) => state.user.darkMode);
+  const ExhibitUId = useSelector((state) => state.user.ExhibitUId);
   let userData = props.navigation.getParam("userData");
   userData.profileLinks = userData.profileLinks ? userData.profileLinks : {};
+  userData.projectLinks = userData.projectLinks ? userData.projectLinks : {};
+
+  userData =
+    userData.ExhibitUId === ExhibitUId
+      ? {
+          ...userData,
+          profilePictureBase64: useSelector(
+            (state) => state.user.profilePictureBase64
+          )
+            ? useSelector((state) => state.user.profilePictureBase64)
+            : props.navigation.getParam("profilePictureUrl"),
+          profileColumns: useSelector((state) => state.user.profileColumns),
+          ExhibitUId: useSelector((state) => state.user.ExhibitUId),
+          fullname: useSelector((state) => state.user.fullname),
+          username: useSelector((state) => state.user.username),
+          jobTitle: useSelector((state) => state.user.jobTitle),
+          profileBiography: useSelector((state) => state.user.profileBiography),
+          profileLinks: useSelector((state) => state.user.profileLinks),
+          profileProjects: useSelector((state) => state.user.profileProjects)
+            ? useSelector((state) => state.user.profileProjects)
+            : props.navigation.getParam("profileProjects"),
+          numberOfAdvocates: useSelector(
+            (state) => state.user.numberOfAdvocates
+          ),
+          numberOfFollowers: useSelector(
+            (state) => state.user.numberOfFollowers
+          ),
+          numberOfFollowing: useSelector(
+            (state) => state.user.numberOfFollowing
+          ),
+          hideFollowing: useSelector((state) => state.user.hideFollowing),
+          hideFollowers: useSelector((state) => state.user.hideFollowers),
+          hideAdvocates: useSelector((state) => state.user.hideAdvocates),
+        }
+      : userData;
+
+  const [profileProjectsState, setProfileProjectsState] = useState(
+    Object.values(userData.profileProjects).sort((first, second) => {
+      return (
+        second["projectDateCreated"]["_seconds"] -
+        first["projectDateCreated"]["_seconds"]
+      );
+    })
+  );
 
   useEffect(() => {
     props.navigation.setParams({ darkMode: darkModeValue });
   }, [darkModeValue]);
+
+  useDidMountEffect(() => {
+    // Sort the array based on the second element
+    setProfileProjectsState(
+      Object.values(userData.profileProjects).sort((first, second) => {
+        return (
+          second["projectDateCreated"]["_seconds"] -
+          first["projectDateCreated"]["_seconds"]
+        );
+      })
+    );
+  }, [userData.profileProjects]);
 
   const viewProjectHandler = (projectId) => {
     props.navigation.navigate("ViewFeedProfileProject", {
@@ -61,25 +118,19 @@ const FeedProfileScreen = (props) => {
           ...styles.profileDescriptionStyle,
           color: darkModeValue ? "white" : "black",
         }}
-        resumeText={{
-          color: darkModeValue ? "white" : "black",
-        }}
-        iconResumeStyle={darkModeValue ? "white" : "black"}
-        onEditProfilePress={() => props.navigation.navigate("EditProfile")}
         description={userData.profileBiography}
-        onAddNewProjectPress={() => props.navigation.navigate("AddProject")}
         followersOnPress={() =>
-          props.navigation.navigate("ViewFollowers", {
+          props.navigation.push("ViewFollowers", {
             ExhibitUId: userData.ExhibitUId,
           })
         }
         followingOnPress={() =>
-          props.navigation.navigate("ViewFollowing", {
+          props.navigation.push("ViewFollowing", {
             ExhibitUId: userData.ExhibitUId,
           })
         }
         advocatesOnPress={() =>
-          props.navigation.navigate("ViewAdvocates", {
+          props.navigation.push("ViewAdvocates", {
             ExhibitUId: userData.ExhibitUId,
           })
         }
@@ -95,7 +146,7 @@ const FeedProfileScreen = (props) => {
       }}
     >
       <FlatList
-        data={Object.values(userData.profileProjects)}
+        data={profileProjectsState}
         keyExtractor={(item) => item.projectId}
         key={userData.profileColumns}
         ListHeaderComponent={topHeader}

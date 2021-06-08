@@ -1,14 +1,13 @@
 import React from "react";
 import {
-  View,
-  Text,
-  StyleSheet,
   Image,
+  Platform,
+  StyleSheet,
+  Text,
   TouchableNativeFeedback,
   TouchableOpacity,
-  Platform,
+  View,
 } from "react-native";
-
 import EditButton from "../UI/EditButton";
 
 const UserTitleEdit = (props) => {
@@ -19,7 +18,12 @@ const UserTitleEdit = (props) => {
 
   return (
     <View
-      style={{ alignItems: "center", justifyContent: "center", width: "100%" }}
+      style={{
+        alignItems: "center",
+        justifyContent: "center",
+        width: "100%",
+        margin: 5,
+      }}
     >
       <View style={{ ...styles.secondContainer }}>
         <View style={{ ...styles.thirdContainer }}>

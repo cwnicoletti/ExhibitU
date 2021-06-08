@@ -1,31 +1,29 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
-  View,
-  Text,
+  ActivityIndicator,
+  Animated,
+  Dimensions,
+  FlatList,
   Image,
   ImageBackground,
-  StyleSheet,
-  TouchableOpacity,
-  TouchableNativeFeedback,
+  LogBox,
   Platform,
-  Dimensions,
+  StyleSheet,
+  Text,
+  TouchableNativeFeedback,
+  TouchableOpacity,
   TouchableWithoutFeedback,
-  Animated,
-  FlatList,
-  ActivityIndicator,
+  View,
 } from "react-native";
-import { useSelector, useDispatch } from "react-redux";
-import Cheer from "../../assets/Icons/clap.svg";
-import Cheerfill from "../../assets/Icons/clap-fill.svg";
-import LinkButton from "../UI/LinkButton";
 import resolveAssetSource from "react-native/Libraries/Image/resolveAssetSource";
-
+import { useDispatch, useSelector } from "react-redux";
+import Cheerfill from "../../assets/Icons/clap-fill.svg";
+import Cheer from "../../assets/Icons/clap.svg";
 import {
   cheerOwnProfilePost,
   uncheerOwnProfilePost,
 } from "../../store/actions/user";
-
-import { LogBox } from "react-native";
+import LinkButton from "../UI/LinkButton";
 
 const toDateTime = (seconds) => {
   let t = new Date(0); // Epoch
@@ -35,7 +33,8 @@ const toDateTime = (seconds) => {
 
 const ProfileProjectPostView = (props) => {
   const dispatch = useDispatch();
-  const darkModeValue = useSelector((state) => state.switches.darkMode);
+  const darkModeValue = useSelector((state) => state.user.darkMode);
+  const showCheering = useSelector((state) => state.user.showCheering);
   const [photoHeight, setHeight] = useState(null);
   const [photoWidth, setWidth] = useState(null);
   const [showClapping, setShowClapping] = useState(false);
@@ -44,7 +43,6 @@ const ProfileProjectPostView = (props) => {
   const [processingWholeCheer, setProcessingWholeCheer] = useState(false);
   const ExhibitUId = useSelector((state) => state.user.ExhibitUId);
   const cheeredPosts = useSelector((state) => state.user.cheeredPosts);
-  const fullname = useSelector((state) => state.user.fullname);
   const [clap, setClap] = useState(false);
   const localId = useSelector((state) => state.auth.userId);
   const posterExhibitUId = useSelector((state) => state.user.ExhibitUId);
@@ -220,8 +218,8 @@ const ProfileProjectPostView = (props) => {
                       marginTop: photoHeight,
                       ...props.clapContainer,
                     }}
-                    height={height / 5}
-                    width={width / 5}
+                    height={photoHeight / 5}
+                    width={photoWidth / 5}
                     fill="white"
                   />
                 ) : (
@@ -253,53 +251,6 @@ const ProfileProjectPostView = (props) => {
                   paddingBottom: 10,
                 }}
               >
-                <View
-                  style={{
-                    flex: 1,
-                    alignItems: "flex-start",
-                  }}
-                >
-                  <TouchableCmp onPress={props.onSelectProfile}>
-                    <View
-                      style={{
-                        marginLeft: 15,
-                        alignSelf: "center",
-                      }}
-                    >
-                      <View
-                        style={{
-                          height: 50,
-                          width: 50,
-                          borderRadius: 50 / 2,
-                        }}
-                      >
-                        <Image
-                          style={{
-                            ...styles.profileImage,
-                            ...props.profileImageStyle,
-                            alignSelf: "center",
-                          }}
-                          source={
-                            props.profileImageSource
-                              ? { uri: props.profileImageSource }
-                              : require("../../assets/default-profile-icon.jpg")
-                          }
-                        />
-                      </View>
-                      <Text
-                        style={{
-                          color: darkModeValue ? "white" : "black",
-                          marginTop: 3,
-                          textAlign: "center",
-                        }}
-                      >
-                        {fullname.split(" ")[0].length > 10
-                          ? fullname.substring(0, 10) + "..."
-                          : fullname.split(" ")[0]}
-                      </Text>
-                    </View>
-                  </TouchableCmp>
-                </View>
                 {loadingCheer ? (
                   <ActivityIndicator
                     size="small"
@@ -353,26 +304,30 @@ const ProfileProjectPostView = (props) => {
             alignItems: "center",
           }}
         >
-          <TouchableCmp onPress={props.onSelectCheering}>
-            <View style={{ flexDirection: "row" }}>
-              <Text
-                style={{
-                  ...styles.pictureCheerNumber,
-                  ...props.pictureCheerNumber,
-                }}
-              >
-                {numberOfCheers}
-              </Text>
-              <Text
-                style={{
-                  ...styles.pictureCheerText,
-                  ...props.pictureCheerText,
-                }}
-              >
-                cheering
-              </Text>
-            </View>
-          </TouchableCmp>
+          {showCheering ? (
+            numberOfCheers >= 1 ? (
+              <TouchableCmp onPress={props.onSelectCheering}>
+                <View style={{ flexDirection: "row" }}>
+                  <Text
+                    style={{
+                      ...styles.pictureCheerNumber,
+                      ...props.pictureCheerNumber,
+                    }}
+                  >
+                    {numberOfCheers}
+                  </Text>
+                  <Text
+                    style={{
+                      ...styles.pictureCheerText,
+                      ...props.pictureCheerText,
+                    }}
+                  >
+                    cheering
+                  </Text>
+                </View>
+              </TouchableCmp>
+            ) : null
+          ) : null}
           <View style={{ justifyContent: "center" }}>
             <FlatList
               data={Object.values(links)}
@@ -458,26 +413,28 @@ const ProfileProjectPostView = (props) => {
               />
             )}
           />
-          <TouchableCmp onPress={props.onSelectCheering}>
-            <View style={{ flexDirection: "row" }}>
-              <Text
-                style={{
-                  ...styles.pictureCheerNumber,
-                  ...props.pictureCheerNumber,
-                }}
-              >
-                {numberOfCheers}
-              </Text>
-              <Text
-                style={{
-                  ...styles.pictureCheerText,
-                  ...props.pictureCheerText,
-                }}
-              >
-                cheering
-              </Text>
-            </View>
-          </TouchableCmp>
+          {showCheering && props.numberOfCheers >= 1 ? (
+            <TouchableCmp onPress={props.onSelectCheering}>
+              <View style={{ flexDirection: "row" }}>
+                <Text
+                  style={{
+                    ...styles.pictureCheerNumber,
+                    ...props.pictureCheerNumber,
+                  }}
+                >
+                  {numberOfCheers}
+                </Text>
+                <Text
+                  style={{
+                    ...styles.pictureCheerText,
+                    ...props.pictureCheerText,
+                  }}
+                >
+                  cheering
+                </Text>
+              </View>
+            </TouchableCmp>
+          ) : null}
         </View>
       )}
       <View style={{ ...styles.captionContainer, ...props.captionContainer }}>

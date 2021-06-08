@@ -1,24 +1,25 @@
 import React, { useEffect, useState } from "react";
 import {
-  View,
-  StyleSheet,
-  Image,
-  Text,
-  TouchableOpacity,
-  TouchableNativeFeedback,
-  ActivityIndicator,
-  Dimensions,
-  Platform,
+    ActivityIndicator,
+    Dimensions, Image,
+
+
+
+
+
+    Platform, StyleSheet,
+
+    Text,
+
+    TouchableNativeFeedback, TouchableOpacity, View
 } from "react-native";
-import { useSelector, useDispatch } from "react-redux";
 import Carousel from "react-native-snap-carousel";
-
-import exampleImage1 from "../../assets/ExhibitU_icon_transparent_white.png";
-import exampleImage2 from "../../assets/ExhibitU_icon_transparent_white.png";
-import exampleImage3 from "../../assets/ExhibitU_icon_transparent_white.png";
+import { useDispatch, useSelector } from "react-redux";
+import { default as exampleImage1, default as exampleImage2, default as exampleImage3 } from "../../assets/ExhibitU_icon_transparent_white.png";
 import CarouselCardItem from "../../components/UI/CarouselCardItem";
-
 import { setIntroing } from "../../store/actions/signup";
+
+
 
 const IntroScreen = (props) => {
   const dispatch = useDispatch();

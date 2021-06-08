@@ -1,25 +1,24 @@
 import React, { useEffect } from "react";
-import { StyleSheet, View, Text, Image } from "react-native";
-import { useSelector, useDispatch } from "react-redux";
-
+import { StyleSheet, Text, View } from "react-native";
+import { ScrollView } from "react-native-gesture-handler";
+import { HeaderButtons, Item } from "react-navigation-header-buttons";
+import { useDispatch, useSelector } from "react-redux";
 import FilterSwitch from "../../components/UI/FilterSwitch";
 import IoniconsHeaderButton from "../../components/UI/IoniconsHeaderButton";
-import { HeaderButtons, Item } from "react-navigation-header-buttons";
-
 import {
-  setShowCheering,
-  setHideFollowing,
-  setHideFollowers,
   setHideAdvocates,
-} from "../../store/actions/switches";
+  setHideFollowers,
+  setHideFollowing,
+  setShowCheering,
+} from "../../store/actions/user";
 
 const ShowcaseSettingsScreen = (props) => {
   const dispatch = useDispatch();
-  const darkModeValue = useSelector((state) => state.switches.darkMode);
-  const showCheeringValue = useSelector((state) => state.switches.showCheering);
-  const followingValue = useSelector((state) => state.switches.hideFollowing);
-  const followersValue = useSelector((state) => state.switches.hideFollowers);
-  const advocatesValue = useSelector((state) => state.switches.hideAdvocates);
+  const darkModeValue = useSelector((state) => state.user.darkMode);
+  const showCheeringValue = useSelector((state) => state.user.showCheering);
+  const followingValue = useSelector((state) => state.user.hideFollowing);
+  const followersValue = useSelector((state) => state.user.hideFollowers);
+  const advocatesValue = useSelector((state) => state.user.hideAdvocates);
   const localId = useSelector((state) => state.auth.userId);
   const ExhibitUId = useSelector((state) => state.user.ExhibitUId);
 
@@ -34,70 +33,72 @@ const ShowcaseSettingsScreen = (props) => {
         backgroundColor: darkModeValue ? "black" : "white",
       }}
     >
-      <FilterSwitch
-        viewStyle={{
-          flexDirection: "row",
-          justifyContent: "space-between",
-          alignItems: "center",
-          margin: 10,
-        }}
-        labelStyle={{
-          color: darkModeValue ? "white" : "black",
-        }}
-        label="Show Cheering"
-        state={showCheeringValue}
-        onChange={(newValue) => {
-          dispatch(setShowCheering(localId, ExhibitUId, newValue));
-        }}
-      />
-      <FilterSwitch
-        viewStyle={{
-          flexDirection: "row",
-          justifyContent: "space-between",
-          alignItems: "center",
-          margin: 10,
-        }}
-        labelStyle={{
-          color: darkModeValue ? "white" : "black",
-        }}
-        label="Hide followers"
-        state={followersValue}
-        onChange={(newValue) => {
-          dispatch(setHideFollowers(localId, ExhibitUId, newValue));
-        }}
-      />
-      <FilterSwitch
-        viewStyle={{
-          flexDirection: "row",
-          justifyContent: "space-between",
-          alignItems: "center",
-          margin: 10,
-        }}
-        labelStyle={{
-          color: darkModeValue ? "white" : "black",
-        }}
-        label="Hide following"
-        state={followingValue}
-        onChange={(newValue) => {
-          dispatch(setHideFollowing(localId, ExhibitUId, newValue));
-        }}
-      />
-      <FilterSwitch
-        viewStyle={{
-          flexDirection: "row",
-          justifyContent: "space-between",
-          alignItems: "center",
-          margin: 10,
-        }}
-        labelStyle={{
-          color: darkModeValue ? "white" : "black",
-        }}
-        label="Hide advocates"
-        state={advocatesValue}
-        onChange={(newValue) => {
-          dispatch(setHideAdvocates(localId, ExhibitUId, newValue));
-        }}
-      />
+      <ScrollView style={{ alignSelf: "center", width: 200, marginTop: 20 }}>
+        <FilterSwitch
+          viewStyle={{
+            flexDirection: "row",
+            justifyContent: "space-between",
+            alignItems: "center",
+            margin: 10,
+          }}
+          labelStyle={{
+            color: darkModeValue ? "white" : "black",
+          }}
+          label="Show Cheering"
+          state={showCheeringValue}
+          onChange={(newValue) => {
+            dispatch(setShowCheering(localId, ExhibitUId, newValue));
+          }}
+        />
+        <FilterSwitch
+          viewStyle={{
+            flexDirection: "row",
+            justifyContent: "space-between",
+            alignItems: "center",
+            margin: 10,
+          }}
+          labelStyle={{
+            color: darkModeValue ? "white" : "black",
+          }}
+          label="Hide followers"
+          state={followersValue}
+          onChange={(newValue) => {
+            dispatch(setHideFollowers(localId, ExhibitUId, newValue));
+          }}
+        />
+        <FilterSwitch
+          viewStyle={{
+            flexDirection: "row",
+            justifyContent: "space-between",
+            alignItems: "center",
+            margin: 10,
+          }}
+          labelStyle={{
+            color: darkModeValue ? "white" : "black",
+          }}
+          label="Hide following"
+          state={followingValue}
+          onChange={(newValue) => {
+            dispatch(setHideFollowing(localId, ExhibitUId, newValue));
+          }}
+        />
+        <FilterSwitch
+          viewStyle={{
+            flexDirection: "row",
+            justifyContent: "space-between",
+            alignItems: "center",
+            margin: 10,
+          }}
+          labelStyle={{
+            color: darkModeValue ? "white" : "black",
+          }}
+          label="Hide advocates"
+          state={advocatesValue}
+          onChange={(newValue) => {
+            dispatch(setHideAdvocates(localId, ExhibitUId, newValue));
+          }}
+        />
+      </ScrollView>
     </View>
   );
 };

@@ -1,34 +1,30 @@
+import * as WebBrowser from "expo-web-browser";
 import React from "react";
 import {
-  View,
-  Text,
-  StyleSheet,
   FlatList,
+  Platform,
+  StyleSheet,
+  Text,
   TouchableNativeFeedback,
   TouchableOpacity,
-  Platform,
+  View,
 } from "react-native";
 import { useSelector } from "react-redux";
-import * as WebBrowser from "expo-web-browser";
-import { Ionicons } from "@expo/vector-icons";
-
-import ExploreUserTitle from "./ExploreUserTitle";
 import LinkButton from "../UI/LinkButton";
+import ExploreUserTitle from "./ExploreUserTitle";
 
 const handleLinkOnPress = (url) => {
   WebBrowser.openBrowserAsync(url);
 };
 
 const ExploreProfileHeader = (props) => {
-  const darkModeValue = useSelector((state) => state.switches.darkMode);
+  const darkModeValue = useSelector((state) => state.user.darkMode);
   const followingValue = props.hideFollowing;
   const followersValue = props.hideFollowers;
   const advocatesValue = props.hideAdvocates;
-  const showResumeValue = props.showResumeValue;
   const links = props.links;
 
   const userDataProfileHeader = {
-    resumeLink: props.resumeLink,
     numberOfFollowers: props.numberOfFollowers,
     numberOfFollowing: props.numberOfFollowing,
     numberOfAdvocates: props.numberOfAdvocates,
@@ -53,7 +49,7 @@ const ExploreProfileHeader = (props) => {
         <ExploreUserTitle {...props} />
         <View
           style={{
-            margin: 10,
+            marginTop: 5,
             flexDirection: "row",
           }}
         >
@@ -168,51 +164,21 @@ const ExploreProfileHeader = (props) => {
             </TouchableCmp>
           ) : null}
         </View>
-        {showResumeValue ? (
-          <TouchableCmp
-            style={{
-              ...styles.resumeLink,
-              ...props.resumeLink,
-              borderColor: darkModeValue ? "gray" : "#c9c9c9",
-            }}
-            onPress={() => handleLinkOnPress(linktoresume)}
-          >
-            <View
-              style={{
-                flexDirection: "row",
-                width: "96%",
-                alignItems: "center",
-                justifyContent: "center",
-                ...props.resumeLink,
-                borderColor: darkModeValue ? "gray" : "#c9c9c9",
-              }}
-            >
-              <Ionicons
-                name="ios-paper"
-                size={24}
-                color={props.iconResumeStyle}
-              />
-              <Text style={{ ...styles.resumeText, ...props.resumeText }}>
-                Resume
-              </Text>
-            </View>
-          </TouchableCmp>
-        ) : null}
         {props.description ? (
           <Text style={props.descriptionStyle}>{props.description}</Text>
         ) : null}
         <FlatList
           data={Object.values(links)}
           keyExtractor={(item) => item.linkId}
+          columnWrapperStyle={
+            Object.keys(links).length > 1 ? { justifyContent: "center" } : null
+          }
           numColumns={
             Object.keys(links).length === 1
               ? 1
               : Object.keys(links).length === 2
               ? 2
               : 3
-          }
-          columnWrapperStyle={
-            Object.keys(links).length > 1 ? { justifyContent: "center" } : null
           }
           renderItem={(itemData) => (
             <LinkButton
@@ -268,17 +234,6 @@ const styles = StyleSheet.create({
     height: 100,
     width: 100,
     borderRadius: 100 / 2,
-  },
-  resumeLink: {
-    flexDirection: "row",
-    borderWidth: 1,
-    width: "96%",
-    alignItems: "center",
-    justifyContent: "center",
-    marginBottom: 10,
-  },
-  resumeText: {
-    margin: 10,
   },
 });
 

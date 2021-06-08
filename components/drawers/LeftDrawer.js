@@ -1,14 +1,14 @@
 import React from "react";
-import { View, Text, StyleSheet, SafeAreaView, Image } from "react-native";
-import { useSelector, useDispatch } from "react-redux";
-
+import { Image, SafeAreaView, StyleSheet, Text, View } from "react-native";
+import { useDispatch, useSelector } from "react-redux";
+import { setDarkMode } from "../../store/actions/user";
 import FilterSwitch from "../UI/FilterSwitch";
 
-import { setDarkMode } from "../../store/actions/switches";
+
 
 const LeftDrawer = (props) => {
   const dispatch = useDispatch();
-  const darkModeValue = useSelector((state) => state.switches.darkMode);
+  const darkModeValue = useSelector((state) => state.user.darkMode);
   const localId = useSelector((state) => state.auth.userId);
   const ExhibitUId = useSelector((state) => state.user.ExhibitUId);
   const fullname = useSelector((state) => state.user.fullname);

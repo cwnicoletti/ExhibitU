@@ -1,22 +1,21 @@
+import { EvilIcons, Feather } from "@expo/vector-icons";
+import algoliasearch from "algoliasearch";
 import React, { useEffect, useState } from "react";
 import {
-  StyleSheet,
-  View,
-  Text,
-  TouchableWithoutFeedback,
-  Keyboard,
-  FlatList,
-  SafeAreaView,
-  RefreshControl,
-} from "react-native";
-import { useSelector } from "react-redux";
-import { SearchBar } from "react-native-elements";
-import algoliasearch from "algoliasearch";
-import { EvilIcons, Feather } from "@expo/vector-icons";
+    FlatList, Keyboard,
 
-import IoniconsHeaderButton from "../../components/UI/IoniconsHeaderButton";
+
+    RefreshControl, SafeAreaView, StyleSheet,
+
+    Text,
+    TouchableWithoutFeedback, View
+} from "react-native";
+import { SearchBar } from "react-native-elements";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
+import { useSelector } from "react-redux";
 import ExploreAdvocatesCard from "../../components/explore/ExploreAdvocatesCard";
+import IoniconsHeaderButton from "../../components/UI/IoniconsHeaderButton";
+
 
 const AdvocatesScreen = (props) => {
   const client = algoliasearch(
@@ -25,7 +24,7 @@ const AdvocatesScreen = (props) => {
   );
   const index = client.initIndex("users");
 
-  const darkModeValue = useSelector((state) => state.switches.darkMode);
+  const darkModeValue = useSelector((state) => state.user.darkMode);
   const [returnedIndex, setReturnedIndex] = useState([]);
   const [projects, setProjects] = useState({});
   const [search, setSearch] = useState("");
@@ -85,12 +84,10 @@ const AdvocatesScreen = (props) => {
     fullname,
     username,
     jobTitle,
-    resumeLinkUrl,
     profileBiography,
     numberOfFollowers,
     numberOfFollowing,
     numberOfAdvocates,
-    showResume,
     hideFollowing,
     hideFollowers,
     hideAdvocates,
@@ -109,12 +106,10 @@ const AdvocatesScreen = (props) => {
       fullname,
       username,
       jobTitle,
-      resumeLinkUrl,
       profileBiography,
       numberOfFollowers,
       numberOfFollowing,
       numberOfAdvocates,
-      showResume,
       hideFollowing,
       hideFollowers,
       hideAdvocates,
@@ -152,13 +147,13 @@ const AdvocatesScreen = (props) => {
               borderBottomColor: "gray",
               borderBottomWidth: 1,
             }}
-            searchIcon={<EvilIcons name="search" size={24} color="white" />}
+            searchIcon={<EvilIcons name="search" size={24} color={darkModeValue ? "white" : "black"} />}
             clearIcon={
               search ? (
                 <Feather
                   name="x"
                   size={24}
-                  color="white"
+                  color={darkModeValue ? "white" : "black"}
                   onPress={() => {
                     searchFilterFunction("");
                   }}
@@ -214,12 +209,10 @@ const AdvocatesScreen = (props) => {
                 itemData.item.fullname,
                 itemData.item.username,
                 itemData.item.jobTitle,
-                itemData.item.resumeLinkUrl,
                 itemData.item.profileBiography,
                 itemData.item.numberOfFollowers,
                 itemData.item.numberOfFollowing,
                 itemData.item.numberOfAdvocates,
-                itemData.item.showResume,
                 itemData.item.hideFollowing,
                 itemData.item.hideFollowers,
                 itemData.item.hideAdvocates,

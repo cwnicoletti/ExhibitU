@@ -1,33 +1,30 @@
-import React, { useEffect, useCallback, useReducer, useState } from "react";
+import { Ionicons } from "@expo/vector-icons";
+import * as ImagePicker from "expo-image-picker";
+import React, { useCallback, useEffect, useReducer, useState } from "react";
 import {
-  Image,
-  StyleSheet,
-  View,
-  Text,
-  KeyboardAvoidingView,
-  SafeAreaView,
-  TouchableOpacity,
-  TouchableNativeFeedback,
   ActivityIndicator,
   FlatList,
+  Image,
+  KeyboardAvoidingView,
+  LogBox,
   Platform,
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  TouchableNativeFeedback,
+  TouchableOpacity,
+  View,
 } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import { useSelector, useDispatch } from "react-redux";
-import * as ImagePicker from "expo-image-picker";
-import LinkButton from "../../components/UI/LinkButton";
+import { HeaderButtons, Item } from "react-navigation-header-buttons";
+import { useDispatch, useSelector } from "react-redux";
 import DefaultPicture from "../../assets/Icons/picture.svg";
-import { Ionicons } from "@expo/vector-icons";
-
 import Input from "../../components/UI/Input";
 import IoniconsHeaderButton from "../../components/UI/IoniconsHeaderButton";
-import { HeaderButtons, Item } from "react-navigation-header-buttons";
-
-import { LogBox } from "react-native";
-
+import LinkButton from "../../components/UI/LinkButton";
 import {
-  uploadNewProject,
   uploadAddTempProjectCoverPicture,
+  uploadNewProject,
 } from "../../store/actions/user";
 
 const FORM_INPUT_UPDATE = "FORM_INPUT_UPDATE";
@@ -139,9 +136,8 @@ const formReducer = (state, action) => {
           ([links, v]) => links !== `link${action.linkNum}`
         )
       );
-      const reorderedRemainingLinkValues = updateDictionaryOnRemove(
-        remainingLinkValues
-      );
+      const reorderedRemainingLinkValues =
+        updateDictionaryOnRemove(remainingLinkValues);
       return {
         inputValues: { ...reorderedRemainingLinkValues },
       };
@@ -155,7 +151,7 @@ const AddProjectScreen = (props) => {
   const [linksState, setLinksState] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadingTempPicture, setIsLoadingTempPicture] = useState(false);
-  const darkModeValue = useSelector((state) => state.switches.darkMode);
+  const darkModeValue = useSelector((state) => state.user.darkMode);
   const localId = useSelector((state) => state.auth.userId);
   const ExhibitUId = useSelector((state) => state.user.ExhibitUId);
   const projectTempCoverPhotoId = useSelector(
@@ -170,12 +166,12 @@ const AddProjectScreen = (props) => {
 
   let initialState = {
     inputValues: {
-      projectTitle: "",
-      projectDescription: "",
+      exhibitTitle: "",
+      exhibitDescription: "",
     },
     inputValidities: {
-      projectTitle: false,
-      projectDescription: false,
+      exhibitTitle: false,
+      exhibitDescription: false,
     },
     formIsValid: false,
   };
@@ -230,8 +226,8 @@ const AddProjectScreen = (props) => {
         localId,
         projectTempCoverPhotoId,
         projectTempCoverPhotoBase64,
-        formState.inputValues.projectTitle,
-        formState.inputValues.projectDescription,
+        formState.inputValues.exhibitTitle,
+        formState.inputValues.exhibitDescription,
         newLinks
       )
     );
@@ -248,9 +244,8 @@ const AddProjectScreen = (props) => {
   useEffect(() => {
     (async () => {
       if (Platform.OS !== "web") {
-        const {
-          status,
-        } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+        const { status } =
+          await ImagePicker.requestMediaLibraryPermissionsAsync();
         if (status !== "granted") {
           alert("Sorry, we need camera roll permissions to make this work!");
         }
@@ -379,7 +374,7 @@ const AddProjectScreen = (props) => {
                   margin: 10,
                 }}
               >
-                {formState.inputValues.projectTitle}
+                {formState.inputValues.exhibitTitle}
               </Text>
             </View>
             <Text
@@ -389,7 +384,7 @@ const AddProjectScreen = (props) => {
                 textAlign: "center",
               }}
             >
-              {formState.inputValues.projectDescription}
+              {formState.inputValues.exhibitDescription}
             </Text>
           </View>
           {Object.keys(parseLinkValuesFromInputValues(formState)).length <=
@@ -510,7 +505,7 @@ const AddProjectScreen = (props) => {
               >
                 <Ionicons name="ios-add" size={14} color="#007AFF" />
                 <Text style={{ margin: 10, color: "#007AFF" }}>
-                  Add Project Cover Photo
+                  Add Exhibit Cover Photo
                 </Text>
               </View>
             </TouchableCmp>
@@ -531,7 +526,7 @@ const AddProjectScreen = (props) => {
                   margin: 10,
                 }}
               >
-                Loading project cover photo...
+                Loading exhibit cover photo, please wait...
               </Text>
               <ActivityIndicator size="small" color="white" />
             </View>
@@ -552,15 +547,15 @@ const AddProjectScreen = (props) => {
           ) : null}
           <Input
             textLabel={{ color: darkModeValue ? "white" : "black" }}
-            id="projectTitle"
-            label="Project Title"
-            errorText="Please enter a valid project title!"
+            id="exhibitTitle"
+            label="Exhibit Title"
+            errorText="Please enter a valid exhibit title!"
             keyboardType="default"
             autoCapitalize="sentences"
             returnKeyType="next"
             onInputChange={inputChangeHandler}
             onSubmitEditing={() => {
-              projectDescription.focus();
+              exhibitDescription.focus();
             }}
             initialValue={""}
             initiallyValid={true}
@@ -568,13 +563,13 @@ const AddProjectScreen = (props) => {
           />
           <Input
             textLabel={{ color: darkModeValue ? "white" : "black" }}
-            id="projectDescription"
-            label="Project Description"
-            errorText="Please enter a valid project description!"
+            id="exhibitDescription"
+            label="Exhibit Description"
+            errorText="Please enter a valid exhibit description!"
             keyboardType="default"
             multiline
             styleInput={{ height: 50 }}
-            inputRef={(ref) => (projectDescription = ref)}
+            inputRef={(ref) => (exhibitDescription = ref)}
             onInputChange={inputChangeHandler}
             initialValue={""}
             initiallyValid={true}
@@ -669,7 +664,7 @@ const AddProjectScreen = (props) => {
               >
                 <Ionicons name="ios-add" size={14} color="green" />
                 <Text style={{ margin: 10, color: "green" }}>
-                  Add a link to project
+                  Add a link to exhibit
                 </Text>
               </TouchableCmp>
             </View>
@@ -728,7 +723,7 @@ const AddProjectScreen = (props) => {
                       : "#007AFF",
                 }}
               >
-                Create project
+                Confirm and create exhibit
               </Text>
               <Ionicons
                 name="ios-checkmark"
@@ -758,7 +753,7 @@ const AddProjectScreen = (props) => {
                 margin: 10,
               }}
             >
-              Creating project...
+              Creating exhibit...
             </Text>
             <ActivityIndicator size="small" color="white" />
           </View>
@@ -783,7 +778,7 @@ AddProjectScreen.navigationOptions = (navData) => {
             color: darkModeValue ? "white" : "black",
           }}
         >
-          Add a new exhibit
+          Create exhibit
         </Text>
       </SafeAreaView>
     ),
