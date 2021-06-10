@@ -293,14 +293,14 @@ const tabScreenConfig = {
       },
     }),
   },
-  Notifications: {
-    screen: NotificationsNavigator,
-    navigationOptions: () => ({
-      tabBarComponent: ({ navigation }) => {
-        return <NotificationsBottomTab navigation={navigation} />;
-      },
-    }),
-  },
+  // Notifications: {
+  //   screen: NotificationsNavigator,
+  //   navigationOptions: () => ({
+  //     tabBarComponent: ({ navigation }) => {
+  //       return <NotificationsBottomTab navigation={navigation} />;
+  //     },
+  //   }),
+  // },
   Profile: {
     screen: ProfileNavigator,
     navigationOptions: () => ({
