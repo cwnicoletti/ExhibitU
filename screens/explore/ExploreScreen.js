@@ -100,7 +100,6 @@ const ExploreScreen = (props) => {
     advocates,
     profileProjects,
     profileLinks,
-    projectLinks,
     profileColumns,
     showCheering
   ) => {
@@ -125,7 +124,6 @@ const ExploreScreen = (props) => {
         advocates,
         profileProjects,
         profileLinks,
-        projectLinks,
         profileColumns,
         showCheering,
       },
@@ -359,7 +357,6 @@ const ExploreScreen = (props) => {
                 itemData.item.advocates,
                 itemData.item.profileProjects,
                 itemData.item.profileLinks,
-                itemData.item.projectLinks,
                 itemData.item.profileColumns,
                 itemData.item.showCheering
               );

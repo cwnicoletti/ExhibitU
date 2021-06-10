@@ -146,7 +146,6 @@ const ExploreProfileScreen = (props) => {
           exploredUserDataNewState.hideFollowers = hit.hideFollowers;
           exploredUserDataNewState.hideAdvocates = hit.hideAdvocates;
           exploredUserDataNewState.profileLinks = hit.profileLinks;
-          exploredUserDataNewState.projectLinks = hit.projectLinks;
           exploredUserDataNewState.profileColumns = hit.profileColumns;
           exploredUserDataNewState.showCheering = hit.showCheering;
           exploredUserDataNewState.numberOfFollowers = hit.numberOfFollowers;
