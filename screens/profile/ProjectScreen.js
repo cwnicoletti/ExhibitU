@@ -143,6 +143,10 @@ const ProjectScreen = (props) => {
         onEditProfilePress={() =>
           props.navigation.navigate("EditProjectScreen", {
             projectId: currentProjectId,
+            projectTitle: profileProjects[currentProjectId].projectTitle,
+            projectDescription: profileProjects[currentProjectId].projectDescription,
+            projectCoverPhotoId: profileProjects[currentProjectId].projectCoverPhotoId,
+            projectCoverPhotoUrl: profileProjects[currentProjectId].projectCoverPhotoUrl,
             links: profileProjects[currentProjectId].projectLinks,
           })
         }

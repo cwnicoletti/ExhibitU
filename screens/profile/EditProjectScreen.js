@@ -156,16 +156,12 @@ const EditProjectScreen = (props) => {
   const [linksState, setLinksState] = useState(Object.values(prevLinks));
   const darkModeValue = useSelector((state) => state.user.darkMode);
   const localId = useSelector((state) => state.auth.userId);
-  const profileProjects = useSelector((state) => state.user.profileProjects);
-  const currentProjectId = props.navigation.getParam("projectId");
-  const exhibitTitle = profileProjects[currentProjectId].projectTitle;
   const projectId = props.navigation.getParam("projectId");
-  const projectDescription =
-    profileProjects[currentProjectId].projectDescription;
-  const projectCoverPhotoId =
-    profileProjects[currentProjectId].projectCoverPhotoId;
+  const exhibitTitle = props.navigation.getParam("projectTitle");
+  const projectDescription = props.navigation.getParam("projectDescription");
+  const projectCoverPhotoId = props.navigation.getParam("projectCoverPhotoId");
   const [projectCoverPhotoUrl, setProjectCoverPhotoUrl] = useState(
-    profileProjects[currentProjectId].projectCoverPhotoUrl
+    props.navigation.getParam("projectCoverPhotoUrl")
   );
   const projectTempCoverPhotoUrl = useSelector(
     (state) => state.user.projectTempCoverPhotoUrl
@@ -243,15 +239,14 @@ const EditProjectScreen = (props) => {
     props.navigation.navigate("ViewProfileProject", {
       projectId: projectId,
     });
-  }, [dispatch, formState, submitHandler, linksState]);
+  }, [formState, submitHandler, linksState]);
 
-  const deleteHandler = useCallback(() => {
+  const deleteHandler = () => {
+    props.navigation.navigate("Profile");
     dispatch(
       uploadRemoveProject(ExhibitUId, localId, projectId, projectCoverPhotoId)
     );
-
-    props.navigation.navigate("Profile");
-  }, [dispatch, deleteHandler]);
+  };
 
   let android = null;
   if (Platform.OS === "android") {
@@ -268,12 +263,6 @@ const EditProjectScreen = (props) => {
   useEffect(() => {
     props.navigation.setParams({ darkMode: darkModeValue });
   }, [darkModeValue]);
-
-  useEffect(() => {
-    props.navigation.setParams({
-      exhibitTitle: formState.inputValues.exhibitTitle,
-    });
-  }, [formState.inputValues.exhibitTitle]);
 
   const changeProjectCoverPicture = async () => {
     const result = await ImagePicker.launchImageLibraryAsync({
@@ -751,7 +740,6 @@ EditProjectScreen.navigationOptions = (navData) => {
   const darkModeValue = navData.navigation.getParam("darkMode");
   const android = navData.navigation.getParam("android");
   const deleteFn = navData.navigation.getParam("deleteFn");
-  const exhibitTitle = navData.navigation.getParam("exhibitTitle");
   return {
     headerTitle: () => (
       <SafeAreaView
