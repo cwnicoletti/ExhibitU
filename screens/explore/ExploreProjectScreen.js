@@ -37,6 +37,9 @@ const ExploreProjectScreen = (props) => {
     projectPosts: props.navigation.getParam("projectPosts")
       ? props.navigation.getParam("projectPosts")
       : {},
+    projectLinks: props.navigation.getParam("projectLinks")
+      ? props.navigation.getParam("projectLinks")
+      : {},
   };
 
   const [projectPostsState, setProjectPostsState] = useState(
