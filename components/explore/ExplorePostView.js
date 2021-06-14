@@ -27,15 +27,10 @@ import {
   uncheerOwnFeedPost,
   uncheerPost,
 } from "../../store/actions/user";
+import toDateTime from "../../helper/toDateTime";
 
 const handleLinkOnPress = async (url) => {
   await WebBrowser.openBrowserAsync(url);
-};
-
-const toDateTime = (seconds) => {
-  let t = new Date(0); // Epoch
-  t.setUTCSeconds(seconds);
-  return t;
 };
 
 const ExplorePostView = (props) => {

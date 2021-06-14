@@ -18,12 +18,7 @@ import resolveAssetSource from "react-native/Libraries/Image/resolveAssetSource"
 import { useSelector } from "react-redux";
 import Cheer from "../../assets/Icons/clap.svg";
 import LinkButton from "../UI/LinkButton";
-
-const toDateTime = (seconds) => {
-  let t = new Date(0); // Epoch
-  t.setUTCSeconds(seconds);
-  return t;
-};
+import toDateTime from "../../helper/toDateTime";
 
 const ProjectItem = (props) => {
   const [height, setHeight] = useState(null);

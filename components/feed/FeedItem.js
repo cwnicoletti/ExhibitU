@@ -28,12 +28,7 @@ import {
   uncheerPost,
 } from "../../store/actions/user";
 import LinkButton from "../UI/LinkButton";
-
-const toDateTime = (seconds) => {
-  let t = new Date(0); // Epoch
-  t.setUTCSeconds(seconds);
-  return t;
-};
+import toDateTime from "../../helper/toDateTime";
 
 const handleLinkOnPress = async (url) => {
   await WebBrowser.openBrowserAsync(url);
