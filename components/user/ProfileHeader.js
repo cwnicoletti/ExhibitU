@@ -33,10 +33,6 @@ const Profile = (props) => {
     TouchableCmp = TouchableNativeFeedback;
   }
 
-  const handleLinkOnPress = (url) => {
-    WebBrowser.openBrowserAsync(url);
-  };
-
   return (
     <View>
       <View
@@ -198,7 +194,7 @@ const Profile = (props) => {
                 borderRadius: 5,
               }}
               onPress={() =>
-                handleLinkOnPress(
+                WebBrowser.openBrowserAsync(
                   itemData.item[`linkUrl${itemData.item.linkId}`]
                 )
               }

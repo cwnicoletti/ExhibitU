@@ -13,10 +13,6 @@ import { useSelector } from "react-redux";
 import LinkButton from "../UI/LinkButton";
 import UserTitleShowcaseLocal from "../user/UserTitleShowcaseLocal";
 
-const handleLinkOnPress = (url) => {
-  WebBrowser.openBrowserAsync(url);
-};
-
 const FeedProfileHeader = (props) => {
   const darkModeValue = useSelector((state) => state.user.darkMode);
   const links = props.links;
@@ -172,7 +168,7 @@ const FeedProfileHeader = (props) => {
                 borderRadius: 5,
               }}
               onPress={() =>
-                handleLinkOnPress(
+                WebBrowser.openBrowserAsync(
                   itemData.item[`linkUrl${itemData.item.linkId}`]
                 )
               }

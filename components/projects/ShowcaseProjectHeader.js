@@ -4,11 +4,6 @@ import { FlatList, Image, StyleSheet, Text, View } from "react-native";
 import { useSelector } from "react-redux";
 import LinkButton from "../UI/LinkButton";
 
-
-const handleLinkOnPress = (url) => {
-  WebBrowser.openBrowserAsync(url);
-};
-
 const ExhibitUProjectHeader = (props) => {
   const darkModeValue = useSelector((state) => state.user.darkMode);
   const links = props.links;
@@ -70,7 +65,7 @@ const ExhibitUProjectHeader = (props) => {
               borderRadius: 5,
             }}
             onPress={() =>
-              handleLinkOnPress(itemData.item[`linkUrl${itemData.item.linkId}`])
+              WebBrowser.openBrowserAsync(itemData.item[`linkUrl${itemData.item.linkId}`])
             }
           />
         )}

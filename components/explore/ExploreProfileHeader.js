@@ -13,10 +13,6 @@ import { useSelector } from "react-redux";
 import LinkButton from "../UI/LinkButton";
 import ExploreUserTitle from "./ExploreUserTitle";
 
-const handleLinkOnPress = (url) => {
-  WebBrowser.openBrowserAsync(url);
-};
-
 const ExploreProfileHeader = (props) => {
   const darkModeValue = useSelector((state) => state.user.darkMode);
   const followingValue = props.hideFollowing;
@@ -199,7 +195,7 @@ const ExploreProfileHeader = (props) => {
                 borderRadius: 5,
               }}
               onPress={() =>
-                handleLinkOnPress(
+                WebBrowser.openBrowserAsync(
                   itemData.item[`linkUrl${itemData.item.linkId}`]
                 )
               }

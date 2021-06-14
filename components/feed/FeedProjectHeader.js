@@ -8,10 +8,6 @@ const FeedProjectHeader = (props) => {
   const darkModeValue = useSelector((state) => state.user.darkMode);
   const links = props.links;
 
-  const handleLinkOnPress = (url) => {
-    WebBrowser.openBrowserAsync(url);
-  };
-
   return (
     <View style={{ ...styles.container, ...props.containerStyle }}>
       <Image
@@ -59,7 +55,7 @@ const FeedProjectHeader = (props) => {
               borderRadius: 5,
             }}
             onPress={() =>
-              handleLinkOnPress(itemData.item[`linkUrl${itemData.item.linkId}`])
+              WebBrowser.openBrowserAsync(itemData.item[`linkUrl${itemData.item.linkId}`])
             }
           />
         )}
