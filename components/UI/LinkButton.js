@@ -26,7 +26,7 @@ const LinkButton = (props) => {
 const styles = StyleSheet.create({
   container: {
     height: 35,
-    width: "46%",
+    width: "100%",
     marginBottom: "2%",
     marginLeft: "2%",
     marginRight: "2%",
@@ -38,6 +38,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     margin: 10,
     marginLeft: 5,
+    paddingRight: 5,
     color: "#24a0ed",
   },
 });

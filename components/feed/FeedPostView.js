@@ -291,7 +291,7 @@ const FeedPostView = (props) => {
             ...styles.pictureCheerContainer,
             ...props.pictureCheerContainer,
             flexDirection: "row",
-            alignSelf: "center",
+            justifyContent: "center",
           }}
         >
           {currentUsersPost ? (
@@ -339,11 +339,40 @@ const FeedPostView = (props) => {
               </View>
             </TouchableCmp>
           ) : null}
-          <View style={{ justifyContent: "center" }}>
+          <FlatList
+            data={Object.values(links)}
+            keyExtractor={(item) => item.linkId}
+            numColumns={1}
+            renderItem={(itemData) => (
+              <LinkButton
+                imageUrl={itemData.item[`linkImageUrl${itemData.item.linkId}`]}
+                title={itemData.item[`linkTitle${itemData.item.linkId}`]}
+                textStyle={{ color: darkModeValue ? "white" : "black" }}
+                linkContainer={{
+                  width: "100%",
+                }}
+                onPress={() =>
+                  WebBrowser.openBrowserAsync(
+                    itemData.item[`linkUrl${itemData.item.linkId}`]
+                  )
+                }
+              />
+            )}
+          />
+        </View>
+      ) : (
+        <View
+          style={{
+            ...styles.pictureCheerContainer,
+            ...props.pictureCheerContainer,
+          }}
+        >
+          <View style={{ alignItems: "center" }}>
             <FlatList
               data={Object.values(links)}
               keyExtractor={(item) => item.linkId}
-              numColumns={1}
+              numColumns={Object.keys(links).length === 2 ? 2 : 3}
+              columnWrapperStyle={{ justifyContent: "center" }}
               renderItem={(itemData) => (
                 <LinkButton
                   imageUrl={
@@ -352,7 +381,7 @@ const FeedPostView = (props) => {
                   title={itemData.item[`linkTitle${itemData.item.linkId}`]}
                   textStyle={{ color: darkModeValue ? "white" : "black" }}
                   linkContainer={{
-                    width: "96%",
+                    width: Object.keys(links).length === 2 ? "46%" : "28%",
                   }}
                   onPress={() =>
                     WebBrowser.openBrowserAsync(
@@ -363,46 +392,6 @@ const FeedPostView = (props) => {
               )}
             />
           </View>
-        </View>
-      ) : (
-        <View
-          style={{
-            ...styles.pictureCheerContainer,
-            ...props.pictureCheerContainer,
-          }}
-        >
-          <FlatList
-            data={Object.values(links)}
-            keyExtractor={(item) => item.linkId}
-            numColumns={
-              Object.keys(links).length <= 1
-                ? 1
-                : Object.keys(links).length === 2
-                ? 2
-                : 3
-            }
-            columnWrapperStyle={{ justifyContent: "center" }}
-            renderItem={(itemData) => (
-              <LinkButton
-                imageUrl={itemData.item[`linkImageUrl${itemData.item.linkId}`]}
-                title={itemData.item[`linkTitle${itemData.item.linkId}`]}
-                textStyle={{ color: darkModeValue ? "white" : "black" }}
-                linkContainer={{
-                  width:
-                    Object.keys(links).length <= 1
-                      ? "96%"
-                      : Object.keys(links).length === 2
-                      ? "46%"
-                      : "28%",
-                }}
-                onPress={() =>
-                  handleLinkOnPress(
-                    itemData.item[`linkUrl${itemData.item.linkId}`]
-                  )
-                }
-              />
-            )}
-          />
           {showCheering && props.numberOfCheers >= 1 ? (
             <TouchableCmp onPress={props.onSelectCheering}>
               <View style={{ flexDirection: "row", padding: 10 }}>
@@ -509,7 +498,9 @@ const styles = StyleSheet.create({
     alignItems: "flex-end",
   },
   pictureCheerContainer: {
-    padding: 10,
+    width: "100%",
+    paddingVertical: 5,
+    paddingHorizontal: 15,
   },
   pictureCheerNumber: {
     fontWeight: "bold",

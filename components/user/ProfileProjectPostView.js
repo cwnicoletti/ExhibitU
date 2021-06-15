@@ -25,6 +25,7 @@ import {
 } from "../../store/actions/user";
 import LinkButton from "../UI/LinkButton";
 import toDateTime from "../../helper/toDateTime";
+import * as WebBrowser from "expo-web-browser";
 
 const ProfileProjectPostView = (props) => {
   const dispatch = useDispatch();
@@ -296,7 +297,7 @@ const ProfileProjectPostView = (props) => {
             ...styles.pictureCheerContainer,
             ...props.pictureCheerContainer,
             flexDirection: "row",
-            alignItems: "center",
+            justifyContent: "center",
           }}
         >
           {showCheering ? (
@@ -323,46 +324,26 @@ const ProfileProjectPostView = (props) => {
               </TouchableCmp>
             ) : null
           ) : null}
-          <View style={{ justifyContent: "center" }}>
-            <FlatList
-              data={Object.values(links)}
-              keyExtractor={(item) => item.linkId}
-              numColumns={
-                Object.keys(links).length <= 1
-                  ? 1
-                  : Object.keys(links).length === 2
-                  ? 2
-                  : 3
-              }
-              renderItem={(itemData) => (
-                <LinkButton
-                  imageUrl={
-                    itemData.item[`linkImageUrl${itemData.item.linkId}`]
-                  }
-                  title={itemData.item[`linkTitle${itemData.item.linkId}`]}
-                  textStyle={{ color: darkModeValue ? "white" : "black" }}
-                  linkContainer={{
-                    borderColor: "gray",
-                    width:
-                      Object.keys(links).length <= 1
-                        ? "96%"
-                        : Object.keys(links).length === 2
-                        ? "46%"
-                        : "28%",
-                  }}
-                  imageStyle={{
-                    backgroundColor: "white",
-                    borderRadius: 5,
-                  }}
-                  onPress={() =>
-                    handleLinkOnPress(
-                      itemData.item[`linkUrl${itemData.item.linkId}`]
-                    )
-                  }
-                />
-              )}
-            />
-          </View>
+          <FlatList
+            data={Object.values(links)}
+            keyExtractor={(item) => item.linkId}
+            numColumns={1}
+            renderItem={(itemData) => (
+              <LinkButton
+                imageUrl={itemData.item[`linkImageUrl${itemData.item.linkId}`]}
+                title={itemData.item[`linkTitle${itemData.item.linkId}`]}
+                textStyle={{ color: darkModeValue ? "white" : "black" }}
+                linkContainer={{
+                  width: "100%",
+                }}
+                onPress={() =>
+                  WebBrowser.openBrowserAsync(
+                    itemData.item[`linkUrl${itemData.item.linkId}`]
+                  )
+                }
+              />
+            )}
+          />
         </View>
       ) : (
         <View
@@ -371,46 +352,34 @@ const ProfileProjectPostView = (props) => {
             ...props.pictureCheerContainer,
           }}
         >
-          <FlatList
-            data={Object.values(links)}
-            keyExtractor={(item) => item.linkId}
-            numColumns={
-              Object.keys(links).length <= 1
-                ? 1
-                : Object.keys(links).length === 2
-                ? 2
-                : 3
-            }
-            columnWrapperStyle={{ justifyContent: "center" }}
-            renderItem={(itemData) => (
-              <LinkButton
-                imageUrl={itemData.item[`linkImageUrl${itemData.item.linkId}`]}
-                title={itemData.item[`linkTitle${itemData.item.linkId}`]}
-                textStyle={{ color: darkModeValue ? "white" : "black" }}
-                linkContainer={{
-                  borderColor: "gray",
-                  width:
-                    Object.keys(links).length <= 1
-                      ? "96%"
-                      : Object.keys(links).length === 2
-                      ? "46%"
-                      : "28%",
-                }}
-                imageStyle={{
-                  backgroundColor: "white",
-                  borderRadius: 5,
-                }}
-                onPress={() =>
-                  handleLinkOnPress(
-                    itemData.item[`linkUrl${itemData.item.linkId}`]
-                  )
-                }
-              />
-            )}
-          />
+          <View style={{ alignItems: "center" }}>
+            <FlatList
+              data={Object.values(links)}
+              keyExtractor={(item) => item.linkId}
+              numColumns={Object.keys(links).length === 2 ? 2 : 3}
+              columnWrapperStyle={{ justifyContent: "center" }}
+              renderItem={(itemData) => (
+                <LinkButton
+                  imageUrl={
+                    itemData.item[`linkImageUrl${itemData.item.linkId}`]
+                  }
+                  title={itemData.item[`linkTitle${itemData.item.linkId}`]}
+                  textStyle={{ color: darkModeValue ? "white" : "black" }}
+                  linkContainer={{
+                    width: Object.keys(links).length === 2 ? "46%" : "28%",
+                  }}
+                  onPress={() =>
+                    WebBrowser.openBrowserAsync(
+                      itemData.item[`linkUrl${itemData.item.linkId}`]
+                    )
+                  }
+                />
+              )}
+            />
+          </View>
           {showCheering && props.numberOfCheers >= 1 ? (
             <TouchableCmp onPress={props.onSelectCheering}>
-              <View style={{ flexDirection: "row" }}>
+              <View style={{ flexDirection: "row", padding: 10 }}>
                 <Text
                   style={{
                     ...styles.pictureCheerNumber,
@@ -464,40 +433,15 @@ const ProfileProjectPostView = (props) => {
 };
 
 const styles = StyleSheet.create({
-  project: {
-    borderTopWidth: 1,
-    borderBottomWidth: 1,
-  },
-  profileImage: {
-    borderWidth: 1,
-    borderColor: "white",
-    marginLeft: 10,
-    height: 50,
-    width: 50,
-    borderRadius: 50 / 2,
-  },
-  nameUsernameContainer: {
-    flex: 1,
-    marginLeft: 10,
-    justifyContent: "center",
-  },
-  nameStyle: {
-    fontWeight: "bold",
-  },
-  usernameStyle: {
-    marginTop: 2,
-  },
-  title: {
-    fontSize: 14,
-    fontWeight: "bold",
-  },
+  project: {},
   date: {
     margin: 10,
     fontSize: 13,
   },
   caption: {
     textAlign: "center",
-    margin: 10,
+    marginVertical: 10,
+    marginHorizontal: "10%",
     fontSize: 13,
   },
   titleContainer: {
@@ -507,19 +451,21 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
   },
   pictureCheerContainer: {
-    padding: 10,
+    width: "100%",
+    paddingVertical: 5,
+    paddingHorizontal: 15,
   },
   pictureCheerNumber: {
     fontWeight: "bold",
     fontSize: 15,
-    marginLeft: 5,
     marginTop: 5,
+    marginLeft: 3,
   },
   pictureCommentNumber: {
     fontWeight: "bold",
     fontSize: 15,
     marginTop: 5,
-    marginBottom: 5,
+    marginBottom: 3,
   },
   pictureCheerText: {
     fontSize: 15,
@@ -533,9 +479,9 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   commentContainer: {
-    paddingTop: 15,
-    paddingRight: 15,
-    paddingLeft: 15,
+    paddingTop: 5,
+    paddingRight: 5,
+    paddingLeft: 5,
   },
   dateContainer: {
     alignItems: "flex-end",
