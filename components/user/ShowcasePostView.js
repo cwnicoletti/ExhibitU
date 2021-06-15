@@ -1,7 +1,6 @@
 import * as WebBrowser from "expo-web-browser";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
-  Animated,
   Dimensions,
   FlatList,
   Image,
@@ -78,7 +77,7 @@ const ExhibitUPostView = (props) => {
             ...styles.pictureCheerContainer,
             ...props.pictureCheerContainer,
             flexDirection: "row",
-            alignItems: "center",
+            justifyContent: "center",
           }}
         >
           {showCheering ? (
@@ -105,42 +104,26 @@ const ExhibitUPostView = (props) => {
               </TouchableCmp>
             ) : null
           ) : null}
-          <View style={{ justifyContent: "center" }}>
-            <FlatList
-              data={Object.values(links)}
-              keyExtractor={(item) => item.linkId}
-              numColumns={
-                Object.keys(links).length <= 1
-                  ? 1
-                  : Object.keys(links).length === 2
-                  ? 2
-                  : 3
-              }
-              renderItem={(itemData) => (
-                <LinkButton
-                  imageUrl={
-                    itemData.item[`linkImageUrl${itemData.item.linkId}`]
-                  }
-                  title={itemData.item[`linkTitle${itemData.item.linkId}`]}
-                  textStyle={{ color: darkModeValue ? "white" : "black" }}
-                  linkContainer={{
-                    borderColor: "gray",
-                    width:
-                      Object.keys(links).length <= 1
-                        ? "96%"
-                        : Object.keys(links).length === 2
-                        ? "46%"
-                        : "28%",
-                  }}
-                  onPress={() =>
-                    WebBrowser.openBrowserAsync(
-                      itemData.item[`linkUrl${itemData.item.linkId}`]
-                    )
-                  }
-                />
-              )}
-            />
-          </View>
+          <FlatList
+            data={Object.values(links)}
+            keyExtractor={(item) => item.linkId}
+            numColumns={1}
+            renderItem={(itemData) => (
+              <LinkButton
+                imageUrl={itemData.item[`linkImageUrl${itemData.item.linkId}`]}
+                title={itemData.item[`linkTitle${itemData.item.linkId}`]}
+                textStyle={{ color: darkModeValue ? "white" : "black" }}
+                linkContainer={{
+                  width: "100%",
+                }}
+                onPress={() =>
+                  WebBrowser.openBrowserAsync(
+                    itemData.item[`linkUrl${itemData.item.linkId}`]
+                  )
+                }
+              />
+            )}
+          />
         </View>
       ) : (
         <View
@@ -152,13 +135,7 @@ const ExhibitUPostView = (props) => {
           <FlatList
             data={Object.values(links)}
             keyExtractor={(item) => item.linkId}
-            numColumns={
-              Object.keys(links).length <= 1
-                ? 1
-                : Object.keys(links).length === 2
-                ? 2
-                : 3
-            }
+            numColumns={Object.keys(links).length === 2 ? 2 : 3}
             columnWrapperStyle={{ justifyContent: "center" }}
             renderItem={(itemData) => (
               <LinkButton
@@ -166,16 +143,10 @@ const ExhibitUPostView = (props) => {
                 title={itemData.item[`linkTitle${itemData.item.linkId}`]}
                 textStyle={{ color: darkModeValue ? "white" : "black" }}
                 linkContainer={{
-                  borderColor: "gray",
-                  width:
-                    Object.keys(links).length <= 1
-                      ? "96%"
-                      : Object.keys(links).length === 2
-                      ? "46%"
-                      : "28%",
+                  width: Object.keys(links).length === 2 ? "46%" : "28%",
                 }}
                 onPress={() =>
-                  handleLinkOnPress(
+                  WebBrowser.openBrowserAsync(
                     itemData.item[`linkUrl${itemData.item.linkId}`]
                   )
                 }
