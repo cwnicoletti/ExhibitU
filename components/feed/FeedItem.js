@@ -30,10 +30,6 @@ import {
 import LinkButton from "../UI/LinkButton";
 import toDateTime from "../../helper/toDateTime";
 
-const handleLinkOnPress = async (url) => {
-  await WebBrowser.openBrowserAsync(url);
-};
-
 const FeedItem = (props) => {
   const dispatch = useDispatch();
   const [height, setHeight] = useState(null);
@@ -360,7 +356,7 @@ const FeedItem = (props) => {
             ...styles.pictureCheerContainer,
             ...props.pictureCheerContainer,
             flexDirection: "row",
-            alignItems: "center",
+            alignSelf: "center",
           }}
         >
           {currentUsersPost ? (
@@ -408,17 +404,11 @@ const FeedItem = (props) => {
               </View>
             </TouchableCmp>
           ) : null}
-          <View style={{ alignItems: "center" }}>
+          <View>
             <FlatList
               data={Object.values(links)}
               keyExtractor={(item) => item.linkId}
-              numColumns={
-                Object.keys(links).length <= 1
-                  ? 1
-                  : Object.keys(links).length === 2
-                  ? 2
-                  : 3
-              }
+              numColumns={1}
               renderItem={(itemData) => (
                 <LinkButton
                   imageUrl={
@@ -427,15 +417,10 @@ const FeedItem = (props) => {
                   title={itemData.item[`linkTitle${itemData.item.linkId}`]}
                   textStyle={{ color: darkModeValue ? "white" : "black" }}
                   linkContainer={{
-                    width:
-                      Object.keys(links).length <= 1
-                        ? "96%"
-                        : Object.keys(links).length === 2
-                        ? "46%"
-                        : "28%",
+                    width: "100%",
                   }}
                   onPress={() =>
-                    handleLinkOnPress(
+                    WebBrowser.openBrowserAsync(
                       itemData.item[`linkUrl${itemData.item.linkId}`]
                     )
                   }
@@ -455,13 +440,7 @@ const FeedItem = (props) => {
             <FlatList
               data={Object.values(links)}
               keyExtractor={(item) => item.linkId}
-              numColumns={
-                Object.keys(links).length <= 1
-                  ? 1
-                  : Object.keys(links).length === 2
-                  ? 2
-                  : 3
-              }
+              numColumns={Object.keys(links).length === 2 ? 2 : 3}
               columnWrapperStyle={{ justifyContent: "center" }}
               renderItem={(itemData) => (
                 <LinkButton
@@ -471,15 +450,10 @@ const FeedItem = (props) => {
                   title={itemData.item[`linkTitle${itemData.item.linkId}`]}
                   textStyle={{ color: darkModeValue ? "white" : "black" }}
                   linkContainer={{
-                    width:
-                      Object.keys(links).length <= 1
-                        ? "96%"
-                        : Object.keys(links).length === 2
-                        ? "46%"
-                        : "28%",
+                    width: Object.keys(links).length === 2 ? "46%" : "28%",
                   }}
                   onPress={() =>
-                    handleLinkOnPress(
+                    WebBrowser.openBrowserAsync(
                       itemData.item[`linkUrl${itemData.item.linkId}`]
                     )
                   }
@@ -580,6 +554,7 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
   },
   pictureCheerContainer: {
+    width: "100%",
     paddingVertical: 5,
     paddingHorizontal: 15,
   },

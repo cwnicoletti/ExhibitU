@@ -20,10 +20,6 @@ import { useSelector } from "react-redux";
 import LinkButton from "../UI/LinkButton";
 import toDateTime from "../../helper/toDateTime";
 
-const handleLinkOnPress = async (url) => {
-  await WebBrowser.openBrowserAsync(url);
-};
-
 const ExhibitUPostView = (props) => {
   const [photoHeight, setHeight] = useState(null);
   const [photoWidth, setWidth] = useState(null);
@@ -137,7 +133,7 @@ const ExhibitUPostView = (props) => {
                         : "28%",
                   }}
                   onPress={() =>
-                    handleLinkOnPress(
+                    WebBrowser.openBrowserAsync(
                       itemData.item[`linkUrl${itemData.item.linkId}`]
                     )
                   }

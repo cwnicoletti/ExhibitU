@@ -15,10 +15,6 @@ import { useSelector } from "react-redux";
 import EditButton from "../UI/EditButton";
 import LinkButton from "../UI/LinkButton";
 
-const handleLinkOnPress = async (url) => {
-  await WebBrowser.openBrowserAsync(url);
-};
-
 const ProjectHeader = (props) => {
   const darkModeValue = useSelector((state) => state.user.darkMode);
   const links = props.links;
@@ -94,7 +90,7 @@ const ProjectHeader = (props) => {
                 borderRadius: 5,
               }}
               onPress={() =>
-                handleLinkOnPress(
+                WebBrowser.openBrowserAsync(
                   itemData.item[`linkUrl${itemData.item.linkId}`]
                 )
               }

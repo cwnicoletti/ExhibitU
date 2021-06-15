@@ -29,10 +29,6 @@ import {
 } from "../../store/actions/user";
 import toDateTime from "../../helper/toDateTime";
 
-const handleLinkOnPress = async (url) => {
-  await WebBrowser.openBrowserAsync(url);
-};
-
 const ExplorePostView = (props) => {
   const dispatch = useDispatch();
   const [photoHeight, setHeight] = useState(null);
@@ -326,7 +322,7 @@ const ExplorePostView = (props) => {
                   borderRadius: 5,
                 }}
                 onPress={() =>
-                  handleLinkOnPress(
+                  WebBrowser.openBrowserAsync(
                     itemData.item[`linkUrl${itemData.item.linkId}`]
                   )
                 }

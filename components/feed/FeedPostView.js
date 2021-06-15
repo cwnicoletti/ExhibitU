@@ -29,10 +29,6 @@ import {
 import LinkButton from "../UI/LinkButton";
 import toDateTime from "../../helper/toDateTime";
 
-const handleLinkOnPress = async (url) => {
-  await WebBrowser.openBrowserAsync(url);
-};
-
 const FeedPostView = (props) => {
   const dispatch = useDispatch();
   const [photoHeight, setHeight] = useState(null);
@@ -295,7 +291,7 @@ const FeedPostView = (props) => {
             ...styles.pictureCheerContainer,
             ...props.pictureCheerContainer,
             flexDirection: "row",
-            alignItems: "center",
+            alignSelf: "center",
           }}
         >
           {currentUsersPost ? (
@@ -347,13 +343,7 @@ const FeedPostView = (props) => {
             <FlatList
               data={Object.values(links)}
               keyExtractor={(item) => item.linkId}
-              numColumns={
-                Object.keys(links).length <= 1
-                  ? 1
-                  : Object.keys(links).length === 2
-                  ? 2
-                  : 3
-              }
+              numColumns={1}
               renderItem={(itemData) => (
                 <LinkButton
                   imageUrl={
@@ -362,15 +352,10 @@ const FeedPostView = (props) => {
                   title={itemData.item[`linkTitle${itemData.item.linkId}`]}
                   textStyle={{ color: darkModeValue ? "white" : "black" }}
                   linkContainer={{
-                    width:
-                      Object.keys(links).length <= 1
-                        ? "96%"
-                        : Object.keys(links).length === 2
-                        ? "46%"
-                        : "28%",
+                    width: "96%",
                   }}
                   onPress={() =>
-                    handleLinkOnPress(
+                    WebBrowser.openBrowserAsync(
                       itemData.item[`linkUrl${itemData.item.linkId}`]
                     )
                   }
