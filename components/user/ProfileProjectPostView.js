@@ -377,7 +377,7 @@ const ProfileProjectPostView = (props) => {
               )}
             />
           </View>
-          {showCheering && props.numberOfCheers >= 1 ? (
+          {showCheering && numberOfCheers >= 1 ? (
             <TouchableCmp onPress={props.onSelectCheering}>
               <View style={{ flexDirection: "row", padding: 10 }}>
                 <Text

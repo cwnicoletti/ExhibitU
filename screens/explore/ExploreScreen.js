@@ -216,31 +216,38 @@ const ExploreScreen = (props) => {
       index.search(search).then((responses) => {
         for (const object of responses.hits) {
           if (object) {
-            for (const projectId of Object.keys(object.profileProjects)) {
-              for (const postId of Object.keys(
-                object.profileProjects[projectId].projectPosts
-              )) {
-                if (postId === difference[0]) {
-                  if (intialCheeredPosts.length < cheeredPosts.length) {
-                    object.profileProjects[projectId].projectPosts[
-                      postId
-                    ].numberOfCheers += 1;
-                    object.profileProjects[projectId].projectPosts[
-                      postId
-                    ].cheering = [
-                      ...object.profileProjects[projectId].projectPosts[postId]
-                        .cheering,
-                      ExhibitUId,
-                    ];
-                  } else {
-                    object.profileProjects[projectId].projectPosts[
-                      postId
-                    ].numberOfCheers -= 1;
-                    object.profileProjects[projectId].projectPosts[
-                      postId
-                    ].cheering = object.profileProjects[projectId].projectPosts[
-                      postId
-                    ].cheering.filter((userId) => userId !== ExhibitUId);
+            if (object.profileProjects) {
+              for (const projectId of Object.keys(object.profileProjects)) {
+                if (object.profileProjects[projectId].projectPosts) {
+                  for (const postId of Object.keys(
+                    object.profileProjects[projectId].projectPosts
+                  )) {
+                    if (postId === difference[0]) {
+                      if (intialCheeredPosts.length < cheeredPosts.length) {
+                        object.profileProjects[projectId].projectPosts[
+                          postId
+                        ].numberOfCheers += 1;
+                        object.profileProjects[projectId].projectPosts[
+                          postId
+                        ].cheering = [
+                          ...object.profileProjects[projectId].projectPosts[
+                            postId
+                          ].cheering,
+                          ExhibitUId,
+                        ];
+                      } else {
+                        object.profileProjects[projectId].projectPosts[
+                          postId
+                        ].numberOfCheers -= 1;
+                        object.profileProjects[projectId].projectPosts[
+                          postId
+                        ].cheering = object.profileProjects[
+                          projectId
+                        ].projectPosts[postId].cheering.filter(
+                          (userId) => userId !== ExhibitUId
+                        );
+                      }
+                    }
                   }
                 }
               }
