@@ -40,12 +40,6 @@ const correctUrls = (links) => {
         links[link][`linkUrl${linkNumber}`]
       }`;
     }
-    // Append .com to link url
-    if (!links[link][`linkUrl${linkNumber}`].includes(".com")) {
-      links[link][`linkUrl${linkNumber}`] = `${
-        links[link][`linkUrl${linkNumber}`]
-      }.com`;
-    }
     linkNumber += 1;
   }
   return links;
