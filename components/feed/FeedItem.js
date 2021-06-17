@@ -84,8 +84,8 @@ const FeedItem = (props) => {
 
   const slideUp = () => {
     Animated.timing(slideAnim, {
-      toValue: -height / 2,
-      duration: 750,
+      toValue: -height,
+      duration: 1200,
       useNativeDriver: true,
     }).start();
   };
@@ -93,7 +93,7 @@ const FeedItem = (props) => {
   const fadeOut = () => {
     Animated.timing(fadeAnim, {
       toValue: 0,
-      duration: 750,
+      duration: 1200,
       useNativeDriver: true,
     }).start();
   };
@@ -101,7 +101,7 @@ const FeedItem = (props) => {
   const fadeIn = () => {
     Animated.timing(fadeAnim, {
       toValue: 1,
-      duration: 750,
+      duration: 1200,
       useNativeDriver: true,
     }).start();
   };
@@ -109,7 +109,7 @@ const FeedItem = (props) => {
   let clapCount = 0;
   const update = () => {
     setClap((prevState) => !prevState);
-    const maxClap = 20;
+    const maxClap = 30;
 
     if (clapCount < maxClap) {
       setTimeout(() => {
@@ -188,6 +188,118 @@ const FeedItem = (props) => {
                 : require("../../assets/default-post-icon.png")
             }
           >
+            <View
+              style={{
+                flex: 1,
+                justifyContent: "flex-start",
+                alignItems: "flex-start",
+              }}
+            >
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <LinearGradient
+                  style={{
+                    ...styles.profilePictureContainer,
+                    ...props.profilePictureContainer,
+                  }}
+                  colors={props.profilePictureColors}
+                >
+                  <View
+                    style={{
+                      flex: 1,
+                      marginVertical: 10,
+                      alignItems: "flex-start",
+                    }}
+                  >
+                    <TouchableCmp onPress={props.onSelectProfile}>
+                      <View
+                        style={{
+                          marginLeft: 15,
+                          alignItems: "center",
+                        }}
+                      >
+                        <View
+                          style={{
+                            height: 50,
+                            width: 50,
+                            borderRadius: 50 / 2,
+                          }}
+                        >
+                          <Image
+                            style={{
+                              ...styles.profileImage,
+                              ...props.profileImageStyle,
+                            }}
+                            source={
+                              props.profileImageSource
+                                ? { uri: props.profileImageSource }
+                                : require("../../assets/default-profile-icon.jpg")
+                            }
+                          />
+                        </View>
+                        <Text
+                          style={{
+                            color: "white",
+                            marginTop: 3,
+                            textAlign: "center",
+                          }}
+                        >
+                          {fullname.split(" ")[0].length > 10
+                            ? fullname.substring(0, 10) + "..."
+                            : fullname.split(" ")[0]}
+                        </Text>
+                      </View>
+                    </TouchableCmp>
+                  </View>
+                  {loadingCheer ? (
+                    <ActivityIndicator
+                      size="small"
+                      color="white"
+                      style={{ marginRight: 10 }}
+                    />
+                  ) : (
+                    <View>
+                      {!cheeredPosts.includes(postId) ? (
+                        <TouchableCmp onPress={unCheer}>
+                          <View>
+                            <Cheer
+                              style={{
+                                ...styles.clapContainer,
+                                ...props.clapContainer,
+                                flex: 1,
+                              }}
+                              height={28}
+                              width={28}
+                              fill="white"
+                            />
+                          </View>
+                        </TouchableCmp>
+                      ) : (
+                        <TouchableCmp onPress={unCheer}>
+                          <View>
+                            <Cheerfill
+                              style={{
+                                ...styles.clapContainer,
+                                ...props.clapContainer,
+                                flex: 1,
+                              }}
+                              height={28}
+                              width={28}
+                              fill="white"
+                            />
+                          </View>
+                        </TouchableCmp>
+                      )}
+                    </View>
+                  )}
+                </LinearGradient>
+              </View>
+            </View>
             {showClapping ? (
               <Animated.View
                 style={{
@@ -222,109 +334,6 @@ const FeedItem = (props) => {
                 )}
               </Animated.View>
             ) : null}
-            <View
-              style={{
-                flex: 1,
-                justifyContent: "flex-end",
-                alignItems: "flex-end",
-              }}
-            >
-              <View
-                style={{
-                  flexDirection: "row",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                <View
-                  style={{
-                    flex: 1,
-                    alignItems: "flex-start",
-                  }}
-                >
-                  <TouchableCmp onPress={props.onSelectProfile}>
-                    <View
-                      style={{
-                        marginLeft: 15,
-                        alignItems: "center",
-                      }}
-                    >
-                      <View
-                        style={{
-                          height: 50,
-                          width: 50,
-                          borderRadius: 50 / 2,
-                        }}
-                      >
-                        <Image
-                          style={{
-                            ...styles.profileImage,
-                            ...props.profileImageStyle,
-                          }}
-                          source={
-                            props.profileImageSource
-                              ? { uri: props.profileImageSource }
-                              : require("../../assets/default-profile-icon.jpg")
-                          }
-                        />
-                      </View>
-                      <Text
-                        style={{
-                          color: "white",
-                          marginTop: 3,
-                          textAlign: "center",
-                        }}
-                      >
-                        {fullname.split(" ")[0].length > 10
-                          ? fullname.substring(0, 10) + "..."
-                          : fullname.split(" ")[0]}
-                      </Text>
-                    </View>
-                  </TouchableCmp>
-                </View>
-                {loadingCheer ? (
-                  <ActivityIndicator
-                    size="small"
-                    color="white"
-                    style={{ marginRight: 10 }}
-                  />
-                ) : (
-                  <View>
-                    {!cheeredPosts.includes(postId) ? (
-                      <TouchableCmp onPress={unCheer}>
-                        <View>
-                          <Cheer
-                            style={{
-                              ...styles.clapContainer,
-                              ...props.clapContainer,
-                              flex: 1,
-                            }}
-                            height={28}
-                            width={28}
-                            fill="white"
-                          />
-                        </View>
-                      </TouchableCmp>
-                    ) : (
-                      <TouchableCmp onPress={unCheer}>
-                        <View>
-                          <Cheerfill
-                            style={{
-                              ...styles.clapContainer,
-                              ...props.clapContainer,
-                              flex: 1,
-                            }}
-                            height={28}
-                            width={28}
-                            fill="white"
-                          />
-                        </View>
-                      </TouchableCmp>
-                    )}
-                  </View>
-                )}
-              </View>
-            </View>
             <TouchableCmp onPress={props.onSelect}>
               <LinearGradient
                 style={{
@@ -355,14 +364,37 @@ const FeedItem = (props) => {
           style={{
             ...styles.pictureCheerContainer,
             ...props.pictureCheerContainer,
-            flexDirection: "row",
-            justifyContent: "center",
           }}
         >
+          <FlatList
+            data={Object.values(links)}
+            keyExtractor={(item) => item.linkId}
+            numColumns={1}
+            renderItem={(itemData) => (
+              <LinkButton
+                imageUrl={itemData.item[`linkImageUrl${itemData.item.linkId}`]}
+                title={itemData.item[`linkTitle${itemData.item.linkId}`]}
+                textStyle={{ color: darkModeValue ? "white" : "black" }}
+                linkContainer={{
+                  width: "100%",
+                }}
+                onPress={() =>
+                  WebBrowser.openBrowserAsync(
+                    itemData.item[`linkUrl${itemData.item.linkId}`]
+                  )
+                }
+              />
+            )}
+          />
           {currentUsersPost ? (
             showCheering && props.numberOfCheers >= 1 ? (
               <TouchableCmp onPress={props.onSelectCheering}>
-                <View style={{ flexDirection: "row" }}>
+                <View
+                  style={{
+                    flexDirection: "row",
+                    justifyContent: "flex-start",
+                  }}
+                >
                   <Text
                     style={{
                       ...styles.pictureCheerNumber,
@@ -404,26 +436,6 @@ const FeedItem = (props) => {
               </View>
             </TouchableCmp>
           ) : null}
-          <FlatList
-            data={Object.values(links)}
-            keyExtractor={(item) => item.linkId}
-            numColumns={1}
-            renderItem={(itemData) => (
-              <LinkButton
-                imageUrl={itemData.item[`linkImageUrl${itemData.item.linkId}`]}
-                title={itemData.item[`linkTitle${itemData.item.linkId}`]}
-                textStyle={{ color: darkModeValue ? "white" : "black" }}
-                linkContainer={{
-                  width: "100%",
-                }}
-                onPress={() =>
-                  WebBrowser.openBrowserAsync(
-                    itemData.item[`linkUrl${itemData.item.linkId}`]
-                  )
-                }
-              />
-            )}
-          />
         </View>
       ) : (
         <View
@@ -519,7 +531,6 @@ const styles = StyleSheet.create({
     borderRadius: 50 / 2,
   },
   nameUsernameContainer: {
-    flex: 1,
     marginLeft: 10,
     justifyContent: "center",
   },
@@ -543,11 +554,15 @@ const styles = StyleSheet.create({
     margin: 10,
     fontSize: 13,
   },
+  profilePictureContainer: {
+    alignItems: "center",
+    flexDirection: "row",
+    paddingRight: 10,
+  },
   titleContainer: {
     alignItems: "center",
     flexDirection: "row",
     padding: 10,
-    borderTopWidth: 1,
   },
   pictureCheerContainer: {
     width: "100%",
