@@ -1,17 +1,17 @@
 import React, { useCallback, useEffect } from "react";
 import {
-    LogBox, Platform, ScrollView, StyleSheet,
-
-    Text, View
+  LogBox,
+  Platform,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
 } from "react-native";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import { useDispatch, useSelector } from "react-redux";
 import IoniconsHeaderButton from "../../components/UI/IoniconsHeaderButton";
 import ProfileProjectPostView from "../../components/user/ProfileProjectPostView";
 import { uploadRemovePost } from "../../store/actions/user";
-
-
-
 
 const PictureScreen = (props) => {
   const dispatch = useDispatch();
@@ -102,13 +102,8 @@ const PictureScreen = (props) => {
       }}
     >
       <ProfileProjectPostView
-        containerStyle={{
-          ...styles.profileContainerStyle,
-          borderBottomColor: darkModeValue ? "white" : "black",
-        }}
         image={postPhotoBase64}
         descriptionStyle={{
-          ...styles.profileDescriptionStyle,
           color: darkModeValue ? "white" : "black",
         }}
         caption={caption}
@@ -251,9 +246,6 @@ PictureScreen.navigationOptions = (navData) => {
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-  },
-  profileDescriptionStyle: {
-    margin: 15,
   },
   text: {
     padding: 10,

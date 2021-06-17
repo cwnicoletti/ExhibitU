@@ -205,7 +205,6 @@ const UserFeedScreen = (props) => {
   //     }
   //   });
 
-
   // }, []);
 
   useEffect(() => {
@@ -324,8 +323,8 @@ const UserFeedScreen = (props) => {
             titleStyle={{
               color: "white",
             }}
-            nameTitleColors={["rgba(0,0,0,1)", "rgba(0,0,0,0.00)"]}
-            projectTitleColors={["rgba(0,0,0,0.00)", "rgba(0,0,0,1)"]}
+            profilePictureColors={["rgba(0,0,0,0.2)", "rgba(0,0,0,0)"]}
+            projectTitleColors={["rgba(0,0,0,0)", "rgba(0,0,0,0.3)"]}
             pictureCheerContainer={{
               backgroundColor: darkModeValue ? "#121212" : "white",
             }}

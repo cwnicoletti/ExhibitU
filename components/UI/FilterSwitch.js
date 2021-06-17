@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, Switch, Text, View } from "react-native";
+import { Switch, Text, View } from "react-native";
 
 const FilterSwitch = (props) => {
   return (
@@ -9,7 +9,5 @@ const FilterSwitch = (props) => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({});
 
 export default FilterSwitch;
