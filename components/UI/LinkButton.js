@@ -28,7 +28,6 @@ const styles = StyleSheet.create({
     height: 35,
     width: "100%",
     marginBottom: "2%",
-    marginLeft: "2%",
     marginRight: "2%",
     flexDirection: "row",
     justifyContent: "center",
