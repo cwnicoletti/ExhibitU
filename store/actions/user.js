@@ -1131,14 +1131,14 @@ export const cheerPost = (
       await AsyncStorage.setItem("userDocData", JSON.stringify(data));
     });
 
-    dispatch({
+    await dispatch({
       type: CHEER_POST,
       ExhibitUId,
       projectId,
       postId,
     });
 
-    dispatch({ type: CHEER_UPDATE_POSTS, projectId, postId });
+    await dispatch({ type: CHEER_UPDATE_POSTS, projectId, postId });
   };
 };
 
@@ -1278,14 +1278,14 @@ export const cheerOwnProfilePost = (
       await AsyncStorage.setItem("userDocData", JSON.stringify(data));
     });
 
-    dispatch({
+    await dispatch({
       type: CHEER_OWN_PROFILE_POST,
       ExhibitUId,
       projectId,
       postId,
     });
 
-    dispatch({ type: CHEER_UPDATE_POSTS, projectId, postId });
+    await dispatch({ type: CHEER_UPDATE_POSTS, projectId, postId });
   };
 };
 
@@ -1372,14 +1372,14 @@ export const uncheerPost = (
       await AsyncStorage.setItem("userDocData", JSON.stringify(data));
     });
 
-    dispatch({
+    await dispatch({
       type: UNCHEER_POST,
       ExhibitUId,
       projectId,
       postId,
     });
 
-    dispatch({ type: UNCHEER_UPDATE_POSTS, projectId, postId });
+    await dispatch({ type: UNCHEER_UPDATE_POSTS, projectId, postId });
   };
 };
 
@@ -1518,14 +1518,14 @@ export const uncheerOwnProfilePost = (
       await AsyncStorage.setItem("userDocData", JSON.stringify(data));
     });
 
-    dispatch({
+    await dispatch({
       type: UNCHEER_OWN_PROFILE_POST,
       ExhibitUId,
       projectId,
       postId,
     });
 
-    dispatch({ type: UNCHEER_UPDATE_POSTS, projectId, postId });
+    await dispatch({ type: UNCHEER_UPDATE_POSTS, projectId, postId });
   };
 };
 
