@@ -12,6 +12,7 @@ const FeedProjectScreen = (props) => {
   const ExhibitUId = useSelector((state) => state.user.ExhibitUId);
   const projectId = props.navigation.getParam("projectId");
   let userData = props.navigation.getParam("userData");
+  userData.projectLinks = userData.projectLinks ? userData.projectLinks : {};
   userData =
     userData.ExhibitUId === ExhibitUId
       ? {
@@ -82,11 +83,11 @@ const FeedProjectScreen = (props) => {
     hideFollowing,
     hideFollowers,
     hideAdvocates,
-    profileLinks,
     profileColumns,
     postLinks,
     postDateCreated
   ) => {
+    console.log(profileLinks);
     props.navigation.navigate("ViewComments", {
       projectId,
       userData: {
@@ -106,7 +107,6 @@ const FeedProjectScreen = (props) => {
         hideFollowing,
         hideFollowers,
         hideAdvocates,
-        profileLinks,
         profileColumns,
         postLinks,
         profileProjects: userData.profileProjects,
@@ -119,8 +119,6 @@ const FeedProjectScreen = (props) => {
   };
 
   useEffect(() => {
-    props.navigation.setParams({ ExhibitUId: ExhibitUId });
-    props.navigation.setParams({ feedExhibitUId: userData.ExhibitUId });
     props.navigation.setParams({ android });
   }, []);
 
@@ -158,7 +156,7 @@ const FeedProjectScreen = (props) => {
         }}
         title={project.projectTitle}
         description={project.projectDescription}
-        links={project.projectLinks}
+        links={userData.projectLinks}
       />
     );
   };
@@ -221,9 +219,8 @@ const FeedProjectScreen = (props) => {
                 itemData.item.hideFollowing,
                 itemData.item.hideFollowers,
                 itemData.item.hideAdvocates,
-                itemData.item.profileLinks,
                 itemData.item.profileColumns,
-                itemData.item.postLinks,
+                userData.postLinks,
                 itemData.item.postDateCreated._seconds
               )
             }
@@ -236,9 +233,6 @@ const FeedProjectScreen = (props) => {
 
 FeedProjectScreen.navigationOptions = (navData) => {
   const darkModeValue = navData.navigation.getParam("darkMode");
-  const ExhibitUId = navData.navigation.getParam("ExhibitUId");
-  const feedExhibitUId = navData.navigation.getParam("feedExhibitUId");
-  const android = navData.navigation.getParam("android");
 
   return {
     headerTitle: () => (

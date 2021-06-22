@@ -64,7 +64,6 @@ const FeedCommentsScreen = (props) => {
         hideFollowing: userData.hideFollowing,
         hideFollowers: userData.hideFollowers,
         hideAdvocates: userData.hideAdvocates,
-        profileLinks: userData.profileLinks,
         postLinks: userData.postLinks,
         profileColumns: userData.profileColumns,
       },
