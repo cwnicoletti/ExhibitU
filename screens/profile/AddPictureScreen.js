@@ -506,6 +506,7 @@ const EditProfileScreen = (props) => {
             autoCapitalize="sentences"
             returnKeyType="next"
             multiline
+            styleInput={{ height: 60 }}
             onInputChange={inputChangeHandler}
             initialValue={""}
             initiallyValid={true}
