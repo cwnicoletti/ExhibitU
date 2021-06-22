@@ -296,34 +296,8 @@ const ProfileProjectPostView = (props) => {
           style={{
             ...styles.pictureCheerContainer,
             ...props.pictureCheerContainer,
-            flexDirection: "row",
-            justifyContent: "center",
           }}
         >
-          {showCheering ? (
-            numberOfCheers >= 1 ? (
-              <TouchableCmp onPress={props.onSelectCheering}>
-                <View style={{ flexDirection: "row" }}>
-                  <Text
-                    style={{
-                      ...styles.pictureCheerNumber,
-                      ...props.pictureCheerNumber,
-                    }}
-                  >
-                    {numberOfCheers}
-                  </Text>
-                  <Text
-                    style={{
-                      ...styles.pictureCheerText,
-                      ...props.pictureCheerText,
-                    }}
-                  >
-                    cheering
-                  </Text>
-                </View>
-              </TouchableCmp>
-            ) : null
-          ) : null}
           <FlatList
             data={Object.values(links)}
             keyExtractor={(item) => item.linkId}
@@ -344,6 +318,32 @@ const ProfileProjectPostView = (props) => {
               />
             )}
           />
+          {showCheering ? (
+            numberOfCheers >= 1 ? (
+              <TouchableCmp onPress={props.onSelectCheering}>
+                <View
+                  style={{ flexDirection: "row", justifyContent: "flex-start" }}
+                >
+                  <Text
+                    style={{
+                      ...styles.pictureCheerNumber,
+                      ...props.pictureCheerNumber,
+                    }}
+                  >
+                    {numberOfCheers}
+                  </Text>
+                  <Text
+                    style={{
+                      ...styles.pictureCheerText,
+                      ...props.pictureCheerText,
+                    }}
+                  >
+                    cheering
+                  </Text>
+                </View>
+              </TouchableCmp>
+            ) : null
+          ) : null}
         </View>
       ) : (
         <View
@@ -444,12 +444,6 @@ const styles = StyleSheet.create({
     marginHorizontal: "10%",
     fontSize: 13,
   },
-  titleContainer: {
-    alignItems: "center",
-    flexDirection: "row",
-    padding: 10,
-    borderTopWidth: 1,
-  },
   pictureCheerContainer: {
     width: "100%",
     paddingVertical: 5,
@@ -485,16 +479,6 @@ const styles = StyleSheet.create({
   },
   dateContainer: {
     alignItems: "flex-end",
-  },
-  titleTextContainer: {
-    flex: 1,
-    marginLeft: 5,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  balance: {
-    width: 24,
-    height: "100%",
   },
 });
 

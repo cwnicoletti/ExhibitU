@@ -76,10 +76,28 @@ const ExhibitUPostView = (props) => {
           style={{
             ...styles.pictureCheerContainer,
             ...props.pictureCheerContainer,
-            flexDirection: "row",
-            justifyContent: "center",
           }}
         >
+          <FlatList
+            data={Object.values(links)}
+            keyExtractor={(item) => item.linkId}
+            numColumns={1}
+            renderItem={(itemData) => (
+              <LinkButton
+                imageUrl={itemData.item[`linkImageUrl${itemData.item.linkId}`]}
+                title={itemData.item[`linkTitle${itemData.item.linkId}`]}
+                textStyle={{ color: darkModeValue ? "white" : "black" }}
+                linkContainer={{
+                  width: "100%",
+                }}
+                onPress={() =>
+                  WebBrowser.openBrowserAsync(
+                    itemData.item[`linkUrl${itemData.item.linkId}`]
+                  )
+                }
+              />
+            )}
+          />
           {showCheering ? (
             props.numberOfCheers >= 1 ? (
               <TouchableCmp onPress={props.onSelectCheering}>
@@ -104,26 +122,6 @@ const ExhibitUPostView = (props) => {
               </TouchableCmp>
             ) : null
           ) : null}
-          <FlatList
-            data={Object.values(links)}
-            keyExtractor={(item) => item.linkId}
-            numColumns={1}
-            renderItem={(itemData) => (
-              <LinkButton
-                imageUrl={itemData.item[`linkImageUrl${itemData.item.linkId}`]}
-                title={itemData.item[`linkTitle${itemData.item.linkId}`]}
-                textStyle={{ color: darkModeValue ? "white" : "black" }}
-                linkContainer={{
-                  width: "100%",
-                }}
-                onPress={() =>
-                  WebBrowser.openBrowserAsync(
-                    itemData.item[`linkUrl${itemData.item.linkId}`]
-                  )
-                }
-              />
-            )}
-          />
         </View>
       ) : (
         <View
