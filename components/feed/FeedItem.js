@@ -506,9 +506,6 @@ const FeedItem = (props) => {
         >
           {`${postDateCreated.toLocaleString("UTC", {
             weekday: "long",
-            year: "numeric",
-            month: "long",
-            day: "numeric",
           })}`}
           {", "}
           {`${postDateCreated.toLocaleString("UTC", {
