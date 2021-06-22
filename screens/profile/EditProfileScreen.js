@@ -247,6 +247,7 @@ const EditProfileScreen = (props) => {
       profileBiography: formState.inputValues.bio,
     };
     await setIsLoading(false);
+    props.navigation.navigate("Profile");
   }, [dispatch, formState]);
 
   const changeProfilePicture = async () => {
@@ -381,9 +382,9 @@ const EditProfileScreen = (props) => {
                 paddingTop: 5,
               }}
             >
-              {userData.fullname}
+              {formState.inputValues.fullname}
             </Text>
-            {userData.jobTitle ? (
+            {formState.inputValues.jobTitle ? (
               <Text
                 style={{
                   color: darkModeValue ? "white" : "black",
@@ -392,7 +393,7 @@ const EditProfileScreen = (props) => {
                   paddingTop: 5,
                 }}
               >
-                {userData.jobTitle}
+                {formState.inputValues.jobTitle}
               </Text>
             ) : null}
             <Text
@@ -402,7 +403,7 @@ const EditProfileScreen = (props) => {
                 margin: 5,
               }}
             >
-              @{userData.username}
+              @{formState.inputValues.username}
             </Text>
           </View>
         </SafeAreaView>
@@ -671,14 +672,12 @@ const EditProfileScreen = (props) => {
       <Input
         textLabel={{ color: darkModeValue ? "white" : "black" }}
         id="jobTitle"
-        label="Job Title"
-        errorText="Please enter a valid job title!"
+        label="Profile Title"
         keyboardType="default"
         returnKeyType="next"
         onInputChange={inputChangeHandler}
         initialValue={userData.jobTitle ? userData.jobTitle : ""}
         initiallyValid={userData.jobTitle}
-        required
       />
       <Input
         textLabel={{ color: darkModeValue ? "white" : "black" }}
