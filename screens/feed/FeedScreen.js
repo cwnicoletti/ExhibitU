@@ -60,9 +60,7 @@ const UserFeedScreen = (props) => {
     hideFollowing,
     hideFollowers,
     hideAdvocates,
-    profileLinks,
     projectLinks,
-    postLinks,
     profileColumns,
     postDateCreated
   ) => {
@@ -84,9 +82,7 @@ const UserFeedScreen = (props) => {
         hideFollowing,
         hideFollowers,
         hideAdvocates,
-        profileLinks,
         projectLinks,
-        postLinks,
         profileColumns,
         postDateCreated,
       },
@@ -125,7 +121,6 @@ const UserFeedScreen = (props) => {
     hideAdvocates,
     profileLinks,
     projectLinks,
-    postLinks,
     profileColumns,
     postDateCreated
   ) => {
@@ -148,7 +143,6 @@ const UserFeedScreen = (props) => {
         hideAdvocates,
         profileLinks,
         projectLinks,
-        postLinks,
         profileColumns,
         postDateCreated,
       },
@@ -324,7 +318,7 @@ const UserFeedScreen = (props) => {
               color: "white",
             }}
             profilePictureColors={["rgba(0,0,0,0.2)", "rgba(0,0,0,0)"]}
-            projectTitleColors={["rgba(0,0,0,0)", "rgba(0,0,0,0.3)"]}
+            projectTitleColors={["rgba(0,0,0,0)", "rgba(0,0,0,0.7)"]}
             pictureCheerContainer={{
               backgroundColor: darkModeValue ? "#121212" : "white",
             }}
@@ -364,9 +358,7 @@ const UserFeedScreen = (props) => {
                 itemData.item.hideFollowing,
                 itemData.item.hideFollowers,
                 itemData.item.hideAdvocates,
-                itemData.item.profileLinks,
                 itemData.item.projectLinks,
-                itemData.item.postLinks,
                 itemData.item.profileColumns,
                 itemData.item.postDateCreated._seconds
               );
@@ -397,7 +389,6 @@ const UserFeedScreen = (props) => {
                 itemData.item.hideAdvocates,
                 itemData.item.profileLinks,
                 itemData.item.projectLinks,
-                itemData.item.postLinks,
                 itemData.item.profileColumns,
                 itemData.item.postDateCreated._seconds
               );

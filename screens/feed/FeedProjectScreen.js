@@ -13,6 +13,7 @@ const FeedProjectScreen = (props) => {
   const projectId = props.navigation.getParam("projectId");
   let userData = props.navigation.getParam("userData");
   userData.projectLinks = userData.projectLinks ? userData.projectLinks : {};
+
   userData =
     userData.ExhibitUId === ExhibitUId
       ? {
@@ -28,7 +29,6 @@ const FeedProjectScreen = (props) => {
           username: useSelector((state) => state.user.username),
           jobTitle: useSelector((state) => state.user.jobTitle),
           profileBiography: useSelector((state) => state.user.profileBiography),
-          profileLinks: useSelector((state) => state.user.profileLinks),
           profileProjects: useSelector((state) => state.user.profileProjects)
             ? useSelector((state) => state.user.profileProjects)
             : props.navigation.getParam("profileProjects"),
@@ -87,7 +87,6 @@ const FeedProjectScreen = (props) => {
     postLinks,
     postDateCreated
   ) => {
-    console.log(profileLinks);
     props.navigation.navigate("ViewComments", {
       projectId,
       userData: {
