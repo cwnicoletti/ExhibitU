@@ -288,9 +288,9 @@ export default (state = intialState, action) => {
     case ADD_USER_POST:
       return {
         ...state,
-        tempPhotoPostId: intialState.tempPhotoPostId,
-        tempPhotoPostUrl: intialState.tempPhotoPostUrl,
-        tempPhotoPostBase64: intialState.tempPhotoPostBase64,
+        tempPhotoPostId: intialState.postPhotoPostId,
+        tempPhotoPostUrl: intialState.postPhotoUrl,
+        tempPhotoPostBase64: intialState.postPhotoBase64,
         profileProjects: {
           ...state.profileProjects,
           [action.projectId]: {
@@ -313,6 +313,7 @@ export default (state = intialState, action) => {
                 profilePictureBase64: action.profilePictureBase64,
                 postDateCreated: action.postDateCreated,
                 postLastUpdated: action.postLastUpdated,
+                postPhotoPostId: action.postPhotoPostId,
                 postPhotoUrl: action.postPhotoUrl,
                 postPhotoBase64: action.postPhotoBase64,
                 caption: action.caption,
@@ -367,6 +368,7 @@ export default (state = intialState, action) => {
                     profilePictureBase64: action.profilePictureBase64,
                     postDateCreated: action.postDateCreated,
                     postLastUpdated: action.postLastUpdated,
+                    postPhotoPostId: action.postPhotoPostId,
                     postPhotoUrl: action.postPhotoUrl,
                     postPhotoBase64: action.postPhotoBase64,
                     caption: action.caption,
@@ -386,6 +388,7 @@ export default (state = intialState, action) => {
             profilePictureBase64: action.profilePictureBase64,
             postDateCreated: action.postDateCreated,
             postLastUpdated: action.postLastUpdated,
+            postPhotoPostId: action.postPhotoPostId,
             postPhotoUrl: action.postPhotoUrl,
             postPhotoBase64: action.postPhotoBase64,
             caption: action.caption,

@@ -839,6 +839,7 @@ export const addUserPost = (
       data = JSON.parse(data);
       data.tempPhotoPostId = "";
       data.tempPhotoPostUrl = "";
+      data.tempPhotoPostBase64 = "";
       data.profileProjects = {
         ...data.profileProjects,
         [projectId]: {
@@ -861,6 +862,7 @@ export const addUserPost = (
               profilePictureBase64,
               postDateCreated: time,
               postLastUpdated: time,
+              postPhotoPostId: tempPhotoPostId,
               postPhotoUrl: tempPhotoPostUrl,
               postPhotoBase64: tempPhotoPostBase64,
               caption,
@@ -917,6 +919,7 @@ export const addUserPost = (
                   profilePictureBase64,
                   postDateCreated: time,
                   postLastUpdated: time,
+                  postPhotoPostId: tempPhotoPostId,
                   postPhotoUrl: tempPhotoPostUrl,
                   postPhotoBase64: tempPhotoPostBase64,
                   caption: caption,
@@ -983,6 +986,7 @@ export const addUserPost = (
       postId: retrievedPostId,
       postDateCreated: time,
       postLastUpdated: time,
+      postPhotoPostId: tempPhotoPostId,
       postPhotoUrl: tempPhotoPostUrl,
       postPhotoBase64: tempPhotoPostBase64,
       caption,
