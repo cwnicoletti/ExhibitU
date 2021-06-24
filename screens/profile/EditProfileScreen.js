@@ -656,6 +656,9 @@ const EditProfileScreen = (props) => {
         initialValue={userData.fullname ? userData.fullname : ""}
         initiallyValid={userData.fullname}
         required
+        styleInput={{
+          marginBottom: 10,
+        }}
       />
       <Input
         textLabel={{ color: darkModeValue ? "white" : "black" }}
@@ -668,6 +671,9 @@ const EditProfileScreen = (props) => {
         initialValue={userData.username ? userData.username : ""}
         initiallyValid={userData.username}
         required
+        styleInput={{
+          marginBottom: 10,
+        }}
       />
       <Input
         textLabel={{ color: darkModeValue ? "white" : "black" }}
@@ -678,6 +684,9 @@ const EditProfileScreen = (props) => {
         onInputChange={inputChangeHandler}
         initialValue={userData.jobTitle ? userData.jobTitle : ""}
         initiallyValid={userData.jobTitle}
+        styleInput={{
+          marginBottom: 10,
+        }}
       />
       <Input
         textLabel={{ color: darkModeValue ? "white" : "black" }}
@@ -692,6 +701,10 @@ const EditProfileScreen = (props) => {
           userData.profileBiography ? userData.profileBiography : ""
         }
         initiallyValid={userData.profileBiography}
+        styleInput={{
+          height: 60,
+          marginBottom: 10,
+        }}
       />
       {linksState.map((link, i) => (
         <View key={link.linkId}>

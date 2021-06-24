@@ -554,6 +554,9 @@ const AddProjectScreen = (props) => {
             initialValue={""}
             initiallyValid={true}
             required
+            styleInput={{
+              marginBottom: 10,
+            }}
           />
           <Input
             textLabel={{ color: darkModeValue ? "white" : "black" }}
@@ -562,11 +565,14 @@ const AddProjectScreen = (props) => {
             errorText="Please enter a valid exhibit description!"
             keyboardType="default"
             multiline
-            styleInput={{ height: 50 }}
             inputRef={(ref) => (exhibitDescription = ref)}
             onInputChange={inputChangeHandler}
             initialValue={""}
             initiallyValid={true}
+            styleInput={{
+              height: 60,
+              marginBottom: 10,
+            }}
           />
           {linksState.map((link, i) => (
             <View key={link.linkId}>
@@ -601,6 +607,9 @@ const AddProjectScreen = (props) => {
                 initialValue={link[`linkTitle${link.linkId}`]}
                 initiallyValid={true}
                 required
+                styleInput={{
+                  marginBottom: 10,
+                }}
               />
               <Input
                 textLabel={{ color: darkModeValue ? "white" : "black" }}
@@ -614,6 +623,9 @@ const AddProjectScreen = (props) => {
                 initialValue={link[`linkUrl${link.linkId}`]}
                 initiallyValid={true}
                 required
+                styleInput={{
+                  marginBottom: 10,
+                }}
               />
               <View
                 style={{

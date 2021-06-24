@@ -2,18 +2,15 @@ import { Ionicons } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
 import React, { useCallback, useEffect, useReducer, useState } from "react";
 import {
-    ActivityIndicator, KeyboardAvoidingView,
-
-
-
-
-    Platform, SafeAreaView, StyleSheet,
-
-    Text,
-
-
-
-    TouchableNativeFeedback, TouchableOpacity, View
+  ActivityIndicator,
+  KeyboardAvoidingView,
+  Platform,
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  TouchableNativeFeedback,
+  TouchableOpacity,
+  View,
 } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
@@ -22,12 +19,9 @@ import Input from "../../components/UI/Input";
 import IoniconsHeaderButton from "../../components/UI/IoniconsHeaderButton";
 import PreviewPostItem from "../../components/user/PreviewPostItem";
 import {
-    addUserPost,
-    uploadAddTempPostPicture
+  addUserPost,
+  uploadAddTempPostPicture,
 } from "../../store/actions/user";
-
-
-
 
 const FORM_INPUT_UPDATE = "FORM_INPUT_UPDATE";
 const FORM_INPUT_LINKS_UPDATE = "FORM_INPUT_LINKS_UPDATE";
@@ -506,11 +500,14 @@ const EditProfileScreen = (props) => {
             autoCapitalize="sentences"
             returnKeyType="next"
             multiline
-            styleInput={{ height: 60 }}
             onInputChange={inputChangeHandler}
             initialValue={""}
             initiallyValid={true}
             required
+            styleInput={{
+              height: 60,
+              marginBottom: 10,
+            }}
           />
           {linksState.map((link, i) => (
             <View key={link.linkId}>
@@ -545,6 +542,9 @@ const EditProfileScreen = (props) => {
                 initialValue={link[`linkTitle${link.linkId}`]}
                 initiallyValid={true}
                 required
+                styleInput={{
+                  marginBottom: 10,
+                }}
               />
               <Input
                 textLabel={{ color: darkModeValue ? "white" : "black" }}
@@ -558,6 +558,9 @@ const EditProfileScreen = (props) => {
                 initialValue={link[`linkUrl${link.linkId}`]}
                 initiallyValid={true}
                 required
+                styleInput={{
+                  marginBottom: 10,
+                }}
               />
               <View
                 style={{

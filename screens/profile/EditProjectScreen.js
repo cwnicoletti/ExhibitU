@@ -553,6 +553,9 @@ const EditProjectScreen = (props) => {
             initialValue={exhibitTitle ? exhibitTitle : ""}
             initiallyValid={true}
             required
+            styleInput={{
+              marginBottom: 10,
+            }}
           />
           <Input
             textLabel={{ color: darkModeValue ? "white" : "black" }}
@@ -561,12 +564,15 @@ const EditProjectScreen = (props) => {
             errorText="Please enter a valid exhibit description!"
             keyboardType="default"
             multiline
-            styleInput={{ height: 50 }}
             onInputChange={inputChangeHandler}
             initialValue={projectDescription ? projectDescription : ""}
             initiallyValid={true}
             required
             minLength={5}
+            styleInput={{
+              height: 60,
+              marginBottom: 10,
+            }}
           />
           {linksState.map((link, i) => (
             <View key={link.linkId}>
