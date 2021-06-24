@@ -1,17 +1,15 @@
 import React, { useCallback, useReducer, useState } from "react";
 import {
-    ActivityIndicator,
-    Image,
-
-
-
-    Platform, StyleSheet,
-
-
-    Text,
-
-    TouchableNativeFeedback, TouchableOpacity, View
+  ActivityIndicator,
+  Image,
+  Platform,
+  StyleSheet,
+  Text,
+  TouchableNativeFeedback,
+  TouchableOpacity,
+  View,
 } from "react-native";
+import { SimpleLineIcons } from "@expo/vector-icons";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import { useDispatch } from "react-redux";
@@ -19,7 +17,6 @@ import Card from "../../components/UI/Card";
 import Input from "../../components/UI/Input";
 import IoniconsHeaderButton from "../../components/UI/IoniconsHeaderButton";
 import { login } from "../../store/actions/auth";
-
 
 const FORM_INPUT_UPDATE = "FORM_INPUT_UPDATE";
 
@@ -105,7 +102,7 @@ const LoginScreen = (props) => {
           <Card style={styles.authContainer}>
             <Input
               id="email"
-              label="Email"
+              placeholder="Email"
               keyboardType="email-address"
               required
               email
@@ -119,11 +116,14 @@ const LoginScreen = (props) => {
               onSubmitEditing={() => {
                 password.focus();
               }}
-              textLabel={{ color: "white" }}
+              styleInput={{
+                color: 'white',
+                backgroundColor: "#222222",
+              }}
             />
             <Input
               id="password"
-              label="Password"
+              placeholder="Password"
               keyboardType="default"
               secureTextEntry
               required
@@ -140,7 +140,11 @@ const LoginScreen = (props) => {
               errorText="Please enter a valid password"
               onInputChange={inputChangeHandler}
               initialValue=""
-              textLabel={{ color: "white" }}
+              styleInput={{
+                color: 'white',
+                backgroundColor: "#222222",
+                marginBottom: 10,
+              }}
             />
             {isLoading ? (
               <View
@@ -175,11 +179,14 @@ const LoginScreen = (props) => {
                     borderWidth: 1,
                     margin: 10,
                     alignItems: "center",
+                    justifyContent: "center",
+                    flexDirection: "row",
                   }}
                 >
                   <Text
                     style={{
                       margin: 10,
+                      marginRight: 5,
                       color:
                         formState.formIsValid === false ? "gray" : "#007AFF",
                       fontSize: 16,
@@ -187,6 +194,11 @@ const LoginScreen = (props) => {
                   >
                     Login
                   </Text>
+                  <SimpleLineIcons
+                    name="login"
+                    size={16}
+                    color={formState.formIsValid === false ? "gray" : "#007AFF"}
+                  />
                 </View>
               </TouchableCmp>
             )}
@@ -246,11 +258,6 @@ const styles = StyleSheet.create({
     height: 150,
     margin: 20,
   },
-  logoImage: {
-    height: 30,
-    width: 30,
-    marginRight: 5,
-  },
   logo: {
     flex: 1,
     flexDirection: "row",
@@ -274,20 +281,6 @@ const styles = StyleSheet.create({
     width: "90%",
     maxWidth: 400,
     maxHeight: 400,
-  },
-  loadingAuth: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  activityContainer: {
-    marginTop: 10,
-    flexDirection: "row",
-  },
-  buttonContainer: {
-    marginTop: 10,
-    backgroundColor: "#00B7DB",
-    borderRadius: 10,
   },
 });
 
