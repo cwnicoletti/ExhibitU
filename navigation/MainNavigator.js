@@ -336,8 +336,8 @@ const IntroStack = createStackNavigator(
 
 const MainNavigator = createSwitchNavigator({
   Startup: StartupScreen,
-  StartAuth: StartSignup,
   Intro: IntroStack,
+  StartAuth: StartSignup,
   Project: FullAppNavigator,
 });
 
