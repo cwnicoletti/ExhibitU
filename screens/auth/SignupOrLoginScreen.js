@@ -1,4 +1,4 @@
-import { Fontisto } from "@expo/vector-icons";
+import { Fontisto, MaterialIcons } from "@expo/vector-icons";
 import { useFonts } from "expo-font";
 import React from "react";
 import {
@@ -104,6 +104,12 @@ const SignupOrLoginScreen = (props) => {
             width: "80%",
           }}
         >
+          <MaterialIcons
+            name="person-outline"
+            size={24}
+            color="#38c9ff"
+            style={{ marginVertical: 10 }}
+          />
           <Text style={{ margin: 10, color: "#00a0db" }}>Login</Text>
         </View>
       </TouchableCmp>
