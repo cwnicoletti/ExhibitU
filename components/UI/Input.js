@@ -91,12 +91,12 @@ const Input = (props) => {
         {...props}
         style={{
           ...styles.input,
-          ...props.styleInput,
           color: darkModeValue ? "white" : "black",
           backgroundColor: darkModeValue ? "#222222" : "#eeeeee",
+          ...props.styleInput,
         }}
         value={inputState.value}
-        placeholder="type here..."
+        placeholder={props.placeholder ? props.placeholder : "type here..."}
         placeholderTextColor={"grey"}
         onChangeText={textChangeHandler}
         onBlur={lostFocusHandler}
@@ -114,7 +114,6 @@ const Input = (props) => {
 const styles = StyleSheet.create({
   formControl: {
     width: "100%",
-    paddingBottom: 2,
   },
   label: {
     marginVertical: 2,
@@ -125,7 +124,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     borderRadius: 10,
     paddingVertical: 10,
-    margin: 10,
+    marginHorizontal: 10,
   },
   errorContainer: {
     marginVertical: 5,
