@@ -15,6 +15,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Card from "../../components/UI/Card";
 import Input from "../../components/UI/Input";
 import IoniconsHeaderButton from "../../components/UI/IoniconsHeaderButton";
+import { Ionicons } from "@expo/vector-icons";
 import { signup } from "../../store/actions/auth";
 
 const FORM_INPUT_UPDATE = "FORM_INPUT_UPDATE";
@@ -157,7 +158,7 @@ const SignupScreen2 = (props) => {
               styleInput={{
                 color: "white",
                 backgroundColor: "#222222",
-                marginVertical: 20,
+                marginBottom: 10,
               }}
             />
             <Text style={styles.text}>
@@ -196,11 +197,14 @@ const SignupScreen2 = (props) => {
                     borderWidth: 1,
                     margin: 10,
                     alignItems: "center",
+                    justifyContent: "center",
+                    flexDirection: "row",
                   }}
                 >
                   <Text
                     style={{
                       margin: 10,
+                      marginRight: 5,
                       color:
                         formState.formIsValid === false ? "gray" : "#007AFF",
                       fontSize: 16,
@@ -208,6 +212,11 @@ const SignupScreen2 = (props) => {
                   >
                     Confirm Signup
                   </Text>
+                  <Ionicons
+                    name="ios-checkmark"
+                    size={16}
+                    color={formState.formIsValid === false ? "gray" : "#007AFF"}
+                  />
                 </View>
               </TouchableCmp>
             )}
@@ -267,11 +276,6 @@ const styles = StyleSheet.create({
     width: 100,
     height: 100,
   },
-  logoImage: {
-    height: 30,
-    width: 30,
-    marginRight: 5,
-  },
   logo: {
     flex: 1,
     flexDirection: "row",
@@ -299,48 +303,13 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   authContainer: {
-    shadowColor: null,
-    shadowOpacity: null,
-    shadowOffset: {
-      width: null,
-      height: null,
-    },
-    shadowRadius: null,
-    elevation: null,
-    borderRadius: null,
     backgroundColor: "black",
     width: "90%",
     maxWidth: 400,
     maxHeight: 400,
   },
-  loadingAuth: {
-    flexDirection: "row",
-  },
-  buttonContainer: {
-    marginTop: 10,
-    backgroundColor: "#00B7DB",
-    borderRadius: 10,
-  },
   activityContainer: {
     marginTop: 10,
-  },
-  buttonText: {
-    color: "#00B7DB",
-  },
-  buttonLinkedInContainer: {
-    width: "90%",
-    marginTop: 10,
-    backgroundColor: "white",
-    borderWidth: 1,
-    borderRadius: 15,
-    borderBottomColor: "#ccc",
-    borderBottomWidth: 1,
-    justifyContent: "space-between",
-  },
-  buttons: {
-    alignItems: "center",
-    paddingVertical: 10,
-    color: "#00B7DB",
   },
 });
 

@@ -18,6 +18,7 @@ import { useDispatch } from "react-redux";
 import Card from "../../components/UI/Card";
 import Input from "../../components/UI/Input";
 import IoniconsHeaderButton from "../../components/UI/IoniconsHeaderButton";
+import { Feather } from "@expo/vector-icons";
 import { setFullname } from "../../store/actions/signup";
 
 
@@ -142,11 +143,14 @@ const SignupScreen2 = (props) => {
                     borderWidth: 1,
                     margin: 10,
                     alignItems: "center",
+                    justifyContent: "center",
+                    flexDirection: "row",
                   }}
                 >
                   <Text
                     style={{
                       margin: 10,
+                      marginRight: 5,
                       color:
                         formState.formIsValid === false ? "gray" : "#007AFF",
                       fontSize: 16,
@@ -154,6 +158,11 @@ const SignupScreen2 = (props) => {
                   >
                     Next
                   </Text>
+                  <Feather
+                    name="arrow-right"
+                    size={16}
+                    color={formState.formIsValid === false ? "gray" : "#007AFF"}
+                  />
                 </View>
               </TouchableCmp>
             )}

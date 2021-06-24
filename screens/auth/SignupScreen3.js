@@ -1,16 +1,13 @@
 import React, { useCallback, useReducer, useState } from "react";
 import {
-    ActivityIndicator,
-    Image,
-
-
-
-    Platform, StyleSheet,
-
-
-    Text,
-
-    TouchableNativeFeedback, TouchableOpacity, View
+  ActivityIndicator,
+  Image,
+  Platform,
+  StyleSheet,
+  Text,
+  TouchableNativeFeedback,
+  TouchableOpacity,
+  View,
 } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
@@ -18,8 +15,8 @@ import { useDispatch, useSelector } from "react-redux";
 import Card from "../../components/UI/Card";
 import Input from "../../components/UI/Input";
 import IoniconsHeaderButton from "../../components/UI/IoniconsHeaderButton";
+import { Feather } from "@expo/vector-icons";
 import { setUsername } from "../../store/actions/signup";
-
 
 const FORM_INPUT_UPDATE = "FORM_INPUT_UPDATE";
 
@@ -127,7 +124,7 @@ const SignupScreen2 = (props) => {
               onInputChange={inputChangeHandler}
               initialValue=""
               styleInput={{
-                color: 'white',
+                color: "white",
                 backgroundColor: "#222222",
                 marginVertical: 10,
               }}
@@ -148,11 +145,14 @@ const SignupScreen2 = (props) => {
                     borderWidth: 1,
                     margin: 10,
                     alignItems: "center",
+                    justifyContent: "center",
+                    flexDirection: "row",
                   }}
                 >
                   <Text
                     style={{
                       margin: 10,
+                      marginRight: 5,
                       color:
                         formState.formIsValid === false ? "gray" : "#007AFF",
                       fontSize: 16,
@@ -160,6 +160,11 @@ const SignupScreen2 = (props) => {
                   >
                     Next
                   </Text>
+                  <Feather
+                    name="arrow-right"
+                    size={16}
+                    color={formState.formIsValid === false ? "gray" : "#007AFF"}
+                  />
                 </View>
               </TouchableCmp>
             )}
