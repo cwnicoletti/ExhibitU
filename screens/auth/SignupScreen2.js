@@ -116,10 +116,15 @@ const SignupScreen2 = (props) => {
                   authHandler();
                 }
               }}
-              placeholder="e.g. Christian Nicoletti"
+              placeholder="Example Name"
               errorText="Please enter a valid name"
               onInputChange={inputChangeHandler}
               initialValue=""
+              styleInput={{
+                color: 'white',
+                backgroundColor: "#222222",
+                marginVertical: 10,
+              }}
             />
             {isLoading ? (
               <View style={styles.activityContainer}>

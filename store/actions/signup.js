@@ -7,21 +7,14 @@ export const SIGNUP_FULLNAME = "SIGNUP_FULLNAME";
 export const SIGNUP_USERNAME = "SIGNUP_USERNAME";
 export const SIGNUP_PASSWORD = "SIGNUP_PASSWORD";
 
-export const setIntroing = (localId, ExhibitUId, value) => {
+export const setIntroing = (value) => {
   return async (dispatch) => {
-    const userFeedGet = { localId, ExhibitUId, value, switchName: "introing" };
-
-    axios.post(
-      `https://us-central1-showcase-79c28.cloudfunctions.net/setSwitch`,
-      userFeedGet
-    );
-
     AsyncStorage.getItem("userLoginData").then(async (data) => {
       data = JSON.parse(data);
       data.introing = value;
       await AsyncStorage.setItem("userLoginData", JSON.stringify(data));
     });
-    
+
     await dispatch({ type: INTROING, introing: value });
   };
 };

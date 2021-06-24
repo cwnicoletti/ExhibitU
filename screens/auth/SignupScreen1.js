@@ -1,17 +1,13 @@
 import { Fontisto } from "@expo/vector-icons";
 import React, { useCallback, useReducer, useState } from "react";
 import {
-    ActivityIndicator,
-
-
-
-
-    Platform, StyleSheet,
-
-
-    Text,
-
-    TouchableNativeFeedback, TouchableOpacity, View
+  ActivityIndicator,
+  Platform,
+  StyleSheet,
+  Text,
+  TouchableNativeFeedback,
+  TouchableOpacity,
+  View,
 } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
@@ -19,9 +15,8 @@ import { useDispatch } from "react-redux";
 import Card from "../../components/UI/Card";
 import Input from "../../components/UI/Input";
 import IoniconsHeaderButton from "../../components/UI/IoniconsHeaderButton";
+import { Feather } from "@expo/vector-icons";
 import { setEmail } from "../../store/actions/signup";
-
-
 
 const FORM_INPUT_UPDATE = "FORM_INPUT_UPDATE";
 
@@ -99,6 +94,7 @@ const SignupScreen1 = (props) => {
       >
         <View style={styles.inner}>
           <Text style={styles.text}>Enter your email</Text>
+          <Text style={styles.textLogin}>(This will be used as your login)</Text>
           <Fontisto
             name="email"
             size={100}
@@ -108,7 +104,7 @@ const SignupScreen1 = (props) => {
           <Card style={styles.authContainer}>
             <Input
               id="email"
-              label="E-Mail"
+              label="Email"
               keyboardType="email-address"
               required
               email
@@ -127,6 +123,11 @@ const SignupScreen1 = (props) => {
               errorText="Please enter a valid email address"
               onInputChange={inputChangeHandler}
               initialValue=""
+              styleInput={{
+                color: 'white',
+                backgroundColor: "#222222",
+                marginVertical: 10,
+              }}
             />
             {isLoading ? (
               <View style={styles.activityContainer}>
@@ -144,11 +145,14 @@ const SignupScreen1 = (props) => {
                     borderWidth: 1,
                     margin: 10,
                     alignItems: "center",
+                    justifyContent: "center",
+                    flexDirection: "row",
                   }}
                 >
                   <Text
                     style={{
                       margin: 10,
+                      marginRight: 5,
                       color:
                         formState.formIsValid === false ? "gray" : "#007AFF",
                       fontSize: 16,
@@ -156,6 +160,11 @@ const SignupScreen1 = (props) => {
                   >
                     Next
                   </Text>
+                  <Feather
+                    name="arrow-right"
+                    size={16}
+                    color={formState.formIsValid === false ? "gray" : "#007AFF"}
+                  />
                 </View>
               </TouchableCmp>
             )}
@@ -233,6 +242,11 @@ const styles = StyleSheet.create({
     color: "white",
     marginTop: 20,
     fontSize: 22,
+  },
+  textLogin: {
+    color: "white",
+    marginTop: 10,
+    fontSize: 16,
   },
   authContainer: {
     shadowColor: null,

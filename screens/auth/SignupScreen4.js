@@ -1,16 +1,13 @@
 import React, { useCallback, useReducer, useState } from "react";
 import {
-    ActivityIndicator,
-    Image,
-
-
-
-    Platform, StyleSheet,
-
-
-    Text,
-
-    TouchableNativeFeedback, TouchableOpacity, View
+  ActivityIndicator,
+  Image,
+  Platform,
+  StyleSheet,
+  Text,
+  TouchableNativeFeedback,
+  TouchableOpacity,
+  View,
 } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
@@ -19,7 +16,6 @@ import Card from "../../components/UI/Card";
 import Input from "../../components/UI/Input";
 import IoniconsHeaderButton from "../../components/UI/IoniconsHeaderButton";
 import { signup } from "../../store/actions/auth";
-
 
 const FORM_INPUT_UPDATE = "FORM_INPUT_UPDATE";
 
@@ -81,7 +77,7 @@ const SignupScreen2 = (props) => {
         signup(email, fullname, username, formState.inputValues.password)
       );
       await setIsLoading(false);
-      await props.navigation.navigate("Intro");
+      await props.navigation.navigate("Project");
     } else {
       await setIsLoading(false);
     }
@@ -116,7 +112,7 @@ const SignupScreen2 = (props) => {
           <Card style={styles.authContainer}>
             <Input
               id="password"
-              label="Password"
+              placeholder="New password"
               keyboardType="default"
               secureTextEntry
               required
@@ -132,10 +128,14 @@ const SignupScreen2 = (props) => {
               errorText="Please enter a valid password"
               onInputChange={inputChangeHandler}
               initialValue=""
+              styleInput={{
+                color: "white",
+                backgroundColor: "#222222",
+              }}
             />
             <Input
               id="confirmpassword"
-              label="Confirm Password"
+              placeholder="Confirm password"
               keyboardType="default"
               secureTextEntry
               required
@@ -154,6 +154,11 @@ const SignupScreen2 = (props) => {
               errorText="Please enter a valid password"
               onInputChange={inputChangeHandler}
               initialValue=""
+              styleInput={{
+                color: "white",
+                backgroundColor: "#222222",
+                marginVertical: 20,
+              }}
             />
             <Text style={styles.text}>
               By continuing, you agree to our Terms of Use, and Privacy Policy
@@ -259,8 +264,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   image: {
-    width: 150,
-    height: 150,
+    width: 100,
+    height: 100,
   },
   logoImage: {
     height: 30,
