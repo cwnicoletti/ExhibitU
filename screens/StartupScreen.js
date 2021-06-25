@@ -10,19 +10,20 @@ const StartupScreen = (props) => {
   useEffect(() => {
     const tryLogin = async () => {
       const userData = await AsyncStorage.getItem("userLoginData");
+      const introingData = await AsyncStorage.getItem("introing");
+
+      const transformedIntroing = JSON.parse(introingData);
       const transformedData = JSON.parse(userData);
-      let localId = false;
-      let token = false;
-      let introing = true;
+
+      let [localId, token, introing] = [false, false, true];
+      console.log(transformedIntroing);
+      [{ introing }] = [transformedIntroing];
 
       if (transformedData) {
-        [localId, token, introing] = [transformedData];
-      } else {
-        props.navigation.navigate("Intro");
-        return;
+        [{ localId, token }] = [transformedData];
       }
 
-      if (!userData && !introing) {
+      if (!transformedData && !introing) {
         props.navigation.navigate("StartAuth");
         return;
       }

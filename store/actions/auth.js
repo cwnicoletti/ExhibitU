@@ -24,7 +24,6 @@ export const signup = (email, fullname, username, password) => {
     await saveDataToStorage(
       getSignupResponse.data.localId,
       getSignupResponse.data.idToken,
-      getSignupResponse.data.introing
     );
     await saveUserDocumentToStorage(
       getSignupResponse.data.docData.ExhibitUId,
@@ -224,7 +223,6 @@ export const login = (email, password) => {
     await saveDataToStorage(
       getLoginResponse.data.localId,
       getLoginResponse.data.idToken,
-      getLoginResponse.data.introing
     );
 
     await dispatch(getUserData());
@@ -243,10 +241,10 @@ export const logout = () => {
   return { type: LOGOUT };
 };
 
-const saveDataToStorage = async (localId, token, introing) => {
+const saveDataToStorage = async (localId, token) => {
   await AsyncStorage.setItem(
     "userLoginData",
-    JSON.stringify({ localId, token, introing })
+    JSON.stringify({ localId, token })
   );
 };
 
