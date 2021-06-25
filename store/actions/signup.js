@@ -9,11 +9,10 @@ export const SIGNUP_PASSWORD = "SIGNUP_PASSWORD";
 
 export const setIntroing = (value) => {
   return async (dispatch) => {
-    AsyncStorage.getItem("userLoginData").then(async (data) => {
-      data = JSON.parse(data);
-      data.introing = value;
-      await AsyncStorage.setItem("userLoginData", JSON.stringify(data));
-    });
+    await AsyncStorage.setItem(
+      "userLoginData",
+      JSON.stringify({ introing: true })
+    );
 
     await dispatch({ type: INTROING, introing: value });
   };

@@ -10,22 +10,30 @@ const StartupScreen = (props) => {
   useEffect(() => {
     const tryLogin = async () => {
       const userData = await AsyncStorage.getItem("userLoginData");
-      if (!userData) {
+      const transformedData = JSON.parse(userData);
+      let localId = false;
+      let token = false;
+      let introing = true;
+
+      if (transformedData) {
+        [localId, token, introing] = [transformedData];
+      } else {
+        props.navigation.navigate("Intro");
+        return;
+      }
+
+      if (!userData && !introing) {
         props.navigation.navigate("StartAuth");
         return;
       }
-      const transformedData = JSON.parse(userData);
-      const { localId, token, introing } = transformedData;
 
-      if (!token || !localId) {
+      if ((!token || !localId) && !introing) {
         props.navigation.navigate("StartAuth");
         return;
       }
 
       if (introing) {
-        await dispatch(getUserData());
-        await dispatch(authenticate(localId, token));
-        await props.navigation.navigate("Intro");
+        props.navigation.navigate("Intro");
       } else {
         await dispatch(getUserData());
         await dispatch(authenticate(localId, token));
@@ -34,7 +42,7 @@ const StartupScreen = (props) => {
     };
 
     tryLogin();
-  }, [dispatch]);
+  }, []);
 
   return (
     <View style={styles.screen}>
