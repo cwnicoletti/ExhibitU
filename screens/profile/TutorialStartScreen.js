@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   Platform,
   StyleSheet,
@@ -28,8 +28,8 @@ const IntroScreen = (props) => {
     await props.navigation.navigate("TutorialHome");
   };
 
-  const continueToProfileHandler = async () => {
-    await props.navigation.navigate("Project");
+  const continueToReminderHandler = () => {
+    props.navigation.navigate("TutorialReminder");
   };
 
   return (
@@ -67,7 +67,7 @@ const IntroScreen = (props) => {
             borderWidth: 1,
             alignItems: "center",
           }}
-          onPress={continueToProfileHandler}
+          onPress={continueToReminderHandler}
         >
           <Text
             style={{
@@ -76,7 +76,7 @@ const IntroScreen = (props) => {
               fontSize: 16,
             }}
           >
-            Nope! Continue to profile
+            No thanks!
           </Text>
         </TouchableCmp>
       </View>
