@@ -58,6 +58,8 @@ export const UPDATE_ALL_POSTS = "UPDATE_ALL_POSTS";
 export const UPLOAD_FEEDBACK = "UPLOAD_FEEDBACK";
 export const UPLOAD_REPORT_BUG = "UPLOAD_REPORT_BUG";
 
+export const SET_TUTORIALING = "SET_TUTORIALING";
+
 const getBase64FromUrl = async (url) => {
   if (url) {
     const response = await axios.get(url, {
@@ -1772,5 +1774,30 @@ export const setHideAdvocates = (localId, ExhibitUId, value) => {
     });
 
     dispatch({ type: HIDE_ADVOCATES, ExhibitUId, hideAdvocatesValue: value });
+  };
+};
+
+export const setTutorialing = (localId, ExhibitUId, value, screen) => {
+  return async (dispatch) => {
+    const tutorialingData = {
+      localId,
+      ExhibitUId,
+      value,
+      screen,
+    };
+
+    axios.post(
+      `https://us-central1-showcase-79c28.cloudfunctions.net/setTutorialing`,
+      tutorialingData
+    );
+
+    await AsyncStorage.getItem("userDocData").then(async (data) => {
+      data = JSON.parse(data);
+      data.tutorialing = value;
+      data.tutorialingScreen = screen;
+      await AsyncStorage.setItem("userDocData", JSON.stringify(data));
+    });
+
+    dispatch({ type: SET_TUTORIALING, value, screen });
   };
 };

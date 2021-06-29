@@ -46,6 +46,7 @@ import {
   UPDATE_USER_PROJECT,
   UPLOAD_FEEDBACK,
   UPLOAD_REPORT_BUG,
+  SET_TUTORIALING,
 } from "../actions/user";
 
 const intialState = {
@@ -92,6 +93,8 @@ const intialState = {
   hideFollowing: false,
   hideFollowers: false,
   hideAdvocates: false,
+  tutorialing: true,
+  tutorialingScreen: "Start",
 };
 
 export default (state = intialState, action) => {
@@ -1017,6 +1020,12 @@ export default (state = intialState, action) => {
       return {
         ...state,
         darkMode: action.darkMode,
+      };
+    case SET_TUTORIALING:
+      return {
+        ...state,
+        tutorialing: action.tutorialing,
+        tutorialingScreen: action.screen,
       };
   }
   return state;
