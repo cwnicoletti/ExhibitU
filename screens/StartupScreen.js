@@ -15,9 +15,14 @@ const StartupScreen = (props) => {
       const transformedIntroing = JSON.parse(introingData);
       const transformedData = JSON.parse(userData);
 
-      let [localId, token, introing] = [false, false, true];
-      console.log(transformedIntroing);
-      [{ introing }] = [transformedIntroing];
+      let [localId, token, introing, tutorialing, tutorialScreen] = [
+        false,
+        false,
+        true,
+        false,
+        "Start",
+      ];
+      [{ introing, tutorialing }] = [transformedIntroing];
 
       if (transformedData) {
         [{ localId, token }] = [transformedData];
@@ -36,9 +41,13 @@ const StartupScreen = (props) => {
       if (introing) {
         props.navigation.navigate("Intro");
       } else {
-        await dispatch(getUserData());
-        await dispatch(authenticate(localId, token));
-        await props.navigation.navigate("Project");
+        if (!tutorialing) {
+          await dispatch(getUserData());
+          await dispatch(authenticate(localId, token));
+          await props.navigation.navigate("Project");
+        } else {
+          props.navigation.navigate(`Tutorial${tutorialScreen}`);
+        }
       }
     };
 
