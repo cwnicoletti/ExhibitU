@@ -47,6 +47,7 @@ import ProjectScreen from "../screens/profile/ProjectScreen";
 import ShowcasePictureScreen from "../screens/profile/ShowcasePictureScreen";
 import ShowcaseProfileScreen from "../screens/profile/ShowcaseProfileScreen";
 import ShowcaseProjectScreen from "../screens/profile/ShowcaseProjectScreen";
+import TutorialStartScreen from "../screens/profile/TutorialStartScreen";
 import NotificationsScreen from "../screens/notifications/NotificationsScreen";
 
 import ProfileBottomTab from "../components/footers/ProfileBottomTab";
@@ -218,6 +219,7 @@ const ProfileandSettingsNavigator = createStackNavigator({
   CheeringScreen: CheeringScreen,
   EditProjectScreen: EditProjectScreen,
   AddPicture: AddPictureScreen,
+  TutorialHome: TutorialStartScreen,
 });
 
 const RightProfileDrawerNavigator = createDrawerNavigator(
