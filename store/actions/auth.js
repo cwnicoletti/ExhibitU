@@ -23,7 +23,7 @@ export const signup = (email, fullname, username, password) => {
 
     await saveDataToStorage(
       getSignupResponse.data.localId,
-      getSignupResponse.data.idToken,
+      getSignupResponse.data.idToken
     );
     await saveUserDocumentToStorage(
       getSignupResponse.data.docData.ExhibitUId,
@@ -62,7 +62,9 @@ export const signup = (email, fullname, username, password) => {
       getSignupResponse.data.docData.hideFollowing,
       getSignupResponse.data.docData.hideFollowers,
       getSignupResponse.data.docData.hideAdvocates,
-      getSignupResponse.data.docData.updates
+      getSignupResponse.data.docData.updates,
+      getSignupResponse.data.docData.tutorialing,
+      getSignupResponse.data.docData.tutorialScreen
     );
 
     await dispatch(getUserData());
@@ -218,11 +220,13 @@ export const login = (email, password) => {
       getLoginResponse.data.docData.hideFollowing,
       getLoginResponse.data.docData.hideFollowers,
       getLoginResponse.data.docData.hideAdvocates,
-      getLoginResponse.data.docData.updates
+      getLoginResponse.data.docData.updates,
+      getLoginResponse.data.docData.tutorialing,
+      getLoginResponse.data.docData.tutorialScreen
     );
     await saveDataToStorage(
       getLoginResponse.data.localId,
-      getLoginResponse.data.idToken,
+      getLoginResponse.data.idToken
     );
 
     await dispatch(getUserData());
@@ -283,7 +287,9 @@ const saveUserDocumentToStorage = async (
   hideFollowing,
   hideFollowers,
   hideAdvocates,
-  updates
+  updates,
+  tutorialing,
+  tutorialScreen
 ) => {
   await AsyncStorage.setItem(
     "userDocData",
@@ -323,6 +329,8 @@ const saveUserDocumentToStorage = async (
       hideFollowers,
       hideAdvocates,
       updates,
+      tutorialing,
+      tutorialScreen,
     })
   );
 };
