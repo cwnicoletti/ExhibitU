@@ -25,7 +25,7 @@ const IntroScreen = (props) => {
     await setIsLoading(true);
     await dispatch(setTutorialing(true));
     await setIsLoading(false);
-    await props.navigation.navigate("TutorialHome");
+    await props.navigation.navigate("Project");
   };
 
   const continueToReminderHandler = () => {
