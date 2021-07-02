@@ -59,6 +59,7 @@ export const UPLOAD_FEEDBACK = "UPLOAD_FEEDBACK";
 export const UPLOAD_REPORT_BUG = "UPLOAD_REPORT_BUG";
 
 export const SET_TUTORIALING = "SET_TUTORIALING";
+export const SET_TUTORIALING_PROMPT = "SET_TUTORIALING_PROMPT";
 
 const getBase64FromUrl = async (url) => {
   if (url) {
@@ -241,6 +242,9 @@ export const getUserData = () => {
       hideFollowing: transformedData.hideFollowing,
       hideFollowers: transformedData.hideFollowers,
       hideAdvocates: transformedData.hideAdvocates,
+      tutorialing: transformedData.tutorialing,
+      tutorialPrompt: transformedData.tutorialPrompt,
+      tutorialScreen: transformedData.tutorialScreen,
       followers,
       following,
       advocates,
@@ -1799,5 +1803,28 @@ export const setTutorialing = (localId, ExhibitUId, value, screen) => {
     });
 
     dispatch({ type: SET_TUTORIALING, value, screen });
+  };
+};
+
+export const setTutorialPrompt = (localId, ExhibitUId, value) => {
+  return async (dispatch) => {
+    const tutorialingData = {
+      localId,
+      ExhibitUId,
+      value,
+    };
+
+    axios.post(
+      `https://us-central1-showcase-79c28.cloudfunctions.net/setTutorialPrompt`,
+      tutorialingData
+    );
+
+    await AsyncStorage.getItem("userDocData").then(async (data) => {
+      data = JSON.parse(data);
+      data.tutorialPrompt = value;
+      await AsyncStorage.setItem("userDocData", JSON.stringify(data));
+    });
+
+    dispatch({ type: SET_TUTORIALING_PROMPT, value});
   };
 };

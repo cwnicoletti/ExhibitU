@@ -64,6 +64,7 @@ export const signup = (email, fullname, username, password) => {
       getSignupResponse.data.docData.hideAdvocates,
       getSignupResponse.data.docData.updates,
       getSignupResponse.data.docData.tutorialing,
+      getSignupResponse.data.docData.tutorialPrompt,
       getSignupResponse.data.docData.tutorialScreen
     );
 
@@ -222,6 +223,7 @@ export const login = (email, password) => {
       getLoginResponse.data.docData.hideAdvocates,
       getLoginResponse.data.docData.updates,
       getLoginResponse.data.docData.tutorialing,
+      getLoginResponse.data.docData.tutorialPrompt,
       getLoginResponse.data.docData.tutorialScreen
     );
     await saveDataToStorage(
@@ -289,6 +291,7 @@ const saveUserDocumentToStorage = async (
   hideAdvocates,
   updates,
   tutorialing,
+  tutorialPrompt,
   tutorialScreen
 ) => {
   await AsyncStorage.setItem(
@@ -330,6 +333,7 @@ const saveUserDocumentToStorage = async (
       hideAdvocates,
       updates,
       tutorialing,
+      tutorialPrompt,
       tutorialScreen,
     })
   );

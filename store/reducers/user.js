@@ -47,6 +47,7 @@ import {
   UPLOAD_FEEDBACK,
   UPLOAD_REPORT_BUG,
   SET_TUTORIALING,
+  SET_TUTORIALING_PROMPT,
 } from "../actions/user";
 
 const intialState = {
@@ -93,8 +94,9 @@ const intialState = {
   hideFollowing: false,
   hideFollowers: false,
   hideAdvocates: false,
-  tutorialing: true,
-  tutorialingScreen: "Start",
+  tutorialing: false,
+  tutorialPrompt: false,
+  tutorialScreen: "Start",
 };
 
 export default (state = intialState, action) => {
@@ -136,7 +138,9 @@ export default (state = intialState, action) => {
         showCheering: action.showCheering,
         hideFollowing: action.hideFollowing,
         hideFollowers: action.hideFollowers,
-        hideAdvocates: action.hideAdvocates,
+        tutorialing: action.tutorialing,
+        tutorialPrompt: action.tutorialPrompt,
+        tutorialScreen: action.tutorialScreen,
       };
     case GET_USER_FEED:
       return {
@@ -1026,6 +1030,11 @@ export default (state = intialState, action) => {
         ...state,
         tutorialing: action.tutorialing,
         tutorialingScreen: action.screen,
+      };
+    case SET_TUTORIALING_PROMPT:
+      return {
+        ...state,
+        tutorialPrompt: action.tutorialPrompt,
       };
   }
   return state;
