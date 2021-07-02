@@ -17,6 +17,7 @@ import Input from "../../components/UI/Input";
 import IoniconsHeaderButton from "../../components/UI/IoniconsHeaderButton";
 import { Ionicons } from "@expo/vector-icons";
 import { signup } from "../../store/actions/auth";
+import { setTutorialPrompt } from "../../functions";
 
 const FORM_INPUT_UPDATE = "FORM_INPUT_UPDATE";
 
@@ -77,6 +78,7 @@ const SignupScreen2 = (props) => {
       await dispatch(
         signup(email, fullname, username, formState.inputValues.password)
       );
+      await dispatch(setTutorialPrompt(true));
       await setIsLoading(false);
       await props.navigation.navigate("Project");
     } else {
