@@ -8,6 +8,7 @@ import {
   Text,
   View,
 } from "react-native";
+import { FontAwesome, Feather } from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { useDispatch, useSelector } from "react-redux";
 import ProjectItem from "../../components/projectItems/ProfileProjectItem";
@@ -18,6 +19,8 @@ import {
   offScreen,
   refreshProfile,
   showcaseProfile,
+  setTutorialing,
+  setTutorialPrompt,
 } from "../../store/actions/user";
 
 const ProfileScreen = (props) => {
@@ -29,6 +32,7 @@ const ProfileScreen = (props) => {
   const darkModeValue = useSelector((state) => state.user.darkMode);
   const localId = useSelector((state) => state.auth.userId);
   const ExhibitUId = useSelector((state) => state.user.ExhibitUId);
+  const tutorialPrompt = useSelector((state) => state.user.tutorialPrompt);
   const profilePictureBase64 = useSelector(
     (state) => state.user.profilePictureBase64
   );
@@ -68,6 +72,13 @@ const ProfileScreen = (props) => {
     }
   }
 
+  let android = null;
+  let TouchableCmp = TouchableOpacity;
+  if (Platform.OS === "android") {
+    TouchableCmp = TouchableNativeFeedback;
+    android = true;
+  }
+
   let slideAnim = useRef(new Animated.Value(0)).current;
 
   const slideDown = () => {
@@ -97,6 +108,21 @@ const ProfileScreen = (props) => {
     await setIsRefreshing(true);
     await dispatch(refreshProfile(localId));
     await setIsRefreshing(false);
+  };
+
+  const startTutorialHandler = async () => {
+    await setIsLoading(true);
+    await dispatch(setTutorialing(true));
+    await dispatch(setTutorialPrompt(false));
+    await setIsLoading(false);
+    await props.navigation.navigate("Project");
+  };
+
+  const skipTutorialHandler = async () => {
+    await setIsLoading(true);
+    await dispatch(setTutorialing(false));
+    await setIsLoading(false);
+    await dispatch(setTutorialPrompt(false));
   };
 
   useEffect(() => {
@@ -236,9 +262,132 @@ const ProfileScreen = (props) => {
     <View
       style={{
         ...styles.screen,
+        justifyContent: "center",
         backgroundColor: darkModeValue ? "black" : "white",
       }}
     >
+      {tutorialPrompt ? (
+        <View>
+          <View
+            style={{
+              position: "absolute",
+              height: "100%",
+              width: "100%",
+              justifyContent: "center",
+              backgroundColor: "white",
+              opacity: 0.4,
+              zIndex: 1,
+            }}
+          />
+          <View
+            style={{
+              position: "absolute",
+              alignSelf: "center",
+              width: "90%",
+              backgroundColor: "black",
+              zIndex: 1,
+            }}
+          >
+            <FontAwesome
+              name="graduation-cap"
+              size={100}
+              color="white"
+              style={{ alignSelf: "center", margin: 20 }}
+            />
+            <View style={{ margin: 10 }}>
+              <Text
+                style={{
+                  color: "white",
+                  fontSize: 18,
+                  margin: 5,
+                  alignSelf: "center",
+                }}
+              >
+                Heads up!
+              </Text>
+              <Text
+                style={{
+                  color: "white",
+                  fontSize: 18,
+                  margin: 5,
+                  alignSelf: "center",
+                }}
+              >
+                A tutorial can be found in the right side bar.
+              </Text>
+              <Text
+                style={{
+                  color: "white",
+                  fontSize: 18,
+                  margin: 5,
+                  alignSelf: "center",
+                }}
+              >
+                Thats all! Enjoy ExhibitU
+              </Text>
+            </View>
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "space-between",
+              }}
+            >
+              <TouchableCmp
+                style={{
+                  borderColor: "#007AFF",
+                  borderWidth: 1,
+                  margin: 10,
+                  alignItems: "center",
+                  flexDirection: "row",
+                }}
+                onPress={startTutorialHandler}
+              >
+                <Text
+                  style={{
+                    margin: 5,
+                    color: "#007AFF",
+                    fontSize: 14,
+                  }}
+                >
+                  Wait, start the tutorial!
+                </Text>
+                <FontAwesome
+                  name="graduation-cap"
+                  size={16}
+                  color={"#007AFF"}
+                  style={{ alignSelf: "center", marginRight: 5 }}
+                />
+              </TouchableCmp>
+              <TouchableCmp
+                style={{
+                  borderColor: "#007AFF",
+                  borderWidth: 1,
+                  margin: 10,
+                  alignItems: "center",
+                  flexDirection: "row",
+                }}
+                onPress={skipTutorialHandler}
+              >
+                <Text
+                  style={{
+                    margin: 5,
+                    color: "#007AFF",
+                    fontSize: 14,
+                  }}
+                >
+                  Thanks! Go to profile
+                </Text>
+                <Feather
+                  name="arrow-right"
+                  size={16}
+                  color={"#007AFF"}
+                  style={{ alignSelf: "center", marginRight: 5 }}
+                />
+              </TouchableCmp>
+            </View>
+          </View>
+        </View>
+      ) : null}
       <FlatList
         data={profileProjectsState}
         keyExtractor={(item) => item.projectId}
@@ -316,7 +465,6 @@ const ProfileScreen = (props) => {
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    justifyContent: "space-between",
   },
   profileTitleStyle: {
     fontSize: 24,
