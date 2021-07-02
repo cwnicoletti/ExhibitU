@@ -220,8 +220,6 @@ const ProfileandSettingsNavigator = createStackNavigator({
   CheeringScreen: CheeringScreen,
   EditProjectScreen: EditProjectScreen,
   AddPicture: AddPictureScreen,
-  TutorialStart: TutorialStartScreen,
-  TutorialReminder: TutorialReminderScreen,
 });
 
 const RightProfileDrawerNavigator = createDrawerNavigator(
