@@ -17,7 +17,7 @@ import Input from "../../components/UI/Input";
 import IoniconsHeaderButton from "../../components/UI/IoniconsHeaderButton";
 import { Ionicons } from "@expo/vector-icons";
 import { signup } from "../../store/actions/auth";
-import { setTutorialPrompt } from "../../functions";
+import { setTutorialPrompt } from "../../store/actions/user";
 
 const FORM_INPUT_UPDATE = "FORM_INPUT_UPDATE";
 
