@@ -1798,7 +1798,7 @@ export const setTutorialing = (localId, ExhibitUId, value, screen) => {
     await AsyncStorage.getItem("userDocData").then(async (data) => {
       data = JSON.parse(data);
       data.tutorialing = value;
-      data.tutorialingScreen = screen;
+      data.tutorialScreen = screen;
       await AsyncStorage.setItem("userDocData", JSON.stringify(data));
     });
 

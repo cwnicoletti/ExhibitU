@@ -1028,8 +1028,8 @@ export default (state = intialState, action) => {
     case SET_TUTORIALING:
       return {
         ...state,
-        tutorialing: action.tutorialing,
-        tutorialingScreen: action.screen,
+        tutorialing: action.value,
+        tutorialScreen: action.screen,
       };
     case SET_TUTORIALING_PROMPT:
       return {
