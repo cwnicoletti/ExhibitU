@@ -3,7 +3,7 @@ import { createAppContainer, createSwitchNavigator } from "react-navigation";
 import { createDrawerNavigator, DrawerActions } from "react-navigation-drawer";
 import { createStackNavigator } from "react-navigation-stack";
 import { createBottomTabNavigator } from "react-navigation-tabs";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import LeftDrawer from "../components/drawers/LeftDrawer";
 import RightDrawer from "../components/drawers/RightDrawer";
 import ProfileHeader from "../components/headers/ProfileHeader";
@@ -47,8 +47,6 @@ import ProjectScreen from "../screens/profile/ProjectScreen";
 import ShowcasePictureScreen from "../screens/profile/ShowcasePictureScreen";
 import ShowcaseProfileScreen from "../screens/profile/ShowcaseProfileScreen";
 import ShowcaseProjectScreen from "../screens/profile/ShowcaseProjectScreen";
-import TutorialStartScreen from "../screens/profile/TutorialStartScreen";
-import TutorialReminderScreen from "../screens/profile/TutorialReminderScreen";
 import NotificationsScreen from "../screens/notifications/NotificationsScreen";
 
 import ProfileBottomTab from "../components/footers/ProfileBottomTab";
@@ -57,6 +55,7 @@ import FeedBottomTab from "../components/footers/FeedBottomTab";
 import ExploreBottomTab from "../components/footers/ExploreBottomTab";
 import StartupScreen from "../screens/StartupScreen";
 import { logout } from "../store/actions/auth";
+import { setTutorialing } from "../store/actions/user";
 
 const FeedandViewNavigator = createStackNavigator({
   Feed: {
@@ -100,6 +99,8 @@ const FeedNavigator = createDrawerNavigator(
     drawerPosition: "right",
     contentComponent: (navData) => {
       const dispatch = useDispatch();
+      const localId = useSelector((state) => state.auth.userId);
+      const ExhibitUId = useSelector((state) => state.user.ExhibitUId);
       return (
         <RightDrawer
           navData={navData}
@@ -112,9 +113,10 @@ const FeedNavigator = createDrawerNavigator(
             navData.navigation.closeRightDrawer();
             navData.navigation.navigate("Updates");
           }}
-          feedbackOnPress={() => {
+          tutorialOnPress={() => {
             navData.navigation.closeRightDrawer();
-            navData.navigation.navigate("Feedback");
+            navData.navigation.navigate("Project");
+            dispatch(setTutorialing(localId, ExhibitUId, true, "Start"));
           }}
           logoutOnPress={() => {
             dispatch(logout());
@@ -247,6 +249,8 @@ const ProfileNavigator = createDrawerNavigator(
     drawerPosition: "right",
     contentComponent: (navData) => {
       const dispatch = useDispatch();
+      const localId = useSelector((state) => state.auth.userId);
+      const ExhibitUId = useSelector((state) => state.user.ExhibitUId);
       return (
         <RightDrawer
           navData={navData}
@@ -259,9 +263,10 @@ const ProfileNavigator = createDrawerNavigator(
             navData.navigation.closeRightDrawer();
             navData.navigation.navigate("Updates");
           }}
-          feedbackOnPress={() => {
+          tutorialOnPress={() => {
             navData.navigation.closeRightDrawer();
-            navData.navigation.navigate("Feedback");
+            navData.navigation.navigate("Project");
+            dispatch(setTutorialing(localId, ExhibitUId, true, "Start"));
           }}
           logoutOnPress={() => {
             dispatch(logout());
