@@ -18,6 +18,7 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import { useDispatch, useSelector } from "react-redux";
 import FilterSwitch from "../../components/UI/FilterSwitch";
+import TutorialEditProfile from "../../components/tutorial/TutorialEditProfile";
 import Input from "../../components/UI/Input";
 import IoniconsHeaderButton from "../../components/UI/IoniconsHeaderButton";
 import LinkButton from "../../components/UI/LinkButton";
@@ -155,6 +156,8 @@ const EditProfileScreen = (props) => {
   const followingValue = useSelector((state) => state.user.hideFollowing);
   const followersValue = useSelector((state) => state.user.hideFollowers);
   const advocatesValue = useSelector((state) => state.user.hideAdvocates);
+  const tutorialing = useSelector((state) => state.user.tutorialing);
+  const tutorialScreen = useSelector((state) => state.user.tutorialScreen);
 
   let userData = {
     fullname: useSelector((state) => state.user.fullname),
@@ -334,6 +337,9 @@ const EditProfileScreen = (props) => {
       style={{ backgroundColor: darkModeValue ? "black" : "white" }}
       scrollEnabled={true}
     >
+      {tutorialing && tutorialScreen === "EditProfile" ? (
+        <TutorialEditProfile ExhibitUId={ExhibitUId} localId={localId} />
+      ) : null}
       <Text
         style={{
           fontSize: 28,
