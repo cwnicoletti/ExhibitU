@@ -78,7 +78,6 @@ const SignupScreen2 = (props) => {
       await dispatch(
         signup(email, fullname, username, formState.inputValues.password)
       );
-      await dispatch(setTutorialPrompt(true));
       await setIsLoading(false);
       await props.navigation.navigate("Project");
     } else {
