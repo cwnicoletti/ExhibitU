@@ -7,12 +7,12 @@ import {
   StyleSheet,
   Text,
   View,
-  ActivityIndicator,
 } from "react-native";
-import { FontAwesome, Feather, AntDesign } from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { useDispatch, useSelector } from "react-redux";
 import ProjectItem from "../../components/projectItems/ProfileProjectItem";
+import TutorialPrompt from "../../components/tutorial/TutorialPrompt";
+import TutorialStart from "../../components/tutorial/TutorialStart";
 import ProfileHeader from "../../components/user/ProfileHeader";
 import useDidMountEffect from "../../helper/useDidMountEffect";
 import {
@@ -20,14 +20,10 @@ import {
   offScreen,
   refreshProfile,
   showcaseProfile,
-  setTutorialing,
-  setTutorialPrompt,
 } from "../../store/actions/user";
 
 const ProfileScreen = (props) => {
   const dispatch = useDispatch();
-  const [isLoadingTutorial, setIsLoadingTutorial] = useState(false);
-  const [isLoadingSkip, setIsLoadingSkip] = useState(false);
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [isLoadingTwoColumns, setIsLoadingTwoColumns] = useState(false);
   const [isLoadingThreeColumns, setIsLoadingThreeColumns] = useState(false);
@@ -35,7 +31,10 @@ const ProfileScreen = (props) => {
   const darkModeValue = useSelector((state) => state.user.darkMode);
   const localId = useSelector((state) => state.auth.userId);
   const ExhibitUId = useSelector((state) => state.user.ExhibitUId);
+  const tutorialing = useSelector((state) => state.user.tutorialing);
   const tutorialPrompt = useSelector((state) => state.user.tutorialPrompt);
+  const tutorialScreen = useSelector((state) => state.user.tutorialScreen);
+
   const profilePictureBase64 = useSelector(
     (state) => state.user.profilePictureBase64
   );
@@ -111,20 +110,6 @@ const ProfileScreen = (props) => {
     await setIsRefreshing(true);
     await dispatch(refreshProfile(localId));
     await setIsRefreshing(false);
-  };
-
-  const startTutorialHandler = async () => {
-    await setIsLoadingTutorial(true);
-    await dispatch(setTutorialing(localId, ExhibitUId, true));
-    await dispatch(setTutorialPrompt(localId, ExhibitUId, false));
-    await setIsLoadingTutorial(false);
-  };
-
-  const skipTutorialHandler = async () => {
-    await setIsLoadingSkip(true);
-    await dispatch(setTutorialing(localId, ExhibitUId, false, "Start"));
-    await dispatch(setTutorialPrompt(localId, ExhibitUId, false));
-    await setIsLoadingSkip(false);
   };
 
   useEffect(() => {
@@ -269,180 +254,10 @@ const ProfileScreen = (props) => {
       }}
     >
       {tutorialPrompt ? (
-        <View
-          style={{
-            position: "absolute",
-            justifyContent: "center",
-            height: "100%",
-            width: "100%",
-            backgroundColor: "black",
-            zIndex: 1,
-          }}
-        >
-          <View
-            style={{
-              position: "absolute",
-              height: "100%",
-              width: "100%",
-              justifyContent: "center",
-              backgroundColor: "white",
-              opacity: 0.1,
-              zIndex: 2,
-            }}
-          />
-          <AntDesign
-            name="arrowup"
-            size={25}
-            color="white"
-            style={{
-              position: "absolute",
-              right: 20,
-              top: 20,
-              justifyContent: "center",
-              zIndex: 3,
-              alignSelf: "center",
-            }}
-          />
-          <View
-            style={{
-              position: "absolute",
-              alignSelf: "center",
-              width: "90%",
-              backgroundColor: "black",
-              zIndex: 3,
-            }}
-          >
-            <FontAwesome
-              name="graduation-cap"
-              size={100}
-              color="white"
-              style={{ alignSelf: "center", margin: 20 }}
-            />
-            <View style={{ margin: 10 }}>
-              <Text
-                style={{
-                  color: "white",
-                  fontSize: 18,
-                  margin: 5,
-                  alignSelf: "center",
-                }}
-              >
-                Heads up!
-              </Text>
-              <Text
-                style={{
-                  color: "white",
-                  fontSize: 18,
-                  margin: 5,
-                  alignSelf: "center",
-                }}
-              >
-                A tutorial can be found in the right side bar.
-              </Text>
-              <Text
-                style={{
-                  color: "white",
-                  fontSize: 18,
-                  margin: 5,
-                  alignSelf: "center",
-                }}
-              >
-                Thats all! Enjoy ExhibitU
-              </Text>
-            </View>
-            <View
-              style={{
-                flexDirection: "row",
-                justifyContent: "space-between",
-                alignSelf: "center",
-                margin: 10,
-              }}
-            >
-              {isLoadingTutorial ? (
-                <View
-                  style={{
-                    flex: 1,
-                    margin: 5,
-                    alignSelf: "center",
-                    alignItems: "center",
-                  }}
-                >
-                  <ActivityIndicator size="small" color="white" />
-                </View>
-              ) : (
-                <TouchableCmp
-                  style={{
-                    flex: 1,
-                    borderColor: "#007AFF",
-                    borderWidth: 1,
-                    margin: 5,
-                    alignSelf: "center",
-                    alignItems: "center",
-                    flexDirection: "row",
-                  }}
-                  onPress={startTutorialHandler}
-                >
-                  <Text
-                    style={{
-                      margin: 5,
-                      color: "#007AFF",
-                      fontSize: 14,
-                    }}
-                  >
-                    Wait, start the tutorial!
-                  </Text>
-                  <FontAwesome
-                    name="graduation-cap"
-                    size={16}
-                    color={"#007AFF"}
-                    style={{ alignSelf: "center", marginRight: 5 }}
-                  />
-                </TouchableCmp>
-              )}
-              {isLoadingSkip ? (
-                <View
-                  style={{
-                    flex: 1,
-                    margin: 5,
-                    alignSelf: "center",
-                    alignItems: "center",
-                  }}
-                >
-                  <ActivityIndicator size="small" color="white" />
-                </View>
-              ) : (
-                <TouchableCmp
-                  style={{
-                    flex: 1,
-                    borderColor: "#007AFF",
-                    borderWidth: 1,
-                    margin: 5,
-                    alignSelf: "center",
-                    alignItems: "center",
-                    flexDirection: "row",
-                  }}
-                  onPress={skipTutorialHandler}
-                >
-                  <Text
-                    style={{
-                      margin: 5,
-                      color: "#007AFF",
-                      fontSize: 14,
-                    }}
-                  >
-                    Continue to profile
-                  </Text>
-                  <Feather
-                    name="arrow-right"
-                    size={16}
-                    color={"#007AFF"}
-                    style={{ alignSelf: "center", marginRight: 5 }}
-                  />
-                </TouchableCmp>
-              )}
-            </View>
-          </View>
-        </View>
+        <TutorialPrompt ExhibitUId={ExhibitUId} localId={localId} />
+      ) : null}
+      {tutorialing && !tutorialPrompt && tutorialScreen === "Start" ? (
+        <TutorialStart ExhibitUId={ExhibitUId} localId={localId} />
       ) : null}
       <FlatList
         data={profileProjectsState}
