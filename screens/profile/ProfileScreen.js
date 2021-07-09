@@ -7,8 +7,9 @@ import {
   StyleSheet,
   Text,
   View,
+  ActivityIndicator,
 } from "react-native";
-import { FontAwesome, Feather } from "@expo/vector-icons";
+import { FontAwesome, Feather, AntDesign } from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { useDispatch, useSelector } from "react-redux";
 import ProjectItem from "../../components/projectItems/ProfileProjectItem";
@@ -25,6 +26,8 @@ import {
 
 const ProfileScreen = (props) => {
   const dispatch = useDispatch();
+  const [isLoadingTutorial, setIsLoadingTutorial] = useState(false);
+  const [isLoadingSkip, setIsLoadingSkip] = useState(false);
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [isLoadingTwoColumns, setIsLoadingTwoColumns] = useState(false);
   const [isLoadingThreeColumns, setIsLoadingThreeColumns] = useState(false);
@@ -111,18 +114,17 @@ const ProfileScreen = (props) => {
   };
 
   const startTutorialHandler = async () => {
-    await setIsLoading(true);
-    await dispatch(setTutorialing(true));
-    await dispatch(setTutorialPrompt(false));
-    await setIsLoading(false);
-    await props.navigation.navigate("Project");
+    await setIsLoadingTutorial(true);
+    await dispatch(setTutorialing(localId, ExhibitUId, true));
+    await dispatch(setTutorialPrompt(localId, ExhibitUId, false));
+    await setIsLoadingTutorial(false);
   };
 
   const skipTutorialHandler = async () => {
-    await setIsLoading(true);
-    await dispatch(setTutorialing(false));
-    await setIsLoading(false);
-    await dispatch(setTutorialPrompt(false));
+    await setIsLoadingSkip(true);
+    await dispatch(setTutorialing(localId, ExhibitUId, false, "Start"));
+    await dispatch(setTutorialPrompt(localId, ExhibitUId, false));
+    await setIsLoadingSkip(false);
   };
 
   useEffect(() => {
@@ -267,7 +269,16 @@ const ProfileScreen = (props) => {
       }}
     >
       {tutorialPrompt ? (
-        <View>
+        <View
+          style={{
+            position: "absolute",
+            justifyContent: "center",
+            height: "100%",
+            width: "100%",
+            backgroundColor: "black",
+            zIndex: 1,
+          }}
+        >
           <View
             style={{
               position: "absolute",
@@ -275,8 +286,21 @@ const ProfileScreen = (props) => {
               width: "100%",
               justifyContent: "center",
               backgroundColor: "white",
-              opacity: 0.4,
-              zIndex: 1,
+              opacity: 0.1,
+              zIndex: 2,
+            }}
+          />
+          <AntDesign
+            name="arrowup"
+            size={25}
+            color="white"
+            style={{
+              position: "absolute",
+              right: 20,
+              top: 20,
+              justifyContent: "center",
+              zIndex: 3,
+              alignSelf: "center",
             }}
           />
           <View
@@ -285,7 +309,7 @@ const ProfileScreen = (props) => {
               alignSelf: "center",
               width: "90%",
               backgroundColor: "black",
-              zIndex: 1,
+              zIndex: 3,
             }}
           >
             <FontAwesome
@@ -330,60 +354,92 @@ const ProfileScreen = (props) => {
               style={{
                 flexDirection: "row",
                 justifyContent: "space-between",
+                alignSelf: "center",
+                margin: 10,
               }}
             >
-              <TouchableCmp
-                style={{
-                  borderColor: "#007AFF",
-                  borderWidth: 1,
-                  margin: 10,
-                  alignItems: "center",
-                  flexDirection: "row",
-                }}
-                onPress={startTutorialHandler}
-              >
-                <Text
+              {isLoadingTutorial ? (
+                <View
                   style={{
+                    flex: 1,
                     margin: 5,
-                    color: "#007AFF",
-                    fontSize: 14,
+                    alignSelf: "center",
+                    alignItems: "center",
                   }}
                 >
-                  Wait, start the tutorial!
-                </Text>
-                <FontAwesome
-                  name="graduation-cap"
-                  size={16}
-                  color={"#007AFF"}
-                  style={{ alignSelf: "center", marginRight: 5 }}
-                />
-              </TouchableCmp>
-              <TouchableCmp
-                style={{
-                  borderColor: "#007AFF",
-                  borderWidth: 1,
-                  margin: 10,
-                  alignItems: "center",
-                  flexDirection: "row",
-                }}
-                onPress={skipTutorialHandler}
-              >
-                <Text
+                  <ActivityIndicator size="small" color="white" />
+                </View>
+              ) : (
+                <TouchableCmp
                   style={{
+                    flex: 1,
+                    borderColor: "#007AFF",
+                    borderWidth: 1,
                     margin: 5,
-                    color: "#007AFF",
-                    fontSize: 14,
+                    alignSelf: "center",
+                    alignItems: "center",
+                    flexDirection: "row",
+                  }}
+                  onPress={startTutorialHandler}
+                >
+                  <Text
+                    style={{
+                      margin: 5,
+                      color: "#007AFF",
+                      fontSize: 14,
+                    }}
+                  >
+                    Wait, start the tutorial!
+                  </Text>
+                  <FontAwesome
+                    name="graduation-cap"
+                    size={16}
+                    color={"#007AFF"}
+                    style={{ alignSelf: "center", marginRight: 5 }}
+                  />
+                </TouchableCmp>
+              )}
+              {isLoadingSkip ? (
+                <View
+                  style={{
+                    flex: 1,
+                    margin: 5,
+                    alignSelf: "center",
+                    alignItems: "center",
                   }}
                 >
-                  Thanks! Go to profile
-                </Text>
-                <Feather
-                  name="arrow-right"
-                  size={16}
-                  color={"#007AFF"}
-                  style={{ alignSelf: "center", marginRight: 5 }}
-                />
-              </TouchableCmp>
+                  <ActivityIndicator size="small" color="white" />
+                </View>
+              ) : (
+                <TouchableCmp
+                  style={{
+                    flex: 1,
+                    borderColor: "#007AFF",
+                    borderWidth: 1,
+                    margin: 5,
+                    alignSelf: "center",
+                    alignItems: "center",
+                    flexDirection: "row",
+                  }}
+                  onPress={skipTutorialHandler}
+                >
+                  <Text
+                    style={{
+                      margin: 5,
+                      color: "#007AFF",
+                      fontSize: 14,
+                    }}
+                  >
+                    Continue to profile
+                  </Text>
+                  <Feather
+                    name="arrow-right"
+                    size={16}
+                    color={"#007AFF"}
+                    style={{ alignSelf: "center", marginRight: 5 }}
+                  />
+                </TouchableCmp>
+              )}
             </View>
           </View>
         </View>
