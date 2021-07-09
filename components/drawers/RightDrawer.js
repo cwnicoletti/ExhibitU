@@ -1,14 +1,20 @@
-import { Feather, MaterialCommunityIcons, SimpleLineIcons } from "@expo/vector-icons";
+import {
+  Feather,
+  MaterialCommunityIcons,
+  SimpleLineIcons,
+  AntDesign,
+} from "@expo/vector-icons";
 import React from "react";
 import {
-    Platform, SafeAreaView, StyleSheet, Text,
-
-
-
-    TouchableNativeFeedback, TouchableOpacity, View
+  Platform,
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  TouchableNativeFeedback,
+  TouchableOpacity,
+  View,
 } from "react-native";
 import { useSelector } from "react-redux";
-
 
 const RightDrawer = (props) => {
   const darkModeValue = useSelector((state) => state.user.darkMode);
@@ -115,6 +121,34 @@ const RightDrawer = (props) => {
                 }}
               >
                 Future Updates
+              </Text>
+            </View>
+          </TouchableCmp>
+        </View>
+      </SafeAreaView>
+      <SafeAreaView forceInset={{ top: "always", horizontal: "never" }}>
+        <View
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            margin: 10,
+          }}
+        >
+          <AntDesign
+            name="questioncircleo"
+            size={20}
+            color={darkModeValue ? "white" : "black"}
+          />
+          <TouchableCmp onPress={props.tutorialOnPress}>
+            <View>
+              <Text
+                style={{
+                  color: darkModeValue ? "#bababa" : "black",
+                  fontSize: 18,
+                  marginHorizontal: 10,
+                }}
+              >
+                Tutorial
               </Text>
             </View>
           </TouchableCmp>
