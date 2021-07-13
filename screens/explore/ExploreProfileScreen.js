@@ -39,101 +39,110 @@ const ExploreProfileScreen = (props) => {
   // Empty dict if user doesn't have any projects yet
   exploredUserData.profileProjects = exploredUserData.profileProjects
     ? exploredUserData.profileProjects
-    : {
-        ["randomId121334"]: {
-          projectPosts: {
-            ["randomId121334h"]: {
-              ExhibitUId: ExhibitUId,
-              projectId: "randomId121334",
-              postId: "randomId121334h",
-              fullname: "test",
-              username: "test",
-              jobTitle: "test",
-              profileBiography: "test",
-              profileProjects: {},
-              profilePictureUrl: "test",
-              postPhotoUrl:
-                "https://camo.githubusercontent.com/9aea0a68fd10f943a82ce8a434f6c126296568fdf17d0cc914d40a4feb4a9f10/68747470733a2f2f7265732e636c6f7564696e6172792e636f6d2f706572736f6e616c757365313233342f696d6167652f75706c6f61642f76313631373231353939392f436f43726561746f727765626170705f6c7a716e696e2e706e67",
-              postPhotoBase64: "",
-              numberOfCheers: 0,
-              numberOfComments: 0,
-              caption: "Sample post",
-              postLinks: {},
-              postDateCreated: {
-                _seconds: 7654757,
-                _minutes: 7654757,
-              },
+    : {};
+
+  if (
+    tutorialing &&
+    (tutorialScreen === "ExploreScreen" ||
+      tutorialScreen === "ExploreProfile" ||
+      tutorialScreen === "ExploreProject")
+  ) {
+    exploredUserData.profileProjects = {
+      ["randomId121334"]: {
+        projectPosts: {
+          ["randomId121334h"]: {
+            ExhibitUId: ExhibitUId,
+            projectId: "randomId121334",
+            postId: "randomId121334h",
+            fullname: "test",
+            username: "test",
+            jobTitle: "test",
+            profileBiography: "test",
+            profileProjects: {},
+            profilePictureUrl: "test",
+            postPhotoUrl:
+              "https://camo.githubusercontent.com/9aea0a68fd10f943a82ce8a434f6c126296568fdf17d0cc914d40a4feb4a9f10/68747470733a2f2f7265732e636c6f7564696e6172792e636f6d2f706572736f6e616c757365313233342f696d6167652f75706c6f61642f76313631373231353939392f436f43726561746f727765626170705f6c7a716e696e2e706e67",
+            postPhotoBase64: "",
+            numberOfCheers: 0,
+            numberOfComments: 0,
+            caption: "Sample post",
+            postLinks: {},
+            postDateCreated: {
+              _seconds: 7654757,
+              _minutes: 7654757,
             },
           },
-          projectTitle: "Sample Exhibit",
-          projectDescription:
-            "I've been working on a really cool web application!",
-          projectCoverPhotoUrl:
-            "https://res.cloudinary.com/showcase-79c28/image/upload/v1626117054/project_pic_ysb6uu.png",
-          projectCoverPhotoBase64: "",
-          projectDateCreated: {
-            _seconds: 7654757,
-            _minutes: 7654757,
-          },
-          projectLastUpdated: {
-            _seconds: 7654757,
-            _minutes: 7654757,
-          },
-          projectLinks: {},
-          projectColumns: 2,
         },
-      };
-  exploredUserData.profileBiography = exploredUserData.profileBiography
-    ? exploredUserData.profileBiography
-    : "Yes, it's me, Elon Tusk.";
-  exploredUserData.following = exploredUserData.following
-    ? exploredUserData.following
-    : [];
-  exploredUserData.followers = exploredUserData.followers
-    ? exploredUserData.followers
-    : [];
-  exploredUserData.advocates = exploredUserData.advocates
-    ? exploredUserData.advocates
-    : [];
-  exploredUserData.fullname = exploredUserData.fullname
-    ? exploredUserData.fullname
-    : "Elon Tusk";
-  exploredUserData.username = exploredUserData.username
-    ? exploredUserData.username
-    : "elontusk";
-  exploredUserData.jobTitle = exploredUserData.jobTitle
-    ? exploredUserData.jobTitle
-    : "CEO of companies";
-  exploredUserData.profilePictureUrl = exploredUserData.profilePictureUrl
-    ? exploredUserData.profilePictureUrl
-    : "";
-  exploredUserData.hideFollowing = exploredUserData.hideFollowing
-    ? exploredUserData.hideFollowing
-    : false;
-  exploredUserData.hideFollowers = exploredUserData.hideFollowers
-    ? exploredUserData.hideFollowers
-    : false;
-  exploredUserData.hideAdvocates = exploredUserData.hideAdvocates
-    ? exploredUserData.hideAdvocates
-    : false;
-  exploredUserData.profileLinks = exploredUserData.profileLinks
-    ? exploredUserData.profileLinks
-    : {};
-  exploredUserData.profileColumns = exploredUserData.profileColumns
-    ? exploredUserData.profileColumns
-    : 2;
-  exploredUserData.showCheering = exploredUserData.showCheering
-    ? exploredUserData.showCheering
-    : true;
-  exploredUserData.numberOfFollowers = exploredUserData.numberOfFollowers
-    ? exploredUserData.numberOfFollowers
-    : 0;
-  exploredUserData.numberOfFollowing = exploredUserData.numberOfFollowing
-    ? exploredUserData.numberOfFollowing
-    : 0;
-  exploredUserData.numberOfAdvocates = exploredUserData.numberOfAdvocates
-    ? exploredUserData.numberOfAdvocates
-    : 0;
+        projectTitle: "Sample Exhibit",
+        projectDescription:
+          "I've been working on a really cool web application!",
+        projectCoverPhotoUrl:
+          "https://res.cloudinary.com/showcase-79c28/image/upload/v1626117054/project_pic_ysb6uu.png",
+        projectCoverPhotoBase64: "",
+        projectDateCreated: {
+          _seconds: 7654757,
+          _minutes: 7654757,
+        },
+        projectLastUpdated: {
+          _seconds: 7654757,
+          _minutes: 7654757,
+        },
+        projectLinks: {},
+        projectColumns: 2,
+      },
+    };
+    exploredUserData.profileBiography = exploredUserData.profileBiography
+      ? exploredUserData.profileBiography
+      : "Yes, it's me, Elon Tusk.";
+    exploredUserData.following = exploredUserData.following
+      ? exploredUserData.following
+      : [];
+    exploredUserData.followers = exploredUserData.followers
+      ? exploredUserData.followers
+      : [];
+    exploredUserData.advocates = exploredUserData.advocates
+      ? exploredUserData.advocates
+      : [];
+    exploredUserData.fullname = exploredUserData.fullname
+      ? exploredUserData.fullname
+      : "Elon Tusk";
+    exploredUserData.username = exploredUserData.username
+      ? exploredUserData.username
+      : "elontusk";
+    exploredUserData.jobTitle = exploredUserData.jobTitle
+      ? exploredUserData.jobTitle
+      : "CEO of companies";
+    exploredUserData.profilePictureUrl = exploredUserData.profilePictureUrl
+      ? exploredUserData.profilePictureUrl
+      : "";
+    exploredUserData.hideFollowing = exploredUserData.hideFollowing
+      ? exploredUserData.hideFollowing
+      : false;
+    exploredUserData.hideFollowers = exploredUserData.hideFollowers
+      ? exploredUserData.hideFollowers
+      : false;
+    exploredUserData.hideAdvocates = exploredUserData.hideAdvocates
+      ? exploredUserData.hideAdvocates
+      : false;
+    exploredUserData.profileLinks = exploredUserData.profileLinks
+      ? exploredUserData.profileLinks
+      : {};
+    exploredUserData.profileColumns = exploredUserData.profileColumns
+      ? exploredUserData.profileColumns
+      : 2;
+    exploredUserData.showCheering = exploredUserData.showCheering
+      ? exploredUserData.showCheering
+      : true;
+    exploredUserData.numberOfFollowers = exploredUserData.numberOfFollowers
+      ? exploredUserData.numberOfFollowers
+      : 0;
+    exploredUserData.numberOfFollowing = exploredUserData.numberOfFollowing
+      ? exploredUserData.numberOfFollowing
+      : 0;
+    exploredUserData.numberOfAdvocates = exploredUserData.numberOfAdvocates
+      ? exploredUserData.numberOfAdvocates
+      : 0;
+  }
 
   const [profileProjectsState, setProfileProjectsState] = useState(
     Object.values(exploredUserData.profileProjects).sort((first, second) => {
@@ -277,18 +286,6 @@ const ExploreProfileScreen = (props) => {
   useEffect(() => {
     props.navigation.setParams({ isfollowing: isfollowing });
   }, [isfollowing]);
-
-  useDidMountEffect(() => {
-    // Sort the array based on the second element
-    setProfileProjectsState(
-      Object.values(exploredUserData.profileProjects).sort((first, second) => {
-        return (
-          second["projectDateCreated"]["_seconds"] -
-          first["projectDateCreated"]["_seconds"]
-        );
-      })
-    );
-  }, [exploredUserData.profileProjects]);
 
   useDidMountEffect(() => {
     if (isAdvocating) {
