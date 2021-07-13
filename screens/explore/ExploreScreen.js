@@ -276,7 +276,10 @@ const ExploreScreen = (props) => {
         backgroundColor: darkModeValue ? "black" : "white",
       }}
     >
-      {tutorialing && tutorialScreen === "ExploreScreen" ? (
+      {tutorialing &&
+      (tutorialScreen === "ExploreScreen" ||
+        tutorialScreen === "FeedView" ||
+        tutorialScreen === "ExploreProfile") ? (
         <TutorialExploreScreen ExhibitUId={ExhibitUId} localId={localId} />
       ) : null}
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>

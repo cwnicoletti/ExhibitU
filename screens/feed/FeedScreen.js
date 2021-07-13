@@ -259,7 +259,8 @@ const UserFeedScreen = (props) => {
         backgroundColor: darkModeValue ? "black" : "white",
       }}
     >
-      {tutorialing && tutorialScreen === "FeedView" ? (
+      {tutorialing &&
+      (tutorialScreen === "FeedView" || tutorialScreen === "PostCreation") ? (
         <TutorialFeedView ExhibitUId={ExhibitUId} localId={localId} />
       ) : null}
       <StatusBar barStyle={setStatusBarStyle(darkModeValue)} />

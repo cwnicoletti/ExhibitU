@@ -320,7 +320,9 @@ const AddProjectScreen = (props) => {
         disableKBDismissScroll={true}
         scrollEnabled={true}
       >
-        {tutorialing && tutorialScreen === "ExhibitCreation" ? (
+        {tutorialing &&
+        (tutorialScreen === "ExhibitCreation" ||
+          tutorialScreen === "ExhibitView") ? (
           <TutorialExhibitCreation ExhibitUId={ExhibitUId} localId={localId} />
         ) : null}
         <View

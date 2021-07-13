@@ -259,16 +259,24 @@ const ProfileScreen = (props) => {
       {tutorialPrompt ? (
         <TutorialPrompt ExhibitUId={ExhibitUId} localId={localId} />
       ) : null}
-      {tutorialing && !tutorialPrompt && tutorialScreen === "Start" ? (
+      {tutorialing &&
+      !tutorialPrompt &&
+      (tutorialScreen === "Start" || tutorialScreen === "EditProfile") ? (
         <TutorialStart ExhibitUId={ExhibitUId} localId={localId} />
       ) : null}
-      {tutorialing && !tutorialPrompt && tutorialScreen === "CreateExhibit" ? (
+      {tutorialing &&
+      !tutorialPrompt &&
+      (tutorialScreen === "CreateExhibit" ||
+        tutorialScreen === "ExhibitCreation") ? (
         <TutorialCreateExhibit ExhibitUId={ExhibitUId} localId={localId} />
       ) : null}
-      {tutorialing && !tutorialPrompt && tutorialScreen === "CreatePost" ? (
+      {tutorialing && !tutorialPrompt && tutorialScreen === "ExhibitView" ? (
         <TutorialExploreExhibit ExhibitUId={ExhibitUId} localId={localId} />
       ) : null}
-      {tutorialing && !tutorialPrompt && tutorialScreen === "TutorialEnd" ? (
+      {tutorialing &&
+      !tutorialPrompt &&
+      (tutorialScreen === "TutorialEnd" ||
+        tutorialScreen === "ExploreProject") ? (
         <TutorialEnd ExhibitUId={ExhibitUId} localId={localId} />
       ) : null}
       <FlatList

@@ -336,7 +336,9 @@ const EditProfileScreen = (props) => {
       style={{ backgroundColor: darkModeValue ? "black" : "white" }}
       scrollEnabled={true}
     >
-      {tutorialing && tutorialScreen === "EditProfile" ? (
+      {tutorialing &&
+      (tutorialScreen === "EditProfile" ||
+        tutorialScreen === "CreateExhibit") ? (
         <TutorialEditProfile ExhibitUId={ExhibitUId} localId={localId} />
       ) : null}
       <Text

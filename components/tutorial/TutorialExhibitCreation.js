@@ -26,7 +26,7 @@ const TutorialExhibitCreation = (props) => {
   }
 
   const nextTutorialHandler = async () => {
-    dispatch(setTutorialing(localId, ExhibitUId, true, "CreatePost"));
+    dispatch(setTutorialing(localId, ExhibitUId, true, "ExhibitView"));
     props.navigation.goBack();
   };
 

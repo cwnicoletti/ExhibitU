@@ -335,7 +335,10 @@ const ExploreProjectScreen = (props) => {
         backgroundColor: darkModeValue ? "black" : "white",
       }}
     >
-      {tutorialing && tutorialScreen === "ExploreProject" ? (
+      {tutorialing &&
+      (tutorialScreen === "ExploreProfile" ||
+        tutorialScreen === "ExploreProject" ||
+        tutorialScreen === "TutorialEnd") ? (
         <TutorialExploreProject ExhibitUId={ExhibitUId} localId={localId} />
       ) : null}
       <FlatList

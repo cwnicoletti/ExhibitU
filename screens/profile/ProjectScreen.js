@@ -247,7 +247,9 @@ const ProjectScreen = (props) => {
         backgroundColor: darkModeValue ? "black" : "white",
       }}
     >
-      {tutorialing && tutorialScreen === "ExhibitView" ? (
+      {tutorialing &&
+      (tutorialScreen === "ExhibitView" ||
+        tutorialScreen === "PostCreation") ? (
         <TutorialExhibitView ExhibitUId={ExhibitUId} localId={localId} />
       ) : null}
       <FlatList
