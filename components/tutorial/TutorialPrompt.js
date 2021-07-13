@@ -8,14 +8,12 @@ import {
   Platform,
 } from "react-native";
 import { FontAwesome, Feather, AntDesign } from "@expo/vector-icons";
-import TutorialModalWithBackground from "../UI/TutorialModalNoBackground";
+import TutorialModalNoBackgroundNoX from "../UI/TutorialModalNoBackgroundNoX";
 import { useDispatch } from "react-redux";
 import { setTutorialing, setTutorialPrompt } from "../../store/actions/user";
 
 const TutorialPrompt = (props) => {
   const dispatch = useDispatch();
-  const [isLoadingTutorial, setIsLoadingTutorial] = useState(false);
-  const [isLoadingSkip, setIsLoadingSkip] = useState(false);
 
   const ExhibitUId = props.ExhibitUId;
   const localId = props.localId;
@@ -28,21 +26,17 @@ const TutorialPrompt = (props) => {
   }
 
   const startTutorialHandler = async () => {
-    await setIsLoadingTutorial(true);
     dispatch(setTutorialing(localId, ExhibitUId, true, "Start"));
-    await setIsLoadingTutorial(false);
     await dispatch(setTutorialPrompt(localId, ExhibitUId, false));
   };
 
   const skipTutorialHandler = async () => {
-    await setIsLoadingSkip(true);
     dispatch(setTutorialing(localId, ExhibitUId, false, "Start"));
-    await setIsLoadingSkip(false);
     await dispatch(setTutorialPrompt(localId, ExhibitUId, false));
   };
 
   return (
-    <TutorialModalWithBackground>
+    <TutorialModalNoBackgroundNoX>
       <AntDesign
         name="arrowup"
         size={25}
@@ -90,8 +84,15 @@ const TutorialPrompt = (props) => {
               alignSelf: "center",
             }}
           >
-            A tutorial can be found in the right side bar.
+            A tutorial can be found in the right side bar by tapping on the
+            icon:
           </Text>
+          <Feather
+            name="settings"
+            size={21}
+            color={"white"}
+            style={{ alignSelf: "center", margin: 20 }}
+          />
           <Text
             style={{
               color: "white",
@@ -111,90 +112,65 @@ const TutorialPrompt = (props) => {
             margin: 5,
           }}
         >
-          {isLoadingTutorial ? (
-            <View
+          <TouchableCmp
+            style={{
+              flex: 1,
+              borderColor: "#007AFF",
+              borderWidth: 1,
+              margin: 5,
+              justifyContent: "center",
+              alignItems: "center",
+              flexDirection: "row",
+            }}
+            onPress={startTutorialHandler}
+          >
+            <Text
               style={{
-                flex: 1,
-                alignSelf: "center",
-                alignItems: "center",
+                color: "#007AFF",
+                fontSize: 14,
+                padding: 5,
               }}
             >
-              <ActivityIndicator size="small" color="white" />
-            </View>
-          ) : (
-            <TouchableCmp
+              Start the tutorial!
+            </Text>
+            <FontAwesome
+              name="graduation-cap"
+              size={16}
+              color={"#007AFF"}
+              style={{ alignSelf: "center" }}
+            />
+          </TouchableCmp>
+          <TouchableCmp
+            style={{
+              flex: 1,
+              borderColor: "#007AFF",
+              borderWidth: 1,
+              margin: 5,
+              justifyContent: "center",
+              alignItems: "center",
+              flexDirection: "row",
+            }}
+            onPress={skipTutorialHandler}
+          >
+            <Text
               style={{
-                flex: 1,
-                borderColor: "#007AFF",
-                borderWidth: 1,
-                margin: 5,
-                justifyContent: "center",
-                alignItems: "center",
-                flexDirection: "row",
-              }}
-              onPress={startTutorialHandler}
-            >
-              <Text
-                style={{
-                  margin: 5,
-                  color: "#007AFF",
-                  fontSize: 14,
-                }}
-              >
-                Wait, start the tutorial!
-              </Text>
-              <FontAwesome
-                name="graduation-cap"
-                size={16}
-                color={"#007AFF"}
-                style={{ alignSelf: "center" }}
-              />
-            </TouchableCmp>
-          )}
-          {isLoadingSkip ? (
-            <View
-              style={{
-                flex: 1,
-                margin: 5,
-                alignSelf: "center",
-                alignItems: "center",
+                padding: 5,
+                color: "#007AFF",
+                fontSize: 14,
               }}
             >
-              <ActivityIndicator size="small" color="white" />
-            </View>
-          ) : (
-            <TouchableCmp
-              style={{
-                flex: 1,
-                borderColor: "#007AFF",
-                borderWidth: 1,
-                margin: 5,
-                justifyContent: "center",
-                alignItems: "center",
-                flexDirection: "row",
-              }}
-              onPress={skipTutorialHandler}
-            >
-              <Text
-                style={{
-                  margin: 5,
-                  color: "#007AFF",
-                  fontSize: 14,
-                }}
-              >
-                Continue to profile
-              </Text>
-              <Feather
-                name="arrow-right"
-                size={16}
-                color={"#007AFF"}
-                style={{ alignSelf: "center" }}
-              />
-            </TouchableCmp>
-          )}
+              Continue to profile
+            </Text>
+            <Feather
+              name="arrow-right"
+              size={16}
+              color={"#007AFF"}
+              style={{ alignSelf: "center" }}
+            />
+          </TouchableCmp>
         </View>
       </View>
-    </TutorialModalWithBackground>
+    </TutorialModalNoBackgroundNoX>
   );
 };
 
