@@ -15,7 +15,7 @@ import { useDispatch } from "react-redux";
 import { withNavigation } from "react-navigation";
 import { setTutorialing } from "../../store/actions/user";
 
-const TutorialStart = (props) => {
+const TutorialEnd = (props) => {
   const dispatch = useDispatch();
 
   const ExhibitUId = props.ExhibitUId;
@@ -29,8 +29,7 @@ const TutorialStart = (props) => {
   }
 
   const nextTutorialHandler = async () => {
-    dispatch(setTutorialing(localId, ExhibitUId, true, "EditProfile"));
-    props.navigation.navigate("EditProfile");
+    dispatch(setTutorialing(localId, ExhibitUId, false, "Start"));
   };
 
   return (
@@ -47,17 +46,8 @@ const TutorialStart = (props) => {
           alignSelf: "center",
         }}
       >
-        Welcome to the tutorial!
+        End of tutorial!
       </Text>
-      {/* <Image
-          style={{
-            height: 100,
-            width: 100,
-            alignSelf: "center",
-            marginBottom: 10,
-          }}
-          source={require("../../assets/default-profile-icon.jpg")}
-        /> */}
       <View style={{ margin: 10 }}>
         <Text
           style={{
@@ -67,7 +57,7 @@ const TutorialStart = (props) => {
             alignSelf: "center",
           }}
         >
-          First things first,
+          That's all you need to know
         </Text>
         <Text
           style={{
@@ -77,16 +67,8 @@ const TutorialStart = (props) => {
             alignSelf: "center",
           }}
         >
-          You can edit your profile with the button:
+          Thank you!
         </Text>
-        <View
-          style={{ width: "80%", alignSelf: "center", alignItems: "center" }}
-        >
-          <EditButton
-            editText="Edit profile"
-            onPress={props.onEditProfilePress}
-          />
-        </View>
       </View>
       <View
         style={{
@@ -115,10 +97,10 @@ const TutorialStart = (props) => {
               fontSize: 14,
             }}
           >
-            Next
+            Finish
           </Text>
           <Feather
-            name="arrow-right"
+            name="check"
             size={16}
             color={"#007AFF"}
             style={{ alignSelf: "center" }}
@@ -129,4 +111,4 @@ const TutorialStart = (props) => {
   );
 };
 
-export default withNavigation(TutorialStart);
+export default withNavigation(TutorialEnd);

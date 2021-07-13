@@ -1,22 +1,21 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   View,
   Text,
-  ActivityIndicator,
   TouchableOpacity,
   TouchableNativeFeedback,
   Platform,
-  Image,
 } from "react-native";
-import { FontAwesome, Feather, AntDesign } from "@expo/vector-icons";
+import { Feather, Ionicons } from "@expo/vector-icons";
 import TutorialModalNoBackground from "../UI/TutorialModalNoBackground";
-import EditButton from "../UI/EditButton";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { withNavigation } from "react-navigation";
+import EditButton from "../UI/EditButton";
 import { setTutorialing } from "../../store/actions/user";
 
-const TutorialStart = (props) => {
+const TutorialExhibitView = (props) => {
   const dispatch = useDispatch();
+  const darkModeValue = useSelector((state) => state.user.darkMode);
 
   const ExhibitUId = props.ExhibitUId;
   const localId = props.localId;
@@ -29,46 +28,29 @@ const TutorialStart = (props) => {
   }
 
   const nextTutorialHandler = async () => {
-    dispatch(setTutorialing(localId, ExhibitUId, true, "EditProfile"));
-    props.navigation.navigate("EditProfile");
+    dispatch(setTutorialing(localId, ExhibitUId, true, "PostCreation"));
+    props.navigation.navigate("AddPicture");
   };
 
   return (
     <TutorialModalNoBackground
       localId={localId}
       ExhibitUId={ExhibitUId}
-      screen="Start"
+      screen="CreateExhibit"
+      modalContainerStyle={{ justifyContent: "flex-end" }}
+      modalStyle={{ top: "2%" }}
     >
       <Text
         style={{
           color: "white",
           fontSize: 18,
-          margin: 5,
+          margin: 20,
           alignSelf: "center",
         }}
       >
-        Welcome to the tutorial!
+        Your Exhibit Screen
       </Text>
-      {/* <Image
-          style={{
-            height: 100,
-            width: 100,
-            alignSelf: "center",
-            marginBottom: 10,
-          }}
-          source={require("../../assets/default-profile-icon.jpg")}
-        /> */}
       <View style={{ margin: 10 }}>
-        <Text
-          style={{
-            color: "white",
-            fontSize: 18,
-            margin: 5,
-            alignSelf: "center",
-          }}
-        >
-          First things first,
-        </Text>
         <Text
           style={{
             color: "white",
@@ -77,17 +59,47 @@ const TutorialStart = (props) => {
             alignSelf: "center",
           }}
         >
-          You can edit your profile with the button:
+          Here you can see your exhibit and the posts you add to it
         </Text>
-        <View
-          style={{ width: "80%", alignSelf: "center", alignItems: "center" }}
-        >
-          <EditButton
-            editText="Edit profile"
-            onPress={props.onEditProfilePress}
-          />
-        </View>
       </View>
+      <View style={{ marginHorizontal: 10 }}>
+        <Text
+          style={{
+            color: "white",
+            fontSize: 16,
+            margin: 5,
+            alignSelf: "center",
+          }}
+        >
+          You can also edit certain areas of your exhibit like the title,
+          description, and links with:
+        </Text>
+      </View>
+      <View style={{ width: "80%", alignSelf: "center", alignItems: "center" }}>
+        <EditButton
+          editText="Edit exhibit"
+          onPress={props.onEditProfilePress}
+        />
+      </View>
+      <View style={{ marginHorizontal: 10 }}>
+        <Text
+          style={{
+            color: "white",
+            fontSize: 16,
+            margin: 5,
+            alignSelf: "center",
+          }}
+        >
+          To create a post, you can click the plus icon in the top right of your
+          phone:
+        </Text>
+      </View>
+      <Ionicons
+        name="ios-add"
+        size={23}
+        color="white"
+        style={{ alignSelf: "center" }}
+      />
       <View
         style={{
           flexDirection: "row",
@@ -129,4 +141,4 @@ const TutorialStart = (props) => {
   );
 };
 
-export default withNavigation(TutorialStart);
+export default withNavigation(TutorialExhibitView);

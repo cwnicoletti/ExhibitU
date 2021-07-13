@@ -1,22 +1,20 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   View,
   Text,
-  ActivityIndicator,
   TouchableOpacity,
   TouchableNativeFeedback,
   Platform,
-  Image,
 } from "react-native";
-import { FontAwesome, Feather, AntDesign } from "@expo/vector-icons";
+import { Feather, Ionicons } from "@expo/vector-icons";
 import TutorialModalNoBackground from "../UI/TutorialModalNoBackground";
-import EditButton from "../UI/EditButton";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { withNavigation } from "react-navigation";
-import { setTutorialing } from "../../store/actions/user";
+import { setTutorialing, setTutorialPrompt } from "../../store/actions/user";
 
-const TutorialStart = (props) => {
+const TutorialExploreExhibit = (props) => {
   const dispatch = useDispatch();
+  const darkModeValue = useSelector((state) => state.user.darkMode);
 
   const ExhibitUId = props.ExhibitUId;
   const localId = props.localId;
@@ -29,46 +27,29 @@ const TutorialStart = (props) => {
   }
 
   const nextTutorialHandler = async () => {
-    dispatch(setTutorialing(localId, ExhibitUId, true, "EditProfile"));
-    props.navigation.navigate("EditProfile");
+    dispatch(setTutorialing(localId, ExhibitUId, true, "ExhibitView"));
+    props.navigation.navigate("ViewProfileProject");
   };
 
   return (
     <TutorialModalNoBackground
       localId={localId}
       ExhibitUId={ExhibitUId}
-      screen="Start"
+      screen="CreateExhibit"
+      modalContainerStyle={{ justifyContent: "flex-end" }}
+      modalStyle={{ bottom: "15%" }}
     >
       <Text
         style={{
           color: "white",
           fontSize: 18,
-          margin: 5,
+          margin: 20,
           alignSelf: "center",
         }}
       >
-        Welcome to the tutorial!
+        Explore an exhibit
       </Text>
-      {/* <Image
-          style={{
-            height: 100,
-            width: 100,
-            alignSelf: "center",
-            marginBottom: 10,
-          }}
-          source={require("../../assets/default-profile-icon.jpg")}
-        /> */}
       <View style={{ margin: 10 }}>
-        <Text
-          style={{
-            color: "white",
-            fontSize: 18,
-            margin: 5,
-            alignSelf: "center",
-          }}
-        >
-          First things first,
-        </Text>
         <Text
           style={{
             color: "white",
@@ -77,16 +58,20 @@ const TutorialStart = (props) => {
             alignSelf: "center",
           }}
         >
-          You can edit your profile with the button:
+          Once you've made an exhibit you can tap on it
         </Text>
-        <View
-          style={{ width: "80%", alignSelf: "center", alignItems: "center" }}
+      </View>
+      <View style={{ margin: 10 }}>
+        <Text
+          style={{
+            color: "white",
+            fontSize: 16,
+            margin: 5,
+            alignSelf: "center",
+          }}
         >
-          <EditButton
-            editText="Edit profile"
-            onPress={props.onEditProfilePress}
-          />
-        </View>
+          (If you haven't made one, we'll show a sample)
+        </Text>
       </View>
       <View
         style={{
@@ -129,4 +114,4 @@ const TutorialStart = (props) => {
   );
 };
 
-export default withNavigation(TutorialStart);
+export default withNavigation(TutorialExploreExhibit);

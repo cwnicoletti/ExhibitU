@@ -1,22 +1,20 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   View,
   Text,
-  ActivityIndicator,
   TouchableOpacity,
   TouchableNativeFeedback,
   Platform,
-  Image,
 } from "react-native";
-import { FontAwesome, Feather, AntDesign } from "@expo/vector-icons";
+import { Feather, Ionicons } from "@expo/vector-icons";
 import TutorialModalNoBackground from "../UI/TutorialModalNoBackground";
-import EditButton from "../UI/EditButton";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { withNavigation } from "react-navigation";
-import { setTutorialing } from "../../store/actions/user";
+import { setTutorialing, setTutorialPrompt } from "../../store/actions/user";
 
-const TutorialStart = (props) => {
+const TutorialCreateExhibit = (props) => {
   const dispatch = useDispatch();
+  const darkModeValue = useSelector((state) => state.user.darkMode);
 
   const ExhibitUId = props.ExhibitUId;
   const localId = props.localId;
@@ -29,15 +27,17 @@ const TutorialStart = (props) => {
   }
 
   const nextTutorialHandler = async () => {
-    dispatch(setTutorialing(localId, ExhibitUId, true, "EditProfile"));
-    props.navigation.navigate("EditProfile");
+    dispatch(setTutorialing(localId, ExhibitUId, true, "ExhibitCreation"));
+    props.navigation.navigate("AddProject");
   };
 
   return (
     <TutorialModalNoBackground
       localId={localId}
       ExhibitUId={ExhibitUId}
-      screen="Start"
+      screen="CreateExhibit"
+      modalContainerStyle={{ justifyContent: "flex-end" }}
+      modalStyle={{ bottom: "15%" }}
     >
       <Text
         style={{
@@ -47,28 +47,9 @@ const TutorialStart = (props) => {
           alignSelf: "center",
         }}
       >
-        Welcome to the tutorial!
+        Create an exhibit!
       </Text>
-      {/* <Image
-          style={{
-            height: 100,
-            width: 100,
-            alignSelf: "center",
-            marginBottom: 10,
-          }}
-          source={require("../../assets/default-profile-icon.jpg")}
-        /> */}
       <View style={{ margin: 10 }}>
-        <Text
-          style={{
-            color: "white",
-            fontSize: 18,
-            margin: 5,
-            alignSelf: "center",
-          }}
-        >
-          First things first,
-        </Text>
         <Text
           style={{
             color: "white",
@@ -77,16 +58,53 @@ const TutorialStart = (props) => {
             alignSelf: "center",
           }}
         >
-          You can edit your profile with the button:
+          ExhibitU's main feature is creating exhibits with:
         </Text>
         <View
-          style={{ width: "80%", alignSelf: "center", alignItems: "center" }}
+          style={{
+            alignItems: "center",
+          }}
         >
-          <EditButton
-            editText="Edit profile"
-            onPress={props.onEditProfilePress}
-          />
+          <TouchableCmp onPress={props.onAddNewProjectPress}>
+            <View
+              style={{
+                marginTop: 10,
+                paddingHorizontal: "20%",
+                flexDirection: "row",
+                borderColor: darkModeValue ? "gray" : "#c9c9c9",
+                borderWidth: 1,
+                alignItems: "center",
+              }}
+            >
+              <Ionicons
+                name="ios-add"
+                size={14}
+                color={darkModeValue ? "white" : "black"}
+              />
+              <Text
+                style={{
+                  margin: 7,
+                  color: darkModeValue ? "white" : "black",
+                }}
+              >
+                Create exhibit
+              </Text>
+            </View>
+          </TouchableCmp>
         </View>
+      </View>
+      <View style={{ margin: 10 }}>
+        <Text
+          style={{
+            color: "white",
+            fontSize: 16,
+            margin: 5,
+            alignSelf: "center",
+          }}
+        >
+          Exhibits are a way of storing multiple pictures with captions
+          showcasing your work
+        </Text>
       </View>
       <View
         style={{
@@ -129,4 +147,4 @@ const TutorialStart = (props) => {
   );
 };
 
-export default withNavigation(TutorialStart);
+export default withNavigation(TutorialCreateExhibit);

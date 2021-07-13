@@ -1,21 +1,18 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   View,
   Text,
-  ActivityIndicator,
   TouchableOpacity,
   TouchableNativeFeedback,
   Platform,
-  Image,
 } from "react-native";
-import { FontAwesome, Feather, AntDesign } from "@expo/vector-icons";
+import { Feather, SimpleLineIcons } from "@expo/vector-icons";
 import TutorialModalNoBackground from "../UI/TutorialModalNoBackground";
-import EditButton from "../UI/EditButton";
 import { useDispatch } from "react-redux";
 import { withNavigation } from "react-navigation";
 import { setTutorialing } from "../../store/actions/user";
 
-const TutorialStart = (props) => {
+const TutorialExploreProfile = (props) => {
   const dispatch = useDispatch();
 
   const ExhibitUId = props.ExhibitUId;
@@ -29,46 +26,29 @@ const TutorialStart = (props) => {
   }
 
   const nextTutorialHandler = async () => {
-    dispatch(setTutorialing(localId, ExhibitUId, true, "EditProfile"));
-    props.navigation.navigate("EditProfile");
+    dispatch(setTutorialing(localId, ExhibitUId, true, "ExploreProject"));
+    props.navigation.navigate("ViewExploredProfileProject");
   };
 
   return (
     <TutorialModalNoBackground
       localId={localId}
       ExhibitUId={ExhibitUId}
-      screen="Start"
+      screen="CreateExhibit"
+      modalContainerStyle={{ justifyContent: "flex-end" }}
+      modalStyle={{ bottom: "15%" }}
     >
       <Text
         style={{
           color: "white",
           fontSize: 18,
-          margin: 5,
+          margin: 20,
           alignSelf: "center",
         }}
       >
-        Welcome to the tutorial!
+        Explore User Profile
       </Text>
-      {/* <Image
-          style={{
-            height: 100,
-            width: 100,
-            alignSelf: "center",
-            marginBottom: 10,
-          }}
-          source={require("../../assets/default-profile-icon.jpg")}
-        /> */}
       <View style={{ margin: 10 }}>
-        <Text
-          style={{
-            color: "white",
-            fontSize: 18,
-            margin: 5,
-            alignSelf: "center",
-          }}
-        >
-          First things first,
-        </Text>
         <Text
           style={{
             color: "white",
@@ -77,17 +57,27 @@ const TutorialStart = (props) => {
             alignSelf: "center",
           }}
         >
-          You can edit your profile with the button:
+          Similar to other social media apps, you can follow other users
         </Text>
-        <View
-          style={{ width: "80%", alignSelf: "center", alignItems: "center" }}
-        >
-          <EditButton
-            editText="Edit profile"
-            onPress={props.onEditProfilePress}
-          />
-        </View>
       </View>
+      <View style={{ margin: 10 }}>
+        <Text
+          style={{
+            color: "white",
+            fontSize: 16,
+            margin: 5,
+            alignSelf: "center",
+          }}
+        >
+          Following is as simple as tapping on the follow icon in the top right of your phone:
+        </Text>
+      </View>
+      <SimpleLineIcons
+        name="user-follow"
+        size={23}
+        color="white"
+        style={{ alignSelf: "center" }}
+      />
       <View
         style={{
           flexDirection: "row",
@@ -129,4 +119,4 @@ const TutorialStart = (props) => {
   );
 };
 
-export default withNavigation(TutorialStart);
+export default withNavigation(TutorialExploreProfile);
