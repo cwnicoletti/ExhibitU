@@ -18,6 +18,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Input from "../../components/UI/Input";
 import IoniconsHeaderButton from "../../components/UI/IoniconsHeaderButton";
 import PreviewPostItem from "../../components/user/PreviewPostItem";
+import TutorialPostCreation from "../../components/tutorial/TutorialPostCreation";
 import {
   addUserPost,
   uploadAddTempPostPicture,
@@ -182,6 +183,8 @@ const EditProfileScreen = (props) => {
   const followingValue = useSelector((state) => state.user.hideFollowing);
   const followersValue = useSelector((state) => state.user.hideFollowers);
   const advocatesValue = useSelector((state) => state.user.hideAdvocates);
+  const tutorialing = useSelector((state) => state.user.tutorialing);
+  const tutorialScreen = useSelector((state) => state.user.tutorialScreen);
 
   let TouchableCmp = TouchableOpacity;
   if (Platform.OS === "android") {
@@ -353,6 +356,9 @@ const EditProfileScreen = (props) => {
         keyboardShouldPersistTaps="handled"
         scrollEnabled={true}
       >
+        {tutorialing && tutorialScreen === "PostCreation" ? (
+          <TutorialPostCreation ExhibitUId={ExhibitUId} localId={localId} />
+        ) : null}
         <View
           style={{
             borderBottomWidth: 1,

@@ -18,6 +18,7 @@ import {
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import { useDispatch, useSelector } from "react-redux";
+import TutorialExhibitCreation from "../../components/tutorial/TutorialExhibitCreation";
 import DefaultPicture from "../../assets/Icons/picture.svg";
 import Input from "../../components/UI/Input";
 import IoniconsHeaderButton from "../../components/UI/IoniconsHeaderButton";
@@ -157,6 +158,8 @@ const AddProjectScreen = (props) => {
   const projectTempCoverPhotoBase64 = useSelector(
     (state) => state.user.projectTempCoverPhotoBase64
   );
+  const tutorialing = useSelector((state) => state.user.tutorialing);
+  const tutorialScreen = useSelector((state) => state.user.tutorialScreen);
 
   let initialState = {
     inputValues: {
@@ -317,6 +320,9 @@ const AddProjectScreen = (props) => {
         disableKBDismissScroll={true}
         scrollEnabled={true}
       >
+        {tutorialing && tutorialScreen === "ExhibitCreation" ? (
+          <TutorialExhibitCreation ExhibitUId={ExhibitUId} localId={localId} />
+        ) : null}
         <View
           style={{
             alignItems: "center",

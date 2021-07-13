@@ -11,6 +11,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import FeedItem from "../../components/feed/FeedItem";
 import useDidMountEffect from "../../helper/useDidMountEffect";
+import TutorialFeedView from "../../components/tutorial/TutorialFeedView";
 import * as Notifications from "expo-notifications";
 import { getUserFeed, offScreen } from "../../store/actions/user";
 
@@ -39,6 +40,8 @@ const UserFeedScreen = (props) => {
     (state) => state.user.profilePictureBase64
   );
   const resetScrollFeed = useSelector((state) => state.user.resetScrollFeed);
+  const tutorialing = useSelector((state) => state.user.tutorialing);
+  const tutorialScreen = useSelector((state) => state.user.tutorialScreen);
 
   useEffect(() => {
     props.navigation.setParams({ darkMode: darkModeValue });
@@ -256,6 +259,9 @@ const UserFeedScreen = (props) => {
         backgroundColor: darkModeValue ? "black" : "white",
       }}
     >
+      {tutorialing && tutorialScreen === "FeedView" ? (
+        <TutorialFeedView ExhibitUId={ExhibitUId} localId={localId} />
+      ) : null}
       <StatusBar barStyle={setStatusBarStyle(darkModeValue)} />
       <FlatList
         extraData={profilePictureBase64}

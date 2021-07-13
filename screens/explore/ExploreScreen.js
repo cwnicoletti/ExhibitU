@@ -13,12 +13,14 @@ import { SearchBar } from "react-native-elements";
 import { useDispatch, useSelector } from "react-redux";
 import ExploreCard from "../../components/explore/ExploreCard";
 import useDidMountEffect from "../../helper/useDidMountEffect";
+import TutorialExploreScreen from "../../components/tutorial/TutorialExploreScreen";
 import { offScreen } from "../../store/actions/user";
 import { FontAwesome5 } from "@expo/vector-icons";
 
 const ExploreScreen = (props) => {
   const dispatch = useDispatch();
   const darkModeValue = useSelector((state) => state.user.darkMode);
+  const localId = useSelector((state) => state.auth.userId);
   const ExhibitUId = useSelector((state) => state.user.ExhibitUId);
   const [search, setSearch] = useState("");
   const [returnedIndex, setReturnedIndex] = useState([]);
@@ -32,6 +34,8 @@ const ExploreScreen = (props) => {
   const resetScrollExplore = useSelector(
     (state) => state.user.resetScrollExplore
   );
+  const tutorialing = useSelector((state) => state.user.tutorialing);
+  const tutorialScreen = useSelector((state) => state.user.tutorialScreen);
 
   useEffect(() => {
     setIntialAdvocating(advocating);
@@ -272,6 +276,9 @@ const ExploreScreen = (props) => {
         backgroundColor: darkModeValue ? "black" : "white",
       }}
     >
+      {tutorialing && tutorialScreen === "ExploreScreen" ? (
+        <TutorialExploreScreen ExhibitUId={ExhibitUId} localId={localId} />
+      ) : null}
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
         <View style={{ alignItems: "center" }}>
           <SearchBar

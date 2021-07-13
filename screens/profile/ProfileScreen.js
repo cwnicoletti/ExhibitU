@@ -13,6 +13,9 @@ import { useDispatch, useSelector } from "react-redux";
 import ProjectItem from "../../components/projectItems/ProfileProjectItem";
 import TutorialPrompt from "../../components/tutorial/TutorialPrompt";
 import TutorialStart from "../../components/tutorial/TutorialStart";
+import TutorialCreateExhibit from "../../components/tutorial/TutorialCreateExhibit";
+import TutorialExploreExhibit from "../../components/tutorial/TutorialExploreExhibit";
+import TutorialEnd from "../../components/tutorial/TutorialEnd";
 import ProfileHeader from "../../components/user/ProfileHeader";
 import useDidMountEffect from "../../helper/useDidMountEffect";
 import {
@@ -258,6 +261,15 @@ const ProfileScreen = (props) => {
       ) : null}
       {tutorialing && !tutorialPrompt && tutorialScreen === "Start" ? (
         <TutorialStart ExhibitUId={ExhibitUId} localId={localId} />
+      ) : null}
+      {tutorialing && !tutorialPrompt && tutorialScreen === "CreateExhibit" ? (
+        <TutorialCreateExhibit ExhibitUId={ExhibitUId} localId={localId} />
+      ) : null}
+      {tutorialing && !tutorialPrompt && tutorialScreen === "CreatePost" ? (
+        <TutorialExploreExhibit ExhibitUId={ExhibitUId} localId={localId} />
+      ) : null}
+      {tutorialing && !tutorialPrompt && tutorialScreen === "TutorialEnd" ? (
+        <TutorialEnd ExhibitUId={ExhibitUId} localId={localId} />
       ) : null}
       <FlatList
         data={profileProjectsState}

@@ -13,6 +13,7 @@ import ExploreProjectHeader from "../../components/explore/ExploreProjectHeader"
 import FontAwesomeHeaderButton from "../../components/UI/FontAwesomeHeaderButton";
 import IoniconsHeaderButton from "../../components/UI/IoniconsHeaderButton";
 import ProjectPictures from "../../components/UI/ProjectPictures";
+import TutorialExploreProject from "../../components/tutorial/TutorialExploreProject";
 import useDidMountEffect from "../../helper/useDidMountEffect";
 import { advocateForUser, unadvocateForUser } from "../../store/actions/user";
 
@@ -26,7 +27,11 @@ const ExploreProjectScreen = (props) => {
   const [intialCheeredPosts, setIntialCheeredPosts] = useState([]);
   const [exploredUserDataLocal, setExploredUserDataLocal] = useState(
     props.navigation.getParam("exploredUserData")
+      ? props.navigation.getParam("exploredUserData")
+      : {}
   );
+  const tutorialing = useSelector((state) => state.user.tutorialing);
+  const tutorialScreen = useSelector((state) => state.user.tutorialScreen);
 
   const exploredProjectData = {
     projectId: props.navigation.getParam("projectId"),
@@ -41,6 +46,110 @@ const ExploreProjectScreen = (props) => {
       ? props.navigation.getParam("projectLinks")
       : {},
   };
+
+  exploredProjectData.projectId = exploredProjectData.projectId
+    ? exploredProjectData.projectId
+    : "";
+  exploredProjectData.projectTitle = exploredProjectData.projectTitle
+    ? exploredProjectData.projectTitle
+    : "Sample Project";
+  exploredProjectData.projectCoverPhotoUrl =
+    exploredProjectData.projectCoverPhotoUrl
+      ? exploredProjectData.projectCoverPhotoUrl
+      : "https://res.cloudinary.com/showcase-79c28/image/upload/v1626117054/project_pic_ysb6uu.png";
+  exploredProjectData.projectDescription =
+    exploredProjectData.projectDescription
+      ? exploredProjectData.projectDescription
+      : "I've been working on a really cool web application!";
+  exploredProjectData.projectColumns = exploredProjectData.projectColumns
+    ? exploredProjectData.projectColumns
+    : 2;
+  exploredProjectData.projectPosts = exploredProjectData.projectPosts
+    ? exploredProjectData.projectPosts
+    : {
+        ["randomId121334h"]: {
+          ExhibitUId: ExhibitUId,
+          projectId: "randomId121334",
+          postId: "randomId121334h",
+          fullname: "test",
+          username: "test",
+          jobTitle: "test",
+          profileBiography: "test",
+          profileProjects: {},
+          profilePictureUrl: "test",
+          postPhotoUrl:
+            "https://camo.githubusercontent.com/9aea0a68fd10f943a82ce8a434f6c126296568fdf17d0cc914d40a4feb4a9f10/68747470733a2f2f7265732e636c6f7564696e6172792e636f6d2f706572736f6e616c757365313233342f696d6167652f75706c6f61642f76313631373231353939392f436f43726561746f727765626170705f6c7a716e696e2e706e67",
+          postPhotoBase64: "",
+          numberOfCheers: 0,
+          numberOfComments: 0,
+          caption: "Sample post",
+          postLinks: {},
+          postDateCreated: {
+            _seconds: 7654757,
+            _minutes: 7654757,
+          },
+        },
+      };
+  exploredProjectData.projectLinks = exploredProjectData.projectLinks
+    ? exploredProjectData.projectLinks
+    : {};
+
+  exploredUserDataLocal.profileBiography =
+    exploredUserDataLocal.profileBiography
+      ? exploredUserDataLocal.profileBiography
+      : "Yes, it's me, Elon Tusk.";
+  exploredUserDataLocal.following = exploredUserDataLocal.following
+    ? exploredUserDataLocal.following
+    : [];
+  exploredUserDataLocal.followers = exploredUserDataLocal.followers
+    ? exploredUserDataLocal.followers
+    : [];
+  exploredUserDataLocal.advocates = exploredUserDataLocal.advocates
+    ? exploredUserDataLocal.advocates
+    : [];
+  exploredUserDataLocal.fullname = exploredUserDataLocal.fullname
+    ? exploredUserDataLocal.fullname
+    : "Elon Tusk";
+  exploredUserDataLocal.username = exploredUserDataLocal.username
+    ? exploredUserDataLocal.username
+    : "elontusk";
+  exploredUserDataLocal.jobTitle = exploredUserDataLocal.jobTitle
+    ? exploredUserDataLocal.jobTitle
+    : "CEO of companies";
+  exploredUserDataLocal.profilePictureUrl =
+    exploredUserDataLocal.profilePictureUrl
+      ? exploredUserDataLocal.profilePictureUrl
+      : "";
+  exploredUserDataLocal.hideFollowing = exploredUserDataLocal.hideFollowing
+    ? exploredUserDataLocal.hideFollowing
+    : false;
+  exploredUserDataLocal.hideFollowers = exploredUserDataLocal.hideFollowers
+    ? exploredUserDataLocal.hideFollowers
+    : false;
+  exploredUserDataLocal.hideAdvocates = exploredUserDataLocal.hideAdvocates
+    ? exploredUserDataLocal.hideAdvocates
+    : false;
+  exploredUserDataLocal.profileLinks = exploredUserDataLocal.profileLinks
+    ? exploredUserDataLocal.profileLinks
+    : {};
+  exploredUserDataLocal.profileColumns = exploredUserDataLocal.profileColumns
+    ? exploredUserDataLocal.profileColumns
+    : 2;
+  exploredUserDataLocal.showCheering = exploredUserDataLocal.showCheering
+    ? exploredUserDataLocal.showCheering
+    : true;
+  exploredUserDataLocal.numberOfFollowers =
+    exploredUserDataLocal.numberOfFollowers
+      ? exploredUserDataLocal.numberOfFollowers
+      : 0;
+  exploredUserDataLocal.numberOfFollowing =
+    exploredUserDataLocal.numberOfFollowing
+      ? exploredUserDataLocal.numberOfFollowing
+      : 0;
+  exploredUserDataLocal.numberOfAdvocates =
+    exploredUserDataLocal.numberOfAdvocates
+      ? exploredUserDataLocal.numberOfAdvocates
+      : 0;
 
   const [projectPostsState, setProjectPostsState] = useState(
     Object.values(exploredProjectData.projectPosts).sort((first, second) => {
@@ -158,18 +267,6 @@ const ExploreProjectScreen = (props) => {
   }, [exploredUserDataLocal]);
 
   useDidMountEffect(() => {
-    // Sort the array based on the second element
-    setProjectPostsState(
-      Object.values(exploredProjectData.projectPosts).sort((first, second) => {
-        return (
-          second["postDateCreated"]["_seconds"] -
-          first["postDateCreated"]["_seconds"]
-        );
-      })
-    );
-  }, [exploredProjectData.projectPosts]);
-
-  useDidMountEffect(() => {
     const difference = getExlusiveBothSetsDifference(
       intialCheeredPosts,
       cheeredPosts
@@ -238,6 +335,9 @@ const ExploreProjectScreen = (props) => {
         backgroundColor: darkModeValue ? "black" : "white",
       }}
     >
+      {tutorialing && tutorialScreen === "ExploreProject" ? (
+        <TutorialExploreProject ExhibitUId={ExhibitUId} localId={localId} />
+      ) : null}
       <FlatList
         data={projectPostsState}
         keyExtractor={(item) => item.postId}
