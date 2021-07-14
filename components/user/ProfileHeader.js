@@ -238,7 +238,6 @@ const Profile = (props) => {
       </View>
       {Object.keys(profileProjects).length > 0 ? (
         <View>
-          {" "}
           <Text
             style={{
               color: darkModeValue ? "white" : "black",

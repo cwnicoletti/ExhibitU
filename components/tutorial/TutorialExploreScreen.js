@@ -37,17 +37,8 @@ const TutorialExploreScreen = (props) => {
       screen="CreateExhibit"
       modalContainerStyle={{ justifyContent: "flex-start" }}
       modalStyle={{ top: "15%" }}
+      title={"Explore Page"}
     >
-      <Text
-        style={{
-          color: "white",
-          fontSize: 18,
-          margin: 20,
-          alignSelf: "center",
-        }}
-      >
-        Explore Page
-      </Text>
       <View style={{ margin: 10 }}>
         <Text
           style={{

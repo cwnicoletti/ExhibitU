@@ -37,17 +37,8 @@ const TutorialEnd = (props) => {
       localId={localId}
       ExhibitUId={ExhibitUId}
       screen="Start"
+      title={"End of tutorial"}
     >
-      <Text
-        style={{
-          color: "white",
-          fontSize: 18,
-          margin: 5,
-          alignSelf: "center",
-        }}
-      >
-        End of tutorial!
-      </Text>
       <View style={{ margin: 10 }}>
         <Text
           style={{
@@ -57,17 +48,7 @@ const TutorialEnd = (props) => {
             alignSelf: "center",
           }}
         >
-          That's all you need to know
-        </Text>
-        <Text
-          style={{
-            color: "white",
-            fontSize: 16,
-            margin: 5,
-            alignSelf: "center",
-          }}
-        >
-          Thank you!
+          That's all you need to know!
         </Text>
       </View>
       <View

@@ -37,17 +37,8 @@ const TutorialExploreProfile = (props) => {
       screen="CreateExhibit"
       modalContainerStyle={{ justifyContent: "flex-end" }}
       modalStyle={{ bottom: "15%" }}
+      title={"Explore User Profile"}
     >
-      <Text
-        style={{
-          color: "white",
-          fontSize: 18,
-          margin: 20,
-          alignSelf: "center",
-        }}
-      >
-        Explore User Profile
-      </Text>
       <View style={{ margin: 10 }}>
         <Text
           style={{
@@ -69,7 +60,8 @@ const TutorialExploreProfile = (props) => {
             alignSelf: "center",
           }}
         >
-          Following is as simple as tapping on the follow icon in the top right of your phone:
+          Following is as simple as tapping on the follow icon in the top right
+          of your phone:
         </Text>
       </View>
       <SimpleLineIcons

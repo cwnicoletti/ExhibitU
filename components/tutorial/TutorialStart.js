@@ -38,26 +38,8 @@ const TutorialStart = (props) => {
       localId={localId}
       ExhibitUId={ExhibitUId}
       screen="Start"
+      title={"Welcome to the tutorial!"}
     >
-      <Text
-        style={{
-          color: "white",
-          fontSize: 18,
-          margin: 5,
-          alignSelf: "center",
-        }}
-      >
-        Welcome to the tutorial!
-      </Text>
-      {/* <Image
-          style={{
-            height: 100,
-            width: 100,
-            alignSelf: "center",
-            marginBottom: 10,
-          }}
-          source={require("../../assets/default-profile-icon.jpg")}
-        /> */}
       <View style={{ margin: 10 }}>
         <Text
           style={{

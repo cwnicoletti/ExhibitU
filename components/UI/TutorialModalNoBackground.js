@@ -1,5 +1,6 @@
 import React from "react";
 import {
+  Text,
   View,
   Platform,
   TouchableOpacity,
@@ -59,14 +60,30 @@ const TutorialModalNoBackground = (props) => {
           ...props.modalStyle,
         }}
       >
-        <TouchableCmp onPress={endTutorialHandler}>
-          <Feather
-            name="x"
-            size={24}
-            color="red"
-            style={{ alignSelf: "flex-end", marginTop: 20, marginRight: 20 }}
-          />
-        </TouchableCmp>
+        <View
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            margin: 20,
+          }}
+        >
+          <View style={{ flex: 1 }} />
+          <Text
+            style={{
+              color: "white",
+              fontSize: 18,
+              margin: 5,
+              flex: 10,
+              fontWeight: "700",
+              textAlign: "center",
+            }}
+          >
+            {props.title}
+          </Text>
+          <TouchableCmp onPress={endTutorialHandler} style={{ flex: 1 }}>
+            <Feather name="x" size={23} color="red" />
+          </TouchableCmp>
+        </View>
         {props.children}
       </View>
     </View>

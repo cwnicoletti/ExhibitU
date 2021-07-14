@@ -39,17 +39,8 @@ const TutorialPostCreation = (props) => {
       screen="CreateExhibit"
       modalContainerStyle={{ justifyContent: "flex-start" }}
       modalStyle={{ top: "15%" }}
+      title={"Creating a post"}
     >
-      <Text
-        style={{
-          color: "white",
-          fontSize: 18,
-          margin: 20,
-          alignSelf: "center",
-        }}
-      >
-        Creating a post
-      </Text>
       <View style={{ margin: 10 }}>
         <Text
           style={{

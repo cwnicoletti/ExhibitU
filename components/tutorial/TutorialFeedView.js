@@ -37,17 +37,8 @@ const TutorialFeedView = (props) => {
       screen="CreateExhibit"
       modalContainerStyle={{ justifyContent: "flex-start" }}
       modalStyle={{ top: "15%" }}
+      title={"Your Feed!"}
     >
-      <Text
-        style={{
-          color: "white",
-          fontSize: 18,
-          margin: 20,
-          alignSelf: "center",
-        }}
-      >
-        Your Feed!
-      </Text>
       <View style={{ margin: 10 }}>
         <Text
           style={{

@@ -35,17 +35,8 @@ const TutorialExhibitCreation = (props) => {
       localId={localId}
       ExhibitUId={ExhibitUId}
       screen="AddProject"
+      title={"Creating an Exhibit"}
     >
-      <Text
-        style={{
-          color: "white",
-          fontSize: 18,
-          margin: 5,
-          alignSelf: "center",
-        }}
-      >
-        Creating an Exhibit
-      </Text>
       <View style={{ margin: 10 }}>
         <Text
           style={{

@@ -36,17 +36,8 @@ const TutorialEditProfile = (props) => {
       localId={localId}
       ExhibitUId={ExhibitUId}
       screen="EditProfile"
+      title={"Edit Profile Screen"}
     >
-      <Text
-        style={{
-          color: "white",
-          fontSize: 18,
-          margin: 5,
-          alignSelf: "center",
-        }}
-      >
-        Edit Profile Screen
-      </Text>
       <Image
         style={{
           height: 100,

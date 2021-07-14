@@ -38,17 +38,8 @@ const TutorialExploreExhibit = (props) => {
       screen="CreateExhibit"
       modalContainerStyle={{ justifyContent: "flex-end" }}
       modalStyle={{ bottom: "15%" }}
+      title={"Explore an exhibit"}
     >
-      <Text
-        style={{
-          color: "white",
-          fontSize: 18,
-          margin: 20,
-          alignSelf: "center",
-        }}
-      >
-        Explore an exhibit
-      </Text>
       <View style={{ margin: 10 }}>
         <Text
           style={{
