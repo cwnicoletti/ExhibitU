@@ -16,7 +16,9 @@ const StartupScreen = (props) => {
       const transformedData = JSON.parse(userData);
 
       let [localId, token, introing] = [false, false, true];
-      [{ introing }] = [transformedIntroing];
+      if (transformedIntroing) {
+        [{ introing }] = [transformedIntroing];
+      }
 
       if (transformedData) {
         [{ localId, token }] = [transformedData];
