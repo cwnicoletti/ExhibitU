@@ -68,11 +68,15 @@ const LoginScreen = (props) => {
 
   const authHandler = async () => {
     await setIsLoading(true);
-    await dispatch(
-      login(formState.inputValues.email, formState.inputValues.password)
+    const authenticated = await dispatch(
+      await login(formState.inputValues.email, formState.inputValues.password)
     );
     await setIsLoading(false);
-    await props.navigation.navigate("Project");
+    if (authenticated) {
+      await props.navigation.navigate("Project");
+    } else {
+      
+    }
   };
 
   const inputChangeHandler = useCallback(
@@ -117,7 +121,7 @@ const LoginScreen = (props) => {
                 password.focus();
               }}
               styleInput={{
-                color: 'white',
+                color: "white",
                 backgroundColor: "#222222",
               }}
             />
@@ -141,7 +145,7 @@ const LoginScreen = (props) => {
               onInputChange={inputChangeHandler}
               initialValue=""
               styleInput={{
-                color: 'white',
+                color: "white",
                 backgroundColor: "#222222",
                 marginBottom: 10,
               }}
