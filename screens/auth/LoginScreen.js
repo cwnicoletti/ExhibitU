@@ -8,6 +8,7 @@ import {
   TouchableNativeFeedback,
   TouchableOpacity,
   View,
+  Alert,
 } from "react-native";
 import { SimpleLineIcons } from "@expo/vector-icons";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
@@ -75,7 +76,12 @@ const LoginScreen = (props) => {
     if (authenticated) {
       await props.navigation.navigate("Project");
     } else {
-      
+      Alert.alert("Invalid Credentials", "Invalid username or password", [
+        {
+          text: "Dismiss",
+          onPress: () => console.log("Ask me later pressed"),
+        },
+      ]);
     }
   };
 
