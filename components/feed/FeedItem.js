@@ -29,6 +29,7 @@ import {
 } from "../../store/actions/user";
 import LinkButton from "../UI/LinkButton";
 import toDateTime from "../../helper/toDateTime";
+import TimeStamp from "../UI/TimeStamp";
 
 const FeedItem = (props) => {
   const dispatch = useDispatch();
@@ -500,42 +501,23 @@ const FeedItem = (props) => {
           </Text>
         </View>
       ) : null}
-      <View style={{ ...styles.dateContainer, ...props.dateContainer }}>
-        <Text
-          style={{ ...styles.date, ...props.dateStyle, flexDirection: "row" }}
-        >
-          {`${postDateCreated.toLocaleString("UTC", {
-            weekday: "long",
-          })}`}
-          {", "}
-          {`${postDateCreated.toLocaleString("UTC", {
-            hour: "numeric",
-            minute: "numeric",
-          })}`}
-        </Text>
-      </View>
+      <TimeStamp
+        postDateCreated={postDateCreated}
+        dateContainer={props.dateContainer}
+        dateStyle={props.dateStyle}
+        dateLength={"short"}
+      />
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  project: {},
   profileImage: {
     borderWidth: 1,
     borderColor: "white",
     height: 50,
     width: 50,
     borderRadius: 50 / 2,
-  },
-  nameUsernameContainer: {
-    marginLeft: 10,
-    justifyContent: "center",
-  },
-  nameStyle: {
-    fontWeight: "bold",
-  },
-  usernameStyle: {
-    marginTop: 2,
   },
   title: {
     fontSize: 14,
@@ -545,10 +527,6 @@ const styles = StyleSheet.create({
     textAlign: "center",
     marginVertical: 10,
     marginHorizontal: "10%",
-    fontSize: 13,
-  },
-  date: {
-    margin: 10,
     fontSize: 13,
   },
   profilePictureContainer: {
@@ -572,12 +550,6 @@ const styles = StyleSheet.create({
     marginTop: 5,
     marginLeft: 3,
   },
-  pictureCommentNumber: {
-    fontWeight: "bold",
-    fontSize: 15,
-    marginTop: 5,
-    marginBottom: 3,
-  },
   pictureCheerText: {
     fontSize: 15,
     marginLeft: 3,
@@ -586,16 +558,8 @@ const styles = StyleSheet.create({
   captionContainer: {
     justifyContent: "center",
   },
-  dateContainer: {
-    alignItems: "flex-end",
-  },
   clapContainer: {
     marginRight: 10,
-  },
-  commentContainer: {
-    paddingTop: 5,
-    paddingRight: 5,
-    paddingLeft: 5,
   },
   titleTextContainer: {
     flex: 1,

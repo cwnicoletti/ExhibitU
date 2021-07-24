@@ -26,6 +26,7 @@ import {
 import LinkButton from "../UI/LinkButton";
 import toDateTime from "../../helper/toDateTime";
 import * as WebBrowser from "expo-web-browser";
+import TimeStamp from "../UI/TimeStamp";
 
 const ProfileProjectPostView = (props) => {
   const dispatch = useDispatch();
@@ -411,29 +412,16 @@ const ProfileProjectPostView = (props) => {
           {props.caption}
         </Text>
       </View>
-      <View style={{ ...styles.dateContainer, ...props.dateContainer }}>
-        <Text
-          style={{ ...styles.date, ...props.dateStyle, flexDirection: "row" }}
-        >
-          {`${postDateCreated.toLocaleString("UTC", {
-            weekday: "long",
-            year: "numeric",
-            month: "long",
-            day: "numeric",
-          })}`}
-          {", "}
-          {`${postDateCreated.toLocaleString("UTC", {
-            hour: "numeric",
-            minute: "numeric",
-          })}`}
-        </Text>
-      </View>
+      <TimeStamp
+        postDateCreated={postDateCreated}
+        dateContainer={props.dateContainer}
+        dateStyle={props.dateStyle}
+      />
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  project: {},
   date: {
     margin: 10,
     fontSize: 13,
@@ -455,12 +443,6 @@ const styles = StyleSheet.create({
     marginTop: 5,
     marginLeft: 3,
   },
-  pictureCommentNumber: {
-    fontWeight: "bold",
-    fontSize: 15,
-    marginTop: 5,
-    marginBottom: 3,
-  },
   pictureCheerText: {
     fontSize: 15,
     marginLeft: 3,
@@ -471,11 +453,6 @@ const styles = StyleSheet.create({
   },
   clapContainer: {
     marginRight: 10,
-  },
-  commentContainer: {
-    paddingTop: 5,
-    paddingRight: 5,
-    paddingLeft: 5,
   },
   dateContainer: {
     alignItems: "flex-end",

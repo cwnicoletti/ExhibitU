@@ -21,6 +21,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Cheerfill from "../../assets/Icons/clap-fill.svg";
 import Cheer from "../../assets/Icons/clap.svg";
 import LinkButton from "../UI/LinkButton";
+import TimeStamp from "../UI/TimeStamp";
 import {
   cheerOwnFeedPost,
   cheerPost,
@@ -365,23 +366,11 @@ const ExplorePostView = (props) => {
           {props.caption}
         </Text>
       </View>
-      <View style={{ ...styles.dateContainer, ...props.dateContainer }}>
-        <Text
-          style={{ ...styles.date, ...props.dateStyle, flexDirection: "row" }}
-        >
-          {`${postDateCreated.toLocaleString("UTC", {
-            weekday: "long",
-            year: "numeric",
-            month: "long",
-            day: "numeric",
-          })}`}
-          {", "}
-          {`${postDateCreated.toLocaleString("UTC", {
-            hour: "numeric",
-            minute: "numeric",
-          })}`}
-        </Text>
-      </View>
+      <TimeStamp
+        postDateCreated={postDateCreated}
+        dateContainer={props.dateContainer}
+        dateStyle={props.dateStyle}
+      />
     </View>
   );
 };
@@ -391,50 +380,14 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
     borderBottomWidth: 1,
   },
-  profileImage: {
-    borderWidth: 1,
-    borderColor: "white",
-    marginLeft: 10,
-    height: 50,
-    width: 50,
-    borderRadius: 50 / 2,
-  },
-  nameUsernameContainer: {
-    flex: 1,
-    marginLeft: 10,
-    justifyContent: "center",
-  },
-  nameStyle: {
-    fontWeight: "bold",
-  },
-  usernameStyle: {
-    marginTop: 2,
-  },
-  dotsContainer: {
-    flex: 1,
-    justifyContent: "flex-end",
-  },
   title: {
     fontSize: 14,
     fontWeight: "bold",
-  },
-  date: {
-    margin: 10,
-    fontSize: 13,
-  },
-  dateContainer: {
-    alignItems: "flex-end",
   },
   caption: {
     textAlign: "center",
     margin: 10,
     fontSize: 13,
-  },
-  titleContainer: {
-    alignItems: "center",
-    flexDirection: "row",
-    padding: 10,
-    borderTopWidth: 1,
   },
   pictureCheerContainer: {
     padding: 10,
@@ -444,12 +397,6 @@ const styles = StyleSheet.create({
     fontSize: 15,
     marginLeft: 5,
     marginTop: 5,
-  },
-  pictureCommentNumber: {
-    fontWeight: "bold",
-    fontSize: 15,
-    marginTop: 5,
-    marginBottom: 5,
   },
   pictureCheerText: {
     fontSize: 15,
@@ -461,21 +408,6 @@ const styles = StyleSheet.create({
   },
   clapContainer: {
     marginRight: 15,
-  },
-  commentContainer: {
-    paddingTop: 15,
-    paddingRight: 15,
-    paddingLeft: 15,
-  },
-  titleTextContainer: {
-    flex: 1,
-    marginLeft: 5,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  balance: {
-    width: 24,
-    height: "100%",
   },
 });
 
