@@ -3,12 +3,14 @@
 
 This is a mobile app built using React Native and Expo. Designs were made via Adobe Xd.
 
-<img src="https://res.cloudinary.com/personaluse1234/image/upload/v1619238001/image4_2_xpn0qs.png" width="200">&nbsp;
-<img src="https://res.cloudinary.com/personaluse1234/image/upload/v1619238001/image5_x11qcs.png" width="200">&nbsp;
-<img src="https://res.cloudinary.com/personaluse1234/image/upload/v1619238007/image2_3_g9tytz.png" width="200">&nbsp;
-<img src="https://res.cloudinary.com/personaluse1234/image/upload/v1619238006/image1_3_c7nddw.png" width="200">&nbsp;
-<img src="https://res.cloudinary.com/personaluse1234/image/upload/v1619238008/image0_7_iqm774.png" width="200">&nbsp;
-<img src="https://res.cloudinary.com/personaluse1234/image/upload/v1619238010/image3_1_vvayxg.png" width="200">&nbsp;
+<img src="https://res.cloudinary.com/personaluse1234/image/upload/v1627322353/image0_xmon8y.png" width="200">&nbsp;
+<img src="https://res.cloudinary.com/personaluse1234/image/upload/v1627322354/image1_nzjygj.png" width="200">&nbsp;
+<img src="https://res.cloudinary.com/personaluse1234/image/upload/v1627322349/image2_vifzug.png" width="200">&nbsp;
+<img src="https://res.cloudinary.com/personaluse1234/image/upload/v1627322362/image6_wqmiup.png" width="200">&nbsp;
+<img src="https://res.cloudinary.com/personaluse1234/image/upload/v1627322356/image3_fkr3o5.png" width="200">&nbsp;
+<img src="https://res.cloudinary.com/personaluse1234/image/upload/v1627322354/image4_jbppjr.png" width="200">&nbsp;
+<img src="https://res.cloudinary.com/personaluse1234/image/upload/v1627322349/image5_xg1zfx.png" width="200">&nbsp;
+<img src="https://res.cloudinary.com/personaluse1234/image/upload/v1627322351/image8_aowb9b.png" width="200">&nbsp;
 
 ## Getting started
 
@@ -20,7 +22,7 @@ This is a mobile app built using React Native and Expo. Designs were made via Ad
 6.  While in the root directory of this repo, run: `expo start`
 7.  Expo Go should find your project if you're on the same wifi as your computer, if not: Open the camera app and focus on the QR code to get a notification to the app.
 
-**THIS MOBILE APP USES A BACKEND IN A PRIVATE REPO. YOU CAN'T EDIT THE BACKEND, BUT IT WILL STILL WORK**
+**BACKEND IS IN A PRIVATE REPO**
 
 ## Testing your code
 
