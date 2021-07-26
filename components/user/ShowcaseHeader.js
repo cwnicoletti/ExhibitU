@@ -11,6 +11,7 @@ import {
 } from "react-native";
 import { useSelector } from "react-redux";
 import LinkButton from "../UI/LinkButton";
+import ProfileStats from "../UI/ProfileStats";
 import UserTitleShowcaseLocal from "./UserTitleShowcaseLocal";
 
 const ExhibitUHeader = (props) => {
@@ -40,123 +41,18 @@ const ExhibitUHeader = (props) => {
         }}
       >
         <UserTitleShowcaseLocal {...props} />
-        <View
-          style={{
-            marginTop: 5,
-            flexDirection: "row",
-          }}
-        >
-          {!followersValue ? (
-            <TouchableCmp
-              style={{
-                flex: 1,
-                borderColor: darkModeValue ? "gray" : "#c9c9c9",
-                alignItems: "center",
-              }}
-              onPress={props.followersOnPress}
-            >
-              <View
-                style={{
-                  flex: 1,
-                  borderColor: darkModeValue ? "gray" : "#c9c9c9",
-                  alignItems: "center",
-                }}
-              >
-                <Text
-                  style={{
-                    margin: 5,
-                    color: darkModeValue ? "white" : "black",
-                    fontWeight: "bold",
-                  }}
-                >
-                  Followers
-                </Text>
-                <Text
-                  style={{
-                    marginBottom: 5,
-                    color: darkModeValue ? "white" : "black",
-                  }}
-                >
-                  {userDataProfileHeader.numberOfFollowers}
-                </Text>
-              </View>
-            </TouchableCmp>
-          ) : null}
-          {!followingValue ? (
-            <TouchableCmp
-              style={{
-                flex: 1,
-                borderColor: darkModeValue ? "gray" : "#c9c9c9",
-                alignItems: "center",
-              }}
-              onPress={props.followingOnPress}
-            >
-              <View
-                style={{
-                  flex: 1,
-                  borderColor: darkModeValue ? "gray" : "#c9c9c9",
-                  alignItems: "center",
-                }}
-              >
-                <Text
-                  style={{
-                    margin: 5,
-                    color: darkModeValue ? "white" : "black",
-                    fontWeight: "bold",
-                  }}
-                >
-                  Following
-                </Text>
-                <Text
-                  style={{
-                    marginBottom: 5,
-                    color: darkModeValue ? "white" : "black",
-                    fontSize: 15,
-                  }}
-                >
-                  {userDataProfileHeader.numberOfFollowing}
-                </Text>
-              </View>
-            </TouchableCmp>
-          ) : null}
-          {!advocatesValue ? (
-            <TouchableCmp
-              style={{
-                flex: 1,
-                borderColor: darkModeValue ? "gray" : "#c9c9c9",
-                alignItems: "center",
-              }}
-              onPress={props.advocatesOnPress}
-            >
-              <View
-                style={{
-                  flex: 1,
-                  borderColor: darkModeValue ? "gray" : "#c9c9c9",
-                  alignItems: "center",
-                }}
-              >
-                <Text
-                  style={{
-                    margin: 5,
-                    color: darkModeValue ? "white" : "black",
-                    fontWeight: "bold",
-                  }}
-                >
-                  Advocates
-                </Text>
-                <Text
-                  style={{
-                    marginBottom: 5,
-                    color: darkModeValue ? "white" : "black",
-                    fontSize: 15,
-                  }}
-                >
-                  {userDataProfileHeader.numberOfAdvocates}
-                </Text>
-              </View>
-            </TouchableCmp>
-          ) : null}
-        </View>
+        <ProfileStats
+          darkModeValue={darkModeValue}
+          followersValue={followersValue}
+          followingValue={followingValue}
+          advocatesValue={advocatesValue}
+          followersOnPress={props.followersOnPress}
+          followingOnPress={props.followingOnPress}
+          advocatesOnPress={props.advocatesOnPress}
+          numberOfFollowers={userDataProfileHeader.numberOfFollowers}
+          numberOfFollowing={userDataProfileHeader.numberOfFollowing}
+          numberOfAdvocates={userDataProfileHeader.numberOfAdvocates}
+        />
         {props.description ? (
           <Text style={props.descriptionStyle}>{props.description}</Text>
         ) : null}
