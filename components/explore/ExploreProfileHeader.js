@@ -1,38 +1,14 @@
 import * as WebBrowser from "expo-web-browser";
 import React from "react";
-import {
-  FlatList,
-  Platform,
-  StyleSheet,
-  Text,
-  TouchableNativeFeedback,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { FlatList, StyleSheet, Text, View } from "react-native";
 import { useSelector } from "react-redux";
 import LinkButton from "../UI/LinkButton";
+import ProfileStats from "../UI/ProfileStats";
 import ExploreUserTitle from "./ExploreUserTitle";
 
 const ExploreProfileHeader = (props) => {
   const darkModeValue = useSelector((state) => state.user.darkMode);
-  const followingValue = props.hideFollowing;
-  const followersValue = props.hideFollowers;
-  const advocatesValue = props.hideAdvocates;
   const links = props.links;
-
-  const userDataProfileHeader = {
-    numberOfFollowers: props.numberOfFollowers,
-    numberOfFollowing: props.numberOfFollowing,
-    numberOfAdvocates: props.numberOfAdvocates,
-    followers: props.followers,
-    following: props.following,
-    advocates: props.advocates,
-  };
-
-  let TouchableCmp = TouchableOpacity;
-  if (Platform.OS === "android") {
-    TouchableCmp = TouchableNativeFeedback;
-  }
 
   return (
     <View>
@@ -43,123 +19,18 @@ const ExploreProfileHeader = (props) => {
         }}
       >
         <ExploreUserTitle {...props} />
-        <View
-          style={{
-            marginTop: 5,
-            flexDirection: "row",
-          }}
-        >
-          {!followersValue ? (
-            <TouchableCmp
-              style={{
-                flex: 1,
-                borderColor: darkModeValue ? "gray" : "#c9c9c9",
-                alignItems: "center",
-              }}
-              onPress={props.followersOnPress}
-            >
-              <View
-                style={{
-                  flex: 1,
-                  borderColor: darkModeValue ? "gray" : "#c9c9c9",
-                  alignItems: "center",
-                }}
-              >
-                <Text
-                  style={{
-                    margin: 5,
-                    color: darkModeValue ? "white" : "black",
-                    fontWeight: "bold",
-                  }}
-                >
-                  Followers
-                </Text>
-                <Text
-                  style={{
-                    marginBottom: 5,
-                    color: darkModeValue ? "white" : "black",
-                  }}
-                >
-                  {userDataProfileHeader.numberOfFollowers}
-                </Text>
-              </View>
-            </TouchableCmp>
-          ) : null}
-          {!followingValue ? (
-            <TouchableCmp
-              style={{
-                flex: 1,
-                borderColor: darkModeValue ? "gray" : "#c9c9c9",
-                alignItems: "center",
-              }}
-              onPress={props.followingOnPress}
-            >
-              <View
-                style={{
-                  flex: 1,
-                  borderColor: darkModeValue ? "gray" : "#c9c9c9",
-                  alignItems: "center",
-                }}
-              >
-                <Text
-                  style={{
-                    margin: 5,
-                    color: darkModeValue ? "white" : "black",
-                    fontWeight: "bold",
-                  }}
-                >
-                  Following
-                </Text>
-                <Text
-                  style={{
-                    marginBottom: 5,
-                    color: darkModeValue ? "white" : "black",
-                    fontSize: 15,
-                  }}
-                >
-                  {userDataProfileHeader.numberOfFollowing}
-                </Text>
-              </View>
-            </TouchableCmp>
-          ) : null}
-          {!advocatesValue ? (
-            <TouchableCmp
-              style={{
-                flex: 1,
-                borderColor: darkModeValue ? "gray" : "#c9c9c9",
-                alignItems: "center",
-              }}
-              onPress={props.advocatesOnPress}
-            >
-              <View
-                style={{
-                  flex: 1,
-                  borderColor: darkModeValue ? "gray" : "#c9c9c9",
-                  alignItems: "center",
-                }}
-              >
-                <Text
-                  style={{
-                    margin: 5,
-                    color: darkModeValue ? "white" : "black",
-                    fontWeight: "bold",
-                  }}
-                >
-                  Advocates
-                </Text>
-                <Text
-                  style={{
-                    marginBottom: 5,
-                    color: darkModeValue ? "white" : "black",
-                    fontSize: 15,
-                  }}
-                >
-                  {userDataProfileHeader.numberOfAdvocates}
-                </Text>
-              </View>
-            </TouchableCmp>
-          ) : null}
-        </View>
+        <ProfileStats
+          darkModeValue={darkModeValue}
+          followersValue={props.followersValue}
+          followingValue={props.followingValue}
+          advocatesValue={props.advocatesValue}
+          followersOnPress={props.followersOnPress}
+          followingOnPress={props.followingOnPress}
+          advocatesOnPress={props.advocatesOnPress}
+          numberOfFollowers={props.numberOfFollowers}
+          numberOfFollowing={props.numberOfFollowing}
+          numberOfAdvocates={props.numberOfAdvocates}
+        />
         {props.description ? (
           <Text style={props.descriptionStyle}>{props.description}</Text>
         ) : null}
@@ -212,24 +83,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     margin: 5,
-  },
-  secondContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-  },
-  thirdContainer: {
-    marginRight: 10,
-    alignItems: "center",
-  },
-  image: {
-    height: 80,
-    width: 80,
-    borderRadius: 80 / 2,
-  },
-  showCaseLocalImage: {
-    height: 100,
-    width: 100,
-    borderRadius: 100 / 2,
   },
 });
 
