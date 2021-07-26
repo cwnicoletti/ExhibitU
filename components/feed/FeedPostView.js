@@ -27,6 +27,7 @@ import {
   uncheerPost,
 } from "../../store/actions/user";
 import LinkButton from "../UI/LinkButton";
+import TimeStamp from "../UI/TimeStamp";
 import toDateTime from "../../helper/toDateTime";
 
 const FeedPostView = (props) => {
