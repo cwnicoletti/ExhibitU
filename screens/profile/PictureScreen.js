@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import { useDispatch, useSelector } from "react-redux";
-import IoniconsHeaderButton from "../../components/UI/IoniconsHeaderButton";
+import IoniconsHeaderButton from "../../components/UI/header_buttons/IoniconsHeaderButton";
 import ProfileProjectPostView from "../../components/user/ProfileProjectPostView";
 import { uploadRemovePost } from "../../store/actions/user";
 

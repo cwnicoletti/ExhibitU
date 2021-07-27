@@ -15,7 +15,7 @@ import { SearchBar } from "react-native-elements";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import { useSelector } from "react-redux";
 import ExploreAdvocatesCard from "../../components/explore/ExploreAdvocatesCard";
-import IoniconsHeaderButton from "../../components/UI/IoniconsHeaderButton";
+import IoniconsHeaderButton from "../../components/UI/header_buttons/IoniconsHeaderButton";
 
 const ExploreAdvocatesScreen = (props) => {
   const darkModeValue = useSelector((state) => state.user.darkMode);

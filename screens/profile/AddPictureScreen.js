@@ -16,7 +16,7 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import { useDispatch, useSelector } from "react-redux";
 import Input from "../../components/UI/Input";
-import IoniconsHeaderButton from "../../components/UI/IoniconsHeaderButton";
+import IoniconsHeaderButton from "../../components/UI/header_buttons/IoniconsHeaderButton";
 import PreviewPostItem from "../../components/user/PreviewPostItem";
 import TutorialPostCreation from "../../components/tutorial/TutorialPostCreation";
 import {

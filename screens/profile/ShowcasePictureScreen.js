@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import { useSelector } from "react-redux";
-import IoniconsHeaderButton from "../../components/UI/IoniconsHeaderButton";
+import IoniconsHeaderButton from "../../components/UI/header_buttons/IoniconsHeaderButton";
 import ShowcasePostView from "../../components/user/ShowcasePostView";
 
 const ShowcasePictureScreen = (props) => {

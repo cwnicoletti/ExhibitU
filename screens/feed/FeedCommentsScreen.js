@@ -11,7 +11,7 @@ import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import { useSelector } from "react-redux";
 import useDidMountEffect from "../../helper/useDidMountEffect";
 import FeedPostView from "../../components/feed/FeedPostView";
-import IoniconsHeaderButton from "../../components/UI/IoniconsHeaderButton";
+import IoniconsHeaderButton from "../../components/UI/header_buttons/IoniconsHeaderButton";
 
 const FeedCommentsScreen = (props) => {
   const darkModeValue = useSelector((state) => state.user.darkMode);

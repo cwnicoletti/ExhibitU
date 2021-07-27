@@ -1,16 +1,9 @@
 import * as WebBrowser from "expo-web-browser";
 import React from "react";
-import {
-  FlatList,
-  Platform,
-  StyleSheet,
-  Text,
-  TouchableNativeFeedback,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { FlatList, StyleSheet, Text, View } from "react-native";
 import { useSelector } from "react-redux";
 import LinkButton from "../UI/LinkButton";
+import ProfileStats from "../UI/ProfileStats";
 import UserTitleShowcaseLocal from "../user/UserTitleShowcaseLocal";
 
 const FeedProfileHeader = (props) => {

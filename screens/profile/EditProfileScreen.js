@@ -19,7 +19,7 @@ import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import { useDispatch, useSelector } from "react-redux";
 import TutorialEditProfile from "../../components/tutorial/TutorialEditProfile";
 import Input from "../../components/UI/Input";
-import IoniconsHeaderButton from "../../components/UI/IoniconsHeaderButton";
+import IoniconsHeaderButton from "../../components/UI/header_buttons/IoniconsHeaderButton";
 import LinkButton from "../../components/UI/LinkButton";
 import {
   uploadChangeProfilePicture,

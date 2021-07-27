@@ -3,7 +3,7 @@ import { Platform, ScrollView, StyleSheet, Text, View } from "react-native";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import { useSelector } from "react-redux";
 import ExplorePostView from "../../components/explore/ExplorePostView";
-import IoniconsHeaderButton from "../../components/UI/IoniconsHeaderButton";
+import IoniconsHeaderButton from "../../components/UI/header_buttons/IoniconsHeaderButton";
 import useDidMountEffect from "../../helper/useDidMountEffect";
 
 const ExplorePictureScreen = (props) => {

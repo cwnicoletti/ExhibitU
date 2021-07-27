@@ -15,7 +15,7 @@ import { SearchBar } from "react-native-elements";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import { useSelector } from "react-redux";
 import ExploreCard from "../../components/explore/ExploreCard";
-import IoniconsHeaderButton from "../../components/UI/IoniconsHeaderButton";
+import IoniconsHeaderButton from "../../components/UI/header_buttons/IoniconsHeaderButton";
 
 const ExploreCheeringScreen = (props) => {
   const [returnedIndex, setReturnedIndex] = useState([]);

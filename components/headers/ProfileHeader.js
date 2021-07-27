@@ -5,8 +5,8 @@ import { useSelector } from "react-redux";
 import Menu from "../headers_components/Menu";
 import Settings from "../headers_components/Settings";
 import Title from "../headers_components/Title";
-import FeatherHeaderButton from "../UI/FeatherHeaderButton";
-import IoniconsHeaderButton from "../UI/IoniconsHeaderButton";
+import FeatherHeaderButton from "../UI/header_buttons/FeatherHeaderButton";
+import IoniconsHeaderButton from "../UI/header_buttons/IoniconsHeaderButton";
 
 const ProfileHeader = ({ navigation }) => {
   const darkModeValue = useSelector((state) => state.user.darkMode);

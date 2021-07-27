@@ -10,8 +10,8 @@ import {
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import { useDispatch, useSelector } from "react-redux";
 import ExploreProjectHeader from "../../components/explore/ExploreProjectHeader";
-import FontAwesomeHeaderButton from "../../components/UI/FontAwesomeHeaderButton";
-import IoniconsHeaderButton from "../../components/UI/IoniconsHeaderButton";
+import FontAwesomeHeaderButton from "../../components/UI/header_buttons/FontAwesomeHeaderButton";
+import IoniconsHeaderButton from "../../components/UI/header_buttons/IoniconsHeaderButton";
 import ProjectPictures from "../../components/UI/ProjectPictures";
 import TutorialExploreProject from "../../components/tutorial/TutorialExploreProject";
 import useDidMountEffect from "../../helper/useDidMountEffect";

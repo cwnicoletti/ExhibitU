@@ -3,7 +3,7 @@ import { FlatList, StyleSheet, Text, View } from "react-native";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import { useDispatch, useSelector } from "react-redux";
 import ProjectItem from "../../components/projectItems/ProfileProjectItem";
-import IoniconsHeaderButton from "../../components/UI/IoniconsHeaderButton";
+import IoniconsHeaderButton from "../../components/UI/header_buttons/IoniconsHeaderButton";
 import ShowcaseHeader from "../../components/user/ShowcaseHeader";
 import useDidMountEffect from "../../helper/useDidMountEffect";
 import { returnFromShowcasing } from "../../store/actions/user";

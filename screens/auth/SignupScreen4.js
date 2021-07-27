@@ -14,7 +14,7 @@ import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import { useDispatch, useSelector } from "react-redux";
 import Card from "../../components/UI/Card";
 import Input from "../../components/UI/Input";
-import IoniconsHeaderButton from "../../components/UI/IoniconsHeaderButton";
+import IoniconsHeaderButton from "../../components/UI/header_buttons/IoniconsHeaderButton";
 import { Ionicons } from "@expo/vector-icons";
 import { signup } from "../../store/actions/auth";
 import { setTutorialPrompt } from "../../store/actions/user";

@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 import FeedProfileHeader from "../../components/feed/FeedProfileHeader";
 import ProjectItem from "../../components/projectItems/ProfileProjectItem";
 import useDidMountEffect from "../../helper/useDidMountEffect";
-import IoniconsHeaderButton from "../../components/UI/IoniconsHeaderButton";
+import IoniconsHeaderButton from "../../components/UI/header_buttons/IoniconsHeaderButton";
 
 const FeedProfileScreen = (props) => {
   const darkModeValue = useSelector((state) => state.user.darkMode);
