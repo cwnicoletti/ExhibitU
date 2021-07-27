@@ -9,7 +9,7 @@ import {
   Image,
 } from "react-native";
 import { FontAwesome, Feather, AntDesign } from "@expo/vector-icons";
-import TutorialModalNoBackground from "../UI/TutorialModalNoBackground";
+import TutorialModalNoBackground from "../UI/modals/TutorialModalNoBackground";
 import EditButton from "../UI/EditButton";
 import { useDispatch } from "react-redux";
 import { withNavigation } from "react-navigation";

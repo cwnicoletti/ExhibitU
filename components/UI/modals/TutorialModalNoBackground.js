@@ -1,5 +1,6 @@
 import React from "react";
 import {
+  Text,
   View,
   Platform,
   TouchableOpacity,
@@ -7,9 +8,9 @@ import {
 } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import { useDispatch } from "react-redux";
-import { setTutorialing } from "../../store/actions/user";
+import { setTutorialing } from "../../../store/actions/user";
 
-const TutorialModalWithBackground = (props) => {
+const TutorialModalNoBackground = (props) => {
   const dispatch = useDispatch();
 
   const ExhibitUId = props.ExhibitUId;
@@ -33,8 +34,8 @@ const TutorialModalWithBackground = (props) => {
         justifyContent: "center",
         height: "100%",
         width: "100%",
-        backgroundColor: "black",
         zIndex: 1,
+        ...props.modalContainerStyle,
       }}
     >
       <View
@@ -52,23 +53,41 @@ const TutorialModalWithBackground = (props) => {
         style={{
           position: "absolute",
           alignSelf: "center",
+          justifyContent: "center",
           width: "90%",
           backgroundColor: "black",
           zIndex: 3,
+          ...props.modalStyle,
         }}
       >
-        <TouchableCmp onPress={endTutorialHandler}>
-          <Feather
-            name="x"
-            size={24}
-            color="red"
-            style={{ alignSelf: "flex-end", marginTop: 20, marginRight: 20 }}
-          />
-        </TouchableCmp>
+        <View
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            margin: 20,
+          }}
+        >
+          <View style={{ flex: 1 }} />
+          <Text
+            style={{
+              color: "white",
+              fontSize: 18,
+              margin: 5,
+              flex: 10,
+              fontWeight: "700",
+              textAlign: "center",
+            }}
+          >
+            {props.title}
+          </Text>
+          <TouchableCmp onPress={endTutorialHandler} style={{ flex: 1 }}>
+            <Feather name="x" size={23} color="red" />
+          </TouchableCmp>
+        </View>
         {props.children}
       </View>
     </View>
   );
 };
 
-export default TutorialModalWithBackground;
+export default TutorialModalNoBackground;

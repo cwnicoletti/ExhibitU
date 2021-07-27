@@ -7,7 +7,7 @@ import {
 } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import { useDispatch } from "react-redux";
-import { setTutorialing } from "../../store/actions/user";
+import { setTutorialing } from "../../../store/actions/user";
 
 const TutorialModalNoBackgroundNoX = (props) => {
   const dispatch = useDispatch();

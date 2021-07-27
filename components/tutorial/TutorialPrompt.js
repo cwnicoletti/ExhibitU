@@ -8,7 +8,7 @@ import {
   Platform,
 } from "react-native";
 import { FontAwesome, Feather, AntDesign } from "@expo/vector-icons";
-import TutorialModalNoBackgroundNoX from "../UI/TutorialModalNoBackgroundNoX";
+import TutorialModalNoBackgroundNoX from "../UI/modals/TutorialModalNoBackgroundNoX";
 import { useDispatch } from "react-redux";
 import { setTutorialing, setTutorialPrompt } from "../../store/actions/user";
 
