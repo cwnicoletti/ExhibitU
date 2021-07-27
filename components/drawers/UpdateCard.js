@@ -7,7 +7,6 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import Card from "../UI/Card";
 
 const UpdateCard = (props) => {
   let Component = null;
@@ -42,7 +41,7 @@ const UpdateCard = (props) => {
   }
 
   return (
-    <Card style={{ ...styles.project, ...props.projectContainer }}>
+    <View style={{ ...styles.project, ...props.projectContainer }}>
       {!props.iconFamily || !props.iconName || Component == null ? null : (
         <Component
           name={props.iconName}
@@ -58,7 +57,7 @@ const UpdateCard = (props) => {
           {props.updateBody}
         </Text>
       </View>
-    </Card>
+    </View>
   );
 };
 

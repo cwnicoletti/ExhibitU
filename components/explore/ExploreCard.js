@@ -8,7 +8,6 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import Card from "../UI/Card";
 
 const ExploreCard = (props) => {
   let TouchableCmp = TouchableOpacity;
@@ -17,7 +16,7 @@ const ExploreCard = (props) => {
   }
 
   return (
-    <Card style={{ ...styles.project, ...props.projectContainer }}>
+    <View style={{ ...styles.project, ...props.projectContainer }}>
       <View style={styles.touchable}>
         <TouchableCmp onPress={props.onSelect} useForeground>
           <View style={{ flexDirection: "row", margin: 10 }}>
@@ -47,7 +46,7 @@ const ExploreCard = (props) => {
           </View>
         </TouchableCmp>
       </View>
-    </Card>
+    </View>
   );
 };
 

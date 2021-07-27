@@ -9,7 +9,6 @@ import {
   Image,
 } from "react-native";
 import { useSelector } from "react-redux";
-import Card from "../UI/Card";
 
 const ProjectItem = (props) => {
   const profileColumns = useSelector((state) => state.user.profileColumns);
@@ -20,7 +19,7 @@ const ProjectItem = (props) => {
   }
 
   return (
-    <Card
+    <View
       style={{
         ...styles.project,
         ...props.projectContainer,
@@ -55,7 +54,7 @@ const ProjectItem = (props) => {
           </View>
         </TouchableCmp>
       </View>
-    </Card>
+    </View>
   );
 };
 

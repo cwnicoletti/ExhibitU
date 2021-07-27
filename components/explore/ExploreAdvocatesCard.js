@@ -9,7 +9,6 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import Card from "../UI/Card";
 import ExploreAdvocatesProjectsIcons from "./ExploreAdvocatesProjectsIcons";
 
 const ExploreAdvocatesCard = (props) => {
@@ -33,7 +32,7 @@ const ExploreAdvocatesCard = (props) => {
   }
 
   return (
-    <Card style={{ ...styles.project, ...props.projectContainer }}>
+    <View style={{ ...styles.project, ...props.projectContainer }}>
       <View style={styles.touchable}>
         <TouchableCmp onPress={props.onSelect} useForeground>
           <View style={{ flexDirection: "row", margin: 5 }}>
@@ -98,7 +97,7 @@ const ExploreAdvocatesCard = (props) => {
           </View>
         </TouchableCmp>
       </View>
-    </Card>
+    </View>
   );
 };
 

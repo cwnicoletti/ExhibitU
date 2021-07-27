@@ -12,7 +12,6 @@ import {
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import { useDispatch } from "react-redux";
-import Card from "../../components/UI/Card";
 import Input from "../../components/UI/Input";
 import IoniconsHeaderButton from "../../components/UI/header_buttons/IoniconsHeaderButton";
 import { Feather } from "@expo/vector-icons";
@@ -101,7 +100,7 @@ const SignupScreen1 = (props) => {
             color="white"
             style={{ margin: 10 }}
           />
-          <Card style={styles.authContainer}>
+          <View style={styles.authContainer}>
             <Input
               id="email"
               label="Email"
@@ -168,7 +167,7 @@ const SignupScreen1 = (props) => {
                 </View>
               </TouchableCmp>
             )}
-          </Card>
+          </View>
         </View>
       </KeyboardAwareScrollView>
     </View>

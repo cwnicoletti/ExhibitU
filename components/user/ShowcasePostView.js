@@ -18,6 +18,7 @@ import resolveAssetSource from "react-native/Libraries/Image/resolveAssetSource"
 import { useSelector } from "react-redux";
 import LinkButton from "../UI/LinkButton";
 import toDateTime from "../../helper/toDateTime";
+import TimeStamp from "../UI/TimeStamp";
 
 const ExhibitUPostView = (props) => {
   const [photoHeight, setHeight] = useState(null);
@@ -187,23 +188,11 @@ const ExhibitUPostView = (props) => {
           {props.caption}
         </Text>
       </View>
-      <View style={{ ...styles.dateContainer, ...props.dateContainer }}>
-        <Text
-          style={{ ...styles.date, ...props.dateStyle, flexDirection: "row" }}
-        >
-          {`${postDateCreated.toLocaleString("UTC", {
-            weekday: "long",
-            year: "numeric",
-            month: "long",
-            day: "numeric",
-          })}`}
-          {", "}
-          {`${postDateCreated.toLocaleString("UTC", {
-            hour: "numeric",
-            minute: "numeric",
-          })}`}
-        </Text>
-      </View>
+      <TimeStamp
+        postDateCreated={postDateCreated}
+        dateContainer={props.dateContainer}
+        dateStyle={props.dateStyle}
+      />
     </View>
   );
 };

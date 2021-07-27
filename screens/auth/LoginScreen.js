@@ -14,7 +14,6 @@ import { SimpleLineIcons } from "@expo/vector-icons";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import { useDispatch } from "react-redux";
-import Card from "../../components/UI/Card";
 import Input from "../../components/UI/Input";
 import IoniconsHeaderButton from "../../components/UI/header_buttons/IoniconsHeaderButton";
 import { login } from "../../store/actions/auth";
@@ -109,7 +108,7 @@ const LoginScreen = (props) => {
             style={styles.image}
             source={require("../../assets/ExhibitU_icon_transparent_white.png")}
           />
-          <Card style={styles.authContainer}>
+          <View style={styles.authContainer}>
             <Input
               id="email"
               placeholder="Email"
@@ -212,7 +211,7 @@ const LoginScreen = (props) => {
                 </View>
               </TouchableCmp>
             )}
-          </Card>
+          </View>
         </View>
       </KeyboardAwareScrollView>
     </View>

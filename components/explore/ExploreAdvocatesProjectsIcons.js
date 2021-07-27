@@ -4,7 +4,6 @@ import {
 
     TouchableNativeFeedback, TouchableOpacity, View
 } from "react-native";
-import Card from "../UI/Card";
 
 
 const ExploreAdvocatesProjectsIcons = (props) => {
@@ -14,11 +13,11 @@ const ExploreAdvocatesProjectsIcons = (props) => {
   }
 
   return (
-    <Card style={{ ...styles.project, ...props.projectContainer }}>
+    <View style={{ ...styles.project, ...props.projectContainer }}>
       <View>
         <Image style={styles.image} source={props.image} />
       </View>
-    </Card>
+    </View>
   );
 };
 
