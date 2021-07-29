@@ -36,18 +36,18 @@ All contributions should be referenced to the [CONTRIBUTIONS](https://github.com
 ## Dependencies
 [Package.json](https://github.com/cwnicoletti/Diamond-Case/blob/main/package.json)
 
-"@react-native-async-storage/async-storage": "^1.13.0",<br />
+"@react-native-async-storage/async-storage": "^1.15.0",<br />
 "@react-native-community/masked-view": "0.1.10",<br />
 "algoliasearch": "^4.8.3",<br />
 "axios": "^0.21.1",<br />
 "buffer": "^6.0.3",<br />
-"expo": "^41.0.0",<br />
-"expo-font": "~9.1.0",<br />
-"expo-image-picker": "~10.1.4",<br />
-"expo-linear-gradient": "~9.1.0",<br />
-"expo-notifications": "~0.11.6",<br />
+"expo": "^42.0.0",<br />
+"expo-font": "~9.2.1",<br />
+"expo-image-picker": "~10.2.2",<br />
+"expo-linear-gradient": "~9.2.0",<br />
+"expo-notifications": "~0.12.3",<br />
 "expo-status-bar": "~1.0.4",<br />
-"expo-web-browser": "~9.1.0",<br />
+"expo-web-browser": "~9.2.0",<br />
 "react": "16.13.1",<br />
 "react-dom": "16.13.1",<br />
 "react-native": "https://github.com/expo/react-native/archive/sdk-41.0.0.tar.gz",<br />
@@ -59,7 +59,7 @@ All contributions should be referenced to the [CONTRIBUTIONS](https://github.com
 "react-native-reanimated": "^1.13.3",<br />
 "react-native-screens": "^2.10.1",<br />
 "react-native-snap-carousel": "^3.9.1",<br />
-"react-native-svg": "12.1.0",<br />
+"react-native-svg": "12.1.1",<br />
 "react-native-svg-transformer": "^0.14.3",<br />
 "react-native-vector-icons": "^7.1.0",<br />
 "react-navigation": "^4.4.3",<br />
@@ -76,7 +76,7 @@ All contributions should be referenced to the [CONTRIBUTIONS](https://github.com
 
 "firebase": "8.2.3",<br />
 "jest": "^26.6.3",<br />
-"jest-expo": "^41.0.0",<br />
+"jest-expo": "^42.0.0",<br />
 "react-test-renderer": "^17.0.2",<br />
 
 ## Licensing
