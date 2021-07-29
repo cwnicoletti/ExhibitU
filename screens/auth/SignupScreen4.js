@@ -308,9 +308,6 @@ const styles = StyleSheet.create({
     maxWidth: 400,
     maxHeight: 400,
   },
-  activityContainer: {
-    marginTop: 10,
-  },
 });
 
 export default SignupScreen2;

@@ -145,21 +145,6 @@ const styles = StyleSheet.create({
     color: "white",
     padding: 10,
   },
-  buttonText: {
-    color: "#00B7DB",
-    fontSize: 16,
-  },
-  buttonContainer: {
-    backgroundColor: "white",
-    borderWidth: 1,
-    borderRadius: 15,
-    borderBottomColor: "#ccc",
-    borderBottomWidth: 1,
-    alignItems: "center",
-    flexDirection: "row",
-    padding: 10,
-    paddingHorizontal: 80,
-  },
 });
 
 export default SignupOrLoginScreen;

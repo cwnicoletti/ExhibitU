@@ -219,15 +219,6 @@ const styles = StyleSheet.create({
   inner: {
     alignItems: "center",
   },
-  image: {
-    width: 150,
-    height: 150,
-  },
-  logoImage: {
-    height: 30,
-    width: 30,
-    marginRight: 5,
-  },
   logo: {
     flex: 1,
     flexDirection: "row",
@@ -262,29 +253,8 @@ const styles = StyleSheet.create({
     maxWidth: 400,
     maxHeight: 400,
   },
-  loadingAuth: {
-    flexDirection: "row",
-  },
-  buttonContainer: {
-    marginTop: 10,
-    backgroundColor: "#00B7DB",
-    borderRadius: 10,
-  },
   activityContainer: {
     marginTop: 10,
-  },
-  buttonText: {
-    color: "#00B7DB",
-  },
-  buttonLinkedInContainer: {
-    width: "90%",
-    marginTop: 10,
-    backgroundColor: "white",
-    borderWidth: 1,
-    borderRadius: 15,
-    borderBottomColor: "#ccc",
-    borderBottomWidth: 1,
-    justifyContent: "space-between",
   },
   buttons: {
     alignItems: "center",

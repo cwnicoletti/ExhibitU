@@ -264,9 +264,6 @@ const styles = StyleSheet.create({
   logoTitle: {
     fontSize: 26,
   },
-  details: {
-    height: 0,
-  },
 });
 
 export default PictureScreen;

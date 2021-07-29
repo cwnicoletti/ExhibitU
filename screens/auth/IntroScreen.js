@@ -11,7 +11,7 @@ import {
   View,
 } from "react-native";
 import Carousel from "react-native-snap-carousel";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import {
   default as exampleImage1,
   default as exampleImage2,
@@ -211,87 +211,16 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "black",
   },
-  inner: {
-    alignItems: "center",
-  },
   image: {
     width: 150,
     height: 150,
-  },
-  logoImage: {
-    height: 30,
-    width: 30,
-    marginRight: 5,
-  },
-  logo: {
-    flex: 1,
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  logoTitle: {
-    fontSize: 26,
   },
   text: {
     color: "white",
     padding: 10,
   },
-  authContainer: {
-    shadowColor: null,
-    shadowOpacity: null,
-    shadowOffset: {
-      width: null,
-      height: null,
-    },
-    shadowRadius: null,
-    elevation: null,
-    borderRadius: null,
-    backgroundColor: "black",
-    width: "90%",
-    maxWidth: 400,
-    maxHeight: 400,
-  },
-  loadingAuth: {
-    flexDirection: "row",
-  },
-  buttonContainer: {
-    marginTop: 10,
-    backgroundColor: "#00B7DB",
-    borderRadius: 10,
-  },
   activityContainer: {
     marginTop: 10,
-  },
-  buttonText: {
-    color: "#00B7DB",
-  },
-  buttonLinkedInContainer: {
-    width: "90%",
-    marginTop: 10,
-    backgroundColor: "white",
-    borderWidth: 1,
-    borderRadius: 15,
-    borderBottomColor: "#ccc",
-    borderBottomWidth: 1,
-    justifyContent: "space-between",
-  },
-  buttons: {
-    alignItems: "center",
-    paddingVertical: 10,
-    color: "#00B7DB",
-  },
-  barContainer: {
-    flexDirection: "row",
-    justifyContent: "center",
-  },
-  track: {
-    backgroundColor: "#ccc",
-    overflow: "hidden",
-    height: 2,
-  },
-  bar: {
-    backgroundColor: "#5294d6",
-    height: 2,
   },
 });
 

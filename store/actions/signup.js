@@ -1,5 +1,4 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import axios from "axios";
 
 export const INTROING = "INTROING";
 export const SIGNUP_EMAIL = "SIGNUP_EMAIL";

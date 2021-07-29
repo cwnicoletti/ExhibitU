@@ -743,26 +743,6 @@ EditProfileScreen.navigationOptions = (navData) => {
 };
 
 const styles = StyleSheet.create({
-  screen: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  profileTitleStyle: {
-    fontSize: 24,
-    fontWeight: "bold",
-    paddingTop: 10,
-  },
-  profileUsernameStyle: {
-    fontSize: 18,
-    paddingTop: 10,
-  },
-  profileDescriptionStyle: {
-    padding: 20,
-  },
-  profileContainerStyle: {
-    borderBottomWidth: 1,
-  },
   text: {
     padding: 10,
   },
