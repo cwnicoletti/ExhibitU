@@ -2,20 +2,20 @@ import { EvilIcons, Feather } from "@expo/vector-icons";
 import algoliasearch from "algoliasearch";
 import React, { useEffect, useState } from "react";
 import {
-    FlatList, Keyboard,
-
-
-    RefreshControl, SafeAreaView, StyleSheet,
-
-    Text,
-    TouchableWithoutFeedback, View
+  FlatList,
+  Keyboard,
+  RefreshControl,
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  TouchableWithoutFeedback,
+  View,
 } from "react-native";
 import { SearchBar } from "react-native-elements";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import { useSelector } from "react-redux";
 import ExploreAdvocatesCard from "../../components/explore/ExploreAdvocatesCard";
 import IoniconsHeaderButton from "../../components/UI/header_buttons/IoniconsHeaderButton";
-
 
 const AdvocatesScreen = (props) => {
   const client = algoliasearch(
@@ -147,7 +147,13 @@ const AdvocatesScreen = (props) => {
               borderBottomColor: "gray",
               borderBottomWidth: 1,
             }}
-            searchIcon={<EvilIcons name="search" size={24} color={darkModeValue ? "white" : "black"} />}
+            searchIcon={
+              <EvilIcons
+                name="search"
+                size={24}
+                color={darkModeValue ? "white" : "black"}
+              />
+            }
             clearIcon={
               search ? (
                 <Feather

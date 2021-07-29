@@ -6,8 +6,8 @@ import {
   TouchableNativeFeedback,
   TouchableOpacity,
   View,
-  Image,
 } from "react-native";
+import FastImage from "react-native-fast-image";
 import { useSelector } from "react-redux";
 
 const ProjectItem = (props) => {
@@ -38,7 +38,7 @@ const ProjectItem = (props) => {
         <TouchableCmp onPress={props.onSelect} useForeground>
           <View>
             <View style={{ ...styles.imageContainer, ...props.imageContainer }}>
-              <Image style={styles.image} source={{ uri: props.image }} />
+              <FastImage style={styles.image} source={{ uri: props.image }} />
             </View>
             <View style={{ ...styles.details, ...props.details }}>
               <Text
