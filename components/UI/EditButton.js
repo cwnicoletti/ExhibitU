@@ -1,9 +1,10 @@
 import React from "react";
 import {
-    Platform, StyleSheet, Text,
-
-
-    TouchableNativeFeedback, TouchableOpacity, View
+  Platform,
+  Text,
+  TouchableNativeFeedback,
+  TouchableOpacity,
+  View,
 } from "react-native";
 import { useSelector } from "react-redux";
 
@@ -38,7 +39,5 @@ const EditButton = (props) => {
     </TouchableCmp>
   );
 };
-
-const styles = StyleSheet.create({});
 
 export default EditButton;

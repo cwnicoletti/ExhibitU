@@ -38,11 +38,6 @@ const Title = (props) => {
 };
 
 const styles = StyleSheet.create({
-  image: {
-    height: 30,
-    width: 30,
-    marginRight: 5,
-  },
   logo: {
     flexDirection: "row",
     justifyContent: "center",

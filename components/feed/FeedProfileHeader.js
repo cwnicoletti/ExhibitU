@@ -84,24 +84,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     margin: 5,
   },
-  secondContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-  },
-  thirdContainer: {
-    marginRight: 10,
-    alignItems: "center",
-  },
-  image: {
-    height: 80,
-    width: 80,
-    borderRadius: 80 / 2,
-  },
-  showCaseLocalImage: {
-    height: 100,
-    width: 100,
-    borderRadius: 100 / 2,
-  },
 });
 
 export default FeedProfileHeader;

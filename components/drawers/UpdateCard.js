@@ -70,12 +70,6 @@ const styles = StyleSheet.create({
     height: 100,
     width: "80%",
   },
-  image: {
-    height: 70,
-    width: 70,
-    borderRadius: 70 / 2,
-    overflow: "hidden",
-  },
   title: {
     fontWeight: "500",
     fontSize: 12,

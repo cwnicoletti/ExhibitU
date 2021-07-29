@@ -1,10 +1,8 @@
 import React from "react";
-import { Image, SafeAreaView, StyleSheet, Text, View } from "react-native";
+import { Image, SafeAreaView, Text, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { setDarkMode } from "../../store/actions/user";
 import FilterSwitch from "../UI/FilterSwitch";
-
-
 
 const LeftDrawer = (props) => {
   const dispatch = useDispatch();
@@ -90,7 +88,5 @@ const LeftDrawer = (props) => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({});
 
 export default LeftDrawer;

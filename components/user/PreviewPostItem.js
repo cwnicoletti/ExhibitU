@@ -306,12 +306,6 @@ const styles = StyleSheet.create({
     width: 50,
     borderRadius: 50 / 2,
   },
-  nameStyle: {
-    fontWeight: "bold",
-  },
-  usernameStyle: {
-    marginTop: 2,
-  },
   title: {
     fontSize: 14,
     fontWeight: "bold",

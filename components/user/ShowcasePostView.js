@@ -202,29 +202,6 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
     borderBottomWidth: 1,
   },
-  profileImage: {
-    borderWidth: 1,
-    borderColor: "white",
-    marginLeft: 10,
-    height: 50,
-    width: 50,
-    borderRadius: 50 / 2,
-  },
-  nameUsernameContainer: {
-    flex: 1,
-    marginLeft: 10,
-    justifyContent: "center",
-  },
-  nameStyle: {
-    fontWeight: "bold",
-  },
-  usernameStyle: {
-    marginTop: 2,
-  },
-  dotsContainer: {
-    flex: 1,
-    justifyContent: "flex-end",
-  },
   title: {
     fontSize: 14,
     fontWeight: "bold",
@@ -234,12 +211,6 @@ const styles = StyleSheet.create({
     margin: 10,
     fontSize: 13,
   },
-  titleContainer: {
-    alignItems: "center",
-    flexDirection: "row",
-    padding: 10,
-    borderTopWidth: 1,
-  },
   pictureCheerContainer: {
     padding: 10,
   },
@@ -248,16 +219,6 @@ const styles = StyleSheet.create({
     fontSize: 15,
     marginLeft: 5,
     marginTop: 5,
-  },
-  date: {
-    margin: 10,
-    fontSize: 13,
-  },
-  pictureCommentNumber: {
-    fontWeight: "bold",
-    fontSize: 15,
-    marginTop: 5,
-    marginBottom: 5,
   },
   pictureCheerText: {
     fontSize: 15,
@@ -277,16 +238,6 @@ const styles = StyleSheet.create({
   },
   dateContainer: {
     alignItems: "flex-end",
-  },
-  titleTextContainer: {
-    flex: 1,
-    marginLeft: 5,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  balance: {
-    width: 24,
-    height: "100%",
   },
 });
 

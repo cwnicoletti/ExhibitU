@@ -8,7 +8,6 @@ import React from "react";
 import {
   Platform,
   SafeAreaView,
-  StyleSheet,
   Text,
   TouchableNativeFeedback,
   TouchableOpacity,
@@ -193,7 +192,5 @@ const RightDrawer = (props) => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({});
 
 export default RightDrawer;
