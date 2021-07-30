@@ -14,7 +14,35 @@ exports[`renders default 1`] = `
 />
 `;
 
-exports[`renders with dummy links 1`] = `
+exports[`renders with false image 1`] = `
+<RNCSafeAreaProvider
+  onInsetsChange={[Function]}
+  style={
+    Array [
+      Object {
+        "flex": 1,
+      },
+      undefined,
+    ]
+  }
+/>
+`;
+
+exports[`renders with image 1`] = `
+<RNCSafeAreaProvider
+  onInsetsChange={[Function]}
+  style={
+    Array [
+      Object {
+        "flex": 1,
+      },
+      undefined,
+    ]
+  }
+/>
+`;
+
+exports[`renders with multiple dummy links 1`] = `
 <RNCSafeAreaProvider
   onInsetsChange={[Function]}
   style={

@@ -30,7 +30,7 @@ test("renders default", () => {
   expect(tree).toMatchSnapshot();
 });
 
-test("renders with dummy links", () => {
+test("renders with multiple dummy links", () => {
   const rootReducer = combineReducers({
     signup: signupReducer,
     auth: authReducer,
@@ -41,8 +41,14 @@ test("renders with dummy links", () => {
 
   const links = {
     ["link1"]: {
-      linktitle1: "test",
-      linkUrl1: "test",
+      linkId: "1",
+      linktitle1: "link1",
+      linkUrl1: "link1",
+    },
+    ["link2"]: {
+      linkId: "2",
+      linktitle1: "link2",
+      linkUrl1: "link2",
     },
   };
 
@@ -57,3 +63,27 @@ test("renders with dummy links", () => {
     .toJSON();
   expect(tree).toMatchSnapshot();
 });
+
+test("renders with random image", () => {
+  const rootReducer = combineReducers({
+    signup: signupReducer,
+    auth: authReducer,
+    user: userReducer,
+  });
+
+  const store = createStore(rootReducer, applyMiddleware(ReduxThunk));
+
+
+
+  const tree = renderer
+    .create(
+      <Provider store={store}>
+        <SafeAreaProvider>
+          <PreviewPostItem image={"https://i.picsum.photos/id/431/200/300.jpg?hmac=aUpIWBq8svIaK2ruTnNG-BZuvcDsK9Mr9PuJuYAYEQ0"} />
+        </SafeAreaProvider>
+      </Provider>
+    )
+    .toJSON();
+  expect(tree).toMatchSnapshot();
+});
+

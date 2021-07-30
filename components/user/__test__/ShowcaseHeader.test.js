@@ -7,7 +7,7 @@ import ReduxThunk from "redux-thunk";
 import authReducer from "../../../store/reducers/auth";
 import signupReducer from "../../../store/reducers/signup";
 import userReducer from "../../../store/reducers/user";
-import ExhibitUHeader from "../ExhibitUHeader";
+import ShowcaseHeader from "../ShowcaseHeader";
 
 
 
@@ -24,7 +24,7 @@ test("renders correctly", () => {
     .create(
       <Provider store={store}>
         <SafeAreaProvider>
-          <ExhibitUHeader />
+          <ShowcaseHeader />
         </SafeAreaProvider>
       </Provider>
     )
