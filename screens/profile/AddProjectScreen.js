@@ -206,11 +206,9 @@ const AddProjectScreen = (props) => {
     [dispatchFormState]
   );
 
-  let android = null;
   let TouchableCmp = TouchableOpacity;
   if (Platform.OS === "android") {
     TouchableCmp = TouchableNativeFeedback;
-    android = true;
   }
 
   const submitHandler = useCallback(async () => {
@@ -253,7 +251,6 @@ const AddProjectScreen = (props) => {
   useEffect(() => {
     LogBox.ignoreLogs(["VirtualizedLists should never be nested"]);
     props.navigation.setParams({ submit: submitHandler });
-    props.navigation.setParams({ android });
   }, []);
 
   useEffect(() => {
@@ -779,7 +776,6 @@ const AddProjectScreen = (props) => {
 
 AddProjectScreen.navigationOptions = (navData) => {
   const darkModeValue = navData.navigation.getParam("darkMode");
-  const android = navData.navigation.getParam("android");
   return {
     headerTitle: () => (
       <SafeAreaView

@@ -115,10 +115,6 @@ const ProfileScreen = (props) => {
     await setIsRefreshing(false);
   };
 
-  useEffect(() => {
-    props.navigation.setParams({ darkMode: darkModeValue });
-  }, [darkModeValue]);
-
   useDidMountEffect(() => {
     // Sort the array based on the second element
     setProfileProjectsState(

@@ -120,7 +120,6 @@ const ProjectScreen = (props) => {
 
   useEffect(() => {
     props.navigation.setParams({
-      android,
       projectId: currentProjectId,
       projectTitle: currentProject.projectTitle,
       projectDescription: currentProject.projectDescription,
@@ -322,7 +321,7 @@ ProjectScreen.navigationOptions = (navData) => {
   const projectDescriptionParam =
     navData.navigation.getParam("projectDescription");
   const projectLinksParam = navData.navigation.getParam("projectLinks");
-  console.log(darkModeValue);
+
   return {
     headerTitle: () => (
       <View style={styles.logo}>

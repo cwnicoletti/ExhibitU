@@ -319,11 +319,6 @@ const EditProfileScreen = (props) => {
     });
   };
 
-  let android = null;
-  if (Platform.OS === "android") {
-    android = true;
-  }
-
   useEffect(() => {
     (async () => {
       if (Platform.OS !== "web") {
@@ -338,7 +333,6 @@ const EditProfileScreen = (props) => {
 
   useEffect(() => {
     props.navigation.setParams({ submit: submitHandler });
-    props.navigation.setParams({ android: android });
   }, []);
 
   useEffect(() => {
@@ -703,7 +697,7 @@ const EditProfileScreen = (props) => {
 
 EditProfileScreen.navigationOptions = (navData) => {
   const darkModeValue = navData.navigation.getParam("darkMode");
-  const android = navData.navigation.getParam("android");
+
   return {
     headerTitle: () => (
       <SafeAreaView

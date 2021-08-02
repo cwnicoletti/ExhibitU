@@ -22,11 +22,6 @@ const FeedCommentsScreen = (props) => {
   const [numberOfCheers, setNumberOfCheers] = useState(userData.numberOfCheers);
   userData.postLinks = userData.postLinks ? userData.postLinks : {};
 
-  let android = null;
-  if (Platform.OS === "android") {
-    android = true;
-  }
-
   useEffect(() => {
     setIntialCheeredPosts(cheeredPosts);
   }, []);
@@ -72,7 +67,6 @@ const FeedCommentsScreen = (props) => {
 
   useEffect(() => {
     LogBox.ignoreLogs(["VirtualizedLists should never be nested"]);
-    props.navigation.setParams({ android });
     props.navigation.setParams({ projectId: projectId });
   }, []);
 
@@ -189,7 +183,6 @@ const FeedCommentsScreen = (props) => {
 
 FeedCommentsScreen.navigationOptions = (navData) => {
   const darkModeValue = navData.navigation.getParam("darkMode");
-  const android = navData.navigation.getParam("android");
 
   return {
     headerTitle: () => (

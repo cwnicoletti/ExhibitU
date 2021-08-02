@@ -69,7 +69,6 @@ const ShowcasePictureScreen = (props) => {
 
   useEffect(() => {
     LogBox.ignoreLogs(["VirtualizedLists should never be nested"]);
-    props.navigation.setParams({ android: android });
   }, []);
 
   useEffect(() => {
@@ -165,7 +164,6 @@ const ShowcasePictureScreen = (props) => {
 
 ShowcasePictureScreen.navigationOptions = (navData) => {
   const darkModeValue = navData.navigation.getParam("darkMode");
-  const android = navData.navigation.getParam("android");
 
   return {
     headerTitle: () => (

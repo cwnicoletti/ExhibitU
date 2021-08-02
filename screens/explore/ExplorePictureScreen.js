@@ -25,11 +25,6 @@ const ExplorePictureScreen = (props) => {
   const cheeredPosts = useSelector((state) => state.user.cheeredPosts);
   const [intialCheeredPosts, setIntialCheeredPosts] = useState([]);
 
-  let android = null;
-  if (Platform.OS === "android") {
-    android = true;
-  }
-
   const getExlusiveBothSetsDifference = (arr1, arr2) => {
     const difference = arr1
       .filter((x) => !arr2.includes(x))
@@ -181,7 +176,6 @@ const ExplorePictureScreen = (props) => {
 
 ExplorePictureScreen.navigationOptions = (navData) => {
   const darkModeValue = navData.navigation.getParam("darkMode");
-  const android = navData.navigation.getParam("android");
 
   return {
     headerTitle: () => (

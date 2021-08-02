@@ -166,6 +166,8 @@ const UserFeedScreen = (props) => {
     setIsRefreshing(false);
   };
 
+  // TODO: Implement with notifications
+  //
   // useEffect(() => {
   //   const registerForPushNotificationsAsync = async () => {
   //     let token;
