@@ -1,6 +1,6 @@
 import React from "react";
 import { View } from "react-native";
-import { useAppSelector } from "react-redux";
+import { useAppSelector } from "../../hooks";
 import MainBottomTabContainer from "../footers_components/MainBottomTabContainer";
 
 const NotificationBottomTab = (props) => {

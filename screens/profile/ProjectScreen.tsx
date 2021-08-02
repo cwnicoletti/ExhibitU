@@ -138,7 +138,6 @@ const ProjectScreen = (props) => {
     return (
       <ProjectHeader
         containerStyle={{
-          ...styles.profileContainerStyle,
           borderBottomColor: darkModeValue ? "white" : "black",
         }}
         imgSource={
@@ -251,7 +250,7 @@ const ProjectScreen = (props) => {
         tutorialScreen === "PostCreation") ? (
         <TutorialExhibitView ExhibitUId={ExhibitUId} localId={localId} />
       ) : null}
-      <FlatList
+      <FlatList<Object | any>
         data={projectPostsState}
         keyExtractor={(item) => item.postId}
         ListHeaderComponent={topHeader}
@@ -279,7 +278,6 @@ const ProjectScreen = (props) => {
             titleStyle={{
               color: darkModeValue ? "white" : "black",
             }}
-            imageContainer={styles.imageContainer}
             onSelect={() =>
               viewCommentsHandler(
                 itemData.item.ExhibitUId,

@@ -11,7 +11,7 @@ import {
   View,
   ActivityIndicator,
 } from "react-native";
-import { useAppSelector } from "react-redux";
+import { useAppSelector } from "../../hooks";
 import EditButton from "../UI/EditButton";
 import LinkButton from "../UI/LinkButton";
 

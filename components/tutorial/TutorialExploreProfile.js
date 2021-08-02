@@ -8,7 +8,7 @@ import {
 } from "react-native";
 import { Feather, SimpleLineIcons } from "@expo/vector-icons";
 import TutorialModalNoBackground from "../UI/modals/TutorialModalNoBackground";
-import { useAppDispatch } from "react-redux";
+import { useAppDispatch } from "../../hooks";
 import { withNavigation } from "react-navigation";
 import { setTutorialing } from "../../store/actions/user";
 

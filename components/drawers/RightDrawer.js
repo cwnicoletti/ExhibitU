@@ -13,7 +13,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { useAppSelector } from "react-redux";
+import { useAppSelector } from "../../hooks";
 
 const RightDrawer = (props) => {
   const darkModeValue = useAppSelector((state) => state.user.darkMode);

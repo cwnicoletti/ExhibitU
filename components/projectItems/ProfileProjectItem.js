@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { useAppSelector } from "react-redux";
+import { useAppSelector } from "../../hooks";
 
 const ProjectItem = (props) => {
   const profileColumns = useAppSelector((state) => state.user.profileColumns);

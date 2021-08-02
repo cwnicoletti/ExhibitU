@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect } from "react";
 import {
   LogBox,
   Platform,
@@ -8,24 +8,36 @@ import {
   View,
 } from "react-native";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
-import { useAppSelector } from "react-redux";
+import { useAppDispatch, useAppSelector } from "../../hooks";
 import IoniconsHeaderButton from "../../components/UI/header_buttons/IoniconsHeaderButton";
-import ShowcasePostView from "../../components/user/ShowcasePostView";
+import ProfileProjectPostView from "../../components/user/ProfileProjectPostView";
+import { uploadRemovePost } from "../../store/actions/user";
 
-const ShowcasePictureScreen = (props) => {
+const PictureScreen = (props) => {
+  const dispatch = useAppDispatch();
   const darkModeValue = useAppSelector((state) => state.user.darkMode);
-  const userData = props.navigation.getParam("userData");
-
-  const postId = props.navigation.getParam("postId");
+  const localId = useAppSelector((state) => state.auth.userId);
+  const profileProjects = useAppSelector((state) => state.user.profileProjects);
+  const profilePictureUrl = useAppSelector(
+    (state) => state.user.profilePictureUrl
+  );
+  const profilePictureBase64 = useAppSelector(
+    (state) => state.user.profilePictureBase64
+  );
+  const ExhibitUId = props.navigation.getParam("ExhibitUId");
   const projectId = props.navigation.getParam("projectId");
-  const postPhotoUrl = props.navigation.getParam("postPhotoUrl");
+  const postId = props.navigation.getParam("postId");
+  const fullname = props.navigation.getParam("fullname");
+  const username = props.navigation.getParam("username");
+  const jobTitle = props.navigation.getParam("jobTitle");
+  const profileBiography = props.navigation.getParam("profileBiography");
   const postPhotoBase64 = props.navigation.getParam("postPhotoBase64");
   const numberOfCheers = props.navigation.getParam("numberOfCheers");
   const numberOfComments = props.navigation.getParam("numberOfComments");
   const caption = props.navigation.getParam("caption");
   const postDateCreated = props.navigation.getParam("postDateCreated");
-  const postLinks = props.navigation.getParam("postLinks")
-    ? props.navigation.getParam("postLinks")
+  const links = props.navigation.getParam("links")
+    ? props.navigation.getParam("links")
     : {};
 
   let android = null;
@@ -35,40 +47,47 @@ const ShowcasePictureScreen = (props) => {
 
   const viewCheeringHandler = () => {
     props.navigation.push("CheeringScreen", {
-      ExhibitUId: userData.ExhibitUId,
+      ExhibitUId: ExhibitUId,
       projectId: projectId,
       postId: postId,
       numberOfCheers: numberOfCheers,
     });
   };
 
-  const viewProfileHandler = () => {
-    props.navigation.push("ShowcaseProfile", {
-      ExhibitUId: userData.ExhibitUId,
-      profilePictureUrl: userData.profilePictureUrl,
-      fullname: userData.fullname,
-      username: userData.username,
-      jobTitle: userData.jobTitle,
-      profileBiography: userData.profileBiography,
-      numberOfFollowers: userData.numberOfFollowers,
-      numberOfFollowing: userData.numberOfFollowing,
-      numberOfAdvocates: userData.numberOfAdvocates,
-      hideFollowing: userData.hideFollowing,
-      hideFollowers: userData.hideFollowers,
-      hideAdvocates: userData.hideAdvocates,
-      followers: userData.followers,
-      following: userData.following,
-      advocates: userData.advocates,
-      profileProjects: userData.profileProjects,
-      profileLinks: userData.profileLinks,
-      projectLinks: userData.projectLinks,
-      profileColumns: userData.profileColumns,
-      showCheering: userData.showCheering,
+  const viewProfileHandler = (
+    ExhibitUId,
+    projectId,
+    fullname,
+    username,
+    jobTitle,
+    profileBiography,
+    profileProjects,
+    profilePictureUrl
+  ) => {
+    props.navigation.push("ExhibitUProfile", {
+      ExhibitUId,
+      projectId,
+      fullname,
+      username,
+      jobTitle,
+      profileBiography,
+      profileProjects,
+      profilePictureUrl,
     });
   };
 
+  const deleteHandler = useCallback(async () => {
+    dispatch(uploadRemovePost(ExhibitUId, localId, projectId, postId));
+
+    props.navigation.navigate("ViewProfileProject", {
+      projectId: projectId,
+    });
+  }, [dispatch]);
+
   useEffect(() => {
     LogBox.ignoreLogs(["VirtualizedLists should never be nested"]);
+    props.navigation.setParams({ android: android });
+    props.navigation.setParams({ deleteFn: deleteHandler });
   }, []);
 
   useEffect(() => {
@@ -82,25 +101,18 @@ const ShowcasePictureScreen = (props) => {
         backgroundColor: darkModeValue ? "black" : "white",
       }}
     >
-      <ShowcasePostView
-        containerStyle={{
-          ...styles.profileContainerStyle,
-          borderBottomColor: darkModeValue ? "white" : "black",
-        }}
-        image={postPhotoBase64 ? postPhotoBase64 : postPhotoUrl}
+      <ProfileProjectPostView
+        image={postPhotoBase64}
         descriptionStyle={{
-          ...styles.profileDescriptionStyle,
           color: darkModeValue ? "white" : "black",
         }}
         caption={caption}
-        profileImageSource={
-          userData.profilePictureBase64
-            ? userData.profilePictureBase64
-            : userData.profilePictureUrl
-        }
+        profileImageSource={profilePictureBase64}
         numberOfCheers={numberOfCheers}
         numberOfComments={numberOfComments}
-        links={postLinks}
+        links={links}
+        postId={postId}
+        projectId={projectId}
         postDateCreated={postDateCreated}
         nameStyle={{
           color: darkModeValue ? "white" : "black",
@@ -114,15 +126,15 @@ const ShowcasePictureScreen = (props) => {
         titleContainer={{
           color: darkModeValue ? "white" : "black",
         }}
-        threeDotsStyle={darkModeValue ? "white" : "black"}
-        captionContainer={{
-          backgroundColor: darkModeValue ? "#121212" : "white",
-        }}
         dateContainer={{
           backgroundColor: darkModeValue ? "#121212" : "white",
         }}
         dateStyle={{
           color: "gray",
+        }}
+        threeDotsStyle={darkModeValue ? "white" : "black"}
+        captionContainer={{
+          backgroundColor: darkModeValue ? "#121212" : "white",
         }}
         titleStyle={{
           color: "white",
@@ -155,15 +167,26 @@ const ShowcasePictureScreen = (props) => {
           viewCheeringHandler();
         }}
         onSelectProfile={() => {
-          viewProfileHandler();
+          viewProfileHandler(
+            ExhibitUId,
+            projectId,
+            fullname,
+            username,
+            jobTitle,
+            profileBiography,
+            profileProjects,
+            profilePictureUrl
+          );
         }}
       />
     </ScrollView>
   );
 };
 
-ShowcasePictureScreen.navigationOptions = (navData) => {
+PictureScreen.navigationOptions = (navData) => {
   const darkModeValue = navData.navigation.getParam("darkMode");
+  const android = navData.navigation.getParam("android");
+  const deleteFn = navData.navigation.getParam("deleteFn");
 
   return {
     headerTitle: () => (
@@ -198,15 +221,31 @@ ShowcasePictureScreen.navigationOptions = (navData) => {
         />
       </HeaderButtons>
     ),
+    headerRight: () => (
+      <HeaderButtons HeaderButtonComponent={IoniconsHeaderButton}>
+        {android ? (
+          <Item
+            title="Trash"
+            iconName={"md-trash"}
+            color="red"
+            onPress={deleteFn}
+          />
+        ) : (
+          <Item
+            title="Trash"
+            iconName={"ios-trash"}
+            color="red"
+            onPress={deleteFn}
+          />
+        )}
+      </HeaderButtons>
+    ),
   };
 };
 
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-  },
-  profileDescriptionStyle: {
-    margin: 15,
   },
   text: {
     padding: 10,
@@ -227,4 +266,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ShowcasePictureScreen;
+export default PictureScreen;

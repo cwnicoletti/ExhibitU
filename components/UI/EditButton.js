@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { useAppSelector } from "react-redux";
+import { useAppSelector } from "../../hooks";
 
 const EditButton = (props) => {
   const darkModeValue = useAppSelector((state) => state.user.darkMode);

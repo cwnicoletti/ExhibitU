@@ -13,7 +13,7 @@ import {
 } from "react-native";
 import { SearchBar } from "react-native-elements";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
-import { useAppSelector } from "react-redux";
+import { useAppSelector } from "../../hooks";
 import ExploreAdvocatesCard from "../../components/explore/ExploreAdvocatesCard";
 import IoniconsHeaderButton from "../../components/UI/header_buttons/IoniconsHeaderButton";
 
@@ -243,19 +243,14 @@ AdvocatesScreen.navigationOptions = (navData) => {
   const darkModeValue = navData.navigation.getParam("darkMode");
   return {
     headerTitle: () => (
-      <SafeAreaView
-        forceInset={{ top: "always", horizontal: "never" }}
-        style={styles.logo}
+      <Text
+        style={{
+          ...styles.logoTitle,
+          color: darkModeValue ? "white" : "black",
+        }}
       >
-        <Text
-          style={{
-            ...styles.logoTitle,
-            color: darkModeValue ? "white" : "black",
-          }}
-        >
-          Advocates
-        </Text>
-      </SafeAreaView>
+        Advocates
+      </Text>
     ),
     headerTitleStyle: {
       color: darkModeValue ? "white" : "black",

@@ -1,7 +1,7 @@
 import * as WebBrowser from "expo-web-browser";
 import React from "react";
 import { FlatList, Image, StyleSheet, Text, View } from "react-native";
-import { useAppSelector } from "react-redux";
+import { useAppSelector } from "../../hooks";
 import LinkButton from "../UI/LinkButton";
 
 const FeedProjectHeader = (props) => {

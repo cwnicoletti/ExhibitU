@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
 import { Animated, View } from "react-native";
-import { useAppSelector } from "react-redux";
+import { useAppSelector } from "../../hooks";
 import useDidMountEffect from "../../helper/useDidMountEffect";
 import MainBottomTabContainer from "../footers_components/MainBottomTabContainer";
 

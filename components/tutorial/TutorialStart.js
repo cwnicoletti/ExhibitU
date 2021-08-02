@@ -11,7 +11,7 @@ import {
 import { FontAwesome, Feather, AntDesign } from "@expo/vector-icons";
 import TutorialModalNoBackground from "../UI/modals/TutorialModalNoBackground";
 import EditButton from "../UI/EditButton";
-import { useAppDispatch } from "react-redux";
+import { useAppDispatch } from "../../hooks";
 import { withNavigation } from "react-navigation";
 import { setTutorialing } from "../../store/actions/user";
 

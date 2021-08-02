@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { FlatList, StyleSheet, Text, View } from "react-native";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
-import { useAppSelector } from "react-redux";
+import { useAppSelector } from "../../hooks";
 import FeedProfileHeader from "../../components/feed/FeedProfileHeader";
 import ProjectItem from "../../components/projectItems/ProfileProjectItem";
 import useDidMountEffect from "../../helper/useDidMountEffect";

@@ -233,13 +233,11 @@ const EditProjectScreen = (props) => {
     props.navigation.navigate("ViewProfileProject", {
       projectId: projectId,
     });
-  }, [formState, submitHandler, linksState]);
+  }, [formState, linksState]);
 
   const deleteHandler = () => {
     props.navigation.navigate("Profile");
-    dispatch(
-      uploadRemoveProject(ExhibitUId, localId, projectId, projectCoverPhotoId)
-    );
+    dispatch(uploadRemoveProject(ExhibitUId, localId, projectId));
   };
 
   let android = null;
@@ -742,19 +740,14 @@ EditProjectScreen.navigationOptions = (navData) => {
   const deleteFn = navData.navigation.getParam("deleteFn");
   return {
     headerTitle: () => (
-      <SafeAreaView
-        forceInset={{ top: "always", horizontal: "never" }}
-        style={styles.logo}
+      <Text
+        style={{
+          ...styles.logoTitle,
+          color: darkModeValue ? "white" : "black",
+        }}
       >
-        <Text
-          style={{
-            ...styles.logoTitle,
-            color: darkModeValue ? "white" : "black",
-          }}
-        >
-          Edit Exhibit
-        </Text>
-      </SafeAreaView>
+        Edit Exhibit
+      </Text>
     ),
     headerTitleStyle: {
       color: darkModeValue ? "white" : "black",

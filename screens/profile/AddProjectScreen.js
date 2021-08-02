@@ -778,19 +778,14 @@ AddProjectScreen.navigationOptions = (navData) => {
   const darkModeValue = navData.navigation.getParam("darkMode");
   return {
     headerTitle: () => (
-      <SafeAreaView
-        forceInset={{ top: "always", horizontal: "never" }}
-        style={styles.logo}
+      <Text
+        style={{
+          ...styles.logoTitle,
+          color: darkModeValue ? "white" : "black",
+        }}
       >
-        <Text
-          style={{
-            ...styles.logoTitle,
-            color: darkModeValue ? "white" : "black",
-          }}
-        >
-          Create exhibit
-        </Text>
-      </SafeAreaView>
+        Create exhibit
+      </Text>
     ),
     headerTitleStyle: {
       color: darkModeValue ? "white" : "black",

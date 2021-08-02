@@ -2,7 +2,7 @@ import React from "react";
 import { View, TouchableWithoutFeedback } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { resetScroll, onScreen } from "../../store/actions/user";
-import { useAppSelector, useAppDispatch } from "react-redux";
+import { useAppSelector, useAppDispatch } from "../../hooks";
 
 const Feed = (props) => {
   const dispatch = useAppDispatch();

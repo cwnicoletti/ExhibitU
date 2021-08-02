@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { FlatList, Platform, StyleSheet, Text, View } from "react-native";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
-import { useAppSelector } from "react-redux";
+import { useAppSelector } from "../../hooks";
 import ShowcaseProjectHeader from "../../components/projects/ShowcaseProjectHeader";
 import IoniconsHeaderButton from "../../components/UI/header_buttons/IoniconsHeaderButton";
 import useDidMountEffect from "../../helper/useDidMountEffect";
@@ -75,7 +75,6 @@ const ShowcaseProjectScreen = (props) => {
     return (
       <ShowcaseProjectHeader
         containerStyle={{
-          ...styles.profileContainerStyle,
           borderBottomColor: darkModeValue ? "white" : "black",
         }}
         imgSource={
@@ -101,7 +100,7 @@ const ShowcaseProjectScreen = (props) => {
         backgroundColor: darkModeValue ? "black" : "white",
       }}
     >
-      <FlatList
+      <FlatList<Object | any>
         data={projectPostsState}
         keyExtractor={(item) => item.postId}
         ListHeaderComponent={topHeader}
@@ -130,7 +129,6 @@ const ShowcaseProjectScreen = (props) => {
             titleStyle={{
               color: darkModeValue ? "white" : "black",
             }}
-            imageContainer={styles.imageContainer}
             onSelect={() =>
               viewCommentsHandler(
                 itemData.item.postId,

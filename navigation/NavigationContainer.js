@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import { NavigationActions } from "react-navigation";
-import { useAppSelector } from "react-redux";
+import { useAppSelector } from "../hooks";
 import MainNavigator from "./MainNavigator";
 
 

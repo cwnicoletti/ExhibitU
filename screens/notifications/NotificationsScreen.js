@@ -8,7 +8,7 @@ import {
   FlatList,
   RefreshControl,
 } from "react-native";
-import { useAppSelector, useAppDispatch } from "react-redux";
+import { useAppSelector, useAppDispatch } from "../../hooks";
 import { SearchBar } from "react-native-elements";
 import algoliasearch from "algoliasearch";
 import { offScreen } from "../../store/actions/user";

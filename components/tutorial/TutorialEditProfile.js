@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import TutorialModalNoBackground from "../UI/modals/TutorialModalNoBackground";
-import { useAppDispatch } from "react-redux";
+import { useAppDispatch } from "../../hooks";
 import { withNavigation } from "react-navigation";
 import { setTutorialing, setTutorialPrompt } from "../../store/actions/user";
 

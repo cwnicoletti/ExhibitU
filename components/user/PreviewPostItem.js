@@ -15,7 +15,7 @@ import {
   View,
 } from "react-native";
 import resolveAssetSource from "react-native/Libraries/Image/resolveAssetSource";
-import { useAppSelector } from "react-redux";
+import { useAppSelector } from "../../hooks";
 import Cheer from "../../assets/Icons/clap.svg";
 import LinkButton from "../UI/LinkButton";
 import toDateTime from "../../helper/toDateTime";

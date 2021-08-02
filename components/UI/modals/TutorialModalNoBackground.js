@@ -7,7 +7,7 @@ import {
   TouchableNativeFeedback,
 } from "react-native";
 import { Feather } from "@expo/vector-icons";
-import { useAppDispatch } from "react-redux";
+import { useAppDispatch } from "../../../hooks";
 import { setTutorialing } from "../../../store/actions/user";
 
 const TutorialModalNoBackground = (props) => {

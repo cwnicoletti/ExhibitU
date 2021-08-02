@@ -11,7 +11,7 @@ import {
   View,
 } from "react-native";
 import Carousel from "react-native-snap-carousel";
-import { useAppDispatch } from "react-redux";
+import { useAppDispatch } from "../../hooks";
 import {
   default as exampleImage1,
   default as exampleImage2,

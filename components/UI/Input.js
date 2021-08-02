@@ -1,6 +1,6 @@
 import React, { useEffect, useReducer } from "react";
 import { StyleSheet, Text, TextInput, View } from "react-native";
-import { useAppSelector } from "react-redux";
+import { useAppSelector } from "../../hooks";
 
 const INPUT_CHANGE = "INPUT_CHANGE";
 const INPUT_BLUR = "INPUT_BLUR";

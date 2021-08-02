@@ -148,7 +148,9 @@ const EditProfileScreen = (props) => {
   const darkModeValue = useAppSelector((state) => state.user.darkMode);
   const localId = useAppSelector((state) => state.auth.userId);
   const ExhibitUId = useAppSelector((state) => state.user.ExhibitUId);
-  const profilePictureId = useAppSelector((state) => state.user.profilePictureId);
+  const profilePictureId = useAppSelector(
+    (state) => state.user.profilePictureId
+  );
   const profilePictureBase64 = useAppSelector(
     (state) => state.user.profilePictureBase64
   );
@@ -870,19 +872,14 @@ EditProfileScreen.navigationOptions = (navData) => {
 
   return {
     headerTitle: () => (
-      <SafeAreaView
-        forceInset={{ top: "always", horizontal: "never" }}
-        style={styles.logo}
+      <Text
+        style={{
+          ...styles.logoTitle,
+          color: darkModeValue ? "white" : "black",
+        }}
       >
-        <Text
-          style={{
-            ...styles.logoTitle,
-            color: darkModeValue ? "white" : "black",
-          }}
-        >
-          Edit profile
-        </Text>
-      </SafeAreaView>
+        Edit profile
+      </Text>
     ),
     headerTitleStyle: {
       color: darkModeValue ? "white" : "black",

@@ -152,7 +152,9 @@ const EditProfileScreen = (props) => {
     (state) => state.user.profilePictureBase64
   );
   const tempPhotoPostId = useAppSelector((state) => state.user.tempPhotoPostId);
-  const tempPhotoPostUrl = useAppSelector((state) => state.user.tempPhotoPostUrl);
+  const tempPhotoPostUrl = useAppSelector(
+    (state) => state.user.tempPhotoPostUrl
+  );
   const tempPhotoPostBase64 = useAppSelector(
     (state) => state.user.tempPhotoPostBase64
   );
@@ -178,7 +180,9 @@ const EditProfileScreen = (props) => {
     (state) => state.user.numberOfAdvocates
   );
   const profileColumns = useAppSelector((state) => state.user.profileColumns);
-  const profileBiography = useAppSelector((state) => state.user.profileBiography);
+  const profileBiography = useAppSelector(
+    (state) => state.user.profileBiography
+  );
   const profileLinks = useAppSelector((state) => state.user.profileLinks);
   const followingValue = useAppSelector((state) => state.user.hideFollowing);
   const followersValue = useAppSelector((state) => state.user.hideFollowers);
@@ -700,19 +704,14 @@ EditProfileScreen.navigationOptions = (navData) => {
 
   return {
     headerTitle: () => (
-      <SafeAreaView
-        forceInset={{ top: "always", horizontal: "never" }}
-        style={styles.logo}
+      <Text
+        style={{
+          ...styles.logoTitle,
+          color: darkModeValue ? "white" : "black",
+        }}
       >
-        <Text
-          style={{
-            ...styles.logoTitle,
-            color: darkModeValue ? "white" : "black",
-          }}
-        >
-          Create post
-        </Text>
-      </SafeAreaView>
+        Create post
+      </Text>
     ),
     headerTitleStyle: {
       color: darkModeValue ? "white" : "black",
