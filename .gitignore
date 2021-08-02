@@ -13,7 +13,7 @@ web-build/
 .DS_Store
 
 # Hiding API keys and firebase info
-config.js
+config.ts
 .firebaserc
 firebase.json
 functions/*

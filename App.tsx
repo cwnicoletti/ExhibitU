@@ -9,16 +9,16 @@ import NavigationContainer from "./navigation/NavigationContainer";
 import authReducer from "./store/reducers/auth";
 import signupReducer from "./store/reducers/signup";
 import userReducer from "./store/reducers/user";
-import * as firebase from "firebase";
+import firebase from "firebase/app";
 // import * as Notifications from "expo-notifications";
-import { apikey, authDomain, databaseURL, storageBucket } from "./config";
+import FirebaseConfig from "./config";
 
 // Initialize Firebase
 const firebaseConfig = {
-  apiKey: apikey,
-  authDomain: authDomain,
-  databaseURL: databaseURL,
-  storageBucket: storageBucket,
+  apiKey: FirebaseConfig.apikey,
+  authDomain: FirebaseConfig.authDomain,
+  databaseURL: FirebaseConfig.databaseURL,
+  storageBucket: FirebaseConfig.storageBucket,
 };
 
 if (firebase.apps.length === 0) {
@@ -41,7 +41,10 @@ const rootReducer = combineReducers({
 
 const store = createStore(rootReducer, applyMiddleware(ReduxThunk));
 
-export default App = () => {
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch
+
+const App = () => {
   return (
     <Provider store={store}>
       <SafeAreaProvider>
@@ -52,3 +55,5 @@ export default App = () => {
     </Provider>
   );
 };
+
+export default App;
