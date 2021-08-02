@@ -9,12 +9,12 @@ import {
 } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import TutorialModalNoBackground from "../UI/modals/TutorialModalNoBackground";
-import { useDispatch } from "react-redux";
+import { useAppDispatch } from "react-redux";
 import { withNavigation } from "react-navigation";
 import { setTutorialing, setTutorialPrompt } from "../../store/actions/user";
 
 const TutorialEditProfile = (props) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const ExhibitUId = props.ExhibitUId;
   const localId = props.localId;

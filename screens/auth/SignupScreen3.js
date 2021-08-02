@@ -11,7 +11,7 @@ import {
 } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
-import { useDispatch, useSelector } from "react-redux";
+import { useAppDispatch, useAppSelector } from "../../hooks";
 import Input from "../../components/UI/Input";
 import IoniconsHeaderButton from "../../components/UI/header_buttons/IoniconsHeaderButton";
 import { Feather } from "@expo/vector-icons";
@@ -43,9 +43,9 @@ const formReducer = (state, action) => {
 };
 
 const SignupScreen2 = (props) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const [isLoading, setIsLoading] = useState(false);
-  const fullname = useSelector((state) => state.signup.fullname);
+  const fullname = useAppSelector((state) => state.signup.fullname);
 
   let android = null;
   let TouchableCmp = TouchableOpacity;

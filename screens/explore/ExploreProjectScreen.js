@@ -8,7 +8,7 @@ import {
   View,
 } from "react-native";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
-import { useDispatch, useSelector } from "react-redux";
+import { useAppDispatch, useAppSelector } from "../../hooks";
 import ExploreProjectHeader from "../../components/explore/ExploreProjectHeader";
 import FontAwesomeHeaderButton from "../../components/UI/header_buttons/FontAwesomeHeaderButton";
 import IoniconsHeaderButton from "../../components/UI/header_buttons/IoniconsHeaderButton";
@@ -18,20 +18,20 @@ import useDidMountEffect from "../../helper/useDidMountEffect";
 import { advocateForUser, unadvocateForUser } from "../../store/actions/user";
 
 const ExploreProjectScreen = (props) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const [isLoading, setIsLoading] = useState(false);
-  const darkModeValue = useSelector((state) => state.user.darkMode);
-  const localId = useSelector((state) => state.auth.userId);
-  const ExhibitUId = useSelector((state) => state.user.ExhibitUId);
-  const cheeredPosts = useSelector((state) => state.user.cheeredPosts);
+  const darkModeValue = useAppSelector((state) => state.user.darkMode);
+  const localId = useAppSelector((state) => state.auth.userId);
+  const ExhibitUId = useAppSelector((state) => state.user.ExhibitUId);
+  const cheeredPosts = useAppSelector((state) => state.user.cheeredPosts);
   const [intialCheeredPosts, setIntialCheeredPosts] = useState([]);
   const [exploredUserDataLocal, setExploredUserDataLocal] = useState(
     props.navigation.getParam("exploredUserData")
       ? props.navigation.getParam("exploredUserData")
       : {}
   );
-  const tutorialing = useSelector((state) => state.user.tutorialing);
-  const tutorialScreen = useSelector((state) => state.user.tutorialScreen);
+  const tutorialing = useAppSelector((state) => state.user.tutorialing);
+  const tutorialScreen = useAppSelector((state) => state.user.tutorialScreen);
 
   const exploredProjectData = {
     projectId: props.navigation.getParam("projectId"),

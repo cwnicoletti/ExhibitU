@@ -1,12 +1,12 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import React, { useEffect } from "react";
 import { ActivityIndicator, StyleSheet, View } from "react-native";
-import { useDispatch } from "react-redux";
+import { useAppDispatch } from "react-redux";
 import { authenticate } from "../store/actions/auth";
 import { getUserData } from "../store/actions/user";
 
 const StartupScreen = (props) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   useEffect(() => {
     const tryLogin = async () => {
       const userData = await AsyncStorage.getItem("userLoginData");

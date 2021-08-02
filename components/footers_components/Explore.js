@@ -2,11 +2,11 @@ import React from "react";
 import { View, TouchableWithoutFeedback } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { resetScroll, onScreen } from "../../store/actions/user";
-import { useSelector, useDispatch } from "react-redux";
+import { useAppSelector, useAppDispatch } from "react-redux";
 
 const Explore = (props) => {
-  const dispatch = useDispatch();
-  const onExploreScreen = useSelector((state) => state.user.onExploreScreen);
+  const dispatch = useAppDispatch();
+  const onExploreScreen = useAppSelector((state) => state.user.onExploreScreen);
   return (
     <TouchableWithoutFeedback
       onPress={() => {

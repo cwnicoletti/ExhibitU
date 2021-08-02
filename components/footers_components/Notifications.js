@@ -2,11 +2,11 @@ import React from "react";
 import { View, TouchableWithoutFeedback } from "react-native";
 import { Entypo } from "@expo/vector-icons";
 import { resetScroll, onScreen } from "../../store/actions/user";
-import { useSelector, useDispatch } from "react-redux";
+import { useAppSelector, useAppDispatch } from "react-redux";
 
 const Notifications = (props) => {
-  const dispatch = useDispatch();
-  const onNotificationscreen = useSelector(
+  const dispatch = useAppDispatch();
+  const onNotificationscreen = useAppSelector(
     (state) => state.user.onNotificationsScreen
   );
 

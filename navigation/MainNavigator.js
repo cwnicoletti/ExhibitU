@@ -3,7 +3,7 @@ import { createAppContainer, createSwitchNavigator } from "react-navigation";
 import { createDrawerNavigator, DrawerActions } from "react-navigation-drawer";
 import { createStackNavigator } from "react-navigation-stack";
 import { createBottomTabNavigator } from "react-navigation-tabs";
-import { useDispatch, useSelector } from "react-redux";
+import { useAppDispatch, useAppSelector } from "../../hooks";
 import LeftDrawer from "../components/drawers/LeftDrawer";
 import RightDrawer from "../components/drawers/RightDrawer";
 import ProfileHeader from "../components/headers/ProfileHeader";
@@ -98,9 +98,9 @@ const FeedNavigator = createDrawerNavigator(
   {
     drawerPosition: "right",
     contentComponent: (navData) => {
-      const dispatch = useDispatch();
-      const localId = useSelector((state) => state.auth.userId);
-      const ExhibitUId = useSelector((state) => state.user.ExhibitUId);
+      const dispatch = useAppDispatch();
+      const localId = useAppSelector((state) => state.auth.userId);
+      const ExhibitUId = useAppSelector((state) => state.user.ExhibitUId);
       return (
         <RightDrawer
           navData={navData}
@@ -248,9 +248,9 @@ const ProfileNavigator = createDrawerNavigator(
   {
     drawerPosition: "right",
     contentComponent: (navData) => {
-      const dispatch = useDispatch();
-      const localId = useSelector((state) => state.auth.userId);
-      const ExhibitUId = useSelector((state) => state.user.ExhibitUId);
+      const dispatch = useAppDispatch();
+      const localId = useAppSelector((state) => state.auth.userId);
+      const ExhibitUId = useAppSelector((state) => state.user.ExhibitUId);
       return (
         <RightDrawer
           navData={navData}

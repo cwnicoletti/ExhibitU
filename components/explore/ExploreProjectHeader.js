@@ -1,12 +1,12 @@
 import * as WebBrowser from "expo-web-browser";
 import React from "react";
 import { FlatList, Image, StyleSheet, Text, View } from "react-native";
-import { useSelector } from "react-redux";
+import { useAppSelector } from "react-redux";
 import LinkButton from "../UI/LinkButton";
 
 
 const ExploreProjectHeader = (props) => {
-  const darkModeValue = useSelector((state) => state.user.darkMode);
+  const darkModeValue = useAppSelector((state) => state.user.darkMode);
   const links = props.links;
 
   return (

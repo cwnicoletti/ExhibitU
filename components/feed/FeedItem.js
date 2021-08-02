@@ -18,7 +18,7 @@ import {
   View,
 } from "react-native";
 import resolveAssetSource from "react-native/Libraries/Image/resolveAssetSource";
-import { useDispatch, useSelector } from "react-redux";
+import { useAppDispatch, useAppSelector } from "../../hooks";
 import Cheerfill from "../../assets/Icons/clap-fill.svg";
 import Cheer from "../../assets/Icons/clap.svg";
 import {
@@ -32,18 +32,18 @@ import toDateTime from "../../helper/toDateTime";
 import TimeStamp from "../UI/TimeStamp";
 
 const FeedItem = (props) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const [height, setHeight] = useState(null);
   const [width, setWidth] = useState(null);
   const [processingWholeCheer, setProcessingWholeCheer] = useState(false);
   const [loadingCheer, setLoadingCheer] = useState(false);
   const [showClapping, setShowClapping] = useState(false);
   const [clap, setClap] = useState(false);
-  const darkModeValue = useSelector((state) => state.user.darkMode);
-  const cheeredPosts = useSelector((state) => state.user.cheeredPosts);
-  const showCheering = useSelector((state) => state.user.showCheering);
-  const localId = useSelector((state) => state.auth.userId);
-  const ExhibitUId = useSelector((state) => state.user.ExhibitUId);
+  const darkModeValue = useAppSelector((state) => state.user.darkMode);
+  const cheeredPosts = useAppSelector((state) => state.user.cheeredPosts);
+  const showCheering = useAppSelector((state) => state.user.showCheering);
+  const localId = useAppSelector((state) => state.auth.userId);
+  const ExhibitUId = useAppSelector((state) => state.user.ExhibitUId);
   const projectId = props.projectId;
   const postId = props.postId;
   const posterExhibitUId = props.posterExhibitUId;

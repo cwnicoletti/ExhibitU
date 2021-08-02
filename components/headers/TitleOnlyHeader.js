@@ -1,10 +1,10 @@
 import React from "react";
 import { Image, Text, View } from "react-native";
-import { useSelector } from "react-redux";
+import { useAppSelector } from "react-redux";
 import Title from "../headers_components/Title";
 
 const TitleOnlyHeader = () => {
-  const darkModeValue = useSelector((state) => state.user.darkMode);
+  const darkModeValue = useAppSelector((state) => state.user.darkMode);
 
   return (
     <View>

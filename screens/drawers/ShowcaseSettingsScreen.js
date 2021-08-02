@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
-import { useDispatch, useSelector } from "react-redux";
+import { useAppDispatch, useAppSelector } from "../../hooks";
 import FilterSwitch from "../../components/UI/FilterSwitch";
 import IoniconsHeaderButton from "../../components/UI/header_buttons/IoniconsHeaderButton";
 import {
@@ -13,14 +13,14 @@ import {
 } from "../../store/actions/user";
 
 const ShowcaseSettingsScreen = (props) => {
-  const dispatch = useDispatch();
-  const darkModeValue = useSelector((state) => state.user.darkMode);
-  const showCheeringValue = useSelector((state) => state.user.showCheering);
-  const followingValue = useSelector((state) => state.user.hideFollowing);
-  const followersValue = useSelector((state) => state.user.hideFollowers);
-  const advocatesValue = useSelector((state) => state.user.hideAdvocates);
-  const localId = useSelector((state) => state.auth.userId);
-  const ExhibitUId = useSelector((state) => state.user.ExhibitUId);
+  const dispatch = useAppDispatch();
+  const darkModeValue = useAppSelector((state) => state.user.darkMode);
+  const showCheeringValue = useAppSelector((state) => state.user.showCheering);
+  const followingValue = useAppSelector((state) => state.user.hideFollowing);
+  const followersValue = useAppSelector((state) => state.user.hideFollowers);
+  const advocatesValue = useAppSelector((state) => state.user.hideAdvocates);
+  const localId = useAppSelector((state) => state.auth.userId);
+  const ExhibitUId = useAppSelector((state) => state.user.ExhibitUId);
 
   useEffect(() => {
     props.navigation.setParams({ darkMode: darkModeValue });

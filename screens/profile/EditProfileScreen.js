@@ -16,7 +16,7 @@ import {
 } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
-import { useDispatch, useSelector } from "react-redux";
+import { useAppDispatch, useAppSelector } from "../../hooks";
 import TutorialEditProfile from "../../components/tutorial/TutorialEditProfile";
 import Input from "../../components/UI/Input";
 import IoniconsHeaderButton from "../../components/UI/header_buttons/IoniconsHeaderButton";
@@ -139,36 +139,36 @@ const formReducer = (state, action) => {
 };
 
 const EditProfileScreen = (props) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const [fileSizeError, setFileSizeError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const prevLinks = useSelector((state) => state.user.profileLinks);
+  const prevLinks = useAppSelector((state) => state.user.profileLinks);
   const [linksState, setLinksState] = useState(Object.values(prevLinks));
   const [isLoadingTempPicture, setIsLoadingTempPicture] = useState(false);
-  const darkModeValue = useSelector((state) => state.user.darkMode);
-  const localId = useSelector((state) => state.auth.userId);
-  const ExhibitUId = useSelector((state) => state.user.ExhibitUId);
-  const profilePictureId = useSelector((state) => state.user.profilePictureId);
-  const profilePictureBase64 = useSelector(
+  const darkModeValue = useAppSelector((state) => state.user.darkMode);
+  const localId = useAppSelector((state) => state.auth.userId);
+  const ExhibitUId = useAppSelector((state) => state.user.ExhibitUId);
+  const profilePictureId = useAppSelector((state) => state.user.profilePictureId);
+  const profilePictureBase64 = useAppSelector(
     (state) => state.user.profilePictureBase64
   );
-  const followingValue = useSelector((state) => state.user.hideFollowing);
-  const followersValue = useSelector((state) => state.user.hideFollowers);
-  const advocatesValue = useSelector((state) => state.user.hideAdvocates);
-  const tutorialing = useSelector((state) => state.user.tutorialing);
-  const tutorialScreen = useSelector((state) => state.user.tutorialScreen);
+  const followingValue = useAppSelector((state) => state.user.hideFollowing);
+  const followersValue = useAppSelector((state) => state.user.hideFollowers);
+  const advocatesValue = useAppSelector((state) => state.user.hideAdvocates);
+  const tutorialing = useAppSelector((state) => state.user.tutorialing);
+  const tutorialScreen = useAppSelector((state) => state.user.tutorialScreen);
 
   let userData = {
-    fullname: useSelector((state) => state.user.fullname),
-    username: useSelector((state) => state.user.username),
-    jobTitle: useSelector((state) => state.user.jobTitle),
-    profileBiography: useSelector((state) => state.user.profileBiography),
+    fullname: useAppSelector((state) => state.user.fullname),
+    username: useAppSelector((state) => state.user.username),
+    jobTitle: useAppSelector((state) => state.user.jobTitle),
+    profileBiography: useAppSelector((state) => state.user.profileBiography),
   };
 
   const userDataProfileHeader = {
-    numberOfFollowers: useSelector((state) => state.user.numberOfFollowers),
-    numberOfFollowing: useSelector((state) => state.user.numberOfFollowing),
-    numberOfAdvocates: useSelector((state) => state.user.numberOfAdvocates),
+    numberOfFollowers: useAppSelector((state) => state.user.numberOfFollowers),
+    numberOfFollowing: useAppSelector((state) => state.user.numberOfFollowing),
+    numberOfAdvocates: useAppSelector((state) => state.user.numberOfAdvocates),
   };
 
   let TouchableCmp = TouchableOpacity;

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { FlatList, StyleSheet, Text, View } from "react-native";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
-import { useDispatch, useSelector } from "react-redux";
+import { useAppDispatch, useAppSelector } from "../../hooks";
 import ProjectItem from "../../components/projectItems/ProfileProjectItem";
 import IoniconsHeaderButton from "../../components/UI/header_buttons/IoniconsHeaderButton";
 import ShowcaseHeader from "../../components/user/ShowcaseHeader";
@@ -9,41 +9,43 @@ import useDidMountEffect from "../../helper/useDidMountEffect";
 import { returnFromShowcasing } from "../../store/actions/user";
 
 const ShowcaseProfileScreen = (props) => {
-  const dispatch = useDispatch();
-  const darkModeValue = useSelector((state) => state.user.darkMode);
-  const ExhibitUId = useSelector((state) => state.user.ExhibitUId);
+  const dispatch = useAppDispatch();
+  const darkModeValue = useAppSelector((state) => state.user.darkMode);
+  const ExhibitUId = useAppSelector((state) => state.user.ExhibitUId);
 
   const userData =
     props.navigation.getParam("ExhibitUId") === ExhibitUId ||
     props.navigation.getParam("ExhibitUId") === void 0
       ? {
-          profilePictureBase64: useSelector(
+          profilePictureBase64: useAppSelector(
             (state) => state.user.profilePictureBase64
           )
-            ? useSelector((state) => state.user.profilePictureBase64)
+            ? useAppSelector((state) => state.user.profilePictureBase64)
             : props.navigation.getParam("profilePictureUrl"),
-          profileColumns: useSelector((state) => state.user.profileColumns),
-          ExhibitUId: useSelector((state) => state.user.ExhibitUId),
-          fullname: useSelector((state) => state.user.fullname),
-          username: useSelector((state) => state.user.username),
-          jobTitle: useSelector((state) => state.user.jobTitle),
-          profileBiography: useSelector((state) => state.user.profileBiography),
-          profileLinks: useSelector((state) => state.user.profileLinks),
-          profileProjects: useSelector((state) => state.user.profileProjects)
-            ? useSelector((state) => state.user.profileProjects)
+          profileColumns: useAppSelector((state) => state.user.profileColumns),
+          ExhibitUId: useAppSelector((state) => state.user.ExhibitUId),
+          fullname: useAppSelector((state) => state.user.fullname),
+          username: useAppSelector((state) => state.user.username),
+          jobTitle: useAppSelector((state) => state.user.jobTitle),
+          profileBiography: useAppSelector(
+            (state) => state.user.profileBiography
+          ),
+          profileLinks: useAppSelector((state) => state.user.profileLinks),
+          profileProjects: useAppSelector((state) => state.user.profileProjects)
+            ? useAppSelector((state) => state.user.profileProjects)
             : props.navigation.getParam("profileProjects"),
-          numberOfAdvocates: useSelector(
+          numberOfAdvocates: useAppSelector(
             (state) => state.user.numberOfAdvocates
           ),
-          numberOfFollowers: useSelector(
+          numberOfFollowers: useAppSelector(
             (state) => state.user.numberOfFollowers
           ),
-          numberOfFollowing: useSelector(
+          numberOfFollowing: useAppSelector(
             (state) => state.user.numberOfFollowing
           ),
-          hideFollowing: useSelector((state) => state.user.hideFollowing),
-          hideFollowers: useSelector((state) => state.user.hideFollowers),
-          hideAdvocates: useSelector((state) => state.user.hideAdvocates),
+          hideFollowing: useAppSelector((state) => state.user.hideFollowing),
+          hideFollowers: useAppSelector((state) => state.user.hideFollowers),
+          hideAdvocates: useAppSelector((state) => state.user.hideAdvocates),
         }
       : {
           profilePictureUrl: props.navigation.getParam("profilePictureUrl"),

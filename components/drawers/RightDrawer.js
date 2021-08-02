@@ -13,10 +13,10 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { useSelector } from "react-redux";
+import { useAppSelector } from "react-redux";
 
 const RightDrawer = (props) => {
-  const darkModeValue = useSelector((state) => state.user.darkMode);
+  const darkModeValue = useAppSelector((state) => state.user.darkMode);
 
   let TouchableCmp = TouchableOpacity;
   if (Platform.OS === "android") {

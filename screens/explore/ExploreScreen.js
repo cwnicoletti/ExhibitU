@@ -10,7 +10,7 @@ import {
   View,
 } from "react-native";
 import { SearchBar } from "react-native-elements";
-import { useDispatch, useSelector } from "react-redux";
+import { useAppDispatch, useAppSelector } from "../../hooks";
 import ExploreCard from "../../components/explore/ExploreCard";
 import useDidMountEffect from "../../helper/useDidMountEffect";
 import TutorialExploreScreen from "../../components/tutorial/TutorialExploreScreen";
@@ -18,24 +18,24 @@ import { offScreen } from "../../store/actions/user";
 import { FontAwesome5 } from "@expo/vector-icons";
 
 const ExploreScreen = (props) => {
-  const dispatch = useDispatch();
-  const darkModeValue = useSelector((state) => state.user.darkMode);
-  const localId = useSelector((state) => state.auth.userId);
-  const ExhibitUId = useSelector((state) => state.user.ExhibitUId);
+  const dispatch = useAppDispatch();
+  const darkModeValue = useAppSelector((state) => state.user.darkMode);
+  const localId = useAppSelector((state) => state.auth.userId);
+  const ExhibitUId = useAppSelector((state) => state.user.ExhibitUId);
   const [search, setSearch] = useState("");
   const [returnedIndex, setReturnedIndex] = useState([]);
   const [isRefreshing, setIsRefreshing] = useState(false);
-  const advocating = useSelector((state) => state.user.advocating);
+  const advocating = useAppSelector((state) => state.user.advocating);
   const [intialAdvocating, setIntialAdvocating] = useState([]);
-  const following = useSelector((state) => state.user.following);
+  const following = useAppSelector((state) => state.user.following);
   const [intialFollowing, setIntialFollowing] = useState([]);
-  const cheeredPosts = useSelector((state) => state.user.cheeredPosts);
+  const cheeredPosts = useAppSelector((state) => state.user.cheeredPosts);
   const [intialCheeredPosts, setIntialCheeredPosts] = useState([]);
-  const resetScrollExplore = useSelector(
+  const resetScrollExplore = useAppSelector(
     (state) => state.user.resetScrollExplore
   );
-  const tutorialing = useSelector((state) => state.user.tutorialing);
-  const tutorialScreen = useSelector((state) => state.user.tutorialScreen);
+  const tutorialing = useAppSelector((state) => state.user.tutorialing);
+  const tutorialScreen = useAppSelector((state) => state.user.tutorialScreen);
 
   useEffect(() => {
     setIntialAdvocating(advocating);

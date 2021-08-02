@@ -1,12 +1,12 @@
 import React, { useRef, useState } from "react";
 import { Animated, View } from "react-native";
-import { useSelector } from "react-redux";
+import { useAppSelector } from "react-redux";
 import useDidMountEffect from "../../helper/useDidMountEffect";
 import MainBottomTabContainer from "../footers_components/MainBottomTabContainer";
 
 const ProfileBottomTab = (props) => {
-  const darkModeValue = useSelector((state) => state.user.darkMode);
-  const showcasingProfile = useSelector(
+  const darkModeValue = useAppSelector((state) => state.user.darkMode);
+  const showcasingProfile = useAppSelector(
     (state) => state.user.showcasingProfile
   );
   const [hiddenProfileFooter, setHiddenProfileFooter] = useState(false);

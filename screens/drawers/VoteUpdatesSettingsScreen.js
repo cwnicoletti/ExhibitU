@@ -9,15 +9,15 @@ import {
   View,
 } from "react-native";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
-import { useDispatch, useSelector } from "react-redux";
+import { useAppDispatch, useAppSelector } from "../../hooks";
 import UpdateCard from "../../components/drawers/UpdateCard";
 import IoniconsHeaderButton from "../../components/UI/header_buttons/IoniconsHeaderButton";
 import { getUpdates } from "../../store/actions/user";
 
 const VoteUpdatesSettingsScreen = (props) => {
-  const dispatch = useDispatch();
-  const darkModeValue = useSelector((state) => state.user.darkMode);
-  const updates = useSelector((state) => state.user.updates);
+  const dispatch = useAppDispatch();
+  const darkModeValue = useAppSelector((state) => state.user.darkMode);
+  const updates = useAppSelector((state) => state.user.updates);
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [emptyFeed, setEmptyFeed] = useState(false);
 

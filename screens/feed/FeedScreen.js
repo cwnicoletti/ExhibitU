@@ -8,7 +8,7 @@ import {
   Text,
   View,
 } from "react-native";
-import { useDispatch, useSelector } from "react-redux";
+import { useAppDispatch, useAppSelector } from "../../hooks";
 import FeedItem from "../../components/feed/FeedItem";
 import useDidMountEffect from "../../helper/useDidMountEffect";
 import TutorialFeedView from "../../components/tutorial/TutorialFeedView";
@@ -16,7 +16,7 @@ import * as Notifications from "expo-notifications";
 import { getUserFeed, offScreen } from "../../store/actions/user";
 
 const UserFeedScreen = (props) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const styleTypes = ["dark-content", "light-content"];
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [emptyFeed, setEmptyFeed] = useState(false);
@@ -24,10 +24,10 @@ const UserFeedScreen = (props) => {
   // const [notification, setNotification] = useState(false);
   // const notificationListener = useRef();
   // const responseListener = useRef();
-  const darkModeValue = useSelector((state) => state.user.darkMode);
-  const ExhibitUId = useSelector((state) => state.user.ExhibitUId);
-  const localId = useSelector((state) => state.auth.userId);
-  const userFeed = useSelector((state) => state.user.userFeed);
+  const darkModeValue = useAppSelector((state) => state.user.darkMode);
+  const ExhibitUId = useAppSelector((state) => state.user.ExhibitUId);
+  const localId = useAppSelector((state) => state.auth.userId);
+  const userFeed = useAppSelector((state) => state.user.userFeed);
   const [userFeedState, setUserFeedState] = useState(
     Object.values(userFeed).sort((first, second) => {
       return (
@@ -36,12 +36,12 @@ const UserFeedScreen = (props) => {
       );
     })
   );
-  const profilePictureBase64 = useSelector(
+  const profilePictureBase64 = useAppSelector(
     (state) => state.user.profilePictureBase64
   );
-  const resetScrollFeed = useSelector((state) => state.user.resetScrollFeed);
-  const tutorialing = useSelector((state) => state.user.tutorialing);
-  const tutorialScreen = useSelector((state) => state.user.tutorialScreen);
+  const resetScrollFeed = useAppSelector((state) => state.user.resetScrollFeed);
+  const tutorialing = useAppSelector((state) => state.user.tutorialing);
+  const tutorialScreen = useAppSelector((state) => state.user.tutorialScreen);
 
   useEffect(() => {
     props.navigation.setParams({ darkMode: darkModeValue });

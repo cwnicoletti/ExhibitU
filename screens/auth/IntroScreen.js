@@ -11,7 +11,7 @@ import {
   View,
 } from "react-native";
 import Carousel from "react-native-snap-carousel";
-import { useDispatch } from "react-redux";
+import { useAppDispatch } from "react-redux";
 import {
   default as exampleImage1,
   default as exampleImage2,
@@ -20,7 +20,7 @@ import CarouselCardItem from "../../components/UI/CarouselCardItem";
 import { setIntroing } from "../../store/actions/signup";
 
 const IntroScreen = (props) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const [isLoading, setIsLoading] = useState(false);
   const [sliderIndex, setSliderIndex] = useState(0);
   const isCarousel = React.useRef(null);

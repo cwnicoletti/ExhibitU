@@ -8,20 +8,20 @@ import {
   View,
 } from "react-native";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
-import { useDispatch, useSelector } from "react-redux";
+import { useAppDispatch, useAppSelector } from "../../hooks";
 import IoniconsHeaderButton from "../../components/UI/header_buttons/IoniconsHeaderButton";
 import ProfileProjectPostView from "../../components/user/ProfileProjectPostView";
 import { uploadRemovePost } from "../../store/actions/user";
 
 const PictureScreen = (props) => {
-  const dispatch = useDispatch();
-  const darkModeValue = useSelector((state) => state.user.darkMode);
-  const localId = useSelector((state) => state.auth.userId);
-  const profileProjects = useSelector((state) => state.user.profileProjects);
-  const profilePictureUrl = useSelector(
+  const dispatch = useAppDispatch();
+  const darkModeValue = useAppSelector((state) => state.user.darkMode);
+  const localId = useAppSelector((state) => state.auth.userId);
+  const profileProjects = useAppSelector((state) => state.user.profileProjects);
+  const profilePictureUrl = useAppSelector(
     (state) => state.user.profilePictureUrl
   );
-  const profilePictureBase64 = useSelector(
+  const profilePictureBase64 = useAppSelector(
     (state) => state.user.profilePictureBase64
   );
   const ExhibitUId = props.navigation.getParam("ExhibitUId");

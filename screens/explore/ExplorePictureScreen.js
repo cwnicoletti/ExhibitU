@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Platform, ScrollView, StyleSheet, Text, View } from "react-native";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
-import { useSelector } from "react-redux";
+import { useAppSelector } from "react-redux";
 import ExplorePostView from "../../components/explore/ExplorePostView";
 import IoniconsHeaderButton from "../../components/UI/header_buttons/IoniconsHeaderButton";
 import useDidMountEffect from "../../helper/useDidMountEffect";
 
 const ExplorePictureScreen = (props) => {
-  const darkModeValue = useSelector((state) => state.user.darkMode);
+  const darkModeValue = useAppSelector((state) => state.user.darkMode);
   const ExhibitUId = props.navigation.getParam("ExhibitUId");
   const currentProjectId = props.navigation.getParam("projectId");
   const postId = props.navigation.getParam("postId");
@@ -22,7 +22,7 @@ const ExplorePictureScreen = (props) => {
   const links = props.navigation.getParam("postLinks");
   const postDateCreated = props.navigation.getParam("postDateCreated");
   const exploredUserData = props.navigation.getParam("exploredUserData");
-  const cheeredPosts = useSelector((state) => state.user.cheeredPosts);
+  const cheeredPosts = useAppSelector((state) => state.user.cheeredPosts);
   const [intialCheeredPosts, setIntialCheeredPosts] = useState([]);
 
   const getExlusiveBothSetsDifference = (arr1, arr2) => {

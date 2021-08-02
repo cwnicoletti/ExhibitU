@@ -8,16 +8,16 @@ import {
   View,
 } from "react-native";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
-import { useSelector } from "react-redux";
+import { useAppSelector } from "react-redux";
 import useDidMountEffect from "../../helper/useDidMountEffect";
 import FeedPostView from "../../components/feed/FeedPostView";
 import IoniconsHeaderButton from "../../components/UI/header_buttons/IoniconsHeaderButton";
 
 const FeedCommentsScreen = (props) => {
-  const darkModeValue = useSelector((state) => state.user.darkMode);
+  const darkModeValue = useAppSelector((state) => state.user.darkMode);
   const projectId = props.navigation.getParam("projectId");
   const userData = props.navigation.getParam("userData");
-  const cheeredPosts = useSelector((state) => state.user.cheeredPosts);
+  const cheeredPosts = useAppSelector((state) => state.user.cheeredPosts);
   const [intialCheeredPosts, setIntialCheeredPosts] = useState([]);
   const [numberOfCheers, setNumberOfCheers] = useState(userData.numberOfCheers);
   userData.postLinks = userData.postLinks ? userData.postLinks : {};

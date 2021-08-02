@@ -9,7 +9,7 @@ import {
   View,
 } from "react-native";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
-import { useDispatch, useSelector } from "react-redux";
+import { useAppDispatch, useAppSelector } from "../../hooks";
 import ExploreProfileHeader from "../../components/explore/ExploreProfileHeader";
 import ProjectItem from "../../components/projectItems/ProfileProjectItem";
 import IoniconsHeaderButton from "../../components/UI/header_buttons/IoniconsHeaderButton";
@@ -19,17 +19,17 @@ import useDidMountEffect from "../../helper/useDidMountEffect";
 import { followUser, unfollowUser } from "../../store/actions/user";
 
 const ExploreProfileScreen = (props) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const [isLoading, setIsLoading] = useState(false);
   const [isRefreshing, setIsRefreshing] = useState(false);
-  const darkModeValue = useSelector((state) => state.user.darkMode);
-  const localId = useSelector((state) => state.auth.userId);
-  const ExhibitUId = useSelector((state) => state.user.ExhibitUId);
-  const projectsAdvocating = useSelector(
+  const darkModeValue = useAppSelector((state) => state.user.darkMode);
+  const localId = useAppSelector((state) => state.auth.userId);
+  const ExhibitUId = useAppSelector((state) => state.user.ExhibitUId);
+  const projectsAdvocating = useAppSelector(
     (state) => state.user.projectsAdvocating
   );
-  const tutorialing = useSelector((state) => state.user.tutorialing);
-  const tutorialScreen = useSelector((state) => state.user.tutorialScreen);
+  const tutorialing = useAppSelector((state) => state.user.tutorialing);
+  const tutorialScreen = useAppSelector((state) => state.user.tutorialScreen);
 
   const [exploredUserData, setExploredUserData] = useState(
     props.navigation.getParam("exploreData")

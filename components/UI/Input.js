@@ -1,6 +1,6 @@
 import React, { useEffect, useReducer } from "react";
 import { StyleSheet, Text, TextInput, View } from "react-native";
-import { useSelector } from "react-redux";
+import { useAppSelector } from "react-redux";
 
 const INPUT_CHANGE = "INPUT_CHANGE";
 const INPUT_BLUR = "INPUT_BLUR";
@@ -31,7 +31,7 @@ const Input = (props) => {
     isValid: props.initiallyValid,
     touched: false,
   });
-  const darkModeValue = useSelector((state) => state.user.darkMode);
+  const darkModeValue = useAppSelector((state) => state.user.darkMode);
 
   const { onInputChange, id } = props;
 

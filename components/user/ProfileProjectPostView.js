@@ -16,7 +16,7 @@ import {
   View,
 } from "react-native";
 import resolveAssetSource from "react-native/Libraries/Image/resolveAssetSource";
-import { useDispatch, useSelector } from "react-redux";
+import { useAppDispatch, useAppSelector } from "../../hooks";
 import Cheerfill from "../../assets/Icons/clap-fill.svg";
 import Cheer from "../../assets/Icons/clap.svg";
 import {
@@ -29,20 +29,20 @@ import * as WebBrowser from "expo-web-browser";
 import TimeStamp from "../UI/TimeStamp";
 
 const ProfileProjectPostView = (props) => {
-  const dispatch = useDispatch();
-  const darkModeValue = useSelector((state) => state.user.darkMode);
-  const showCheering = useSelector((state) => state.user.showCheering);
+  const dispatch = useAppDispatch();
+  const darkModeValue = useAppSelector((state) => state.user.darkMode);
+  const showCheering = useAppSelector((state) => state.user.showCheering);
   const [photoHeight, setHeight] = useState(null);
   const [photoWidth, setWidth] = useState(null);
   const [showClapping, setShowClapping] = useState(false);
   const [loadingCheer, setLoadingCheer] = useState(false);
   const [numberOfCheers, setNumberOfCheers] = useState(props.numberOfCheers);
   const [processingWholeCheer, setProcessingWholeCheer] = useState(false);
-  const ExhibitUId = useSelector((state) => state.user.ExhibitUId);
-  const cheeredPosts = useSelector((state) => state.user.cheeredPosts);
+  const ExhibitUId = useAppSelector((state) => state.user.ExhibitUId);
+  const cheeredPosts = useAppSelector((state) => state.user.cheeredPosts);
   const [clap, setClap] = useState(false);
-  const localId = useSelector((state) => state.auth.userId);
-  const posterExhibitUId = useSelector((state) => state.user.ExhibitUId);
+  const localId = useAppSelector((state) => state.auth.userId);
+  const posterExhibitUId = useAppSelector((state) => state.user.ExhibitUId);
   const defaultPostIcon = require("../../assets/default-profile-icon.jpg");
   const source = resolveAssetSource(defaultPostIcon);
   const links = props.links;

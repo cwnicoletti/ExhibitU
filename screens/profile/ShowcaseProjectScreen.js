@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { FlatList, Platform, StyleSheet, Text, View } from "react-native";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
-import { useSelector } from "react-redux";
+import { useAppSelector } from "react-redux";
 import ShowcaseProjectHeader from "../../components/projects/ShowcaseProjectHeader";
 import IoniconsHeaderButton from "../../components/UI/header_buttons/IoniconsHeaderButton";
 import useDidMountEffect from "../../helper/useDidMountEffect";
 import ProjectPictures from "../../components/UI/ProjectPictures";
 
 const ShowcaseProjectScreen = (props) => {
-  const darkModeValue = useSelector((state) => state.user.darkMode);
+  const darkModeValue = useAppSelector((state) => state.user.darkMode);
   const currentProjectId = props.navigation.getParam("projectId");
   const userData = props.navigation.getParam("userData");
   const project = userData.profileProjects[currentProjectId];

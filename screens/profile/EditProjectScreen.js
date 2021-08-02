@@ -17,7 +17,7 @@ import {
 } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
-import { useDispatch, useSelector } from "react-redux";
+import { useAppDispatch, useAppSelector } from "../../hooks";
 import DefaultPicture from "../../assets/Icons/picture.svg";
 import Input from "../../components/UI/Input";
 import IoniconsHeaderButton from "../../components/UI/header_buttons/IoniconsHeaderButton";
@@ -142,14 +142,14 @@ const formReducer = (state, action) => {
 };
 
 const EditProjectScreen = (props) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const [fileSizeError, setFileSizeError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadingTempPicture, setIsLoadingTempPicture] = useState(false);
   const prevLinks = props.navigation.getParam("links");
   const [linksState, setLinksState] = useState(Object.values(prevLinks));
-  const darkModeValue = useSelector((state) => state.user.darkMode);
-  const localId = useSelector((state) => state.auth.userId);
+  const darkModeValue = useAppSelector((state) => state.user.darkMode);
+  const localId = useAppSelector((state) => state.auth.userId);
   const projectId = props.navigation.getParam("projectId");
   const exhibitTitle = props.navigation.getParam("projectTitle");
   const projectDescription = props.navigation.getParam("projectDescription");
@@ -157,10 +157,10 @@ const EditProjectScreen = (props) => {
   const [projectCoverPhotoUrl, setProjectCoverPhotoUrl] = useState(
     props.navigation.getParam("projectCoverPhotoUrl")
   );
-  const projectTempCoverPhotoUrl = useSelector(
+  const projectTempCoverPhotoUrl = useAppSelector(
     (state) => state.user.projectTempCoverPhotoUrl
   );
-  const ExhibitUId = useSelector((state) => state.user.ExhibitUId);
+  const ExhibitUId = useAppSelector((state) => state.user.ExhibitUId);
 
   let TouchableCmp = TouchableOpacity;
   if (Platform.OS === "android") {

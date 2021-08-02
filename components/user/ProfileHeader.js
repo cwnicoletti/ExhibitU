@@ -11,23 +11,23 @@ import {
   View,
   ActivityIndicator,
 } from "react-native";
-import { useSelector } from "react-redux";
+import { useAppSelector } from "react-redux";
 import LinkButton from "../UI/LinkButton";
 import ProfileStats from "../UI/ProfileStats";
 import UserTitleEdit from "./UserTitleEdit";
 
 const Profile = (props) => {
   const links = props.links;
-  const darkModeValue = useSelector((state) => state.user.darkMode);
-  const followingValue = useSelector((state) => state.user.hideFollowing);
-  const followersValue = useSelector((state) => state.user.hideFollowers);
-  const advocatesValue = useSelector((state) => state.user.hideAdvocates);
-  const profileProjects = useSelector((state) => state.user.profileProjects);
+  const darkModeValue = useAppSelector((state) => state.user.darkMode);
+  const followingValue = useAppSelector((state) => state.user.hideFollowing);
+  const followersValue = useAppSelector((state) => state.user.hideFollowers);
+  const advocatesValue = useAppSelector((state) => state.user.hideAdvocates);
+  const profileProjects = useAppSelector((state) => state.user.profileProjects);
 
   const userDataProfileHeader = {
-    numberOfFollowers: useSelector((state) => state.user.numberOfFollowers),
-    numberOfFollowing: useSelector((state) => state.user.numberOfFollowing),
-    numberOfAdvocates: useSelector((state) => state.user.numberOfAdvocates),
+    numberOfFollowers: useAppSelector((state) => state.user.numberOfFollowers),
+    numberOfFollowing: useAppSelector((state) => state.user.numberOfFollowing),
+    numberOfAdvocates: useAppSelector((state) => state.user.numberOfAdvocates),
   };
 
   let TouchableCmp = TouchableOpacity;

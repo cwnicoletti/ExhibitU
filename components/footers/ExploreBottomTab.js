@@ -1,10 +1,10 @@
 import React from "react";
 import { View } from "react-native";
-import { useSelector } from "react-redux";
+import { useAppSelector } from "react-redux";
 import MainBottomTabContainer from "../footers_components/MainBottomTabContainer";
 
 const ExploreBottomTab = (props) => {
-  const darkModeValue = useSelector((state) => state.user.darkMode);
+  const darkModeValue = useAppSelector((state) => state.user.darkMode);
 
   return (
     <View>

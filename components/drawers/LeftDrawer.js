@@ -1,16 +1,16 @@
 import React from "react";
 import { Image, SafeAreaView, Text, View } from "react-native";
-import { useDispatch, useSelector } from "react-redux";
+import { useAppDispatch, useAppSelector } from "../../hooks";
 import { setDarkMode } from "../../store/actions/user";
 import FilterSwitch from "../UI/FilterSwitch";
 
 const LeftDrawer = (props) => {
-  const dispatch = useDispatch();
-  const darkModeValue = useSelector((state) => state.user.darkMode);
-  const localId = useSelector((state) => state.auth.userId);
-  const ExhibitUId = useSelector((state) => state.user.ExhibitUId);
-  const fullname = useSelector((state) => state.user.fullname);
-  const profilePictureUrl = useSelector(
+  const dispatch = useAppDispatch();
+  const darkModeValue = useAppSelector((state) => state.user.darkMode);
+  const localId = useAppSelector((state) => state.auth.userId);
+  const ExhibitUId = useAppSelector((state) => state.user.ExhibitUId);
+  const fullname = useAppSelector((state) => state.user.fullname);
+  const profilePictureUrl = useAppSelector(
     (state) => state.user.profilePictureUrl
   );
 

@@ -1,12 +1,12 @@
 import React from "react";
 import { View } from "react-native";
-import { useDispatch, useSelector } from "react-redux";
+import { useAppDispatch, useAppSelector } from "../../hooks";
 import MainBottomTabContainer from "../footers_components/MainBottomTabContainer";
 
 const FeedBottomTab = (props) => {
-  const dispatch = useDispatch();
-  const darkModeValue = useSelector((state) => state.user.darkMode);
-  const onFeedScreen = useSelector((state) => state.user.onFeedScreen);
+  const dispatch = useAppDispatch();
+  const darkModeValue = useAppSelector((state) => state.user.darkMode);
+  const onFeedScreen = useAppSelector((state) => state.user.onFeedScreen);
 
   return (
     <View>

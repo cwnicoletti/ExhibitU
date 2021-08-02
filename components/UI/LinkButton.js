@@ -1,10 +1,10 @@
 import { EvilIcons } from "@expo/vector-icons";
 import React from "react";
 import { StyleSheet, Text, TouchableOpacity } from "react-native";
-import { useSelector } from "react-redux";
+import { useAppSelector } from "react-redux";
 
 const LinkButton = (props) => {
-  const darkModeValue = useSelector((state) => state.user.darkMode);
+  const darkModeValue = useAppSelector((state) => state.user.darkMode);
 
   return (
     <TouchableOpacity

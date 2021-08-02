@@ -8,10 +8,10 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { useSelector } from "react-redux";
+import { useAppSelector } from "react-redux";
 
 const ProjectItem = (props) => {
-  const profileColumns = useSelector((state) => state.user.profileColumns);
+  const profileColumns = useAppSelector((state) => state.user.profileColumns);
 
   let TouchableCmp = TouchableOpacity;
   if (Platform.OS === "android") {

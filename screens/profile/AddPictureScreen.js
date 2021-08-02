@@ -14,7 +14,7 @@ import {
 } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
-import { useDispatch, useSelector } from "react-redux";
+import { useAppDispatch, useAppSelector } from "../../hooks";
 import Input from "../../components/UI/Input";
 import IoniconsHeaderButton from "../../components/UI/header_buttons/IoniconsHeaderButton";
 import PreviewPostItem from "../../components/user/PreviewPostItem";
@@ -137,23 +137,23 @@ const formReducer = (state, action) => {
 };
 
 const EditProfileScreen = (props) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const [fileSizeError, setFileSizeError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadingTempPicture, setIsLoadingTempPicture] = useState(false);
   const [linksState, setLinksState] = useState([]);
-  const darkModeValue = useSelector((state) => state.user.darkMode);
-  const localId = useSelector((state) => state.auth.userId);
-  const ExhibitUId = useSelector((state) => state.user.ExhibitUId);
-  const profilePictureUrl = useSelector(
+  const darkModeValue = useAppSelector((state) => state.user.darkMode);
+  const localId = useAppSelector((state) => state.auth.userId);
+  const ExhibitUId = useAppSelector((state) => state.user.ExhibitUId);
+  const profilePictureUrl = useAppSelector(
     (state) => state.user.profilePictureUrl
   );
-  const profilePictureBase64 = useSelector(
+  const profilePictureBase64 = useAppSelector(
     (state) => state.user.profilePictureBase64
   );
-  const tempPhotoPostId = useSelector((state) => state.user.tempPhotoPostId);
-  const tempPhotoPostUrl = useSelector((state) => state.user.tempPhotoPostUrl);
-  const tempPhotoPostBase64 = useSelector(
+  const tempPhotoPostId = useAppSelector((state) => state.user.tempPhotoPostId);
+  const tempPhotoPostUrl = useAppSelector((state) => state.user.tempPhotoPostUrl);
+  const tempPhotoPostBase64 = useAppSelector(
     (state) => state.user.tempPhotoPostBase64
   );
   const projectTitle = props.navigation.getParam("projectTitle");
@@ -165,26 +165,26 @@ const EditProfileScreen = (props) => {
   const projectLastUpdated = props.navigation.getParam("projectLastUpdated");
   const projectDescription = props.navigation.getParam("projectDescription");
   const projectLinks = props.navigation.getParam("projectLinks");
-  const fullname = useSelector((state) => state.user.fullname);
-  const username = useSelector((state) => state.user.username);
-  const jobTitle = useSelector((state) => state.user.jobTitle);
-  const numberOfFollowers = useSelector(
+  const fullname = useAppSelector((state) => state.user.fullname);
+  const username = useAppSelector((state) => state.user.username);
+  const jobTitle = useAppSelector((state) => state.user.jobTitle);
+  const numberOfFollowers = useAppSelector(
     (state) => state.user.numberOfFollowers
   );
-  const numberOfFollowing = useSelector(
+  const numberOfFollowing = useAppSelector(
     (state) => state.user.numberOfFollowing
   );
-  const numberOfAdvocates = useSelector(
+  const numberOfAdvocates = useAppSelector(
     (state) => state.user.numberOfAdvocates
   );
-  const profileColumns = useSelector((state) => state.user.profileColumns);
-  const profileBiography = useSelector((state) => state.user.profileBiography);
-  const profileLinks = useSelector((state) => state.user.profileLinks);
-  const followingValue = useSelector((state) => state.user.hideFollowing);
-  const followersValue = useSelector((state) => state.user.hideFollowers);
-  const advocatesValue = useSelector((state) => state.user.hideAdvocates);
-  const tutorialing = useSelector((state) => state.user.tutorialing);
-  const tutorialScreen = useSelector((state) => state.user.tutorialScreen);
+  const profileColumns = useAppSelector((state) => state.user.profileColumns);
+  const profileBiography = useAppSelector((state) => state.user.profileBiography);
+  const profileLinks = useAppSelector((state) => state.user.profileLinks);
+  const followingValue = useAppSelector((state) => state.user.hideFollowing);
+  const followersValue = useAppSelector((state) => state.user.hideFollowers);
+  const advocatesValue = useAppSelector((state) => state.user.hideAdvocates);
+  const tutorialing = useAppSelector((state) => state.user.tutorialing);
+  const tutorialScreen = useAppSelector((state) => state.user.tutorialScreen);
 
   let TouchableCmp = TouchableOpacity;
   if (Platform.OS === "android") {

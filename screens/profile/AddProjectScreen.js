@@ -17,7 +17,7 @@ import {
 } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
-import { useDispatch, useSelector } from "react-redux";
+import { useAppDispatch, useAppSelector } from "../../hooks";
 import TutorialExhibitCreation from "../../components/tutorial/TutorialExhibitCreation";
 import DefaultPicture from "../../assets/Icons/picture.svg";
 import Input from "../../components/UI/Input";
@@ -141,25 +141,25 @@ const formReducer = (state, action) => {
 };
 
 const AddProjectScreen = (props) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const [fileSizeError, setFileSizeError] = useState(false);
   const [linksState, setLinksState] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadingTempPicture, setIsLoadingTempPicture] = useState(false);
-  const darkModeValue = useSelector((state) => state.user.darkMode);
-  const localId = useSelector((state) => state.auth.userId);
-  const ExhibitUId = useSelector((state) => state.user.ExhibitUId);
-  const projectTempCoverPhotoId = useSelector(
+  const darkModeValue = useAppSelector((state) => state.user.darkMode);
+  const localId = useAppSelector((state) => state.auth.userId);
+  const ExhibitUId = useAppSelector((state) => state.user.ExhibitUId);
+  const projectTempCoverPhotoId = useAppSelector(
     (state) => state.user.projectTempCoverPhotoId
   );
-  const projectTempCoverPhotoUrl = useSelector(
+  const projectTempCoverPhotoUrl = useAppSelector(
     (state) => state.user.projectTempCoverPhotoUrl
   );
-  const projectTempCoverPhotoBase64 = useSelector(
+  const projectTempCoverPhotoBase64 = useAppSelector(
     (state) => state.user.projectTempCoverPhotoBase64
   );
-  const tutorialing = useSelector((state) => state.user.tutorialing);
-  const tutorialScreen = useSelector((state) => state.user.tutorialScreen);
+  const tutorialing = useAppSelector((state) => state.user.tutorialing);
+  const tutorialScreen = useAppSelector((state) => state.user.tutorialScreen);
 
   let initialState = {
     inputValues: {

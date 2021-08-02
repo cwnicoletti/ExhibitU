@@ -11,12 +11,12 @@ import {
 import { FontAwesome, Feather, AntDesign } from "@expo/vector-icons";
 import TutorialModalNoBackground from "../UI/modals/TutorialModalNoBackground";
 import EditButton from "../UI/EditButton";
-import { useDispatch } from "react-redux";
+import { useAppDispatch } from "react-redux";
 import { withNavigation } from "react-navigation";
 import { setTutorialing } from "../../store/actions/user";
 
 const TutorialStart = (props) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const ExhibitUId = props.ExhibitUId;
   const localId = props.localId;

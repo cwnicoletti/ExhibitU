@@ -13,7 +13,7 @@ import {
 } from "react-native";
 import { SearchBar } from "react-native-elements";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
-import { useSelector } from "react-redux";
+import { useAppSelector } from "react-redux";
 import ExploreAdvocatesCard from "../../components/explore/ExploreAdvocatesCard";
 import IoniconsHeaderButton from "../../components/UI/header_buttons/IoniconsHeaderButton";
 
@@ -24,7 +24,7 @@ const AdvocatesScreen = (props) => {
   );
   const index = client.initIndex("users");
 
-  const darkModeValue = useSelector((state) => state.user.darkMode);
+  const darkModeValue = useAppSelector((state) => state.user.darkMode);
   const [returnedIndex, setReturnedIndex] = useState([]);
   const [projects, setProjects] = useState({});
   const [search, setSearch] = useState("");

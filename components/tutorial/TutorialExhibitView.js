@@ -8,14 +8,14 @@ import {
 } from "react-native";
 import { Feather, Ionicons } from "@expo/vector-icons";
 import TutorialModalNoBackground from "../UI/modals/TutorialModalNoBackground";
-import { useDispatch, useSelector } from "react-redux";
+import { useAppDispatch, useAppSelector } from "../../hooks";
 import { withNavigation } from "react-navigation";
 import EditButton from "../UI/EditButton";
 import { setTutorialing } from "../../store/actions/user";
 
 const TutorialExhibitView = (props) => {
-  const dispatch = useDispatch();
-  const darkModeValue = useSelector((state) => state.user.darkMode);
+  const dispatch = useAppDispatch();
+  const darkModeValue = useAppSelector((state) => state.user.darkMode);
 
   const ExhibitUId = props.ExhibitUId;
   const localId = props.localId;

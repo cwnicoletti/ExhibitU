@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { FlatList, Platform, StyleSheet, Text, View } from "react-native";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
-import { useDispatch, useSelector } from "react-redux";
+import { useAppDispatch, useAppSelector } from "../../hooks";
 import ProjectHeader from "../../components/projects/ProjectHeader";
 import IoniconsHeaderButton from "../../components/UI/header_buttons/IoniconsHeaderButton";
 import ProjectPictures from "../../components/UI/ProjectPictures";
@@ -9,16 +9,16 @@ import TutorialExhibitView from "../../components/tutorial/TutorialExhibitView";
 import { changeProjectNumberOfColumns } from "../../store/actions/user";
 
 const ProjectScreen = (props) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const [isLoadingTwoColumns, setIsLoadingTwoColumns] = useState(false);
   const [isLoadingThreeColumns, setIsLoadingThreeColumns] = useState(false);
   const [isLoadingFourColumns, setIsLoadingFourColumns] = useState(false);
-  const darkModeValue = useSelector((state) => state.user.darkMode);
-  const localId = useSelector((state) => state.auth.userId);
-  const ExhibitUId = useSelector((state) => state.user.ExhibitUId);
-  const profileProjects = useSelector((state) => state.user.profileProjects);
-  const tutorialing = useSelector((state) => state.user.tutorialing);
-  const tutorialScreen = useSelector((state) => state.user.tutorialScreen);
+  const darkModeValue = useAppSelector((state) => state.user.darkMode);
+  const localId = useAppSelector((state) => state.auth.userId);
+  const ExhibitUId = useAppSelector((state) => state.user.ExhibitUId);
+  const profileProjects = useAppSelector((state) => state.user.profileProjects);
+  const tutorialing = useAppSelector((state) => state.user.tutorialing);
+  const tutorialScreen = useAppSelector((state) => state.user.tutorialScreen);
   const currentProjectId = props.navigation.getParam("projectId");
   const currentProject = profileProjects[currentProjectId]
     ? profileProjects[currentProjectId]

@@ -1,5 +1,5 @@
 import { SimpleLineIcons } from "@expo/vector-icons";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import {
   Animated,
   FlatList,
@@ -7,9 +7,10 @@ import {
   StyleSheet,
   Text,
   View,
+  Platform,
+  TouchableNativeFeedback,
 } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import { useDispatch, useSelector } from "react-redux";
 import ProjectItem from "../../components/projectItems/ProfileProjectItem";
 import TutorialPrompt from "../../components/tutorial/TutorialPrompt";
 import TutorialStart from "../../components/tutorial/TutorialStart";
@@ -24,40 +25,41 @@ import {
   refreshProfile,
   showcaseProfile,
 } from "../../store/actions/user";
+import { useAppDispatch, useAppSelector } from "../../hooks";
 
 const ProfileScreen = (props) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [isLoadingTwoColumns, setIsLoadingTwoColumns] = useState(false);
   const [isLoadingThreeColumns, setIsLoadingThreeColumns] = useState(false);
   const [isLoadingFourColumns, setIsLoadingFourColumns] = useState(false);
-  const darkModeValue = useSelector((state) => state.user.darkMode);
-  const localId = useSelector((state) => state.auth.userId);
-  const ExhibitUId = useSelector((state) => state.user.ExhibitUId);
-  const tutorialing = useSelector((state) => state.user.tutorialing);
-  const tutorialPrompt = useSelector((state) => state.user.tutorialPrompt);
-  const tutorialScreen = useSelector((state) => state.user.tutorialScreen);
+  const darkModeValue = useAppSelector((state) => state.user.darkMode);
+  const localId = useAppSelector((state) => state.auth.userId);
+  const ExhibitUId = useAppSelector((state) => state.user.ExhibitUId);
+  const tutorialing = useAppSelector((state) => state.user.tutorialing);
+  const tutorialPrompt = useAppSelector((state) => state.user.tutorialPrompt);
+  const tutorialScreen = useAppSelector((state) => state.user.tutorialScreen);
 
-  const profilePictureBase64 = useSelector(
+  const profilePictureBase64 = useAppSelector(
     (state) => state.user.profilePictureBase64
   );
-  const profileColumns = useSelector((state) => state.user.profileColumns);
-  const resetScrollProfile = useSelector(
+  const profileColumns = useAppSelector((state) => state.user.profileColumns);
+  const resetScrollProfile = useAppSelector(
     (state) => state.user.resetScrollProfile
   );
-  const showcasingProfile = useSelector(
+  const showcasingProfile = useAppSelector(
     (state) => state.user.showcasingProfile
   );
   const [hiddenComponent, setHiddenComponent] = useState(false);
 
   const userData = {
-    ExhibitUId: useSelector((state) => state.user.ExhibitUId),
-    fullname: useSelector((state) => state.user.fullname),
-    username: useSelector((state) => state.user.username),
-    jobTitle: useSelector((state) => state.user.jobTitle),
-    profileBiography: useSelector((state) => state.user.profileBiography),
-    profileLinks: useSelector((state) => state.user.profileLinks),
-    profileProjects: useSelector((state) => state.user.profileProjects),
+    ExhibitUId: useAppSelector((state) => state.user.ExhibitUId),
+    fullname: useAppSelector((state) => state.user.fullname),
+    username: useAppSelector((state) => state.user.username),
+    jobTitle: useAppSelector((state) => state.user.jobTitle),
+    profileBiography: useAppSelector((state) => state.user.profileBiography),
+    profileLinks: useAppSelector((state) => state.user.profileLinks),
+    profileProjects: useAppSelector((state) => state.user.profileProjects),
   };
   const [profileProjectsState, setProfileProjectsState] = useState(
     Object.values(userData.profileProjects).sort((first, second) => {
@@ -77,11 +79,9 @@ const ProfileScreen = (props) => {
     }
   }
 
-  let android = null;
-  let TouchableCmp = TouchableOpacity;
+  let TouchableCmp: any = TouchableOpacity;
   if (Platform.OS === "android") {
     TouchableCmp = TouchableNativeFeedback;
-    android = true;
   }
 
   let slideAnim = useRef(new Animated.Value(0)).current;
@@ -135,7 +135,7 @@ const ProfileScreen = (props) => {
     }
   }, [showcasingProfile]);
 
-  const profileFlatlist = useRef();
+  const profileFlatlist: any = useRef();
   useDidMountEffect(() => {
     profileFlatlist.current.scrollToOffset({ animated: true, offset: 0 });
   }, [resetScrollProfile]);
@@ -275,7 +275,7 @@ const ProfileScreen = (props) => {
         tutorialScreen === "ExploreProject") ? (
         <TutorialEnd ExhibitUId={ExhibitUId} localId={localId} />
       ) : null}
-      <FlatList
+      <FlatList<Object | any>
         data={profileProjectsState}
         keyExtractor={(item) => item.projectId}
         key={profileColumns}

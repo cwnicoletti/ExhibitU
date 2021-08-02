@@ -8,12 +8,12 @@ import {
 } from "react-native";
 import { Feather, Ionicons } from "@expo/vector-icons";
 import TutorialModalNoBackground from "../UI/modals/TutorialModalNoBackground";
-import { useDispatch, useSelector } from "react-redux";
+import { useAppDispatch, useAppSelector } from "../../hooks";
 import { withNavigation } from "react-navigation";
 import { setTutorialing, setTutorialPrompt } from "../../store/actions/user";
 
 const TutorialExhibitCreation = (props) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const ExhibitUId = props.ExhibitUId;
   const localId = props.localId;

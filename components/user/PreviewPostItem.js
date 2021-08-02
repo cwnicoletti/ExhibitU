@@ -15,15 +15,15 @@ import {
   View,
 } from "react-native";
 import resolveAssetSource from "react-native/Libraries/Image/resolveAssetSource";
-import { useSelector } from "react-redux";
+import { useAppSelector } from "react-redux";
 import Cheer from "../../assets/Icons/clap.svg";
 import LinkButton from "../UI/LinkButton";
 import toDateTime from "../../helper/toDateTime";
 
 const ProjectItem = (props) => {
   const [height, setHeight] = useState(null);
-  const darkModeValue = useSelector((state) => state.user.darkMode);
-  const fullname = useSelector((state) => state.user.fullname);
+  const darkModeValue = useAppSelector((state) => state.user.darkMode);
+  const fullname = useAppSelector((state) => state.user.fullname);
   const defaultPostIcon = require("../../assets/default-post-icon.png");
   const source = resolveAssetSource(defaultPostIcon);
   const links = props.links;

@@ -11,12 +11,12 @@ import {
   View,
   ActivityIndicator,
 } from "react-native";
-import { useSelector } from "react-redux";
+import { useAppSelector } from "react-redux";
 import EditButton from "../UI/EditButton";
 import LinkButton from "../UI/LinkButton";
 
 const ProjectHeader = (props) => {
-  const darkModeValue = useSelector((state) => state.user.darkMode);
+  const darkModeValue = useAppSelector((state) => state.user.darkMode);
   const links = props.links;
 
   let TouchableCmp = TouchableOpacity;

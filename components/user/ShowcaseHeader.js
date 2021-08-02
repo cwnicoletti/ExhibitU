@@ -9,13 +9,13 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { useSelector } from "react-redux";
+import { useAppSelector } from "react-redux";
 import LinkButton from "../UI/LinkButton";
 import ProfileStats from "../UI/ProfileStats";
 import UserTitleShowcaseLocal from "./UserTitleShowcaseLocal";
 
 const ExhibitUHeader = (props) => {
-  const darkModeValue = useSelector((state) => state.user.darkMode);
+  const darkModeValue = useAppSelector((state) => state.user.darkMode);
   const links = props.links;
   const followingValue = props.followingValue;
   const followersValue = props.followersValue;

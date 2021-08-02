@@ -1,7 +1,7 @@
 import React from "react";
 import { Image, Platform, Text, View } from "react-native";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
-import { useSelector } from "react-redux";
+import { useAppSelector } from "react-redux";
 import Menu from "../headers_components/Menu";
 import Settings from "../headers_components/Settings";
 import Title from "../headers_components/Title";
@@ -9,7 +9,7 @@ import FeatherHeaderButton from "../UI/header_buttons/FeatherHeaderButton";
 import IoniconsHeaderButton from "../UI/header_buttons/IoniconsHeaderButton";
 
 const ProfileHeader = ({ navigation }) => {
-  const darkModeValue = useSelector((state) => state.user.darkMode);
+  const darkModeValue = useAppSelector((state) => state.user.darkMode);
 
   return (
     <View>

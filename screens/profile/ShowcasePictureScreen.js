@@ -8,12 +8,12 @@ import {
   View,
 } from "react-native";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
-import { useSelector } from "react-redux";
+import { useAppSelector } from "react-redux";
 import IoniconsHeaderButton from "../../components/UI/header_buttons/IoniconsHeaderButton";
 import ShowcasePostView from "../../components/user/ShowcasePostView";
 
 const ShowcasePictureScreen = (props) => {
-  const darkModeValue = useSelector((state) => state.user.darkMode);
+  const darkModeValue = useAppSelector((state) => state.user.darkMode);
   const userData = props.navigation.getParam("userData");
 
   const postId = props.navigation.getParam("postId");

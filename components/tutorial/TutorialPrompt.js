@@ -9,11 +9,11 @@ import {
 } from "react-native";
 import { FontAwesome, Feather, AntDesign } from "@expo/vector-icons";
 import TutorialModalNoBackgroundNoX from "../UI/modals/TutorialModalNoBackgroundNoX";
-import { useDispatch } from "react-redux";
+import { useAppDispatch } from "react-redux";
 import { setTutorialing, setTutorialPrompt } from "../../store/actions/user";
 
 const TutorialPrompt = (props) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const ExhibitUId = props.ExhibitUId;
   const localId = props.localId;

@@ -15,7 +15,7 @@ import {
   View,
 } from "react-native";
 import resolveAssetSource from "react-native/Libraries/Image/resolveAssetSource";
-import { useSelector } from "react-redux";
+import { useAppSelector } from "react-redux";
 import LinkButton from "../UI/LinkButton";
 import toDateTime from "../../helper/toDateTime";
 import TimeStamp from "../UI/TimeStamp";
@@ -23,8 +23,8 @@ import TimeStamp from "../UI/TimeStamp";
 const ExhibitUPostView = (props) => {
   const [photoHeight, setHeight] = useState(null);
   const [photoWidth, setWidth] = useState(null);
-  const darkModeValue = useSelector((state) => state.user.darkMode);
-  const showCheering = useSelector((state) => state.user.showCheering);
+  const darkModeValue = useAppSelector((state) => state.user.darkMode);
+  const showCheering = useAppSelector((state) => state.user.showCheering);
   const defaultPostIcon = require("../../assets/default-profile-icon.jpg");
   const source = resolveAssetSource(defaultPostIcon);
   const links = props.links;

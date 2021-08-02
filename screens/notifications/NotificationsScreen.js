@@ -8,7 +8,7 @@ import {
   FlatList,
   RefreshControl,
 } from "react-native";
-import { useSelector, useDispatch } from "react-redux";
+import { useAppSelector, useAppDispatch } from "react-redux";
 import { SearchBar } from "react-native-elements";
 import algoliasearch from "algoliasearch";
 import { offScreen } from "../../store/actions/user";
@@ -24,12 +24,12 @@ const ExploreScreen = (props) => {
   );
   const index = client.initIndex("users");
 
-  const dispatch = useDispatch();
-  const darkModeValue = useSelector((state) => state.user.darkMode);
+  const dispatch = useAppDispatch();
+  const darkModeValue = useAppSelector((state) => state.user.darkMode);
   const [search, setSearch] = useState("");
   const [returnedIndex, setReturnedIndex] = useState([]);
   const [isRefreshing, setIsRefreshing] = useState(false);
-  const resetScrollExplore = useSelector(
+  const resetScrollExplore = useAppSelector(
     (state) => state.user.resetScrollExplore
   );
 
