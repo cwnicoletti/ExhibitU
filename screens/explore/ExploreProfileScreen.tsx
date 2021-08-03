@@ -398,7 +398,7 @@ const ExploreProfileScreen = (props) => {
         tutorialScreen === "ExploreProject") ? (
         <TutorialExploreProfile ExhibitUId={ExhibitUId} localId={localId} />
       ) : null}
-      <FlatList
+      <FlatList<any>
         data={profileProjectsState}
         keyExtractor={(item) => item.projectId}
         ListHeaderComponent={topHeader}

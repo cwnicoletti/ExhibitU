@@ -2,23 +2,19 @@ import { Fontisto, MaterialIcons } from "@expo/vector-icons";
 import { useFonts } from "expo-font";
 import React from "react";
 import {
-    Image,
-
-
-
-    Platform, StyleSheet,
-
-    Text,
-    TouchableNativeFeedback,
-    TouchableOpacity, View
+  Image,
+  Platform,
+  StyleSheet,
+  Text,
+  TouchableNativeFeedback,
+  TouchableOpacity,
+  View,
 } from "react-native";
 
 const SignupOrLoginScreen = (props) => {
-  let android = null;
-  let TouchableCmp = TouchableOpacity;
+  let TouchableCmp: any = TouchableOpacity;
   if (Platform.OS === "android") {
     TouchableCmp = TouchableNativeFeedback;
-    android = true;
   }
 
   const [loaded] = useFonts({
@@ -117,7 +113,7 @@ const SignupOrLoginScreen = (props) => {
   );
 };
 
-SignupOrLoginScreen.navigationOptions = (navData) => {
+SignupOrLoginScreen.navigationOptions = () => {
   return {
     headerShown: false,
   };

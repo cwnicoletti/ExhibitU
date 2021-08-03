@@ -1,7 +1,7 @@
-import { Fontisto } from "@expo/vector-icons";
 import React, { useCallback, useReducer, useState } from "react";
 import {
   ActivityIndicator,
+  Image,
   Platform,
   StyleSheet,
   Text,
@@ -11,11 +11,11 @@ import {
 } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
-import { useAppDispatch } from "../../hooks";
+import { useAppDispatch, useAppSelector } from "../../hooks";
 import Input from "../../components/UI/Input";
 import IoniconsHeaderButton from "../../components/UI/header_buttons/IoniconsHeaderButton";
 import { Feather } from "@expo/vector-icons";
-import { setEmail } from "../../store/actions/signup";
+import { setUsername } from "../../store/actions/signup";
 
 const FORM_INPUT_UPDATE = "FORM_INPUT_UPDATE";
 
@@ -31,9 +31,7 @@ const formReducer = (state, action) => {
     };
     let updatedFormIsValid = true;
     for (const key in updatedValidities) {
-      if (updatedValidities.hasOwnProperty(key)) {
-        updatedFormIsValid = updatedFormIsValid && updatedValidities[key];
-      }
+      updatedFormIsValid = updatedFormIsValid && updatedValidities[key];
     }
     return {
       formIsValid: updatedFormIsValid,
@@ -44,32 +42,31 @@ const formReducer = (state, action) => {
   return state;
 };
 
-const SignupScreen1 = (props) => {
+const SignupScreen2 = (props) => {
   const dispatch = useAppDispatch();
   const [isLoading, setIsLoading] = useState(false);
+  const fullname = useAppSelector((state) => state.signup.fullname);
 
-  let android = null;
-  let TouchableCmp = TouchableOpacity;
+  let TouchableCmp: any = TouchableOpacity;
   if (Platform.OS === "android") {
     TouchableCmp = TouchableNativeFeedback;
-    android = true;
   }
 
   const [formState, dispatchFormState] = useReducer(formReducer, {
     inputValues: {
-      email: "",
+      username: "",
     },
     inputValidities: {
-      email: false,
+      username: false,
     },
     formIsValid: false,
   });
 
   const authHandler = async () => {
     await setIsLoading(true);
-    await dispatch(setEmail(formState.inputValues.email));
+    await dispatch(setUsername(formState.inputValues.username));
     await setIsLoading(false);
-    await props.navigation.navigate("Signup2");
+    await props.navigation.navigate("Signup4");
   };
 
   const inputChangeHandler = useCallback(
@@ -92,38 +89,39 @@ const SignupScreen1 = (props) => {
         keyboardShouldPersistTaps="handled"
       >
         <View style={styles.inner}>
-          <Text style={styles.text}>Enter your email</Text>
-          <Text style={styles.textLogin}>(This will be used as your login)</Text>
-          <Fontisto
-            name="email"
-            size={100}
-            color="white"
-            style={{ margin: 10 }}
+          <Text style={styles.text}>Enter a username</Text>
+          <Text style={styles.smallerText}>
+            (You can change this at any time)
+          </Text>
+          <Image
+            style={styles.image}
+            source={require("../../assets/default-profile-icon.jpg")}
           />
+          <Text style={styles.fullname}>{fullname}</Text>
           <View style={styles.authContainer}>
             <Input
-              id="email"
-              label="Email"
-              keyboardType="email-address"
+              id="username"
+              label="Username"
+              keyboardType="default"
               required
-              email
-              autoCorrect={false}
-              autoCapitalize="none"
-              returnKeyType="done"
-              placeholder="example@example.com"
+              minLength={2}
               autoFocus={true}
+              autoCorrect={false}
               blurOnSubmit={false}
               initiallyValid={false}
+              autoCapitalize="none"
+              returnKeyType="done"
               onSubmitEditing={() => {
                 if (formState.formIsValid === true) {
                   authHandler();
                 }
               }}
-              errorText="Please enter a valid email address"
+              placeholder="exampleusername123"
+              errorText="Please enter a valid username"
               onInputChange={inputChangeHandler}
               initialValue=""
               styleInput={{
-                color: 'white',
+                color: "white",
                 backgroundColor: "#222222",
                 marginVertical: 10,
               }}
@@ -174,7 +172,7 @@ const SignupScreen1 = (props) => {
   );
 };
 
-SignupScreen1.navigationOptions = (navData) => {
+SignupScreen2.navigationOptions = (navData) => {
   return {
     headerTitle: () => (
       <View style={styles.logo}>
@@ -219,6 +217,10 @@ const styles = StyleSheet.create({
   inner: {
     alignItems: "center",
   },
+  image: {
+    width: 150,
+    height: 150,
+  },
   logo: {
     flex: 1,
     flexDirection: "row",
@@ -233,10 +235,16 @@ const styles = StyleSheet.create({
     marginTop: 20,
     fontSize: 22,
   },
-  textLogin: {
+  fullname: {
     color: "white",
-    marginTop: 10,
-    fontSize: 16,
+    padding: 5,
+    fontSize: 20,
+  },
+  smallerText: {
+    color: "white",
+    padding: 5,
+    paddingBottom: 10,
+    fontSize: 12,
   },
   authContainer: {
     shadowColor: null,
@@ -263,4 +271,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SignupScreen1;
+export default SignupScreen2;

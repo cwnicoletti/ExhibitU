@@ -28,7 +28,9 @@ const FeedProfileScreen = (props) => {
           fullname: useAppSelector((state) => state.user.fullname),
           username: useAppSelector((state) => state.user.username),
           jobTitle: useAppSelector((state) => state.user.jobTitle),
-          profileBiography: useAppSelector((state) => state.user.profileBiography),
+          profileBiography: useAppSelector(
+            (state) => state.user.profileBiography
+          ),
           profileLinks: useAppSelector((state) => state.user.profileLinks),
           profileProjects: useAppSelector((state) => state.user.profileProjects)
             ? useAppSelector((state) => state.user.profileProjects)
@@ -145,7 +147,7 @@ const FeedProfileScreen = (props) => {
         backgroundColor: darkModeValue ? "black" : "white",
       }}
     >
-      <FlatList
+      <FlatList<any>
         data={profileProjectsState}
         keyExtractor={(item) => item.projectId}
         key={userData.profileColumns}

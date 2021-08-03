@@ -53,7 +53,6 @@ const ExplorePictureScreen = (props) => {
   }, []);
 
   useEffect(() => {
-    props.navigation.setParams({ android: android });
     props.navigation.setParams({ projectId: currentProjectId });
   }, []);
 
@@ -94,7 +93,6 @@ const ExplorePictureScreen = (props) => {
     >
       <ExplorePostView
         containerStyle={{
-          ...styles.profileContainerStyle,
           borderBottomColor: darkModeValue ? "white" : "black",
         }}
         image={{ uri: postPhotoUrl }}

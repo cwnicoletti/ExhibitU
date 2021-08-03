@@ -1,16 +1,13 @@
 import React, { useCallback, useReducer, useState } from "react";
 import {
-    ActivityIndicator,
-    Image,
-
-
-
-    Platform, StyleSheet,
-
-
-    Text,
-
-    TouchableNativeFeedback, TouchableOpacity, View
+  ActivityIndicator,
+  Image,
+  Platform,
+  StyleSheet,
+  Text,
+  TouchableNativeFeedback,
+  TouchableOpacity,
+  View,
 } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
@@ -19,7 +16,6 @@ import Input from "../../components/UI/Input";
 import IoniconsHeaderButton from "../../components/UI/header_buttons/IoniconsHeaderButton";
 import { Feather } from "@expo/vector-icons";
 import { setFullname } from "../../store/actions/signup";
-
 
 const FORM_INPUT_UPDATE = "FORM_INPUT_UPDATE";
 
@@ -50,11 +46,9 @@ const SignupScreen2 = (props) => {
   const dispatch = useAppDispatch();
   const [isLoading, setIsLoading] = useState(false);
 
-  let android = null;
-  let TouchableCmp = TouchableOpacity;
+  let TouchableCmp: any = TouchableOpacity;
   if (Platform.OS === "android") {
     TouchableCmp = TouchableNativeFeedback;
-    android = true;
   }
 
   const [formState, dispatchFormState] = useReducer(formReducer, {
@@ -121,7 +115,7 @@ const SignupScreen2 = (props) => {
               onInputChange={inputChangeHandler}
               initialValue=""
               styleInput={{
-                color: 'white',
+                color: "white",
                 backgroundColor: "#222222",
                 marginVertical: 10,
               }}

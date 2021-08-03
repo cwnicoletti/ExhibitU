@@ -1,13 +1,6 @@
 import { AntDesign } from "@expo/vector-icons";
 import React, { useEffect, useState } from "react";
-import {
-  FlatList,
-  RefreshControl,
-  SafeAreaView,
-  StyleSheet,
-  Text,
-  View,
-} from "react-native";
+import { FlatList, RefreshControl, StyleSheet, Text, View } from "react-native";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import UpdateCard from "../../components/drawers/UpdateCard";
@@ -66,7 +59,7 @@ const VoteUpdatesSettingsScreen = (props) => {
         backgroundColor: darkModeValue ? "black" : "white",
       }}
     >
-      <FlatList
+      <FlatList<any>
         data={Object.values(updates)}
         refreshControl={
           <RefreshControl
@@ -101,10 +94,7 @@ VoteUpdatesSettingsScreen.navigationOptions = (navData) => {
   const darkModeValue = navData.navigation.getParam("darkMode");
   return {
     headerTitle: () => (
-      <SafeAreaView
-        forceInset={{ top: "always", horizontal: "never" }}
-        style={styles.logo}
-      >
+      <View style={styles.logo}>
         <Text
           style={{
             ...styles.logoTitle,
@@ -113,7 +103,7 @@ VoteUpdatesSettingsScreen.navigationOptions = (navData) => {
         >
           Future Updates
         </Text>
-      </SafeAreaView>
+      </View>
     ),
     headerTitleStyle: {
       color: darkModeValue ? "white" : "black",

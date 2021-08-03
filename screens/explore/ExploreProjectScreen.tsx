@@ -313,7 +313,6 @@ const ExploreProjectScreen = (props) => {
     return (
       <ExploreProjectHeader
         containerStyle={{
-          ...styles.profileContainerStyle,
           borderBottomColor: darkModeValue ? "white" : "black",
         }}
         imgSource={{ uri: exploredProjectData.projectCoverPhotoUrl }}
@@ -341,7 +340,7 @@ const ExploreProjectScreen = (props) => {
         tutorialScreen === "TutorialEnd") ? (
         <TutorialExploreProject ExhibitUId={ExhibitUId} localId={localId} />
       ) : null}
-      <FlatList
+      <FlatList<any>
         data={projectPostsState}
         keyExtractor={(item) => item.postId}
         ListHeaderComponent={topHeader}
@@ -367,7 +366,6 @@ const ExploreProjectScreen = (props) => {
             titleStyle={{
               color: darkModeValue ? "white" : "black",
             }}
-            imageContainer={styles.imageContainer}
             onSelect={() =>
               viewCommentsHandler(
                 itemData.item.ExhibitUId,
