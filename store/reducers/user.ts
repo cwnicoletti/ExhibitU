@@ -295,9 +295,9 @@ export default (state = intialState, action) => {
     case ADD_USER_POST:
       return {
         ...state,
-        tempPhotoPostId: intialState.postPhotoPostId,
-        tempPhotoPostUrl: intialState.postPhotoUrl,
-        tempPhotoPostBase64: intialState.postPhotoBase64,
+        tempPhotoPostId: intialState.tempPhotoPostId,
+        tempPhotoPostUrl: intialState.tempPhotoPostUrl,
+        tempPhotoPostBase64: intialState.tempPhotoPostBase64,
         profileProjects: {
           ...state.profileProjects,
           [action.projectId]: {

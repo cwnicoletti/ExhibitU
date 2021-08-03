@@ -97,7 +97,7 @@ export const login = (email, password) => {
     const loginForm = { email, password };
 
     let authenticated = false;
-    let getLoginResponse = {};
+    let getLoginResponse: any = {};
 
     try {
       getLoginResponse = await axios.post(
