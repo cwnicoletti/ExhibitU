@@ -2,17 +2,19 @@ import React from "react";
 import { StyleSheet, View, Text } from "react-native";
 
 const TimeStamp = (props) => {
-  let timeStamp = {
-    weekday: "long",
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  };
+  let timeStamp = {};
 
   switch (props.dateLength) {
     case "short":
       timeStamp = {
         weekday: "long",
+      };
+    default:
+      timeStamp = {
+        weekday: "long",
+        year: "numeric",
+        month: "long",
+        day: "numeric",
       };
   }
 
