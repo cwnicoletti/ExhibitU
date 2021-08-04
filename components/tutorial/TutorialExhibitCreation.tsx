@@ -6,11 +6,11 @@ import {
   TouchableNativeFeedback,
   Platform,
 } from "react-native";
-import { Feather, Ionicons } from "@expo/vector-icons";
+import { Feather } from "@expo/vector-icons";
 import TutorialModalNoBackground from "../UI/modals/TutorialModalNoBackground";
-import { useAppDispatch, useAppSelector } from "../../hooks";
+import { useAppDispatch } from "../../hooks";
 import { withNavigation } from "react-navigation";
-import { setTutorialing, setTutorialPrompt } from "../../store/actions/user";
+import { setTutorialing } from "../../store/actions/user";
 
 const TutorialExhibitCreation = (props) => {
   const dispatch = useAppDispatch();

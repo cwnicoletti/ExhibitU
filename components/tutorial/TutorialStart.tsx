@@ -1,14 +1,12 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   View,
   Text,
-  ActivityIndicator,
   TouchableOpacity,
   TouchableNativeFeedback,
   Platform,
-  Image,
 } from "react-native";
-import { FontAwesome, Feather, AntDesign } from "@expo/vector-icons";
+import { Feather } from "@expo/vector-icons";
 import TutorialModalNoBackground from "../UI/modals/TutorialModalNoBackground";
 import EditButton from "../UI/EditButton";
 import { useAppDispatch } from "../../hooks";

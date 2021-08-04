@@ -15,7 +15,7 @@ import TutorialFeedView from "../../components/tutorial/TutorialFeedView";
 import * as Notifications from "expo-notifications";
 import { getUserFeed, offScreen } from "../../store/actions/user";
 
-const UserFeedScreen = (props) => {
+const FeedScreen = (props) => {
   const dispatch = useAppDispatch();
   const styleTypes = ["dark-content", "light-content"];
   const [isRefreshing, setIsRefreshing] = useState(false);
@@ -409,7 +409,7 @@ const UserFeedScreen = (props) => {
   );
 };
 
-UserFeedScreen.navigationOptions = (navData) => {
+FeedScreen.navigationOptions = (navData) => {
   const darkModeValue = navData.navigation.getParam("darkMode");
   return {
     headerTitle: () => (
@@ -469,4 +469,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default UserFeedScreen;
+export default FeedScreen;

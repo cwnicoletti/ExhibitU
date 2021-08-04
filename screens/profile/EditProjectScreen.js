@@ -8,7 +8,6 @@ import {
   KeyboardAvoidingView,
   LogBox,
   Platform,
-  SafeAreaView,
   StyleSheet,
   Text,
   TouchableNativeFeedback,

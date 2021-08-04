@@ -168,7 +168,7 @@ const ShowcaseProfileScreen = (props) => {
         backgroundColor: darkModeValue ? "black" : "white",
       }}
     >
-      <FlatList
+      <FlatList<any>
         data={profileProjectsState}
         keyExtractor={(item) => item.projectId}
         ListHeaderComponent={topHeader}

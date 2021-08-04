@@ -6,7 +6,7 @@ import {
   TouchableNativeFeedback,
   Platform,
 } from "react-native";
-import { Feather, SimpleLineIcons, FontAwesome } from "@expo/vector-icons";
+import { Feather } from "@expo/vector-icons";
 import TutorialModalNoBackground from "../UI/modals/TutorialModalNoBackground";
 import { useAppDispatch } from "../../hooks";
 import { withNavigation } from "react-navigation";

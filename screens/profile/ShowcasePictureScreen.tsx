@@ -84,7 +84,6 @@ const ShowcasePictureScreen = (props) => {
     >
       <ShowcasePostView
         containerStyle={{
-          ...styles.profileContainerStyle,
           borderBottomColor: darkModeValue ? "white" : "black",
         }}
         image={postPhotoBase64 ? postPhotoBase64 : postPhotoUrl}
