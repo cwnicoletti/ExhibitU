@@ -54,7 +54,7 @@ const ProfileProjectPostView = (props) => {
   const slideAnim = useRef(new Animated.Value(0)).current;
 
   let secondnow = null;
-  let TouchableCmp = TouchableOpacity;
+  let TouchableCmp: any = TouchableOpacity;
   if (Platform.OS === "android") {
     TouchableCmp = TouchableNativeFeedback;
   }
@@ -179,7 +179,7 @@ const ProfileProjectPostView = (props) => {
   };
 
   return (
-    <View style={{ ...styles.project, ...props.projectContainer }}>
+    <View style={{ ...props.projectContainer }}>
       <TouchableWithoutFeedback
         onPress={() => {
           if (!processingWholeCheer) {
@@ -299,7 +299,7 @@ const ProfileProjectPostView = (props) => {
             ...props.pictureCheerContainer,
           }}
         >
-          <FlatList
+          <FlatList<any>
             data={Object.values(links)}
             keyExtractor={(item) => item.linkId}
             numColumns={1}
@@ -354,7 +354,7 @@ const ProfileProjectPostView = (props) => {
           }}
         >
           <View style={{ alignItems: "center" }}>
-            <FlatList
+            <FlatList<any>
               data={Object.values(links)}
               keyExtractor={(item) => item.linkId}
               numColumns={Object.keys(links).length === 2 ? 2 : 3}

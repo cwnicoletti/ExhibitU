@@ -31,7 +31,7 @@ const ProjectItem = (props) => {
     Math.floor(Date.now() / 1000)
   ).toLocaleString();
 
-  let TouchableCmp = TouchableOpacity;
+  let TouchableCmp: any = TouchableOpacity;
   if (Platform.OS === "android") {
     TouchableCmp = TouchableNativeFeedback;
   }
@@ -189,7 +189,7 @@ const ProjectItem = (props) => {
             </Text>
           </View>
           <View style={{ justifyContent: "center" }}>
-            <FlatList
+            <FlatList<any>
               data={Object.values(links)}
               keyExtractor={(item) => item.linkId}
               numColumns={
@@ -226,7 +226,7 @@ const ProjectItem = (props) => {
             ...props.pictureCheerContainer,
           }}
         >
-          <FlatList
+          <FlatList<any>
             data={Object.values(links)}
             keyExtractor={(item) => item.linkId}
             key={Object.keys(links).length}

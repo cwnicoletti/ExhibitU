@@ -57,7 +57,7 @@ const FeedItem = (props) => {
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const slideAnim = useRef(new Animated.Value(0)).current;
 
-  let TouchableCmp = TouchableOpacity;
+  let TouchableCmp: any = TouchableOpacity;
   if (Platform.OS === "android") {
     TouchableCmp = TouchableNativeFeedback;
   }
@@ -169,7 +169,7 @@ const FeedItem = (props) => {
   };
 
   return (
-    <View style={{ ...styles.project, ...props.projectContainer }}>
+    <View style={{ ...props.projectContainer }}>
       <TouchableWithoutFeedback
         onPress={() => {
           if (!processingWholeCheer) {
@@ -367,7 +367,7 @@ const FeedItem = (props) => {
             ...props.pictureCheerContainer,
           }}
         >
-          <FlatList
+          <FlatList<any>
             data={Object.values(links)}
             keyExtractor={(item) => item.linkId}
             numColumns={1}
@@ -446,7 +446,7 @@ const FeedItem = (props) => {
           }}
         >
           <View style={{ alignItems: "center" }}>
-            <FlatList
+            <FlatList<any>
               data={Object.values(links)}
               keyExtractor={(item) => item.linkId}
               numColumns={Object.keys(links).length === 2 ? 2 : 3}

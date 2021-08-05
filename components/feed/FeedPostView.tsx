@@ -1,6 +1,7 @@
 import * as WebBrowser from "expo-web-browser";
 import React, { useEffect, useRef, useState } from "react";
 import {
+  ActivityIndicator,
   Animated,
   Dimensions,
   FlatList,
@@ -13,24 +14,23 @@ import {
   TouchableNativeFeedback,
   TouchableOpacity,
   TouchableWithoutFeedback,
-  ActivityIndicator,
   View,
 } from "react-native";
 import resolveAssetSource from "react-native/Libraries/Image/resolveAssetSource";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import Cheerfill from "../../assets/Icons/clap-fill.svg";
 import Cheer from "../../assets/Icons/clap.svg";
-import LinkButton from "../UI/LinkButton";
-import TimeStamp from "../UI/TimeStamp";
 import {
   cheerOwnFeedPost,
   cheerPost,
   uncheerOwnFeedPost,
   uncheerPost,
 } from "../../store/actions/user";
+import LinkButton from "../UI/LinkButton";
+import TimeStamp from "../UI/TimeStamp";
 import toDateTime from "../../helper/toDateTime";
 
-const ExplorePostView = (props) => {
+const FeedPostView = (props) => {
   const dispatch = useAppDispatch();
   const [photoHeight, setHeight] = useState(null);
   const [photoWidth, setWidth] = useState(null);
@@ -55,10 +55,14 @@ const ExplorePostView = (props) => {
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const slideAnim = useRef(new Animated.Value(0)).current;
 
-  let TouchableCmp = TouchableOpacity;
+  let TouchableCmp: any = TouchableOpacity;
   if (Platform.OS === "android") {
     TouchableCmp = TouchableNativeFeedback;
   }
+
+  useEffect(() => {
+    LogBox.ignoreLogs(["VirtualizedLists should never be nested"]);
+  }, []);
 
   useEffect(() => {
     if (cheeredPosts.includes(postId)) {
@@ -82,10 +86,6 @@ const ExplorePostView = (props) => {
       setWidth(screenWidth);
     });
   }, [Image]);
-
-  useEffect(() => {
-    LogBox.ignoreLogs(["VirtualizedLists should never be nested"]);
-  }, []);
 
   const slideUp = () => {
     Animated.timing(slideAnim, {
@@ -187,7 +187,11 @@ const ExplorePostView = (props) => {
               height: photoHeight,
               width: photoWidth,
             }}
-            source={props.image}
+            source={
+              props.image
+                ? { uri: props.image }
+                : require("../../assets/default-post-icon.png")
+            }
           >
             {showClapping ? (
               <Animated.View
@@ -282,45 +286,24 @@ const ExplorePostView = (props) => {
           </ImageBackground>
         </View>
       </TouchableWithoutFeedback>
-      <View
-        style={{
-          ...styles.pictureCheerContainer,
-          ...props.pictureCheerContainer,
-        }}
-      >
-        <View style={{ alignItems: "center" }}>
-          <FlatList
+      {Object.keys(links).length <= 1 ? (
+        <View
+          style={{
+            ...styles.pictureCheerContainer,
+            ...props.pictureCheerContainer,
+          }}
+        >
+          <FlatList<any>
             data={Object.values(links)}
             keyExtractor={(item) => item.linkId}
-            numColumns={
-              Object.keys(links).length === 1
-                ? 1
-                : Object.keys(links).length === 2
-                ? 2
-                : 3
-            }
-            columnWrapperStyle={
-              Object.keys(links).length > 1
-                ? { justifyContent: "center" }
-                : null
-            }
+            numColumns={1}
             renderItem={(itemData) => (
               <LinkButton
                 imageUrl={itemData.item[`linkImageUrl${itemData.item.linkId}`]}
                 title={itemData.item[`linkTitle${itemData.item.linkId}`]}
                 textStyle={{ color: darkModeValue ? "white" : "black" }}
                 linkContainer={{
-                  borderColor: "gray",
-                  width:
-                    Object.keys(links).length === 1
-                      ? "96%"
-                      : Object.keys(links).length === 2
-                      ? "46%"
-                      : "28%",
-                }}
-                imageStyle={{
-                  backgroundColor: "white",
-                  borderRadius: 5,
+                  width: "100%",
                 }}
                 onPress={() =>
                   WebBrowser.openBrowserAsync(
@@ -330,9 +313,30 @@ const ExplorePostView = (props) => {
               />
             )}
           />
-        </View>
-        {showCheering ? (
-          props.numberOfCheers >= 1 ? (
+          {currentUsersPost ? (
+            showCheering && props.numberOfCheers >= 1 ? (
+              <TouchableCmp onPress={props.onSelectCheering}>
+                <View style={{ flexDirection: "row" }}>
+                  <Text
+                    style={{
+                      ...styles.pictureCheerNumber,
+                      ...props.pictureCheerNumber,
+                    }}
+                  >
+                    {props.numberOfCheers}
+                  </Text>
+                  <Text
+                    style={{
+                      ...styles.pictureCheerText,
+                      ...props.pictureCheerText,
+                    }}
+                  >
+                    cheering
+                  </Text>
+                </View>
+              </TouchableCmp>
+            ) : null
+          ) : props.numberOfCheers >= 1 ? (
             <TouchableCmp onPress={props.onSelectCheering}>
               <View style={{ flexDirection: "row" }}>
                 <Text
@@ -353,9 +357,64 @@ const ExplorePostView = (props) => {
                 </Text>
               </View>
             </TouchableCmp>
-          ) : null
-        ) : null}
-      </View>
+          ) : null}
+        </View>
+      ) : (
+        <View
+          style={{
+            ...styles.pictureCheerContainer,
+            ...props.pictureCheerContainer,
+          }}
+        >
+          <View style={{ alignItems: "center" }}>
+            <FlatList<any>
+              data={Object.values(links)}
+              keyExtractor={(item) => item.linkId}
+              numColumns={Object.keys(links).length === 2 ? 2 : 3}
+              columnWrapperStyle={{ justifyContent: "center" }}
+              renderItem={(itemData) => (
+                <LinkButton
+                  imageUrl={
+                    itemData.item[`linkImageUrl${itemData.item.linkId}`]
+                  }
+                  title={itemData.item[`linkTitle${itemData.item.linkId}`]}
+                  textStyle={{ color: darkModeValue ? "white" : "black" }}
+                  linkContainer={{
+                    width: Object.keys(links).length === 2 ? "46%" : "28%",
+                  }}
+                  onPress={() =>
+                    WebBrowser.openBrowserAsync(
+                      itemData.item[`linkUrl${itemData.item.linkId}`]
+                    )
+                  }
+                />
+              )}
+            />
+          </View>
+          {showCheering && props.numberOfCheers >= 1 ? (
+            <TouchableCmp onPress={props.onSelectCheering}>
+              <View style={{ flexDirection: "row", padding: 10 }}>
+                <Text
+                  style={{
+                    ...styles.pictureCheerNumber,
+                    ...props.pictureCheerNumber,
+                  }}
+                >
+                  {props.numberOfCheers}
+                </Text>
+                <Text
+                  style={{
+                    ...styles.pictureCheerText,
+                    ...props.pictureCheerText,
+                  }}
+                >
+                  cheering
+                </Text>
+              </View>
+            </TouchableCmp>
+          ) : null}
+        </View>
+      )}
       <View style={{ ...styles.captionContainer, ...props.captionContainer }}>
         <Text
           style={{
@@ -390,7 +449,9 @@ const styles = StyleSheet.create({
     fontSize: 13,
   },
   pictureCheerContainer: {
-    padding: 10,
+    width: "100%",
+    paddingVertical: 5,
+    paddingHorizontal: 15,
   },
   pictureCheerNumber: {
     fontWeight: "bold",
@@ -411,4 +472,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ExplorePostView;
+export default FeedPostView;
