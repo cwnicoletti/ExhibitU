@@ -10,6 +10,7 @@ import {
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import { useAppSelector } from "../../hooks";
 import useDidMountEffect from "../../helper/useDidMountEffect";
+import getExlusiveBothSetsDifference from "../../helper/getExlusiveBothSetsDifference";
 import FeedPostView from "../../components/feed/FeedPostView";
 import IoniconsHeaderButton from "../../components/UI/header_buttons/IoniconsHeaderButton";
 
@@ -25,13 +26,6 @@ const FeedCommentsScreen = (props) => {
   useEffect(() => {
     setIntialCheeredPosts(cheeredPosts);
   }, []);
-
-  const getExlusiveBothSetsDifference = (arr1, arr2) => {
-    const difference = arr1
-      .filter((x) => !arr2.includes(x))
-      .concat(arr2.filter((x) => !arr1.includes(x)));
-    return difference;
-  };
 
   const viewCheeringHandler = () => {
     props.navigation.push("ViewCheering", {

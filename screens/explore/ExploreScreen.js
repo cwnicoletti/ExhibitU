@@ -13,6 +13,7 @@ import { SearchBar } from "react-native-elements";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import ExploreCard from "../../components/explore/ExploreCard";
 import useDidMountEffect from "../../helper/useDidMountEffect";
+import getExlusiveBothSetsDifference from "../../helper/getExlusiveBothSetsDifference";
 import TutorialExploreScreen from "../../components/tutorial/TutorialExploreScreen";
 import { offScreen } from "../../store/actions/user";
 import { FontAwesome5 } from "@expo/vector-icons";
@@ -132,13 +133,6 @@ const ExploreScreen = (props) => {
         showCheering,
       },
     });
-  };
-
-  const getExlusiveBothSetsDifference = (arr1, arr2) => {
-    const difference = arr1
-      .filter((x) => !arr2.includes(x))
-      .concat(arr2.filter((x) => !arr1.includes(x)));
-    return difference;
   };
 
   useDidMountEffect(() => {

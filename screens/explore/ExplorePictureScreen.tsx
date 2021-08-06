@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { Platform, ScrollView, StyleSheet, Text, View } from "react-native";
+import { ScrollView, StyleSheet, Text, View } from "react-native";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import { useAppSelector } from "../../hooks";
 import ExplorePostView from "../../components/explore/ExplorePostView";
 import IoniconsHeaderButton from "../../components/UI/header_buttons/IoniconsHeaderButton";
+import getExlusiveBothSetsDifference from "../../helper/getExlusiveBothSetsDifference";
 import useDidMountEffect from "../../helper/useDidMountEffect";
 
 const ExplorePictureScreen = (props) => {
@@ -24,13 +25,6 @@ const ExplorePictureScreen = (props) => {
   const exploredUserData = props.navigation.getParam("exploredUserData");
   const cheeredPosts = useAppSelector((state) => state.user.cheeredPosts);
   const [intialCheeredPosts, setIntialCheeredPosts] = useState([]);
-
-  const getExlusiveBothSetsDifference = (arr1, arr2) => {
-    const difference = arr1
-      .filter((x) => !arr2.includes(x))
-      .concat(arr2.filter((x) => !arr1.includes(x)));
-    return difference;
-  };
 
   const viewCheeringHandler = () => {
     props.navigation.navigate("ExploreCheering", {
