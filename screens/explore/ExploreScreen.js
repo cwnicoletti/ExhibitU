@@ -12,6 +12,7 @@ import {
 import { SearchBar } from "react-native-elements";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import ExploreCard from "../../components/explore/ExploreCard";
+import MainHeaderTitle from "../../components/UI/MainHeaderTitle";
 import useDidMountEffect from "../../helper/useDidMountEffect";
 import getExlusiveBothSetsDifference from "../../helper/getExlusiveBothSetsDifference";
 import TutorialExploreScreen from "../../components/tutorial/TutorialExploreScreen";
@@ -402,20 +403,11 @@ ExploreScreen.navigationOptions = (navData) => {
   const darkModeValue = navData.navigation.getParam("darkMode");
   return {
     headerTitle: () => (
-      <View
-        forceInset={{ top: "always", horizontal: "never" }}
-        style={styles.logo}
-      >
-        <Text
-          style={{
-            ...styles.logoTitle,
-            color: darkModeValue ? "white" : "black",
-            fontFamily: "CormorantUpright",
-          }}
-        >
-          ExhibitU
-        </Text>
-      </View>
+      <MainHeaderTitle
+        darkModeValue={darkModeValue}
+        fontFamily={"CormorantUpright"}
+        titleName={"ExhibitU"}
+      />
     ),
     headerStyle: {
       backgroundColor: darkModeValue ? "black" : "white",
@@ -434,15 +426,6 @@ const styles = StyleSheet.create({
     height: 30,
     width: 30,
     marginRight: 5,
-  },
-  logo: {
-    flex: 1,
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  logoTitle: {
-    fontSize: 26,
   },
 });
 

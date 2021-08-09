@@ -2,20 +2,19 @@ import { EvilIcons, Feather } from "@expo/vector-icons";
 import algoliasearch from "algoliasearch";
 import React, { useEffect, useState } from "react";
 import {
-    FlatList, Keyboard,
-
-
-    RefreshControl, SafeAreaView, StyleSheet,
-
-    Text,
-    TouchableWithoutFeedback, View
+  FlatList,
+  Keyboard,
+  RefreshControl,
+  StyleSheet,
+  TouchableWithoutFeedback,
+  View,
 } from "react-native";
 import { SearchBar } from "react-native-elements";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
+import MainHeaderTitle from "../../components/UI/MainHeaderTitle";
 import { useAppSelector } from "../../hooks";
 import ExploreAdvocatesCard from "../../components/explore/ExploreAdvocatesCard";
 import IoniconsHeaderButton from "../../components/UI/header_buttons/IoniconsHeaderButton";
-
 
 const FeedAdvocatesScreen = (props) => {
   const client = algoliasearch(
@@ -139,7 +138,13 @@ const FeedAdvocatesScreen = (props) => {
               borderBottomColor: "gray",
               borderBottomWidth: 1,
             }}
-            searchIcon={<EvilIcons name="search" size={24} color={darkModeValue ? "white" : "black"} />}
+            searchIcon={
+              <EvilIcons
+                name="search"
+                size={24}
+                color={darkModeValue ? "white" : "black"}
+              />
+            }
             clearIcon={
               search ? (
                 <Feather
@@ -224,24 +229,12 @@ FeedAdvocatesScreen.navigationOptions = (navData) => {
   const darkModeValue = navData.navigation.getParam("darkMode");
   return {
     headerTitle: () => (
-      <SafeAreaView
-        forceInset={{ top: "always", horizontal: "never" }}
-        style={styles.logo}
-      >
-        <Text
-          style={{
-            ...styles.logoTitle,
-            color: darkModeValue ? "white" : "black",
-          }}
-        >
-          Advocates
-        </Text>
-      </SafeAreaView>
+      <MainHeaderTitle darkModeValue={darkModeValue} titleName={"Advocates"} />
     ),
     headerStyle: {
       backgroundColor: darkModeValue ? "black" : "white",
     },
-    headerLeft: (props) => (
+    headerLeft: () => (
       <HeaderButtons HeaderButtonComponent={IoniconsHeaderButton}>
         <Item
           title="Add"
@@ -267,15 +260,6 @@ const styles = StyleSheet.create({
     height: 30,
     width: 30,
     marginRight: 5,
-  },
-  logo: {
-    flex: 1,
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  logoTitle: {
-    fontSize: 26,
   },
 });
 

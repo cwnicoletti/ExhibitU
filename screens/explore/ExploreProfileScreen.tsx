@@ -14,6 +14,7 @@ import ExploreProfileHeader from "../../components/explore/ExploreProfileHeader"
 import ProjectItem from "../../components/projectItems/ProfileProjectItem";
 import IoniconsHeaderButton from "../../components/UI/header_buttons/IoniconsHeaderButton";
 import SimpleLineIconsHeaderButton from "../../components/UI/header_buttons/SimpleLineIconsHeaderButton";
+import MainHeaderTitle from "../../components/UI/MainHeaderTitle";
 import TutorialExploreProfile from "../../components/tutorial/TutorialExploreProfile";
 import useDidMountEffect from "../../helper/useDidMountEffect";
 import { followUser, unfollowUser } from "../../store/actions/user";
@@ -450,17 +451,11 @@ ExploreProfileScreen.navigationOptions = (navData) => {
   const unfollowFn = navData.navigation.getParam("unfollowFn");
   return {
     headerTitle: () => (
-      <View style={styles.logo}>
-        <Text
-          style={{
-            ...styles.logoTitle,
-            color: darkModeValue ? "white" : "black",
-            fontFamily: "CormorantUpright",
-          }}
-        >
-          ExhibitU
-        </Text>
-      </View>
+      <MainHeaderTitle
+        darkModeValue={darkModeValue}
+        fontFamily={"CormorantUpright"}
+        titleName={"ExhibitU"}
+      />
     ),
     headerStyle: {
       backgroundColor: darkModeValue ? "black" : "white",
@@ -566,15 +561,6 @@ const styles = StyleSheet.create({
     height: 30,
     width: 30,
     marginRight: 5,
-  },
-  logo: {
-    flex: 1,
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  logoTitle: {
-    fontSize: 26,
   },
 });
 

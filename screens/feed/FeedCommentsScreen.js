@@ -1,13 +1,7 @@
 import React, { useEffect, useState } from "react";
-import {
-  LogBox,
-  Platform,
-  ScrollView,
-  StyleSheet,
-  Text,
-  View,
-} from "react-native";
+import { LogBox, ScrollView, StyleSheet } from "react-native";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
+import MainHeaderTitle from "../../components/UI/MainHeaderTitle";
 import { useAppSelector } from "../../hooks";
 import useDidMountEffect from "../../helper/useDidMountEffect";
 import getExlusiveBothSetsDifference from "../../helper/getExlusiveBothSetsDifference";
@@ -22,10 +16,6 @@ const FeedCommentsScreen = (props) => {
   const [intialCheeredPosts, setIntialCheeredPosts] = useState([]);
   const [numberOfCheers, setNumberOfCheers] = useState(userData.numberOfCheers);
   userData.postLinks = userData.postLinks ? userData.postLinks : {};
-
-  useEffect(() => {
-    setIntialCheeredPosts(cheeredPosts);
-  }, []);
 
   const viewCheeringHandler = () => {
     props.navigation.push("ViewCheering", {
@@ -61,6 +51,7 @@ const FeedCommentsScreen = (props) => {
 
   useEffect(() => {
     LogBox.ignoreLogs(["VirtualizedLists should never be nested"]);
+    setIntialCheeredPosts(cheeredPosts);
     props.navigation.setParams({ projectId: projectId });
   }, []);
 
@@ -180,17 +171,11 @@ FeedCommentsScreen.navigationOptions = (navData) => {
 
   return {
     headerTitle: () => (
-      <View style={styles.logo}>
-        <Text
-          style={{
-            ...styles.logoTitle,
-            color: darkModeValue ? "white" : "black",
-            fontFamily: "CormorantUpright",
-          }}
-        >
-          ExhibitU
-        </Text>
-      </View>
+      <MainHeaderTitle
+        darkModeValue={darkModeValue}
+        fontFamily={"CormorantUpright"}
+        titleName={"ExhibitU"}
+      />
     ),
     headerStyle: {
       backgroundColor: darkModeValue ? "black" : "white",
@@ -224,15 +209,6 @@ const styles = StyleSheet.create({
     height: 30,
     width: 30,
     marginRight: 5,
-  },
-  logo: {
-    flex: 1,
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  logoTitle: {
-    fontSize: 26,
   },
 });
 

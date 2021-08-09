@@ -6,6 +6,7 @@ import FeedProfileHeader from "../../components/feed/FeedProfileHeader";
 import ProjectItem from "../../components/projectItems/ProfileProjectItem";
 import useDidMountEffect from "../../helper/useDidMountEffect";
 import IoniconsHeaderButton from "../../components/UI/header_buttons/IoniconsHeaderButton";
+import MainHeaderTitle from "../../components/UI/MainHeaderTitle";
 
 const FeedProfileScreen = (props) => {
   const darkModeValue = useAppSelector((state) => state.user.darkMode);
@@ -182,17 +183,11 @@ FeedProfileScreen.navigationOptions = (navData) => {
   const darkModeValue = navData.navigation.getParam("darkMode");
   return {
     headerTitle: () => (
-      <View style={styles.logo}>
-        <Text
-          style={{
-            ...styles.logoTitle,
-            color: darkModeValue ? "white" : "black",
-            fontFamily: "CormorantUpright",
-          }}
-        >
-          ExhibitU
-        </Text>
-      </View>
+      <MainHeaderTitle
+        darkModeValue={darkModeValue}
+        fontFamily={"CormorantUpright"}
+        titleName={"ExhibitU"}
+      />
     ),
     headerStyle: {
       backgroundColor: darkModeValue ? "black" : "white",
@@ -244,15 +239,6 @@ const styles = StyleSheet.create({
     height: 30,
     width: 30,
     marginRight: 5,
-  },
-  logo: {
-    flex: 1,
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  logoTitle: {
-    fontSize: 26,
   },
 });
 

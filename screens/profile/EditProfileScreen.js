@@ -16,6 +16,7 @@ import {
 } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
+import MainHeaderTitle from "../../components/UI/MainHeaderTitle";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import TutorialEditProfile from "../../components/tutorial/TutorialEditProfile";
 import Input from "../../components/UI/Input";
@@ -872,14 +873,10 @@ EditProfileScreen.navigationOptions = (navData) => {
 
   return {
     headerTitle: () => (
-      <Text
-        style={{
-          ...styles.logoTitle,
-          color: darkModeValue ? "white" : "black",
-        }}
-      >
-        Edit profile
-      </Text>
+      <MainHeaderTitle
+        darkModeValue={darkModeValue}
+        titleName={"Edit Profile"}
+      />
     ),
     headerStyle: {
       backgroundColor: darkModeValue ? "black" : "white",

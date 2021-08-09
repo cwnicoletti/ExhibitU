@@ -5,7 +5,6 @@ import {
   FlatList,
   Keyboard,
   RefreshControl,
-  SafeAreaView,
   StyleSheet,
   Text,
   TouchableWithoutFeedback,
@@ -13,6 +12,7 @@ import {
 } from "react-native";
 import { SearchBar } from "react-native-elements";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
+import MainHeaderTitle from "../../components/UI/MainHeaderTitle";
 import { useAppSelector } from "../../hooks";
 import ExploreCard from "../../components/explore/ExploreCard";
 import IoniconsHeaderButton from "../../components/UI/header_buttons/IoniconsHeaderButton";
@@ -162,7 +162,13 @@ const ExploreCheeringScreen = (props) => {
               borderBottomColor: "gray",
               borderBottomWidth: 1,
             }}
-            searchIcon={<EvilIcons name="search" size={24} color={darkModeValue ? "white" : "black"} />}
+            searchIcon={
+              <EvilIcons
+                name="search"
+                size={24}
+                color={darkModeValue ? "white" : "black"}
+              />
+            }
             clearIcon={
               search ? (
                 <Feather
@@ -247,20 +253,11 @@ ExploreCheeringScreen.navigationOptions = (navData) => {
   const darkModeValue = navData.navigation.getParam("darkMode");
   return {
     headerTitle: () => (
-      <SafeAreaView
-        forceInset={{ top: "always", horizontal: "never" }}
-        style={styles.logo}
-      >
-        <Text
-          style={{
-            ...styles.logoTitle,
-            color: darkModeValue ? "white" : "black",
-            fontFamily: "CormorantUpright",
-          }}
-        >
-          ExhibitU
-        </Text>
-      </SafeAreaView>
+      <MainHeaderTitle
+        darkModeValue={darkModeValue}
+        fontFamily={"CormorantUpright"}
+        titleName={"ExhibitU"}
+      />
     ),
     headerStyle: {
       backgroundColor: darkModeValue ? "black" : "white",

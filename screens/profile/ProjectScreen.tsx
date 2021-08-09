@@ -7,6 +7,7 @@ import IoniconsHeaderButton from "../../components/UI/header_buttons/IoniconsHea
 import ProjectPictures from "../../components/UI/ProjectPictures";
 import TutorialExhibitView from "../../components/tutorial/TutorialExhibitView";
 import { changeProjectNumberOfColumns } from "../../store/actions/user";
+import MainHeaderTitle from "../../components/UI/MainHeaderTitle";
 
 const ProjectScreen = (props) => {
   const dispatch = useAppDispatch();
@@ -322,17 +323,11 @@ ProjectScreen.navigationOptions = (navData) => {
 
   return {
     headerTitle: () => (
-      <View style={styles.logo}>
-        <Text
-          style={{
-            ...styles.logoTitle,
-            color: darkModeValue ? "white" : "black",
-            fontFamily: "CormorantUpright",
-          }}
-        >
-          ExhibitU
-        </Text>
-      </View>
+      <MainHeaderTitle
+        darkModeValue={darkModeValue}
+        fontFamily={"CormorantUpright"}
+        titleName={"ExhibitU"}
+      />
     ),
     headerStyle: {
       backgroundColor: darkModeValue ? "black" : "white",
@@ -386,15 +381,6 @@ const styles = StyleSheet.create({
     height: 30,
     width: 30,
     marginRight: 5,
-  },
-  logo: {
-    flex: 1,
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  logoTitle: {
-    fontSize: 26,
   },
 });
 

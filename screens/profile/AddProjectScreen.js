@@ -16,6 +16,7 @@ import {
 } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
+import MainHeaderTitle from "../../components/UI/MainHeaderTitle";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import TutorialExhibitCreation from "../../components/tutorial/TutorialExhibitCreation";
 import DefaultPicture from "../../assets/Icons/picture.svg";
@@ -777,14 +778,7 @@ AddProjectScreen.navigationOptions = (navData) => {
   const darkModeValue = navData.navigation.getParam("darkMode");
   return {
     headerTitle: () => (
-      <Text
-        style={{
-          ...styles.logoTitle,
-          color: darkModeValue ? "white" : "black",
-        }}
-      >
-        Create exhibit
-      </Text>
+      <MainHeaderTitle darkModeValue={darkModeValue} titleName={"Create Exhibit"} />
     ),
     headerStyle: {
       backgroundColor: darkModeValue ? "black" : "white",

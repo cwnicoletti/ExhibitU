@@ -13,6 +13,7 @@ import {
 } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
+import MainHeaderTitle from "../../components/UI/MainHeaderTitle";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import Input from "../../components/UI/Input";
 import IoniconsHeaderButton from "../../components/UI/header_buttons/IoniconsHeaderButton";
@@ -703,14 +704,10 @@ EditProfileScreen.navigationOptions = (navData) => {
 
   return {
     headerTitle: () => (
-      <Text
-        style={{
-          ...styles.logoTitle,
-          color: darkModeValue ? "white" : "black",
-        }}
-      >
-        Create post
-      </Text>
+      <MainHeaderTitle
+        darkModeValue={darkModeValue}
+        titleName={"Create Post"}
+      />
     ),
     headerStyle: {
       backgroundColor: darkModeValue ? "black" : "white",

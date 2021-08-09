@@ -5,14 +5,13 @@ import {
   FlatList,
   Keyboard,
   RefreshControl,
-  SafeAreaView,
   StyleSheet,
-  Text,
   TouchableWithoutFeedback,
   View,
 } from "react-native";
 import { SearchBar } from "react-native-elements";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
+import MainHeaderTitle from "../../components/UI/MainHeaderTitle";
 import { useAppSelector } from "../../hooks";
 import ExploreAdvocatesCard from "../../components/explore/ExploreAdvocatesCard";
 import IoniconsHeaderButton from "../../components/UI/header_buttons/IoniconsHeaderButton";
@@ -243,14 +242,7 @@ AdvocatesScreen.navigationOptions = (navData) => {
   const darkModeValue = navData.navigation.getParam("darkMode");
   return {
     headerTitle: () => (
-      <Text
-        style={{
-          ...styles.logoTitle,
-          color: darkModeValue ? "white" : "black",
-        }}
-      >
-        Advocates
-      </Text>
+      <MainHeaderTitle darkModeValue={darkModeValue} titleName={"Advocates"} />
     ),
     headerStyle: {
       backgroundColor: darkModeValue ? "black" : "white",

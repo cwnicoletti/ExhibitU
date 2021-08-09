@@ -5,14 +5,13 @@ import {
   FlatList,
   Keyboard,
   RefreshControl,
-  SafeAreaView,
   StyleSheet,
-  Text,
   TouchableWithoutFeedback,
   View,
 } from "react-native";
 import { SearchBar } from "react-native-elements";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
+import MainHeaderTitle from "../../components/UI/MainHeaderTitle";
 import { useAppSelector } from "../../hooks";
 import ExploreCard from "../../components/explore/ExploreCard";
 import IoniconsHeaderButton from "../../components/UI/header_buttons/IoniconsHeaderButton";
@@ -142,7 +141,13 @@ const ExploreFollowingScreen = (props) => {
               borderBottomColor: "gray",
               borderBottomWidth: 1,
             }}
-            searchIcon={<EvilIcons name="search" size={24} color={darkModeValue ? "white" : "black"} />}
+            searchIcon={
+              <EvilIcons
+                name="search"
+                size={24}
+                color={darkModeValue ? "white" : "black"}
+              />
+            }
             clearIcon={
               search ? (
                 <Feather
@@ -228,19 +233,7 @@ ExploreFollowingScreen.navigationOptions = (navData) => {
   const darkModeValue = navData.navigation.getParam("darkMode");
   return {
     headerTitle: () => (
-      <SafeAreaView
-        forceInset={{ top: "always", horizontal: "never" }}
-        style={styles.logo}
-      >
-        <Text
-          style={{
-            ...styles.logoTitle,
-            color: darkModeValue ? "white" : "black",
-          }}
-        >
-          Following
-        </Text>
-      </SafeAreaView>
+      <MainHeaderTitle darkModeValue={darkModeValue} titleName={"Following"} />
     ),
     headerStyle: {
       backgroundColor: darkModeValue ? "black" : "white",

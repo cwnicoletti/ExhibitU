@@ -5,14 +5,13 @@ import {
   FlatList,
   Keyboard,
   RefreshControl,
-  SafeAreaView,
   StyleSheet,
-  Text,
   TouchableWithoutFeedback,
   View,
 } from "react-native";
 import { SearchBar } from "react-native-elements";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
+import MainHeaderTitle from "../../components/UI/MainHeaderTitle";
 import { useAppSelector } from "../../hooks";
 import ExploreCard from "../../components/explore/ExploreCard";
 import IoniconsHeaderButton from "../../components/UI/header_buttons/IoniconsHeaderButton";
@@ -231,14 +230,7 @@ FollowingScreen.navigationOptions = (navData) => {
   const darkModeValue = navData.navigation.getParam("darkMode");
   return {
     headerTitle: () => (
-      <Text
-        style={{
-          ...styles.logoTitle,
-          color: darkModeValue ? "white" : "black",
-        }}
-      >
-        Following
-      </Text>
+      <MainHeaderTitle darkModeValue={darkModeValue} titleName={"Following"} />
     ),
     headerStyle: {
       backgroundColor: darkModeValue ? "black" : "white",

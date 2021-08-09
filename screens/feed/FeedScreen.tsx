@@ -12,8 +12,9 @@ import { useAppDispatch, useAppSelector } from "../../hooks";
 import FeedItem from "../../components/feed/FeedItem";
 import useDidMountEffect from "../../helper/useDidMountEffect";
 import TutorialFeedView from "../../components/tutorial/TutorialFeedView";
-import * as Notifications from "expo-notifications";
+// import * as Notifications from "expo-notifications";
 import { getUserFeed, offScreen } from "../../store/actions/user";
+import MainHeaderTitle from "../../components/UI/MainHeaderTitle";
 
 const FeedScreen = (props) => {
   const dispatch = useAppDispatch();
@@ -413,17 +414,11 @@ FeedScreen.navigationOptions = (navData) => {
   const darkModeValue = navData.navigation.getParam("darkMode");
   return {
     headerTitle: () => (
-      <View style={styles.logo}>
-        <Text
-          style={{
-            ...styles.logoTitle,
-            color: darkModeValue ? "white" : "black",
-            fontFamily: "CormorantUpright",
-          }}
-        >
-          ExhibitU
-        </Text>
-      </View>
+      <MainHeaderTitle
+        darkModeValue={darkModeValue}
+        fontFamily={"CormorantUpright"}
+        titleName={"ExhibitU"}
+      />
     ),
     headerStyle: {
       backgroundColor: darkModeValue ? "black" : "white",
@@ -442,15 +437,6 @@ const styles = StyleSheet.create({
     height: 30,
     width: 30,
     marginRight: 5,
-  },
-  logo: {
-    flex: 1,
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  logoTitle: {
-    fontSize: 26,
   },
 });
 

@@ -16,6 +16,7 @@ import {
 } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
+import MainHeaderTitle from "../../components/UI/MainHeaderTitle";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import DefaultPicture from "../../assets/Icons/picture.svg";
 import Input from "../../components/UI/Input";
@@ -739,14 +740,10 @@ EditProjectScreen.navigationOptions = (navData) => {
   const deleteFn = navData.navigation.getParam("deleteFn");
   return {
     headerTitle: () => (
-      <Text
-        style={{
-          ...styles.logoTitle,
-          color: darkModeValue ? "white" : "black",
-        }}
-      >
-        Edit Exhibit
-      </Text>
+      <MainHeaderTitle
+        darkModeValue={darkModeValue}
+        titleName={"Edit Exhibit"}
+      />
     ),
     headerStyle: {
       backgroundColor: darkModeValue ? "black" : "white",
