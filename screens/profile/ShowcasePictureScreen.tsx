@@ -178,10 +178,6 @@ ShowcasePictureScreen.navigationOptions = (navData) => {
         </Text>
       </View>
     ),
-    headerTitleStyle: {
-      color: darkModeValue ? "white" : "black",
-      fontSize: 20,
-    },
     headerStyle: {
       backgroundColor: darkModeValue ? "black" : "white",
     },

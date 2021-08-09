@@ -187,14 +187,10 @@ SignupScreen2.navigationOptions = (navData) => {
         </Text>
       </View>
     ),
-    headerTitleStyle: {
-      color: "white",
-      fontSize: 20,
-    },
     headerStyle: {
       backgroundColor: "black",
     },
-    headerLeft: (props) => (
+    headerLeft: () => (
       <HeaderButtons HeaderButtonComponent={IoniconsHeaderButton}>
         <Item
           title="Back"

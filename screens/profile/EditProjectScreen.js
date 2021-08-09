@@ -748,10 +748,6 @@ EditProjectScreen.navigationOptions = (navData) => {
         Edit Exhibit
       </Text>
     ),
-    headerTitleStyle: {
-      color: darkModeValue ? "white" : "black",
-      fontSize: 20,
-    },
     headerStyle: {
       backgroundColor: darkModeValue ? "black" : "white",
     },

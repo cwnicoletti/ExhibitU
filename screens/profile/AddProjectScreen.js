@@ -786,14 +786,10 @@ AddProjectScreen.navigationOptions = (navData) => {
         Create exhibit
       </Text>
     ),
-    headerTitleStyle: {
-      color: darkModeValue ? "white" : "black",
-      fontSize: 20,
-    },
     headerStyle: {
       backgroundColor: darkModeValue ? "black" : "white",
     },
-    headerLeft: (props) => (
+    headerLeft: () => (
       <HeaderButtons HeaderButtonComponent={IoniconsHeaderButton}>
         <Item
           title="Add"

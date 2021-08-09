@@ -425,23 +425,8 @@ FeedScreen.navigationOptions = (navData) => {
         </Text>
       </View>
     ),
-    headerTitleStyle: {
-      color: darkModeValue ? "white" : "black",
-      fontSize: 20,
-    },
     headerStyle: {
       backgroundColor: darkModeValue ? "black" : "white",
-    },
-    tabBarOptions: {
-      activeTintColory: darkModeValue ? "white" : "black",
-      inactiveTintColor: darkModeValue ? "#696969" : "#bfbfbf",
-      tabStyle: {
-        backgroundColor: darkModeValue ? "black" : "white",
-      },
-      style: {
-        backgroundColor: darkModeValue ? "black" : "white",
-      },
-      showLabel: false,
     },
   };
 };

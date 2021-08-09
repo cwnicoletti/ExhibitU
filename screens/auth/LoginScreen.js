@@ -233,9 +233,6 @@ LoginScreen.navigationOptions = (navData) => {
         </Text>
       </View>
     ),
-    headerTitleStyle: {
-      color: "white",
-    },
     headerStyle: {
       backgroundColor: "black",
     },
