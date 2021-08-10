@@ -3,12 +3,14 @@ import { StyleSheet, View, Text } from "react-native";
 
 const TimeStamp = (props) => {
   let timeStamp = {};
-
   switch (props.dateLength) {
     case "short":
       timeStamp = {
         weekday: "long",
+        month: "long",
+        day: "numeric",
       };
+      break;
     default:
       timeStamp = {
         weekday: "long",
@@ -16,13 +18,12 @@ const TimeStamp = (props) => {
         month: "long",
         day: "numeric",
       };
+      break;
   }
 
   return (
     <View style={{ ...styles.dateContainer, ...props.dateContainer }}>
-      <Text
-        style={{ ...styles.date, ...props.dateStyle, flexDirection: "row" }}
-      >
+      <Text style={{ ...styles.date, ...props.dateStyle }}>
         {`${props.postDateCreated.toLocaleString("UTC", timeStamp)}`}
         {", "}
         {`${props.postDateCreated.toLocaleString("UTC", {
@@ -36,6 +37,7 @@ const TimeStamp = (props) => {
 
 const styles = StyleSheet.create({
   date: {
+    flexDirection: "row",
     margin: 10,
     fontSize: 13,
   },
