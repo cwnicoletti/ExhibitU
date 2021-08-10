@@ -43,6 +43,11 @@ const UserTitleEdit = (props) => {
                 ? { uri: props.imgSource }
                 : require("../../assets/default-profile-icon.jpg")
             }
+            defaultSource={
+              props.imgSource
+                ? { uri: props.imgSource }
+                : require("../../assets/default-profile-icon.jpg")
+            }
           />
         </View>
       </View>

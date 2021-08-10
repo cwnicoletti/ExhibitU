@@ -140,7 +140,11 @@ const ProfileScreen = (props) => {
     profileFlatlist.current.scrollToOffset({ animated: true, offset: 0 });
   }, [resetScrollProfile]);
 
-  const topHeader = () => {
+  function getData(profileProjectsState) {
+    return profileProjectsState;
+  }
+
+  function topHeader() {
     return (
       <ProfileHeader
         containerStyle={{
@@ -242,7 +246,7 @@ const ProfileScreen = (props) => {
         isLoadingFourColumns={isLoadingFourColumns}
       />
     );
-  };
+  }
 
   return (
     <View
@@ -276,7 +280,7 @@ const ProfileScreen = (props) => {
         <TutorialEnd ExhibitUId={ExhibitUId} localId={localId} />
       ) : null}
       <FlatList<Object | any>
-        data={profileProjectsState}
+        data={getData(profileProjectsState)}
         keyExtractor={(item) => item.projectId}
         key={profileColumns}
         ListHeaderComponent={topHeader()}

@@ -34,6 +34,11 @@ const ProjectHeader = (props) => {
               ? { uri: props.imgSource }
               : require("../../assets/default-post-icon.png")
           }
+          defaultSource={
+            props.imgSource
+              ? { uri: props.imgSource }
+              : require("../../assets/default-post-icon.png")
+          }
         />
         <EditButton
           editText="Edit Exhibit"
