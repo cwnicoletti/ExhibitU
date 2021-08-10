@@ -338,7 +338,7 @@ const ExploreProjectScreen = (props) => {
       <FlatList<any>
         data={projectPostsState}
         keyExtractor={(item) => item.postId}
-        ListHeaderComponent={topHeader}
+        ListHeaderComponent={topHeader()}
         numColumns={exploredProjectData.projectColumns}
         renderItem={(itemData) => (
           <ProjectPictures

@@ -172,7 +172,7 @@ const ShowcaseProfileScreen = (props) => {
       <FlatList<any>
         data={profileProjectsState}
         keyExtractor={(item) => item.projectId}
-        ListHeaderComponent={topHeader}
+        ListHeaderComponent={topHeader()}
         numColumns={userData.profileColumns}
         renderItem={(itemData) => (
           <ProjectItem

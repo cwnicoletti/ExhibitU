@@ -69,7 +69,7 @@ const VoteUpdatesSettingsScreen = (props) => {
           />
         }
         keyExtractor={(item) => item.id}
-        ListHeaderComponent={topHeader}
+        ListHeaderComponent={topHeader()}
         renderItem={(itemData) => (
           <UpdateCard
             updateTitle={itemData.item.title}

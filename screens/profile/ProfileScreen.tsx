@@ -279,7 +279,7 @@ const ProfileScreen = (props) => {
         data={profileProjectsState}
         keyExtractor={(item) => item.projectId}
         key={profileColumns}
-        ListHeaderComponent={topHeader}
+        ListHeaderComponent={topHeader()}
         refreshControl={
           <RefreshControl
             refreshing={isRefreshing}

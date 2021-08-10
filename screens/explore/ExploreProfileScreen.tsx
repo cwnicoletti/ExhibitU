@@ -402,7 +402,7 @@ const ExploreProfileScreen = (props) => {
       <FlatList<any>
         data={profileProjectsState}
         keyExtractor={(item) => item.projectId}
-        ListHeaderComponent={topHeader}
+        ListHeaderComponent={topHeader()}
         refreshControl={
           <RefreshControl
             refreshing={isRefreshing}

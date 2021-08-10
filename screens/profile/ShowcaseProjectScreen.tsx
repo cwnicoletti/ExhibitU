@@ -104,7 +104,7 @@ const ShowcaseProjectScreen = (props) => {
       <FlatList<Object | any>
         data={projectPostsState}
         keyExtractor={(item) => item.postId}
-        ListHeaderComponent={topHeader}
+        ListHeaderComponent={topHeader()}
         numColumns={project.projectColumns}
         renderItem={(itemData) => (
           <ProjectPictures

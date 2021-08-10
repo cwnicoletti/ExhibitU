@@ -152,7 +152,7 @@ const FeedProfileScreen = (props) => {
         data={profileProjectsState}
         keyExtractor={(item) => item.projectId}
         key={userData.profileColumns}
-        ListHeaderComponent={topHeader}
+        ListHeaderComponent={topHeader()}
         numColumns={userData.profileColumns}
         renderItem={(itemData) => (
           <ProjectItem

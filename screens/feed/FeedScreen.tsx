@@ -278,7 +278,7 @@ const FeedScreen = (props) => {
             tintColor={darkModeValue ? "white" : "black"}
           />
         }
-        ListFooterComponent={topHeader}
+        ListFooterComponent={topHeader()}
         keyExtractor={(item) => item.postId}
         renderItem={(itemData) => (
           <FeedItem

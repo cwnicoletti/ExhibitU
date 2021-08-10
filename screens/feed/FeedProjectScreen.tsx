@@ -172,7 +172,7 @@ const FeedProjectScreen = (props) => {
       <FlatList<any>
         data={projectPostsState}
         keyExtractor={(item) => item.postId}
-        ListHeaderComponent={topHeader}
+        ListHeaderComponent={topHeader()}
         numColumns={project.projectColumns}
         renderItem={(itemData) => (
           <ProjectPictures
