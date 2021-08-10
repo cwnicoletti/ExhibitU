@@ -1,6 +1,6 @@
 import { AntDesign } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import {
   Dimensions,
   FlatList,
@@ -14,22 +14,24 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import resolveAssetSource from "react-native/Libraries/Image/resolveAssetSource";
 import { useAppSelector } from "../../hooks";
 import Cheer from "../../assets/Icons/clap.svg";
 import LinkButton from "../UI/LinkButton";
 import toDateTime from "../../helper/toDateTime";
 
 const ProjectItem = (props) => {
-  const [height, setHeight] = useState(null);
   const darkModeValue = useAppSelector((state) => state.user.darkMode);
   const fullname = useAppSelector((state) => state.user.fullname);
-  const defaultPostIcon = require("../../assets/default-post-icon.png");
-  const source = resolveAssetSource(defaultPostIcon);
   const links = props.links;
   const currentTime = toDateTime(
     Math.floor(Date.now() / 1000)
   ).toLocaleString();
+
+  // Post background-picture width, height
+  const width = Dimensions.get("window").width;
+  const scaleFactor = 500 / width;
+  let imageHeight = 500 / scaleFactor;
+  const height = imageHeight;
 
   let TouchableCmp: any = TouchableOpacity;
   if (Platform.OS === "android") {
@@ -39,18 +41,6 @@ const ProjectItem = (props) => {
   useEffect(() => {
     LogBox.ignoreLogs(["VirtualizedLists should never be nested"]);
   }, []);
-
-  useEffect(() => {
-    Image.getSize(props.image ? props.image : source, (width, height) => {
-      // calculate image width and height
-      const screenWidth = Dimensions.get("window").width;
-
-      const scaleFactor = width / screenWidth;
-      let imageHeight = height / scaleFactor;
-
-      setHeight(imageHeight);
-    });
-  }, [Image]);
 
   return (
     <View style={{ ...styles.project, ...props.projectContainer }}>

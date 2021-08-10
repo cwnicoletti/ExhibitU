@@ -4,7 +4,6 @@ import {
   Animated,
   Dimensions,
   FlatList,
-  Image,
   ImageBackground,
   LogBox,
   Platform,
@@ -15,7 +14,6 @@ import {
   TouchableWithoutFeedback,
   View,
 } from "react-native";
-import resolveAssetSource from "react-native/Libraries/Image/resolveAssetSource";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import Cheerfill from "../../assets/Icons/clap-fill.svg";
 import Cheer from "../../assets/Icons/clap.svg";
@@ -32,8 +30,6 @@ const ProfileProjectPostView = (props) => {
   const dispatch = useAppDispatch();
   const darkModeValue = useAppSelector((state) => state.user.darkMode);
   const showCheering = useAppSelector((state) => state.user.showCheering);
-  const [photoHeight, setHeight] = useState(null);
-  const [photoWidth, setWidth] = useState(null);
   const [showClapping, setShowClapping] = useState(false);
   const [loadingCheer, setLoadingCheer] = useState(false);
   const [numberOfCheers, setNumberOfCheers] = useState(props.numberOfCheers);
@@ -43,8 +39,6 @@ const ProfileProjectPostView = (props) => {
   const [clap, setClap] = useState(false);
   const localId = useAppSelector((state) => state.auth.userId);
   const posterExhibitUId = useAppSelector((state) => state.user.ExhibitUId);
-  const defaultPostIcon = require("../../assets/default-profile-icon.jpg");
-  const source = resolveAssetSource(defaultPostIcon);
   const links = props.links;
   const postId = props.postId;
   const projectId = props.projectId;
@@ -52,6 +46,12 @@ const ProfileProjectPostView = (props) => {
 
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const slideAnim = useRef(new Animated.Value(0)).current;
+
+  // Post background-picture width, height
+  const photoWidth = Dimensions.get("window").width;
+  const scaleFactor = 500 / photoWidth;
+  let imageHeight = 500 / scaleFactor;
+  const photoHeight = imageHeight;
 
   let secondnow = null;
   let TouchableCmp: any = TouchableOpacity;
@@ -68,23 +68,6 @@ const ProfileProjectPostView = (props) => {
   useEffect(() => {
     LogBox.ignoreLogs(["VirtualizedLists should never be nested"]);
   }, []);
-
-  useEffect(() => {
-    Image.getSize(props.image ? props.image : source, (width, height) => {
-      // calculate image width and height
-      const screenWidth = Dimensions.get("window").width;
-      const screenHeight = Dimensions.get("window").height;
-
-      const scaleFactor = width / screenWidth;
-      let imageHeight = height / scaleFactor;
-
-      if (imageHeight > screenHeight / 1.6) {
-        imageHeight = screenHeight / 1.6;
-      }
-      setHeight(imageHeight);
-      setWidth(screenWidth);
-    });
-  }, [Image]);
 
   const slideUp = () => {
     Animated.timing(slideAnim, {

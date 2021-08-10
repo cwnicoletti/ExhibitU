@@ -1,9 +1,8 @@
 import * as WebBrowser from "expo-web-browser";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import {
   Dimensions,
   FlatList,
-  Image,
   ImageBackground,
   LogBox,
   Platform,
@@ -14,21 +13,22 @@ import {
   TouchableWithoutFeedback,
   View,
 } from "react-native";
-import resolveAssetSource from "react-native/Libraries/Image/resolveAssetSource";
 import { useAppSelector } from "../../hooks";
 import LinkButton from "../UI/LinkButton";
 import toDateTime from "../../helper/toDateTime";
 import TimeStamp from "../UI/TimeStamp";
 
 const ExhibitUPostView = (props) => {
-  const [photoHeight, setHeight] = useState(null);
-  const [photoWidth, setWidth] = useState(null);
   const darkModeValue = useAppSelector((state) => state.user.darkMode);
   const showCheering = useAppSelector((state) => state.user.showCheering);
-  const defaultPostIcon = require("../../assets/default-profile-icon.jpg");
-  const source = resolveAssetSource(defaultPostIcon);
   const links = props.links;
   const postDateCreated = toDateTime(props.postDateCreated);
+
+  // Post background-picture width, height
+  const photoWidth = Dimensions.get("window").width;
+  const scaleFactor = 500 / photoWidth;
+  let imageHeight = 500 / scaleFactor;
+  const photoHeight = imageHeight;
 
   let TouchableCmp: any = TouchableOpacity;
   if (Platform.OS === "android") {
@@ -38,23 +38,6 @@ const ExhibitUPostView = (props) => {
   useEffect(() => {
     LogBox.ignoreLogs(["VirtualizedLists should never be nested"]);
   }, []);
-
-  useEffect(() => {
-    Image.getSize(props.image ? props.image : source, (width, height) => {
-      // calculate image width and height
-      const screenWidth = Dimensions.get("window").width;
-      const screenHeight = Dimensions.get("window").height;
-
-      const scaleFactor = width / screenWidth;
-      let imageHeight = height / scaleFactor;
-
-      if (imageHeight > screenHeight / 1.6) {
-        imageHeight = screenHeight / 1.6;
-      }
-      setHeight(imageHeight);
-      setWidth(screenWidth);
-    });
-  }, [Image]);
 
   return (
     <View style={{ ...styles.project, ...props.projectContainer }}>

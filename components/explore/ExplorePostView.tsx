@@ -4,7 +4,6 @@ import {
   Animated,
   Dimensions,
   FlatList,
-  Image,
   ImageBackground,
   LogBox,
   Platform,
@@ -16,7 +15,6 @@ import {
   ActivityIndicator,
   View,
 } from "react-native";
-import resolveAssetSource from "react-native/Libraries/Image/resolveAssetSource";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import Cheerfill from "../../assets/Icons/clap-fill.svg";
 import Cheer from "../../assets/Icons/clap.svg";
@@ -32,8 +30,6 @@ import toDateTime from "../../helper/toDateTime";
 
 const ExplorePostView = (props) => {
   const dispatch = useAppDispatch();
-  const [photoHeight, setHeight] = useState(null);
-  const [photoWidth, setWidth] = useState(null);
   const [processingWholeCheer, setProcessingWholeCheer] = useState(false);
   const [loadingCheer, setLoadingCheer] = useState(false);
   const [showClapping, setShowClapping] = useState(false);
@@ -42,8 +38,6 @@ const ExplorePostView = (props) => {
   const cheeredPosts = useAppSelector((state) => state.user.cheeredPosts);
   const localId = useAppSelector((state) => state.auth.userId);
   const darkModeValue = useAppSelector((state) => state.user.darkMode);
-  const defaultPostIcon = require("../../assets/default-profile-icon.jpg");
-  const source = resolveAssetSource(defaultPostIcon);
   const ExhibitUId = useAppSelector((state) => state.user.ExhibitUId);
   const posterExhibitUId = props.posterExhibitUId;
   const currentUsersPost = ExhibitUId === posterExhibitUId ? true : false;
@@ -55,6 +49,12 @@ const ExplorePostView = (props) => {
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const slideAnim = useRef(new Animated.Value(0)).current;
 
+  // Post background-picture width, height
+  const photoWidth = Dimensions.get("window").width;
+  const scaleFactor = 500 / photoWidth;
+  let imageHeight = 500 / scaleFactor;
+  const photoHeight = imageHeight;
+
   let TouchableCmp: any = TouchableOpacity;
   if (Platform.OS === "android") {
     TouchableCmp = TouchableNativeFeedback;
@@ -65,23 +65,6 @@ const ExplorePostView = (props) => {
       setClap(true);
     }
   }, [cheeredPosts]);
-
-  useEffect(() => {
-    Image.getSize(props.image ? props.image : source, (width, height) => {
-      // calculate image width and height
-      const screenWidth = Dimensions.get("window").width;
-      const screenHeight = Dimensions.get("window").height;
-
-      const scaleFactor = width / screenWidth;
-      let imageHeight = height / scaleFactor;
-
-      if (imageHeight > screenHeight / 1.6) {
-        imageHeight = screenHeight / 1.6;
-      }
-      setHeight(imageHeight);
-      setWidth(screenWidth);
-    });
-  }, [Image]);
 
   useEffect(() => {
     LogBox.ignoreLogs(["VirtualizedLists should never be nested"]);

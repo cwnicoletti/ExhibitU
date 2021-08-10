@@ -17,7 +17,6 @@ import {
   TouchableWithoutFeedback,
   View,
 } from "react-native";
-import resolveAssetSource from "react-native/Libraries/Image/resolveAssetSource";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import Cheerfill from "../../assets/Icons/clap-fill.svg";
 import Cheer from "../../assets/Icons/clap.svg";
@@ -33,8 +32,6 @@ import TimeStamp from "../UI/TimeStamp";
 
 const FeedItem = (props) => {
   const dispatch = useAppDispatch();
-  const [height, setHeight] = useState(null);
-  const [width, setWidth] = useState(null);
   const [processingWholeCheer, setProcessingWholeCheer] = useState(false);
   const [loadingCheer, setLoadingCheer] = useState(false);
   const [showClapping, setShowClapping] = useState(false);
@@ -50,12 +47,16 @@ const FeedItem = (props) => {
   const currentUsersPost = ExhibitUId === posterExhibitUId ? true : false;
   const links = props.links ? props.links : {};
   const fullname = props.fullname;
-  const defaultPostIcon = require("../../assets/default-profile-icon.jpg");
-  const source = resolveAssetSource(defaultPostIcon);
   const postDateCreated = toDateTime(props.postDateCreated);
 
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const slideAnim = useRef(new Animated.Value(0)).current;
+
+  // Post background-picture width, height
+  const width = Dimensions.get("window").width;
+  const scaleFactor = 500 / width;
+  let imageHeight = 500 / scaleFactor;
+  const height = imageHeight;
 
   let TouchableCmp: any = TouchableOpacity;
   if (Platform.OS === "android") {
@@ -69,19 +70,6 @@ const FeedItem = (props) => {
       setClap(false);
     }
   }, [cheeredPosts]);
-
-  useEffect(() => {
-    Image.getSize(props.image ? props.image : source, (width, height) => {
-      // calculate image width and height
-      const screenWidth = Dimensions.get("window").width;
-
-      const scaleFactor = width / screenWidth;
-      let imageHeight = height / scaleFactor;
-
-      setHeight(imageHeight);
-      setWidth(screenWidth);
-    });
-  }, [Image]);
 
   const slideUp = () => {
     Animated.timing(slideAnim, {
