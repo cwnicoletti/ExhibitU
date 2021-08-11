@@ -33,6 +33,10 @@ import {
   uploadUpdatedProject,
 } from "../../store/actions/user";
 
+const FORM_INPUT_UPDATE = "FORM_INPUT_UPDATE";
+const FORM_INPUT_LINKS_UPDATE = "FORM_INPUT_LINKS_UPDATE";
+const FORM_INPUT_LINKS_REMOVE = "FORM_INPUT_LINKS_REMOVE";
+
 const EditProjectScreen = (props) => {
   const dispatch = useAppDispatch();
   const [fileSizeError, setFileSizeError] = useState(false);
@@ -142,8 +146,8 @@ const EditProjectScreen = (props) => {
 
   useEffect(() => {
     LogBox.ignoreLogs(["VirtualizedLists should never be nested"]);
-    props.navigation.setParams({ submit: submitHandler });
     props.navigation.setParams({ android });
+    props.navigation.setParams({ submit: submitHandler });
     props.navigation.setParams({ deleteFn: deleteHandler });
   }, []);
 
