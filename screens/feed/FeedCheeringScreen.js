@@ -273,15 +273,6 @@ const styles = StyleSheet.create({
     width: 30,
     marginRight: 5,
   },
-  logo: {
-    flex: 1,
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  logoTitle: {
-    fontSize: 26,
-  },
 });
 
 export default FeedCheeringScreen;

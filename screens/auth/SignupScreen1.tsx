@@ -16,6 +16,7 @@ import Input from "../../components/UI/Input";
 import IoniconsHeaderButton from "../../components/UI/header_buttons/IoniconsHeaderButton";
 import { Feather } from "@expo/vector-icons";
 import { setEmail } from "../../store/actions/signup";
+import MainHeaderTitle from "../../components/UI/MainHeaderTitle";
 
 const FORM_INPUT_UPDATE = "FORM_INPUT_UPDATE";
 
@@ -177,17 +178,11 @@ const SignupScreen1 = (props) => {
 SignupScreen1.navigationOptions = (navData) => {
   return {
     headerTitle: () => (
-      <View style={styles.logo}>
-        <Text
-          style={{
-            ...styles.logoTitle,
-            color: "white",
-            fontFamily: "CormorantUpright",
-          }}
-        >
-          ExhibitU
-        </Text>
-      </View>
+      <MainHeaderTitle
+        darkModeValue={true}
+        fontFamily={"CormorantUpright"}
+        titleName={"ExhibitU"}
+      />
     ),
     headerStyle: {
       backgroundColor: "black",
@@ -214,15 +209,6 @@ const styles = StyleSheet.create({
   },
   inner: {
     alignItems: "center",
-  },
-  logo: {
-    flex: 1,
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  logoTitle: {
-    fontSize: 26,
   },
   text: {
     color: "white",

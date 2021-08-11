@@ -16,6 +16,7 @@ import { EvilIcons, Feather } from "@expo/vector-icons";
 
 import ExploreCard from "../../components/explore/ExploreCard";
 import useDidMountEffect from "../../helper/useDidMountEffect";
+import MainHeaderTitle from "../../components/UI/MainHeaderTitle";
 
 const ExploreScreen = (props) => {
   const client = algoliasearch(
@@ -229,20 +230,11 @@ ExploreScreen.navigationOptions = (navData) => {
   const darkModeValue = navData.navigation.getParam("darkMode");
   return {
     headerTitle: () => (
-      <View
-        forceInset={{ top: "always", horizontal: "never" }}
-        style={styles.logo}
-      >
-        <Text
-          style={{
-            ...styles.logoTitle,
-            color: darkModeValue ? "white" : "black",
-            fontFamily: "CormorantUpright",
-          }}
-        >
-          ExhibitU
-        </Text>
-      </View>
+      <MainHeaderTitle
+        darkModeValue={darkModeValue}
+        fontFamily={"CormorantUpright"}
+        titleName={"ExhibitU"}
+      />
     ),
     headerStyle: {
       backgroundColor: darkModeValue ? "black" : "white",
@@ -261,15 +253,6 @@ const styles = StyleSheet.create({
     height: 30,
     width: 30,
     marginRight: 5,
-  },
-  logo: {
-    flex: 1,
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  logoTitle: {
-    fontSize: 26,
   },
 });
 

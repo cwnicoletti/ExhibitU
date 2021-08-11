@@ -6,6 +6,7 @@ import { useAppDispatch, useAppSelector } from "../../hooks";
 import UpdateCard from "../../components/drawers/UpdateCard";
 import IoniconsHeaderButton from "../../components/UI/header_buttons/IoniconsHeaderButton";
 import { getUpdates } from "../../store/actions/user";
+import MainHeaderTitle from "../../components/UI/MainHeaderTitle";
 
 const VoteUpdatesSettingsScreen = (props) => {
   const dispatch = useAppDispatch();
@@ -94,16 +95,10 @@ VoteUpdatesSettingsScreen.navigationOptions = (navData) => {
   const darkModeValue = navData.navigation.getParam("darkMode");
   return {
     headerTitle: () => (
-      <View style={styles.logo}>
-        <Text
-          style={{
-            ...styles.logoTitle,
-            color: darkModeValue ? "white" : "black",
-          }}
-        >
-          Future Updates
-        </Text>
-      </View>
+      <MainHeaderTitle
+        darkModeValue={darkModeValue}
+        titleName={"Future Updates"}
+      />
     ),
     headerStyle: {
       backgroundColor: darkModeValue ? "black" : "white",
@@ -134,15 +129,6 @@ const styles = StyleSheet.create({
     height: 30,
     width: 30,
     marginRight: 5,
-  },
-  logo: {
-    flex: 1,
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  logoTitle: {
-    fontSize: 26,
   },
 });
 

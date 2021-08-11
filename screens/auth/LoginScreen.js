@@ -17,6 +17,7 @@ import { useAppDispatch } from "../../hooks";
 import Input from "../../components/UI/Input";
 import IoniconsHeaderButton from "../../components/UI/header_buttons/IoniconsHeaderButton";
 import { login } from "../../store/actions/auth";
+import MainHeaderTitle from "../../components/UI/MainHeaderTitle";
 
 const FORM_INPUT_UPDATE = "FORM_INPUT_UPDATE";
 
@@ -221,22 +222,16 @@ const LoginScreen = (props) => {
 LoginScreen.navigationOptions = (navData) => {
   return {
     headerTitle: () => (
-      <View style={styles.logo}>
-        <Text
-          style={{
-            ...styles.logoTitle,
-            color: "white",
-            fontFamily: "CormorantUpright",
-          }}
-        >
-          ExhibitU
-        </Text>
-      </View>
+      <MainHeaderTitle
+        darkModeValue={darkModeValue}
+        fontFamily={"CormorantUpright"}
+        titleName={"ExhibitU"}
+      />
     ),
     headerStyle: {
       backgroundColor: "black",
     },
-    headerLeft: (props) => (
+    headerLeft: () => (
       <HeaderButtons HeaderButtonComponent={IoniconsHeaderButton}>
         <Item
           title="Back"
@@ -263,15 +258,6 @@ const styles = StyleSheet.create({
     width: 150,
     height: 150,
     margin: 20,
-  },
-  logo: {
-    flex: 1,
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  logoTitle: {
-    fontSize: 26,
   },
   authContainer: {
     shadowColor: null,

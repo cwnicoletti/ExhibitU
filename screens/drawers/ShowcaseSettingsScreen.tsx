@@ -11,6 +11,7 @@ import {
   setHideFollowing,
   setShowCheering,
 } from "../../store/actions/user";
+import MainHeaderTitle from "../../components/UI/MainHeaderTitle";
 
 const ShowcaseSettingsScreen = (props) => {
   const dispatch = useAppDispatch();
@@ -107,16 +108,10 @@ ShowcaseSettingsScreen.navigationOptions = (navData) => {
   const darkModeValue = navData.navigation.getParam("darkMode");
   return {
     headerTitle: () => (
-      <View style={styles.logo}>
-        <Text
-          style={{
-            ...styles.logoTitle,
-            color: "white",
-          }}
-        >
-          Profile Settings
-        </Text>
-      </View>
+      <MainHeaderTitle
+        darkModeValue={darkModeValue}
+        titleName={"Profile Settings"}
+      />
     ),
     headerStyle: {
       backgroundColor: darkModeValue ? "black" : "white",
@@ -151,15 +146,6 @@ const styles = StyleSheet.create({
     height: 30,
     width: 30,
     marginRight: 5,
-  },
-  logo: {
-    flex: 1,
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  logoTitle: {
-    fontSize: 26,
   },
 });
 
