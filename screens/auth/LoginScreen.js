@@ -223,7 +223,7 @@ LoginScreen.navigationOptions = (navData) => {
   return {
     headerTitle: () => (
       <MainHeaderTitle
-        darkModeValue={darkModeValue}
+        darkModeValue={true}
         fontFamily={"CormorantUpright"}
         titleName={"ExhibitU"}
       />

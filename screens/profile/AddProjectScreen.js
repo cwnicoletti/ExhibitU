@@ -20,6 +20,10 @@ import MainHeaderTitle from "../../components/UI/MainHeaderTitle";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import TutorialExhibitCreation from "../../components/tutorial/TutorialExhibitCreation";
 import DefaultPicture from "../../assets/Icons/picture.svg";
+import correctUrls from "../../helper/correctUrls";
+import parseLinkValuesFromInputValues from "../../helper/parseLinkValuesFromInputValues";
+import linkFormReducer from "../../helper/linkFormReducer";
+import updateArrayOnRemove from "../../helper/updateArrayOnRemove";
 import Input from "../../components/UI/Input";
 import IoniconsHeaderButton from "../../components/UI/header_buttons/IoniconsHeaderButton";
 import LinkButton from "../../components/UI/LinkButton";
@@ -27,118 +31,6 @@ import {
   uploadAddTempProjectCoverPicture,
   uploadNewProject,
 } from "../../store/actions/user";
-
-const FORM_INPUT_UPDATE = "FORM_INPUT_UPDATE";
-const FORM_INPUT_LINKS_UPDATE = "FORM_INPUT_LINKS_UPDATE";
-const FORM_INPUT_LINKS_REMOVE = "FORM_INPUT_LINKS_REMOVE";
-
-const correctUrls = (links) => {
-  let linkNumber = 1;
-  for (const link of Object.keys(links)) {
-    // Prepend https:// to link url
-    if (!links[link][`linkUrl${linkNumber}`].includes("https://")) {
-      links[link][`linkUrl${linkNumber}`] = `https://${
-        links[link][`linkUrl${linkNumber}`]
-      }`;
-    }
-    linkNumber += 1;
-  }
-  return links;
-};
-
-const parseLinkValuesFromInputValues = (formState) => {
-  let linkArgs = {};
-  for (const key in formState.inputValues) {
-    if (key.search("link") !== -1) {
-      linkArgs = { ...linkArgs, [key]: formState.inputValues[key] };
-    }
-  }
-  return linkArgs;
-};
-
-const updateDictionaryOnRemove = (state) => {
-  let linkNum = 1;
-  for (const key in state) {
-    if (key.search("link") !== -1) {
-      state[`link${linkNum}`] = state[key];
-      if (`link${linkNum}` !== key) {
-        delete state[key];
-      }
-      linkNum += 1;
-    }
-  }
-  return state;
-};
-
-const updateArrayOnRemove = (state) => {
-  state.forEach((object, i) => {
-    for (const key in object) {
-      if (key.search("linkTitle") !== -1) {
-        object[`linkTitle${i + 1}`] = object[key];
-        if (`linkTitle${i + 1}` !== key) {
-          delete object[key];
-        }
-      } else if (key.search("linkUrl") !== -1) {
-        object[`linkUrl${i + 1}`] = object[key];
-        if (`linkUrl${i + 1}` !== key) {
-          delete object[key];
-        }
-      } else if (key.search("linkId") !== -1) {
-        object["linkId"] = i + 1;
-      }
-    }
-  });
-  return state;
-};
-
-const formReducer = (state, action) => {
-  switch (action.type) {
-    case FORM_INPUT_UPDATE:
-      const updateValues = {
-        ...state.inputValues,
-        [action.input]: action.value,
-      };
-      const updatedValidities = {
-        ...state.inputValidities,
-        [action.input]: action.isValid,
-      };
-      let updatedFormIsValid = true;
-      for (const key in updatedValidities) {
-        if (updatedValidities.hasOwnProperty(key)) {
-          updatedFormIsValid = updatedFormIsValid && updatedValidities[key];
-        }
-      }
-      return {
-        formIsValid: updatedFormIsValid,
-        inputValidities: updatedValidities,
-        inputValues: updateValues,
-      };
-    case FORM_INPUT_LINKS_UPDATE:
-      const updateLinkValues = {
-        ...state.inputValues,
-        [`link${action.linkNum}`]: {
-          ...state.inputValues[`link${action.linkNum}`],
-          linkId: action.linkNum,
-          [action.input]: action.value,
-        },
-      };
-      return {
-        inputValues: updateLinkValues,
-      };
-    case FORM_INPUT_LINKS_REMOVE:
-      const remainingLinkValues = Object.fromEntries(
-        Object.entries(state.inputValues).filter(
-          ([links, v]) => links !== `link${action.linkNum}`
-        )
-      );
-      const reorderedRemainingLinkValues =
-        updateDictionaryOnRemove(remainingLinkValues);
-      return {
-        inputValues: { ...reorderedRemainingLinkValues },
-      };
-  }
-  return state;
-};
 
 const AddProjectScreen = (props) => {
   const dispatch = useAppDispatch();
@@ -172,7 +64,10 @@ const AddProjectScreen = (props) => {
     },
     formIsValid: false,
   };
-  const [formState, dispatchFormState] = useReducer(formReducer, initialState);
+  const [formState, dispatchFormState] = useReducer(
+    linkFormReducer,
+    initialState
+  );
 
   const inputChangeHandler = useCallback(
     (inputIdentifier, inputValue, inputValidity) => {
@@ -778,7 +673,10 @@ AddProjectScreen.navigationOptions = (navData) => {
   const darkModeValue = navData.navigation.getParam("darkMode");
   return {
     headerTitle: () => (
-      <MainHeaderTitle darkModeValue={darkModeValue} titleName={"Create Exhibit"} />
+      <MainHeaderTitle
+        darkModeValue={darkModeValue}
+        titleName={"Create Exhibit"}
+      />
     ),
     headerStyle: {
       backgroundColor: darkModeValue ? "black" : "white",

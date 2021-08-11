@@ -199,7 +199,7 @@ const IntroScreen = (props) => {
   );
 };
 
-IntroScreen.navigationOptions = (navData) => {
+IntroScreen.navigationOptions = () => {
   return {
     headerMode: "none",
     headerVisible: false,
