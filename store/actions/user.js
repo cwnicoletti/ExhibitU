@@ -1084,43 +1084,26 @@ export const cheerPost = (
     await AsyncStorage.getItem("userDocData").then(async (data) => {
       data = JSON.parse(data);
       if (data.userFeed[postId]) {
-        data.userFeed = {
-          ...data.userFeed,
-          [postId]: {
-            ...data.userFeed[postId],
-            numberOfCheers: data.userFeed[postId].numberOfCheers + 1,
-            cheering: [...data.userFeed[postId].cheering, ExhibitUId],
-            profileProjects: {
-              ...data.userFeed[postId].profileProjects,
-              [projectId]: {
-                ...data.userFeed[postId].profileProjects[projectId],
-                projectPosts: {
-                  ...data.userFeed[postId].profileProjects[projectId]
-                    .projectPosts,
-                  [postId]: {
-                    ...data.userFeed[postId].profileProjects[projectId]
-                      .projectPosts[postId],
-                    numberOfCheers:
-                      data.userFeed[postId].profileProjects[projectId]
-                        .projectPosts[postId].numberOfCheers + 1,
-                    cheering: [
-                      ...data.userFeed[postId].profileProjects[projectId]
-                        .projectPosts[postId].cheering,
-                      ExhibitUId,
-                    ],
-                  },
-                },
-              },
-            },
-          },
-        };
+        data.userFeed[postId].cheering.push(ExhibitUId);
+        data.userFeed[postId].profileProjects[projectId].projectPosts[
+          postId
+        ].cheering.push(ExhibitUId);
+
+        data.userFeed[postId].numberOfCheers += 1;
+        data.userFeed[postId].profileProjects[projectId].projectPosts[
+          postId
+        ].numberOfCheers += 1;
+
+        data.cheeredPosts.push(postId);
+
         Object.entries(data.userFeed).map(([id, value]) => {
           Object.entries(data.userFeed[id].profileProjects).map(
             ([projId, value]) => {
               if (
                 Object.keys(
                   data.userFeed[id].profileProjects[projId].projectPosts
-                ).includes(postId)
+                ).includes(postId) &&
+                postId !== id
               ) {
                 data.userFeed[id].profileProjects[projId].projectPosts[
                   postId
@@ -1136,18 +1119,10 @@ export const cheerPost = (
         });
       }
 
-      data.cheeredPosts = [...data.cheeredPosts, postId];
-
       await AsyncStorage.setItem("userDocData", JSON.stringify(data));
     });
 
-    await dispatch({
-      type: CHEER_POST,
-      ExhibitUId,
-      projectId,
-      postId,
-    });
-
+    await dispatch({ type: CHEER_POST, ExhibitUId, projectId, postId });
     await dispatch({ type: CHEER_UPDATE_POSTS, projectId, postId });
   };
 };
@@ -1156,26 +1131,11 @@ export const cheerOwnFeedPost = (ExhibitUId, projectId, postId) => {
   return async (dispatch) => {
     await AsyncStorage.getItem("userDocData").then(async (data) => {
       data = JSON.parse(data);
-      data.profileProjects = {
-        ...data.profileProjects,
-        [projectId]: {
-          ...data.profileProjects[projectId],
-          projectPosts: {
-            ...data.profileProjects[projectId].projectPosts,
-            [postId]: {
-              ...data.profileProjects[projectId].projectPosts[postId],
-              numberOfCheers:
-                data.profileProjects[projectId].projectPosts[postId]
-                  .numberOfCheers + 1,
-              cheering: [
-                ...data.profileProjects[projectId].projectPosts[postId]
-                  .cheering,
-                ExhibitUId,
-              ],
-            },
-          },
-        },
-      };
+      data.profileProjects[projectId].projectPosts[postId].cheering.push(
+        postId
+      );
+      data.profileProjects[projectId].projectPosts[postId].numberOfCheers += 1;
+
       await AsyncStorage.setItem("userDocData", JSON.stringify(data));
     });
 
@@ -1269,7 +1229,8 @@ export const cheerOwnProfilePost = (
             if (
               Object.keys(
                 data.userFeed[id].profileProjects[projId].projectPosts
-              ).includes(postId)
+              ).includes(postId) &&
+              postId !== id
             ) {
               data.userFeed[id].profileProjects[projId].projectPosts[
                 postId
@@ -1323,45 +1284,34 @@ export const uncheerPost = (
     await AsyncStorage.getItem("userDocData").then(async (data) => {
       data = JSON.parse(data);
       if (data.userFeed[postId]) {
-        data.userFeed = {
-          ...data.userFeed,
-          [postId]: {
-            ...data.userFeed[postId],
-            profileProjects: {
-              ...data.userFeed[postId].profileProjects,
-              [projectId]: {
-                ...data.userFeed[postId].profileProjects[projectId],
-                projectPosts: {
-                  ...data.userFeed[postId].profileProjects[projectId]
-                    .projectPosts,
-                  [postId]: {
-                    ...data.userFeed[postId].profileProjects[projectId]
-                      .projectPosts[postId],
-                    numberOfCheers:
-                      data.userFeed[postId].profileProjects[projectId]
-                        .projectPosts[postId].numberOfCheers - 1,
-                    cheering: data.userFeed[postId].profileProjects[
-                      projectId
-                    ].projectPosts[postId].cheering.filter(
-                      (listExhibitUId) => listExhibitUId !== ExhibitUId
-                    ),
-                  },
-                },
-              },
-            },
-            numberOfCheers: data.userFeed[postId].numberOfCheers - 1,
-            cheering: data.userFeed[postId].cheering.filter(
-              (listExhibitUId) => listExhibitUId !== ExhibitUId
-            ),
-          },
-        };
+        data.userFeed[postId].cheering.splice(
+          data.userFeed[postId].cheering.indexOf(ExhibitUId),
+          1
+        );
+        data.userFeed[postId].profileProjects[projectId].projectPosts[
+          postId
+        ].cheering.splice(
+          data.userFeed[postId].profileProjects[projectId].projectPosts[
+            postId
+          ].cheering.indexOf(ExhibitUId),
+          1
+        );
+
+        data.userFeed[postId].numberOfCheers -= 1;
+        data.userFeed[postId].profileProjects[projectId].projectPosts[
+          postId
+        ].numberOfCheers -= 1;
+
+        data.cheeredPosts.splice(data.cheeredPosts.indexOf(postId), 1);
+
         Object.entries(data.userFeed).map(([id, value]) => {
           Object.entries(data.userFeed[id].profileProjects).map(
             ([projId, value]) => {
               if (
                 Object.keys(
                   data.userFeed[id].profileProjects[projId].projectPosts
-                ).includes(postId)
+                ).includes(postId) &&
+                postId !== id
               ) {
                 data.userFeed[id].profileProjects[projId].projectPosts[
                   postId
@@ -1376,8 +1326,6 @@ export const uncheerPost = (
           );
         });
       }
-
-      data.cheeredPosts = data.cheeredPosts.filter((post) => post !== postId);
 
       await AsyncStorage.setItem("userDocData", JSON.stringify(data));
     });
@@ -1397,26 +1345,14 @@ export const uncheerOwnFeedPost = (ExhibitUId, projectId, postId) => {
   return async (dispatch) => {
     await AsyncStorage.getItem("userDocData").then(async (data) => {
       data = JSON.parse(data);
-      data.profileProjects = {
-        ...data.profileProjects,
-        [projectId]: {
-          ...data.profileProjects[projectId],
-          projectPosts: {
-            ...data.profileProjects[projectId].projectPosts,
-            [postId]: {
-              ...data.profileProjects[projectId].projectPosts[postId],
-              numberOfCheers:
-                data.profileProjects[projectId].projectPosts[postId]
-                  .numberOfCheers - 1,
-              cheering: data.profileProjects[projectId].projectPosts[
-                postId
-              ].cheering.filter(
-                (listExhibitUId) => listExhibitUId !== ExhibitUId
-              ),
-            },
-          },
-        },
-      };
+      data.profileProjects[projectId].projectPosts[postId].cheering.splice(
+        data.profileProjects[projectId].projectPosts[postId].cheering.indexOf(
+          ExhibitUId
+        ),
+        1
+      );
+      data.profileProjects[projectId].projectPosts[postId].numberOfCheers - 1;
+
       await AsyncStorage.setItem("userDocData", JSON.stringify(data));
     });
 
@@ -1510,7 +1446,8 @@ export const uncheerOwnProfilePost = (
             if (
               Object.keys(
                 data.userFeed[id].profileProjects[projId].projectPosts
-              ).includes(postId)
+              ).includes(postId) &&
+              postId !== id
             ) {
               data.userFeed[id].profileProjects[projId].projectPosts[
                 postId
@@ -1825,6 +1762,6 @@ export const setTutorialPrompt = (localId, ExhibitUId, value) => {
       await AsyncStorage.setItem("userDocData", JSON.stringify(data));
     });
 
-    dispatch({ type: SET_TUTORIALING_PROMPT, value});
+    dispatch({ type: SET_TUTORIALING_PROMPT, value });
   };
 };

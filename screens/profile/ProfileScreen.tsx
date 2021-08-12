@@ -252,7 +252,6 @@ const ProfileScreen = (props) => {
     <View
       style={{
         ...styles.screen,
-        justifyContent: "center",
         backgroundColor: darkModeValue ? "black" : "white",
       }}
     >
@@ -316,7 +315,7 @@ const ProfileScreen = (props) => {
             transform: [{ translateY: slideAnim }],
           }}
         >
-          <TouchableOpacity
+          <TouchableCmp
             style={{
               margin: 10,
               padding: 10,
@@ -346,7 +345,7 @@ const ProfileScreen = (props) => {
             >
               Showcase exhibits
             </Text>
-          </TouchableOpacity>
+          </TouchableCmp>
         </Animated.View>
       ) : null}
     </View>
@@ -356,6 +355,7 @@ const ProfileScreen = (props) => {
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
+    justifyContent: "center",
   },
   profileTitleStyle: {
     fontSize: 24,

@@ -1,3 +1,4 @@
+import { pushReturn, spliceRemoveReturn } from "../../helper/CoreFunctions";
 import {
   ADD_TEMP_POST_PICTURE,
   ADD_TEMP_PROJECT_PICTURE,
@@ -524,10 +525,10 @@ export default (state = intialState, action) => {
             ...state.userFeed,
             [action.postId]: {
               ...state.userFeed[action.postId],
-              cheering: [
-                ...state.userFeed[action.postId].cheering,
-                action.ExhibitUId,
-              ],
+              cheering: pushReturn(
+                state.userFeed[action.postId].cheering,
+                action.ExhibitUId
+              ),
               numberOfCheers: state.userFeed[action.postId].numberOfCheers + 1,
               profileProjects: {
                 ...state.userFeed[action.postId].profileProjects,
@@ -543,12 +544,12 @@ export default (state = intialState, action) => {
                       ...state.userFeed[action.postId].profileProjects[
                         action.projectId
                       ].projectPosts[action.postId],
-                      cheering: [
-                        ...state.userFeed[action.postId].profileProjects[
+                      cheering: pushReturn(
+                        state.userFeed[action.postId].profileProjects[
                           action.projectId
                         ].projectPosts[action.postId].cheering,
-                        action.ExhibitUId,
-                      ],
+                        action.ExhibitUId
+                      ),
                       numberOfCheers:
                         state.userFeed[action.postId].profileProjects[
                           action.projectId
@@ -559,12 +560,12 @@ export default (state = intialState, action) => {
               },
             },
           },
-          cheeredPosts: [...state.cheeredPosts, action.postId],
+          cheeredPosts: pushReturn(state.cheeredPosts, action.postId),
         };
       } else {
         return {
           ...state,
-          cheeredPosts: [...state.cheeredPosts, action.postId],
+          cheeredPosts: pushReturn(state.cheeredPosts, action.postId),
         };
       }
     case CHEER_UPDATE_POSTS:
@@ -574,7 +575,8 @@ export default (state = intialState, action) => {
             if (
               Object.keys(
                 state.userFeed[id].profileProjects[projId].projectPosts
-              ).includes(action.postId)
+              ).includes(action.postId) &&
+              action.postId !== id
             ) {
               state.userFeed[id].profileProjects[projId].projectPosts[
                 action.postId
@@ -607,12 +609,12 @@ export default (state = intialState, action) => {
                   state.profileProjects[action.projectId].projectPosts[
                     action.postId
                   ].numberOfCheers + 1,
-                cheering: [
-                  ...state.profileProjects[action.projectId].projectPosts[
+                cheering: pushReturn(
+                  state.profileProjects[action.projectId].projectPosts[
                     action.postId
                   ].cheering,
-                  action.ExhibitUId,
-                ],
+                  action.ExhibitUId
+                ),
               },
             },
           },
@@ -635,12 +637,12 @@ export default (state = intialState, action) => {
                   state.profileProjects[action.projectId].projectPosts[
                     action.postId
                   ].numberOfCheers + 1,
-                cheering: [
-                  ...state.profileProjects[action.projectId].projectPosts[
+                cheering: pushReturn(
+                  state.profileProjects[action.projectId].projectPosts[
                     action.postId
                   ].cheering,
-                  action.ExhibitUId,
-                ],
+                  action.ExhibitUId
+                ),
               },
             },
           },
@@ -663,12 +665,12 @@ export default (state = intialState, action) => {
                     ...state.userFeed[action.postId].profileProjects[
                       action.projectId
                     ].projectPosts[action.postId],
-                    cheering: [
-                      ...state.userFeed[action.postId].profileProjects[
+                    cheering: pushReturn(
+                      state.userFeed[action.postId].profileProjects[
                         action.projectId
                       ].projectPosts[action.postId].cheering,
-                      action.ExhibitUId,
-                    ],
+                      action.ExhibitUId
+                    ),
                     numberOfCheers:
                       state.userFeed[action.postId].profileProjects[
                         action.projectId
@@ -677,14 +679,14 @@ export default (state = intialState, action) => {
                 },
               },
             },
-            cheering: [
-              ...state.userFeed[action.postId].cheering,
-              action.ExhibitUId,
-            ],
+            cheering: pushReturn(
+              state.userFeed[action.postId].cheering,
+              action.ExhibitUId
+            ),
             numberOfCheers: state.userFeed[action.postId].numberOfCheers + 1,
           },
         },
-        cheeredPosts: [...state.cheeredPosts, action.postId],
+        cheeredPosts: pushReturn(state.cheeredPosts, action.postId),
       };
     case UNCHEER_POST:
       if (state.userFeed[action.postId]) {
@@ -708,10 +710,11 @@ export default (state = intialState, action) => {
                       ...state.userFeed[action.postId].profileProjects[
                         action.projectId
                       ].projectPosts[action.postId],
-                      cheering: state.userFeed[action.postId].profileProjects[
-                        action.projectId
-                      ].projectPosts[action.postId].cheering.filter(
-                        (ExhibitUId) => ExhibitUId !== action.ExhibitUId
+                      cheering: spliceRemoveReturn(
+                        state.userFeed[action.postId].profileProjects[
+                          action.projectId
+                        ].projectPosts[action.postId].cheering,
+                        action.ExhibitUId
                       ),
                       numberOfCheers:
                         state.userFeed[action.postId].profileProjects[
@@ -721,22 +724,19 @@ export default (state = intialState, action) => {
                   },
                 },
               },
-              cheering: state.userFeed[action.postId].cheering.filter(
-                (ExhibitUId) => ExhibitUId !== action.ExhibitUId
+              cheering: spliceRemoveReturn(
+                state.userFeed[action.postId].cheering,
+                action.ExhibitUId
               ),
               numberOfCheers: state.userFeed[action.postId].numberOfCheers - 1,
             },
           },
-          cheeredPosts: state.cheeredPosts.filter(
-            (post) => post !== action.postId
-          ),
+          cheeredPosts: spliceRemoveReturn(state.cheeredPosts, action.postId),
         };
       } else {
         return {
           ...state,
-          cheeredPosts: state.cheeredPosts.filter(
-            (post) => post !== action.postId
-          ),
+          cheeredPosts: spliceRemoveReturn(state.cheeredPosts, action.postId),
         };
       }
     case UNCHEER_UPDATE_POSTS:
@@ -746,7 +746,8 @@ export default (state = intialState, action) => {
             if (
               Object.keys(
                 state.userFeed[id].profileProjects[projId].projectPosts
-              ).includes(action.postId)
+              ).includes(action.postId) &&
+              action.postId !== id
             ) {
               state.userFeed[id].profileProjects[projId].projectPosts[
                 action.postId
@@ -779,10 +780,11 @@ export default (state = intialState, action) => {
                   state.profileProjects[action.projectId].projectPosts[
                     action.postId
                   ].numberOfCheers - 1,
-                cheering: state.profileProjects[action.projectId].projectPosts[
-                  action.postId
-                ].cheering.filter(
-                  (listExhibitUId) => listExhibitUId !== action.ExhibitUId
+                cheering: spliceRemoveReturn(
+                  state.profileProjects[action.projectId].projectPosts[
+                    action.postId
+                  ].cheering,
+                  action.ExhibitUId
                 ),
               },
             },
@@ -806,10 +808,11 @@ export default (state = intialState, action) => {
                   state.profileProjects[action.projectId].projectPosts[
                     action.postId
                   ].numberOfCheers - 1,
-                cheering: state.profileProjects[action.projectId].projectPosts[
-                  action.postId
-                ].cheering.filter(
-                  (listExhibitUId) => listExhibitUId !== action.ExhibitUId
+                cheering: spliceRemoveReturn(
+                  state.profileProjects[action.projectId].projectPosts[
+                    action.postId
+                  ].cheering,
+                  action.ExhibitUId
                 ),
               },
             },
@@ -833,10 +836,11 @@ export default (state = intialState, action) => {
                     ...state.userFeed[action.postId].profileProjects[
                       action.projectId
                     ].projectPosts[action.postId],
-                    cheering: state.userFeed[action.postId].profileProjects[
-                      action.projectId
-                    ].projectPosts[action.postId].cheering.filter(
-                      (ExhibitUId) => ExhibitUId !== action.ExhibitUId
+                    cheering: spliceRemoveReturn(
+                      state.userFeed[action.postId].profileProjects[
+                        action.projectId
+                      ].projectPosts[action.postId].cheering,
+                      action.ExhibitUId
                     ),
                     numberOfCheers:
                       state.userFeed[action.postId].profileProjects[
@@ -846,15 +850,14 @@ export default (state = intialState, action) => {
                 },
               },
             },
-            cheering: state.userFeed[action.postId].cheering.filter(
-              (ExhibitUId) => ExhibitUId !== action.ExhibitUId
+            cheering: spliceRemoveReturn(
+              state.userFeed[action.postId].cheering,
+              action.ExhibitUId
             ),
             numberOfCheers: state.userFeed[action.postId].numberOfCheers - 1,
           },
         },
-        cheeredPosts: state.cheeredPosts.filter(
-          (post) => post !== action.postId
-        ),
+        cheeredPosts: spliceRemoveReturn(state.cheeredPosts, action.postId),
       };
     case UPLOAD_FEEDBACK:
       return {
