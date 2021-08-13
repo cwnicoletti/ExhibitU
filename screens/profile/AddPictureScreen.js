@@ -18,6 +18,7 @@ import correctUrls from "../../helper/correctUrls";
 import parseLinkValuesFromInputValues from "../../helper/parseLinkValuesFromInputValues";
 import updateArrayOnRemove from "../../helper/updateArrayOnRemove";
 import linkFormReducer from "../../helper/linkFormReducer";
+import getPhotoPermissions from "../../helper/getPhotoPermissions";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import Input from "../../components/UI/Input";
 import IoniconsHeaderButton from "../../components/UI/header_buttons/IoniconsHeaderButton";
@@ -180,6 +181,9 @@ const EditProfileScreen = (props) => {
   }, [dispatch, formState, submitHandler, tempPhotoPostUrl]);
 
   const addProjectPicture = async () => {
+    if (!(await getPhotoPermissions(ImagePicker))) {
+      return;
+    }
     const result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: "Images",
       allowsEditing: true,
@@ -221,18 +225,6 @@ const EditProfileScreen = (props) => {
       linkNum: linkNumber,
     });
   };
-
-  useEffect(() => {
-    (async () => {
-      if (Platform.OS !== "web") {
-        const { status } =
-          await ImagePicker.requestMediaLibraryPermissionsAsync();
-        if (status !== "granted") {
-          alert("Sorry, we need camera roll permissions to make this work!");
-        }
-      }
-    })();
-  }, []);
 
   useEffect(() => {
     props.navigation.setParams({ submit: submitHandler });

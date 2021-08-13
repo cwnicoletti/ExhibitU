@@ -24,6 +24,7 @@ import correctUrls from "../../helper/correctUrls";
 import parseLinkValuesFromInputValues from "../../helper/parseLinkValuesFromInputValues";
 import linkFormReducer from "../../helper/linkFormReducer";
 import updateArrayOnRemove from "../../helper/updateArrayOnRemove";
+import getPhotoPermissions from "../../helper/getPhotoPermissions";
 import IoniconsHeaderButton from "../../components/UI/header_buttons/IoniconsHeaderButton";
 import LinkButton from "../../components/UI/LinkButton";
 import useDidMountEffect from "../../helper/useDidMountEffect";
@@ -156,6 +157,9 @@ const EditProjectScreen = (props) => {
   }, [darkModeValue]);
 
   const changeProjectCoverPicture = async () => {
+    if (!(await getPhotoPermissions(ImagePicker))) {
+      return;
+    }
     const result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: "Images",
       allowsEditing: true,

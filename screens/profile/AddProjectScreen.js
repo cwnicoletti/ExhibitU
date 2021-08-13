@@ -24,6 +24,7 @@ import correctUrls from "../../helper/correctUrls";
 import parseLinkValuesFromInputValues from "../../helper/parseLinkValuesFromInputValues";
 import linkFormReducer from "../../helper/linkFormReducer";
 import updateArrayOnRemove from "../../helper/updateArrayOnRemove";
+import getPhotoPermissions from "../../helper/getPhotoPermissions";
 import Input from "../../components/UI/Input";
 import IoniconsHeaderButton from "../../components/UI/header_buttons/IoniconsHeaderButton";
 import LinkButton from "../../components/UI/LinkButton";
@@ -136,18 +137,6 @@ const AddProjectScreen = (props) => {
   ]);
 
   useEffect(() => {
-    (async () => {
-      if (Platform.OS !== "web") {
-        const { status } =
-          await ImagePicker.requestMediaLibraryPermissionsAsync();
-        if (status !== "granted") {
-          alert("Sorry, we need camera roll permissions to make this work!");
-        }
-      }
-    })();
-  }, []);
-
-  useEffect(() => {
     LogBox.ignoreLogs(["VirtualizedLists should never be nested"]);
     props.navigation.setParams({ submit: submitHandler });
   }, []);
@@ -157,6 +146,9 @@ const AddProjectScreen = (props) => {
   }, [darkModeValue]);
 
   const changeProjectCoverPicture = async () => {
+    if (!(await getPhotoPermissions(ImagePicker))) {
+      return;
+    }
     const result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: "Images",
       allowsEditing: true,

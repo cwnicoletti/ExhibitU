@@ -13,6 +13,8 @@ import {
   TouchableNativeFeedback,
   TouchableOpacity,
   View,
+  Alert,
+  Linking,
 } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
@@ -21,6 +23,7 @@ import correctUrls from "../../helper/correctUrls";
 import parseLinkValuesFromInputValues from "../../helper/parseLinkValuesFromInputValues";
 import linkFormReducer from "../../helper/linkFormReducer";
 import updateArrayOnRemove from "../../helper/updateArrayOnRemove";
+import getPhotoPermissions from "../../helper/getPhotoPermissions";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import TutorialEditProfile from "../../components/tutorial/TutorialEditProfile";
 import Input from "../../components/UI/Input";
@@ -155,6 +158,9 @@ const EditProfileScreen = (props) => {
   }, [dispatch, formState]);
 
   const changeProfilePicture = async () => {
+    if (!(await getPhotoPermissions())) {
+      return;
+    }
     const result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: "Images",
       allowsEditing: true,
@@ -202,18 +208,6 @@ const EditProfileScreen = (props) => {
       linkNum: linkNumber,
     });
   };
-
-  useEffect(() => {
-    (async () => {
-      if (Platform.OS !== "web") {
-        const { status } =
-          await ImagePicker.requestMediaLibraryPermissionsAsync();
-        if (status !== "granted") {
-          alert("Sorry, we need camera roll permissions to make this work!");
-        }
-      }
-    })();
-  }, []);
 
   useEffect(() => {
     LogBox.ignoreLogs(["VirtualizedLists should never be nested"]);
