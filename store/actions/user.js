@@ -521,7 +521,7 @@ export const followUser = (exploredExhibitUId, ExhibitUId, localId) => {
 
     await AsyncStorage.getItem("userDocData").then(async (data) => {
       data = JSON.parse(data);
-      data.following = data.following.concat(exploredExhibitUId);
+      data.following.push(exploredExhibitUId);
       data.numberOfFollowing = data.numberOfFollowing + 1;
       await AsyncStorage.setItem("userDocData", JSON.stringify(data));
     });
@@ -544,9 +544,7 @@ export const unfollowUser = (exploredExhibitUId, ExhibitUId, localId) => {
 
     await AsyncStorage.getItem("userDocData").then(async (data) => {
       data = JSON.parse(data);
-      data.following = data.following.filter(
-        (user) => user !== exploredExhibitUId
-      );
+      data.following.splice(data.following.indexOf(exploredExhibitUId), 1);
       data.numberOfFollowing = data.numberOfFollowing - 1;
       await AsyncStorage.setItem("userDocData", JSON.stringify(data));
     });
@@ -574,8 +572,8 @@ export const advocateForUser = (
 
     await AsyncStorage.getItem("userDocData").then(async (data) => {
       data = JSON.parse(data);
-      data.advocating = data.advocating.concat(exploredExhibitUId);
-      data.projectsAdvocating = data.projectsAdvocating.concat(projectId);
+      data.advocating.push(exploredExhibitUId);
+      data.projectsAdvocating.push(projectId);
       data.numberOfAdvocating = data.numberOfAdvocating + 1;
       await AsyncStorage.setItem("userDocData", JSON.stringify(data));
     });
@@ -604,11 +602,10 @@ export const unadvocateForUser = (
 
     await AsyncStorage.getItem("userDocData").then(async (data) => {
       data = JSON.parse(data);
-      data.advocating = data.advocating.filter(
-        (user) => user !== exploredExhibitUId
-      );
-      data.projectsAdvocating = data.projectsAdvocating.filter(
-        (user) => user !== projectId
+      data.advocating.splice(data.advocating.indexOf(exploredExhibitUId), 1);
+      data.projectsAdvocating.splice(
+        data.projectsAdvocating.indexOf(projectId),
+        1
       );
       data.numberOfAdvocating = data.numberOfAdvocating - 1;
       await AsyncStorage.setItem("userDocData", JSON.stringify(data));

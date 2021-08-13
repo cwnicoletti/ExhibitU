@@ -488,32 +488,38 @@ export default (state = intialState, action) => {
     case FOLLOW_USER:
       return {
         ...state,
-        following: state.following.concat(action.exploredExhibitUId),
+        following: pushReturn(state.following, action.exploredExhibitUId),
         numberOfFollowing: state.numberOfFollowing + 1,
       };
     case UNFOLLOW_USER:
       return {
         ...state,
-        following: state.following.filter(
-          (user) => user !== action.exploredExhibitUId
+        following: spliceRemoveReturn(
+          state.following,
+          action.exploredExhibitUId
         ),
         numberOfFollowing: state.numberOfFollowing - 1,
       };
     case ADVOCATE_FOR_USER:
       return {
         ...state,
-        advocating: state.advocating.concat(action.exploredExhibitUId),
-        projectsAdvocating: state.projectsAdvocating.concat(action.projectId),
+        advocating: pushReturn(state.advocating, action.exploredExhibitUId),
+        projectsAdvocating: pushReturn(
+          state.projectsAdvocating,
+          action.projectId
+        ),
         numberOfAdvocating: state.numberOfAdvocating + 1,
       };
     case UNADVOCATE_FOR_USER:
       return {
         ...state,
-        advocating: state.advocating.filter(
-          (user) => user !== action.exploredExhibitUId
+        advocating: spliceRemoveReturn(
+          state.advocating,
+          action.exploredExhibitUId
         ),
-        projectsAdvocating: state.projectsAdvocating.filter(
-          (user) => user !== action.projectId
+        projectsAdvocating: spliceRemoveReturn(
+          state.projectsAdvocating,
+          action.projectId
         ),
         numberOfAdvocating: state.numberOfAdvocating - 1,
       };
