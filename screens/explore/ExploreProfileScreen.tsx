@@ -11,7 +11,7 @@ import {
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import ExploreProfileHeader from "../../components/explore/ExploreProfileHeader";
-import ProjectItem from "../../components/projectItems/ProfileProjectItem";
+import ProfileProjectItem from "../../components/projectItems/ProfileProjectItem";
 import IoniconsHeaderButton from "../../components/UI/header_buttons/IoniconsHeaderButton";
 import SimpleLineIconsHeaderButton from "../../components/UI/header_buttons/SimpleLineIconsHeaderButton";
 import MainHeaderTitle from "../../components/UI/MainHeaderTitle";
@@ -412,7 +412,7 @@ const ExploreProfileScreen = (props) => {
         }
         numColumns={exploredUserData.profileColumns}
         renderItem={(itemData) => (
-          <ProjectItem
+          <ProfileProjectItem
             image={itemData.item.projectCoverPhotoUrl}
             title={itemData.item.projectTitle}
             projectContainer={{

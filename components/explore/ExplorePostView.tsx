@@ -26,6 +26,7 @@ import {
   uncheerOwnFeedPost,
   uncheerPost,
 } from "../../store/actions/user";
+import { AnimatedGradient } from "../custom/AnimatedGradient/AnimatedGradient";
 import toDateTime from "../../helper/toDateTime";
 
 const ExplorePostView = (props) => {
@@ -34,6 +35,11 @@ const ExplorePostView = (props) => {
   const [loadingCheer, setLoadingCheer] = useState(false);
   const [showClapping, setShowClapping] = useState(false);
   const [clap, setClap] = useState(false);
+  const [imageIsLoading, setImageIsLoading] = useState(true);
+  const [greyColorValues, setGreyColorValues] = useState([
+    "rgba(50,50,50,1)",
+    "rgba(0,0,0,1)",
+  ]);
   const showCheering = useAppSelector((state) => state.user.showCheering);
   const cheeredPosts = useAppSelector((state) => state.user.cheeredPosts);
   const localId = useAppSelector((state) => state.auth.userId);
@@ -165,6 +171,19 @@ const ExplorePostView = (props) => {
         }}
       >
         <View>
+          {imageIsLoading ? (
+            <AnimatedGradient
+              style={{
+                height: photoHeight,
+                width: "100%",
+                position: "absolute",
+                zindex: 3,
+              }}
+              colors={greyColorValues}
+              start={{ x: 0, y: 0 }}
+              end={{ x: 1, y: 0 }}
+            />
+          ) : null}
           <ImageBackground
             style={{
               height: photoHeight,
