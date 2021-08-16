@@ -26,9 +26,11 @@ import {
   uncheerOwnFeedPost,
   uncheerPost,
 } from "../../store/actions/user";
+import { AnimatedGradient } from "../custom/AnimatedGradient/AnimatedGradient";
 import LinkButton from "../UI/LinkButton";
 import toDateTime from "../../helper/toDateTime";
 import TimeStamp from "../UI/TimeStamp";
+import useDidMountEffect from "../../helper/useDidMountEffect";
 
 const FeedItem = (props) => {
   const dispatch = useAppDispatch();
@@ -36,6 +38,12 @@ const FeedItem = (props) => {
   const [loadingCheer, setLoadingCheer] = useState(false);
   const [showClapping, setShowClapping] = useState(false);
   const [clap, setClap] = useState(false);
+  const [imageIsLoading, setImageIsLoading] = useState(true);
+  const [profileImageIsLoading, setProfileImageIsLoading] = useState(true);
+  const [greyColorValues, setGreyColorValues] = useState([
+    "rgba(50,50,50,1)",
+    "rgba(0,0,0,1)",
+  ]);
   const darkModeValue = useAppSelector((state) => state.user.darkMode);
   const cheeredPosts = useAppSelector((state) => state.user.cheeredPosts);
   const showCheering = useAppSelector((state) => state.user.showCheering);
@@ -71,6 +79,10 @@ const FeedItem = (props) => {
     }
   }, [cheeredPosts]);
 
+  useDidMountEffect(() => {
+    setGreyColorValues(["rgba(50,50,50,1)", "rgba(0,0,0,1)"]);
+  }, [imageIsLoading, profileImageIsLoading]);
+
   const slideUp = () => {
     Animated.timing(slideAnim, {
       toValue: -height,
@@ -96,13 +108,13 @@ const FeedItem = (props) => {
   };
 
   let clapCount = 0;
-  const update = () => {
+  const updateClap = () => {
     setClap((prevState) => !prevState);
     const maxClap = 30;
 
     if (clapCount < maxClap) {
       setTimeout(() => {
-        window.requestAnimationFrame(update);
+        window.requestAnimationFrame(updateClap);
         clapCount += 1;
       }, 75);
     } else {
@@ -118,7 +130,7 @@ const FeedItem = (props) => {
       await setShowClapping(true);
       await fadeIn();
       await slideUp();
-      await update();
+      await updateClap();
       await setTimeout(() => {
         fadeOut();
       }, 750);
@@ -166,6 +178,19 @@ const FeedItem = (props) => {
         }}
       >
         <View>
+          {imageIsLoading ? (
+            <AnimatedGradient
+              style={{
+                height: height,
+                width: "100%",
+                position: "absolute",
+                zindex: 3,
+              }}
+              colors={greyColorValues}
+              start={{ x: 0, y: 0 }}
+              end={{ x: 1, y: 0 }}
+            />
+          ) : null}
           <ImageBackground
             style={{
               height: height,
@@ -176,6 +201,12 @@ const FeedItem = (props) => {
                 ? { uri: props.image }
                 : require("../../assets/default-post-icon.png")
             }
+            onLoadStart={() => {
+              setGreyColorValues(["rgba(0,0,0,1)", "rgba(50,50,50,1)"]);
+            }}
+            onLoadEnd={() => {
+              setImageIsLoading(false);
+            }}
           >
             <View
               style={{
@@ -219,9 +250,29 @@ const FeedItem = (props) => {
                             borderRadius: 50 / 2,
                           }}
                         >
+                          {profileImageIsLoading ? (
+                            <AnimatedGradient
+                              style={{
+                                borderWidth: 1,
+                                borderColor: "white",
+                                position: "absolute",
+                                zindex: 3,
+                                height: 50,
+                                width: 50,
+                                borderRadius: 50 / 2,
+                              }}
+                              colors={greyColorValues}
+                              start={{ x: 0, y: 0 }}
+                              end={{ x: 1, y: 0 }}
+                            />
+                          ) : null}
                           <Image
                             style={{
-                              ...styles.profileImage,
+                              borderWidth: 1,
+                              borderColor: "white",
+                              height: 50,
+                              width: 50,
+                              borderRadius: 50 / 2,
                               ...props.profileImageStyle,
                             }}
                             source={
@@ -229,6 +280,9 @@ const FeedItem = (props) => {
                                 ? { uri: props.profileImageSource }
                                 : require("../../assets/default-profile-icon.jpg")
                             }
+                            onLoadEnd={() => {
+                              setProfileImageIsLoading(false);
+                            }}
                           />
                         </View>
                         <Text
@@ -500,13 +554,6 @@ const FeedItem = (props) => {
 };
 
 const styles = StyleSheet.create({
-  profileImage: {
-    borderWidth: 1,
-    borderColor: "white",
-    height: 50,
-    width: 50,
-    borderRadius: 50 / 2,
-  },
   title: {
     fontSize: 14,
     fontWeight: "bold",
