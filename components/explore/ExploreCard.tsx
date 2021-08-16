@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
+import { useEffect } from "react";
 import {
   Image,
   Platform,
@@ -8,8 +9,15 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import { AnimatedGradient } from "../custom/AnimatedGradient/AnimatedGradient";
 
 const ExploreCard = (props) => {
+  const [profileImageIsLoading, setProfileImageIsLoading] = useState(true);
+  const [greyColorValues, setGreyColorValues] = useState([
+    "rgba(50,50,50,1)",
+    "rgba(0,0,0,1)",
+  ]);
+
   let TouchableCmp: any = TouchableOpacity;
   if (Platform.OS === "android") {
     TouchableCmp = TouchableNativeFeedback;
@@ -21,6 +29,21 @@ const ExploreCard = (props) => {
         <TouchableCmp onPress={props.onSelect} useForeground>
           <View style={{ flexDirection: "row", margin: 10 }}>
             <View style={{ ...props.imageContainer }}>
+              {profileImageIsLoading ? (
+                <AnimatedGradient
+                  style={{
+                    top: 0,
+                    position: "absolute",
+                    zindex: 3,
+                    height: 60,
+                    width: 60,
+                    borderRadius: 60 / 2,
+                  }}
+                  colors={greyColorValues}
+                  start={{ x: 0, y: 0 }}
+                  end={{ x: 1, y: 0 }}
+                />
+              ) : null}
               <Image
                 style={styles.image}
                 source={
@@ -28,6 +51,13 @@ const ExploreCard = (props) => {
                     ? { uri: props.image }
                     : require("../../assets/default-profile-icon.jpg")
                 }
+                onLoadStart={() => {
+                  console.log("Hit2");
+                  setGreyColorValues(["rgba(0,0,0,1)", "rgba(50,50,50,1)"]);
+                }}
+                onLoadEnd={() => {
+                  setProfileImageIsLoading(false);
+                }}
               />
             </View>
             <View style={{ ...styles.details, ...props.details }}>
@@ -59,7 +89,7 @@ const styles = StyleSheet.create({
   image: {
     height: 60,
     width: 60,
-    borderRadius: 70 / 2,
+    borderRadius: 60 / 2,
     overflow: "hidden",
   },
   fullname: {
