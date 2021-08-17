@@ -1,5 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
+import getBase64FromUrl from "../../helper/getBase64FromUrl";
 
 export const FORCE_SEARCH = "FORCE_SEARCH";
 export const RESET_SCROLL = "RESET_SCROLL";
@@ -61,19 +62,54 @@ export const UPLOAD_REPORT_BUG = "UPLOAD_REPORT_BUG";
 export const SET_TUTORIALING = "SET_TUTORIALING";
 export const SET_TUTORIALING_PROMPT = "SET_TUTORIALING_PROMPT";
 
-const getBase64FromUrl = async (url) => {
-  if (url) {
-    const response = await axios.get(url, {
-      responseType: "arraybuffer",
-    });
-    const base64 = Buffer.from(await response.data, "base64").toString(
-      "base64"
-    );
-    return `data:image/png;base64,${base64}`;
-  } else {
-    return "";
-  }
-};
+export interface UserState {
+  ExhibitUId: string;
+  email: string;
+  profilePictureId: string;
+  profilePictureUrl: string;
+  profilePictureBase64: string;
+  projectTempCoverPhotoId: string;
+  projectTempCoverPhotoUrl: string;
+  projectTempCoverPhotoBase64: string;
+  tempPhotoPostId: string;
+  tempPhotoPostUrl: string;
+  tempPhotoPostBase64: string;
+  fullname: string;
+  jobTitle: string;
+  username: string;
+  profileBiography: string;
+  numberOfFollowers: number;
+  numberOfFollowing: number;
+  numberOfAdvocates: number;
+  numberOfAdvocating: number;
+  profileColumns: number;
+  followers: string[];
+  following: string[];
+  advocates: string[];
+  advocating: string[];
+  projectsAdvocating: string[];
+  cheeredPosts: string[];
+  profileProjects: object;
+  profileLinks: object;
+  userFeed: object;
+  darkMode: boolean;
+  showCheering: boolean;
+  hideFollowing: boolean;
+  hideFollowers: boolean;
+  hideAdvocates: boolean;
+  updates: object;
+  resetScrollFeed: boolean;
+  resetScrollExplore: boolean;
+  resetScrollProfile: boolean;
+  showcasingProfile: boolean;
+  hiddenProfileFooter: boolean;
+  onFeedScreen: boolean;
+  onExploreScreen: boolean;
+  onProfileScreen: boolean;
+  tutorialing: boolean;
+  tutorialPrompt: boolean;
+  tutorialScreen: string;
+}
 
 export const refreshProfile = (localId) => {
   return async (dispatch) => {
@@ -134,20 +170,20 @@ export const refreshProfile = (localId) => {
     }
 
     await AsyncStorage.getItem("userDocData").then(async (data) => {
-      data = JSON.parse(data);
-      data.numberOfFollowers = profileInfo.data.data.numberOfFollowers;
-      data.numberOfFollowing = profileInfo.data.data.numberOfFollowing;
-      data.numberOfAdvocates = profileInfo.data.data.numberOfAdvocates;
-      data.numberOfAdvocating = profileInfo.data.data.numberOfAdvocating;
-      data.followers = followers;
-      data.following = following;
-      data.advocates = advocates;
-      data.advocating = advocating;
-      data.projectsAdvocating = projectsAdvocating;
-      data.profileLinks = profileLinks;
-      data.cheeredPosts = cheeredPosts;
-      data.profileProjects = profileProjects;
-      await AsyncStorage.setItem("userDocData", JSON.stringify(data));
+      let parsedData: UserState = JSON.parse(data);
+      parsedData.numberOfFollowers = profileInfo.data.data.numberOfFollowers;
+      parsedData.numberOfFollowing = profileInfo.data.data.numberOfFollowing;
+      parsedData.numberOfAdvocates = profileInfo.data.data.numberOfAdvocates;
+      parsedData.numberOfAdvocating = profileInfo.data.data.numberOfAdvocating;
+      parsedData.followers = followers;
+      parsedData.following = following;
+      parsedData.advocates = advocates;
+      parsedData.advocating = advocating;
+      parsedData.projectsAdvocating = projectsAdvocating;
+      parsedData.profileLinks = profileLinks;
+      parsedData.cheeredPosts = cheeredPosts;
+      parsedData.profileProjects = profileProjects;
+      await AsyncStorage.setItem("userDocData", JSON.stringify(parsedData));
     });
 
     await dispatch({
@@ -294,28 +330,28 @@ export const uploadUpdateUserProfile = (
     );
 
     await AsyncStorage.getItem("userDocData").then(async (data) => {
-      data = JSON.parse(data);
-      data.fullname = fullname;
-      data.jobTitle = jobTitle;
-      data.username = username;
-      data.profileBiography = bio;
-      data.profileLinks = links;
-      if (Object.keys(data.userFeed) > 0) {
-        const feedPosts = Object.keys(data.userFeed);
+      let parsedData: UserState = JSON.parse(data);
+      parsedData.fullname = fullname;
+      parsedData.jobTitle = jobTitle;
+      parsedData.username = username;
+      parsedData.profileBiography = bio;
+      parsedData.profileLinks = links;
+      if (Object.keys(parsedData.userFeed).length > 0) {
+        const feedPosts = Object.keys(parsedData.userFeed);
         for (const post of feedPosts) {
-          data.userFeed = {
+          parsedData.userFeed = {
             [post]: {
-              ...data.userFeed[post],
-              fullname: data.fullname,
-              jobTitle: data.jobTitle,
-              username: data.username,
-              profileBiography: data.bio,
-              profileLinks: data.links,
+              ...parsedData.userFeed[post],
+              fullname: parsedData.fullname,
+              jobTitle: parsedData.jobTitle,
+              username: parsedData.username,
+              profileBiography: bio,
+              profileLinks: links,
             },
           };
         }
       }
-      await AsyncStorage.setItem("userDocData", JSON.stringify(data));
+      await AsyncStorage.setItem("userDocData", JSON.stringify(parsedData));
     });
 
     dispatch({
@@ -354,9 +390,9 @@ export const uploadNewProject = (
       uploadForm
     );
     await AsyncStorage.getItem("userDocData").then(async (data) => {
-      data = JSON.parse(data);
-      data.profileProjects = {
-        ...data.profileProjects,
+      let parsedData: UserState = JSON.parse(data);
+      parsedData.profileProjects = {
+        ...parsedData.profileProjects,
         [newProjectResponse.data.projectId]: {
           projectId: newProjectResponse.data.projectId,
           projectCoverPhotoId: newProjectResponse.data.photoId,
@@ -371,23 +407,23 @@ export const uploadNewProject = (
           projectLinks: links,
         },
       };
-      for (const post in data.userFeed) {
-        if (data.userFeed[post].ExhibitUId === ExhibitUId) {
-          data.userFeed = {
-            ...data.userFeed,
+      for (const post in parsedData.userFeed) {
+        if (parsedData.userFeed[post].ExhibitUId === ExhibitUId) {
+          parsedData.userFeed = {
+            ...parsedData.userFeed,
             [post]: {
-              ...data.userFeed[post],
+              ...parsedData.userFeed[post],
               profileProjects: {
-                ...data.profileProjects,
+                ...parsedData.profileProjects,
               },
             },
           };
         }
       }
-      data.projectTempCoverPhotoUrl = "";
-      data.projectTempCoverPhotoBase64 = "";
-      data.projectTempCoverPhotoId = "";
-      await AsyncStorage.setItem("userDocData", JSON.stringify(data));
+      parsedData.projectTempCoverPhotoUrl = "";
+      parsedData.projectTempCoverPhotoBase64 = "";
+      parsedData.projectTempCoverPhotoId = "";
+      await AsyncStorage.setItem("userDocData", JSON.stringify(parsedData));
     });
     dispatch({
       type: ADD_USER_PROJECT,
@@ -431,11 +467,11 @@ export const uploadUpdatedProject = (
     );
 
     await AsyncStorage.getItem("userDocData").then(async (data) => {
-      data = JSON.parse(data);
-      data.profileProjects = {
-        ...data.profileProjects,
+      let parsedData: UserState = JSON.parse(data);
+      parsedData.profileProjects = {
+        ...parsedData.profileProjects,
         [projectId]: {
-          ...data.profileProjects[projectId],
+          ...parsedData.profileProjects[projectId],
           projectLastUpdated: updatedProjectResponse.data.time,
           projectCoverPhotoUrl: projectTempCoverPhotoUrl,
           projectTitle,
@@ -443,7 +479,7 @@ export const uploadUpdatedProject = (
           projectLinks: links,
         },
       };
-      await AsyncStorage.setItem("userDocData", JSON.stringify(data));
+      await AsyncStorage.setItem("userDocData", JSON.stringify(parsedData));
     });
 
     dispatch({
@@ -468,15 +504,17 @@ export const uploadRemoveProject = (ExhibitUId, localId, projectId) => {
     );
 
     await AsyncStorage.getItem("userDocData").then(async (data) => {
-      data = JSON.parse(data);
-      const postIds = Object.keys(data.profileProjects[projectId].projectPosts);
-      delete data.profileProjects[projectId];
-      for (const post in data.userFeed) {
+      let parsedData: UserState = JSON.parse(data);
+      const postIds = Object.keys(
+        parsedData.profileProjects[projectId].projectPosts
+      );
+      delete parsedData.profileProjects[projectId];
+      for (const post in parsedData.userFeed) {
         if (postIds.includes(post)) {
-          delete data.userFeed[post];
+          delete parsedData.userFeed[post];
         }
       }
-      await AsyncStorage.setItem("userDocData", JSON.stringify(data));
+      await AsyncStorage.setItem("userDocData", JSON.stringify(parsedData));
     });
 
     dispatch({
@@ -496,10 +534,10 @@ export const uploadRemovePost = (ExhibitUId, localId, projectId, postId) => {
     );
 
     await AsyncStorage.getItem("userDocData").then(async (data) => {
-      data = JSON.parse(data);
-      delete data.profileProjects[projectId].projectPosts[postId];
-      delete data.userFeed[postId];
-      await AsyncStorage.setItem("userDocData", JSON.stringify(data));
+      let parsedData: UserState = JSON.parse(data);
+      delete parsedData.profileProjects[projectId].projectPosts[postId];
+      delete parsedData.userFeed[postId];
+      await AsyncStorage.setItem("userDocData", JSON.stringify(parsedData));
     });
 
     await dispatch({
@@ -520,10 +558,10 @@ export const followUser = (exploredExhibitUId, ExhibitUId, localId) => {
     );
 
     await AsyncStorage.getItem("userDocData").then(async (data) => {
-      data = JSON.parse(data);
-      data.following.push(exploredExhibitUId);
-      data.numberOfFollowing = data.numberOfFollowing + 1;
-      await AsyncStorage.setItem("userDocData", JSON.stringify(data));
+      let parsedData: UserState = JSON.parse(data);
+      parsedData.following.push(exploredExhibitUId);
+      parsedData.numberOfFollowing = parsedData.numberOfFollowing + 1;
+      await AsyncStorage.setItem("userDocData", JSON.stringify(parsedData));
     });
 
     await dispatch({
@@ -543,10 +581,13 @@ export const unfollowUser = (exploredExhibitUId, ExhibitUId, localId) => {
     );
 
     await AsyncStorage.getItem("userDocData").then(async (data) => {
-      data = JSON.parse(data);
-      data.following.splice(data.following.indexOf(exploredExhibitUId), 1);
-      data.numberOfFollowing = data.numberOfFollowing - 1;
-      await AsyncStorage.setItem("userDocData", JSON.stringify(data));
+      let parsedData: UserState = JSON.parse(data);
+      parsedData.following.splice(
+        parsedData.following.indexOf(exploredExhibitUId),
+        1
+      );
+      parsedData.numberOfFollowing = parsedData.numberOfFollowing - 1;
+      await AsyncStorage.setItem("userDocData", JSON.stringify(parsedData));
     });
 
     await dispatch({
@@ -571,11 +612,11 @@ export const advocateForUser = (
     );
 
     await AsyncStorage.getItem("userDocData").then(async (data) => {
-      data = JSON.parse(data);
-      data.advocating.push(exploredExhibitUId);
-      data.projectsAdvocating.push(projectId);
-      data.numberOfAdvocating = data.numberOfAdvocating + 1;
-      await AsyncStorage.setItem("userDocData", JSON.stringify(data));
+      let parsedData: UserState = JSON.parse(data);
+      parsedData.advocating.push(exploredExhibitUId);
+      parsedData.projectsAdvocating.push(projectId);
+      parsedData.numberOfAdvocating = parsedData.numberOfAdvocating + 1;
+      await AsyncStorage.setItem("userDocData", JSON.stringify(parsedData));
     });
 
     await dispatch({
@@ -601,14 +642,17 @@ export const unadvocateForUser = (
     );
 
     await AsyncStorage.getItem("userDocData").then(async (data) => {
-      data = JSON.parse(data);
-      data.advocating.splice(data.advocating.indexOf(exploredExhibitUId), 1);
-      data.projectsAdvocating.splice(
-        data.projectsAdvocating.indexOf(projectId),
+      let parsedData: UserState = JSON.parse(data);
+      parsedData.advocating.splice(
+        parsedData.advocating.indexOf(exploredExhibitUId),
         1
       );
-      data.numberOfAdvocating = data.numberOfAdvocating - 1;
-      await AsyncStorage.setItem("userDocData", JSON.stringify(data));
+      parsedData.projectsAdvocating.splice(
+        parsedData.projectsAdvocating.indexOf(projectId),
+        1
+      );
+      parsedData.numberOfAdvocating = parsedData.numberOfAdvocating - 1;
+      await AsyncStorage.setItem("userDocData", JSON.stringify(parsedData));
     });
 
     await dispatch({
@@ -634,20 +678,21 @@ export const uploadChangeProfilePicture = (
     );
 
     await AsyncStorage.getItem("userDocData").then(async (data) => {
-      data = JSON.parse(data);
-      data.profilePictureId = uploadedPictureUrlResponse.data.pictureId;
-      data.profilePictureUrl = uploadedPictureUrlResponse.data.url;
-      data.profilePictureBase64 = base64;
+      let parsedData: UserState = JSON.parse(data);
+      parsedData.profilePictureId = uploadedPictureUrlResponse.data.pictureId;
+      parsedData.profilePictureUrl = uploadedPictureUrlResponse.data.url;
+      parsedData.profilePictureBase64 = base64;
 
-      if (data.userFeed) {
-        Object.entries(data.userFeed).map(([id, value]) => {
-          if (data.userFeed[id].ExhibitUId === ExhibitUId) {
-            data.userFeed[id].profilePictureBase64 = data.profilePictureBase64;
+      if (parsedData.userFeed) {
+        Object.entries(parsedData.userFeed).map(([id, value]) => {
+          if (parsedData.userFeed[id].ExhibitUId === ExhibitUId) {
+            parsedData.userFeed[id].profilePictureBase64 =
+              parsedData.profilePictureBase64;
           }
         });
       }
 
-      await AsyncStorage.setItem("userDocData", JSON.stringify(data));
+      await AsyncStorage.setItem("userDocData", JSON.stringify(parsedData));
     });
 
     await dispatch({
@@ -675,11 +720,12 @@ export const uploadAddTempProjectCoverPicture = (
     );
 
     await AsyncStorage.getItem("userDocData").then(async (data) => {
-      data = JSON.parse(data);
-      data.projectTempCoverPhotoUrl = uploadedPictureUrlResponse.data.url;
-      data.projectTempCoverPhotoId = uploadedPictureUrlResponse.data.photoId;
-      data.projectTempCoverPhotoBase64 = base64;
-      await AsyncStorage.setItem("userDocData", JSON.stringify(data));
+      let parsedData: UserState = JSON.parse(data);
+      parsedData.projectTempCoverPhotoUrl = uploadedPictureUrlResponse.data.url;
+      parsedData.projectTempCoverPhotoId =
+        uploadedPictureUrlResponse.data.photoId;
+      parsedData.projectTempCoverPhotoBase64 = base64;
+      await AsyncStorage.setItem("userDocData", JSON.stringify(parsedData));
     });
 
     await dispatch({
@@ -706,11 +752,11 @@ export const uploadAddTempPostPicture = (
     );
 
     await AsyncStorage.getItem("userDocData").then(async (data) => {
-      data = JSON.parse(data);
-      data.tempPhotoPostId = uploadedPictureUrlResponse.data.photoId;
-      data.tempPhotoPostUrl = uploadedPictureUrlResponse.data.url;
-      data.tempPhotoPostBase64 = base64;
-      await AsyncStorage.setItem("userDocData", JSON.stringify(data));
+      let parsedData: UserState = JSON.parse(data);
+      parsedData.tempPhotoPostId = uploadedPictureUrlResponse.data.photoId;
+      parsedData.tempPhotoPostUrl = uploadedPictureUrlResponse.data.url;
+      parsedData.tempPhotoPostBase64 = base64;
+      await AsyncStorage.setItem("userDocData", JSON.stringify(parsedData));
     });
 
     await dispatch({
@@ -744,20 +790,21 @@ export const uploadChangeProjectCoverPicture = (
     );
 
     await AsyncStorage.getItem("userDocData").then(async (data) => {
-      data = JSON.parse(data);
-      data.projectTempCoverPhotoId = uploadedPictureUrlResponse.data.photoId;
-      data.projectTempCoverPhotoUrl = uploadedPictureUrlResponse.data.url;
-      data.projectTempCoverPhotoBase64 = base64;
-      data.profileProjects = {
-        ...data.profileProjects,
+      let parsedData: UserState = JSON.parse(data);
+      parsedData.projectTempCoverPhotoId =
+        uploadedPictureUrlResponse.data.photoId;
+      parsedData.projectTempCoverPhotoUrl = uploadedPictureUrlResponse.data.url;
+      parsedData.projectTempCoverPhotoBase64 = base64;
+      parsedData.profileProjects = {
+        ...parsedData.profileProjects,
         [projectId]: {
-          ...data.profileProjects[projectId],
+          ...parsedData.profileProjects[projectId],
           projectCoverPhotoUrl: uploadedPictureUrlResponse.data.url,
           projectCoverPhotoId: uploadedPictureUrlResponse.data.photoId,
           projectCoverPhotoBase64: base64,
         },
       };
-      await AsyncStorage.setItem("userDocData", JSON.stringify(data));
+      await AsyncStorage.setItem("userDocData", JSON.stringify(parsedData));
     });
 
     await dispatch({
@@ -839,16 +886,16 @@ export const addUserPost = (
     const time = uploadedUserPost.data.time;
 
     await AsyncStorage.getItem("userDocData").then(async (data) => {
-      data = JSON.parse(data);
-      data.tempPhotoPostId = "";
-      data.tempPhotoPostUrl = "";
-      data.tempPhotoPostBase64 = "";
-      data.profileProjects = {
-        ...data.profileProjects,
+      let parsedData: UserState = JSON.parse(data);
+      parsedData.tempPhotoPostId = "";
+      parsedData.tempPhotoPostUrl = "";
+      parsedData.tempPhotoPostBase64 = "";
+      parsedData.profileProjects = {
+        ...parsedData.profileProjects,
         [projectId]: {
-          ...data.profileProjects[projectId],
+          ...parsedData.profileProjects[projectId],
           projectPosts: {
-            ...data.profileProjects[projectId].projectPosts,
+            ...parsedData.profileProjects[projectId].projectPosts,
             [retrievedPostId]: {
               postId: retrievedPostId,
               ExhibitUId,
@@ -881,8 +928,8 @@ export const addUserPost = (
         },
       };
 
-      data.userFeed = {
-        ...data.userFeed,
+      parsedData.userFeed = {
+        ...parsedData.userFeed,
         [retrievedPostId]: {
           postId: retrievedPostId,
           ExhibitUId,
@@ -898,11 +945,11 @@ export const addUserPost = (
           advocatesValue,
           profileBiography,
           profileProjects: {
-            ...data.profileProjects,
+            ...parsedData.profileProjects,
             [projectId]: {
-              ...data.profileProjects[projectId],
+              ...parsedData.profileProjects[projectId],
               projectPosts: {
-                ...data.profileProjects[projectId].projectPosts,
+                ...parsedData.profileProjects[projectId].projectPosts,
                 [retrievedPostId]: {
                   postId: retrievedPostId,
                   ExhibitUId,
@@ -956,17 +1003,17 @@ export const addUserPost = (
           profileColumns,
         },
       };
-      Object.entries(data.userFeed).map(([id, value]) => {
+      Object.entries(parsedData.userFeed).map(([id, value]) => {
         if (id !== retrievedPostId) {
-          if (data.userFeed[id].ExhibitUId === ExhibitUId) {
+          if (parsedData.userFeed[id].ExhibitUId === ExhibitUId) {
             Object.assign(
-              data.userFeed[id].profileProjects,
-              data.userFeed[retrievedPostId].profileProjects
+              parsedData.userFeed[id].profileProjects,
+              parsedData.userFeed[retrievedPostId].profileProjects
             );
           }
         }
       });
-      await AsyncStorage.setItem("userDocData", JSON.stringify(data));
+      await AsyncStorage.setItem("userDocData", JSON.stringify(parsedData));
     });
 
     await dispatch({
@@ -1048,9 +1095,9 @@ export const getUserFeed = (localId, ExhibitUId) => {
     // }
 
     await AsyncStorage.getItem("userDocData").then(async (data) => {
-      data = JSON.parse(data);
-      data.userFeed = { ...returnData };
-      await AsyncStorage.setItem("userDocData", JSON.stringify(data));
+      let parsedData: UserState = JSON.parse(data);
+      parsedData.userFeed = { ...returnData };
+      await AsyncStorage.setItem("userDocData", JSON.stringify(parsedData));
     });
 
     await dispatch({ type: GET_USER_FEED, feedData: returnData });
@@ -1079,36 +1126,37 @@ export const cheerPost = (
     );
 
     await AsyncStorage.getItem("userDocData").then(async (data) => {
-      data = JSON.parse(data);
-      if (data.userFeed[postId]) {
-        data.userFeed[postId].cheering.push(ExhibitUId);
-        data.userFeed[postId].profileProjects[projectId].projectPosts[
+      let parsedData: UserState = JSON.parse(data);
+      if (parsedData.userFeed[postId]) {
+        parsedData.userFeed[postId].cheering.push(ExhibitUId);
+        parsedData.userFeed[postId].profileProjects[projectId].projectPosts[
           postId
         ].cheering.push(ExhibitUId);
 
-        data.userFeed[postId].numberOfCheers += 1;
-        data.userFeed[postId].profileProjects[projectId].projectPosts[
+        parsedData.userFeed[postId].numberOfCheers += 1;
+        parsedData.userFeed[postId].profileProjects[projectId].projectPosts[
           postId
         ].numberOfCheers += 1;
 
-        data.cheeredPosts.push(postId);
+        parsedData.cheeredPosts.push(postId);
 
-        Object.entries(data.userFeed).map(([id, value]) => {
-          Object.entries(data.userFeed[id].profileProjects).map(
+        Object.entries(parsedData.userFeed).map(([id, value]) => {
+          Object.entries(parsedData.userFeed[id].profileProjects).map(
             ([projId, value]) => {
               if (
                 Object.keys(
-                  data.userFeed[id].profileProjects[projId].projectPosts
+                  parsedData.userFeed[id].profileProjects[projId].projectPosts
                 ).includes(postId) &&
                 postId !== id
               ) {
-                data.userFeed[id].profileProjects[projId].projectPosts[
+                parsedData.userFeed[id].profileProjects[projId].projectPosts[
                   postId
-                ].numberOfCheers = data.userFeed[postId].numberOfCheers;
+                ].numberOfCheers = parsedData.userFeed[postId].numberOfCheers;
                 Object.assign(
-                  data.userFeed[id].profileProjects[projId].projectPosts[postId]
-                    .cheering,
-                  data.userFeed[postId].cheering
+                  parsedData.userFeed[id].profileProjects[projId].projectPosts[
+                    postId
+                  ].cheering,
+                  parsedData.userFeed[postId].cheering
                 );
               }
             }
@@ -1116,7 +1164,7 @@ export const cheerPost = (
         });
       }
 
-      await AsyncStorage.setItem("userDocData", JSON.stringify(data));
+      await AsyncStorage.setItem("userDocData", JSON.stringify(parsedData));
     });
 
     await dispatch({ type: CHEER_POST, ExhibitUId, projectId, postId });
@@ -1127,13 +1175,15 @@ export const cheerPost = (
 export const cheerOwnFeedPost = (ExhibitUId, projectId, postId) => {
   return async (dispatch) => {
     await AsyncStorage.getItem("userDocData").then(async (data) => {
-      data = JSON.parse(data);
-      data.profileProjects[projectId].projectPosts[postId].cheering.push(
+      let parsedData: UserState = JSON.parse(data);
+      parsedData.profileProjects[projectId].projectPosts[postId].cheering.push(
         postId
       );
-      data.profileProjects[projectId].projectPosts[postId].numberOfCheers += 1;
+      parsedData.profileProjects[projectId].projectPosts[
+        postId
+      ].numberOfCheers += 1;
 
-      await AsyncStorage.setItem("userDocData", JSON.stringify(data));
+      await AsyncStorage.setItem("userDocData", JSON.stringify(parsedData));
     });
 
     await dispatch({
@@ -1167,20 +1217,20 @@ export const cheerOwnProfilePost = (
     );
 
     await AsyncStorage.getItem("userDocData").then(async (data) => {
-      data = JSON.parse(data);
-      data.profileProjects = {
-        ...data.profileProjects,
+      let parsedData: UserState = JSON.parse(data);
+      parsedData.profileProjects = {
+        ...parsedData.profileProjects,
         [projectId]: {
-          ...data.profileProjects[projectId],
+          ...parsedData.profileProjects[projectId],
           projectPosts: {
-            ...data.profileProjects[projectId].projectPosts,
+            ...parsedData.profileProjects[projectId].projectPosts,
             [postId]: {
-              ...data.profileProjects[projectId].projectPosts[postId],
+              ...parsedData.profileProjects[projectId].projectPosts[postId],
               numberOfCheers:
-                data.profileProjects[projectId].projectPosts[postId]
+                parsedData.profileProjects[projectId].projectPosts[postId]
                   .numberOfCheers + 1,
               cheering: [
-                ...data.profileProjects[projectId].projectPosts[postId]
+                ...parsedData.profileProjects[projectId].projectPosts[postId]
                   .cheering,
                 ExhibitUId,
               ],
@@ -1189,25 +1239,25 @@ export const cheerOwnProfilePost = (
         },
       };
 
-      data.userFeed = {
-        ...data.userFeed,
+      parsedData.userFeed = {
+        ...parsedData.userFeed,
         [postId]: {
-          ...data.userFeed[postId],
+          ...parsedData.userFeed[postId],
           profileProjects: {
-            ...data.userFeed[postId].profileProjects,
+            ...parsedData.userFeed[postId].profileProjects,
             [projectId]: {
-              ...data.userFeed[postId].profileProjects[projectId],
+              ...parsedData.userFeed[postId].profileProjects[projectId],
               projectPosts: {
-                ...data.userFeed[postId].profileProjects[projectId]
+                ...parsedData.userFeed[postId].profileProjects[projectId]
                   .projectPosts,
                 [postId]: {
-                  ...data.userFeed[postId].profileProjects[projectId]
+                  ...parsedData.userFeed[postId].profileProjects[projectId]
                     .projectPosts[postId],
                   numberOfCheers:
-                    data.userFeed[postId].profileProjects[projectId]
+                    parsedData.userFeed[postId].profileProjects[projectId]
                       .projectPosts[postId].numberOfCheers + 1,
                   cheering: [
-                    ...data.userFeed[postId].profileProjects[projectId]
+                    ...parsedData.userFeed[postId].profileProjects[projectId]
                       .projectPosts[postId].cheering,
                     ExhibitUId,
                   ],
@@ -1215,35 +1265,36 @@ export const cheerOwnProfilePost = (
               },
             },
           },
-          numberOfCheers: data.userFeed[postId].numberOfCheers + 1,
-          cheering: [...data.userFeed[postId].cheering, ExhibitUId],
+          numberOfCheers: parsedData.userFeed[postId].numberOfCheers + 1,
+          cheering: [...parsedData.userFeed[postId].cheering, ExhibitUId],
         },
       };
 
-      Object.entries(data.userFeed).map(([id, value]) => {
-        Object.entries(data.userFeed[id].profileProjects).map(
+      Object.entries(parsedData.userFeed).map(([id, value]) => {
+        Object.entries(parsedData.userFeed[id].profileProjects).map(
           ([projId, value]) => {
             if (
               Object.keys(
-                data.userFeed[id].profileProjects[projId].projectPosts
+                parsedData.userFeed[id].profileProjects[projId].projectPosts
               ).includes(postId) &&
               postId !== id
             ) {
-              data.userFeed[id].profileProjects[projId].projectPosts[
+              parsedData.userFeed[id].profileProjects[projId].projectPosts[
                 postId
-              ].numberOfCheers = data.userFeed[postId].numberOfCheers;
+              ].numberOfCheers = parsedData.userFeed[postId].numberOfCheers;
               Object.assign(
-                data.userFeed[id].profileProjects[projId].projectPosts[postId]
-                  .cheering,
-                data.userFeed[postId].cheering
+                parsedData.userFeed[id].profileProjects[projId].projectPosts[
+                  postId
+                ].cheering,
+                parsedData.userFeed[postId].cheering
               );
             }
           }
         );
       });
 
-      data.cheeredPosts = [...data.cheeredPosts, postId];
-      await AsyncStorage.setItem("userDocData", JSON.stringify(data));
+      parsedData.cheeredPosts = [...parsedData.cheeredPosts, postId];
+      await AsyncStorage.setItem("userDocData", JSON.stringify(parsedData));
     });
 
     await dispatch({
@@ -1279,44 +1330,48 @@ export const uncheerPost = (
     );
 
     await AsyncStorage.getItem("userDocData").then(async (data) => {
-      data = JSON.parse(data);
-      if (data.userFeed[postId]) {
-        data.userFeed[postId].cheering.splice(
-          data.userFeed[postId].cheering.indexOf(ExhibitUId),
+      let parsedData: UserState = JSON.parse(data);
+      if (parsedData.userFeed[postId]) {
+        parsedData.userFeed[postId].cheering.splice(
+          parsedData.userFeed[postId].cheering.indexOf(ExhibitUId),
           1
         );
-        data.userFeed[postId].profileProjects[projectId].projectPosts[
+        parsedData.userFeed[postId].profileProjects[projectId].projectPosts[
           postId
         ].cheering.splice(
-          data.userFeed[postId].profileProjects[projectId].projectPosts[
+          parsedData.userFeed[postId].profileProjects[projectId].projectPosts[
             postId
           ].cheering.indexOf(ExhibitUId),
           1
         );
 
-        data.userFeed[postId].numberOfCheers -= 1;
-        data.userFeed[postId].profileProjects[projectId].projectPosts[
+        parsedData.userFeed[postId].numberOfCheers -= 1;
+        parsedData.userFeed[postId].profileProjects[projectId].projectPosts[
           postId
         ].numberOfCheers -= 1;
 
-        data.cheeredPosts.splice(data.cheeredPosts.indexOf(postId), 1);
+        parsedData.cheeredPosts.splice(
+          parsedData.cheeredPosts.indexOf(postId),
+          1
+        );
 
-        Object.entries(data.userFeed).map(([id, value]) => {
-          Object.entries(data.userFeed[id].profileProjects).map(
+        Object.entries(parsedData.userFeed).map(([id, value]) => {
+          Object.entries(parsedData.userFeed[id].profileProjects).map(
             ([projId, value]) => {
               if (
                 Object.keys(
-                  data.userFeed[id].profileProjects[projId].projectPosts
+                  parsedData.userFeed[id].profileProjects[projId].projectPosts
                 ).includes(postId) &&
                 postId !== id
               ) {
-                data.userFeed[id].profileProjects[projId].projectPosts[
+                parsedData.userFeed[id].profileProjects[projId].projectPosts[
                   postId
-                ].numberOfCheers = data.userFeed[postId].numberOfCheers;
+                ].numberOfCheers = parsedData.userFeed[postId].numberOfCheers;
                 Object.assign(
-                  data.userFeed[id].profileProjects[projId].projectPosts[postId]
-                    .cheering,
-                  data.userFeed[postId].cheering
+                  parsedData.userFeed[id].profileProjects[projId].projectPosts[
+                    postId
+                  ].cheering,
+                  parsedData.userFeed[postId].cheering
                 );
               }
             }
@@ -1324,7 +1379,7 @@ export const uncheerPost = (
         });
       }
 
-      await AsyncStorage.setItem("userDocData", JSON.stringify(data));
+      await AsyncStorage.setItem("userDocData", JSON.stringify(parsedData));
     });
 
     await dispatch({
@@ -1341,16 +1396,19 @@ export const uncheerPost = (
 export const uncheerOwnFeedPost = (ExhibitUId, projectId, postId) => {
   return async (dispatch) => {
     await AsyncStorage.getItem("userDocData").then(async (data) => {
-      data = JSON.parse(data);
-      data.profileProjects[projectId].projectPosts[postId].cheering.splice(
-        data.profileProjects[projectId].projectPosts[postId].cheering.indexOf(
-          ExhibitUId
-        ),
+      let parsedData: UserState = JSON.parse(data);
+      parsedData.profileProjects[projectId].projectPosts[
+        postId
+      ].cheering.splice(
+        parsedData.profileProjects[projectId].projectPosts[
+          postId
+        ].cheering.indexOf(ExhibitUId),
         1
       );
-      data.profileProjects[projectId].projectPosts[postId].numberOfCheers - 1;
+      parsedData.profileProjects[projectId].projectPosts[postId]
+        .numberOfCheers - 1;
 
-      await AsyncStorage.setItem("userDocData", JSON.stringify(data));
+      await AsyncStorage.setItem("userDocData", JSON.stringify(parsedData));
     });
 
     await dispatch({
@@ -1384,19 +1442,19 @@ export const uncheerOwnProfilePost = (
     );
 
     await AsyncStorage.getItem("userDocData").then(async (data) => {
-      data = JSON.parse(data);
-      data.profileProjects = {
-        ...data.profileProjects,
+      let parsedData: UserState = JSON.parse(data);
+      parsedData.profileProjects = {
+        ...parsedData.profileProjects,
         [projectId]: {
-          ...data.profileProjects[projectId],
+          ...parsedData.profileProjects[projectId],
           projectPosts: {
-            ...data.profileProjects[projectId].projectPosts,
+            ...parsedData.profileProjects[projectId].projectPosts,
             [postId]: {
-              ...data.profileProjects[projectId].projectPosts[postId],
+              ...parsedData.profileProjects[projectId].projectPosts[postId],
               numberOfCheers:
-                data.profileProjects[projectId].projectPosts[postId]
+                parsedData.profileProjects[projectId].projectPosts[postId]
                   .numberOfCheers - 1,
-              cheering: data.profileProjects[projectId].projectPosts[
+              cheering: parsedData.profileProjects[projectId].projectPosts[
                 postId
               ].cheering.filter(
                 (listExhibitUId) => listExhibitUId !== ExhibitUId
@@ -1405,24 +1463,24 @@ export const uncheerOwnProfilePost = (
           },
         },
       };
-      data.userFeed = {
-        ...data.userFeed,
+      parsedData.userFeed = {
+        ...parsedData.userFeed,
         [postId]: {
-          ...data.userFeed[postId],
+          ...parsedData.userFeed[postId],
           profileProjects: {
-            ...data.userFeed[postId].profileProjects,
+            ...parsedData.userFeed[postId].profileProjects,
             [projectId]: {
-              ...data.userFeed[postId].profileProjects[projectId],
+              ...parsedData.userFeed[postId].profileProjects[projectId],
               projectPosts: {
-                ...data.userFeed[postId].profileProjects[projectId]
+                ...parsedData.userFeed[postId].profileProjects[projectId]
                   .projectPosts,
                 [postId]: {
-                  ...data.userFeed[postId].profileProjects[projectId]
+                  ...parsedData.userFeed[postId].profileProjects[projectId]
                     .projectPosts[postId],
                   numberOfCheers:
-                    data.userFeed[postId].profileProjects[projectId]
+                    parsedData.userFeed[postId].profileProjects[projectId]
                       .projectPosts[postId].numberOfCheers - 1,
-                  cheering: data.userFeed[postId].profileProjects[
+                  cheering: parsedData.userFeed[postId].profileProjects[
                     projectId
                   ].projectPosts[postId].cheering.filter(
                     (listExhibitUId) => listExhibitUId !== ExhibitUId
@@ -1431,35 +1489,38 @@ export const uncheerOwnProfilePost = (
               },
             },
           },
-          numberOfCheers: data.userFeed[postId].numberOfCheers - 1,
-          cheering: data.userFeed[postId].cheering.filter(
+          numberOfCheers: parsedData.userFeed[postId].numberOfCheers - 1,
+          cheering: parsedData.userFeed[postId].cheering.filter(
             (listExhibitUId) => listExhibitUId !== ExhibitUId
           ),
         },
       };
-      Object.entries(data.userFeed).map(([id, value]) => {
-        Object.entries(data.userFeed[id].profileProjects).map(
+      Object.entries(parsedData.userFeed).map(([id, value]) => {
+        Object.entries(parsedData.userFeed[id].profileProjects).map(
           ([projId, value]) => {
             if (
               Object.keys(
-                data.userFeed[id].profileProjects[projId].projectPosts
+                parsedData.userFeed[id].profileProjects[projId].projectPosts
               ).includes(postId) &&
               postId !== id
             ) {
-              data.userFeed[id].profileProjects[projId].projectPosts[
+              parsedData.userFeed[id].profileProjects[projId].projectPosts[
                 postId
-              ].numberOfCheers = data.userFeed[postId].numberOfCheers;
+              ].numberOfCheers = parsedData.userFeed[postId].numberOfCheers;
               Object.assign(
-                data.userFeed[id].profileProjects[projId].projectPosts[postId]
-                  .cheering,
-                data.userFeed[postId].cheering
+                parsedData.userFeed[id].profileProjects[projId].projectPosts[
+                  postId
+                ].cheering,
+                parsedData.userFeed[postId].cheering
               );
             }
           }
         );
       });
-      data.cheeredPosts = data.cheeredPosts.filter((post) => post !== postId);
-      await AsyncStorage.setItem("userDocData", JSON.stringify(data));
+      parsedData.cheeredPosts = parsedData.cheeredPosts.filter(
+        (post) => post !== postId
+      );
+      await AsyncStorage.setItem("userDocData", JSON.stringify(parsedData));
     });
 
     await dispatch({
@@ -1488,18 +1549,18 @@ export const changeProfileNumberOfColumns = (
     );
 
     await AsyncStorage.getItem("userDocData").then(async (data) => {
-      data = JSON.parse(data);
-      data.profileColumns = number;
+      let parsedData: UserState = JSON.parse(data);
+      parsedData.profileColumns = number;
 
-      if (data.userFeed) {
-        Object.entries(data.userFeed).map(([id, value]) => {
-          if (data.userFeed[id].ExhibitUId === ExhibitUId) {
-            data.userFeed[id].profileColumns = number;
+      if (parsedData.userFeed) {
+        Object.entries(parsedData.userFeed).map(([id, value]) => {
+          if (parsedData.userFeed[id].ExhibitUId === ExhibitUId) {
+            parsedData.userFeed[id].profileColumns = number;
           }
         });
       }
 
-      await AsyncStorage.setItem("userDocData", JSON.stringify(data));
+      await AsyncStorage.setItem("userDocData", JSON.stringify(parsedData));
     });
 
     dispatch({ type: CHANGE_PROFILE_COLUMNS, number, ExhibitUId });
@@ -1522,25 +1583,25 @@ export const changeProjectNumberOfColumns = (
     );
 
     await AsyncStorage.getItem("userDocData").then(async (data) => {
-      data = JSON.parse(data);
-      data.profileProjects = {
-        ...data.profileProjects,
+      let parsedData: UserState = JSON.parse(data);
+      parsedData.profileProjects = {
+        ...parsedData.profileProjects,
         [projectId]: {
-          ...data.profileProjects[projectId],
+          ...parsedData.profileProjects[projectId],
           projectColumns: number,
         },
       };
 
-      if (data.userFeed) {
-        Object.entries(data.userFeed).map(([id, value]) => {
-          if (data.userFeed[id].ExhibitUId === ExhibitUId) {
-            data.userFeed[id].profileProjects[projectId].projectColumns =
+      if (parsedData.userFeed) {
+        Object.entries(parsedData.userFeed).map(([id, value]) => {
+          if (parsedData.userFeed[id].ExhibitUId === ExhibitUId) {
+            parsedData.userFeed[id].profileProjects[projectId].projectColumns =
               number;
           }
         });
       }
 
-      await AsyncStorage.setItem("userDocData", JSON.stringify(data));
+      await AsyncStorage.setItem("userDocData", JSON.stringify(parsedData));
     });
 
     dispatch({ type: CHANGE_PROJECT_COLUMNS, ExhibitUId, projectId, number });
@@ -1555,9 +1616,9 @@ export const getUpdates = () => {
     const returnData = uploadedUserPost.data.returnData;
 
     await AsyncStorage.getItem("userDocData").then(async (data) => {
-      data = JSON.parse(data);
-      data.updates = { ...returnData };
-      await AsyncStorage.setItem("userDocData", JSON.stringify(data));
+      let parsedData: UserState = JSON.parse(data);
+      parsedData.updates = { ...returnData };
+      await AsyncStorage.setItem("userDocData", JSON.stringify(parsedData));
     });
 
     await dispatch({ type: GET_UPDATES, updateData: returnData });
@@ -1610,9 +1671,9 @@ export const setDarkMode = (localId, ExhibitUId, value) => {
     );
 
     await AsyncStorage.getItem("userDocData").then(async (data) => {
-      data = JSON.parse(data);
-      data.darkMode = value;
-      await AsyncStorage.setItem("userDocData", JSON.stringify(data));
+      let parsedData: UserState = JSON.parse(data);
+      parsedData.darkMode = value;
+      await AsyncStorage.setItem("userDocData", JSON.stringify(parsedData));
     });
 
     dispatch({ type: SET_DARKMODE, darkMode: value });
@@ -1634,9 +1695,9 @@ export const setShowCheering = (localId, ExhibitUId, value) => {
     );
 
     AsyncStorage.getItem("userDocData").then(async (data) => {
-      data = JSON.parse(data);
-      data.showCheering = value;
-      await AsyncStorage.setItem("userDocData", JSON.stringify(data));
+      let parsedData: UserState = JSON.parse(data);
+      parsedData.showCheering = value;
+      await AsyncStorage.setItem("userDocData", JSON.stringify(parsedData));
     });
 
     dispatch({ type: SHOW_CHEERING, ExhibitUId, showCheering: value });
@@ -1658,9 +1719,9 @@ export const setHideFollowing = (localId, ExhibitUId, value) => {
     );
 
     await AsyncStorage.getItem("userDocData").then(async (data) => {
-      data = JSON.parse(data);
-      data.hideFollowing = value;
-      await AsyncStorage.setItem("userDocData", JSON.stringify(data));
+      let parsedData: UserState = JSON.parse(data);
+      parsedData.hideFollowing = value;
+      await AsyncStorage.setItem("userDocData", JSON.stringify(parsedData));
     });
 
     dispatch({ type: HIDE_FOLLOWING, ExhibitUId, hideFollowingValue: value });
@@ -1682,9 +1743,9 @@ export const setHideFollowers = (localId, ExhibitUId, value) => {
     );
 
     await AsyncStorage.getItem("userDocData").then(async (data) => {
-      data = JSON.parse(data);
-      data.hideFollowers = value;
-      await AsyncStorage.setItem("userDocData", JSON.stringify(data));
+      let parsedData: UserState = JSON.parse(data);
+      parsedData.hideFollowers = value;
+      await AsyncStorage.setItem("userDocData", JSON.stringify(parsedData));
     });
 
     dispatch({ type: HIDE_FOLLOWERS, ExhibitUId, hideFollowersValue: value });
@@ -1706,9 +1767,9 @@ export const setHideAdvocates = (localId, ExhibitUId, value) => {
     );
 
     await AsyncStorage.getItem("userDocData").then(async (data) => {
-      data = JSON.parse(data);
-      data.hideAdvocates = value;
-      await AsyncStorage.setItem("userDocData", JSON.stringify(data));
+      let parsedData: UserState = JSON.parse(data);
+      parsedData.hideAdvocates = value;
+      await AsyncStorage.setItem("userDocData", JSON.stringify(parsedData));
     });
 
     dispatch({ type: HIDE_ADVOCATES, ExhibitUId, hideAdvocatesValue: value });
@@ -1730,10 +1791,10 @@ export const setTutorialing = (localId, ExhibitUId, value, screen) => {
     );
 
     await AsyncStorage.getItem("userDocData").then(async (data) => {
-      data = JSON.parse(data);
-      data.tutorialing = value;
-      data.tutorialScreen = screen;
-      await AsyncStorage.setItem("userDocData", JSON.stringify(data));
+      let parsedData: UserState = JSON.parse(data);
+      parsedData.tutorialing = value;
+      parsedData.tutorialScreen = screen;
+      await AsyncStorage.setItem("userDocData", JSON.stringify(parsedData));
     });
 
     dispatch({ type: SET_TUTORIALING, value, screen });
@@ -1754,9 +1815,9 @@ export const setTutorialPrompt = (localId, ExhibitUId, value) => {
     );
 
     await AsyncStorage.getItem("userDocData").then(async (data) => {
-      data = JSON.parse(data);
-      data.tutorialPrompt = value;
-      await AsyncStorage.setItem("userDocData", JSON.stringify(data));
+      let parsedData: UserState = JSON.parse(data);
+      parsedData.tutorialPrompt = value;
+      await AsyncStorage.setItem("userDocData", JSON.stringify(parsedData));
     });
 
     dispatch({ type: SET_TUTORIALING_PROMPT, value });

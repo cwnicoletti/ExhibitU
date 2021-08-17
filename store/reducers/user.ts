@@ -49,9 +49,10 @@ import {
   UPLOAD_REPORT_BUG,
   SET_TUTORIALING,
   SET_TUTORIALING_PROMPT,
+  UserState,
 } from "../actions/user";
 
-const intialState = {
+const intialState: UserState = {
   ExhibitUId: "",
   email: "",
   profilePictureId: "",
