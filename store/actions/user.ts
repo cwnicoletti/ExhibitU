@@ -111,7 +111,7 @@ export interface UserState {
   tutorialScreen: string;
 }
 
-export const refreshProfile = (localId) => {
+export const refreshProfile = (localId: string) => {
   return async (dispatch) => {
     const downloadForm = { localId };
 
@@ -305,13 +305,13 @@ export const getUserData = () => {
 };
 
 export const uploadUpdateUserProfile = (
-  ExhibitUId,
-  localId,
-  fullname,
-  jobTitle,
-  username,
-  bio,
-  links
+  ExhibitUId: string,
+  localId: string,
+  fullname: string,
+  jobTitle: string,
+  username: string,
+  bio: string,
+  links: object
 ) => {
   return async (dispatch) => {
     const uploadForm = {
@@ -366,13 +366,13 @@ export const uploadUpdateUserProfile = (
 };
 
 export const uploadNewProject = (
-  ExhibitUId,
-  localId,
-  projectTempCoverPhotoId,
-  projectTempCoverPhotoBase64,
-  projectTitle,
-  projectDescription,
-  links
+  ExhibitUId: string,
+  localId: string,
+  projectTempCoverPhotoId: string,
+  projectTempCoverPhotoBase64: string,
+  projectTitle: string,
+  projectDescription: string,
+  links: object
 ) => {
   return async (dispatch) => {
     const uploadForm = {
@@ -442,13 +442,13 @@ export const uploadNewProject = (
 };
 
 export const uploadUpdatedProject = (
-  ExhibitUId,
-  localId,
-  projectId,
-  projectTempCoverPhotoUrl,
-  projectTitle,
-  projectDescription,
-  links
+  ExhibitUId: string,
+  localId: string,
+  projectId: string,
+  projectTempCoverPhotoUrl: string,
+  projectTitle: string,
+  projectDescription: string,
+  links: object
 ) => {
   return async (dispatch) => {
     const uploadForm = {
@@ -494,7 +494,11 @@ export const uploadUpdatedProject = (
   };
 };
 
-export const uploadRemoveProject = (ExhibitUId, localId, projectId) => {
+export const uploadRemoveProject = (
+  ExhibitUId: string,
+  localId: string,
+  projectId: string
+) => {
   return async (dispatch) => {
     const uploadForm = { ExhibitUId, localId, projectId };
 
@@ -524,7 +528,12 @@ export const uploadRemoveProject = (ExhibitUId, localId, projectId) => {
   };
 };
 
-export const uploadRemovePost = (ExhibitUId, localId, projectId, postId) => {
+export const uploadRemovePost = (
+  ExhibitUId: string,
+  localId: string,
+  projectId: string,
+  postId: string
+) => {
   return async (dispatch) => {
     const uploadForm = { ExhibitUId, localId, projectId, postId };
 
@@ -548,7 +557,11 @@ export const uploadRemovePost = (ExhibitUId, localId, projectId, postId) => {
   };
 };
 
-export const followUser = (exploredExhibitUId, ExhibitUId, localId) => {
+export const followUser = (
+  exploredExhibitUId: string,
+  ExhibitUId: string,
+  localId: string
+) => {
   return async (dispatch) => {
     const user = { exploredExhibitUId, ExhibitUId, localId };
 
@@ -571,7 +584,11 @@ export const followUser = (exploredExhibitUId, ExhibitUId, localId) => {
   };
 };
 
-export const unfollowUser = (exploredExhibitUId, ExhibitUId, localId) => {
+export const unfollowUser = (
+  exploredExhibitUId: string,
+  ExhibitUId: string,
+  localId: string
+) => {
   return async (dispatch) => {
     const user = { exploredExhibitUId, ExhibitUId, localId };
 
@@ -598,10 +615,10 @@ export const unfollowUser = (exploredExhibitUId, ExhibitUId, localId) => {
 };
 
 export const advocateForUser = (
-  exploredExhibitUId,
-  ExhibitUId,
-  localId,
-  projectId
+  exploredExhibitUId: string,
+  ExhibitUId: string,
+  localId: string,
+  projectId: string
 ) => {
   return async (dispatch) => {
     const user = { exploredExhibitUId, ExhibitUId, localId, projectId };
@@ -628,10 +645,10 @@ export const advocateForUser = (
 };
 
 export const unadvocateForUser = (
-  exploredExhibitUId,
-  ExhibitUId,
-  localId,
-  projectId
+  exploredExhibitUId: string,
+  ExhibitUId: string,
+  localId: string,
+  projectId: string
 ) => {
   return async (dispatch) => {
     const user = { exploredExhibitUId, ExhibitUId, localId, projectId };
@@ -664,10 +681,10 @@ export const unadvocateForUser = (
 };
 
 export const uploadChangeProfilePicture = (
-  base64,
-  ExhibitUId,
-  localId,
-  profilePictureId
+  base64: string,
+  ExhibitUId: string,
+  localId: string,
+  profilePictureId: string
 ) => {
   return async (dispatch) => {
     const picture = { base64, ExhibitUId, localId, profilePictureId };
@@ -706,10 +723,10 @@ export const uploadChangeProfilePicture = (
 };
 
 export const uploadAddTempProjectCoverPicture = (
-  base64,
-  ExhibitUId,
-  localId,
-  projectTempCoverPhotoId
+  base64: string,
+  ExhibitUId: string,
+  localId: string,
+  projectTempCoverPhotoId: string
 ) => {
   return async (dispatch) => {
     const picture = { base64, ExhibitUId, localId, projectTempCoverPhotoId };
@@ -738,10 +755,10 @@ export const uploadAddTempProjectCoverPicture = (
 };
 
 export const uploadAddTempPostPicture = (
-  base64,
-  projectId,
-  ExhibitUId,
-  localId
+  base64: string,
+  projectId: string,
+  ExhibitUId: string,
+  localId: string
 ) => {
   return async (dispatch) => {
     const picture = { base64, projectId, ExhibitUId, localId };
@@ -769,11 +786,11 @@ export const uploadAddTempPostPicture = (
 };
 
 export const uploadChangeProjectCoverPicture = (
-  base64,
-  projectId,
-  ExhibitUId,
-  localId,
-  projectCoverPhotoId
+  base64: string,
+  projectId: string,
+  ExhibitUId: string,
+  localId: string,
+  projectCoverPhotoId: string
 ) => {
   return async (dispatch) => {
     const picture = {
@@ -818,34 +835,34 @@ export const uploadChangeProjectCoverPicture = (
 };
 
 export const addUserPost = (
-  ExhibitUId,
-  localId,
-  projectId,
-  fullname,
-  username,
-  jobTitle,
-  numberOfFollowers,
-  numberOfFollowing,
-  numberOfAdvocates,
-  followingValue,
-  followersValue,
-  advocatesValue,
-  profileBiography,
-  projectTitle,
-  projectCoverPhotoUrl,
-  projectDateCreated,
-  projectLastUpdated,
-  projectDescription,
-  profilePictureUrl,
-  profilePictureBase64,
-  tempPhotoPostId,
-  tempPhotoPostUrl,
-  tempPhotoPostBase64,
-  caption,
-  profileLinks,
-  projectLinks,
-  links,
-  profileColumns
+  ExhibitUId: string,
+  localId: string,
+  projectId: string,
+  fullname: string,
+  username: string,
+  jobTitle: string,
+  numberOfFollowers: number,
+  numberOfFollowing: number,
+  numberOfAdvocates: number,
+  followingValue: boolean,
+  followersValue: boolean,
+  advocatesValue: boolean,
+  profileBiography: string,
+  projectTitle: string,
+  projectCoverPhotoUrl: string,
+  projectDateCreated: string,
+  projectLastUpdated: string,
+  projectDescription: string,
+  profilePictureUrl: string,
+  profilePictureBase64: string,
+  tempPhotoPostId: string,
+  tempPhotoPostUrl: string,
+  tempPhotoPostBase64: string,
+  caption: string,
+  profileLinks: object,
+  projectLinks: object,
+  links: object,
+  profileColumns: number
 ) => {
   return async (dispatch) => {
     const picture = {
@@ -1050,7 +1067,7 @@ export const addUserPost = (
   };
 };
 
-export const getUserFeed = (localId, ExhibitUId) => {
+export const getUserFeed = (localId: string, ExhibitUId: string) => {
   return async (dispatch) => {
     const userFeedGet = { localId, ExhibitUId };
 
@@ -1105,11 +1122,11 @@ export const getUserFeed = (localId, ExhibitUId) => {
 };
 
 export const cheerPost = (
-  localId,
-  ExhibitUId,
-  projectId,
-  postId,
-  posterExhibitUId
+  localId: string,
+  ExhibitUId: string,
+  projectId: string,
+  postId: string,
+  posterExhibitUId: string
 ) => {
   return async (dispatch) => {
     const cheeringForm = {
@@ -1172,7 +1189,11 @@ export const cheerPost = (
   };
 };
 
-export const cheerOwnFeedPost = (ExhibitUId, projectId, postId) => {
+export const cheerOwnFeedPost = (
+  ExhibitUId: string,
+  projectId: string,
+  postId: string
+) => {
   return async (dispatch) => {
     await AsyncStorage.getItem("userDocData").then(async (data) => {
       let parsedData: UserState = JSON.parse(data);
@@ -1196,11 +1217,11 @@ export const cheerOwnFeedPost = (ExhibitUId, projectId, postId) => {
 };
 
 export const cheerOwnProfilePost = (
-  localId,
-  ExhibitUId,
-  projectId,
-  postId,
-  posterExhibitUId
+  localId: string,
+  ExhibitUId: string,
+  projectId: string,
+  postId: string,
+  posterExhibitUId: string
 ) => {
   return async (dispatch) => {
     const cheeringForm = {
@@ -1309,11 +1330,11 @@ export const cheerOwnProfilePost = (
 };
 
 export const uncheerPost = (
-  localId,
-  ExhibitUId,
-  projectId,
-  postId,
-  posterExhibitUId
+  localId: string,
+  ExhibitUId: string,
+  projectId: string,
+  postId: string,
+  posterExhibitUId: string
 ) => {
   return async (dispatch) => {
     const uncheeringForm = {
@@ -1393,7 +1414,11 @@ export const uncheerPost = (
   };
 };
 
-export const uncheerOwnFeedPost = (ExhibitUId, projectId, postId) => {
+export const uncheerOwnFeedPost = (
+  ExhibitUId: string,
+  projectId: string,
+  postId: string
+) => {
   return async (dispatch) => {
     await AsyncStorage.getItem("userDocData").then(async (data) => {
       let parsedData: UserState = JSON.parse(data);
@@ -1421,11 +1446,11 @@ export const uncheerOwnFeedPost = (ExhibitUId, projectId, postId) => {
 };
 
 export const uncheerOwnProfilePost = (
-  localId,
-  ExhibitUId,
-  projectId,
-  postId,
-  posterExhibitUId
+  localId: string,
+  ExhibitUId: string,
+  projectId: string,
+  postId: string,
+  posterExhibitUId: string
 ) => {
   return async (dispatch) => {
     const uncheeringForm = {
@@ -1535,10 +1560,10 @@ export const uncheerOwnProfilePost = (
 };
 
 export const changeProfileNumberOfColumns = (
-  localId,
-  ExhibitUId,
-  postIds,
-  number
+  localId: string,
+  ExhibitUId: string,
+  postIds: Array<string>,
+  number: number
 ) => {
   return async (dispatch) => {
     const picture = { localId, ExhibitUId, postIds, number };
@@ -1568,11 +1593,11 @@ export const changeProfileNumberOfColumns = (
 };
 
 export const changeProjectNumberOfColumns = (
-  localId,
-  ExhibitUId,
-  projectId,
-  postIds,
-  number
+  localId: string,
+  ExhibitUId: string,
+  projectId: string,
+  postIds: Array<string>,
+  number: number
 ) => {
   return async (dispatch) => {
     const picture = { localId, ExhibitUId, projectId, postIds, number };
@@ -1625,19 +1650,19 @@ export const getUpdates = () => {
   };
 };
 
-export const resetScroll = (tab) => {
+export const resetScroll = (tab: boolean) => {
   return async (dispatch) => {
     await dispatch({ type: RESET_SCROLL, tab });
   };
 };
 
-export const onScreen = (tab) => {
+export const onScreen = (tab: boolean) => {
   return async (dispatch) => {
     await dispatch({ type: ON_SCREEN, tab });
   };
 };
 
-export const offScreen = (tab) => {
+export const offScreen = (tab: boolean) => {
   return async (dispatch) => {
     await dispatch({ type: OFF_SCREEN, tab });
   };
@@ -1649,19 +1674,23 @@ export const showcaseProfile = () => {
   };
 };
 
-export const returnFromShowcasing = (value) => {
+export const returnFromShowcasing = (value: boolean) => {
   return async (dispatch) => {
     await dispatch({ type: RETURN_FROM_SHOWCASING, value });
   };
 };
 
-export const setHideProfileFooter = (value) => {
+export const setHideProfileFooter = (value: boolean) => {
   return async (dispatch) => {
     await dispatch({ type: HIDE_PROFILE_FOOTER, value });
   };
 };
 
-export const setDarkMode = (localId, ExhibitUId, value) => {
+export const setDarkMode = (
+  localId: string,
+  ExhibitUId: string,
+  value: boolean
+) => {
   return async (dispatch) => {
     const darkModeData = { localId, ExhibitUId, value, switchName: "darkMode" };
 
@@ -1680,7 +1709,11 @@ export const setDarkMode = (localId, ExhibitUId, value) => {
   };
 };
 
-export const setShowCheering = (localId, ExhibitUId, value) => {
+export const setShowCheering = (
+  localId: string,
+  ExhibitUId: string,
+  value: boolean
+) => {
   return async (dispatch) => {
     const showCheeringData = {
       localId,
@@ -1704,7 +1737,11 @@ export const setShowCheering = (localId, ExhibitUId, value) => {
   };
 };
 
-export const setHideFollowing = (localId, ExhibitUId, value) => {
+export const setHideFollowing = (
+  localId: string,
+  ExhibitUId: string,
+  value: boolean
+) => {
   return async (dispatch) => {
     const hideFollowingData = {
       localId,
@@ -1728,7 +1765,11 @@ export const setHideFollowing = (localId, ExhibitUId, value) => {
   };
 };
 
-export const setHideFollowers = (localId, ExhibitUId, value) => {
+export const setHideFollowers = (
+  localId: string,
+  ExhibitUId: string,
+  value: boolean
+) => {
   return async (dispatch) => {
     const hideFollowersData = {
       localId,
@@ -1752,7 +1793,11 @@ export const setHideFollowers = (localId, ExhibitUId, value) => {
   };
 };
 
-export const setHideAdvocates = (localId, ExhibitUId, value) => {
+export const setHideAdvocates = (
+  localId: string,
+  ExhibitUId: string,
+  value: boolean
+) => {
   return async (dispatch) => {
     const hideAdvocatesData = {
       localId,
@@ -1776,7 +1821,12 @@ export const setHideAdvocates = (localId, ExhibitUId, value) => {
   };
 };
 
-export const setTutorialing = (localId, ExhibitUId, value, screen) => {
+export const setTutorialing = (
+  localId: string,
+  ExhibitUId: string,
+  value: boolean,
+  screen: string
+) => {
   return async (dispatch) => {
     const tutorialingData = {
       localId,
@@ -1801,7 +1851,11 @@ export const setTutorialing = (localId, ExhibitUId, value, screen) => {
   };
 };
 
-export const setTutorialPrompt = (localId, ExhibitUId, value) => {
+export const setTutorialPrompt = (
+  localId: string,
+  ExhibitUId: string,
+  value: boolean
+) => {
   return async (dispatch) => {
     const tutorialingData = {
       localId,
