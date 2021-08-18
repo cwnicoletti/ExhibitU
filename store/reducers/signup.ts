@@ -1,11 +1,12 @@
 import {
-    INTROING,
-    SIGNUP_EMAIL,
-    SIGNUP_FULLNAME,
-    SIGNUP_USERNAME
+  INTROING,
+  SIGNUP_EMAIL,
+  SIGNUP_FULLNAME,
+  SIGNUP_USERNAME,
+  SignUpState,
 } from "../actions/signup";
 
-const intialState = {
+const intialState: SignUpState = {
   introing: false,
   email: "",
   fullname: "",
