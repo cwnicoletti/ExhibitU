@@ -7,6 +7,11 @@ global.Buffer = global.Buffer || require("buffer").Buffer;
 export const AUTHENTICATE = "AUTHENTICATE";
 export const LOGOUT = "LOGOUT";
 
+export interface AuthState {
+  userId: string;
+  token: string;
+}
+
 interface AuthenticationResponse {
   data: {
     localId: string;

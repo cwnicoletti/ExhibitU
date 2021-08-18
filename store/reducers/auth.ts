@@ -1,6 +1,6 @@
-import { AUTHENTICATE, LOGOUT } from "../actions/auth";
+import { AUTHENTICATE, LOGOUT, AuthState } from "../actions/auth";
 
-const intialState = {
+const intialState: AuthState = {
   userId: null,
   token: null,
 };
