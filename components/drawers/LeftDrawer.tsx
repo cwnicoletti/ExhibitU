@@ -1,7 +1,7 @@
 import React from "react";
 import { Image, SafeAreaView, Text, View } from "react-native";
 import { useAppDispatch, useAppSelector } from "../../hooks";
-import { setDarkMode } from "../../store/actions/user";
+import { setDarkMode } from "../../store/actions/user/user";
 import FilterSwitch from "../UI/FilterSwitch";
 
 const LeftDrawer = () => {

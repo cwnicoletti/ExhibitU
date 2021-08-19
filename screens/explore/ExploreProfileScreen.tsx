@@ -17,7 +17,7 @@ import SimpleLineIconsHeaderButton from "../../components/UI/header_buttons/Simp
 import MainHeaderTitle from "../../components/UI/MainHeaderTitle";
 import TutorialExploreProfile from "../../components/tutorial/TutorialExploreProfile";
 import useDidMountEffect from "../../helper/useDidMountEffect";
-import { followUser, unfollowUser } from "../../store/actions/user";
+import { followUser, unfollowUser } from "../../store/actions/user/user";
 
 const ExploreProfileScreen = (props) => {
   const dispatch = useAppDispatch();

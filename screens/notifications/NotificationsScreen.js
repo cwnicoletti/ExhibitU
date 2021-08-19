@@ -11,7 +11,7 @@ import {
 import { useAppSelector, useAppDispatch } from "../../hooks";
 import { SearchBar } from "react-native-elements";
 import algoliasearch from "algoliasearch";
-import { offScreen } from "../../store/actions/user";
+import { offScreen } from "../../store/actions/user/user";
 import { EvilIcons, Feather } from "@expo/vector-icons";
 
 import ExploreCard from "../../components/explore/ExploreCard";

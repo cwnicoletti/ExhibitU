@@ -1,4 +1,5 @@
 import axios from "axios";
+global.Buffer = global.Buffer || require("buffer").Buffer;
 
 const getBase64FromUrl = async (url: string) => {
   if (url) {

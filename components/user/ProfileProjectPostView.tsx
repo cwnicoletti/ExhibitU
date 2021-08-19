@@ -20,7 +20,7 @@ import Cheer from "../../assets/Icons/clap.svg";
 import {
   cheerOwnProfilePost,
   uncheerOwnProfilePost,
-} from "../../store/actions/user";
+} from "../../store/actions/user/user";
 import LinkButton from "../UI/LinkButton";
 import toDateTime from "../../helper/toDateTime";
 import * as WebBrowser from "expo-web-browser";

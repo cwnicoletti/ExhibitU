@@ -6,7 +6,7 @@ import {
   TouchableNativeFeedback,
 } from "react-native";
 import { useAppDispatch } from "../../../hooks";
-import { setTutorialing } from "../../../store/actions/user";
+import { setTutorialing } from "../../../store/actions/user/user";
 
 const TutorialModalNoBackgroundNoX = (props) => {
   const dispatch = useAppDispatch();

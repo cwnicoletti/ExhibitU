@@ -1,7 +1,7 @@
 import React from "react";
 import { View, TouchableWithoutFeedback } from "react-native";
 import { Entypo } from "@expo/vector-icons";
-import { resetScroll, onScreen } from "../../store/actions/user";
+import { resetScroll, onScreen } from "../../store/actions/user/user";
 import { useAppSelector, useAppDispatch } from "../../hooks";
 
 const Notifications = (props) => {

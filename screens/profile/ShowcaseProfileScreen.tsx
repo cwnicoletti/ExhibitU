@@ -7,7 +7,7 @@ import IoniconsHeaderButton from "../../components/UI/header_buttons/IoniconsHea
 import MainHeaderTitle from "../../components/UI/MainHeaderTitle";
 import ShowcaseHeader from "../../components/user/ShowcaseHeader";
 import useDidMountEffect from "../../helper/useDidMountEffect";
-import { returnFromShowcasing } from "../../store/actions/user";
+import { returnFromShowcasing } from "../../store/actions/user/user";
 
 const ShowcaseProfileScreen = (props) => {
   const dispatch = useAppDispatch();

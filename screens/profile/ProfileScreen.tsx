@@ -24,7 +24,7 @@ import {
   offScreen,
   refreshProfile,
   showcaseProfile,
-} from "../../store/actions/user";
+} from "../../store/actions/user/user";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 
 const ProfileScreen = (props) => {
@@ -61,16 +61,19 @@ const ProfileScreen = (props) => {
     profileLinks: useAppSelector((state) => state.user.profileLinks),
     profileProjects: useAppSelector((state) => state.user.profileProjects),
   };
+
   const [profileProjectsState, setProfileProjectsState] = useState(
-    Object.values(userData.profileProjects).sort((first, second) => {
-      return (
-        second["projectDateCreated"]["_seconds"] -
-        first["projectDateCreated"]["_seconds"]
-      );
-    })
+    Object.values(userData.profileProjects).sort(
+      (first: string, second: string) => {
+        return (
+          second["projectDateCreated"]["_seconds"] -
+          first["projectDateCreated"]["_seconds"]
+        );
+      }
+    )
   );
 
-  let postIds = [];
+  let postIds: string[] = [];
   for (const projectId of Object.keys(userData.profileProjects)) {
     for (const postId of Object.keys(
       userData.profileProjects[projectId].projectPosts
@@ -102,7 +105,7 @@ const ProfileScreen = (props) => {
     }).start();
   };
 
-  const viewProjectHandler = (projectId) => {
+  const viewProjectHandler = (projectId: string) => {
     dispatch(offScreen("Profile"));
     props.navigation.push("ViewProfileProject", {
       projectId,
@@ -115,15 +118,41 @@ const ProfileScreen = (props) => {
     await setIsRefreshing(false);
   };
 
+  const onPressChangeToColumnTwo = async () => {
+    await setIsLoadingTwoColumns(true);
+    await dispatch(
+      changeProfileNumberOfColumns(localId, ExhibitUId, postIds, 2)
+    );
+    await setIsLoadingTwoColumns(false);
+  };
+
+  const onPressChangeToColumnThree = async () => {
+    await setIsLoadingThreeColumns(true);
+    await dispatch(
+      changeProfileNumberOfColumns(localId, ExhibitUId, postIds, 3)
+    );
+    await setIsLoadingThreeColumns(false);
+  };
+
+  const onPressChangeToColumnFour = async () => {
+    await setIsLoadingFourColumns(true);
+    await dispatch(
+      changeProfileNumberOfColumns(localId, ExhibitUId, postIds, 4)
+    );
+    await setIsLoadingFourColumns(false);
+  };
+
   useDidMountEffect(() => {
     // Sort the array based on the second element
     setProfileProjectsState(
-      Object.values(userData.profileProjects).sort((first, second) => {
-        return (
-          second["projectDateCreated"]["_seconds"] -
-          first["projectDateCreated"]["_seconds"]
-        );
-      })
+      Object.values(userData.profileProjects).sort(
+        (first: string, second: string) => {
+          return (
+            second["projectDateCreated"]["_seconds"] -
+            first["projectDateCreated"]["_seconds"]
+          );
+        }
+      )
     );
   }, [userData.profileProjects]);
 
@@ -190,13 +219,7 @@ const ProfileScreen = (props) => {
             ExhibitUId: userData.ExhibitUId,
           })
         }
-        changeColumnToTwo={async () => {
-          await setIsLoadingTwoColumns(true);
-          await dispatch(
-            changeProfileNumberOfColumns(localId, ExhibitUId, postIds, 2)
-          );
-          await setIsLoadingTwoColumns(false);
-        }}
+        changeColumnToTwo={onPressChangeToColumnTwo}
         isLoadingTwoColumns={isLoadingTwoColumns}
         columnTwoStyle={{
           borderColor:
@@ -208,13 +231,7 @@ const ProfileScreen = (props) => {
               ? "gray"
               : "#c9c9c9",
         }}
-        changeColumnToThree={async () => {
-          await setIsLoadingThreeColumns(true);
-          await dispatch(
-            changeProfileNumberOfColumns(localId, ExhibitUId, postIds, 3)
-          );
-          await setIsLoadingThreeColumns(false);
-        }}
+        changeColumnToThree={onPressChangeToColumnThree}
         isLoadingThreeColumns={isLoadingThreeColumns}
         columnThreeStyle={{
           borderColor:
@@ -226,13 +243,7 @@ const ProfileScreen = (props) => {
               ? "gray"
               : "#c9c9c9",
         }}
-        changeColumnToFour={async () => {
-          await setIsLoadingFourColumns(true);
-          await dispatch(
-            changeProfileNumberOfColumns(localId, ExhibitUId, postIds, 4)
-          );
-          await setIsLoadingFourColumns(false);
-        }}
+        changeColumnToFour={onPressChangeToColumnFour}
         columnFourStyle={{
           borderColor:
             profileColumns === 4
@@ -317,13 +328,8 @@ const ProfileScreen = (props) => {
         >
           <TouchableCmp
             style={{
-              margin: 10,
-              padding: 10,
-              alignItems: "center",
-              justifyContent: "center",
-              borderWidth: 1,
+              ...styles.showcaseButton,
               borderColor: darkModeValue ? "gray" : "#c9c9c9",
-              flexDirection: "row",
             }}
             onPress={() => {
               slideDown();
@@ -338,9 +344,8 @@ const ProfileScreen = (props) => {
             />
             <Text
               style={{
+                ...styles.showcaseText,
                 color: darkModeValue ? "white" : "black",
-                fontWeight: "bold",
-                marginLeft: 10,
               }}
             >
               Showcase exhibits
@@ -377,13 +382,17 @@ const styles = StyleSheet.create({
   profileContainerStyle: {
     justifyContent: "flex-start",
   },
-  text: {
+  showcaseButton: {
+    margin: 10,
     padding: 10,
+    alignItems: "center",
+    justifyContent: "center",
+    borderWidth: 1,
+    flexDirection: "row",
   },
-  image: {
-    height: 30,
-    width: 30,
-    marginRight: 5,
+  showcaseText: {
+    fontWeight: "bold",
+    marginLeft: 10,
   },
 });
 

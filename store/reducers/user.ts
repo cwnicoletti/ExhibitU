@@ -13,8 +13,6 @@ import {
   CHEER_OWN_PROFILE_POST,
   CHEER_POST,
   CHEER_UPDATE_POSTS,
-  CLEAR_TEMP_POST_PICTURE,
-  CLEAR_TEMP_PROJECT_PICTURE,
   FOLLOW_USER,
   GET_SWITCHES,
   GET_UPDATES,
@@ -41,16 +39,13 @@ import {
   UNCHEER_UPDATE_POSTS,
   UNFOLLOW_USER,
   UPDATE_ALL_POSTS,
-  UPDATE_PROFILE_LINKS,
-  UPDATE_PROJECT_LINKS,
   UPDATE_USER_PROFILE,
   UPDATE_USER_PROJECT,
-  UPLOAD_FEEDBACK,
-  UPLOAD_REPORT_BUG,
   SET_TUTORIALING,
   SET_TUTORIALING_PROMPT,
   UserState,
-} from "../actions/user";
+  Action,
+} from "../actions/user/types";
 
 const intialState: UserState = {
   ExhibitUId: "",
@@ -101,7 +96,7 @@ const intialState: UserState = {
   tutorialScreen: "Start",
 };
 
-export default (state = intialState, action) => {
+export default (state = intialState, action: Action) => {
   switch (action.type) {
     case GET_USER_DATA:
       return {
@@ -167,11 +162,6 @@ export default (state = intialState, action) => {
         profileProjects: action.profileProjects,
         profileLinks: action.profileLinks,
       };
-    case UPDATE_PROFILE_LINKS:
-      return {
-        ...state,
-        profileLinks: action.updatedProfileLinks,
-      };
     case UPDATE_USER_PROFILE:
       return {
         ...state,
@@ -229,25 +219,12 @@ export default (state = intialState, action) => {
         projectTempCoverPhotoId: action.projectTempCoverPhotoId,
         projectTempCoverPhotoBase64: action.projectTempCoverPhotoBase64,
       };
-    case CLEAR_TEMP_PROJECT_PICTURE:
-      return {
-        ...state,
-        projectTempCoverPhotoUrl: action.projectTempCoverPhotoUrl,
-        projectTempCoverPhotoId: action.projectTempCoverPhotoId,
-        projectCoverPhotoBase64: action.projectCoverPhotoBase64,
-      };
     case ADD_TEMP_POST_PICTURE:
       return {
         ...state,
         tempPhotoPostId: action.tempPhotoPostId,
         tempPhotoPostUrl: action.tempPhotoPostUrl,
         tempPhotoPostBase64: action.tempPhotoPostBase64,
-      };
-    case CLEAR_TEMP_POST_PICTURE:
-      return {
-        ...state,
-        tempPhotoPostUrl: intialState.tempPhotoPostUrl,
-        tempPhotoPostBase64: intialState.tempPhotoPostBase64,
       };
     case ADD_USER_PROJECT:
       Object.entries(state.userFeed).map(([id, value]) => {
@@ -474,17 +451,6 @@ export default (state = intialState, action) => {
             ([postId, v]) => postId !== action.postId
           )
         ),
-      };
-    case UPDATE_PROJECT_LINKS:
-      return {
-        ...state,
-        profileProjects: {
-          ...state.profileProjects,
-          [action.projectId]: {
-            ...state.profileProjects[action.projectId],
-            projectLinks: action.updatedProjectLinks,
-          },
-        },
       };
     case FOLLOW_USER:
       return {
@@ -866,16 +832,6 @@ export default (state = intialState, action) => {
         },
         cheeredPosts: spliceRemoveReturn(state.cheeredPosts, action.postId),
       };
-    case UPLOAD_FEEDBACK:
-      return {
-        ...state,
-        feedback: action.feedback,
-      };
-    case UPLOAD_REPORT_BUG:
-      return {
-        ...state,
-        bugs: action.bug,
-      };
     case CHANGE_PROFILE_COLUMNS:
       if (state.userFeed) {
         Object.entries(state.userFeed).map(([id, value]) => {
@@ -1044,8 +1000,9 @@ export default (state = intialState, action) => {
     case SET_TUTORIALING_PROMPT:
       return {
         ...state,
-        tutorialPrompt: action.tutorialPrompt,
+        tutorialPrompt: action.value,
       };
+    default:
+      return state;
   }
-  return state;
 };

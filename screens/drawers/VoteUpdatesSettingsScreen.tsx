@@ -5,7 +5,7 @@ import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import UpdateCard from "../../components/drawers/UpdateCard";
 import IoniconsHeaderButton from "../../components/UI/header_buttons/IoniconsHeaderButton";
-import { getUpdates } from "../../store/actions/user";
+import { getUpdates } from "../../store/actions/user/user";
 import MainHeaderTitle from "../../components/UI/MainHeaderTitle";
 
 const VoteUpdatesSettingsScreen = (props) => {

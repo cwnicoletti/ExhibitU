@@ -16,7 +16,7 @@ import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import { useAppDispatch } from "../../hooks";
 import Input from "../../components/UI/Input";
 import IoniconsHeaderButton from "../../components/UI/header_buttons/IoniconsHeaderButton";
-import { login } from "../../store/actions/auth";
+import { login } from "../../store/actions/auth/auth";
 import MainHeaderTitle from "../../components/UI/MainHeaderTitle";
 
 const FORM_INPUT_UPDATE = "FORM_INPUT_UPDATE";

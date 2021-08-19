@@ -10,7 +10,7 @@ import {
   setHideFollowers,
   setHideFollowing,
   setShowCheering,
-} from "../../store/actions/user";
+} from "../../store/actions/user/user";
 import MainHeaderTitle from "../../components/UI/MainHeaderTitle";
 
 const ShowcaseSettingsScreen = (props) => {

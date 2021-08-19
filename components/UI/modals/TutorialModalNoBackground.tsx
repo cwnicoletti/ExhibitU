@@ -8,7 +8,7 @@ import {
 } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import { useAppDispatch } from "../../../hooks";
-import { setTutorialing } from "../../../store/actions/user";
+import { setTutorialing } from "../../../store/actions/user/user";
 
 const TutorialModalNoBackground = (props) => {
   const dispatch = useAppDispatch();

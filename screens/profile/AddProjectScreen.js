@@ -31,7 +31,7 @@ import LinkButton from "../../components/UI/LinkButton";
 import {
   uploadAddTempProjectCoverPicture,
   uploadNewProject,
-} from "../../store/actions/user";
+} from "../../store/actions/user/user";
 
 const FORM_INPUT_UPDATE = "FORM_INPUT_UPDATE";
 const FORM_INPUT_LINKS_UPDATE = "FORM_INPUT_LINKS_UPDATE";

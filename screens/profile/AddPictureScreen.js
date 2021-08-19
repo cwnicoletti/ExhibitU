@@ -27,7 +27,7 @@ import TutorialPostCreation from "../../components/tutorial/TutorialPostCreation
 import {
   addUserPost,
   uploadAddTempPostPicture,
-} from "../../store/actions/user";
+} from "../../store/actions/user/user";
 
 const FORM_INPUT_UPDATE = "FORM_INPUT_UPDATE";
 const FORM_INPUT_LINKS_UPDATE = "FORM_INPUT_LINKS_UPDATE";

@@ -1,115 +1,52 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
-import getBase64FromUrl from "../../helper/getBase64FromUrl";
-
-export const FORCE_SEARCH = "FORCE_SEARCH";
-export const RESET_SCROLL = "RESET_SCROLL";
-export const SHOWCASE_PROFILE = "SHOWCASE_PROFILE";
-export const RETURN_FROM_SHOWCASING = "RETURN_FROM_SHOWCASING";
-export const HIDE_PROFILE_FOOTER = "HIDE_PROFILE_FOOTER";
-export const ON_SCREEN = "ON_SCREEN";
-export const OFF_SCREEN = "OFF_SCREEN";
-
-export const GET_SWITCHES = "GET_SWITCHES";
-export const SET_DARKMODE = "SET_DARKMODE";
-export const SHOW_CHEERING = "SHOW_CHEERING";
-export const HIDE_FOLLOWING = "HIDE_FOLLOWING";
-export const HIDE_FOLLOWERS = "HIDE_FOLLOWERS";
-export const HIDE_ADVOCATES = "HIDE_ADVOCATES";
-
-export const CHEER_POST = "CHEER_POST";
-export const CHEER_UPDATE_POSTS = "CHEER_UPDATE_POSTS";
-export const CHEER_OWN_FEED_POST = "CHEER_OWN_FEED_POST";
-export const CHEER_OWN_PROFILE_POST = "CHEER_OWN_PROFILE_POST";
-export const UNCHEER_POST = "UNCHEER_POST";
-export const UNCHEER_UPDATE_POSTS = "UNCHEER_UPDATE_POSTS";
-export const UNCHEER_OWN_FEED_POST = "UNCHEER_OWN_FEED_POST";
-export const UNCHEER_OWN_PROFILE_POST = "UNCHEER_OWN_PROFILE_POST";
-
-export const GET_USER_DATA = "GET_USER_DATA";
-export const GET_USER_FEED = "GET_USER_FEED";
-export const GET_UPDATES = "GET_UPDATES";
-export const FOLLOW_USER = "FOLLOW_USER";
-export const UNFOLLOW_USER = "UNFOLLOW_USER";
-export const ADVOCATE_FOR_USER = "ADVOCATE_FOR_USER";
-export const UNADVOCATE_FOR_USER = "UNADVOCATE_FOR_USER";
-
-export const UPDATE_USER_PROFILE = "UPDATE_USER_PROFILE";
-export const REFRESH_PROFILE = "REFRESH_PROFILE";
-export const UPDATE_PROFILE_LINKS = "UPDATE_PROFILE_LINKS";
-export const UPDATE_PROJECT_LINKS = "UPDATE_PROJECT_LINKS";
-export const UPDATE_USER_PROJECT = "UPDATE_USER_PROJECT";
-
-export const CHANGE_PROFILE_PICTURE = "CHANGE_PROFILE_PICTURE";
-export const CHANGE_PROFILE_COLUMNS = "CHANGE_PROFILE_COLUMNS";
-export const CHANGE_PROJECT_PICTURE = "CHANGE_PROJECT_PICTURE";
-export const CHANGE_PROJECT_COLUMNS = "CHANGE_PROJECT_COLUMNS";
-
-export const REMOVE_USER_PROJECT = "REMOVE_USER_PROJECT";
-export const REMOVE_USER_POST = "REMOVE_USER_POST";
-export const CLEAR_TEMP_PROJECT_PICTURE = "CLEAR_TEMP_PROJECT_PICTURE";
-export const CLEAR_TEMP_POST_PICTURE = "CLEAR_TEMP_POST_PICTURE";
-
-export const ADD_TEMP_PROJECT_PICTURE = "ADD_TEMP_PROJECT_PICTURE";
-export const ADD_TEMP_POST_PICTURE = "ADD_TEMP_POST_PICTURE";
-export const ADD_USER_PROJECT = "ADD_USER_PROJECT";
-export const ADD_USER_POST = "ADD_USER_POST";
-export const UPDATE_ALL_POSTS = "UPDATE_ALL_POSTS";
-
-export const UPLOAD_FEEDBACK = "UPLOAD_FEEDBACK";
-export const UPLOAD_REPORT_BUG = "UPLOAD_REPORT_BUG";
-
-export const SET_TUTORIALING = "SET_TUTORIALING";
-export const SET_TUTORIALING_PROMPT = "SET_TUTORIALING_PROMPT";
-
-export interface UserState {
-  ExhibitUId: string;
-  email: string;
-  profilePictureId: string;
-  profilePictureUrl: string;
-  profilePictureBase64: string;
-  projectTempCoverPhotoId: string;
-  projectTempCoverPhotoUrl: string;
-  projectTempCoverPhotoBase64: string;
-  tempPhotoPostId: string;
-  tempPhotoPostUrl: string;
-  tempPhotoPostBase64: string;
-  fullname: string;
-  jobTitle: string;
-  username: string;
-  profileBiography: string;
-  numberOfFollowers: number;
-  numberOfFollowing: number;
-  numberOfAdvocates: number;
-  numberOfAdvocating: number;
-  profileColumns: number;
-  followers: string[];
-  following: string[];
-  advocates: string[];
-  advocating: string[];
-  projectsAdvocating: string[];
-  cheeredPosts: string[];
-  profileProjects: object;
-  profileLinks: object;
-  userFeed: object;
-  darkMode: boolean;
-  showCheering: boolean;
-  hideFollowing: boolean;
-  hideFollowers: boolean;
-  hideAdvocates: boolean;
-  updates: object;
-  resetScrollFeed: boolean;
-  resetScrollExplore: boolean;
-  resetScrollProfile: boolean;
-  showcasingProfile: boolean;
-  hiddenProfileFooter: boolean;
-  onFeedScreen: boolean;
-  onExploreScreen: boolean;
-  onProfileScreen: boolean;
-  tutorialing: boolean;
-  tutorialPrompt: boolean;
-  tutorialScreen: string;
-}
+import getBase64FromUrl from "../../../helper/getBase64FromUrl";
+import {
+  ADD_TEMP_POST_PICTURE,
+  ADD_TEMP_PROJECT_PICTURE,
+  ADD_USER_POST,
+  ADD_USER_PROJECT,
+  ADVOCATE_FOR_USER,
+  CHANGE_PROFILE_COLUMNS,
+  CHANGE_PROFILE_PICTURE,
+  CHANGE_PROJECT_COLUMNS,
+  CHANGE_PROJECT_PICTURE,
+  CHEER_OWN_FEED_POST,
+  CHEER_OWN_PROFILE_POST,
+  CHEER_POST,
+  CHEER_UPDATE_POSTS,
+  FOLLOW_USER,
+  GET_SWITCHES,
+  GET_UPDATES,
+  GET_USER_DATA,
+  GET_USER_FEED,
+  HIDE_ADVOCATES,
+  HIDE_FOLLOWERS,
+  HIDE_FOLLOWING,
+  HIDE_PROFILE_FOOTER,
+  OFF_SCREEN,
+  ON_SCREEN,
+  REFRESH_PROFILE,
+  REMOVE_USER_POST,
+  REMOVE_USER_PROJECT,
+  RESET_SCROLL,
+  RETURN_FROM_SHOWCASING,
+  SET_DARKMODE,
+  SHOWCASE_PROFILE,
+  SHOW_CHEERING,
+  UNADVOCATE_FOR_USER,
+  UNCHEER_OWN_FEED_POST,
+  UNCHEER_OWN_PROFILE_POST,
+  UNCHEER_POST,
+  UNCHEER_UPDATE_POSTS,
+  UNFOLLOW_USER,
+  UPDATE_ALL_POSTS,
+  UPDATE_USER_PROFILE,
+  UPDATE_USER_PROJECT,
+  SET_TUTORIALING,
+  SET_TUTORIALING_PROMPT,
+  UserState,
+} from "./types";
 
 export const refreshProfile = (localId: string) => {
   return async (dispatch) => {
@@ -1063,7 +1000,11 @@ export const addUserPost = (
       profileColumns,
     });
 
-    await dispatch({ type: UPDATE_ALL_POSTS, postId: retrievedPostId });
+    await dispatch({
+      type: UPDATE_ALL_POSTS,
+      ExhibitUId,
+      postId: retrievedPostId,
+    });
   };
 };
 
@@ -1596,7 +1537,7 @@ export const changeProjectNumberOfColumns = (
   localId: string,
   ExhibitUId: string,
   projectId: string,
-  postIds: Array<string>,
+  postIds: string[],
   number: number
 ) => {
   return async (dispatch) => {
@@ -1662,7 +1603,7 @@ export const onScreen = (tab: boolean) => {
   };
 };
 
-export const offScreen = (tab: boolean) => {
+export const offScreen = (tab: string) => {
   return async (dispatch) => {
     await dispatch({ type: OFF_SCREEN, tab });
   };

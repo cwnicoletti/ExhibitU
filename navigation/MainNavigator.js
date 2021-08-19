@@ -60,8 +60,8 @@ import NotificationsBottomTab from "../components/footers/NotificationsBottomTab
 import FeedBottomTab from "../components/footers/FeedBottomTab";
 import ExploreBottomTab from "../components/footers/ExploreBottomTab";
 import StartupScreen from "../screens/StartupScreen";
-import { logout } from "../store/actions/auth";
-import { setTutorialing } from "../store/actions/user";
+import { logout } from "../store/actions/auth/auth";
+import { setTutorialing } from "../store/actions/user/user";
 
 const FeedandViewNavigator = createStackNavigator({
   Feed: {

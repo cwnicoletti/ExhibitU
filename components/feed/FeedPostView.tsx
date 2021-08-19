@@ -23,7 +23,7 @@ import {
   cheerPost,
   uncheerOwnFeedPost,
   uncheerPost,
-} from "../../store/actions/user";
+} from "../../store/actions/user/user";
 import { AnimatedGradient } from "../custom/AnimatedGradient/AnimatedGradient";
 import LinkButton from "../UI/LinkButton";
 import TimeStamp from "../UI/TimeStamp";

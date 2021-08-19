@@ -6,7 +6,7 @@ import ProjectHeader from "../../components/projects/ProjectHeader";
 import IoniconsHeaderButton from "../../components/UI/header_buttons/IoniconsHeaderButton";
 import ProjectPictures from "../../components/UI/ProjectPictures";
 import TutorialExhibitView from "../../components/tutorial/TutorialExhibitView";
-import { changeProjectNumberOfColumns } from "../../store/actions/user";
+import { changeProjectNumberOfColumns } from "../../store/actions/user/user";
 import MainHeaderTitle from "../../components/UI/MainHeaderTitle";
 
 const ProjectScreen = (props) => {

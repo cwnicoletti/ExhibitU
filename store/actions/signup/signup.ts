@@ -1,17 +1,10 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-
-export const INTROING = "INTROING";
-export const SIGNUP_EMAIL = "SIGNUP_EMAIL";
-export const SIGNUP_FULLNAME = "SIGNUP_FULLNAME";
-export const SIGNUP_USERNAME = "SIGNUP_USERNAME";
-export const SIGNUP_PASSWORD = "SIGNUP_PASSWORD";
-
-export interface SignUpState {
-  introing: boolean;
-  email: string;
-  fullname: string;
-  username: string;
-}
+import {
+  INTROING,
+  SIGNUP_EMAIL,
+  SIGNUP_FULLNAME,
+  SIGNUP_USERNAME,
+} from "./types";
 
 export const setIntroing = (value: boolean) => {
   return async (dispatch) => {

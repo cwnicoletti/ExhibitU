@@ -12,7 +12,7 @@ import { useAppDispatch, useAppSelector } from "../../hooks";
 import IoniconsHeaderButton from "../../components/UI/header_buttons/IoniconsHeaderButton";
 import MainHeaderTitle from "../../components/UI/MainHeaderTitle";
 import ProfileProjectPostView from "../../components/user/ProfileProjectPostView";
-import { uploadRemovePost } from "../../store/actions/user";
+import { uploadRemovePost } from "../../store/actions/user/user";
 
 const PictureScreen = (props) => {
   const dispatch = useAppDispatch();

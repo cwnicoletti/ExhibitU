@@ -16,7 +16,7 @@ import MainHeaderTitle from "../../components/UI/MainHeaderTitle";
 import useDidMountEffect from "../../helper/useDidMountEffect";
 import getExlusiveBothSetsDifference from "../../helper/getExlusiveBothSetsDifference";
 import TutorialExploreScreen from "../../components/tutorial/TutorialExploreScreen";
-import { offScreen } from "../../store/actions/user";
+import { offScreen } from "../../store/actions/user/user";
 import { FontAwesome5 } from "@expo/vector-icons";
 
 const ExploreScreen = (props) => {

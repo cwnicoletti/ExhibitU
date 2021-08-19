@@ -9,7 +9,7 @@ import {
 import { FontAwesome, Feather, AntDesign } from "@expo/vector-icons";
 import TutorialModalNoBackgroundNoX from "../UI/modals/TutorialModalNoBackgroundNoX";
 import { useAppDispatch } from "../../hooks";
-import { setTutorialing, setTutorialPrompt } from "../../store/actions/user";
+import { setTutorialing, setTutorialPrompt } from "../../store/actions/user/user";
 
 const TutorialPrompt = (props) => {
   const dispatch = useAppDispatch();

@@ -15,7 +15,7 @@ import { useAppDispatch, useAppSelector } from "../../hooks";
 import Input from "../../components/UI/Input";
 import IoniconsHeaderButton from "../../components/UI/header_buttons/IoniconsHeaderButton";
 import { Ionicons } from "@expo/vector-icons";
-import { signup } from "../../store/actions/auth";
+import { signup } from "../../store/actions/auth/auth";
 import MainHeaderTitle from "../../components/UI/MainHeaderTitle";
 
 const FORM_INPUT_UPDATE = "FORM_INPUT_UPDATE";

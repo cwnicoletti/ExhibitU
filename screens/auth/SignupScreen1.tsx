@@ -15,7 +15,7 @@ import { useAppDispatch } from "../../hooks";
 import Input from "../../components/UI/Input";
 import IoniconsHeaderButton from "../../components/UI/header_buttons/IoniconsHeaderButton";
 import { Feather } from "@expo/vector-icons";
-import { setEmail } from "../../store/actions/signup";
+import { setEmail } from "../../store/actions/signup/signup";
 import MainHeaderTitle from "../../components/UI/MainHeaderTitle";
 
 const FORM_INPUT_UPDATE = "FORM_INPUT_UPDATE";

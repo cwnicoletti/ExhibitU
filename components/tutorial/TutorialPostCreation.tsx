@@ -10,7 +10,7 @@ import { Feather } from "@expo/vector-icons";
 import TutorialModalNoBackground from "../UI/modals/TutorialModalNoBackground";
 import { useAppDispatch } from "../../hooks";
 import { withNavigation } from "react-navigation";
-import { setTutorialing } from "../../store/actions/user";
+import { setTutorialing } from "../../store/actions/user/user";
 
 const TutorialPostCreation = (props) => {
   const dispatch = useAppDispatch();

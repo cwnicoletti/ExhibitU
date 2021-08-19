@@ -13,7 +13,7 @@ import FeedItem from "../../components/feed/FeedItem";
 import useDidMountEffect from "../../helper/useDidMountEffect";
 import TutorialFeedView from "../../components/tutorial/TutorialFeedView";
 // import * as Notifications from "expo-notifications";
-import { getUserFeed, offScreen } from "../../store/actions/user";
+import { getUserFeed, offScreen } from "../../store/actions/user/user";
 import MainHeaderTitle from "../../components/UI/MainHeaderTitle";
 
 const FeedScreen = (props) => {

@@ -4,7 +4,8 @@ import {
   SIGNUP_FULLNAME,
   SIGNUP_USERNAME,
   SignUpState,
-} from "../actions/signup";
+  Action,
+} from "../actions/signup/types";
 
 const intialState: SignUpState = {
   introing: false,
@@ -13,7 +14,7 @@ const intialState: SignUpState = {
   username: "",
 };
 
-export default (state = intialState, action) => {
+export default (state = intialState, action: Action) => {
   switch (action.type) {
     case INTROING:
       return {

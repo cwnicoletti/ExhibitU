@@ -17,7 +17,7 @@ import MainHeaderTitle from "../../components/UI/MainHeaderTitle";
 import TutorialExploreProject from "../../components/tutorial/TutorialExploreProject";
 import useDidMountEffect from "../../helper/useDidMountEffect";
 import getExlusiveBothSetsDifference from "../../helper/getExlusiveBothSetsDifference";
-import { advocateForUser, unadvocateForUser } from "../../store/actions/user";
+import { advocateForUser, unadvocateForUser } from "../../store/actions/user/user";
 
 const ExploreProjectScreen = (props) => {
   const dispatch = useAppDispatch();

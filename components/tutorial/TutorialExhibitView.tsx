@@ -11,7 +11,7 @@ import TutorialModalNoBackground from "../UI/modals/TutorialModalNoBackground";
 import { useAppDispatch } from "../../hooks";
 import { withNavigation } from "react-navigation";
 import EditButton from "../UI/EditButton";
-import { setTutorialing } from "../../store/actions/user";
+import { setTutorialing } from "../../store/actions/user/user";
 
 const TutorialExhibitView = (props) => {
   const dispatch = useAppDispatch();
