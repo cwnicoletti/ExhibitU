@@ -4,8 +4,6 @@ import {
   Platform,
   ScrollView,
   StyleSheet,
-  Text,
-  View,
 } from "react-native";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import { useAppDispatch, useAppSelector } from "../../hooks";

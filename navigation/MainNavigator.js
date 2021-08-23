@@ -31,7 +31,7 @@ import ExploreScreen from "../screens/explore/ExploreScreen";
 
 import FeedAdvocatesScreen from "../screens/feed/FeedAdvocatesScreen";
 import FeedCheeringScreen from "../screens/feed/FeedCheeringScreen";
-import FeedCommentsScreen from "../screens/feed/FeedCommentsScreen";
+import FeedPictureScreen from "../screens/feed/FeedPictureScreen";
 import FeedFollowersScreen from "../screens/feed/FeedFollowersScreen";
 import FeedFollowingScreen from "../screens/feed/FeedFollowingScreen";
 import FeedProfileScreen from "../screens/feed/FeedProfileScreen";
@@ -71,7 +71,7 @@ const FeedandViewNavigator = createStackNavigator({
     }),
   },
   ViewCheering: FeedCheeringScreen,
-  ViewComments: FeedCommentsScreen,
+  ViewFeedPicture: FeedPictureScreen,
   ViewProfile: FeedProfileScreen,
   ViewFollowers: FeedFollowersScreen,
   ViewFollowing: FeedFollowingScreen,

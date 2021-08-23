@@ -55,12 +55,14 @@ const FeedExhibitScreen = (props) => {
   );
 
   const [exhibitPostsState, setExhibitPostsState] = useState(
-    Object.values(exhibit.exhibitPosts).sort((first: string, second: string) => {
-      return (
-        second["postDateCreated"]["_seconds"] -
-        first["postDateCreated"]["_seconds"]
-      );
-    })
+    Object.values(exhibit.exhibitPosts).sort(
+      (first: string, second: string) => {
+        return (
+          second["postDateCreated"]["_seconds"] -
+          first["postDateCreated"]["_seconds"]
+        );
+      }
+    )
   );
 
   let android = null;
@@ -68,7 +70,7 @@ const FeedExhibitScreen = (props) => {
     android = true;
   }
 
-  const viewCommentsHandler = (
+  const viewPictureHandler = (
     ExhibitUId,
     exhibitId,
     postId,
@@ -90,7 +92,7 @@ const FeedExhibitScreen = (props) => {
     postLinks,
     postDateCreated
   ) => {
-    props.navigation.navigate("ViewComments", {
+    props.navigation.navigate("ViewFeedPicture", {
       exhibitId,
       userData: {
         ExhibitUId,
@@ -131,12 +133,14 @@ const FeedExhibitScreen = (props) => {
   useDidMountEffect(() => {
     // Sort the array based on the second element
     setExhibitPostsState(
-      Object.values(exhibit.exhibitPosts).sort((first: string, second: string) => {
-        return (
-          second["postDateCreated"]["_seconds"] -
-          first["postDateCreated"]["_seconds"]
-        );
-      })
+      Object.values(exhibit.exhibitPosts).sort(
+        (first: string, second: string) => {
+          return (
+            second["postDateCreated"]["_seconds"] -
+            first["postDateCreated"]["_seconds"]
+          );
+        }
+      )
     );
   }, [exhibit.exhibitPosts]);
 
@@ -199,7 +203,7 @@ const FeedExhibitScreen = (props) => {
               color: darkModeValue ? "white" : "black",
             }}
             onSelect={() =>
-              viewCommentsHandler(
+              viewPictureHandler(
                 itemData.item.ExhibitUId,
                 itemData.item.exhibitId,
                 itemData.item.postId,
