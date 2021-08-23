@@ -1,44 +1,18 @@
 import * as WebBrowser from "expo-web-browser";
-import React, { useState } from "react";
+import React from "react";
 import { FlatList, Image, StyleSheet, Text, View } from "react-native";
 import { useAppSelector } from "../../hooks";
 import LinkButton from "../UI/LinkButton";
-import { AnimatedGradient } from "../custom/AnimatedGradient/AnimatedGradient";
 
-const ExploreProjectHeader = (props) => {
+const ExhibitUExhibitHeader = (props) => {
   const darkModeValue = useAppSelector((state) => state.user.darkMode);
-  const [imageIsLoading, setImageIsLoading] = useState(true);
-  const [greyColorValues, setGreyColorValues] = useState([
-    "rgba(50,50,50,1)",
-    "rgba(0,0,0,1)",
-  ]);
-
   const links = props.links;
 
   return (
     <View style={{ ...styles.container, ...props.containerStyle }}>
-      {imageIsLoading ? (
-        <AnimatedGradient
-          style={{
-            width: "100%",
-            height: 350,
-            position: "absolute",
-            zindex: 3,
-          }}
-          colors={greyColorValues}
-          start={{ x: 0, y: 0 }}
-          end={{ x: 1, y: 0 }}
-        />
-      ) : null}
       <Image
         style={{ ...styles.image, ...props.style }}
-        source={props.imgSource}
-        onLoadStart={() => {
-          setGreyColorValues(["rgba(0,0,0,1)", "rgba(50,50,50,1)"]);
-        }}
-        onLoadEnd={() => {
-          setImageIsLoading(false);
-        }}
+        source={{ uri: props.imgSource }}
       />
       <View
         style={{
@@ -115,4 +89,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ExploreProjectHeader;
+export default ExhibitUExhibitHeader;

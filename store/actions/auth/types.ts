@@ -16,9 +16,9 @@ export interface AuthenticationResponse {
       profilePictureId: string;
       profilePictureUrl: string;
       profilePictureBase64: string;
-      projectTempCoverPhotoId: string;
-      projectTempCoverPhotoUrl: string;
-      projectTempCoverPhotoBase64: string;
+      exhibitTempCoverPhotoId: string;
+      exhibitTempCoverPhotoUrl: string;
+      exhibitTempCoverPhotoBase64: string;
       tempPhotoPostId: string;
       tempPhotoPostUrl: string;
       tempPhotoPostBase64: string;
@@ -35,9 +35,9 @@ export interface AuthenticationResponse {
       following: string[];
       advocates: string[];
       advocating: string[];
-      projectsAdvocating: string[];
+      exhibitsAdvocating: string[];
       cheeredPosts: string[];
-      profileProjects: object;
+      profileExhibits: object;
       profileLinks: object;
       userFeed: object;
       darkMode: boolean;

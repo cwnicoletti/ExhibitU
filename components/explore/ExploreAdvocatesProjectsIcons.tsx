@@ -8,14 +8,14 @@ import {
   View,
 } from "react-native";
 
-const ExploreAdvocatesProjectsIcons = (props) => {
+const ExploreAdvocatesExhibitsIcons = (props) => {
   let TouchableCmp: any = TouchableOpacity;
   if (Platform.OS === "android") {
     TouchableCmp = TouchableNativeFeedback;
   }
 
   return (
-    <View style={{ ...styles.project, ...props.projectContainer }}>
+    <View style={{ ...styles.exhibit, ...props.exhibitContainer }}>
       <View>
         <Image style={styles.image} source={props.image} />
       </View>
@@ -24,7 +24,7 @@ const ExploreAdvocatesProjectsIcons = (props) => {
 };
 
 const styles = StyleSheet.create({
-  project: {
+  exhibit: {
     height: 40,
     borderWidth: 1,
     width: 40,
@@ -36,4 +36,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ExploreAdvocatesProjectsIcons;
+export default ExploreAdvocatesExhibitsIcons;

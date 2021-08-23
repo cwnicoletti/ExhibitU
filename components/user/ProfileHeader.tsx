@@ -22,7 +22,7 @@ const Profile = (props) => {
   const followingValue = useAppSelector((state) => state.user.hideFollowing);
   const followersValue = useAppSelector((state) => state.user.hideFollowers);
   const advocatesValue = useAppSelector((state) => state.user.hideAdvocates);
-  const profileProjects = useAppSelector((state) => state.user.profileProjects);
+  const profileExhibits = useAppSelector((state) => state.user.profileExhibits);
 
   const userDataProfileHeader = {
     numberOfFollowers: useAppSelector((state) => state.user.numberOfFollowers),
@@ -104,7 +104,7 @@ const Profile = (props) => {
           alignItems: "center",
         }}
       >
-        <TouchableCmp onPress={props.onAddNewProjectPress}>
+        <TouchableCmp onPress={props.onAddNewExhibitPress}>
           <View
             style={{
               margin: 20,
@@ -132,7 +132,7 @@ const Profile = (props) => {
           </View>
         </TouchableCmp>
       </View>
-      {Object.keys(profileProjects).length > 0 ? (
+      {Object.keys(profileExhibits).length > 0 ? (
         <View>
           <Text
             style={{

@@ -26,7 +26,7 @@ import ExploreFollowersScreen from "../screens/explore/ExploreFollowersScreen";
 import ExploreFollowingScreen from "../screens/explore/ExploreFollowingScreen";
 import ExplorePictureScreen from "../screens/explore/ExplorePictureScreen";
 import ExploreProfileScreen from "../screens/explore/ExploreProfileScreen";
-import ExploreProjectScreen from "../screens/explore/ExploreProjectScreen";
+import ExploreExhibitScreen from "../screens/explore/ExploreExhibitScreen";
 import ExploreScreen from "../screens/explore/ExploreScreen";
 
 import FeedAdvocatesScreen from "../screens/feed/FeedAdvocatesScreen";
@@ -35,23 +35,23 @@ import FeedCommentsScreen from "../screens/feed/FeedCommentsScreen";
 import FeedFollowersScreen from "../screens/feed/FeedFollowersScreen";
 import FeedFollowingScreen from "../screens/feed/FeedFollowingScreen";
 import FeedProfileScreen from "../screens/feed/FeedProfileScreen";
-import FeedProjectScreen from "../screens/feed/FeedProjectScreen";
+import FeedExhibitScreen from "../screens/feed/FeedExhibitScreen";
 import FeedScreen from "../screens/feed/FeedScreen";
 
 import AddPictureScreen from "../screens/profile/AddPictureScreen";
-import AddProjectScreen from "../screens/profile/AddProjectScreen";
+import AddExhibitScreen from "../screens/profile/AddExhibitScreen";
 import AdvocatesScreen from "../screens/profile/AdvocatesScreen";
 import CheeringScreen from "../screens/profile/CheeringScreen";
 import EditProfileScreen from "../screens/profile/EditProfileScreen";
-import EditProjectScreen from "../screens/profile/EditProjectScreen";
+import EditExhibitScreen from "../screens/profile/EditExhibitScreen";
 import FollowersScreen from "../screens/profile/FollowersScreen";
 import FollowingScreen from "../screens/profile/FollowingScreen";
 import PictureScreen from "../screens/profile/PictureScreen";
 import ProfileScreen from "../screens/profile/ProfileScreen";
-import ProjectScreen from "../screens/profile/ProjectScreen";
+import ExhibitScreen from "../screens/profile/ExhibitScreen";
 import ShowcasePictureScreen from "../screens/profile/ShowcasePictureScreen";
 import ShowcaseProfileScreen from "../screens/profile/ShowcaseProfileScreen";
-import ShowcaseProjectScreen from "../screens/profile/ShowcaseProjectScreen";
+import ShowcaseExhibitScreen from "../screens/profile/ShowcaseExhibitScreen";
 
 import NotificationsScreen from "../screens/notifications/NotificationsScreen";
 
@@ -76,8 +76,8 @@ const FeedandViewNavigator = createStackNavigator({
   ViewFollowers: FeedFollowersScreen,
   ViewFollowing: FeedFollowingScreen,
   ViewAdvocates: FeedAdvocatesScreen,
-  ViewFeedProject: FeedProjectScreen,
-  ViewFeedProfileProject: FeedProjectScreen,
+  ViewFeedExhibit: FeedExhibitScreen,
+  ViewFeedProfileExhibit: FeedExhibitScreen,
 });
 
 const RightFeedDrawerNavigator = createDrawerNavigator(
@@ -121,7 +121,7 @@ const FeedNavigator = createDrawerNavigator(
           }}
           tutorialOnPress={() => {
             navData.navigation.closeRightDrawer();
-            navData.navigation.navigate("Project");
+            navData.navigation.navigate("Exhibit");
             dispatch(setTutorialing(localId, ExhibitUId, true, "Start"));
           }}
           logoutOnPress={() => {
@@ -147,8 +147,8 @@ const ExploreNavigator = createStackNavigator({
     }),
   },
   ExploreProfile: ExploreProfileScreen,
-  ViewExploredProfileProject: ExploreProjectScreen,
-  ViewExploredProfileProjectPicture: ExplorePictureScreen,
+  ViewExploredProfileExhibit: ExploreExhibitScreen,
+  ViewExploredProfileExhibitPicture: ExplorePictureScreen,
   ExploreCheering: ExploreCheeringScreen,
   ExploreFollowers: ExploreFollowersScreen,
   ExploreFollowing: ExploreFollowingScreen,
@@ -213,10 +213,10 @@ const ProfileandSettingsNavigator = createStackNavigator({
       header: () => <ProfileHeader navigation={navigation} />,
     }),
   },
-  ViewProfileProject: ProjectScreen,
+  ViewProfileExhibit: ExhibitScreen,
   PictureScreen: PictureScreen,
   ShowcaseProfile: ShowcaseProfileScreen,
-  ShowcaseProject: ShowcaseProjectScreen,
+  ShowcaseExhibit: ShowcaseExhibitScreen,
   ShowcasePictureScreen: ShowcasePictureScreen,
   EditProfile: EditProfileScreen,
   ShowcaseSettings: ShowcaseSettingsScreen,
@@ -224,9 +224,9 @@ const ProfileandSettingsNavigator = createStackNavigator({
   Advocates: AdvocatesScreen,
   Following: FollowingScreen,
   Followers: FollowersScreen,
-  AddProject: AddProjectScreen,
+  AddExhibit: AddExhibitScreen,
   CheeringScreen: CheeringScreen,
-  EditProjectScreen: EditProjectScreen,
+  EditExhibitScreen: EditExhibitScreen,
   AddPicture: AddPictureScreen,
 });
 
@@ -271,7 +271,7 @@ const ProfileNavigator = createDrawerNavigator(
           }}
           tutorialOnPress={() => {
             navData.navigation.closeRightDrawer();
-            navData.navigation.navigate("Project");
+            navData.navigation.navigate("Exhibit");
             dispatch(setTutorialing(localId, ExhibitUId, true, "Start"));
           }}
           logoutOnPress={() => {
@@ -351,7 +351,7 @@ const MainNavigator = createSwitchNavigator({
   Startup: StartupScreen,
   Intro: IntroStack,
   StartAuth: StartSignup,
-  Project: FullAppNavigator,
+  Exhibit: FullAppNavigator,
 });
 
 export default createAppContainer(MainNavigator);

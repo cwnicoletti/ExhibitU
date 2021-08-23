@@ -1,4 +1,4 @@
-// Clapping icon & default project icon made by Freepik (https://www.flaticon.com/authors/freepik)
+// Clapping icon & default exhibit icon made by Freepik (https://www.flaticon.com/authors/freepik)
 import React from "react";
 import { View } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";

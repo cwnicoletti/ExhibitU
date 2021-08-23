@@ -30,7 +30,7 @@ const IntroScreen = (props) => {
   const data = [
     {
       title: "",
-      body: "Welcome to ExhibitU!\n\nThis platform is designed to help you showcase your projects, talents, and skills",
+      body: "Welcome to ExhibitU!\n\nThis platform is designed to help you showcase your exhibits, talents, and skills",
       imgUrl1: exampleImage1Uri,
       useImg1: true,
     },
@@ -42,7 +42,7 @@ const IntroScreen = (props) => {
     },
     {
       title: "",
-      body: "Since ExhibitU is a form of social media you can follow your friends and family to stay up to date on their projects",
+      body: "Since ExhibitU is a form of social media you can follow your friends and family to stay up to date on their exhibits",
       useImg3: true,
     },
     {

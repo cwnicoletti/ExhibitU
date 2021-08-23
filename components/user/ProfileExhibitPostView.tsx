@@ -26,7 +26,7 @@ import toDateTime from "../../helper/toDateTime";
 import * as WebBrowser from "expo-web-browser";
 import TimeStamp from "../UI/TimeStamp";
 
-const ProfileProjectPostView = (props) => {
+const ProfileExhibitPostView = (props) => {
   const dispatch = useAppDispatch();
   const darkModeValue = useAppSelector((state) => state.user.darkMode);
   const showCheering = useAppSelector((state) => state.user.showCheering);
@@ -41,7 +41,7 @@ const ProfileProjectPostView = (props) => {
   const posterExhibitUId = useAppSelector((state) => state.user.ExhibitUId);
   const links = props.links;
   const postId = props.postId;
-  const projectId = props.projectId;
+  const exhibitId = props.exhibitId;
   const postDateCreated = toDateTime(props.postDateCreated);
 
   const fadeAnim = useRef(new Animated.Value(0)).current;
@@ -130,7 +130,7 @@ const ProfileProjectPostView = (props) => {
           cheerOwnProfilePost(
             localId,
             ExhibitUId,
-            projectId,
+            exhibitId,
             postId,
             posterExhibitUId
           )
@@ -151,7 +151,7 @@ const ProfileProjectPostView = (props) => {
         uncheerOwnProfilePost(
           localId,
           ExhibitUId,
-          projectId,
+          exhibitId,
           postId,
           posterExhibitUId
         )
@@ -162,7 +162,7 @@ const ProfileProjectPostView = (props) => {
   };
 
   return (
-    <View style={{ ...props.projectContainer }}>
+    <View style={{ ...props.exhibitContainer }}>
       <TouchableWithoutFeedback
         onPress={() => {
           if (!processingWholeCheer) {
@@ -442,4 +442,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ProfileProjectPostView;
+export default ProfileExhibitPostView;

@@ -32,7 +32,7 @@ const TutorialExhibitCreation = (props) => {
     <TutorialModalNoBackground
       localId={localId}
       ExhibitUId={ExhibitUId}
-      screen="AddProject"
+      screen="AddExhibit"
       title={"Creating an Exhibit"}
     >
       <View style={{ margin: 10 }}>

@@ -73,7 +73,7 @@ const FeedFollowingScreen = (props) => {
     username,
     jobTitle,
     profileBiography,
-    profileProjects,
+    profileExhibits,
     profilePictureUrl,
     numberOfFollowers,
     numberOfFollowing,
@@ -91,7 +91,7 @@ const FeedFollowingScreen = (props) => {
         username,
         jobTitle,
         profileBiography,
-        profileProjects,
+        profileExhibits,
         profilePictureUrl,
         numberOfFollowers,
         numberOfFollowing,
@@ -174,7 +174,7 @@ const FeedFollowingScreen = (props) => {
             fullname={itemData.item.fullname}
             username={itemData.item.username}
             jobTitle={itemData.item.jobTitle}
-            projectContainer={{
+            exhibitContainer={{
               backgroundColor: darkModeValue ? "black" : "white",
               borderColor: darkModeValue ? "gray" : "#c9c9c9",
             }}
@@ -191,7 +191,7 @@ const FeedFollowingScreen = (props) => {
                 itemData.item.username,
                 itemData.item.jobTitle,
                 itemData.item.profileBiography,
-                itemData.item.profileProjects,
+                itemData.item.profileExhibits,
                 itemData.item.profilePictureUrl,
                 itemData.item.numberOfFollowers,
                 itemData.item.numberOfFollowing,

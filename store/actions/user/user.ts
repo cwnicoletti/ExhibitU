@@ -61,9 +61,9 @@ export const refreshProfile = (localId: string) => {
     let following = [];
     let advocates = [];
     let advocating = [];
-    let projectsAdvocating = [];
+    let exhibitsAdvocating = [];
     let cheeredPosts = [];
-    let profileProjects = {};
+    let profileExhibits = {};
     let profileLinks = {};
 
     if (profileInfo.data.data.followers) {
@@ -78,26 +78,26 @@ export const refreshProfile = (localId: string) => {
     if (profileInfo.data.data.advocating) {
       advocating = profileInfo.data.data.advocating;
     }
-    if (profileInfo.data.data.projectsAdvocating) {
-      projectsAdvocating = profileInfo.data.data.projectsAdvocating;
+    if (profileInfo.data.data.exhibitsAdvocating) {
+      exhibitsAdvocating = profileInfo.data.data.exhibitsAdvocating;
     }
     if (profileInfo.data.data.cheeredPosts) {
       cheeredPosts = profileInfo.data.data.cheeredPosts;
     }
-    if (profileInfo.data.data.profileProjects) {
-      profileProjects = profileInfo.data.data.profileProjects;
-      const projectKeys = Object.keys(profileProjects);
-      for (const k of projectKeys) {
-        const projectCoverPhotoBase64 = await getBase64FromUrl(
-          profileProjects[k]["projectCoverPhotoUrl"]
+    if (profileInfo.data.data.profileExhibits) {
+      profileExhibits = profileInfo.data.data.profileExhibits;
+      const exhibitKeys = Object.keys(profileExhibits);
+      for (const k of exhibitKeys) {
+        const exhibitCoverPhotoBase64 = await getBase64FromUrl(
+          profileExhibits[k]["exhibitCoverPhotoUrl"]
         );
-        profileProjects[k]["projectCoverPhotoBase64"] = projectCoverPhotoBase64;
-        const postKeys = Object.keys(profileProjects[k].projectPosts);
+        profileExhibits[k]["exhibitCoverPhotoBase64"] = exhibitCoverPhotoBase64;
+        const postKeys = Object.keys(profileExhibits[k].exhibitPosts);
         for (const id of postKeys) {
           const postPhotoBase64 = await getBase64FromUrl(
-            profileProjects[k].projectPosts[id]["postPhotoUrl"]
+            profileExhibits[k].exhibitPosts[id]["postPhotoUrl"]
           );
-          profileProjects[k].projectPosts[id]["postPhotoBase64"] =
+          profileExhibits[k].exhibitPosts[id]["postPhotoBase64"] =
             postPhotoBase64;
         }
       }
@@ -116,10 +116,10 @@ export const refreshProfile = (localId: string) => {
       parsedData.following = following;
       parsedData.advocates = advocates;
       parsedData.advocating = advocating;
-      parsedData.projectsAdvocating = projectsAdvocating;
+      parsedData.exhibitsAdvocating = exhibitsAdvocating;
       parsedData.profileLinks = profileLinks;
       parsedData.cheeredPosts = cheeredPosts;
-      parsedData.profileProjects = profileProjects;
+      parsedData.profileExhibits = profileExhibits;
       await AsyncStorage.setItem("userDocData", JSON.stringify(parsedData));
     });
 
@@ -133,9 +133,9 @@ export const refreshProfile = (localId: string) => {
       following,
       advocates,
       advocating,
-      projectsAdvocating,
+      exhibitsAdvocating,
       cheeredPosts,
-      profileProjects,
+      profileExhibits,
       profileLinks,
     });
   };
@@ -150,9 +150,9 @@ export const getUserData = () => {
     let following = [];
     let advocates = [];
     let advocating = [];
-    let projectsAdvocating = [];
+    let exhibitsAdvocating = [];
     let cheeredPosts = [];
-    let profileProjects = {};
+    let profileExhibits = {};
     let profileLinks = {};
     let userFeed = {};
     let updates = {};
@@ -169,14 +169,14 @@ export const getUserData = () => {
     if (transformedData.advocating) {
       advocating = transformedData.advocating;
     }
-    if (transformedData.projectsAdvocating) {
-      projectsAdvocating = transformedData.projectsAdvocating;
+    if (transformedData.exhibitsAdvocating) {
+      exhibitsAdvocating = transformedData.exhibitsAdvocating;
     }
     if (transformedData.cheeredPosts) {
       cheeredPosts = transformedData.cheeredPosts;
     }
-    if (transformedData.profileProjects) {
-      profileProjects = transformedData.profileProjects;
+    if (transformedData.profileExhibits) {
+      profileExhibits = transformedData.profileExhibits;
     }
     if (transformedData.profileLinks) {
       profileLinks = transformedData.profileLinks;
@@ -195,9 +195,9 @@ export const getUserData = () => {
       profilePictureId: transformedData.profilePictureId,
       profilePictureUrl: transformedData.profilePictureUrl,
       profilePictureBase64: transformedData.profilePictureBase64,
-      projectTempCoverPhotoId: transformedData.projectTempCoverPhotoId,
-      projectTempCoverPhotoUrl: transformedData.projectTempCoverPhotoUrl,
-      projectTempCoverPhotoBase64: transformedData.projectTempCoverPhotoBase64,
+      exhibitTempCoverPhotoId: transformedData.exhibitTempCoverPhotoId,
+      exhibitTempCoverPhotoUrl: transformedData.exhibitTempCoverPhotoUrl,
+      exhibitTempCoverPhotoBase64: transformedData.exhibitTempCoverPhotoBase64,
       tempPhotoPostId: transformedData.tempPhotoPostId,
       tempPhotoPostUrl: transformedData.tempPhotoPostUrl,
       tempPhotoPostBase64: transformedData.tempPhotoPostBase64,
@@ -222,9 +222,9 @@ export const getUserData = () => {
       following,
       advocates,
       advocating,
-      projectsAdvocating,
+      exhibitsAdvocating,
       cheeredPosts,
-      profileProjects,
+      profileExhibits,
       profileLinks,
       userFeed,
       updates,
@@ -302,46 +302,46 @@ export const uploadUpdateUserProfile = (
   };
 };
 
-export const uploadNewProject = (
+export const uploadNewExhibit = (
   ExhibitUId: string,
   localId: string,
-  projectTempCoverPhotoId: string,
-  projectTempCoverPhotoBase64: string,
-  projectTitle: string,
-  projectDescription: string,
+  exhibitTempCoverPhotoId: string,
+  exhibitTempCoverPhotoBase64: string,
+  exhibitTitle: string,
+  exhibitDescription: string,
   links: object
 ) => {
   return async (dispatch) => {
     const uploadForm = {
       ExhibitUId,
       localId,
-      projectTempCoverPhotoId,
-      projectTempCoverPhotoBase64,
-      projectTitle,
-      projectDescription,
+      exhibitTempCoverPhotoId,
+      exhibitTempCoverPhotoBase64,
+      exhibitTitle,
+      exhibitDescription,
       links,
     };
 
-    const newProjectResponse = await axios.post(
-      "https://us-central1-showcase-79c28.cloudfunctions.net/uploadNewProject",
+    const newExhibitResponse = await axios.post(
+      "https://us-central1-showcase-79c28.cloudfunctions.net/uploadNewExhibit",
       uploadForm
     );
     await AsyncStorage.getItem("userDocData").then(async (data) => {
       let parsedData: UserState = JSON.parse(data);
-      parsedData.profileProjects = {
-        ...parsedData.profileProjects,
-        [newProjectResponse.data.projectId]: {
-          projectId: newProjectResponse.data.projectId,
-          projectCoverPhotoId: newProjectResponse.data.photoId,
-          projectCoverPhotoUrl: newProjectResponse.data.url,
-          projectCoverPhotoBase64: projectTempCoverPhotoBase64,
-          projectDateCreated: newProjectResponse.data.time,
-          projectLastUpdated: newProjectResponse.data.time,
-          projectTitle,
-          projectDescription,
-          projectColumns: 2,
-          projectPosts: {},
-          projectLinks: links,
+      parsedData.profileExhibits = {
+        ...parsedData.profileExhibits,
+        [newExhibitResponse.data.exhibitId]: {
+          exhibitId: newExhibitResponse.data.exhibitId,
+          exhibitCoverPhotoId: newExhibitResponse.data.photoId,
+          exhibitCoverPhotoUrl: newExhibitResponse.data.url,
+          exhibitCoverPhotoBase64: exhibitTempCoverPhotoBase64,
+          exhibitDateCreated: newExhibitResponse.data.time,
+          exhibitLastUpdated: newExhibitResponse.data.time,
+          exhibitTitle,
+          exhibitDescription,
+          exhibitColumns: 2,
+          exhibitPosts: {},
+          exhibitLinks: links,
         },
       };
       for (const post in parsedData.userFeed) {
@@ -350,70 +350,70 @@ export const uploadNewProject = (
             ...parsedData.userFeed,
             [post]: {
               ...parsedData.userFeed[post],
-              profileProjects: {
-                ...parsedData.profileProjects,
+              profileExhibits: {
+                ...parsedData.profileExhibits,
               },
             },
           };
         }
       }
-      parsedData.projectTempCoverPhotoUrl = "";
-      parsedData.projectTempCoverPhotoBase64 = "";
-      parsedData.projectTempCoverPhotoId = "";
+      parsedData.exhibitTempCoverPhotoUrl = "";
+      parsedData.exhibitTempCoverPhotoBase64 = "";
+      parsedData.exhibitTempCoverPhotoId = "";
       await AsyncStorage.setItem("userDocData", JSON.stringify(parsedData));
     });
     dispatch({
       type: ADD_USER_PROJECT,
       ExhibitUId,
-      projectId: newProjectResponse.data.projectId,
-      projectCoverPhotoId: newProjectResponse.data.photoId,
-      projectCoverPhotoUrl: newProjectResponse.data.url,
-      projectCoverPhotoBase64: projectTempCoverPhotoBase64,
-      projectDateCreated: newProjectResponse.data.time,
-      projectLastUpdated: newProjectResponse.data.time,
-      projectTitle,
-      projectDescription,
-      projectLinks: links,
+      exhibitId: newExhibitResponse.data.exhibitId,
+      exhibitCoverPhotoId: newExhibitResponse.data.photoId,
+      exhibitCoverPhotoUrl: newExhibitResponse.data.url,
+      exhibitCoverPhotoBase64: exhibitTempCoverPhotoBase64,
+      exhibitDateCreated: newExhibitResponse.data.time,
+      exhibitLastUpdated: newExhibitResponse.data.time,
+      exhibitTitle,
+      exhibitDescription,
+      exhibitLinks: links,
     });
   };
 };
 
-export const uploadUpdatedProject = (
+export const uploadUpdatedExhibit = (
   ExhibitUId: string,
   localId: string,
-  projectId: string,
-  projectTempCoverPhotoUrl: string,
-  projectTitle: string,
-  projectDescription: string,
+  exhibitId: string,
+  exhibitTempCoverPhotoUrl: string,
+  exhibitTitle: string,
+  exhibitDescription: string,
   links: object
 ) => {
   return async (dispatch) => {
     const uploadForm = {
       ExhibitUId,
       localId,
-      projectId,
-      url: projectTempCoverPhotoUrl,
-      projectTitle,
-      projectDescription,
+      exhibitId,
+      url: exhibitTempCoverPhotoUrl,
+      exhibitTitle,
+      exhibitDescription,
       links,
     };
 
-    const updatedProjectResponse = await axios.post(
-      "https://us-central1-showcase-79c28.cloudfunctions.net/uploadUpdatedProject",
+    const updatedExhibitResponse = await axios.post(
+      "https://us-central1-showcase-79c28.cloudfunctions.net/uploadUpdatedExhibit",
       uploadForm
     );
 
     await AsyncStorage.getItem("userDocData").then(async (data) => {
       let parsedData: UserState = JSON.parse(data);
-      parsedData.profileProjects = {
-        ...parsedData.profileProjects,
-        [projectId]: {
-          ...parsedData.profileProjects[projectId],
-          projectLastUpdated: updatedProjectResponse.data.time,
-          projectCoverPhotoUrl: projectTempCoverPhotoUrl,
-          projectTitle,
-          projectDescription,
-          projectLinks: links,
+      parsedData.profileExhibits = {
+        ...parsedData.profileExhibits,
+        [exhibitId]: {
+          ...parsedData.profileExhibits[exhibitId],
+          exhibitLastUpdated: updatedExhibitResponse.data.time,
+          exhibitCoverPhotoUrl: exhibitTempCoverPhotoUrl,
+          exhibitTitle,
+          exhibitDescription,
+          exhibitLinks: links,
         },
       };
       await AsyncStorage.setItem("userDocData", JSON.stringify(parsedData));
@@ -421,35 +421,35 @@ export const uploadUpdatedProject = (
 
     dispatch({
       type: UPDATE_USER_PROJECT,
-      projectId,
-      projectLastUpdated: updatedProjectResponse.data.time,
-      projectCoverPhotoUrl: projectTempCoverPhotoUrl,
-      projectTitle,
-      projectDescription,
-      projectLinks: links,
+      exhibitId,
+      exhibitLastUpdated: updatedExhibitResponse.data.time,
+      exhibitCoverPhotoUrl: exhibitTempCoverPhotoUrl,
+      exhibitTitle,
+      exhibitDescription,
+      exhibitLinks: links,
     });
   };
 };
 
-export const uploadRemoveProject = (
+export const uploadRemoveExhibit = (
   ExhibitUId: string,
   localId: string,
-  projectId: string
+  exhibitId: string
 ) => {
   return async (dispatch) => {
-    const uploadForm = { ExhibitUId, localId, projectId };
+    const uploadForm = { ExhibitUId, localId, exhibitId };
 
     axios.post(
-      "https://us-central1-showcase-79c28.cloudfunctions.net/uploadRemoveProject",
+      "https://us-central1-showcase-79c28.cloudfunctions.net/uploadRemoveExhibit",
       uploadForm
     );
 
     await AsyncStorage.getItem("userDocData").then(async (data) => {
       let parsedData: UserState = JSON.parse(data);
       const postIds = Object.keys(
-        parsedData.profileProjects[projectId].projectPosts
+        parsedData.profileExhibits[exhibitId].exhibitPosts
       );
-      delete parsedData.profileProjects[projectId];
+      delete parsedData.profileExhibits[exhibitId];
       for (const post in parsedData.userFeed) {
         if (postIds.includes(post)) {
           delete parsedData.userFeed[post];
@@ -460,7 +460,7 @@ export const uploadRemoveProject = (
 
     dispatch({
       type: REMOVE_USER_PROJECT,
-      projectId,
+      exhibitId,
     });
   };
 };
@@ -468,11 +468,11 @@ export const uploadRemoveProject = (
 export const uploadRemovePost = (
   ExhibitUId: string,
   localId: string,
-  projectId: string,
+  exhibitId: string,
   postId: string
 ) => {
   return async (dispatch) => {
-    const uploadForm = { ExhibitUId, localId, projectId, postId };
+    const uploadForm = { ExhibitUId, localId, exhibitId, postId };
 
     axios.post(
       "https://us-central1-showcase-79c28.cloudfunctions.net/uploadRemovePost",
@@ -481,14 +481,14 @@ export const uploadRemovePost = (
 
     await AsyncStorage.getItem("userDocData").then(async (data) => {
       let parsedData: UserState = JSON.parse(data);
-      delete parsedData.profileProjects[projectId].projectPosts[postId];
+      delete parsedData.profileExhibits[exhibitId].exhibitPosts[postId];
       delete parsedData.userFeed[postId];
       await AsyncStorage.setItem("userDocData", JSON.stringify(parsedData));
     });
 
     await dispatch({
       type: REMOVE_USER_POST,
-      projectId,
+      exhibitId,
       postId,
     });
   };
@@ -555,10 +555,10 @@ export const advocateForUser = (
   exploredExhibitUId: string,
   ExhibitUId: string,
   localId: string,
-  projectId: string
+  exhibitId: string
 ) => {
   return async (dispatch) => {
-    const user = { exploredExhibitUId, ExhibitUId, localId, projectId };
+    const user = { exploredExhibitUId, ExhibitUId, localId, exhibitId };
 
     axios.post(
       "https://us-central1-showcase-79c28.cloudfunctions.net/advocateForUser",
@@ -568,7 +568,7 @@ export const advocateForUser = (
     await AsyncStorage.getItem("userDocData").then(async (data) => {
       let parsedData: UserState = JSON.parse(data);
       parsedData.advocating.push(exploredExhibitUId);
-      parsedData.projectsAdvocating.push(projectId);
+      parsedData.exhibitsAdvocating.push(exhibitId);
       parsedData.numberOfAdvocating = parsedData.numberOfAdvocating + 1;
       await AsyncStorage.setItem("userDocData", JSON.stringify(parsedData));
     });
@@ -576,7 +576,7 @@ export const advocateForUser = (
     await dispatch({
       type: ADVOCATE_FOR_USER,
       exploredExhibitUId,
-      projectId,
+      exhibitId,
     });
   };
 };
@@ -585,10 +585,10 @@ export const unadvocateForUser = (
   exploredExhibitUId: string,
   ExhibitUId: string,
   localId: string,
-  projectId: string
+  exhibitId: string
 ) => {
   return async (dispatch) => {
-    const user = { exploredExhibitUId, ExhibitUId, localId, projectId };
+    const user = { exploredExhibitUId, ExhibitUId, localId, exhibitId };
 
     axios.post(
       "https://us-central1-showcase-79c28.cloudfunctions.net/unadvocateForUser",
@@ -601,8 +601,8 @@ export const unadvocateForUser = (
         parsedData.advocating.indexOf(exploredExhibitUId),
         1
       );
-      parsedData.projectsAdvocating.splice(
-        parsedData.projectsAdvocating.indexOf(projectId),
+      parsedData.exhibitsAdvocating.splice(
+        parsedData.exhibitsAdvocating.indexOf(exhibitId),
         1
       );
       parsedData.numberOfAdvocating = parsedData.numberOfAdvocating - 1;
@@ -612,7 +612,7 @@ export const unadvocateForUser = (
     await dispatch({
       type: UNADVOCATE_FOR_USER,
       exploredExhibitUId,
-      projectId,
+      exhibitId,
     });
   };
 };
@@ -659,46 +659,46 @@ export const uploadChangeProfilePicture = (
   };
 };
 
-export const uploadAddTempProjectCoverPicture = (
+export const uploadAddTempExhibitCoverPicture = (
   base64: string,
   ExhibitUId: string,
   localId: string,
-  projectTempCoverPhotoId: string
+  exhibitTempCoverPhotoId: string
 ) => {
   return async (dispatch) => {
-    const picture = { base64, ExhibitUId, localId, projectTempCoverPhotoId };
+    const picture = { base64, ExhibitUId, localId, exhibitTempCoverPhotoId };
 
     const uploadedPictureUrlResponse = await axios.post(
-      "https://us-central1-showcase-79c28.cloudfunctions.net/uploadAddTempProjectCoverPicture",
+      "https://us-central1-showcase-79c28.cloudfunctions.net/uploadAddTempExhibitCoverPicture",
       picture
     );
 
     await AsyncStorage.getItem("userDocData").then(async (data) => {
       let parsedData: UserState = JSON.parse(data);
-      parsedData.projectTempCoverPhotoUrl = uploadedPictureUrlResponse.data.url;
-      parsedData.projectTempCoverPhotoId =
+      parsedData.exhibitTempCoverPhotoUrl = uploadedPictureUrlResponse.data.url;
+      parsedData.exhibitTempCoverPhotoId =
         uploadedPictureUrlResponse.data.photoId;
-      parsedData.projectTempCoverPhotoBase64 = base64;
+      parsedData.exhibitTempCoverPhotoBase64 = base64;
       await AsyncStorage.setItem("userDocData", JSON.stringify(parsedData));
     });
 
     await dispatch({
       type: ADD_TEMP_PROJECT_PICTURE,
-      projectTempCoverPhotoUrl: uploadedPictureUrlResponse.data.url,
-      projectTempCoverPhotoId: uploadedPictureUrlResponse.data.photoId,
-      projectTempCoverPhotoBase64: base64,
+      exhibitTempCoverPhotoUrl: uploadedPictureUrlResponse.data.url,
+      exhibitTempCoverPhotoId: uploadedPictureUrlResponse.data.photoId,
+      exhibitTempCoverPhotoBase64: base64,
     });
   };
 };
 
 export const uploadAddTempPostPicture = (
   base64: string,
-  projectId: string,
+  exhibitId: string,
   ExhibitUId: string,
   localId: string
 ) => {
   return async (dispatch) => {
-    const picture = { base64, projectId, ExhibitUId, localId };
+    const picture = { base64, exhibitId, ExhibitUId, localId };
 
     const uploadedPictureUrlResponse = await axios.post(
       "https://us-central1-showcase-79c28.cloudfunctions.net/uploadAddTempPostPicture",
@@ -722,40 +722,40 @@ export const uploadAddTempPostPicture = (
   };
 };
 
-export const uploadChangeProjectCoverPicture = (
+export const uploadChangeExhibitCoverPicture = (
   base64: string,
-  projectId: string,
+  exhibitId: string,
   ExhibitUId: string,
   localId: string,
-  projectCoverPhotoId: string
+  exhibitCoverPhotoId: string
 ) => {
   return async (dispatch) => {
     const picture = {
       base64,
-      projectId,
+      exhibitId,
       ExhibitUId,
       localId,
-      projectCoverPhotoId,
+      exhibitCoverPhotoId,
     };
 
     const uploadedPictureUrlResponse = await axios.post(
-      "https://us-central1-showcase-79c28.cloudfunctions.net/uploadChangeProjectCoverPicture",
+      "https://us-central1-showcase-79c28.cloudfunctions.net/uploadChangeExhibitCoverPicture",
       picture
     );
 
     await AsyncStorage.getItem("userDocData").then(async (data) => {
       let parsedData: UserState = JSON.parse(data);
-      parsedData.projectTempCoverPhotoId =
+      parsedData.exhibitTempCoverPhotoId =
         uploadedPictureUrlResponse.data.photoId;
-      parsedData.projectTempCoverPhotoUrl = uploadedPictureUrlResponse.data.url;
-      parsedData.projectTempCoverPhotoBase64 = base64;
-      parsedData.profileProjects = {
-        ...parsedData.profileProjects,
-        [projectId]: {
-          ...parsedData.profileProjects[projectId],
-          projectCoverPhotoUrl: uploadedPictureUrlResponse.data.url,
-          projectCoverPhotoId: uploadedPictureUrlResponse.data.photoId,
-          projectCoverPhotoBase64: base64,
+      parsedData.exhibitTempCoverPhotoUrl = uploadedPictureUrlResponse.data.url;
+      parsedData.exhibitTempCoverPhotoBase64 = base64;
+      parsedData.profileExhibits = {
+        ...parsedData.profileExhibits,
+        [exhibitId]: {
+          ...parsedData.profileExhibits[exhibitId],
+          exhibitCoverPhotoUrl: uploadedPictureUrlResponse.data.url,
+          exhibitCoverPhotoId: uploadedPictureUrlResponse.data.photoId,
+          exhibitCoverPhotoBase64: base64,
         },
       };
       await AsyncStorage.setItem("userDocData", JSON.stringify(parsedData));
@@ -763,10 +763,10 @@ export const uploadChangeProjectCoverPicture = (
 
     await dispatch({
       type: CHANGE_PROJECT_PICTURE,
-      projectId,
-      projectCoverPhotoUrl: uploadedPictureUrlResponse.data.url,
-      projectCoverPhotoId: uploadedPictureUrlResponse.data.photoId,
-      projectCoverPhotoBase64: base64,
+      exhibitId,
+      exhibitCoverPhotoUrl: uploadedPictureUrlResponse.data.url,
+      exhibitCoverPhotoId: uploadedPictureUrlResponse.data.photoId,
+      exhibitCoverPhotoBase64: base64,
     });
   };
 };
@@ -774,7 +774,7 @@ export const uploadChangeProjectCoverPicture = (
 export const addUserPost = (
   ExhibitUId: string,
   localId: string,
-  projectId: string,
+  exhibitId: string,
   fullname: string,
   username: string,
   jobTitle: string,
@@ -785,11 +785,11 @@ export const addUserPost = (
   followersValue: boolean,
   advocatesValue: boolean,
   profileBiography: string,
-  projectTitle: string,
-  projectCoverPhotoUrl: string,
-  projectDateCreated: string,
-  projectLastUpdated: string,
-  projectDescription: string,
+  exhibitTitle: string,
+  exhibitCoverPhotoUrl: string,
+  exhibitDateCreated: string,
+  exhibitLastUpdated: string,
+  exhibitDescription: string,
   profilePictureUrl: string,
   profilePictureBase64: string,
   tempPhotoPostId: string,
@@ -797,7 +797,7 @@ export const addUserPost = (
   tempPhotoPostBase64: string,
   caption: string,
   profileLinks: object,
-  projectLinks: object,
+  exhibitLinks: object,
   links: object,
   profileColumns: number
 ) => {
@@ -805,7 +805,7 @@ export const addUserPost = (
     const picture = {
       ExhibitUId,
       localId,
-      projectId,
+      exhibitId,
       fullname,
       username,
       jobTitle,
@@ -816,17 +816,17 @@ export const addUserPost = (
       followersValue,
       advocatesValue,
       profileBiography,
-      projectTitle,
-      projectCoverPhotoUrl,
-      projectDateCreated,
-      projectLastUpdated,
-      projectDescription,
+      exhibitTitle,
+      exhibitCoverPhotoUrl,
+      exhibitDateCreated,
+      exhibitLastUpdated,
+      exhibitDescription,
       profilePictureUrl,
       postId: tempPhotoPostId,
       postUrl: tempPhotoPostUrl,
       caption,
       profileLinks,
-      projectLinks,
+      exhibitLinks,
       links,
       profileColumns,
     };
@@ -844,16 +844,16 @@ export const addUserPost = (
       parsedData.tempPhotoPostId = "";
       parsedData.tempPhotoPostUrl = "";
       parsedData.tempPhotoPostBase64 = "";
-      parsedData.profileProjects = {
-        ...parsedData.profileProjects,
-        [projectId]: {
-          ...parsedData.profileProjects[projectId],
-          projectPosts: {
-            ...parsedData.profileProjects[projectId].projectPosts,
+      parsedData.profileExhibits = {
+        ...parsedData.profileExhibits,
+        [exhibitId]: {
+          ...parsedData.profileExhibits[exhibitId],
+          exhibitPosts: {
+            ...parsedData.profileExhibits[exhibitId].exhibitPosts,
             [retrievedPostId]: {
               postId: retrievedPostId,
               ExhibitUId,
-              projectId,
+              exhibitId,
               fullname,
               username,
               jobTitle,
@@ -861,7 +861,7 @@ export const addUserPost = (
               numberOfFollowing,
               numberOfAdvocates,
               profileBiography,
-              projectTitle,
+              exhibitTitle,
               profilePictureUrl,
               profilePictureBase64,
               postDateCreated: time,
@@ -875,7 +875,7 @@ export const addUserPost = (
               cheering: [],
               comments: {},
               profileLinks,
-              projectLinks,
+              exhibitLinks,
               postLinks: links,
             },
           },
@@ -887,7 +887,7 @@ export const addUserPost = (
         [retrievedPostId]: {
           postId: retrievedPostId,
           ExhibitUId,
-          projectId,
+          exhibitId,
           fullname,
           username,
           jobTitle,
@@ -898,16 +898,16 @@ export const addUserPost = (
           followersValue,
           advocatesValue,
           profileBiography,
-          profileProjects: {
-            ...parsedData.profileProjects,
-            [projectId]: {
-              ...parsedData.profileProjects[projectId],
-              projectPosts: {
-                ...parsedData.profileProjects[projectId].projectPosts,
+          profileExhibits: {
+            ...parsedData.profileExhibits,
+            [exhibitId]: {
+              ...parsedData.profileExhibits[exhibitId],
+              exhibitPosts: {
+                ...parsedData.profileExhibits[exhibitId].exhibitPosts,
                 [retrievedPostId]: {
                   postId: retrievedPostId,
                   ExhibitUId,
-                  projectId,
+                  exhibitId,
                   fullname,
                   username,
                   jobTitle,
@@ -918,7 +918,7 @@ export const addUserPost = (
                   followersValue,
                   advocatesValue,
                   profileBiography,
-                  projectTitle,
+                  exhibitTitle,
                   profilePictureUrl,
                   profilePictureBase64,
                   postDateCreated: time,
@@ -932,14 +932,14 @@ export const addUserPost = (
                   cheering: [],
                   comments: {},
                   profileLinks,
-                  projectLinks,
+                  exhibitLinks,
                   postLinks: links,
                   profileColumns,
                 },
               },
             },
           },
-          projectTitle,
+          exhibitTitle,
           profilePictureUrl,
           profilePictureBase64,
           postDateCreated: time,
@@ -952,7 +952,7 @@ export const addUserPost = (
           cheering: [],
           comments: {},
           profileLinks,
-          projectLinks,
+          exhibitLinks,
           postLinks: links,
           profileColumns,
         },
@@ -961,8 +961,8 @@ export const addUserPost = (
         if (id !== retrievedPostId) {
           if (parsedData.userFeed[id].ExhibitUId === ExhibitUId) {
             Object.assign(
-              parsedData.userFeed[id].profileProjects,
-              parsedData.userFeed[retrievedPostId].profileProjects
+              parsedData.userFeed[id].profileExhibits,
+              parsedData.userFeed[retrievedPostId].profileExhibits
             );
           }
         }
@@ -977,7 +977,7 @@ export const addUserPost = (
       jobTitle,
       ExhibitUId,
       profileBiography,
-      projectTitle,
+      exhibitTitle,
       numberOfFollowers,
       numberOfFollowing,
       numberOfAdvocates,
@@ -986,7 +986,7 @@ export const addUserPost = (
       advocatesValue,
       profilePictureUrl,
       profilePictureBase64,
-      projectId,
+      exhibitId,
       postId: retrievedPostId,
       postDateCreated: time,
       postLastUpdated: time,
@@ -995,7 +995,7 @@ export const addUserPost = (
       postPhotoBase64: tempPhotoPostBase64,
       caption,
       profileLinks,
-      projectLinks,
+      exhibitLinks,
       postLinks: links,
       profileColumns,
     });
@@ -1029,22 +1029,22 @@ export const getUserFeed = (localId: string, ExhibitUId: string) => {
     //     );
     //     returnData[key]["postPhotoBase64"] = postPhotoBase64;
     //     returnData[key]["profilePictureBase64"] = profilePictureBase64;
-    //     for (const projectKey of Object.keys(returnData[key].profileProjects)) {
-    //       const projectCoverPhotoBase64 = await getBase64FromUrl(
-    //         returnData[key].profileProjects[projectKey]["projectCoverPhotoUrl"]
+    //     for (const exhibitKey of Object.keys(returnData[key].profileExhibits)) {
+    //       const exhibitCoverPhotoBase64 = await getBase64FromUrl(
+    //         returnData[key].profileExhibits[exhibitKey]["exhibitCoverPhotoUrl"]
     //       );
-    //       returnData[key].profileProjects[projectKey][
-    //         "projectCoverPhotoBase64"
-    //       ] = projectCoverPhotoBase64;
+    //       returnData[key].profileExhibits[exhibitKey][
+    //         "exhibitCoverPhotoBase64"
+    //       ] = exhibitCoverPhotoBase64;
     //       for (const postKey of Object.keys(
-    //         returnData[key].profileProjects[projectKey].projectPosts
+    //         returnData[key].profileExhibits[exhibitKey].exhibitPosts
     //       )) {
     //         const postPhotoBase64 = await getBase64FromUrl(
-    //           returnData[key].profileProjects[projectKey].projectPosts[postKey][
+    //           returnData[key].profileExhibits[exhibitKey].exhibitPosts[postKey][
     //             "postPhotoUrl"
     //           ]
     //         );
-    //         returnData[key].profileProjects[projectKey].projectPosts[postKey][
+    //         returnData[key].profileExhibits[exhibitKey].exhibitPosts[postKey][
     //           "postPhotoBase64"
     //         ] = postPhotoBase64;
     //       }
@@ -1065,7 +1065,7 @@ export const getUserFeed = (localId: string, ExhibitUId: string) => {
 export const cheerPost = (
   localId: string,
   ExhibitUId: string,
-  projectId: string,
+  exhibitId: string,
   postId: string,
   posterExhibitUId: string
 ) => {
@@ -1073,7 +1073,7 @@ export const cheerPost = (
     const cheeringForm = {
       localId,
       ExhibitUId,
-      projectId,
+      exhibitId,
       postId,
       posterExhibitUId,
     };
@@ -1087,31 +1087,31 @@ export const cheerPost = (
       let parsedData: UserState = JSON.parse(data);
       if (parsedData.userFeed[postId]) {
         parsedData.userFeed[postId].cheering.push(ExhibitUId);
-        parsedData.userFeed[postId].profileProjects[projectId].projectPosts[
+        parsedData.userFeed[postId].profileExhibits[exhibitId].exhibitPosts[
           postId
         ].cheering.push(ExhibitUId);
 
         parsedData.userFeed[postId].numberOfCheers += 1;
-        parsedData.userFeed[postId].profileProjects[projectId].projectPosts[
+        parsedData.userFeed[postId].profileExhibits[exhibitId].exhibitPosts[
           postId
         ].numberOfCheers += 1;
 
         parsedData.cheeredPosts.push(postId);
 
         Object.entries(parsedData.userFeed).map(([id, value]) => {
-          Object.entries(parsedData.userFeed[id].profileProjects).map(
+          Object.entries(parsedData.userFeed[id].profileExhibits).map(
             ([projId, value]) => {
               if (
                 Object.keys(
-                  parsedData.userFeed[id].profileProjects[projId].projectPosts
+                  parsedData.userFeed[id].profileExhibits[projId].exhibitPosts
                 ).includes(postId) &&
                 postId !== id
               ) {
-                parsedData.userFeed[id].profileProjects[projId].projectPosts[
+                parsedData.userFeed[id].profileExhibits[projId].exhibitPosts[
                   postId
                 ].numberOfCheers = parsedData.userFeed[postId].numberOfCheers;
                 Object.assign(
-                  parsedData.userFeed[id].profileProjects[projId].projectPosts[
+                  parsedData.userFeed[id].profileExhibits[projId].exhibitPosts[
                     postId
                   ].cheering,
                   parsedData.userFeed[postId].cheering
@@ -1125,23 +1125,23 @@ export const cheerPost = (
       await AsyncStorage.setItem("userDocData", JSON.stringify(parsedData));
     });
 
-    await dispatch({ type: CHEER_POST, ExhibitUId, projectId, postId });
-    await dispatch({ type: CHEER_UPDATE_POSTS, projectId, postId });
+    await dispatch({ type: CHEER_POST, ExhibitUId, exhibitId, postId });
+    await dispatch({ type: CHEER_UPDATE_POSTS, exhibitId, postId });
   };
 };
 
 export const cheerOwnFeedPost = (
   ExhibitUId: string,
-  projectId: string,
+  exhibitId: string,
   postId: string
 ) => {
   return async (dispatch) => {
     await AsyncStorage.getItem("userDocData").then(async (data) => {
       let parsedData: UserState = JSON.parse(data);
-      parsedData.profileProjects[projectId].projectPosts[postId].cheering.push(
+      parsedData.profileExhibits[exhibitId].exhibitPosts[postId].cheering.push(
         postId
       );
-      parsedData.profileProjects[projectId].projectPosts[
+      parsedData.profileExhibits[exhibitId].exhibitPosts[
         postId
       ].numberOfCheers += 1;
 
@@ -1151,7 +1151,7 @@ export const cheerOwnFeedPost = (
     await dispatch({
       type: CHEER_OWN_FEED_POST,
       ExhibitUId,
-      projectId,
+      exhibitId,
       postId,
     });
   };
@@ -1160,7 +1160,7 @@ export const cheerOwnFeedPost = (
 export const cheerOwnProfilePost = (
   localId: string,
   ExhibitUId: string,
-  projectId: string,
+  exhibitId: string,
   postId: string,
   posterExhibitUId: string
 ) => {
@@ -1168,7 +1168,7 @@ export const cheerOwnProfilePost = (
     const cheeringForm = {
       localId,
       ExhibitUId,
-      projectId,
+      exhibitId,
       postId,
       posterExhibitUId,
     };
@@ -1180,19 +1180,19 @@ export const cheerOwnProfilePost = (
 
     await AsyncStorage.getItem("userDocData").then(async (data) => {
       let parsedData: UserState = JSON.parse(data);
-      parsedData.profileProjects = {
-        ...parsedData.profileProjects,
-        [projectId]: {
-          ...parsedData.profileProjects[projectId],
-          projectPosts: {
-            ...parsedData.profileProjects[projectId].projectPosts,
+      parsedData.profileExhibits = {
+        ...parsedData.profileExhibits,
+        [exhibitId]: {
+          ...parsedData.profileExhibits[exhibitId],
+          exhibitPosts: {
+            ...parsedData.profileExhibits[exhibitId].exhibitPosts,
             [postId]: {
-              ...parsedData.profileProjects[projectId].projectPosts[postId],
+              ...parsedData.profileExhibits[exhibitId].exhibitPosts[postId],
               numberOfCheers:
-                parsedData.profileProjects[projectId].projectPosts[postId]
+                parsedData.profileExhibits[exhibitId].exhibitPosts[postId]
                   .numberOfCheers + 1,
               cheering: [
-                ...parsedData.profileProjects[projectId].projectPosts[postId]
+                ...parsedData.profileExhibits[exhibitId].exhibitPosts[postId]
                   .cheering,
                 ExhibitUId,
               ],
@@ -1205,22 +1205,22 @@ export const cheerOwnProfilePost = (
         ...parsedData.userFeed,
         [postId]: {
           ...parsedData.userFeed[postId],
-          profileProjects: {
-            ...parsedData.userFeed[postId].profileProjects,
-            [projectId]: {
-              ...parsedData.userFeed[postId].profileProjects[projectId],
-              projectPosts: {
-                ...parsedData.userFeed[postId].profileProjects[projectId]
-                  .projectPosts,
+          profileExhibits: {
+            ...parsedData.userFeed[postId].profileExhibits,
+            [exhibitId]: {
+              ...parsedData.userFeed[postId].profileExhibits[exhibitId],
+              exhibitPosts: {
+                ...parsedData.userFeed[postId].profileExhibits[exhibitId]
+                  .exhibitPosts,
                 [postId]: {
-                  ...parsedData.userFeed[postId].profileProjects[projectId]
-                    .projectPosts[postId],
+                  ...parsedData.userFeed[postId].profileExhibits[exhibitId]
+                    .exhibitPosts[postId],
                   numberOfCheers:
-                    parsedData.userFeed[postId].profileProjects[projectId]
-                      .projectPosts[postId].numberOfCheers + 1,
+                    parsedData.userFeed[postId].profileExhibits[exhibitId]
+                      .exhibitPosts[postId].numberOfCheers + 1,
                   cheering: [
-                    ...parsedData.userFeed[postId].profileProjects[projectId]
-                      .projectPosts[postId].cheering,
+                    ...parsedData.userFeed[postId].profileExhibits[exhibitId]
+                      .exhibitPosts[postId].cheering,
                     ExhibitUId,
                   ],
                 },
@@ -1233,19 +1233,19 @@ export const cheerOwnProfilePost = (
       };
 
       Object.entries(parsedData.userFeed).map(([id, value]) => {
-        Object.entries(parsedData.userFeed[id].profileProjects).map(
+        Object.entries(parsedData.userFeed[id].profileExhibits).map(
           ([projId, value]) => {
             if (
               Object.keys(
-                parsedData.userFeed[id].profileProjects[projId].projectPosts
+                parsedData.userFeed[id].profileExhibits[projId].exhibitPosts
               ).includes(postId) &&
               postId !== id
             ) {
-              parsedData.userFeed[id].profileProjects[projId].projectPosts[
+              parsedData.userFeed[id].profileExhibits[projId].exhibitPosts[
                 postId
               ].numberOfCheers = parsedData.userFeed[postId].numberOfCheers;
               Object.assign(
-                parsedData.userFeed[id].profileProjects[projId].projectPosts[
+                parsedData.userFeed[id].profileExhibits[projId].exhibitPosts[
                   postId
                 ].cheering,
                 parsedData.userFeed[postId].cheering
@@ -1262,18 +1262,18 @@ export const cheerOwnProfilePost = (
     await dispatch({
       type: CHEER_OWN_PROFILE_POST,
       ExhibitUId,
-      projectId,
+      exhibitId,
       postId,
     });
 
-    await dispatch({ type: CHEER_UPDATE_POSTS, projectId, postId });
+    await dispatch({ type: CHEER_UPDATE_POSTS, exhibitId, postId });
   };
 };
 
 export const uncheerPost = (
   localId: string,
   ExhibitUId: string,
-  projectId: string,
+  exhibitId: string,
   postId: string,
   posterExhibitUId: string
 ) => {
@@ -1281,7 +1281,7 @@ export const uncheerPost = (
     const uncheeringForm = {
       localId,
       ExhibitUId,
-      projectId,
+      exhibitId,
       postId,
       posterExhibitUId,
     };
@@ -1298,17 +1298,17 @@ export const uncheerPost = (
           parsedData.userFeed[postId].cheering.indexOf(ExhibitUId),
           1
         );
-        parsedData.userFeed[postId].profileProjects[projectId].projectPosts[
+        parsedData.userFeed[postId].profileExhibits[exhibitId].exhibitPosts[
           postId
         ].cheering.splice(
-          parsedData.userFeed[postId].profileProjects[projectId].projectPosts[
+          parsedData.userFeed[postId].profileExhibits[exhibitId].exhibitPosts[
             postId
           ].cheering.indexOf(ExhibitUId),
           1
         );
 
         parsedData.userFeed[postId].numberOfCheers -= 1;
-        parsedData.userFeed[postId].profileProjects[projectId].projectPosts[
+        parsedData.userFeed[postId].profileExhibits[exhibitId].exhibitPosts[
           postId
         ].numberOfCheers -= 1;
 
@@ -1318,19 +1318,19 @@ export const uncheerPost = (
         );
 
         Object.entries(parsedData.userFeed).map(([id, value]) => {
-          Object.entries(parsedData.userFeed[id].profileProjects).map(
+          Object.entries(parsedData.userFeed[id].profileExhibits).map(
             ([projId, value]) => {
               if (
                 Object.keys(
-                  parsedData.userFeed[id].profileProjects[projId].projectPosts
+                  parsedData.userFeed[id].profileExhibits[projId].exhibitPosts
                 ).includes(postId) &&
                 postId !== id
               ) {
-                parsedData.userFeed[id].profileProjects[projId].projectPosts[
+                parsedData.userFeed[id].profileExhibits[projId].exhibitPosts[
                   postId
                 ].numberOfCheers = parsedData.userFeed[postId].numberOfCheers;
                 Object.assign(
-                  parsedData.userFeed[id].profileProjects[projId].projectPosts[
+                  parsedData.userFeed[id].profileExhibits[projId].exhibitPosts[
                     postId
                   ].cheering,
                   parsedData.userFeed[postId].cheering
@@ -1347,31 +1347,31 @@ export const uncheerPost = (
     await dispatch({
       type: UNCHEER_POST,
       ExhibitUId,
-      projectId,
+      exhibitId,
       postId,
     });
 
-    await dispatch({ type: UNCHEER_UPDATE_POSTS, projectId, postId });
+    await dispatch({ type: UNCHEER_UPDATE_POSTS, exhibitId, postId });
   };
 };
 
 export const uncheerOwnFeedPost = (
   ExhibitUId: string,
-  projectId: string,
+  exhibitId: string,
   postId: string
 ) => {
   return async (dispatch) => {
     await AsyncStorage.getItem("userDocData").then(async (data) => {
       let parsedData: UserState = JSON.parse(data);
-      parsedData.profileProjects[projectId].projectPosts[
+      parsedData.profileExhibits[exhibitId].exhibitPosts[
         postId
       ].cheering.splice(
-        parsedData.profileProjects[projectId].projectPosts[
+        parsedData.profileExhibits[exhibitId].exhibitPosts[
           postId
         ].cheering.indexOf(ExhibitUId),
         1
       );
-      parsedData.profileProjects[projectId].projectPosts[postId]
+      parsedData.profileExhibits[exhibitId].exhibitPosts[postId]
         .numberOfCheers - 1;
 
       await AsyncStorage.setItem("userDocData", JSON.stringify(parsedData));
@@ -1380,7 +1380,7 @@ export const uncheerOwnFeedPost = (
     await dispatch({
       type: UNCHEER_OWN_FEED_POST,
       ExhibitUId,
-      projectId,
+      exhibitId,
       postId,
     });
   };
@@ -1389,7 +1389,7 @@ export const uncheerOwnFeedPost = (
 export const uncheerOwnProfilePost = (
   localId: string,
   ExhibitUId: string,
-  projectId: string,
+  exhibitId: string,
   postId: string,
   posterExhibitUId: string
 ) => {
@@ -1397,7 +1397,7 @@ export const uncheerOwnProfilePost = (
     const uncheeringForm = {
       localId,
       ExhibitUId,
-      projectId,
+      exhibitId,
       postId,
       posterExhibitUId,
     };
@@ -1409,18 +1409,18 @@ export const uncheerOwnProfilePost = (
 
     await AsyncStorage.getItem("userDocData").then(async (data) => {
       let parsedData: UserState = JSON.parse(data);
-      parsedData.profileProjects = {
-        ...parsedData.profileProjects,
-        [projectId]: {
-          ...parsedData.profileProjects[projectId],
-          projectPosts: {
-            ...parsedData.profileProjects[projectId].projectPosts,
+      parsedData.profileExhibits = {
+        ...parsedData.profileExhibits,
+        [exhibitId]: {
+          ...parsedData.profileExhibits[exhibitId],
+          exhibitPosts: {
+            ...parsedData.profileExhibits[exhibitId].exhibitPosts,
             [postId]: {
-              ...parsedData.profileProjects[projectId].projectPosts[postId],
+              ...parsedData.profileExhibits[exhibitId].exhibitPosts[postId],
               numberOfCheers:
-                parsedData.profileProjects[projectId].projectPosts[postId]
+                parsedData.profileExhibits[exhibitId].exhibitPosts[postId]
                   .numberOfCheers - 1,
-              cheering: parsedData.profileProjects[projectId].projectPosts[
+              cheering: parsedData.profileExhibits[exhibitId].exhibitPosts[
                 postId
               ].cheering.filter(
                 (listExhibitUId) => listExhibitUId !== ExhibitUId
@@ -1433,22 +1433,22 @@ export const uncheerOwnProfilePost = (
         ...parsedData.userFeed,
         [postId]: {
           ...parsedData.userFeed[postId],
-          profileProjects: {
-            ...parsedData.userFeed[postId].profileProjects,
-            [projectId]: {
-              ...parsedData.userFeed[postId].profileProjects[projectId],
-              projectPosts: {
-                ...parsedData.userFeed[postId].profileProjects[projectId]
-                  .projectPosts,
+          profileExhibits: {
+            ...parsedData.userFeed[postId].profileExhibits,
+            [exhibitId]: {
+              ...parsedData.userFeed[postId].profileExhibits[exhibitId],
+              exhibitPosts: {
+                ...parsedData.userFeed[postId].profileExhibits[exhibitId]
+                  .exhibitPosts,
                 [postId]: {
-                  ...parsedData.userFeed[postId].profileProjects[projectId]
-                    .projectPosts[postId],
+                  ...parsedData.userFeed[postId].profileExhibits[exhibitId]
+                    .exhibitPosts[postId],
                   numberOfCheers:
-                    parsedData.userFeed[postId].profileProjects[projectId]
-                      .projectPosts[postId].numberOfCheers - 1,
-                  cheering: parsedData.userFeed[postId].profileProjects[
-                    projectId
-                  ].projectPosts[postId].cheering.filter(
+                    parsedData.userFeed[postId].profileExhibits[exhibitId]
+                      .exhibitPosts[postId].numberOfCheers - 1,
+                  cheering: parsedData.userFeed[postId].profileExhibits[
+                    exhibitId
+                  ].exhibitPosts[postId].cheering.filter(
                     (listExhibitUId) => listExhibitUId !== ExhibitUId
                   ),
                 },
@@ -1462,19 +1462,19 @@ export const uncheerOwnProfilePost = (
         },
       };
       Object.entries(parsedData.userFeed).map(([id, value]) => {
-        Object.entries(parsedData.userFeed[id].profileProjects).map(
+        Object.entries(parsedData.userFeed[id].profileExhibits).map(
           ([projId, value]) => {
             if (
               Object.keys(
-                parsedData.userFeed[id].profileProjects[projId].projectPosts
+                parsedData.userFeed[id].profileExhibits[projId].exhibitPosts
               ).includes(postId) &&
               postId !== id
             ) {
-              parsedData.userFeed[id].profileProjects[projId].projectPosts[
+              parsedData.userFeed[id].profileExhibits[projId].exhibitPosts[
                 postId
               ].numberOfCheers = parsedData.userFeed[postId].numberOfCheers;
               Object.assign(
-                parsedData.userFeed[id].profileProjects[projId].projectPosts[
+                parsedData.userFeed[id].profileExhibits[projId].exhibitPosts[
                   postId
                 ].cheering,
                 parsedData.userFeed[postId].cheering
@@ -1492,11 +1492,11 @@ export const uncheerOwnProfilePost = (
     await dispatch({
       type: UNCHEER_OWN_PROFILE_POST,
       ExhibitUId,
-      projectId,
+      exhibitId,
       postId,
     });
 
-    await dispatch({ type: UNCHEER_UPDATE_POSTS, projectId, postId });
+    await dispatch({ type: UNCHEER_UPDATE_POSTS, exhibitId, postId });
   };
 };
 
@@ -1533,35 +1533,35 @@ export const changeProfileNumberOfColumns = (
   };
 };
 
-export const changeProjectNumberOfColumns = (
+export const changeExhibitNumberOfColumns = (
   localId: string,
   ExhibitUId: string,
-  projectId: string,
+  exhibitId: string,
   postIds: string[],
   number: number
 ) => {
   return async (dispatch) => {
-    const picture = { localId, ExhibitUId, projectId, postIds, number };
+    const picture = { localId, ExhibitUId, exhibitId, postIds, number };
 
     axios.post(
-      "https://us-central1-showcase-79c28.cloudfunctions.net/changeProjectNumberOfColumns",
+      "https://us-central1-showcase-79c28.cloudfunctions.net/changeExhibitNumberOfColumns",
       picture
     );
 
     await AsyncStorage.getItem("userDocData").then(async (data) => {
       let parsedData: UserState = JSON.parse(data);
-      parsedData.profileProjects = {
-        ...parsedData.profileProjects,
-        [projectId]: {
-          ...parsedData.profileProjects[projectId],
-          projectColumns: number,
+      parsedData.profileExhibits = {
+        ...parsedData.profileExhibits,
+        [exhibitId]: {
+          ...parsedData.profileExhibits[exhibitId],
+          exhibitColumns: number,
         },
       };
 
       if (parsedData.userFeed) {
         Object.entries(parsedData.userFeed).map(([id, value]) => {
           if (parsedData.userFeed[id].ExhibitUId === ExhibitUId) {
-            parsedData.userFeed[id].profileProjects[projectId].projectColumns =
+            parsedData.userFeed[id].profileExhibits[exhibitId].exhibitColumns =
               number;
           }
         });
@@ -1570,7 +1570,7 @@ export const changeProjectNumberOfColumns = (
       await AsyncStorage.setItem("userDocData", JSON.stringify(parsedData));
     });
 
-    dispatch({ type: CHANGE_PROJECT_COLUMNS, ExhibitUId, projectId, number });
+    dispatch({ type: CHANGE_PROJECT_COLUMNS, ExhibitUId, exhibitId, number });
   };
 };
 
@@ -1615,9 +1615,9 @@ export const showcaseProfile = () => {
   };
 };
 
-export const returnFromShowcasing = (value: boolean) => {
+export const returnFromShowcasing = () => {
   return async (dispatch) => {
-    await dispatch({ type: RETURN_FROM_SHOWCASING, value });
+    await dispatch({ type: RETURN_FROM_SHOWCASING });
   };
 };
 

@@ -26,7 +26,7 @@ const TutorialCreateExhibit = (props) => {
 
   const nextTutorialHandler = async () => {
     dispatch(setTutorialing(localId, ExhibitUId, true, "ExhibitCreation"));
-    props.navigation.navigate("AddProject");
+    props.navigation.navigate("AddExhibit");
   };
 
   return (
@@ -54,7 +54,7 @@ const TutorialCreateExhibit = (props) => {
             alignItems: "center",
           }}
         >
-          <TouchableCmp onPress={props.onAddNewProjectPress}>
+          <TouchableCmp onPress={props.onAddNewExhibitPress}>
             <View
               style={{
                 marginTop: 10,

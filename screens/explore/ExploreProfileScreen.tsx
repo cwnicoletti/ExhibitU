@@ -11,7 +11,7 @@ import {
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import ExploreProfileHeader from "../../components/explore/ExploreProfileHeader";
-import ProfileProjectItem from "../../components/projectItems/ProfileProjectItem";
+import ExhibitItem from "../../components/exhibitItems/ExhibitItem";
 import IoniconsHeaderButton from "../../components/UI/header_buttons/IoniconsHeaderButton";
 import SimpleLineIconsHeaderButton from "../../components/UI/header_buttons/SimpleLineIconsHeaderButton";
 import MainHeaderTitle from "../../components/UI/MainHeaderTitle";
@@ -26,8 +26,8 @@ const ExploreProfileScreen = (props) => {
   const darkModeValue = useAppSelector((state) => state.user.darkMode);
   const localId = useAppSelector((state) => state.auth.userId);
   const ExhibitUId = useAppSelector((state) => state.user.ExhibitUId);
-  const projectsAdvocating = useAppSelector(
-    (state) => state.user.projectsAdvocating
+  const exhibitsAdvocating = useAppSelector(
+    (state) => state.user.exhibitsAdvocating
   );
   const tutorialing = useAppSelector((state) => state.user.tutorialing);
   const tutorialScreen = useAppSelector((state) => state.user.tutorialScreen);
@@ -37,29 +37,29 @@ const ExploreProfileScreen = (props) => {
       ? props.navigation.getParam("exploreData")
       : {}
   );
-  // Empty dict if user doesn't have any projects yet
-  exploredUserData.profileProjects = exploredUserData.profileProjects
-    ? exploredUserData.profileProjects
+  // Empty dict if user doesn't have any exhibits yet
+  exploredUserData.profileExhibits = exploredUserData.profileExhibits
+    ? exploredUserData.profileExhibits
     : {};
 
   if (
     tutorialing &&
     (tutorialScreen === "ExploreScreen" ||
       tutorialScreen === "ExploreProfile" ||
-      tutorialScreen === "ExploreProject")
+      tutorialScreen === "ExploreExhibit")
   ) {
-    exploredUserData.profileProjects = {
+    exploredUserData.profileExhibits = {
       ["randomId121334"]: {
-        projectPosts: {
+        exhibitPosts: {
           ["randomId121334h"]: {
             ExhibitUId: ExhibitUId,
-            projectId: "randomId121334",
+            exhibitId: "randomId121334",
             postId: "randomId121334h",
             fullname: "test",
             username: "test",
             jobTitle: "test",
             profileBiography: "test",
-            profileProjects: {},
+            profileExhibits: {},
             profilePictureUrl: "test",
             postPhotoUrl:
               "https://camo.githubusercontent.com/9aea0a68fd10f943a82ce8a434f6c126296568fdf17d0cc914d40a4feb4a9f10/68747470733a2f2f7265732e636c6f7564696e6172792e636f6d2f706572736f6e616c757365313233342f696d6167652f75706c6f61642f76313631373231353939392f436f43726561746f727765626170705f6c7a716e696e2e706e67",
@@ -74,22 +74,22 @@ const ExploreProfileScreen = (props) => {
             },
           },
         },
-        projectTitle: "Sample Exhibit",
-        projectDescription:
+        exhibitTitle: "Sample Exhibit",
+        exhibitDescription:
           "I've been working on a really cool web application!",
-        projectCoverPhotoUrl:
-          "https://res.cloudinary.com/showcase-79c28/image/upload/v1626117054/project_pic_ysb6uu.png",
-        projectCoverPhotoBase64: "",
-        projectDateCreated: {
+        exhibitCoverPhotoUrl:
+          "https://res.cloudinary.com/showcase-79c28/image/upload/v1626117054/exhibit_pic_ysb6uu.png",
+        exhibitCoverPhotoBase64: "",
+        exhibitDateCreated: {
           _seconds: 7654757,
           _minutes: 7654757,
         },
-        projectLastUpdated: {
+        exhibitLastUpdated: {
           _seconds: 7654757,
           _minutes: 7654757,
         },
-        projectLinks: {},
-        projectColumns: 2,
+        exhibitLinks: {},
+        exhibitColumns: 2,
       },
     };
     exploredUserData.profileBiography = exploredUserData.profileBiography
@@ -145,13 +145,15 @@ const ExploreProfileScreen = (props) => {
       : 0;
   }
 
-  const [profileProjectsState, setProfileProjectsState] = useState(
-    Object.values(exploredUserData.profileProjects).sort((first, second) => {
-      return (
-        second["projectDateCreated"]["_seconds"] -
-        first["projectDateCreated"]["_seconds"]
-      );
-    })
+  const [profileExhibitsState, setProfileExhibitsState] = useState(
+    Object.values(exploredUserData.profileExhibits).sort(
+      (first: string, second: string) => {
+        return (
+          second["exhibitDateCreated"]["_seconds"] -
+          first["exhibitDateCreated"]["_seconds"]
+        );
+      }
+    )
   );
 
   const [isfollowing, setIsFollowing] = useState(
@@ -242,7 +244,7 @@ const ExploreProfileScreen = (props) => {
       responses.hits.forEach((hit) => {
         if (hit.objectID === exploredUserData.exploredExhibitUId) {
           const exploredUserDataNewState = exploredUserData;
-          exploredUserDataNewState.profileProjects = hit.profileProjects;
+          exploredUserDataNewState.profileExhibits = hit.profileExhibits;
           exploredUserDataNewState.profileBiography = hit.profileBiography;
           exploredUserDataNewState.following = hit.following;
           exploredUserDataNewState.followers = hit.followers;
@@ -308,27 +310,27 @@ const ExploreProfileScreen = (props) => {
       setIsAdvocating(true);
       setExploredUserData(exploredUserDataNewState);
     }
-  }, [projectsAdvocating]);
+  }, [exhibitsAdvocating]);
 
-  const viewProjectHandler = (
-    projectTitle,
-    projectCoverPhotoUrl,
-    projectDescription,
-    projectPictures,
-    projectLinks,
-    projectPosts,
-    projectId,
-    projectColumns
+  const viewExhibitHandler = (
+    exhibitTitle,
+    exhibitCoverPhotoUrl,
+    exhibitDescription,
+    exhibitPictures,
+    exhibitLinks,
+    exhibitPosts,
+    exhibitId,
+    exhibitColumns
   ) => {
-    props.navigation.push("ViewExploredProfileProject", {
-      projectTitle,
-      projectCoverPhotoUrl,
-      projectDescription,
-      projectPictures,
-      projectLinks,
-      projectPosts,
-      projectId,
-      projectColumns,
+    props.navigation.push("ViewExploredProfileExhibit", {
+      exhibitTitle,
+      exhibitCoverPhotoUrl,
+      exhibitDescription,
+      exhibitPictures,
+      exhibitLinks,
+      exhibitPosts,
+      exhibitId,
+      exhibitColumns,
       exploredUserData: exploredUserData,
     });
   };
@@ -396,12 +398,12 @@ const ExploreProfileScreen = (props) => {
     >
       {tutorialing &&
       (tutorialScreen === "ExploreProfile" ||
-        tutorialScreen === "ExploreProject") ? (
+        tutorialScreen === "ExploreExhibit") ? (
         <TutorialExploreProfile ExhibitUId={ExhibitUId} localId={localId} />
       ) : null}
       <FlatList<any>
-        data={profileProjectsState}
-        keyExtractor={(item) => item.projectId}
+        data={profileExhibitsState}
+        keyExtractor={(item) => item.exhibitId}
         ListHeaderComponent={topHeader()}
         refreshControl={
           <RefreshControl
@@ -412,10 +414,10 @@ const ExploreProfileScreen = (props) => {
         }
         numColumns={exploredUserData.profileColumns}
         renderItem={(itemData) => (
-          <ProfileProjectItem
-            image={itemData.item.projectCoverPhotoUrl}
-            title={itemData.item.projectTitle}
-            projectContainer={{
+          <ExhibitItem
+            image={itemData.item.exhibitCoverPhotoUrl}
+            title={itemData.item.exhibitTitle}
+            exhibitContainer={{
               backgroundColor: darkModeValue ? "black" : "white",
               borderColor: darkModeValue ? "gray" : "#c9c9c9",
             }}
@@ -423,15 +425,15 @@ const ExploreProfileScreen = (props) => {
               color: darkModeValue ? "white" : "black",
             }}
             onSelect={() => {
-              viewProjectHandler(
-                itemData.item.projectTitle,
-                itemData.item.projectCoverPhotoUrl,
-                itemData.item.projectDescription,
-                itemData.item.projectPictures,
-                itemData.item.projectLinks,
-                itemData.item.projectPosts,
-                itemData.item.projectId,
-                itemData.item.projectColumns
+              viewExhibitHandler(
+                itemData.item.exhibitTitle,
+                itemData.item.exhibitCoverPhotoUrl,
+                itemData.item.exhibitDescription,
+                itemData.item.exhibitPictures,
+                itemData.item.exhibitLinks,
+                itemData.item.exhibitPosts,
+                itemData.item.exhibitId,
+                itemData.item.exhibitColumns
               );
             }}
           />

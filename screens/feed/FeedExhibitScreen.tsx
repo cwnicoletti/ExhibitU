@@ -2,18 +2,18 @@ import React, { useEffect, useState } from "react";
 import { FlatList, Platform, StyleSheet, Text, View } from "react-native";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import { useAppSelector } from "../../hooks";
-import FeedProjectHeader from "../../components/feed/FeedProjectHeader";
+import FeedExhibitHeader from "../../components/feed/FeedExhibitHeader";
 import IoniconsHeaderButton from "../../components/UI/header_buttons/IoniconsHeaderButton";
 import useDidMountEffect from "../../helper/useDidMountEffect";
-import ProjectPictures from "../../components/UI/ProjectPictures";
+import ExhibitPictures from "../../components/UI/ExhibitPictures";
 import MainHeaderTitle from "../../components/UI/MainHeaderTitle";
 
-const FeedProjectScreen = (props) => {
+const FeedExhibitScreen = (props) => {
   const darkModeValue = useAppSelector((state) => state.user.darkMode);
   const ExhibitUId = useAppSelector((state) => state.user.ExhibitUId);
-  const projectId = props.navigation.getParam("projectId");
+  const exhibitId = props.navigation.getParam("exhibitId");
   let userData = props.navigation.getParam("userData");
-  userData.projectLinks = userData.projectLinks ? userData.projectLinks : {};
+  userData.exhibitLinks = userData.exhibitLinks ? userData.exhibitLinks : {};
 
   userData =
     userData.ExhibitUId === ExhibitUId
@@ -32,9 +32,9 @@ const FeedProjectScreen = (props) => {
           profileBiography: useAppSelector(
             (state) => state.user.profileBiography
           ),
-          profileProjects: useAppSelector((state) => state.user.profileProjects)
-            ? useAppSelector((state) => state.user.profileProjects)
-            : props.navigation.getParam("profileProjects"),
+          profileExhibits: useAppSelector((state) => state.user.profileExhibits)
+            ? useAppSelector((state) => state.user.profileExhibits)
+            : props.navigation.getParam("profileExhibits"),
           numberOfAdvocates: useAppSelector(
             (state) => state.user.numberOfAdvocates
           ),
@@ -50,12 +50,12 @@ const FeedProjectScreen = (props) => {
         }
       : userData;
 
-  const project: object | any = Object.values(userData.profileProjects).find(
-    (project: string | any) => project.projectId === projectId
+  const exhibit: object | any = Object.values(userData.profileExhibits).find(
+    (exhibit: string | any) => exhibit.exhibitId === exhibitId
   );
 
-  const [projectPostsState, setProjectPostsState] = useState(
-    Object.values(project.projectPosts).sort((first, second) => {
+  const [exhibitPostsState, setExhibitPostsState] = useState(
+    Object.values(exhibit.exhibitPosts).sort((first: string, second: string) => {
       return (
         second["postDateCreated"]["_seconds"] -
         first["postDateCreated"]["_seconds"]
@@ -70,7 +70,7 @@ const FeedProjectScreen = (props) => {
 
   const viewCommentsHandler = (
     ExhibitUId,
-    projectId,
+    exhibitId,
     postId,
     fullname,
     username,
@@ -91,7 +91,7 @@ const FeedProjectScreen = (props) => {
     postDateCreated
   ) => {
     props.navigation.navigate("ViewComments", {
-      projectId,
+      exhibitId,
       userData: {
         ExhibitUId,
         postId,
@@ -111,7 +111,7 @@ const FeedProjectScreen = (props) => {
         hideAdvocates,
         profileColumns,
         postLinks,
-        profileProjects: userData.profileProjects,
+        profileExhibits: userData.profileExhibits,
         profilePictureBase64: userData.profilePictureBase64
           ? userData.profilePictureBase64
           : userData.profilePictureUrl,
@@ -130,34 +130,34 @@ const FeedProjectScreen = (props) => {
 
   useDidMountEffect(() => {
     // Sort the array based on the second element
-    setProjectPostsState(
-      Object.values(project.projectPosts).sort((first, second) => {
+    setExhibitPostsState(
+      Object.values(exhibit.exhibitPosts).sort((first: string, second: string) => {
         return (
           second["postDateCreated"]["_seconds"] -
           first["postDateCreated"]["_seconds"]
         );
       })
     );
-  }, [project.projectPosts]);
+  }, [exhibit.exhibitPosts]);
 
   const topHeader = () => {
     return (
-      <FeedProjectHeader
+      <FeedExhibitHeader
         containerStyle={{
           borderBottomColor: darkModeValue ? "white" : "black",
         }}
         imgSource={
-          project.projectCoverPhotoBase64
-            ? project.projectCoverPhotoBase64
-            : project.projectCoverPhotoUrl
+          exhibit.exhibitCoverPhotoBase64
+            ? exhibit.exhibitCoverPhotoBase64
+            : exhibit.exhibitCoverPhotoUrl
         }
         descriptionStyle={{
           ...styles.profileDescriptionStyle,
           color: darkModeValue ? "white" : "black",
         }}
-        title={project.projectTitle}
-        description={project.projectDescription}
-        links={userData.projectLinks}
+        title={exhibit.exhibitTitle}
+        description={exhibit.exhibitDescription}
+        links={userData.exhibitLinks}
       />
     );
   };
@@ -170,30 +170,30 @@ const FeedProjectScreen = (props) => {
       }}
     >
       <FlatList<any>
-        data={projectPostsState}
+        data={exhibitPostsState}
         keyExtractor={(item) => item.postId}
         ListHeaderComponent={topHeader()}
-        numColumns={project.projectColumns}
+        numColumns={exhibit.exhibitColumns}
         renderItem={(itemData) => (
-          <ProjectPictures
+          <ExhibitPictures
             image={
               itemData.item.postPhotoBase64
                 ? itemData.item.postPhotoBase64
                 : itemData.item.postPhotoUrl
             }
-            projectContainer={{
+            exhibitContainer={{
               backgroundColor: darkModeValue ? "black" : "white",
               width:
-                project.projectColumns === 1
+                exhibit.exhibitColumns === 1
                   ? "100%"
-                  : project.projectColumns === 2
+                  : exhibit.exhibitColumns === 2
                   ? "50%"
-                  : project.projectColumns === 3
+                  : exhibit.exhibitColumns === 3
                   ? "33.33%"
-                  : project.projectColumns === 4
+                  : exhibit.exhibitColumns === 4
                   ? "25%"
                   : "25%",
-              aspectRatio: project.projectColumns === 1 ? null : 3 / 3,
+              aspectRatio: exhibit.exhibitColumns === 1 ? null : 3 / 3,
             }}
             titleStyle={{
               color: darkModeValue ? "white" : "black",
@@ -201,7 +201,7 @@ const FeedProjectScreen = (props) => {
             onSelect={() =>
               viewCommentsHandler(
                 itemData.item.ExhibitUId,
-                itemData.item.projectId,
+                itemData.item.exhibitId,
                 itemData.item.postId,
                 itemData.item.fullname,
                 itemData.item.username,
@@ -231,7 +231,7 @@ const FeedProjectScreen = (props) => {
   );
 };
 
-FeedProjectScreen.navigationOptions = (navData) => {
+FeedExhibitScreen.navigationOptions = (navData) => {
   const darkModeValue = navData.navigation.getParam("darkMode");
 
   return {
@@ -277,4 +277,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default FeedProjectScreen;
+export default FeedExhibitScreen;

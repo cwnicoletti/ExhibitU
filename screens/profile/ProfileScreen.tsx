@@ -11,7 +11,7 @@ import {
   TouchableNativeFeedback,
 } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import ProjectItem from "../../components/projectItems/ProfileProjectItem";
+import ExhibitItem from "../../components/exhibitItems/ExhibitItem";
 import TutorialPrompt from "../../components/tutorial/TutorialPrompt";
 import TutorialStart from "../../components/tutorial/TutorialStart";
 import TutorialCreateExhibit from "../../components/tutorial/TutorialCreateExhibit";
@@ -59,24 +59,24 @@ const ProfileScreen = (props) => {
     jobTitle: useAppSelector((state) => state.user.jobTitle),
     profileBiography: useAppSelector((state) => state.user.profileBiography),
     profileLinks: useAppSelector((state) => state.user.profileLinks),
-    profileProjects: useAppSelector((state) => state.user.profileProjects),
+    profileExhibits: useAppSelector((state) => state.user.profileExhibits),
   };
 
-  const [profileProjectsState, setProfileProjectsState] = useState(
-    Object.values(userData.profileProjects).sort(
+  const [profileExhibitsState, setProfileExhibitsState] = useState(
+    Object.values(userData.profileExhibits).sort(
       (first: string, second: string) => {
         return (
-          second["projectDateCreated"]["_seconds"] -
-          first["projectDateCreated"]["_seconds"]
+          second["exhibitDateCreated"]["_seconds"] -
+          first["exhibitDateCreated"]["_seconds"]
         );
       }
     )
   );
 
   let postIds: string[] = [];
-  for (const projectId of Object.keys(userData.profileProjects)) {
+  for (const exhibitId of Object.keys(userData.profileExhibits)) {
     for (const postId of Object.keys(
-      userData.profileProjects[projectId].projectPosts
+      userData.profileExhibits[exhibitId].exhibitPosts
     )) {
       postIds.push(postId);
     }
@@ -105,10 +105,10 @@ const ProfileScreen = (props) => {
     }).start();
   };
 
-  const viewProjectHandler = (projectId: string) => {
+  const viewExhibitHandler = (exhibitId: string) => {
     dispatch(offScreen("Profile"));
-    props.navigation.push("ViewProfileProject", {
-      projectId,
+    props.navigation.push("ViewProfileExhibit", {
+      exhibitId,
     });
   };
 
@@ -144,17 +144,17 @@ const ProfileScreen = (props) => {
 
   useDidMountEffect(() => {
     // Sort the array based on the second element
-    setProfileProjectsState(
-      Object.values(userData.profileProjects).sort(
+    setProfileExhibitsState(
+      Object.values(userData.profileExhibits).sort(
         (first: string, second: string) => {
           return (
-            second["projectDateCreated"]["_seconds"] -
-            first["projectDateCreated"]["_seconds"]
+            second["exhibitDateCreated"]["_seconds"] -
+            first["exhibitDateCreated"]["_seconds"]
           );
         }
       )
     );
-  }, [userData.profileProjects]);
+  }, [userData.profileExhibits]);
 
   useDidMountEffect(() => {
     if (showcasingProfile === false) {
@@ -169,8 +169,8 @@ const ProfileScreen = (props) => {
     profileFlatlist.current.scrollToOffset({ animated: true, offset: 0 });
   }, [resetScrollProfile]);
 
-  function getData(profileProjectsState) {
-    return profileProjectsState;
+  function getData(profileExhibitsState) {
+    return profileExhibitsState;
   }
 
   function topHeader() {
@@ -203,7 +203,7 @@ const ProfileScreen = (props) => {
         }}
         onEditProfilePress={() => props.navigation.navigate("EditProfile")}
         description={userData.profileBiography}
-        onAddNewProjectPress={() => props.navigation.navigate("AddProject")}
+        onAddNewExhibitPress={() => props.navigation.navigate("AddExhibit")}
         followersOnPress={() =>
           props.navigation.navigate("Followers", {
             ExhibitUId: userData.ExhibitUId,
@@ -286,12 +286,12 @@ const ProfileScreen = (props) => {
       {tutorialing &&
       !tutorialPrompt &&
       (tutorialScreen === "TutorialEnd" ||
-        tutorialScreen === "ExploreProject") ? (
+        tutorialScreen === "ExploreExhibit") ? (
         <TutorialEnd ExhibitUId={ExhibitUId} localId={localId} />
       ) : null}
       <FlatList<Object | any>
-        data={getData(profileProjectsState)}
-        keyExtractor={(item) => item.projectId}
+        data={getData(profileExhibitsState)}
+        keyExtractor={(item) => item.exhibitId}
         key={profileColumns}
         ListHeaderComponent={topHeader()}
         refreshControl={
@@ -304,10 +304,10 @@ const ProfileScreen = (props) => {
         ref={profileFlatlist}
         numColumns={profileColumns}
         renderItem={(itemData) => (
-          <ProjectItem
-            image={itemData.item.projectCoverPhotoBase64}
-            title={itemData.item.projectTitle}
-            projectContainer={{
+          <ExhibitItem
+            image={itemData.item.exhibitCoverPhotoBase64}
+            title={itemData.item.exhibitTitle}
+            exhibitContainer={{
               backgroundColor: darkModeValue ? "black" : "white",
               borderColor: darkModeValue ? "gray" : "#c9c9c9",
             }}
@@ -315,7 +315,7 @@ const ProfileScreen = (props) => {
               color: darkModeValue ? "white" : "black",
             }}
             onSelect={() => {
-              viewProjectHandler(itemData.item.projectId);
+              viewExhibitHandler(itemData.item.exhibitId);
             }}
           />
         )}

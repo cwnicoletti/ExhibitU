@@ -78,7 +78,7 @@ const SignupScreen2 = (props) => {
         signup(email, fullname, username, formState.inputValues.password)
       );
       await setIsLoading(false);
-      await props.navigation.navigate("Project");
+      await props.navigation.navigate("Exhibit");
     } else {
       await setIsLoading(false);
     }

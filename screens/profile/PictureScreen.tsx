@@ -11,14 +11,14 @@ import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import IoniconsHeaderButton from "../../components/UI/header_buttons/IoniconsHeaderButton";
 import MainHeaderTitle from "../../components/UI/MainHeaderTitle";
-import ProfileProjectPostView from "../../components/user/ProfileProjectPostView";
+import ProfileExhibitPostView from "../../components/user/ProfileExhibitPostView";
 import { uploadRemovePost } from "../../store/actions/user/user";
 
 const PictureScreen = (props) => {
   const dispatch = useAppDispatch();
   const darkModeValue = useAppSelector((state) => state.user.darkMode);
   const localId = useAppSelector((state) => state.auth.userId);
-  const profileProjects = useAppSelector((state) => state.user.profileProjects);
+  const profileExhibits = useAppSelector((state) => state.user.profileExhibits);
   const profilePictureUrl = useAppSelector(
     (state) => state.user.profilePictureUrl
   );
@@ -26,7 +26,7 @@ const PictureScreen = (props) => {
     (state) => state.user.profilePictureBase64
   );
   const ExhibitUId = props.navigation.getParam("ExhibitUId");
-  const projectId = props.navigation.getParam("projectId");
+  const exhibitId = props.navigation.getParam("exhibitId");
   const postId = props.navigation.getParam("postId");
   const fullname = props.navigation.getParam("fullname");
   const username = props.navigation.getParam("username");
@@ -49,7 +49,7 @@ const PictureScreen = (props) => {
   const viewCheeringHandler = () => {
     props.navigation.push("CheeringScreen", {
       ExhibitUId: ExhibitUId,
-      projectId: projectId,
+      exhibitId: exhibitId,
       postId: postId,
       numberOfCheers: numberOfCheers,
     });
@@ -57,31 +57,31 @@ const PictureScreen = (props) => {
 
   const viewProfileHandler = (
     ExhibitUId,
-    projectId,
+    exhibitId,
     fullname,
     username,
     jobTitle,
     profileBiography,
-    profileProjects,
+    profileExhibits,
     profilePictureUrl
   ) => {
     props.navigation.push("ExhibitUProfile", {
       ExhibitUId,
-      projectId,
+      exhibitId,
       fullname,
       username,
       jobTitle,
       profileBiography,
-      profileProjects,
+      profileExhibits,
       profilePictureUrl,
     });
   };
 
   const deleteHandler = useCallback(async () => {
-    dispatch(uploadRemovePost(ExhibitUId, localId, projectId, postId));
+    dispatch(uploadRemovePost(ExhibitUId, localId, exhibitId, postId));
 
-    props.navigation.navigate("ViewProfileProject", {
-      projectId: projectId,
+    props.navigation.navigate("ViewProfileExhibit", {
+      exhibitId: exhibitId,
     });
   }, [dispatch]);
 
@@ -102,7 +102,7 @@ const PictureScreen = (props) => {
         backgroundColor: darkModeValue ? "black" : "white",
       }}
     >
-      <ProfileProjectPostView
+      <ProfileExhibitPostView
         image={postPhotoBase64}
         descriptionStyle={{
           color: darkModeValue ? "white" : "black",
@@ -113,7 +113,7 @@ const PictureScreen = (props) => {
         numberOfComments={numberOfComments}
         links={links}
         postId={postId}
-        projectId={projectId}
+        exhibitId={exhibitId}
         postDateCreated={postDateCreated}
         nameStyle={{
           color: darkModeValue ? "white" : "black",
@@ -121,7 +121,7 @@ const PictureScreen = (props) => {
         usernameStyle={{
           color: darkModeValue ? "white" : "black",
         }}
-        projectContainer={{
+        exhibitContainer={{
           borderColor: darkModeValue ? "#616161" : "#e8e8e8",
         }}
         titleContainer={{
@@ -141,7 +141,7 @@ const PictureScreen = (props) => {
           color: "white",
         }}
         nameTitleColors={["rgba(0,0,0,1)", "rgba(0,0,0,0.00)"]}
-        projectTitleColors={["rgba(0,0,0,0.00)", "rgba(0,0,0,1)"]}
+        exhibitTitleColors={["rgba(0,0,0,0.00)", "rgba(0,0,0,1)"]}
         pictureCheerContainer={{
           backgroundColor: darkModeValue ? "#121212" : "white",
         }}
@@ -170,12 +170,12 @@ const PictureScreen = (props) => {
         onSelectProfile={() => {
           viewProfileHandler(
             ExhibitUId,
-            projectId,
+            exhibitId,
             fullname,
             username,
             jobTitle,
             profileBiography,
-            profileProjects,
+            profileExhibits,
             profilePictureUrl
           );
         }}

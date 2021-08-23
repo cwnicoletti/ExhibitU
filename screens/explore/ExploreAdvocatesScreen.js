@@ -19,7 +19,7 @@ import IoniconsHeaderButton from "../../components/UI/header_buttons/IoniconsHea
 const ExploreAdvocatesScreen = (props) => {
   const darkModeValue = useAppSelector((state) => state.user.darkMode);
   const [returnedIndex, setReturnedIndex] = useState([]);
-  const [projects, setProjects] = useState({});
+  const [exhibits, setExhibits] = useState({});
   const [search, setSearch] = useState("");
   const [isRefreshing, setIsRefreshing] = useState(false);
   const exploredExhibitUId = props.navigation.getParam("exploredExhibitUId");
@@ -39,10 +39,10 @@ const ExploreAdvocatesScreen = (props) => {
       const advocates = responses.hits.find(
         (object) => object.objectID === exploredExhibitUId
       ).advocates;
-      const projects = responses.hits.find(
+      const exhibits = responses.hits.find(
         (object) => object.objectID === exploredExhibitUId
-      ).profileProjects;
-      setProjects(projects);
+      ).profileExhibits;
+      setExhibits(exhibits);
       const filteredIndex = responses.hits.filter((object) =>
         advocates.includes(object.objectID)
       );
@@ -61,10 +61,10 @@ const ExploreAdvocatesScreen = (props) => {
       const advocates = responses.hits.find(
         (object) => object.objectID === exploredExhibitUId
       ).advocates;
-      const projects = responses.hits.find(
+      const exhibits = responses.hits.find(
         (object) => object.objectID === exploredExhibitUId
-      ).profileProjects;
-      setProjects(projects);
+      ).profileExhibits;
+      setExhibits(exhibits);
       const filteredIndex = responses.hits.filter((object) =>
         advocates.includes(object.objectID)
       );
@@ -100,9 +100,9 @@ const ExploreAdvocatesScreen = (props) => {
     followers,
     following,
     advocates,
-    profileProjects,
+    profileExhibits,
     profileLinks,
-    projectLinks,
+    exhibitLinks,
     profileColumns,
     showCheering
   ) => {
@@ -124,9 +124,9 @@ const ExploreAdvocatesScreen = (props) => {
         followers,
         following,
         advocates,
-        profileProjects,
+        profileExhibits,
         profileLinks,
-        projectLinks,
+        exhibitLinks,
         profileColumns,
         showCheering,
       },
@@ -202,9 +202,9 @@ const ExploreAdvocatesScreen = (props) => {
             fullname={itemData.item.fullname}
             jobTitle={itemData.item.jobTitle}
             username={itemData.item.username}
-            projects={projects}
-            projectsAdvocating={itemData.item.projectsAdvocating}
-            projectContainer={{
+            exhibits={exhibits}
+            exhibitsAdvocating={itemData.item.exhibitsAdvocating}
+            exhibitContainer={{
               backgroundColor: darkModeValue ? "black" : "white",
               borderColor: darkModeValue ? "gray" : "#c9c9c9",
             }}
@@ -235,9 +235,9 @@ const ExploreAdvocatesScreen = (props) => {
                 itemData.item.followers,
                 itemData.item.following,
                 itemData.item.advocates,
-                itemData.item.profileProjects,
+                itemData.item.profileExhibits,
                 itemData.item.profileLinks,
-                itemData.item.projectLinks,
+                itemData.item.exhibitLinks,
                 itemData.item.profileColumns,
                 itemData.item.showCheering
               );

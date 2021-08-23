@@ -86,9 +86,9 @@ const FollowingScreen = (props) => {
     followers,
     following,
     advocates,
-    profileProjects,
+    profileExhibits,
     profileLinks,
-    projectLinks,
+    exhibitLinks,
     profileColumns,
     showCheering
   ) => {
@@ -108,9 +108,9 @@ const FollowingScreen = (props) => {
       followers,
       following,
       advocates,
-      profileProjects,
+      profileExhibits,
       profileLinks,
-      projectLinks,
+      exhibitLinks,
       profileColumns,
       showCheering,
     });
@@ -185,7 +185,7 @@ const FollowingScreen = (props) => {
             fullname={itemData.item.fullname}
             username={itemData.item.username}
             jobTitle={itemData.item.jobTitle}
-            projectContainer={{
+            exhibitContainer={{
               backgroundColor: darkModeValue ? "black" : "white",
               borderColor: darkModeValue ? "gray" : "#c9c9c9",
             }}
@@ -212,9 +212,9 @@ const FollowingScreen = (props) => {
                 itemData.item.followers,
                 itemData.item.following,
                 itemData.item.advocates,
-                itemData.item.profileProjects,
+                itemData.item.profileExhibits,
                 itemData.item.profileLinks,
-                itemData.item.projectLinks,
+                itemData.item.exhibitLinks,
                 itemData.item.profileColumns,
                 itemData.item.showCheering
               );

@@ -5,7 +5,7 @@ import { useAppSelector } from "../../hooks";
 import LinkButton from "../UI/LinkButton";
 import { AnimatedGradient } from "../custom/AnimatedGradient/AnimatedGradient";
 
-const FeedProjectHeader = (props) => {
+const FeedExhibitHeader = (props) => {
   const darkModeValue = useAppSelector((state) => state.user.darkMode);
   const [imageIsLoading, setImageIsLoading] = useState(true);
   const [greyColorValues, setGreyColorValues] = useState([
@@ -105,4 +105,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default FeedProjectHeader;
+export default FeedExhibitHeader;

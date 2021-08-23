@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useEffect } from "react";
 import {
   Image,
   Platform,
@@ -24,7 +23,7 @@ const ExploreCard = (props) => {
   }
 
   return (
-    <View style={{ ...styles.project, ...props.projectContainer }}>
+    <View style={{ ...styles.exhibit, ...props.exhibitContainer }}>
       <View style={styles.touchable}>
         <TouchableCmp onPress={props.onSelect} useForeground>
           <View style={{ flexDirection: "row", margin: 10 }}>
@@ -81,7 +80,7 @@ const ExploreCard = (props) => {
 };
 
 const styles = StyleSheet.create({
-  project: {
+  exhibit: {
     marginVertical: 2,
     width: "100%",
     justifyContent: "center",

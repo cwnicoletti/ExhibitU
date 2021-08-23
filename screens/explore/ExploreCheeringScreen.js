@@ -23,7 +23,7 @@ const ExploreCheeringScreen = (props) => {
   const [isRefreshing, setIsRefreshing] = useState(false);
   const darkModeValue = useAppSelector((state) => state.user.darkMode);
   const ExhibitUId = props.navigation.getParam("ExhibitUId");
-  const projectId = props.navigation.getParam("projectId");
+  const exhibitId = props.navigation.getParam("exhibitId");
   const postId = props.navigation.getParam("postId");
   const numberOfCheers = props.navigation.getParam("numberOfCheers");
 
@@ -41,7 +41,7 @@ const ExploreCheeringScreen = (props) => {
     index.search("").then((responses) => {
       const cheering = responses.hits.find(
         (object) => object.objectID === ExhibitUId
-      ).profileProjects[projectId].projectPosts[postId].cheering;
+      ).profileExhibits[exhibitId].exhibitPosts[postId].cheering;
       const filteredIndex = responses.hits.filter((object) =>
         cheering.includes(object.objectID)
       );
@@ -59,7 +59,7 @@ const ExploreCheeringScreen = (props) => {
     index.search(text).then((responses) => {
       const cheering = responses.hits.find(
         (object) => object.objectID === ExhibitUId
-      ).profileProjects[projectId].projectPosts[postId].cheering;
+      ).profileExhibits[exhibitId].exhibitPosts[postId].cheering;
       const filteredIndex = responses.hits.filter((object) =>
         cheering.includes(object.objectID)
       );
@@ -78,7 +78,7 @@ const ExploreCheeringScreen = (props) => {
     setIsRefreshing(false);
   };
 
-  const viewProjectHandler = (
+  const viewExhibitHandler = (
     ExhibitUId,
     profilePictureUrl,
     fullname,
@@ -94,9 +94,9 @@ const ExploreCheeringScreen = (props) => {
     followers,
     following,
     advocates,
-    profileProjects,
+    profileExhibits,
     profileLinks,
-    projectLinks,
+    exhibitLinks,
     profileColumns,
     showCheering
   ) => {
@@ -117,9 +117,9 @@ const ExploreCheeringScreen = (props) => {
         followers,
         following,
         advocates,
-        profileProjects,
+        profileExhibits,
         profileLinks,
-        projectLinks,
+        exhibitLinks,
         profileColumns,
         showCheering,
       },
@@ -208,7 +208,7 @@ const ExploreCheeringScreen = (props) => {
             fullname={itemData.item.fullname}
             username={itemData.item.username}
             jobTitle={itemData.item.jobTitle}
-            projectContainer={{
+            exhibitContainer={{
               backgroundColor: darkModeValue ? "black" : "white",
               borderColor: darkModeValue ? "gray" : "#c9c9c9",
             }}
@@ -219,7 +219,7 @@ const ExploreCheeringScreen = (props) => {
               color: darkModeValue ? "white" : "black",
             }}
             onSelect={() => {
-              viewProjectHandler(
+              viewExhibitHandler(
                 itemData.item.objectID,
                 itemData.item.profilePictureUrl,
                 itemData.item.fullname,
@@ -235,9 +235,9 @@ const ExploreCheeringScreen = (props) => {
                 itemData.item.followers,
                 itemData.item.following,
                 itemData.item.advocates,
-                itemData.item.profileProjects,
+                itemData.item.profileExhibits,
                 itemData.item.profileLinks,
-                itemData.item.projectLinks,
+                itemData.item.exhibitLinks,
                 itemData.item.profileColumns,
                 itemData.item.showCheering
               );

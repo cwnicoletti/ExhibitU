@@ -25,7 +25,7 @@ const TutorialExploreExhibit = (props) => {
 
   const nextTutorialHandler = async () => {
     dispatch(setTutorialing(localId, ExhibitUId, true, "ExhibitView"));
-    props.navigation.navigate("ViewProfileProject");
+    props.navigation.navigate("ViewProfileExhibit");
   };
 
   return (

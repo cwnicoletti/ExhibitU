@@ -40,7 +40,7 @@ const ExhibitUPostView = (props) => {
   }, []);
 
   return (
-    <View style={{ ...styles.project, ...props.projectContainer }}>
+    <View style={{ ...styles.exhibit, ...props.exhibitContainer }}>
       <TouchableWithoutFeedback>
         <View>
           <ImageBackground
@@ -182,7 +182,7 @@ const ExhibitUPostView = (props) => {
 };
 
 const styles = StyleSheet.create({
-  project: {
+  exhibit: {
     borderTopWidth: 1,
     borderBottomWidth: 1,
   },

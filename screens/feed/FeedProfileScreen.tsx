@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import { FlatList, StyleSheet, Text, View } from "react-native";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import { useAppSelector } from "../../hooks";
-import FeedProfileHeader from "../../components/feed/FeedProfileHeader";
-import ProjectItem from "../../components/projectItems/ProfileProjectItem";
+import FeedProfileHeader from "../../components/feed/FeedExhibitHeader";
+import ExhibitItem from "../../components/exhibitItems/ExhibitItem";
 import useDidMountEffect from "../../helper/useDidMountEffect";
 import IoniconsHeaderButton from "../../components/UI/header_buttons/IoniconsHeaderButton";
 import MainHeaderTitle from "../../components/UI/MainHeaderTitle";
@@ -13,7 +13,7 @@ const FeedProfileScreen = (props) => {
   const ExhibitUId = useAppSelector((state) => state.user.ExhibitUId);
   let userData = props.navigation.getParam("userData");
   userData.profileLinks = userData.profileLinks ? userData.profileLinks : {};
-  userData.projectLinks = userData.projectLinks ? userData.projectLinks : {};
+  userData.exhibitLinks = userData.exhibitLinks ? userData.exhibitLinks : {};
 
   userData =
     userData.ExhibitUId === ExhibitUId
@@ -33,9 +33,9 @@ const FeedProfileScreen = (props) => {
             (state) => state.user.profileBiography
           ),
           profileLinks: useAppSelector((state) => state.user.profileLinks),
-          profileProjects: useAppSelector((state) => state.user.profileProjects)
-            ? useAppSelector((state) => state.user.profileProjects)
-            : props.navigation.getParam("profileProjects"),
+          profileExhibits: useAppSelector((state) => state.user.profileExhibits)
+            ? useAppSelector((state) => state.user.profileExhibits)
+            : props.navigation.getParam("profileExhibits"),
           numberOfAdvocates: useAppSelector(
             (state) => state.user.numberOfAdvocates
           ),
@@ -51,13 +51,15 @@ const FeedProfileScreen = (props) => {
         }
       : userData;
 
-  const [profileProjectsState, setProfileProjectsState] = useState(
-    Object.values(userData.profileProjects).sort((first, second) => {
-      return (
-        second["projectDateCreated"]["_seconds"] -
-        first["projectDateCreated"]["_seconds"]
-      );
-    })
+  const [profileExhibitsState, setProfileExhibitsState] = useState(
+    Object.values(userData.profileExhibits).sort(
+      (first: string, second: string) => {
+        return (
+          second["exhibitDateCreated"]["_seconds"] -
+          first["exhibitDateCreated"]["_seconds"]
+        );
+      }
+    )
   );
 
   useEffect(() => {
@@ -66,19 +68,21 @@ const FeedProfileScreen = (props) => {
 
   useDidMountEffect(() => {
     // Sort the array based on the second element
-    setProfileProjectsState(
-      Object.values(userData.profileProjects).sort((first, second) => {
-        return (
-          second["projectDateCreated"]["_seconds"] -
-          first["projectDateCreated"]["_seconds"]
-        );
-      })
+    setProfileExhibitsState(
+      Object.values(userData.profileExhibits).sort(
+        (first: string, second: string) => {
+          return (
+            second["exhibitDateCreated"]["_seconds"] -
+            first["exhibitDateCreated"]["_seconds"]
+          );
+        }
+      )
     );
-  }, [userData.profileProjects]);
+  }, [userData.profileExhibits]);
 
-  const viewProjectHandler = (projectId) => {
-    props.navigation.navigate("ViewFeedProfileProject", {
-      projectId,
+  const viewExhibitHandler = (exhibitId) => {
+    props.navigation.navigate("ViewFeedProfileExhibit", {
+      exhibitId,
       userData,
     });
   };
@@ -149,20 +153,20 @@ const FeedProfileScreen = (props) => {
       }}
     >
       <FlatList<any>
-        data={profileProjectsState}
-        keyExtractor={(item) => item.projectId}
+        data={profileExhibitsState}
+        keyExtractor={(item) => item.exhibitId}
         key={userData.profileColumns}
         ListHeaderComponent={topHeader()}
         numColumns={userData.profileColumns}
         renderItem={(itemData) => (
-          <ProjectItem
+          <ExhibitItem
             image={
-              itemData.item.projectCoverPhotoBase64
-                ? itemData.item.projectCoverPhotoBase64
-                : itemData.item.projectCoverPhotoUrl
+              itemData.item.exhibitCoverPhotoBase64
+                ? itemData.item.exhibitCoverPhotoBase64
+                : itemData.item.exhibitCoverPhotoUrl
             }
-            title={itemData.item.projectTitle}
-            projectContainer={{
+            title={itemData.item.exhibitTitle}
+            exhibitContainer={{
               backgroundColor: darkModeValue ? "black" : "white",
               borderColor: darkModeValue ? "gray" : "#c9c9c9",
             }}
@@ -170,7 +174,7 @@ const FeedProfileScreen = (props) => {
               color: darkModeValue ? "white" : "black",
             }}
             onSelect={() => {
-              viewProjectHandler(itemData.item.projectId);
+              viewExhibitHandler(itemData.item.exhibitId);
             }}
           />
         )}

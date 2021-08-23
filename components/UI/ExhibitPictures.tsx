@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import { AnimatedGradient } from "../custom/AnimatedGradient/AnimatedGradient";
 
-const ProjectItem = (props) => {
+const ExhibitItem = (props) => {
   const [imageIsLoading, setImageIsLoading] = useState(true);
   const [greyColorValues, setGreyColorValues] = useState([
     "rgba(50,50,50,1)",
@@ -22,7 +22,7 @@ const ProjectItem = (props) => {
   }
 
   return (
-    <View style={{ ...styles.project, ...props.projectContainer }}>
+    <View style={{ ...styles.exhibit, ...props.exhibitContainer }}>
       <View style={styles.touchable}>
         <TouchableCmp onPress={props.onSelect} useForeground>
           <View>
@@ -59,7 +59,7 @@ const ProjectItem = (props) => {
 };
 
 const styles = StyleSheet.create({
-  project: {
+  exhibit: {
     height: 300,
   },
   image: {
@@ -71,4 +71,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ProjectItem;
+export default ExhibitItem;

@@ -15,7 +15,7 @@ import { useAppSelector } from "../../hooks";
 import EditButton from "../UI/EditButton";
 import LinkButton from "../UI/LinkButton";
 
-const ProjectHeader = (props) => {
+const ExhibitHeader = (props) => {
   const darkModeValue = useAppSelector((state) => state.user.darkMode);
   const links = props.links;
 
@@ -310,4 +310,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ProjectHeader;
+export default ExhibitHeader;

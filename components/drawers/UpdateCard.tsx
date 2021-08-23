@@ -41,7 +41,7 @@ const UpdateCard = (props) => {
   }
 
   return (
-    <View style={{ ...styles.project, ...props.projectContainer }}>
+    <View style={{ ...styles.exhibit, ...props.exhibitContainer }}>
       {!props.iconFamily || !props.iconName || Component == null ? null : (
         <Component
           name={props.iconName}
@@ -62,7 +62,7 @@ const UpdateCard = (props) => {
 };
 
 const styles = StyleSheet.create({
-  project: {
+  exhibit: {
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",

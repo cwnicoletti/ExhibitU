@@ -74,7 +74,7 @@ const LoginScreen = (props) => {
     );
     await setIsLoading(false);
     if (authenticated) {
-      await props.navigation.navigate("Project");
+      await props.navigation.navigate("Exhibit");
     } else {
       Alert.alert("Invalid Credentials", "Invalid username or password", [
         {

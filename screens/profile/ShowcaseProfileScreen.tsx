@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { FlatList, StyleSheet, Text, View } from "react-native";
+import { FlatList, StyleSheet, View } from "react-native";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import { useAppDispatch, useAppSelector } from "../../hooks";
-import ProjectItem from "../../components/projectItems/ProfileProjectItem";
+import ExhibitItem from "../../components/exhibitItems/ExhibitItem";
 import IoniconsHeaderButton from "../../components/UI/header_buttons/IoniconsHeaderButton";
 import MainHeaderTitle from "../../components/UI/MainHeaderTitle";
 import ShowcaseHeader from "../../components/user/ShowcaseHeader";
@@ -32,9 +32,9 @@ const ShowcaseProfileScreen = (props) => {
             (state) => state.user.profileBiography
           ),
           profileLinks: useAppSelector((state) => state.user.profileLinks),
-          profileProjects: useAppSelector((state) => state.user.profileProjects)
-            ? useAppSelector((state) => state.user.profileProjects)
-            : props.navigation.getParam("profileProjects"),
+          profileExhibits: useAppSelector((state) => state.user.profileExhibits)
+            ? useAppSelector((state) => state.user.profileExhibits)
+            : props.navigation.getParam("profileExhibits"),
           numberOfAdvocates: useAppSelector(
             (state) => state.user.numberOfAdvocates
           ),
@@ -57,7 +57,7 @@ const ShowcaseProfileScreen = (props) => {
           jobTitle: props.navigation.getParam("jobTitle"),
           profileBiography: props.navigation.getParam("profileBiography"),
           profileLinks: props.navigation.getParam("profileLinks"),
-          profileProjects: props.navigation.getParam("profileProjects"),
+          profileExhibits: props.navigation.getParam("profileExhibits"),
           numberOfAdvocates: props.navigation.getParam("numberOfAdvocates"),
           numberOfFollowers: props.navigation.getParam("numberOfFollowers"),
           numberOfFollowing: props.navigation.getParam("numberOfFollowing"),
@@ -66,13 +66,15 @@ const ShowcaseProfileScreen = (props) => {
           hideAdvocates: props.navigation.getParam("hideAdvocates"),
         };
 
-  const [profileProjectsState, setProfileProjectsState] = useState(
-    Object.values(userData.profileProjects).sort((first, second) => {
-      return (
-        second["projectDateCreated"]["_seconds"] -
-        first["projectDateCreated"]["_seconds"]
-      );
-    })
+  const [profileExhibitsState, setProfileExhibitsState] = useState(
+    Object.values(userData.profileExhibits).sort(
+      (first: string, second: string) => {
+        return (
+          second["exhibitDateCreated"]["_seconds"] -
+          first["exhibitDateCreated"]["_seconds"]
+        );
+      }
+    )
   );
 
   useEffect(() => {
@@ -85,19 +87,21 @@ const ShowcaseProfileScreen = (props) => {
 
   useDidMountEffect(() => {
     // Sort the array based on the second element
-    setProfileProjectsState(
-      Object.values(userData.profileProjects).sort((first, second) => {
-        return (
-          second["projectDateCreated"]["_seconds"] -
-          first["projectDateCreated"]["_seconds"]
-        );
-      })
+    setProfileExhibitsState(
+      Object.values(userData.profileExhibits).sort(
+        (first: string, second: string) => {
+          return (
+            second["exhibitDateCreated"]["_seconds"] -
+            first["exhibitDateCreated"]["_seconds"]
+          );
+        }
+      )
     );
-  }, [userData.profileProjects]);
+  }, [userData.profileExhibits]);
 
-  const viewProjectHandler = (projectId) => {
-    props.navigation.push("ShowcaseProject", {
-      projectId,
+  const viewExhibitHandler = (exhibitId) => {
+    props.navigation.push("ShowcaseExhibit", {
+      exhibitId,
       userData,
     });
   };
@@ -142,7 +146,7 @@ const ShowcaseProfileScreen = (props) => {
           color: darkModeValue ? "white" : "black",
         }}
         onEditProfilePress={() => props.navigation.navigate("EditProfile")}
-        onAddNewProjectPress={() => props.navigation.navigate("AddProject")}
+        onAddNewExhibitPress={() => props.navigation.navigate("AddExhibit")}
         followersOnPress={() =>
           props.navigation.push("Followers", {
             ExhibitUId: userData.ExhibitUId,
@@ -170,19 +174,19 @@ const ShowcaseProfileScreen = (props) => {
       }}
     >
       <FlatList<any>
-        data={profileProjectsState}
-        keyExtractor={(item) => item.projectId}
+        data={profileExhibitsState}
+        keyExtractor={(item) => item.exhibitId}
         ListHeaderComponent={topHeader()}
         numColumns={userData.profileColumns}
         renderItem={(itemData) => (
-          <ProjectItem
+          <ExhibitItem
             image={
-              itemData.item.projectCoverPhotoBase64
-                ? itemData.item.projectCoverPhotoBase64
-                : itemData.item.projectCoverPhotoUrl
+              itemData.item.exhibitCoverPhotoBase64
+                ? itemData.item.exhibitCoverPhotoBase64
+                : itemData.item.exhibitCoverPhotoUrl
             }
-            title={itemData.item.projectTitle}
-            projectContainer={{
+            title={itemData.item.exhibitTitle}
+            exhibitContainer={{
               backgroundColor: darkModeValue ? "black" : "white",
               borderColor: darkModeValue ? "gray" : "#c9c9c9",
             }}
@@ -190,7 +194,7 @@ const ShowcaseProfileScreen = (props) => {
               color: darkModeValue ? "white" : "black",
             }}
             onSelect={() => {
-              viewProjectHandler(itemData.item.projectId);
+              viewExhibitHandler(itemData.item.exhibitId);
             }}
           />
         )}
@@ -256,14 +260,6 @@ const styles = StyleSheet.create({
   },
   profileContainerStyle: {
     justifyContent: "flex-start",
-  },
-  text: {
-    padding: 10,
-  },
-  image: {
-    height: 30,
-    width: 30,
-    marginRight: 5,
   },
 });
 

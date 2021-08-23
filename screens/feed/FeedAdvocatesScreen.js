@@ -24,7 +24,7 @@ const FeedAdvocatesScreen = (props) => {
   const index = client.initIndex("users");
 
   const [returnedIndex, setReturnedIndex] = useState([]);
-  const [projects, setProjects] = useState({});
+  const [exhibits, setExhibits] = useState({});
   const [search, setSearch] = useState("");
   const [isRefreshing, setIsRefreshing] = useState(false);
   const darkModeValue = useAppSelector((state) => state.user.darkMode);
@@ -39,10 +39,10 @@ const FeedAdvocatesScreen = (props) => {
       const advocates = responses.hits.find(
         (object) => object.objectID === ExhibitUId
       ).advocates;
-      const projects = responses.hits.find(
+      const exhibits = responses.hits.find(
         (object) => object.objectID === ExhibitUId
-      ).profileProjects;
-      setProjects(projects);
+      ).profileExhibits;
+      setExhibits(exhibits);
       const filteredIndex = responses.hits.filter((object) =>
         advocates.includes(object.objectID)
       );
@@ -55,10 +55,10 @@ const FeedAdvocatesScreen = (props) => {
       const advocates = responses.hits.find(
         (object) => object.objectID === ExhibitUId
       ).advocates;
-      const projects = responses.hits.find(
+      const exhibits = responses.hits.find(
         (object) => object.objectID === ExhibitUId
-      ).profileProjects;
-      setProjects(projects);
+      ).profileExhibits;
+      setExhibits(exhibits);
       const filteredIndex = responses.hits.filter((object) =>
         advocates.includes(object.objectID)
       );
@@ -77,13 +77,13 @@ const FeedAdvocatesScreen = (props) => {
     setIsRefreshing(false);
   };
 
-  const viewProjectHandler = (
+  const viewExhibitHandler = (
     ExhibitUId,
     fullname,
     username,
     jobTitle,
     profileBiography,
-    profileProjects,
+    profileExhibits,
     profilePictureUrl,
     numberOfFollowers,
     numberOfFollowing,
@@ -101,7 +101,7 @@ const FeedAdvocatesScreen = (props) => {
         username,
         jobTitle,
         profileBiography,
-        profileProjects,
+        profileExhibits,
         profilePictureUrl,
         numberOfFollowers,
         numberOfFollowing,
@@ -184,9 +184,9 @@ const FeedAdvocatesScreen = (props) => {
             fullname={itemData.item.fullname}
             jobTitle={itemData.item.jobTitle}
             username={itemData.item.username}
-            projects={projects}
-            projectsAdvocating={itemData.item.projectsAdvocating}
-            projectContainer={{
+            exhibits={exhibits}
+            exhibitsAdvocating={itemData.item.exhibitsAdvocating}
+            exhibitContainer={{
               backgroundColor: darkModeValue ? "black" : "white",
               borderColor: darkModeValue ? "gray" : "#c9c9c9",
             }}
@@ -200,13 +200,13 @@ const FeedAdvocatesScreen = (props) => {
               color: darkModeValue ? "white" : "black",
             }}
             onSelect={() => {
-              viewProjectHandler(
+              viewExhibitHandler(
                 itemData.item.objectID,
                 itemData.item.fullname,
                 itemData.item.username,
                 itemData.item.jobTitle,
                 itemData.item.profileBiography,
-                itemData.item.profileProjects,
+                itemData.item.profileExhibits,
                 itemData.item.profilePictureUrl,
                 itemData.item.numberOfFollowers,
                 itemData.item.numberOfFollowing,

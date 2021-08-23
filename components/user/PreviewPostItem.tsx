@@ -19,7 +19,7 @@ import Cheer from "../../assets/Icons/clap.svg";
 import LinkButton from "../UI/LinkButton";
 import toDateTime from "../../helper/toDateTime";
 
-const ProjectItem = (props) => {
+const ExhibitItem = (props) => {
   const darkModeValue = useAppSelector((state) => state.user.darkMode);
   const fullname = useAppSelector((state) => state.user.fullname);
   const links = props.links;
@@ -43,7 +43,7 @@ const ProjectItem = (props) => {
   }, []);
 
   return (
-    <View style={{ ...styles.project, ...props.projectContainer }}>
+    <View style={{ ...styles.exhibit, ...props.exhibitContainer }}>
       <View>
         <ImageBackground
           style={{
@@ -134,12 +134,12 @@ const ProjectItem = (props) => {
               ...styles.titleContainer,
               ...props.titleContainer,
             }}
-            colors={props.projectTitleColors}
+            colors={props.exhibitTitleColors}
           >
             <View style={styles.balance} />
             <View style={styles.titleTextContainer}>
               <Text style={{ ...styles.title, ...props.titleStyle }}>
-                {props.projectTitle}
+                {props.exhibitTitle}
               </Text>
             </View>
             <AntDesign
@@ -286,7 +286,7 @@ const ProjectItem = (props) => {
 };
 
 const styles = StyleSheet.create({
-  project: {
+  exhibit: {
     borderWidth: 1,
   },
   profileImage: {
@@ -349,4 +349,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ProjectItem;
+export default ExhibitItem;

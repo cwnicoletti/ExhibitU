@@ -12,7 +12,7 @@ import { useAppDispatch } from "../../hooks";
 import { withNavigation } from "react-navigation";
 import { setTutorialing } from "../../store/actions/user/user";
 
-const TutorialExploreProject = (props) => {
+const TutorialExploreExhibit = (props) => {
   const dispatch = useAppDispatch();
 
   const ExhibitUId = props.ExhibitUId;
@@ -36,7 +36,7 @@ const TutorialExploreProject = (props) => {
       screen="CreateExhibit"
       modalContainerStyle={{ justifyContent: "flex-end" }}
       modalStyle={{ top: "2%" }}
-      title={"Explore User Project"}
+      title={"Explore User Exhibit"}
     >
       <View style={{ margin: 10 }}>
         <Text
@@ -60,7 +60,7 @@ const TutorialExploreProject = (props) => {
           }}
         >
           Advocating is a unique way of saying "I can advocate for this user's
-          project" and can be shown by simply tapping the icon in the top right
+          exhibit" and can be shown by simply tapping the icon in the top right
           corner of your phone:
         </Text>
       </View>
@@ -105,4 +105,4 @@ const TutorialExploreProject = (props) => {
   );
 };
 
-export default withNavigation(TutorialExploreProject);
+export default withNavigation(TutorialExploreExhibit);

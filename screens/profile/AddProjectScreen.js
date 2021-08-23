@@ -29,15 +29,15 @@ import Input from "../../components/UI/Input";
 import IoniconsHeaderButton from "../../components/UI/header_buttons/IoniconsHeaderButton";
 import LinkButton from "../../components/UI/LinkButton";
 import {
-  uploadAddTempProjectCoverPicture,
-  uploadNewProject,
+  uploadAddTempExhibitCoverPicture,
+  uploadNewExhibit,
 } from "../../store/actions/user/user";
 
 const FORM_INPUT_UPDATE = "FORM_INPUT_UPDATE";
 const FORM_INPUT_LINKS_UPDATE = "FORM_INPUT_LINKS_UPDATE";
 const FORM_INPUT_LINKS_REMOVE = "FORM_INPUT_LINKS_REMOVE";
 
-const AddProjectScreen = (props) => {
+const AddExhibitScreen = (props) => {
   const dispatch = useAppDispatch();
   const [fileSizeError, setFileSizeError] = useState(false);
   const [linksState, setLinksState] = useState([]);
@@ -46,14 +46,14 @@ const AddProjectScreen = (props) => {
   const darkModeValue = useAppSelector((state) => state.user.darkMode);
   const localId = useAppSelector((state) => state.auth.userId);
   const ExhibitUId = useAppSelector((state) => state.user.ExhibitUId);
-  const projectTempCoverPhotoId = useAppSelector(
-    (state) => state.user.projectTempCoverPhotoId
+  const exhibitTempCoverPhotoId = useAppSelector(
+    (state) => state.user.exhibitTempCoverPhotoId
   );
-  const projectTempCoverPhotoUrl = useAppSelector(
-    (state) => state.user.projectTempCoverPhotoUrl
+  const exhibitTempCoverPhotoUrl = useAppSelector(
+    (state) => state.user.exhibitTempCoverPhotoUrl
   );
-  const projectTempCoverPhotoBase64 = useAppSelector(
-    (state) => state.user.projectTempCoverPhotoBase64
+  const exhibitTempCoverPhotoBase64 = useAppSelector(
+    (state) => state.user.exhibitTempCoverPhotoBase64
   );
   const tutorialing = useAppSelector((state) => state.user.tutorialing);
   const tutorialScreen = useAppSelector((state) => state.user.tutorialScreen);
@@ -116,11 +116,11 @@ const AddProjectScreen = (props) => {
     const newLinks = correctUrls(links);
     await setIsLoading(true);
     await dispatch(
-      uploadNewProject(
+      uploadNewExhibit(
         ExhibitUId,
         localId,
-        projectTempCoverPhotoId,
-        projectTempCoverPhotoBase64,
+        exhibitTempCoverPhotoId,
+        exhibitTempCoverPhotoBase64,
         formState.inputValues.exhibitTitle,
         formState.inputValues.exhibitDescription,
         newLinks
@@ -132,8 +132,8 @@ const AddProjectScreen = (props) => {
     dispatch,
     formState,
     submitHandler,
-    projectTempCoverPhotoUrl,
-    projectTempCoverPhotoBase64,
+    exhibitTempCoverPhotoUrl,
+    exhibitTempCoverPhotoBase64,
   ]);
 
   useEffect(() => {
@@ -145,7 +145,7 @@ const AddProjectScreen = (props) => {
     props.navigation.setParams({ darkMode: darkModeValue });
   }, [darkModeValue]);
 
-  const changeProjectCoverPicture = async () => {
+  const changeExhibitCoverPicture = async () => {
     if (!(await getPhotoPermissions(ImagePicker))) {
       return;
     }
@@ -164,11 +164,11 @@ const AddProjectScreen = (props) => {
         setFileSizeError(false);
         const base64 = `data:image/png;base64,${result.base64}`;
         await dispatch(
-          uploadAddTempProjectCoverPicture(
+          uploadAddTempExhibitCoverPicture(
             base64,
             ExhibitUId,
             localId,
-            projectTempCoverPhotoId
+            exhibitTempCoverPhotoId
           )
         );
       }
@@ -238,13 +238,13 @@ const AddProjectScreen = (props) => {
               alignItems: "center",
             }}
           >
-            {projectTempCoverPhotoUrl ? (
+            {exhibitTempCoverPhotoUrl ? (
               <Image
                 style={{
                   height: 350,
                   width: "100%",
                 }}
-                source={{ uri: projectTempCoverPhotoUrl }}
+                source={{ uri: exhibitTempCoverPhotoUrl }}
               />
             ) : (
               <DefaultPicture height={350} width={"100%"} fill="gray" />
@@ -385,7 +385,7 @@ const AddProjectScreen = (props) => {
                 margin: 10,
                 alignSelf: "center",
               }}
-              onPress={changeProjectCoverPicture}
+              onPress={changeExhibitCoverPicture}
             >
               <View
                 style={{
@@ -606,7 +606,7 @@ const AddProjectScreen = (props) => {
             }}
             onPress={submitHandler}
             disabled={
-              !projectTempCoverPhotoUrl || formState.formIsValid === false
+              !exhibitTempCoverPhotoUrl || formState.formIsValid === false
             }
           >
             <View
@@ -620,7 +620,7 @@ const AddProjectScreen = (props) => {
                 style={{
                   margin: 10,
                   color:
-                    !projectTempCoverPhotoUrl || formState.formIsValid === false
+                    !exhibitTempCoverPhotoUrl || formState.formIsValid === false
                       ? "gray"
                       : "#007AFF",
                 }}
@@ -631,7 +631,7 @@ const AddProjectScreen = (props) => {
                 name="ios-checkmark"
                 size={18}
                 color={
-                  !projectTempCoverPhotoUrl || formState.formIsValid === false
+                  !exhibitTempCoverPhotoUrl || formState.formIsValid === false
                     ? "gray"
                     : "#007AFF"
                 }
@@ -665,7 +665,7 @@ const AddProjectScreen = (props) => {
   );
 };
 
-AddProjectScreen.navigationOptions = (navData) => {
+AddExhibitScreen.navigationOptions = (navData) => {
   const darkModeValue = navData.navigation.getParam("darkMode");
   return {
     headerTitle: () => (
@@ -703,4 +703,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AddProjectScreen;
+export default AddExhibitScreen;

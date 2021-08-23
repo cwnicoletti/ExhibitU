@@ -49,7 +49,7 @@ const FeedPostView = (props) => {
   const currentUsersPost = ExhibitUId === posterExhibitUId ? true : false;
   const links = props.links;
   const postId = props.postId;
-  const projectId = props.projectId;
+  const exhibitId = props.exhibitId;
   const postDateCreated = toDateTime(props.postDateCreated);
 
   const fadeAnim = useRef(new Animated.Value(0)).current;
@@ -135,10 +135,10 @@ const FeedPostView = (props) => {
       if (!cheeredPosts.includes(postId)) {
         await setLoadingCheer(true);
         await dispatch(
-          cheerPost(localId, ExhibitUId, projectId, postId, posterExhibitUId)
+          cheerPost(localId, ExhibitUId, exhibitId, postId, posterExhibitUId)
         );
         if (currentUsersPost) {
-          await dispatch(cheerOwnFeedPost(ExhibitUId, projectId, postId));
+          await dispatch(cheerOwnFeedPost(ExhibitUId, exhibitId, postId));
         }
         await setLoadingCheer(false);
       }
@@ -152,17 +152,17 @@ const FeedPostView = (props) => {
     if (cheeredPosts.includes(postId)) {
       await setLoadingCheer(true);
       await dispatch(
-        uncheerPost(localId, ExhibitUId, projectId, postId, posterExhibitUId)
+        uncheerPost(localId, ExhibitUId, exhibitId, postId, posterExhibitUId)
       );
       if (currentUsersPost) {
-        await dispatch(uncheerOwnFeedPost(ExhibitUId, projectId, postId));
+        await dispatch(uncheerOwnFeedPost(ExhibitUId, exhibitId, postId));
       }
       await setLoadingCheer(false);
     }
   };
 
   return (
-    <View style={{ ...styles.project, ...props.projectContainer }}>
+    <View style={{ ...styles.exhibit, ...props.exhibitContainer }}>
       <TouchableWithoutFeedback
         onPress={() => {
           if (!processingWholeCheer) {
@@ -443,7 +443,7 @@ const FeedPostView = (props) => {
 };
 
 const styles = StyleSheet.create({
-  project: {
+  exhibit: {
     borderTopWidth: 1,
     borderBottomWidth: 1,
   },

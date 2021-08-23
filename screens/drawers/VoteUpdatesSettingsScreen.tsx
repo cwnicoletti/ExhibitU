@@ -78,7 +78,7 @@ const VoteUpdatesSettingsScreen = (props) => {
             iconFamily={itemData.item.iconFamily}
             iconName={itemData.item.iconName}
             darkModeValue={darkModeValue}
-            projectContainer={{
+            exhibitContainer={{
               backgroundColor: darkModeValue ? "black" : "white",
               borderColor: darkModeValue ? "gray" : "#c9c9c9",
             }}

@@ -2,44 +2,46 @@ import React, { useEffect, useState } from "react";
 import { FlatList, Platform, StyleSheet, View } from "react-native";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import { useAppSelector } from "../../hooks";
-import ShowcaseProjectHeader from "../../components/projects/ShowcaseProjectHeader";
+import ShowcaseExhibitHeader from "../../components/exhibits/ShowcaseExhibitHeader";
 import IoniconsHeaderButton from "../../components/UI/header_buttons/IoniconsHeaderButton";
 import MainHeaderTitle from "../../components/UI/MainHeaderTitle";
 import useDidMountEffect from "../../helper/useDidMountEffect";
-import ProjectPictures from "../../components/UI/ProjectPictures";
+import ExhibitPictures from "../../components/UI/ExhibitPictures";
 
-const ShowcaseProjectScreen = (props) => {
+const ShowcaseExhibitScreen = (props) => {
   const darkModeValue = useAppSelector((state) => state.user.darkMode);
-  const currentProjectId = props.navigation.getParam("projectId");
+  const currentExhibitId: string = props.navigation.getParam("exhibitId");
   const userData = props.navigation.getParam("userData");
-  const project = userData.profileProjects[currentProjectId];
+  const exhibit = userData.profileExhibits[currentExhibitId];
 
-  const [projectPostsState, setProjectPostsState] = useState(
-    Object.values(project.projectPosts).sort((first, second) => {
-      return (
-        second["postDateCreated"]["_seconds"] -
-        first["postDateCreated"]["_seconds"]
-      );
-    })
+  const [exhibitPostsState, setExhibitPostsState] = useState(
+    Object.values(exhibit.exhibitPosts).sort(
+      (first: string, second: string) => {
+        return (
+          second["postDateCreated"]["_seconds"] -
+          first["postDateCreated"]["_seconds"]
+        );
+      }
+    )
   );
 
-  let android = null;
+  let android: boolean = null;
   if (Platform.OS === "android") {
     android = true;
   }
 
-  const viewCommentsHandler = (
-    postId,
-    postPhotoUrl,
-    postPhotoBase64,
-    numberOfCheers,
-    numberOfComments,
-    caption,
-    postLinks,
-    postDateCreated
+  const viewPictureHandler = (
+    postId: string,
+    postPhotoUrl: string,
+    postPhotoBase64: string,
+    numberOfCheers: number,
+    numberOfComments: number,
+    caption: string,
+    postLinks: object,
+    postDateCreated: string
   ) => {
     props.navigation.push("ShowcasePictureScreen", {
-      projectId: currentProjectId,
+      exhibitId: currentExhibitId,
       postId,
       postPhotoUrl,
       postPhotoBase64,
@@ -62,34 +64,36 @@ const ShowcaseProjectScreen = (props) => {
 
   useDidMountEffect(() => {
     // Sort the array based on the second element
-    setProjectPostsState(
-      Object.values(project.projectPosts).sort((first, second) => {
-        return (
-          second["postDateCreated"]["_seconds"] -
-          first["postDateCreated"]["_seconds"]
-        );
-      })
+    setExhibitPostsState(
+      Object.values(exhibit.exhibitPosts).sort(
+        (first: string, second: string) => {
+          return (
+            second["postDateCreated"]["_seconds"] -
+            first["postDateCreated"]["_seconds"]
+          );
+        }
+      )
     );
-  }, [project.projectPosts]);
+  }, [exhibit.exhibitPosts]);
 
   const topHeader = () => {
     return (
-      <ShowcaseProjectHeader
+      <ShowcaseExhibitHeader
         containerStyle={{
           borderBottomColor: darkModeValue ? "white" : "black",
         }}
         imgSource={
-          project.projectCoverPhotoBase64
-            ? project.projectCoverPhotoBase64
-            : project.projectCoverPhotoUrl
+          exhibit.exhibitCoverPhotoBase64
+            ? exhibit.exhibitCoverPhotoBase64
+            : exhibit.exhibitCoverPhotoUrl
         }
         descriptionStyle={{
           ...styles.profileDescriptionStyle,
           color: darkModeValue ? "white" : "black",
         }}
-        title={project.projectTitle}
-        links={project.projectLinks}
-        description={project.projectDescription}
+        title={exhibit.exhibitTitle}
+        links={exhibit.exhibitLinks}
+        description={exhibit.exhibitDescription}
       />
     );
   };
@@ -102,36 +106,36 @@ const ShowcaseProjectScreen = (props) => {
       }}
     >
       <FlatList<Object | any>
-        data={projectPostsState}
+        data={exhibitPostsState}
         keyExtractor={(item) => item.postId}
         ListHeaderComponent={topHeader()}
-        numColumns={project.projectColumns}
+        numColumns={exhibit.exhibitColumns}
         renderItem={(itemData) => (
-          <ProjectPictures
+          <ExhibitPictures
             image={
               itemData.item.postPhotoBase64
                 ? itemData.item.postPhotoBase64
                 : itemData.item.postPhotoUrl
             }
-            projectContainer={{
+            exhibitContainer={{
               backgroundColor: darkModeValue ? "black" : "white",
               width:
-                project.projectColumns === 1
+                exhibit.exhibitColumns === 1
                   ? "100%"
-                  : project.projectColumns === 2
+                  : exhibit.exhibitColumns === 2
                   ? "50%"
-                  : project.projectColumns === 3
+                  : exhibit.exhibitColumns === 3
                   ? "33.33%"
-                  : project.projectColumns === 4
+                  : exhibit.exhibitColumns === 4
                   ? "25%"
                   : "25%",
-              aspectRatio: project.projectColumns === 1 ? null : 3 / 3,
+              aspectRatio: exhibit.exhibitColumns === 1 ? null : 3 / 3,
             }}
             titleStyle={{
               color: darkModeValue ? "white" : "black",
             }}
             onSelect={() =>
-              viewCommentsHandler(
+              viewPictureHandler(
                 itemData.item.postId,
                 itemData.item.postPhotoUrl,
                 itemData.item.postPhotoBase64,
@@ -149,7 +153,7 @@ const ShowcaseProjectScreen = (props) => {
   );
 };
 
-ShowcaseProjectScreen.navigationOptions = (navData) => {
+ShowcaseExhibitScreen.navigationOptions = (navData) => {
   const darkModeValue = navData.navigation.getParam("darkMode");
   return {
     headerTitle: () => (
@@ -194,4 +198,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ShowcaseProjectScreen;
+export default ShowcaseExhibitScreen;

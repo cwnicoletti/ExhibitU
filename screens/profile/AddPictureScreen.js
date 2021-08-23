@@ -55,15 +55,15 @@ const EditProfileScreen = (props) => {
   const tempPhotoPostBase64 = useAppSelector(
     (state) => state.user.tempPhotoPostBase64
   );
-  const projectTitle = props.navigation.getParam("projectTitle");
-  const projectId = props.navigation.getParam("projectId");
-  const projectCoverPhotoUrl = props.navigation.getParam(
-    "projectCoverPhotoUrl"
+  const exhibitTitle = props.navigation.getParam("exhibitTitle");
+  const exhibitId = props.navigation.getParam("exhibitId");
+  const exhibitCoverPhotoUrl = props.navigation.getParam(
+    "exhibitCoverPhotoUrl"
   );
-  const projectDateCreated = props.navigation.getParam("projectDateCreated");
-  const projectLastUpdated = props.navigation.getParam("projectLastUpdated");
-  const projectDescription = props.navigation.getParam("projectDescription");
-  const projectLinks = props.navigation.getParam("projectLinks");
+  const exhibitDateCreated = props.navigation.getParam("exhibitDateCreated");
+  const exhibitLastUpdated = props.navigation.getParam("exhibitLastUpdated");
+  const exhibitDescription = props.navigation.getParam("exhibitDescription");
+  const exhibitLinks = props.navigation.getParam("exhibitLinks");
   const fullname = useAppSelector((state) => state.user.fullname);
   const username = useAppSelector((state) => state.user.username);
   const jobTitle = useAppSelector((state) => state.user.jobTitle);
@@ -146,7 +146,7 @@ const EditProfileScreen = (props) => {
       addUserPost(
         ExhibitUId,
         localId,
-        projectId,
+        exhibitId,
         fullname,
         username,
         jobTitle,
@@ -157,11 +157,11 @@ const EditProfileScreen = (props) => {
         followersValue,
         advocatesValue,
         profileBiography,
-        projectTitle,
-        projectCoverPhotoUrl,
-        projectDateCreated,
-        projectLastUpdated,
-        projectDescription,
+        exhibitTitle,
+        exhibitCoverPhotoUrl,
+        exhibitDateCreated,
+        exhibitLastUpdated,
+        exhibitDescription,
         profilePictureUrl,
         profilePictureBase64,
         tempPhotoPostId,
@@ -169,7 +169,7 @@ const EditProfileScreen = (props) => {
         tempPhotoPostBase64,
         formState.inputValues.caption,
         profileLinks,
-        projectLinks,
+        exhibitLinks,
         newLinks,
         profileColumns
       )
@@ -180,7 +180,7 @@ const EditProfileScreen = (props) => {
     props.navigation.navigate("Feed");
   }, [dispatch, formState, submitHandler, tempPhotoPostUrl]);
 
-  const addProjectPicture = async () => {
+  const addExhibitPicture = async () => {
     if (!(await getPhotoPermissions(ImagePicker))) {
       return;
     }
@@ -199,7 +199,7 @@ const EditProfileScreen = (props) => {
         setFileSizeError(false);
         const base64 = `data:image/png;base64,${result.base64}`;
         await dispatch(
-          uploadAddTempPostPicture(base64, projectId, ExhibitUId, localId)
+          uploadAddTempPostPicture(base64, exhibitId, ExhibitUId, localId)
         );
       }
     }
@@ -269,7 +269,7 @@ const EditProfileScreen = (props) => {
           <PreviewPostItem
             image={tempPhotoPostBase64}
             profileImageSource={profilePictureBase64}
-            projectTitle={projectTitle}
+            exhibitTitle={exhibitTitle}
             name="Christian Nicoletti"
             username="@christnicoletti"
             nameStyle={{
@@ -284,7 +284,7 @@ const EditProfileScreen = (props) => {
             dateStyle={{
               color: "gray",
             }}
-            projectContainer={{
+            exhibitContainer={{
               borderColor: darkModeValue ? "#616161" : "#e8e8e8",
               marginBottom: 10,
             }}
@@ -299,7 +299,7 @@ const EditProfileScreen = (props) => {
               color: "white",
             }}
             nameTitleColors={["rgba(0,0,0,1)", "rgba(0,0,0,0.00)"]}
-            projectTitleColors={["rgba(0,0,0,0.00)", "rgba(0,0,0,1)"]}
+            exhibitTitleColors={["rgba(0,0,0,0.00)", "rgba(0,0,0,1)"]}
             pictureCheerContainer={{
               backgroundColor: darkModeValue ? "#121212" : "white",
             }}
@@ -336,7 +336,7 @@ const EditProfileScreen = (props) => {
                 margin: 10,
                 alignSelf: "center",
               }}
-              onPress={addProjectPicture}
+              onPress={addExhibitPicture}
             >
               <View
                 style={{

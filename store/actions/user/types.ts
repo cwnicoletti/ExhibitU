@@ -57,9 +57,9 @@ export interface UserState {
   profilePictureId: string;
   profilePictureUrl: string;
   profilePictureBase64: string;
-  projectTempCoverPhotoId: string;
-  projectTempCoverPhotoUrl: string;
-  projectTempCoverPhotoBase64: string;
+  exhibitTempCoverPhotoId: string;
+  exhibitTempCoverPhotoUrl: string;
+  exhibitTempCoverPhotoBase64: string;
   tempPhotoPostId: string;
   tempPhotoPostUrl: string;
   tempPhotoPostBase64: string;
@@ -76,9 +76,9 @@ export interface UserState {
   following: string[];
   advocates: string[];
   advocating: string[];
-  projectsAdvocating: string[];
+  exhibitsAdvocating: string[];
   cheeredPosts: string[];
-  profileProjects: object;
+  profileExhibits: object;
   profileLinks: object;
   userFeed: object;
   darkMode: boolean;
@@ -110,9 +110,9 @@ interface ActionRefreshProfile {
   following: string[];
   advocates: string[];
   advocating: string[];
-  projectsAdvocating: string[];
+  exhibitsAdvocating: string[];
   cheeredPosts: string[];
-  profileProjects: object;
+  profileExhibits: object;
   profileLinks: object;
 }
 interface ActionGetUserData {
@@ -122,9 +122,9 @@ interface ActionGetUserData {
   profilePictureId: string;
   profilePictureUrl: string;
   profilePictureBase64: string;
-  projectTempCoverPhotoId: string;
-  projectTempCoverPhotoUrl: string;
-  projectTempCoverPhotoBase64: string;
+  exhibitTempCoverPhotoId: string;
+  exhibitTempCoverPhotoUrl: string;
+  exhibitTempCoverPhotoBase64: string;
   tempPhotoPostId: string;
   tempPhotoPostUrl: string;
   tempPhotoPostBase64: string;
@@ -141,9 +141,9 @@ interface ActionGetUserData {
   following: string[];
   advocates: string[];
   advocating: string[];
-  projectsAdvocating: string[];
+  exhibitsAdvocating: string[];
   cheeredPosts: string[];
-  profileProjects: object;
+  profileExhibits: object;
   profileLinks: object;
   userFeed: object;
   darkMode: boolean;
@@ -172,35 +172,35 @@ interface ActionUpdateUserProfile {
   bio: string;
   profileLinks: object;
 }
-interface ActionAddUserProject {
+interface ActionAddUserExhibit {
   type: typeof ADD_USER_PROJECT;
   ExhibitUId: string;
-  projectId: string;
-  projectCoverPhotoId: string;
-  projectCoverPhotoUrl: string;
-  projectCoverPhotoBase64: string;
-  projectDateCreated: string;
-  projectLastUpdated: string;
-  projectTitle: string;
-  projectDescription: string;
-  projectLinks: object;
+  exhibitId: string;
+  exhibitCoverPhotoId: string;
+  exhibitCoverPhotoUrl: string;
+  exhibitCoverPhotoBase64: string;
+  exhibitDateCreated: string;
+  exhibitLastUpdated: string;
+  exhibitTitle: string;
+  exhibitDescription: string;
+  exhibitLinks: object;
 }
-interface ActionUpdateUserProject {
+interface ActionUpdateUserExhibit {
   type: typeof UPDATE_USER_PROJECT;
-  projectId: string;
-  projectCoverPhotoUrl: string;
-  projectLastUpdated: string;
-  projectTitle: string;
-  projectDescription: string;
-  projectLinks: object;
+  exhibitId: string;
+  exhibitCoverPhotoUrl: string;
+  exhibitLastUpdated: string;
+  exhibitTitle: string;
+  exhibitDescription: string;
+  exhibitLinks: object;
 }
-interface ActionRemoveUserProject {
+interface ActionRemoveUserExhibit {
   type: typeof REMOVE_USER_PROJECT;
-  projectId: string;
+  exhibitId: string;
 }
 interface ActionRemoveUserPost {
   type: typeof REMOVE_USER_POST;
-  projectId: string;
+  exhibitId: string;
   postId: string;
 }
 interface ActionFollowUser {
@@ -214,12 +214,12 @@ interface ActionUnfollowUser {
 interface ActionAdvocateForUser {
   type: typeof ADVOCATE_FOR_USER;
   exploredExhibitUId: string;
-  projectId: string;
+  exhibitId: string;
 }
 interface ActionUnadvocateForUser {
   type: typeof UNADVOCATE_FOR_USER;
   exploredExhibitUId: string;
-  projectId: string;
+  exhibitId: string;
 }
 interface ActionChangeProfilePicture {
   type: typeof CHANGE_PROFILE_PICTURE;
@@ -228,11 +228,11 @@ interface ActionChangeProfilePicture {
   profilePictureBase64: string;
   ExhibitUId: string;
 }
-interface ActionAddTempProjectPicture {
+interface ActionAddTempExhibitPicture {
   type: typeof ADD_TEMP_PROJECT_PICTURE;
-  projectTempCoverPhotoUrl: string;
-  projectTempCoverPhotoId: string;
-  projectTempCoverPhotoBase64: string;
+  exhibitTempCoverPhotoUrl: string;
+  exhibitTempCoverPhotoId: string;
+  exhibitTempCoverPhotoBase64: string;
 }
 interface ActionAddTempPostPicture {
   type: typeof ADD_TEMP_POST_PICTURE;
@@ -240,12 +240,12 @@ interface ActionAddTempPostPicture {
   tempPhotoPostUrl: string;
   tempPhotoPostBase64: string;
 }
-interface ActionChangeProjectPicture {
+interface ActionChangeExhibitPicture {
   type: typeof CHANGE_PROJECT_PICTURE;
-  projectId: string;
-  projectCoverPhotoUrl: string;
-  projectCoverPhotoId: string;
-  projectCoverPhotoBase64: string;
+  exhibitId: string;
+  exhibitCoverPhotoUrl: string;
+  exhibitCoverPhotoId: string;
+  exhibitCoverPhotoBase64: string;
 }
 interface ActionAddUserPost {
   type: typeof ADD_USER_POST;
@@ -254,7 +254,7 @@ interface ActionAddUserPost {
   jobTitle: string;
   ExhibitUId: string;
   profileBiography: string;
-  projectTitle: string;
+  exhibitTitle: string;
   numberOfFollowers: number;
   numberOfFollowing: number;
   numberOfAdvocates: number;
@@ -263,7 +263,7 @@ interface ActionAddUserPost {
   advocatesValue: boolean;
   profilePictureUrl: string;
   profilePictureBase64: string;
-  projectId: string;
+  exhibitId: string;
   postId: string;
   postDateCreated: string;
   postLastUpdated: string;
@@ -272,7 +272,7 @@ interface ActionAddUserPost {
   postPhotoBase64: string;
   caption: string;
   profileLinks: object;
-  projectLinks: object;
+  exhibitLinks: object;
   postLinks: object;
   profileColumns: number;
 }
@@ -288,47 +288,47 @@ interface ActionGetUserFeed {
 interface ActionCheerPost {
   type: typeof CHEER_POST;
   ExhibitUId: string;
-  projectId: string;
+  exhibitId: string;
   postId: string;
 }
 interface ActionCheerUpdatePosts {
   type: typeof CHEER_UPDATE_POSTS;
-  projectId: string;
+  exhibitId: string;
   postId: string;
 }
 interface ActionCheerOwnFeedPost {
   type: typeof CHEER_OWN_FEED_POST;
   ExhibitUId: string;
-  projectId: string;
+  exhibitId: string;
   postId: string;
 }
 interface ActionCheerOwnProfilePost {
   type: typeof CHEER_OWN_PROFILE_POST;
   ExhibitUId: string;
-  projectId: string;
+  exhibitId: string;
   postId: string;
 }
 interface ActionUncheerPost {
   type: typeof UNCHEER_POST;
   ExhibitUId: string;
-  projectId: string;
+  exhibitId: string;
   postId: string;
 }
 interface ActionUncheerUpdatePosts {
   type: typeof UNCHEER_UPDATE_POSTS;
-  projectId: string;
+  exhibitId: string;
   postId: string;
 }
 interface ActionUncheerOwnFeedPost {
   type: typeof UNCHEER_OWN_FEED_POST;
   ExhibitUId: string;
-  projectId: string;
+  exhibitId: string;
   postId: string;
 }
 interface ActionUncheerOwnProfilePost {
   type: typeof UNCHEER_OWN_PROFILE_POST;
   ExhibitUId: string;
-  projectId: string;
+  exhibitId: string;
   postId: string;
 }
 interface ActionChangeProfileColumns {
@@ -336,10 +336,10 @@ interface ActionChangeProfileColumns {
   number: number;
   ExhibitUId: string;
 }
-interface ActionChangeProjectColumns {
+interface ActionChangeExhibitColumns {
   type: typeof CHANGE_PROJECT_COLUMNS;
   ExhibitUId: string;
-  projectId: string;
+  exhibitId: string;
   number: number;
 }
 interface ActionGetUpdates {
@@ -363,7 +363,6 @@ interface ActionShowcaseProfile {
 }
 interface ActionReturnFromShowcasing {
   type: typeof RETURN_FROM_SHOWCASING;
-  value: boolean;
 }
 interface ActionHideProfileFooter {
   type: typeof HIDE_PROFILE_FOOTER;
@@ -408,18 +407,18 @@ export type Action =
   | ActionGetUserData
   | ActionGetSwitches
   | ActionUpdateUserProfile
-  | ActionAddUserProject
-  | ActionUpdateUserProject
-  | ActionRemoveUserProject
+  | ActionAddUserExhibit
+  | ActionUpdateUserExhibit
+  | ActionRemoveUserExhibit
   | ActionRemoveUserPost
   | ActionFollowUser
   | ActionUnfollowUser
   | ActionAdvocateForUser
   | ActionUnadvocateForUser
   | ActionChangeProfilePicture
-  | ActionAddTempProjectPicture
+  | ActionAddTempExhibitPicture
   | ActionAddTempPostPicture
-  | ActionChangeProjectPicture
+  | ActionChangeExhibitPicture
   | ActionAddUserPost
   | ActionUpdateAllPosts
   | ActionGetUserFeed
@@ -432,7 +431,7 @@ export type Action =
   | ActionUncheerOwnFeedPost
   | ActionUncheerOwnProfilePost
   | ActionChangeProfileColumns
-  | ActionChangeProjectColumns
+  | ActionChangeExhibitColumns
   | ActionGetUpdates
   | ActionResetScroll
   | ActionOnScreen

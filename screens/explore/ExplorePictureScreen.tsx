@@ -11,7 +11,7 @@ import useDidMountEffect from "../../helper/useDidMountEffect";
 const ExplorePictureScreen = (props) => {
   const darkModeValue = useAppSelector((state) => state.user.darkMode);
   const ExhibitUId = props.navigation.getParam("ExhibitUId");
-  const currentProjectId = props.navigation.getParam("projectId");
+  const currentExhibitId = props.navigation.getParam("exhibitId");
   const postId = props.navigation.getParam("postId");
   const fullname = props.navigation.getParam("fullname");
   const profilePictureUrl = props.navigation.getParam("profilePictureUrl");
@@ -30,7 +30,7 @@ const ExplorePictureScreen = (props) => {
   const viewCheeringHandler = () => {
     props.navigation.navigate("ExploreCheering", {
       ExhibitUId: ExhibitUId,
-      projectId: currentProjectId,
+      exhibitId: currentExhibitId,
       postId: postId,
       numberOfCheers: numberOfCheers,
     });
@@ -45,7 +45,7 @@ const ExplorePictureScreen = (props) => {
 
   useEffect(() => {
     setIntialCheeredPosts(cheeredPosts);
-    props.navigation.setParams({ projectId: currentProjectId });
+    props.navigation.setParams({ exhibitId: currentExhibitId });
   }, []);
 
   useEffect(() => {
@@ -58,11 +58,11 @@ const ExplorePictureScreen = (props) => {
       cheeredPosts
     );
     const exploredUserDataNewState = exploredUserData;
-    for (const projectId of Object.keys(
-      exploredUserDataNewState.profileProjects
+    for (const exhibitId of Object.keys(
+      exploredUserDataNewState.profileExhibits
     )) {
       for (const postId of Object.keys(
-        exploredUserDataNewState.profileProjects[projectId].projectPosts
+        exploredUserDataNewState.profileExhibits[exhibitId].exhibitPosts
       )) {
         if (postId === difference[0]) {
           if (intialCheeredPosts.length < cheeredPosts.length) {
@@ -99,7 +99,7 @@ const ExplorePictureScreen = (props) => {
         numberOfComments={numberOfComments}
         links={links}
         postId={postId}
-        projectId={currentProjectId}
+        exhibitId={currentExhibitId}
         posterExhibitUId={ExhibitUId}
         showCheering={exploredUserData.showCheering}
         postDateCreated={postDateCreated}
@@ -109,7 +109,7 @@ const ExplorePictureScreen = (props) => {
         usernameStyle={{
           color: darkModeValue ? "white" : "black",
         }}
-        projectContainer={{
+        exhibitContainer={{
           borderColor: darkModeValue ? "#616161" : "#e8e8e8",
           marginBottom: 10,
         }}
@@ -130,7 +130,7 @@ const ExplorePictureScreen = (props) => {
           color: "gray",
         }}
         nameTitleColors={["rgba(0,0,0,1)", "rgba(0,0,0,0.00)"]}
-        projectTitleColors={["rgba(0,0,0,0.00)", "rgba(0,0,0,1)"]}
+        exhibitTitleColors={["rgba(0,0,0,0.00)", "rgba(0,0,0,1)"]}
         pictureCheerContainer={{
           backgroundColor: darkModeValue ? "#121212" : "white",
         }}

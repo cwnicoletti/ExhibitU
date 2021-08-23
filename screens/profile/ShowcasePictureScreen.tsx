@@ -18,7 +18,7 @@ const ShowcasePictureScreen = (props) => {
   const userData = props.navigation.getParam("userData");
 
   const postId = props.navigation.getParam("postId");
-  const projectId = props.navigation.getParam("projectId");
+  const exhibitId = props.navigation.getParam("exhibitId");
   const postPhotoUrl = props.navigation.getParam("postPhotoUrl");
   const postPhotoBase64 = props.navigation.getParam("postPhotoBase64");
   const numberOfCheers = props.navigation.getParam("numberOfCheers");
@@ -37,7 +37,7 @@ const ShowcasePictureScreen = (props) => {
   const viewCheeringHandler = () => {
     props.navigation.push("CheeringScreen", {
       ExhibitUId: userData.ExhibitUId,
-      projectId: projectId,
+      exhibitId: exhibitId,
       postId: postId,
       numberOfCheers: numberOfCheers,
     });
@@ -60,9 +60,9 @@ const ShowcasePictureScreen = (props) => {
       followers: userData.followers,
       following: userData.following,
       advocates: userData.advocates,
-      profileProjects: userData.profileProjects,
+      profileExhibits: userData.profileExhibits,
       profileLinks: userData.profileLinks,
-      projectLinks: userData.projectLinks,
+      exhibitLinks: userData.exhibitLinks,
       profileColumns: userData.profileColumns,
       showCheering: userData.showCheering,
     });
@@ -108,7 +108,7 @@ const ShowcasePictureScreen = (props) => {
         usernameStyle={{
           color: darkModeValue ? "white" : "black",
         }}
-        projectContainer={{
+        exhibitContainer={{
           borderColor: darkModeValue ? "#616161" : "#e8e8e8",
         }}
         titleContainer={{
@@ -128,7 +128,7 @@ const ShowcasePictureScreen = (props) => {
           color: "white",
         }}
         nameTitleColors={["rgba(0,0,0,1)", "rgba(0,0,0,0.00)"]}
-        projectTitleColors={["rgba(0,0,0,0.00)", "rgba(0,0,0,1)"]}
+        exhibitTitleColors={["rgba(0,0,0,0.00)", "rgba(0,0,0,1)"]}
         pictureCheerContainer={{
           backgroundColor: darkModeValue ? "#121212" : "white",
         }}
@@ -197,14 +197,6 @@ const styles = StyleSheet.create({
   },
   profileDescriptionStyle: {
     margin: 15,
-  },
-  text: {
-    padding: 10,
-  },
-  image: {
-    height: 30,
-    width: 30,
-    marginRight: 5,
   },
 });
 

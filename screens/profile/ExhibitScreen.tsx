@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { FlatList, Platform, StyleSheet, Text, View } from "react-native";
+import { FlatList, Platform, StyleSheet, View } from "react-native";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import { useAppDispatch, useAppSelector } from "../../hooks";
-import ProjectHeader from "../../components/projects/ProjectHeader";
+import ExhibitHeader from "../../components/exhibits/ExhibitHeader";
 import IoniconsHeaderButton from "../../components/UI/header_buttons/IoniconsHeaderButton";
-import ProjectPictures from "../../components/UI/ProjectPictures";
+import ExhibitPictures from "../../components/UI/ExhibitPictures";
 import TutorialExhibitView from "../../components/tutorial/TutorialExhibitView";
-import { changeProjectNumberOfColumns } from "../../store/actions/user/user";
+import { changeExhibitNumberOfColumns } from "../../store/actions/user/user";
 import MainHeaderTitle from "../../components/UI/MainHeaderTitle";
 
-const ProjectScreen = (props) => {
+const ExhibitScreen = (props) => {
   const dispatch = useAppDispatch();
   const [isLoadingTwoColumns, setIsLoadingTwoColumns] = useState(false);
   const [isLoadingThreeColumns, setIsLoadingThreeColumns] = useState(false);
@@ -17,23 +17,23 @@ const ProjectScreen = (props) => {
   const darkModeValue = useAppSelector((state) => state.user.darkMode);
   const localId = useAppSelector((state) => state.auth.userId);
   const ExhibitUId = useAppSelector((state) => state.user.ExhibitUId);
-  const profileProjects = useAppSelector((state) => state.user.profileProjects);
+  const profileExhibits = useAppSelector((state) => state.user.profileExhibits);
   const tutorialing = useAppSelector((state) => state.user.tutorialing);
   const tutorialScreen = useAppSelector((state) => state.user.tutorialScreen);
-  const currentProjectId = props.navigation.getParam("projectId");
-  const currentProject = profileProjects[currentProjectId]
-    ? profileProjects[currentProjectId]
+  const currentExhibitId = props.navigation.getParam("exhibitId");
+  const currentExhibit = profileExhibits[currentExhibitId]
+    ? profileExhibits[currentExhibitId]
     : {
-        projectPosts: {
+        exhibitPosts: {
           ["randomId121334h"]: {
             ExhibitUId: ExhibitUId,
-            projectId: "randomId121334",
+            exhibitId: "randomId121334",
             postId: "randomId121334h",
             fullname: "test",
             username: "test",
             jobTitle: "test",
             profileBiography: "test",
-            profileProjects: {},
+            profileExhibits: {},
             profilePictureUrl: "test",
             postPhotoUrl:
               "https://camo.githubusercontent.com/9aea0a68fd10f943a82ce8a434f6c126296568fdf17d0cc914d40a4feb4a9f10/68747470733a2f2f7265732e636c6f7564696e6172792e636f6d2f706572736f6e616c757365313233342f696d6167652f75706c6f61642f76313631373231353939392f436f43726561746f727765626170705f6c7a716e696e2e706e67",
@@ -48,33 +48,35 @@ const ProjectScreen = (props) => {
             },
           },
         },
-        projectTitle: "Sample Exhibit",
-        projectDescription:
+        exhibitTitle: "Sample Exhibit",
+        exhibitDescription:
           "I've been working on a really cool web application!",
-        projectCoverPhotoUrl:
-          "https://res.cloudinary.com/showcase-79c28/image/upload/v1626117054/project_pic_ysb6uu.png",
-        projectCoverPhotoBase64: "",
-        projectDateCreated: {
+        exhibitCoverPhotoUrl:
+          "https://res.cloudinary.com/showcase-79c28/image/upload/v1626117054/exhibit_pic_ysb6uu.png",
+        exhibitCoverPhotoBase64: "",
+        exhibitDateCreated: {
           _seconds: 7654757,
           _minutes: 7654757,
         },
-        projectLastUpdated: {
+        exhibitLastUpdated: {
           _seconds: 7654757,
           _minutes: 7654757,
         },
-        projectLinks: {},
-        projectColumns: 2,
+        exhibitLinks: {},
+        exhibitColumns: 2,
       };
-  const [projectPostsState, setProjectPostsState] = useState(
-    Object.values(currentProject.projectPosts).sort((first, second) => {
-      return (
-        second["postDateCreated"]["_seconds"] -
-        first["postDateCreated"]["_seconds"]
-      );
-    })
+  const [exhibitPostsState, setExhibitPostsState] = useState(
+    Object.values(currentExhibit.exhibitPosts).sort(
+      (first: string, second: string) => {
+        return (
+          second["postDateCreated"]["_seconds"] -
+          first["postDateCreated"]["_seconds"]
+        );
+      }
+    )
   );
 
-  const postIds = Object.keys(currentProject.projectPosts);
+  const postIds = Object.keys(currentExhibit.exhibitPosts);
 
   let android = null;
   if (Platform.OS === "android") {
@@ -83,13 +85,13 @@ const ProjectScreen = (props) => {
 
   const viewCommentsHandler = (
     ExhibitUId,
-    projectId,
+    exhibitId,
     postId,
     fullname,
     username,
     jobTitle,
     profileBiography,
-    profileProjects,
+    profileExhibits,
     profilePictureUrl,
     postPhotoUrl,
     postPhotoBase64,
@@ -101,13 +103,13 @@ const ProjectScreen = (props) => {
   ) => {
     props.navigation.push("PictureScreen", {
       ExhibitUId,
-      projectId,
+      exhibitId,
       postId,
       fullname,
       username,
       jobTitle,
       profileBiography,
-      profileProjects,
+      profileExhibits,
       profilePictureUrl,
       postPhotoUrl,
       postPhotoBase64,
@@ -121,13 +123,13 @@ const ProjectScreen = (props) => {
 
   useEffect(() => {
     props.navigation.setParams({
-      projectId: currentProjectId,
-      projectTitle: currentProject.projectTitle,
-      projectDescription: currentProject.projectDescription,
-      projectCoverPhotoUrl: currentProject.projectCoverPhotoUrl,
-      projectDateCreated: currentProject.projectDateCreated,
-      projectLastUpdated: currentProject.projectLastUpdated,
-      projectLinks: currentProject.projectLinks,
+      exhibitId: currentExhibitId,
+      exhibitTitle: currentExhibit.exhibitTitle,
+      exhibitDescription: currentExhibit.exhibitDescription,
+      exhibitCoverPhotoUrl: currentExhibit.exhibitCoverPhotoUrl,
+      exhibitDateCreated: currentExhibit.exhibitDateCreated,
+      exhibitLastUpdated: currentExhibit.exhibitLastUpdated,
+      exhibitLinks: currentExhibit.exhibitLinks,
     });
   }, []);
 
@@ -137,39 +139,39 @@ const ProjectScreen = (props) => {
 
   const topHeader = () => {
     return (
-      <ProjectHeader
+      <ExhibitHeader
         containerStyle={{
           borderBottomColor: darkModeValue ? "white" : "black",
         }}
         imgSource={
-          currentProject.projectCoverPhotoBase64
-            ? currentProject.projectCoverPhotoBase64
-            : currentProject.projectCoverPhotoUrl
+          currentExhibit.exhibitCoverPhotoBase64
+            ? currentExhibit.exhibitCoverPhotoBase64
+            : currentExhibit.exhibitCoverPhotoUrl
         }
         descriptionStyle={{
           ...styles.profileDescriptionStyle,
           color: darkModeValue ? "white" : "black",
         }}
-        title={currentProject.projectTitle}
-        description={currentProject.projectDescription}
-        links={currentProject.projectLinks}
+        title={currentExhibit.exhibitTitle}
+        description={currentExhibit.exhibitDescription}
+        links={currentExhibit.exhibitLinks}
         onEditProfilePress={() =>
-          props.navigation.navigate("EditProjectScreen", {
-            projectId: currentProjectId,
-            projectTitle: currentProject.projectTitle,
-            projectDescription: currentProject.projectDescription,
-            projectCoverPhotoId: currentProject.projectCoverPhotoId,
-            projectCoverPhotoUrl: currentProject.projectCoverPhotoUrl,
-            links: currentProject.projectLinks,
+          props.navigation.navigate("EditExhibitScreen", {
+            exhibitId: currentExhibitId,
+            exhibitTitle: currentExhibit.exhibitTitle,
+            exhibitDescription: currentExhibit.exhibitDescription,
+            exhibitCoverPhotoId: currentExhibit.exhibitCoverPhotoId,
+            exhibitCoverPhotoUrl: currentExhibit.exhibitCoverPhotoUrl,
+            links: currentExhibit.exhibitLinks,
           })
         }
         changeColumnToTwo={async () => {
           await setIsLoadingTwoColumns(true);
           await dispatch(
-            changeProjectNumberOfColumns(
+            changeExhibitNumberOfColumns(
               localId,
               ExhibitUId,
-              currentProjectId,
+              currentExhibitId,
               postIds,
               2
             )
@@ -178,7 +180,7 @@ const ProjectScreen = (props) => {
         }}
         columnTwoStyle={{
           borderColor:
-            currentProject.projectColumns === 2
+            currentExhibit.exhibitColumns === 2
               ? darkModeValue
                 ? "#c9c9c9"
                 : "#3d3d3d"
@@ -190,10 +192,10 @@ const ProjectScreen = (props) => {
         changeColumnToThree={async () => {
           await setIsLoadingThreeColumns(true);
           await dispatch(
-            changeProjectNumberOfColumns(
+            changeExhibitNumberOfColumns(
               localId,
               ExhibitUId,
-              currentProjectId,
+              currentExhibitId,
               postIds,
               3
             )
@@ -202,7 +204,7 @@ const ProjectScreen = (props) => {
         }}
         columnThreeStyle={{
           borderColor:
-            currentProject.projectColumns === 3
+            currentExhibit.exhibitColumns === 3
               ? darkModeValue
                 ? "#c9c9c9"
                 : "#3d3d3d"
@@ -214,10 +216,10 @@ const ProjectScreen = (props) => {
         changeColumnToFour={async () => {
           await setIsLoadingFourColumns(true);
           await dispatch(
-            changeProjectNumberOfColumns(
+            changeExhibitNumberOfColumns(
               localId,
               ExhibitUId,
-              currentProjectId,
+              currentExhibitId,
               postIds,
               4
             )
@@ -226,7 +228,7 @@ const ProjectScreen = (props) => {
         }}
         columnFourStyle={{
           borderColor:
-            currentProject.projectColumns === 4
+            currentExhibit.exhibitColumns === 4
               ? darkModeValue
                 ? "#c9c9c9"
                 : "#3d3d3d"
@@ -252,29 +254,29 @@ const ProjectScreen = (props) => {
         <TutorialExhibitView ExhibitUId={ExhibitUId} localId={localId} />
       ) : null}
       <FlatList<Object | any>
-        data={projectPostsState}
+        data={exhibitPostsState}
         keyExtractor={(item) => item.postId}
         ListHeaderComponent={topHeader()}
-        key={currentProject.projectColumns}
-        numColumns={currentProject.projectColumns}
+        key={currentExhibit.exhibitColumns}
+        numColumns={currentExhibit.exhibitColumns}
         renderItem={(itemData) => (
-          <ProjectPictures
+          <ExhibitPictures
             image={
               itemData.item.postPhotoBase64
                 ? itemData.item.postPhotoBase64
                 : itemData.item.postPhotoUrl
             }
-            projectContainer={{
+            exhibitContainer={{
               backgroundColor: darkModeValue ? "black" : "white",
               width:
-                currentProject.projectColumns === 2
+                currentExhibit.exhibitColumns === 2
                   ? "50%"
-                  : currentProject.projectColumns === 3
+                  : currentExhibit.exhibitColumns === 3
                   ? "33.33%"
-                  : currentProject.projectColumns === 4
+                  : currentExhibit.exhibitColumns === 4
                   ? "25%"
                   : "25%",
-              aspectRatio: currentProject.projectColumns === 1 ? null : 3 / 3,
+              aspectRatio: currentExhibit.exhibitColumns === 1 ? null : 3 / 3,
             }}
             titleStyle={{
               color: darkModeValue ? "white" : "black",
@@ -282,13 +284,13 @@ const ProjectScreen = (props) => {
             onSelect={() =>
               viewCommentsHandler(
                 itemData.item.ExhibitUId,
-                itemData.item.projectId,
+                itemData.item.exhibitId,
                 itemData.item.postId,
                 itemData.item.fullname,
                 itemData.item.username,
                 itemData.item.jobTitle,
                 itemData.item.profileBiography,
-                itemData.item.profileProjects,
+                itemData.item.profileExhibits,
                 itemData.item.profilePictureUrl,
                 itemData.item.postPhotoUrl,
                 itemData.item.postPhotoBase64,
@@ -306,20 +308,20 @@ const ProjectScreen = (props) => {
   );
 };
 
-ProjectScreen.navigationOptions = (navData) => {
+ExhibitScreen.navigationOptions = (navData) => {
   const darkModeValue = navData.navigation.getParam("darkMode");
-  const projectIdParam = navData.navigation.getParam("projectId");
-  const projectTitleParam = navData.navigation.getParam("projectTitle");
-  const projectCoverPhotoUrlParam = navData.navigation.getParam(
-    "projectCoverPhotoUrl"
+  const exhibitIdParam = navData.navigation.getParam("exhibitId");
+  const exhibitTitleParam = navData.navigation.getParam("exhibitTitle");
+  const exhibitCoverPhotoUrlParam = navData.navigation.getParam(
+    "exhibitCoverPhotoUrl"
   );
-  const projectDateCreatedParam =
-    navData.navigation.getParam("projectDateCreated");
-  const projectLastUpdatedParam =
-    navData.navigation.getParam("projectLastUpdated");
-  const projectDescriptionParam =
-    navData.navigation.getParam("projectDescription");
-  const projectLinksParam = navData.navigation.getParam("projectLinks");
+  const exhibitDateCreatedParam =
+    navData.navigation.getParam("exhibitDateCreated");
+  const exhibitLastUpdatedParam =
+    navData.navigation.getParam("exhibitLastUpdated");
+  const exhibitDescriptionParam =
+    navData.navigation.getParam("exhibitDescription");
+  const exhibitLinksParam = navData.navigation.getParam("exhibitLinks");
 
   return {
     headerTitle: () => (
@@ -352,13 +354,13 @@ ProjectScreen.navigationOptions = (navData) => {
           color={darkModeValue ? "white" : "black"}
           onPress={() => {
             navData.navigation.navigate("AddPicture", {
-              projectId: projectIdParam,
-              projectTitle: projectTitleParam,
-              projectCoverPhotoUrl: projectCoverPhotoUrlParam,
-              projectDateCreated: projectDateCreatedParam,
-              projectLastUpdated: projectLastUpdatedParam,
-              projectDescription: projectDescriptionParam,
-              projectLinks: projectLinksParam,
+              exhibitId: exhibitIdParam,
+              exhibitTitle: exhibitTitleParam,
+              exhibitCoverPhotoUrl: exhibitCoverPhotoUrlParam,
+              exhibitDateCreated: exhibitDateCreatedParam,
+              exhibitLastUpdated: exhibitLastUpdatedParam,
+              exhibitDescription: exhibitDescriptionParam,
+              exhibitLinks: exhibitLinksParam,
             });
           }}
         />
@@ -374,14 +376,6 @@ const styles = StyleSheet.create({
   profileDescriptionStyle: {
     margin: 15,
   },
-  text: {
-    padding: 10,
-  },
-  image: {
-    height: 30,
-    width: 30,
-    marginRight: 5,
-  },
 });
 
-export default ProjectScreen;
+export default ExhibitScreen;

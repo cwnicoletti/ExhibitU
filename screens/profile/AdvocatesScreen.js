@@ -25,7 +25,7 @@ const AdvocatesScreen = (props) => {
 
   const darkModeValue = useAppSelector((state) => state.user.darkMode);
   const [returnedIndex, setReturnedIndex] = useState([]);
-  const [projects, setProjects] = useState({});
+  const [exhibits, setExhibits] = useState({});
   const [search, setSearch] = useState("");
   const [isRefreshing, setIsRefreshing] = useState(false);
   const ExhibitUId = props.navigation.getParam("ExhibitUId");
@@ -39,10 +39,10 @@ const AdvocatesScreen = (props) => {
       const advocates = responses.hits.find(
         (object) => object.objectID === ExhibitUId
       ).advocates;
-      const projects = responses.hits.find(
+      const exhibits = responses.hits.find(
         (object) => object.objectID === ExhibitUId
-      ).profileProjects;
-      setProjects(projects);
+      ).profileExhibits;
+      setExhibits(exhibits);
       const filteredIndex = responses.hits.filter((object) =>
         advocates.includes(object.objectID)
       );
@@ -55,10 +55,10 @@ const AdvocatesScreen = (props) => {
       const advocates = responses.hits.find(
         (object) => object.objectID === ExhibitUId
       ).advocates;
-      const projects = responses.hits.find(
+      const exhibits = responses.hits.find(
         (object) => object.objectID === ExhibitUId
-      ).profileProjects;
-      setProjects(projects);
+      ).profileExhibits;
+      setExhibits(exhibits);
       const filteredIndex = responses.hits.filter((object) =>
         advocates.includes(object.objectID)
       );
@@ -93,9 +93,9 @@ const AdvocatesScreen = (props) => {
     followers,
     following,
     advocates,
-    profileProjects,
+    profileExhibits,
     profileLinks,
-    projectLinks,
+    exhibitLinks,
     profileColumns,
     showCheering
   ) => {
@@ -115,9 +115,9 @@ const AdvocatesScreen = (props) => {
       followers,
       following,
       advocates,
-      profileProjects,
+      profileExhibits,
       profileLinks,
-      projectLinks,
+      exhibitLinks,
       profileColumns,
       showCheering,
     });
@@ -192,9 +192,9 @@ const AdvocatesScreen = (props) => {
             fullname={itemData.item.fullname}
             username={itemData.item.username}
             jobTitle={itemData.item.jobTitle}
-            projects={projects}
-            projectsAdvocating={itemData.item.projectsAdvocating}
-            projectContainer={{
+            exhibits={exhibits}
+            exhibitsAdvocating={itemData.item.exhibitsAdvocating}
+            exhibitContainer={{
               backgroundColor: darkModeValue ? "black" : "white",
               borderColor: darkModeValue ? "gray" : "#c9c9c9",
             }}
@@ -224,9 +224,9 @@ const AdvocatesScreen = (props) => {
                 itemData.item.followers,
                 itemData.item.following,
                 itemData.item.advocates,
-                itemData.item.profileProjects,
+                itemData.item.profileExhibits,
                 itemData.item.profileLinks,
-                itemData.item.projectLinks,
+                itemData.item.exhibitLinks,
                 itemData.item.profileColumns,
                 itemData.item.showCheering
               );

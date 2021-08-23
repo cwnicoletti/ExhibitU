@@ -11,7 +11,7 @@ import {
 import { useAppSelector } from "../../hooks";
 import { AnimatedGradient } from "../custom/AnimatedGradient/AnimatedGradient";
 
-const ProjectItem = (props) => {
+const ExhibitItem = (props) => {
   const profileColumns = useAppSelector((state) => state.user.profileColumns);
   const [imageIsLoading, setImageIsLoading] = useState(true);
   const [greyColorValues, setGreyColorValues] = useState([
@@ -27,8 +27,8 @@ const ProjectItem = (props) => {
   return (
     <View
       style={{
-        ...styles.project,
-        ...props.projectContainer,
+        ...styles.exhibit,
+        ...props.exhibitContainer,
         width:
           profileColumns === 2
             ? "50%"
@@ -87,7 +87,7 @@ const ProjectItem = (props) => {
 };
 
 const styles = StyleSheet.create({
-  project: {
+  exhibit: {
     height: 300,
   },
   image: {
@@ -115,4 +115,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ProjectItem;
+export default ExhibitItem;

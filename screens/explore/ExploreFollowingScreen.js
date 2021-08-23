@@ -68,7 +68,7 @@ const ExploreFollowingScreen = (props) => {
     setIsRefreshing(false);
   };
 
-  const viewProjectHandler = (
+  const viewExhibitHandler = (
     text,
     ExhibitUId,
     profilePictureUrl,
@@ -85,9 +85,9 @@ const ExploreFollowingScreen = (props) => {
     followers,
     following,
     advocates,
-    profileProjects,
+    profileExhibits,
     profileLinks,
-    projectLinks,
+    exhibitLinks,
     profileColumns,
     showCheering
   ) => {
@@ -109,9 +109,9 @@ const ExploreFollowingScreen = (props) => {
         followers,
         following,
         advocates,
-        profileProjects,
+        profileExhibits,
         profileLinks,
-        projectLinks,
+        exhibitLinks,
         profileColumns,
         showCheering,
       },
@@ -187,7 +187,7 @@ const ExploreFollowingScreen = (props) => {
             fullname={itemData.item.fullname}
             username={itemData.item.username}
             jobTitle={itemData.item.jobTitle}
-            projectContainer={{
+            exhibitContainer={{
               backgroundColor: darkModeValue ? "black" : "white",
               borderColor: darkModeValue ? "gray" : "#c9c9c9",
             }}
@@ -198,7 +198,7 @@ const ExploreFollowingScreen = (props) => {
               color: darkModeValue ? "white" : "black",
             }}
             onSelect={() => {
-              viewProjectHandler(
+              viewExhibitHandler(
                 search,
                 itemData.item.objectID,
                 itemData.item.profilePictureUrl,
@@ -215,9 +215,9 @@ const ExploreFollowingScreen = (props) => {
                 itemData.item.followers,
                 itemData.item.following,
                 itemData.item.advocates,
-                itemData.item.profileProjects,
+                itemData.item.profileExhibits,
                 itemData.item.profileLinks,
-                itemData.item.projectLinks,
+                itemData.item.exhibitLinks,
                 itemData.item.profileColumns,
                 itemData.item.showCheering
               );

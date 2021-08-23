@@ -29,7 +29,7 @@ const FeedCheeringScreen = (props) => {
   const [isRefreshing, setIsRefreshing] = useState(false);
   const darkModeValue = useAppSelector((state) => state.user.darkMode);
   const ExhibitUId = props.navigation.getParam("ExhibitUId");
-  const projectId = props.navigation.getParam("projectId");
+  const exhibitId = props.navigation.getParam("exhibitId");
   const postId = props.navigation.getParam("postId");
   const numberOfCheers = props.navigation.getParam("numberOfCheers");
 
@@ -41,7 +41,7 @@ const FeedCheeringScreen = (props) => {
     index.search("").then((responses) => {
       const cheering = responses.hits.find(
         (object) => object.objectID === ExhibitUId
-      ).profileProjects[projectId].projectPosts[postId].cheering;
+      ).profileExhibits[exhibitId].exhibitPosts[postId].cheering;
       const filteredIndex = responses.hits.filter((object) =>
         cheering.includes(object.objectID)
       );
@@ -53,7 +53,7 @@ const FeedCheeringScreen = (props) => {
     index.search(text).then((responses) => {
       const cheering = responses.hits.find(
         (object) => object.objectID === ExhibitUId
-      ).profileProjects[projectId].projectPosts[postId].cheering;
+      ).profileExhibits[exhibitId].exhibitPosts[postId].cheering;
       const filteredIndex = responses.hits.filter((object) =>
         cheering.includes(object.objectID)
       );
@@ -74,12 +74,12 @@ const FeedCheeringScreen = (props) => {
 
   const viewProfileHandler = (
     ExhibitUId,
-    projectId,
+    exhibitId,
     fullname,
     username,
     jobTitle,
     profileBiography,
-    profileProjects,
+    profileExhibits,
     profilePictureUrl,
     numberOfFollowers,
     numberOfFollowing,
@@ -94,12 +94,12 @@ const FeedCheeringScreen = (props) => {
     props.navigation.push("ViewProfile", {
       userData: {
         ExhibitUId,
-        projectId,
+        exhibitId,
         fullname,
         username,
         jobTitle,
         profileBiography,
-        profileProjects,
+        profileExhibits,
         profilePictureUrl,
         numberOfFollowers,
         numberOfFollowing,
@@ -195,7 +195,7 @@ const FeedCheeringScreen = (props) => {
             fullname={itemData.item.fullname}
             username={itemData.item.username}
             jobTitle={itemData.item.jobTitle}
-            projectContainer={{
+            exhibitContainer={{
               backgroundColor: darkModeValue ? "black" : "white",
               borderColor: darkModeValue ? "gray" : "#c9c9c9",
             }}
@@ -208,12 +208,12 @@ const FeedCheeringScreen = (props) => {
             onSelect={() => {
               viewProfileHandler(
                 itemData.item.objectID,
-                itemData.item.projectId,
+                itemData.item.exhibitId,
                 itemData.item.fullname,
                 itemData.item.username,
                 itemData.item.jobTitle,
                 itemData.item.profileBiography,
-                itemData.item.profileProjects,
+                itemData.item.profileExhibits,
                 itemData.item.profilePictureUrl,
                 itemData.item.numberOfFollowers,
                 itemData.item.numberOfFollowing,

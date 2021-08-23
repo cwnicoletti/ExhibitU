@@ -29,16 +29,16 @@ import IoniconsHeaderButton from "../../components/UI/header_buttons/IoniconsHea
 import LinkButton from "../../components/UI/LinkButton";
 import useDidMountEffect from "../../helper/useDidMountEffect";
 import {
-  uploadChangeProjectCoverPicture,
-  uploadRemoveProject,
-  uploadUpdatedProject,
+  uploadChangeExhibitCoverPicture,
+  uploadRemoveExhibit,
+  uploadUpdatedExhibit,
 } from "../../store/actions/user/user";
 
 const FORM_INPUT_UPDATE = "FORM_INPUT_UPDATE";
 const FORM_INPUT_LINKS_UPDATE = "FORM_INPUT_LINKS_UPDATE";
 const FORM_INPUT_LINKS_REMOVE = "FORM_INPUT_LINKS_REMOVE";
 
-const EditProjectScreen = (props) => {
+const EditExhibitScreen = (props) => {
   const dispatch = useAppDispatch();
   const [fileSizeError, setFileSizeError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -47,15 +47,15 @@ const EditProjectScreen = (props) => {
   const [linksState, setLinksState] = useState(Object.values(prevLinks));
   const darkModeValue = useAppSelector((state) => state.user.darkMode);
   const localId = useAppSelector((state) => state.auth.userId);
-  const projectId = props.navigation.getParam("projectId");
-  const exhibitTitle = props.navigation.getParam("projectTitle");
-  const projectDescription = props.navigation.getParam("projectDescription");
-  const projectCoverPhotoId = props.navigation.getParam("projectCoverPhotoId");
-  const [projectCoverPhotoUrl, setProjectCoverPhotoUrl] = useState(
-    props.navigation.getParam("projectCoverPhotoUrl")
+  const exhibitId = props.navigation.getParam("exhibitId");
+  const exhibitTitle = props.navigation.getParam("exhibitTitle");
+  const exhibitDescription = props.navigation.getParam("exhibitDescription");
+  const exhibitCoverPhotoId = props.navigation.getParam("exhibitCoverPhotoId");
+  const [exhibitCoverPhotoUrl, setExhibitCoverPhotoUrl] = useState(
+    props.navigation.getParam("exhibitCoverPhotoUrl")
   );
-  const projectTempCoverPhotoUrl = useAppSelector(
-    (state) => state.user.projectTempCoverPhotoUrl
+  const exhibitTempCoverPhotoUrl = useAppSelector(
+    (state) => state.user.exhibitTempCoverPhotoUrl
   );
   const ExhibitUId = useAppSelector((state) => state.user.ExhibitUId);
 
@@ -67,11 +67,11 @@ const EditProjectScreen = (props) => {
   let initialState = {
     inputValues: {
       exhibitTitle: exhibitTitle ? exhibitTitle : "",
-      projectDescription: projectDescription ? projectDescription : "",
+      exhibitDescription: exhibitDescription ? exhibitDescription : "",
     },
     inputValidities: {
       exhibitTitle: false,
-      projectDescription: false,
+      exhibitDescription: false,
     },
     formIsValid: false,
   };
@@ -117,27 +117,27 @@ const EditProjectScreen = (props) => {
     const newLinks = correctUrls(links);
     await setIsLoading(true);
     await dispatch(
-      uploadUpdatedProject(
+      uploadUpdatedExhibit(
         ExhibitUId,
         localId,
-        projectId,
-        projectTempCoverPhotoUrl
-          ? projectTempCoverPhotoUrl
-          : projectCoverPhotoUrl,
+        exhibitId,
+        exhibitTempCoverPhotoUrl
+          ? exhibitTempCoverPhotoUrl
+          : exhibitCoverPhotoUrl,
         formState.inputValues.exhibitTitle,
-        formState.inputValues.projectDescription,
+        formState.inputValues.exhibitDescription,
         newLinks
       )
     );
     await setIsLoading(false);
-    props.navigation.navigate("ViewProfileProject", {
-      projectId: projectId,
+    props.navigation.navigate("ViewProfileExhibit", {
+      exhibitId: exhibitId,
     });
   }, [formState, linksState]);
 
   const deleteHandler = () => {
     props.navigation.navigate("Profile");
-    dispatch(uploadRemoveProject(ExhibitUId, localId, projectId));
+    dispatch(uploadRemoveExhibit(ExhibitUId, localId, exhibitId));
   };
 
   let android = null;
@@ -156,7 +156,7 @@ const EditProjectScreen = (props) => {
     props.navigation.setParams({ darkMode: darkModeValue });
   }, [darkModeValue]);
 
-  const changeProjectCoverPicture = async () => {
+  const changeExhibitCoverPicture = async () => {
     if (!(await getPhotoPermissions(ImagePicker))) {
       return;
     }
@@ -175,12 +175,12 @@ const EditProjectScreen = (props) => {
         setFileSizeError(false);
         const base64 = `data:image/png;base64,${result.base64}`;
         await dispatch(
-          uploadChangeProjectCoverPicture(
+          uploadChangeExhibitCoverPicture(
             base64,
-            projectId,
+            exhibitId,
             ExhibitUId,
             localId,
-            projectCoverPhotoId
+            exhibitCoverPhotoId
           )
         );
       }
@@ -209,8 +209,8 @@ const EditProjectScreen = (props) => {
   };
 
   useDidMountEffect(() => {
-    setProjectCoverPhotoUrl(projectTempCoverPhotoUrl);
-  }, [projectTempCoverPhotoUrl]);
+    setExhibitCoverPhotoUrl(exhibitTempCoverPhotoUrl);
+  }, [exhibitTempCoverPhotoUrl]);
 
   return (
     <KeyboardAvoidingView
@@ -249,13 +249,13 @@ const EditProjectScreen = (props) => {
               justifyContent: "center",
             }}
           >
-            {projectCoverPhotoUrl ? (
+            {exhibitCoverPhotoUrl ? (
               <Image
                 style={{
                   height: 350,
                   width: "100%",
                 }}
-                source={{ uri: projectCoverPhotoUrl }}
+                source={{ uri: exhibitCoverPhotoUrl }}
               />
             ) : (
               <DefaultPicture height={350} width={"100%"} fill="gray" />
@@ -281,7 +281,7 @@ const EditProjectScreen = (props) => {
             <Text
               style={{ margin: 10, color: darkModeValue ? "white" : "black" }}
             >
-              {formState.inputValues.projectDescription}
+              {formState.inputValues.exhibitDescription}
             </Text>
           </View>
           {Object.keys(parseLinkValuesFromInputValues(formState)).length <=
@@ -392,7 +392,7 @@ const EditProjectScreen = (props) => {
                 margin: 10,
                 alignSelf: "center",
               }}
-              onPress={changeProjectCoverPicture}
+              onPress={changeExhibitCoverPicture}
             >
               <View
                 style={{
@@ -460,13 +460,13 @@ const EditProjectScreen = (props) => {
           />
           <Input
             textLabel={{ color: darkModeValue ? "white" : "black" }}
-            id="projectDescription"
+            id="exhibitDescription"
             label="Exhibit Description"
             errorText="Please enter a valid exhibit description!"
             keyboardType="default"
             multiline
             onInputChange={inputChangeHandler}
-            initialValue={projectDescription ? projectDescription : ""}
+            initialValue={exhibitDescription ? exhibitDescription : ""}
             initiallyValid={true}
             required
             minLength={5}
@@ -637,7 +637,7 @@ const EditProjectScreen = (props) => {
   );
 };
 
-EditProjectScreen.navigationOptions = (navData) => {
+EditExhibitScreen.navigationOptions = (navData) => {
   const darkModeValue = navData.navigation.getParam("darkMode");
   const android = navData.navigation.getParam("android");
   const deleteFn = navData.navigation.getParam("deleteFn");
@@ -696,4 +696,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default EditProjectScreen;
+export default EditExhibitScreen;

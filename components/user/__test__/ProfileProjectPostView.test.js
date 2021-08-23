@@ -7,7 +7,7 @@ import ReduxThunk from "redux-thunk";
 import authReducer from "../../../store/reducers/auth";
 import signupReducer from "../../../store/reducers/signup";
 import userReducer from "../../../store/reducers/user";
-import ProfileProjectPostView from "../ProfileProjectPostView";
+import ProfileExhibitPostView from "../ProfileExhibitPostView";
 
 
 
@@ -24,7 +24,7 @@ test("renders correctly", () => {
     .create(
       <Provider store={store}>
         <SafeAreaProvider>
-          <ProfileProjectPostView />
+          <ProfileExhibitPostView />
         </SafeAreaProvider>
       </Provider>
     )

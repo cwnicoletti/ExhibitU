@@ -49,7 +49,7 @@ const FeedItem = (props) => {
   const showCheering = useAppSelector((state) => state.user.showCheering);
   const localId = useAppSelector((state) => state.auth.userId);
   const ExhibitUId = useAppSelector((state) => state.user.ExhibitUId);
-  const projectId = props.projectId;
+  const exhibitId = props.exhibitId;
   const postId = props.postId;
   const posterExhibitUId = props.posterExhibitUId;
   const currentUsersPost = ExhibitUId === posterExhibitUId ? true : false;
@@ -142,10 +142,10 @@ const FeedItem = (props) => {
       if (!cheeredPosts.includes(postId)) {
         await setLoadingCheer(true);
         await dispatch(
-          cheerPost(localId, ExhibitUId, projectId, postId, posterExhibitUId)
+          cheerPost(localId, ExhibitUId, exhibitId, postId, posterExhibitUId)
         );
         if (ExhibitUId === posterExhibitUId) {
-          await dispatch(cheerOwnFeedPost(ExhibitUId, projectId, postId));
+          await dispatch(cheerOwnFeedPost(ExhibitUId, exhibitId, postId));
         }
         await setLoadingCheer(false);
       }
@@ -159,17 +159,17 @@ const FeedItem = (props) => {
     if (cheeredPosts.includes(postId)) {
       await setLoadingCheer(true);
       await dispatch(
-        uncheerPost(localId, ExhibitUId, projectId, postId, posterExhibitUId)
+        uncheerPost(localId, ExhibitUId, exhibitId, postId, posterExhibitUId)
       );
       if (ExhibitUId === posterExhibitUId) {
-        await dispatch(uncheerOwnFeedPost(ExhibitUId, projectId, postId));
+        await dispatch(uncheerOwnFeedPost(ExhibitUId, exhibitId, postId));
       }
       await setLoadingCheer(false);
     }
   };
 
   return (
-    <View style={{ ...props.projectContainer }}>
+    <View style={{ ...props.exhibitContainer }}>
       <TouchableWithoutFeedback
         onPress={() => {
           if (!processingWholeCheer) {
@@ -383,12 +383,12 @@ const FeedItem = (props) => {
                   ...styles.titleContainer,
                   ...props.titleContainer,
                 }}
-                colors={props.projectTitleColors}
+                colors={props.exhibitTitleColors}
               >
                 <View style={styles.balance} />
                 <View style={styles.titleTextContainer}>
                   <Text style={{ ...styles.title, ...props.titleStyle }}>
-                    {props.projectTitle}
+                    {props.exhibitTitle}
                   </Text>
                 </View>
                 <AntDesign

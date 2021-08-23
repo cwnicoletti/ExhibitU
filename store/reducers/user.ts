@@ -53,9 +53,9 @@ const intialState: UserState = {
   profilePictureId: "",
   profilePictureUrl: "",
   profilePictureBase64: "",
-  projectTempCoverPhotoId: "",
-  projectTempCoverPhotoUrl: "",
-  projectTempCoverPhotoBase64: "",
+  exhibitTempCoverPhotoId: "",
+  exhibitTempCoverPhotoUrl: "",
+  exhibitTempCoverPhotoBase64: "",
   tempPhotoPostId: "",
   tempPhotoPostUrl: "",
   tempPhotoPostBase64: "",
@@ -72,9 +72,9 @@ const intialState: UserState = {
   following: [],
   advocates: [],
   advocating: [],
-  projectsAdvocating: [],
+  exhibitsAdvocating: [],
   cheeredPosts: [],
-  profileProjects: {},
+  profileExhibits: {},
   profileLinks: {},
   userFeed: {},
   updates: {},
@@ -106,9 +106,9 @@ export default (state = intialState, action: Action) => {
         profilePictureId: action.profilePictureId,
         profilePictureUrl: action.profilePictureUrl,
         profilePictureBase64: action.profilePictureBase64,
-        projectTempCoverPhotoId: action.projectTempCoverPhotoId,
-        projectTempCoverPhotoUrl: action.projectTempCoverPhotoUrl,
-        projectTempCoverPhotoBase64: action.projectTempCoverPhotoBase64,
+        exhibitTempCoverPhotoId: action.exhibitTempCoverPhotoId,
+        exhibitTempCoverPhotoUrl: action.exhibitTempCoverPhotoUrl,
+        exhibitTempCoverPhotoBase64: action.exhibitTempCoverPhotoBase64,
         tempPhotoPostId: action.tempPhotoPostId,
         tempPhotoPostUrl: action.tempPhotoPostUrl,
         tempPhotoPostBase64: action.tempPhotoPostBase64,
@@ -125,9 +125,9 @@ export default (state = intialState, action: Action) => {
         following: action.following,
         advocates: action.advocates,
         advocating: action.advocating,
-        projectsAdvocating: action.projectsAdvocating,
+        exhibitsAdvocating: action.exhibitsAdvocating,
         cheeredPosts: action.cheeredPosts,
-        profileProjects: action.profileProjects,
+        profileExhibits: action.profileExhibits,
         profileLinks: action.profileLinks,
         userFeed: action.userFeed,
         updates: action.updates,
@@ -157,9 +157,9 @@ export default (state = intialState, action: Action) => {
         following: action.following,
         advocates: action.advocates,
         advocating: action.advocating,
-        projectsAdvocating: action.projectsAdvocating,
+        exhibitsAdvocating: action.exhibitsAdvocating,
         cheeredPosts: action.cheeredPosts,
-        profileProjects: action.profileProjects,
+        profileExhibits: action.profileExhibits,
         profileLinks: action.profileLinks,
       };
     case UPDATE_USER_PROFILE:
@@ -177,12 +177,12 @@ export default (state = intialState, action: Action) => {
           if (state.userFeed[id].ExhibitUId === action.ExhibitUId) {
             state.userFeed[id].profilePictureBase64 =
               action.profilePictureBase64;
-            Object.entries(state.userFeed[id].profileProjects).map(
-              ([projectId, value]) => {
-                state.profileProjects[projectId].projectPosts[
+            Object.entries(state.userFeed[id].profileExhibits).map(
+              ([exhibitId, value]) => {
+                state.profileExhibits[exhibitId].exhibitPosts[
                   id
                 ].profilePictureBase64 = action.profilePictureBase64;
-                state.userFeed[id].profileProjects[projectId].projectPosts[
+                state.userFeed[id].profileExhibits[exhibitId].exhibitPosts[
                   id
                 ].profilePictureBase64 = action.profilePictureBase64;
               }
@@ -199,25 +199,25 @@ export default (state = intialState, action: Action) => {
     case CHANGE_PROJECT_PICTURE:
       return {
         ...state,
-        projectTempCoverPhotoUrl: action.projectCoverPhotoUrl,
-        projectTempCoverPhotoId: action.projectCoverPhotoId,
-        projectTempCoverPhotoBase64: action.projectCoverPhotoBase64,
-        profileProjects: {
-          ...state.profileProjects,
-          [action.projectId]: {
-            ...state.profileProjects[action.projectId],
-            projectCoverPhotoUrl: action.projectCoverPhotoUrl,
-            projectCoverPhotoBase64: action.projectCoverPhotoBase64,
-            projectCoverPhotoId: action.projectCoverPhotoId,
+        exhibitTempCoverPhotoUrl: action.exhibitCoverPhotoUrl,
+        exhibitTempCoverPhotoId: action.exhibitCoverPhotoId,
+        exhibitTempCoverPhotoBase64: action.exhibitCoverPhotoBase64,
+        profileExhibits: {
+          ...state.profileExhibits,
+          [action.exhibitId]: {
+            ...state.profileExhibits[action.exhibitId],
+            exhibitCoverPhotoUrl: action.exhibitCoverPhotoUrl,
+            exhibitCoverPhotoBase64: action.exhibitCoverPhotoBase64,
+            exhibitCoverPhotoId: action.exhibitCoverPhotoId,
           },
         },
       };
     case ADD_TEMP_PROJECT_PICTURE:
       return {
         ...state,
-        projectTempCoverPhotoUrl: action.projectTempCoverPhotoUrl,
-        projectTempCoverPhotoId: action.projectTempCoverPhotoId,
-        projectTempCoverPhotoBase64: action.projectTempCoverPhotoBase64,
+        exhibitTempCoverPhotoUrl: action.exhibitTempCoverPhotoUrl,
+        exhibitTempCoverPhotoId: action.exhibitTempCoverPhotoId,
+        exhibitTempCoverPhotoBase64: action.exhibitTempCoverPhotoBase64,
       };
     case ADD_TEMP_POST_PICTURE:
       return {
@@ -229,45 +229,45 @@ export default (state = intialState, action: Action) => {
     case ADD_USER_PROJECT:
       Object.entries(state.userFeed).map(([id, value]) => {
         if (state.userFeed[id].ExhibitUId === action.ExhibitUId) {
-          Object.assign(state.userFeed[id].profileProjects, {
-            ...state.profileProjects,
-            [action.projectId]: {
-              ...state.profileProjects[action.projectId],
-              projectId: action.projectId,
-              projectCoverPhotoId: action.projectCoverPhotoId,
-              projectCoverPhotoUrl: action.projectCoverPhotoUrl,
-              projectCoverPhotoBase64: action.projectCoverPhotoBase64,
-              projectDateCreated: action.projectDateCreated,
-              projectLastUpdated: action.projectLastUpdated,
-              projectTitle: action.projectTitle,
-              projectDescription: action.projectDescription,
-              projectLinks: action.projectLinks,
-              projectColumns: 2,
-              projectPosts: {},
+          Object.assign(state.userFeed[id].profileExhibits, {
+            ...state.profileExhibits,
+            [action.exhibitId]: {
+              ...state.profileExhibits[action.exhibitId],
+              exhibitId: action.exhibitId,
+              exhibitCoverPhotoId: action.exhibitCoverPhotoId,
+              exhibitCoverPhotoUrl: action.exhibitCoverPhotoUrl,
+              exhibitCoverPhotoBase64: action.exhibitCoverPhotoBase64,
+              exhibitDateCreated: action.exhibitDateCreated,
+              exhibitLastUpdated: action.exhibitLastUpdated,
+              exhibitTitle: action.exhibitTitle,
+              exhibitDescription: action.exhibitDescription,
+              exhibitLinks: action.exhibitLinks,
+              exhibitColumns: 2,
+              exhibitPosts: {},
             },
           });
         }
       });
       return {
         ...state,
-        projectTempCoverPhotoUrl: intialState.projectTempCoverPhotoUrl,
-        projectTempCoverPhotoBase64: intialState.projectTempCoverPhotoBase64,
-        projectTempCoverPhotoId: intialState.projectTempCoverPhotoId,
-        profileProjects: {
-          ...state.profileProjects,
-          [action.projectId]: {
-            ...state.profileProjects[action.projectId],
-            projectId: action.projectId,
-            projectCoverPhotoId: action.projectCoverPhotoId,
-            projectCoverPhotoUrl: action.projectCoverPhotoUrl,
-            projectCoverPhotoBase64: action.projectCoverPhotoBase64,
-            projectDateCreated: action.projectDateCreated,
-            projectLastUpdated: action.projectLastUpdated,
-            projectTitle: action.projectTitle,
-            projectDescription: action.projectDescription,
-            projectLinks: action.projectLinks,
-            projectColumns: 2,
-            projectPosts: {},
+        exhibitTempCoverPhotoUrl: intialState.exhibitTempCoverPhotoUrl,
+        exhibitTempCoverPhotoBase64: intialState.exhibitTempCoverPhotoBase64,
+        exhibitTempCoverPhotoId: intialState.exhibitTempCoverPhotoId,
+        profileExhibits: {
+          ...state.profileExhibits,
+          [action.exhibitId]: {
+            ...state.profileExhibits[action.exhibitId],
+            exhibitId: action.exhibitId,
+            exhibitCoverPhotoId: action.exhibitCoverPhotoId,
+            exhibitCoverPhotoUrl: action.exhibitCoverPhotoUrl,
+            exhibitCoverPhotoBase64: action.exhibitCoverPhotoBase64,
+            exhibitDateCreated: action.exhibitDateCreated,
+            exhibitLastUpdated: action.exhibitLastUpdated,
+            exhibitTitle: action.exhibitTitle,
+            exhibitDescription: action.exhibitDescription,
+            exhibitLinks: action.exhibitLinks,
+            exhibitColumns: 2,
+            exhibitPosts: {},
           },
         },
       };
@@ -277,16 +277,16 @@ export default (state = intialState, action: Action) => {
         tempPhotoPostId: intialState.tempPhotoPostId,
         tempPhotoPostUrl: intialState.tempPhotoPostUrl,
         tempPhotoPostBase64: intialState.tempPhotoPostBase64,
-        profileProjects: {
-          ...state.profileProjects,
-          [action.projectId]: {
-            ...state.profileProjects[action.projectId],
-            projectPosts: {
-              ...state.profileProjects[action.projectId].projectPosts,
+        profileExhibits: {
+          ...state.profileExhibits,
+          [action.exhibitId]: {
+            ...state.profileExhibits[action.exhibitId],
+            exhibitPosts: {
+              ...state.profileExhibits[action.exhibitId].exhibitPosts,
               [action.postId]: {
                 postId: action.postId,
                 ExhibitUId: action.ExhibitUId,
-                projectId: action.projectId,
+                exhibitId: action.exhibitId,
                 fullname: action.fullname,
                 username: action.username,
                 jobTitle: action.jobTitle,
@@ -294,7 +294,7 @@ export default (state = intialState, action: Action) => {
                 numberOfFollowing: action.numberOfFollowing,
                 numberOfAdvocates: action.numberOfAdvocates,
                 profileBiography: action.profileBiography,
-                projectTitle: action.projectTitle,
+                exhibitTitle: action.exhibitTitle,
                 profilePictureUrl: action.profilePictureUrl,
                 profilePictureBase64: action.profilePictureBase64,
                 postDateCreated: action.postDateCreated,
@@ -307,7 +307,7 @@ export default (state = intialState, action: Action) => {
                 numberOfCheers: 0,
                 cheering: [],
                 profileLinks: action.profileLinks,
-                projectLinks: action.projectLinks,
+                exhibitLinks: action.exhibitLinks,
                 postLinks: action.postLinks,
               },
             },
@@ -318,7 +318,7 @@ export default (state = intialState, action: Action) => {
           [action.postId]: {
             postId: action.postId,
             ExhibitUId: action.ExhibitUId,
-            projectId: action.projectId,
+            exhibitId: action.exhibitId,
             fullname: action.fullname,
             username: action.username,
             jobTitle: action.jobTitle,
@@ -329,16 +329,16 @@ export default (state = intialState, action: Action) => {
             followersValue: action.followersValue,
             advocatesValue: action.advocatesValue,
             profileBiography: action.profileBiography,
-            profileProjects: {
-              ...state.profileProjects,
-              [action.projectId]: {
-                ...state.profileProjects[action.projectId],
-                projectPosts: {
-                  ...state.profileProjects[action.projectId].projectPosts,
+            profileExhibits: {
+              ...state.profileExhibits,
+              [action.exhibitId]: {
+                ...state.profileExhibits[action.exhibitId],
+                exhibitPosts: {
+                  ...state.profileExhibits[action.exhibitId].exhibitPosts,
                   [action.postId]: {
                     postId: action.postId,
                     ExhibitUId: action.ExhibitUId,
-                    projectId: action.projectId,
+                    exhibitId: action.exhibitId,
                     fullname: action.fullname,
                     username: action.username,
                     jobTitle: action.jobTitle,
@@ -349,7 +349,7 @@ export default (state = intialState, action: Action) => {
                     followersValue: action.followersValue,
                     advocatesValue: action.advocatesValue,
                     profileBiography: action.profileBiography,
-                    projectTitle: action.projectTitle,
+                    exhibitTitle: action.exhibitTitle,
                     profilePictureUrl: action.profilePictureUrl,
                     profilePictureBase64: action.profilePictureBase64,
                     postDateCreated: action.postDateCreated,
@@ -362,14 +362,14 @@ export default (state = intialState, action: Action) => {
                     numberOfCheers: 0,
                     cheering: [],
                     profileLinks: action.profileLinks,
-                    projectLinks: action.projectLinks,
+                    exhibitLinks: action.exhibitLinks,
                     postLinks: action.postLinks,
                     profileColumns: action.profileColumns,
                   },
                 },
               },
             },
-            projectTitle: action.projectTitle,
+            exhibitTitle: action.exhibitTitle,
             profilePictureUrl: action.profilePictureUrl,
             profilePictureBase64: action.profilePictureBase64,
             postDateCreated: action.postDateCreated,
@@ -382,7 +382,7 @@ export default (state = intialState, action: Action) => {
             numberOfCheers: 0,
             cheering: [],
             profileLinks: action.profileLinks,
-            projectLinks: action.projectLinks,
+            exhibitLinks: action.exhibitLinks,
             postLinks: action.postLinks,
             profileColumns: action.profileColumns,
           },
@@ -393,8 +393,8 @@ export default (state = intialState, action: Action) => {
         if (id !== action.postId) {
           if (state.userFeed[id].ExhibitUId === action.ExhibitUId) {
             Object.assign(
-              state.userFeed[id].profileProjects,
-              state.userFeed[action.postId].profileProjects
+              state.userFeed[id].profileExhibits,
+              state.userFeed[action.postId].profileExhibits
             );
           }
         }
@@ -403,27 +403,27 @@ export default (state = intialState, action: Action) => {
     case UPDATE_USER_PROJECT:
       return {
         ...state,
-        profileProjects: {
-          ...state.profileProjects,
-          [action.projectId]: {
-            ...state.profileProjects[action.projectId],
-            projectLastUpdated: action.projectLastUpdated,
-            projectTitle: action.projectTitle,
-            projectCoverPhotoUrl: action.projectCoverPhotoUrl,
-            projectDescription: action.projectDescription,
-            projectLinks: action.projectLinks,
+        profileExhibits: {
+          ...state.profileExhibits,
+          [action.exhibitId]: {
+            ...state.profileExhibits[action.exhibitId],
+            exhibitLastUpdated: action.exhibitLastUpdated,
+            exhibitTitle: action.exhibitTitle,
+            exhibitCoverPhotoUrl: action.exhibitCoverPhotoUrl,
+            exhibitDescription: action.exhibitDescription,
+            exhibitLinks: action.exhibitLinks,
           },
         },
       };
     case REMOVE_USER_PROJECT:
       const postIds = Object.keys(
-        state.profileProjects[action.projectId].projectPosts
+        state.profileExhibits[action.exhibitId].exhibitPosts
       );
       return {
         ...state,
-        profileProjects: Object.fromEntries(
-          Object.entries(state.profileProjects).filter(
-            ([projectId, v]) => projectId !== action.projectId
+        profileExhibits: Object.fromEntries(
+          Object.entries(state.profileExhibits).filter(
+            ([exhibitId, v]) => exhibitId !== action.exhibitId
           )
         ),
         userFeed: Object.fromEntries(
@@ -435,13 +435,13 @@ export default (state = intialState, action: Action) => {
     case REMOVE_USER_POST:
       return {
         ...state,
-        profileProjects: {
-          ...state.profileProjects,
-          [action.projectId]: {
-            ...state.profileProjects[action.projectId],
-            projectPosts: Object.fromEntries(
+        profileExhibits: {
+          ...state.profileExhibits,
+          [action.exhibitId]: {
+            ...state.profileExhibits[action.exhibitId],
+            exhibitPosts: Object.fromEntries(
               Object.entries(
-                state.profileProjects[action.projectId].projectPosts
+                state.profileExhibits[action.exhibitId].exhibitPosts
               ).filter(([postId, v]) => postId !== action.postId)
             ),
           },
@@ -471,9 +471,9 @@ export default (state = intialState, action: Action) => {
       return {
         ...state,
         advocating: pushReturn(state.advocating, action.exploredExhibitUId),
-        projectsAdvocating: pushReturn(
-          state.projectsAdvocating,
-          action.projectId
+        exhibitsAdvocating: pushReturn(
+          state.exhibitsAdvocating,
+          action.exhibitId
         ),
         numberOfAdvocating: state.numberOfAdvocating + 1,
       };
@@ -484,9 +484,9 @@ export default (state = intialState, action: Action) => {
           state.advocating,
           action.exploredExhibitUId
         ),
-        projectsAdvocating: spliceRemoveReturn(
-          state.projectsAdvocating,
-          action.projectId
+        exhibitsAdvocating: spliceRemoveReturn(
+          state.exhibitsAdvocating,
+          action.exhibitId
         ),
         numberOfAdvocating: state.numberOfAdvocating - 1,
       };
@@ -503,30 +503,30 @@ export default (state = intialState, action: Action) => {
                 action.ExhibitUId
               ),
               numberOfCheers: state.userFeed[action.postId].numberOfCheers + 1,
-              profileProjects: {
-                ...state.userFeed[action.postId].profileProjects,
-                [action.projectId]: {
-                  ...state.userFeed[action.postId].profileProjects[
-                    action.projectId
+              profileExhibits: {
+                ...state.userFeed[action.postId].profileExhibits,
+                [action.exhibitId]: {
+                  ...state.userFeed[action.postId].profileExhibits[
+                    action.exhibitId
                   ],
-                  projectPosts: {
-                    ...state.userFeed[action.postId].profileProjects[
-                      action.projectId
-                    ].projectPosts,
+                  exhibitPosts: {
+                    ...state.userFeed[action.postId].profileExhibits[
+                      action.exhibitId
+                    ].exhibitPosts,
                     [action.postId]: {
-                      ...state.userFeed[action.postId].profileProjects[
-                        action.projectId
-                      ].projectPosts[action.postId],
+                      ...state.userFeed[action.postId].profileExhibits[
+                        action.exhibitId
+                      ].exhibitPosts[action.postId],
                       cheering: pushReturn(
-                        state.userFeed[action.postId].profileProjects[
-                          action.projectId
-                        ].projectPosts[action.postId].cheering,
+                        state.userFeed[action.postId].profileExhibits[
+                          action.exhibitId
+                        ].exhibitPosts[action.postId].cheering,
                         action.ExhibitUId
                       ),
                       numberOfCheers:
-                        state.userFeed[action.postId].profileProjects[
-                          action.projectId
-                        ].projectPosts[action.postId].numberOfCheers + 1,
+                        state.userFeed[action.postId].profileExhibits[
+                          action.exhibitId
+                        ].exhibitPosts[action.postId].numberOfCheers + 1,
                     },
                   },
                 },
@@ -543,19 +543,19 @@ export default (state = intialState, action: Action) => {
       }
     case CHEER_UPDATE_POSTS:
       Object.entries(state.userFeed).map(([id, value]) => {
-        Object.entries(state.userFeed[id].profileProjects).map(
+        Object.entries(state.userFeed[id].profileExhibits).map(
           ([projId, value]) => {
             if (
               Object.keys(
-                state.userFeed[id].profileProjects[projId].projectPosts
+                state.userFeed[id].profileExhibits[projId].exhibitPosts
               ).includes(action.postId) &&
               action.postId !== id
             ) {
-              state.userFeed[id].profileProjects[projId].projectPosts[
+              state.userFeed[id].profileExhibits[projId].exhibitPosts[
                 action.postId
               ].numberOfCheers = state.userFeed[action.postId].numberOfCheers;
               Object.assign(
-                state.userFeed[id].profileProjects[projId].projectPosts[
+                state.userFeed[id].profileExhibits[projId].exhibitPosts[
                   action.postId
                 ].cheering,
                 state.userFeed[action.postId].cheering
@@ -568,22 +568,22 @@ export default (state = intialState, action: Action) => {
     case CHEER_OWN_FEED_POST:
       return {
         ...state,
-        profileProjects: {
-          ...state.profileProjects,
-          [action.projectId]: {
-            ...state.profileProjects[action.projectId],
-            projectPosts: {
-              ...state.profileProjects[action.projectId].projectPosts,
+        profileExhibits: {
+          ...state.profileExhibits,
+          [action.exhibitId]: {
+            ...state.profileExhibits[action.exhibitId],
+            exhibitPosts: {
+              ...state.profileExhibits[action.exhibitId].exhibitPosts,
               [action.postId]: {
-                ...state.profileProjects[action.projectId].projectPosts[
+                ...state.profileExhibits[action.exhibitId].exhibitPosts[
                   action.postId
                 ],
                 numberOfCheers:
-                  state.profileProjects[action.projectId].projectPosts[
+                  state.profileExhibits[action.exhibitId].exhibitPosts[
                     action.postId
                   ].numberOfCheers + 1,
                 cheering: pushReturn(
-                  state.profileProjects[action.projectId].projectPosts[
+                  state.profileExhibits[action.exhibitId].exhibitPosts[
                     action.postId
                   ].cheering,
                   action.ExhibitUId
@@ -596,22 +596,22 @@ export default (state = intialState, action: Action) => {
     case CHEER_OWN_PROFILE_POST:
       return {
         ...state,
-        profileProjects: {
-          ...state.profileProjects,
-          [action.projectId]: {
-            ...state.profileProjects[action.projectId],
-            projectPosts: {
-              ...state.profileProjects[action.projectId].projectPosts,
+        profileExhibits: {
+          ...state.profileExhibits,
+          [action.exhibitId]: {
+            ...state.profileExhibits[action.exhibitId],
+            exhibitPosts: {
+              ...state.profileExhibits[action.exhibitId].exhibitPosts,
               [action.postId]: {
-                ...state.profileProjects[action.projectId].projectPosts[
+                ...state.profileExhibits[action.exhibitId].exhibitPosts[
                   action.postId
                 ],
                 numberOfCheers:
-                  state.profileProjects[action.projectId].projectPosts[
+                  state.profileExhibits[action.exhibitId].exhibitPosts[
                     action.postId
                   ].numberOfCheers + 1,
                 cheering: pushReturn(
-                  state.profileProjects[action.projectId].projectPosts[
+                  state.profileExhibits[action.exhibitId].exhibitPosts[
                     action.postId
                   ].cheering,
                   action.ExhibitUId
@@ -624,30 +624,30 @@ export default (state = intialState, action: Action) => {
           ...state.userFeed,
           [action.postId]: {
             ...state.userFeed[action.postId],
-            profileProjects: {
-              ...state.userFeed[action.postId].profileProjects,
-              [action.projectId]: {
-                ...state.userFeed[action.postId].profileProjects[
-                  action.projectId
+            profileExhibits: {
+              ...state.userFeed[action.postId].profileExhibits,
+              [action.exhibitId]: {
+                ...state.userFeed[action.postId].profileExhibits[
+                  action.exhibitId
                 ],
-                projectPosts: {
-                  ...state.userFeed[action.postId].profileProjects[
-                    action.projectId
-                  ].projectPosts,
+                exhibitPosts: {
+                  ...state.userFeed[action.postId].profileExhibits[
+                    action.exhibitId
+                  ].exhibitPosts,
                   [action.postId]: {
-                    ...state.userFeed[action.postId].profileProjects[
-                      action.projectId
-                    ].projectPosts[action.postId],
+                    ...state.userFeed[action.postId].profileExhibits[
+                      action.exhibitId
+                    ].exhibitPosts[action.postId],
                     cheering: pushReturn(
-                      state.userFeed[action.postId].profileProjects[
-                        action.projectId
-                      ].projectPosts[action.postId].cheering,
+                      state.userFeed[action.postId].profileExhibits[
+                        action.exhibitId
+                      ].exhibitPosts[action.postId].cheering,
                       action.ExhibitUId
                     ),
                     numberOfCheers:
-                      state.userFeed[action.postId].profileProjects[
-                        action.projectId
-                      ].projectPosts[action.postId].numberOfCheers + 1,
+                      state.userFeed[action.postId].profileExhibits[
+                        action.exhibitId
+                      ].exhibitPosts[action.postId].numberOfCheers + 1,
                   },
                 },
               },
@@ -669,30 +669,30 @@ export default (state = intialState, action: Action) => {
             ...state.userFeed,
             [action.postId]: {
               ...state.userFeed[action.postId],
-              profileProjects: {
-                ...state.userFeed[action.postId].profileProjects,
-                [action.projectId]: {
-                  ...state.userFeed[action.postId].profileProjects[
-                    action.projectId
+              profileExhibits: {
+                ...state.userFeed[action.postId].profileExhibits,
+                [action.exhibitId]: {
+                  ...state.userFeed[action.postId].profileExhibits[
+                    action.exhibitId
                   ],
-                  projectPosts: {
-                    ...state.userFeed[action.postId].profileProjects[
-                      action.projectId
-                    ].projectPosts,
+                  exhibitPosts: {
+                    ...state.userFeed[action.postId].profileExhibits[
+                      action.exhibitId
+                    ].exhibitPosts,
                     [action.postId]: {
-                      ...state.userFeed[action.postId].profileProjects[
-                        action.projectId
-                      ].projectPosts[action.postId],
+                      ...state.userFeed[action.postId].profileExhibits[
+                        action.exhibitId
+                      ].exhibitPosts[action.postId],
                       cheering: spliceRemoveReturn(
-                        state.userFeed[action.postId].profileProjects[
-                          action.projectId
-                        ].projectPosts[action.postId].cheering,
+                        state.userFeed[action.postId].profileExhibits[
+                          action.exhibitId
+                        ].exhibitPosts[action.postId].cheering,
                         action.ExhibitUId
                       ),
                       numberOfCheers:
-                        state.userFeed[action.postId].profileProjects[
-                          action.projectId
-                        ].projectPosts[action.postId].numberOfCheers - 1,
+                        state.userFeed[action.postId].profileExhibits[
+                          action.exhibitId
+                        ].exhibitPosts[action.postId].numberOfCheers - 1,
                     },
                   },
                 },
@@ -714,19 +714,19 @@ export default (state = intialState, action: Action) => {
       }
     case UNCHEER_UPDATE_POSTS:
       Object.entries(state.userFeed).map(([id, value]) => {
-        Object.entries(state.userFeed[id].profileProjects).map(
+        Object.entries(state.userFeed[id].profileExhibits).map(
           ([projId, value]) => {
             if (
               Object.keys(
-                state.userFeed[id].profileProjects[projId].projectPosts
+                state.userFeed[id].profileExhibits[projId].exhibitPosts
               ).includes(action.postId) &&
               action.postId !== id
             ) {
-              state.userFeed[id].profileProjects[projId].projectPosts[
+              state.userFeed[id].profileExhibits[projId].exhibitPosts[
                 action.postId
               ].numberOfCheers = state.userFeed[action.postId].numberOfCheers;
               Object.assign(
-                state.userFeed[id].profileProjects[projId].projectPosts[
+                state.userFeed[id].profileExhibits[projId].exhibitPosts[
                   action.postId
                 ].cheering,
                 state.userFeed[action.postId].cheering
@@ -739,22 +739,22 @@ export default (state = intialState, action: Action) => {
     case UNCHEER_OWN_FEED_POST:
       return {
         ...state,
-        profileProjects: {
-          ...state.profileProjects,
-          [action.projectId]: {
-            ...state.profileProjects[action.projectId],
-            projectPosts: {
-              ...state.profileProjects[action.projectId].projectPosts,
+        profileExhibits: {
+          ...state.profileExhibits,
+          [action.exhibitId]: {
+            ...state.profileExhibits[action.exhibitId],
+            exhibitPosts: {
+              ...state.profileExhibits[action.exhibitId].exhibitPosts,
               [action.postId]: {
-                ...state.profileProjects[action.projectId].projectPosts[
+                ...state.profileExhibits[action.exhibitId].exhibitPosts[
                   action.postId
                 ],
                 numberOfCheers:
-                  state.profileProjects[action.projectId].projectPosts[
+                  state.profileExhibits[action.exhibitId].exhibitPosts[
                     action.postId
                   ].numberOfCheers - 1,
                 cheering: spliceRemoveReturn(
-                  state.profileProjects[action.projectId].projectPosts[
+                  state.profileExhibits[action.exhibitId].exhibitPosts[
                     action.postId
                   ].cheering,
                   action.ExhibitUId
@@ -767,22 +767,22 @@ export default (state = intialState, action: Action) => {
     case UNCHEER_OWN_PROFILE_POST:
       return {
         ...state,
-        profileProjects: {
-          ...state.profileProjects,
-          [action.projectId]: {
-            ...state.profileProjects[action.projectId],
-            projectPosts: {
-              ...state.profileProjects[action.projectId].projectPosts,
+        profileExhibits: {
+          ...state.profileExhibits,
+          [action.exhibitId]: {
+            ...state.profileExhibits[action.exhibitId],
+            exhibitPosts: {
+              ...state.profileExhibits[action.exhibitId].exhibitPosts,
               [action.postId]: {
-                ...state.profileProjects[action.projectId].projectPosts[
+                ...state.profileExhibits[action.exhibitId].exhibitPosts[
                   action.postId
                 ],
                 numberOfCheers:
-                  state.profileProjects[action.projectId].projectPosts[
+                  state.profileExhibits[action.exhibitId].exhibitPosts[
                     action.postId
                   ].numberOfCheers - 1,
                 cheering: spliceRemoveReturn(
-                  state.profileProjects[action.projectId].projectPosts[
+                  state.profileExhibits[action.exhibitId].exhibitPosts[
                     action.postId
                   ].cheering,
                   action.ExhibitUId
@@ -795,30 +795,30 @@ export default (state = intialState, action: Action) => {
           ...state.userFeed,
           [action.postId]: {
             ...state.userFeed[action.postId],
-            profileProjects: {
-              ...state.userFeed[action.postId].profileProjects,
-              [action.projectId]: {
-                ...state.userFeed[action.postId].profileProjects[
-                  action.projectId
+            profileExhibits: {
+              ...state.userFeed[action.postId].profileExhibits,
+              [action.exhibitId]: {
+                ...state.userFeed[action.postId].profileExhibits[
+                  action.exhibitId
                 ],
-                projectPosts: {
-                  ...state.userFeed[action.postId].profileProjects[
-                    action.projectId
-                  ].projectPosts,
+                exhibitPosts: {
+                  ...state.userFeed[action.postId].profileExhibits[
+                    action.exhibitId
+                  ].exhibitPosts,
                   [action.postId]: {
-                    ...state.userFeed[action.postId].profileProjects[
-                      action.projectId
-                    ].projectPosts[action.postId],
+                    ...state.userFeed[action.postId].profileExhibits[
+                      action.exhibitId
+                    ].exhibitPosts[action.postId],
                     cheering: spliceRemoveReturn(
-                      state.userFeed[action.postId].profileProjects[
-                        action.projectId
-                      ].projectPosts[action.postId].cheering,
+                      state.userFeed[action.postId].profileExhibits[
+                        action.exhibitId
+                      ].exhibitPosts[action.postId].cheering,
                       action.ExhibitUId
                     ),
                     numberOfCheers:
-                      state.userFeed[action.postId].profileProjects[
-                        action.projectId
-                      ].projectPosts[action.postId].numberOfCheers - 1,
+                      state.userFeed[action.postId].profileExhibits[
+                        action.exhibitId
+                      ].exhibitPosts[action.postId].numberOfCheers - 1,
                   },
                 },
               },
@@ -848,20 +848,20 @@ export default (state = intialState, action: Action) => {
       if (state.userFeed) {
         Object.entries(state.userFeed).map(([id, value]) => {
           if (state.userFeed[id].ExhibitUId === action.ExhibitUId) {
-            state.userFeed[id].profileProjects[
-              action.projectId
-            ].projectColumns = action.number;
+            state.userFeed[id].profileExhibits[
+              action.exhibitId
+            ].exhibitColumns = action.number;
           }
         });
       }
 
       return {
         ...state,
-        profileProjects: {
-          ...state.profileProjects,
-          [action.projectId]: {
-            ...state.profileProjects[action.projectId],
-            projectColumns: action.number,
+        profileExhibits: {
+          ...state.profileExhibits,
+          [action.exhibitId]: {
+            ...state.profileExhibits[action.exhibitId],
+            exhibitColumns: action.number,
           },
         },
       };
@@ -906,9 +906,9 @@ export default (state = intialState, action: Action) => {
         Object.entries(state.userFeed).map(([id, value]) => {
           if (state.userFeed[id].ExhibitUId === action.ExhibitUId) {
             state.userFeed[id].showCheering = action.showCheering;
-            Object.entries(state.userFeed[id].profileProjects).map(
-              ([projectId, value]) => {
-                state.userFeed[id].profileProjects[projectId].projectPosts[
+            Object.entries(state.userFeed[id].profileExhibits).map(
+              ([exhibitId, value]) => {
+                state.userFeed[id].profileExhibits[exhibitId].exhibitPosts[
                   id
                 ].showCheering = action.showCheering;
               }
@@ -925,9 +925,9 @@ export default (state = intialState, action: Action) => {
         Object.entries(state.userFeed).map(([id, value]) => {
           if (state.userFeed[id].ExhibitUId === action.ExhibitUId) {
             state.userFeed[id].hideFollowing = action.hideFollowingValue;
-            Object.entries(state.userFeed[id].profileProjects).map(
-              ([projectId, value]) => {
-                state.userFeed[id].profileProjects[projectId].projectPosts[
+            Object.entries(state.userFeed[id].profileExhibits).map(
+              ([exhibitId, value]) => {
+                state.userFeed[id].profileExhibits[exhibitId].exhibitPosts[
                   id
                 ].hideFollowing = action.hideFollowingValue;
               }
@@ -944,9 +944,9 @@ export default (state = intialState, action: Action) => {
         Object.entries(state.userFeed).map(([id, value]) => {
           if (state.userFeed[id].ExhibitUId === action.ExhibitUId) {
             state.userFeed[id].hideFollowers = action.hideFollowersValue;
-            Object.entries(state.userFeed[id].profileProjects).map(
-              ([projectId, value]) => {
-                state.userFeed[id].profileProjects[projectId].projectPosts[
+            Object.entries(state.userFeed[id].profileExhibits).map(
+              ([exhibitId, value]) => {
+                state.userFeed[id].profileExhibits[exhibitId].exhibitPosts[
                   id
                 ].hideFollowers = action.hideFollowersValue;
               }
@@ -963,9 +963,9 @@ export default (state = intialState, action: Action) => {
         Object.entries(state.userFeed).map(([id, value]) => {
           if (state.userFeed[id].ExhibitUId === action.ExhibitUId) {
             state.userFeed[id].hideAdvocates = action.hideAdvocatesValue;
-            Object.entries(state.userFeed[id].profileProjects).map(
-              ([projectId, value]) => {
-                state.userFeed[id].profileProjects[projectId].projectPosts[
+            Object.entries(state.userFeed[id].profileExhibits).map(
+              ([exhibitId, value]) => {
+                state.userFeed[id].profileExhibits[exhibitId].exhibitPosts[
                   id
                 ].hideAdvocates = action.hideAdvocatesValue;
               }

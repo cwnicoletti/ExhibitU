@@ -9,20 +9,20 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import ExploreAdvocatesProjectsIcons from "./ExploreAdvocatesProjectsIcons";
+import ExploreAdvocatesExhibitsIcons from "./ExploreAdvocatesExhibitsIcons";
 
 const ExploreAdvocatesCard = (props) => {
-  const projects = props.projects;
-  const projectsAdvocating = props.projectsAdvocating;
+  const exhibits = props.exhibits;
+  const exhibitsAdvocating = props.exhibitsAdvocating;
 
   const image = props.image
     ? { uri: props.image }
     : require("../../assets/default-profile-icon.jpg");
 
-  let projectsAdvocatingFor = [];
-  Object.values(projects).filter((object: string | any) => {
-    if (projectsAdvocating.includes(object.projectId)) {
-      projectsAdvocatingFor.push(object);
+  let exhibitsAdvocatingFor = [];
+  Object.values(exhibits).filter((object: string | any) => {
+    if (exhibitsAdvocating.includes(object.exhibitId)) {
+      exhibitsAdvocatingFor.push(object);
     }
   });
 
@@ -32,7 +32,7 @@ const ExploreAdvocatesCard = (props) => {
   }
 
   return (
-    <View style={{ ...styles.project, ...props.projectContainer }}>
+    <View style={{ ...styles.exhibit, ...props.exhibitContainer }}>
       <View style={styles.touchable}>
         <TouchableCmp onPress={props.onSelect} useForeground>
           <View style={{ flexDirection: "row", margin: 5 }}>
@@ -80,13 +80,13 @@ const ExploreAdvocatesCard = (props) => {
                 Advocating:
               </Text>
               <FlatList
-                data={projectsAdvocatingFor}
-                keyExtractor={(item) => item.projectId}
+                data={exhibitsAdvocatingFor}
+                keyExtractor={(item) => item.exhibitId}
                 renderItem={(itemData) => (
-                  <ExploreAdvocatesProjectsIcons
+                  <ExploreAdvocatesExhibitsIcons
                     image={
-                      itemData.item.projectCoverPhotoUrl
-                        ? { uri: itemData.item.projectCoverPhotoUrl }
+                      itemData.item.exhibitCoverPhotoUrl
+                        ? { uri: itemData.item.exhibitCoverPhotoUrl }
                         : require("../../assets/black-placeholder.png")
                     }
                   />
@@ -101,7 +101,7 @@ const ExploreAdvocatesCard = (props) => {
 };
 
 const styles = StyleSheet.create({
-  project: {
+  exhibit: {
     height: "100%",
     width: "100%",
     justifyContent: "center",

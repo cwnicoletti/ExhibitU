@@ -9,17 +9,17 @@ import {
 } from "react-native";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import { useAppDispatch, useAppSelector } from "../../hooks";
-import ExploreProjectHeader from "../../components/explore/ExploreProjectHeader";
+import ExploreExhibitHeader from "../../components/explore/ExploreExhibitHeader";
 import FontAwesomeHeaderButton from "../../components/UI/header_buttons/FontAwesomeHeaderButton";
 import IoniconsHeaderButton from "../../components/UI/header_buttons/IoniconsHeaderButton";
-import ProjectPictures from "../../components/UI/ProjectPictures";
+import ExhibitPictures from "../../components/UI/ExhibitPictures";
 import MainHeaderTitle from "../../components/UI/MainHeaderTitle";
-import TutorialExploreProject from "../../components/tutorial/TutorialExploreProject";
+import TutorialExploreExhibit from "../../components/tutorial/TutorialExploreExhibit";
 import useDidMountEffect from "../../helper/useDidMountEffect";
 import getExlusiveBothSetsDifference from "../../helper/getExlusiveBothSetsDifference";
 import { advocateForUser, unadvocateForUser } from "../../store/actions/user/user";
 
-const ExploreProjectScreen = (props) => {
+const ExploreExhibitScreen = (props) => {
   const dispatch = useAppDispatch();
   const [isLoading, setIsLoading] = useState(false);
   const darkModeValue = useAppSelector((state) => state.user.darkMode);
@@ -35,49 +35,49 @@ const ExploreProjectScreen = (props) => {
   const tutorialing = useAppSelector((state) => state.user.tutorialing);
   const tutorialScreen = useAppSelector((state) => state.user.tutorialScreen);
 
-  const exploredProjectData = {
-    projectId: props.navigation.getParam("projectId"),
-    projectTitle: props.navigation.getParam("projectTitle"),
-    projectCoverPhotoUrl: props.navigation.getParam("projectCoverPhotoUrl"),
-    projectDescription: props.navigation.getParam("projectDescription"),
-    projectColumns: props.navigation.getParam("projectColumns"),
-    projectPosts: props.navigation.getParam("projectPosts")
-      ? props.navigation.getParam("projectPosts")
+  const exploredExhibitData = {
+    exhibitId: props.navigation.getParam("exhibitId"),
+    exhibitTitle: props.navigation.getParam("exhibitTitle"),
+    exhibitCoverPhotoUrl: props.navigation.getParam("exhibitCoverPhotoUrl"),
+    exhibitDescription: props.navigation.getParam("exhibitDescription"),
+    exhibitColumns: props.navigation.getParam("exhibitColumns"),
+    exhibitPosts: props.navigation.getParam("exhibitPosts")
+      ? props.navigation.getParam("exhibitPosts")
       : {},
-    projectLinks: props.navigation.getParam("projectLinks")
-      ? props.navigation.getParam("projectLinks")
+    exhibitLinks: props.navigation.getParam("exhibitLinks")
+      ? props.navigation.getParam("exhibitLinks")
       : {},
   };
 
-  exploredProjectData.projectId = exploredProjectData.projectId
-    ? exploredProjectData.projectId
+  exploredExhibitData.exhibitId = exploredExhibitData.exhibitId
+    ? exploredExhibitData.exhibitId
     : "";
-  exploredProjectData.projectTitle = exploredProjectData.projectTitle
-    ? exploredProjectData.projectTitle
-    : "Sample Project";
-  exploredProjectData.projectCoverPhotoUrl =
-    exploredProjectData.projectCoverPhotoUrl
-      ? exploredProjectData.projectCoverPhotoUrl
-      : "https://res.cloudinary.com/showcase-79c28/image/upload/v1626117054/project_pic_ysb6uu.png";
-  exploredProjectData.projectDescription =
-    exploredProjectData.projectDescription
-      ? exploredProjectData.projectDescription
+  exploredExhibitData.exhibitTitle = exploredExhibitData.exhibitTitle
+    ? exploredExhibitData.exhibitTitle
+    : "Sample Exhibit";
+  exploredExhibitData.exhibitCoverPhotoUrl =
+    exploredExhibitData.exhibitCoverPhotoUrl
+      ? exploredExhibitData.exhibitCoverPhotoUrl
+      : "https://res.cloudinary.com/showcase-79c28/image/upload/v1626117054/exhibit_pic_ysb6uu.png";
+  exploredExhibitData.exhibitDescription =
+    exploredExhibitData.exhibitDescription
+      ? exploredExhibitData.exhibitDescription
       : "I've been working on a really cool web application!";
-  exploredProjectData.projectColumns = exploredProjectData.projectColumns
-    ? exploredProjectData.projectColumns
+  exploredExhibitData.exhibitColumns = exploredExhibitData.exhibitColumns
+    ? exploredExhibitData.exhibitColumns
     : 2;
-  exploredProjectData.projectPosts = exploredProjectData.projectPosts
-    ? exploredProjectData.projectPosts
+  exploredExhibitData.exhibitPosts = exploredExhibitData.exhibitPosts
+    ? exploredExhibitData.exhibitPosts
     : {
         ["randomId121334h"]: {
           ExhibitUId: ExhibitUId,
-          projectId: "randomId121334",
+          exhibitId: "randomId121334",
           postId: "randomId121334h",
           fullname: "test",
           username: "test",
           jobTitle: "test",
           profileBiography: "test",
-          profileProjects: {},
+          profileExhibits: {},
           profilePictureUrl: "test",
           postPhotoUrl:
             "https://camo.githubusercontent.com/9aea0a68fd10f943a82ce8a434f6c126296568fdf17d0cc914d40a4feb4a9f10/68747470733a2f2f7265732e636c6f7564696e6172792e636f6d2f706572736f6e616c757365313233342f696d6167652f75706c6f61642f76313631373231353939392f436f43726561746f727765626170705f6c7a716e696e2e706e67",
@@ -92,8 +92,8 @@ const ExploreProjectScreen = (props) => {
           },
         },
       };
-  exploredProjectData.projectLinks = exploredProjectData.projectLinks
-    ? exploredProjectData.projectLinks
+  exploredExhibitData.exhibitLinks = exploredExhibitData.exhibitLinks
+    ? exploredExhibitData.exhibitLinks
     : {};
 
   exploredUserDataLocal.profileBiography =
@@ -153,8 +153,8 @@ const ExploreProjectScreen = (props) => {
       ? exploredUserDataLocal.numberOfAdvocates
       : 0;
 
-  const [projectPostsState, setProjectPostsState] = useState(
-    Object.values(exploredProjectData.projectPosts).sort((first, second) => {
+  const [exhibitPostsState, setExhibitPostsState] = useState(
+    Object.values(exploredExhibitData.exhibitPosts).sort((first: string, second: string) => {
       return (
         second["postDateCreated"]["_seconds"] -
         first["postDateCreated"]["_seconds"]
@@ -178,7 +178,7 @@ const ExploreProjectScreen = (props) => {
         exploredUserDataLocal.exploredExhibitUId,
         ExhibitUId,
         localId,
-        exploredProjectData.projectId
+        exploredExhibitData.exhibitId
       )
     );
     setIsAdvocating(true);
@@ -192,7 +192,7 @@ const ExploreProjectScreen = (props) => {
         exploredUserDataLocal.exploredExhibitUId,
         ExhibitUId,
         localId,
-        exploredProjectData.projectId
+        exploredExhibitData.exhibitId
       )
     );
     setIsAdvocating(false);
@@ -207,7 +207,7 @@ const ExploreProjectScreen = (props) => {
     username,
     jobTitle,
     profileBiography,
-    profileProjects,
+    profileExhibits,
     profilePictureUrl,
     postPhotoUrl,
     numberOfCheers,
@@ -216,15 +216,15 @@ const ExploreProjectScreen = (props) => {
     postLinks,
     postDateCreated
   ) => {
-    props.navigation.push("ViewExploredProfileProjectPicture", {
+    props.navigation.push("ViewExploredProfileExhibitPicture", {
       ExhibitUId,
-      projectId: exploredProjectData.projectId,
+      exhibitId: exploredExhibitData.exhibitId,
       postId,
       fullname,
       username,
       jobTitle,
       profileBiography,
-      profileProjects,
+      profileExhibits,
       profilePictureUrl,
       postPhotoUrl,
       numberOfCheers,
@@ -267,33 +267,33 @@ const ExploreProjectScreen = (props) => {
       cheeredPosts
     );
     const exploredUserDataNewState = exploredUserDataLocal;
-    for (const projectId of Object.keys(
-      exploredUserDataNewState.profileProjects
+    for (const exhibitId of Object.keys(
+      exploredUserDataNewState.profileExhibits
     )) {
       for (const postId of Object.keys(
-        exploredUserDataNewState.profileProjects[projectId].projectPosts
+        exploredUserDataNewState.profileExhibits[exhibitId].exhibitPosts
       )) {
         if (postId === difference[0]) {
           if (intialCheeredPosts.length < cheeredPosts.length) {
-            exploredUserDataNewState.profileProjects[projectId].projectPosts[
+            exploredUserDataNewState.profileExhibits[exhibitId].exhibitPosts[
               postId
             ].numberOfCheers += 1;
-            exploredUserDataNewState.profileProjects[projectId].projectPosts[
+            exploredUserDataNewState.profileExhibits[exhibitId].exhibitPosts[
               postId
             ].cheering = [
-              ...exploredUserDataNewState.profileProjects[projectId]
-                .projectPosts[postId].cheering,
+              ...exploredUserDataNewState.profileExhibits[exhibitId]
+                .exhibitPosts[postId].cheering,
               ExhibitUId,
             ];
           } else {
-            exploredUserDataNewState.profileProjects[projectId].projectPosts[
+            exploredUserDataNewState.profileExhibits[exhibitId].exhibitPosts[
               postId
             ].numberOfCheers -= 1;
-            exploredUserDataNewState.profileProjects[projectId].projectPosts[
+            exploredUserDataNewState.profileExhibits[exhibitId].exhibitPosts[
               postId
-            ].cheering = exploredUserDataNewState.profileProjects[
-              projectId
-            ].projectPosts[postId].cheering.filter(
+            ].cheering = exploredUserDataNewState.profileExhibits[
+              exhibitId
+            ].exhibitPosts[postId].cheering.filter(
               (userId) => userId !== ExhibitUId
             );
           }
@@ -306,18 +306,18 @@ const ExploreProjectScreen = (props) => {
 
   const topHeader = () => {
     return (
-      <ExploreProjectHeader
+      <ExploreExhibitHeader
         containerStyle={{
           borderBottomColor: darkModeValue ? "white" : "black",
         }}
-        imgSource={{ uri: exploredProjectData.projectCoverPhotoUrl }}
+        imgSource={{ uri: exploredExhibitData.exhibitCoverPhotoUrl }}
         descriptionStyle={{
           ...styles.profileDescriptionStyle,
           color: darkModeValue ? "white" : "black",
         }}
-        title={exploredProjectData.projectTitle}
-        description={exploredProjectData.projectDescription}
-        links={exploredProjectData.projectLinks}
+        title={exploredExhibitData.exhibitTitle}
+        description={exploredExhibitData.exhibitDescription}
+        links={exploredExhibitData.exhibitLinks}
       />
     );
   };
@@ -331,32 +331,32 @@ const ExploreProjectScreen = (props) => {
     >
       {tutorialing &&
       (tutorialScreen === "ExploreProfile" ||
-        tutorialScreen === "ExploreProject" ||
+        tutorialScreen === "ExploreExhibit" ||
         tutorialScreen === "TutorialEnd") ? (
-        <TutorialExploreProject ExhibitUId={ExhibitUId} localId={localId} />
+        <TutorialExploreExhibit ExhibitUId={ExhibitUId} localId={localId} />
       ) : null}
       <FlatList<any>
-        data={projectPostsState}
+        data={exhibitPostsState}
         keyExtractor={(item) => item.postId}
         ListHeaderComponent={topHeader()}
-        numColumns={exploredProjectData.projectColumns}
+        numColumns={exploredExhibitData.exhibitColumns}
         renderItem={(itemData) => (
-          <ProjectPictures
+          <ExhibitPictures
             image={itemData.item.postPhotoUrl}
-            projectContainer={{
+            exhibitContainer={{
               backgroundColor: darkModeValue ? "black" : "white",
               width:
-                exploredProjectData.projectColumns === 1
+                exploredExhibitData.exhibitColumns === 1
                   ? "100%"
-                  : exploredProjectData.projectColumns === 2
+                  : exploredExhibitData.exhibitColumns === 2
                   ? "50%"
-                  : exploredProjectData.projectColumns === 3
+                  : exploredExhibitData.exhibitColumns === 3
                   ? "33.33%"
-                  : exploredProjectData.projectColumns === 4
+                  : exploredExhibitData.exhibitColumns === 4
                   ? "25%"
                   : "25%",
               aspectRatio:
-                exploredProjectData.projectColumns === 1 ? null : 3 / 3,
+                exploredExhibitData.exhibitColumns === 1 ? null : 3 / 3,
             }}
             titleStyle={{
               color: darkModeValue ? "white" : "black",
@@ -369,7 +369,7 @@ const ExploreProjectScreen = (props) => {
                 itemData.item.username,
                 itemData.item.jobTitle,
                 itemData.item.profileBiography,
-                itemData.item.profileProjects,
+                itemData.item.profileExhibits,
                 itemData.item.profilePictureUrl,
                 itemData.item.postPhotoUrl,
                 itemData.item.numberOfCheers,
@@ -386,7 +386,7 @@ const ExploreProjectScreen = (props) => {
   );
 };
 
-ExploreProjectScreen.navigationOptions = (navData) => {
+ExploreExhibitScreen.navigationOptions = (navData) => {
   const darkModeValue = navData.navigation.getParam("darkMode");
   const ExhibitUId = navData.navigation.getParam("ExhibitUId");
   const exploredExhibitUId = navData.navigation.getParam("exploredExhibitUId");
@@ -491,4 +491,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ExploreProjectScreen;
+export default ExploreExhibitScreen;

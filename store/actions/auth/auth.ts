@@ -34,8 +34,8 @@ export const signup = (
       getSignupResponse.data.docData.profilePictureId,
       getSignupResponse.data.docData.profilePictureUrl,
       "",
-      getSignupResponse.data.docData.projectTempCoverPhotoId,
-      getSignupResponse.data.docData.projectTempCoverPhotoUrl,
+      getSignupResponse.data.docData.exhibitTempCoverPhotoId,
+      getSignupResponse.data.docData.exhibitTempCoverPhotoUrl,
       "",
       getSignupResponse.data.docData.tempPhotoPostId,
       getSignupResponse.data.docData.tempPhotoPostUrl,
@@ -53,9 +53,9 @@ export const signup = (
       getSignupResponse.data.docData.following,
       getSignupResponse.data.docData.advocates,
       getSignupResponse.data.docData.advocating,
-      getSignupResponse.data.docData.projectsAdvocating,
+      getSignupResponse.data.docData.exhibitsAdvocating,
       getSignupResponse.data.docData.cheeredPosts,
-      getSignupResponse.data.docData.profileProjects,
+      getSignupResponse.data.docData.profileExhibits,
       getSignupResponse.data.docData.profileLinks,
       getSignupResponse.data.docData.userFeed
         ? getSignupResponse.data.docData.userFeed
@@ -103,23 +103,23 @@ export const login = (email: string, password: string) => {
       getLoginResponse.data.docData.profilePictureUrl
     );
 
-    let profileProjects = await getLoginResponse.data.docData.profileProjects;
+    let profileExhibits = await getLoginResponse.data.docData.profileExhibits;
 
-    if (profileProjects) {
-      const projectKeys = Object.keys(profileProjects);
-      for (const k of projectKeys) {
-        const projectCoverPhotoBase64 = await getBase64FromUrl(
-          profileProjects[k]["projectCoverPhotoUrl"]
+    if (profileExhibits) {
+      const exhibitKeys = Object.keys(profileExhibits);
+      for (const k of exhibitKeys) {
+        const exhibitCoverPhotoBase64 = await getBase64FromUrl(
+          profileExhibits[k]["exhibitCoverPhotoUrl"]
         );
-        profileProjects[k]["projectCoverPhotoBase64"] = projectCoverPhotoBase64;
-        const postKeys = Object.keys(profileProjects[k].projectPosts);
+        profileExhibits[k]["exhibitCoverPhotoBase64"] = exhibitCoverPhotoBase64;
+        const postKeys = Object.keys(profileExhibits[k].exhibitPosts);
         for (const id of postKeys) {
           const postPhotoBase64 = await getBase64FromUrl(
-            profileProjects[k].projectPosts[id]["postPhotoUrl"]
+            profileExhibits[k].exhibitPosts[id]["postPhotoUrl"]
           );
-          profileProjects[k].projectPosts[id]["postPhotoBase64"] =
+          profileExhibits[k].exhibitPosts[id]["postPhotoBase64"] =
             postPhotoBase64;
-          profileProjects[k].projectPosts[id]["profilePictureBase64"] =
+          profileExhibits[k].exhibitPosts[id]["profilePictureBase64"] =
             profilePictureBase64;
         }
       }
@@ -142,30 +142,30 @@ export const login = (email: string, password: string) => {
     //         userFeed[key]["profilePictureUrl"]
     //       );
     //     }
-    //     const feedProjectKeys = Object.keys(userFeed[key].profileProjects);
-    //     for (const projectKey of feedProjectKeys) {
+    //     const feedExhibitKeys = Object.keys(userFeed[key].profileExhibits);
+    //     for (const exhibitKey of feedExhibitKeys) {
     //       const postKeys = Object.keys(
-    //         userFeed[key].profileProjects[projectKey].projectPosts
+    //         userFeed[key].profileExhibits[exhibitKey].exhibitPosts
     //       );
-    //       const projectCoverPhotoBase64 = await getBase64FromUrl(
-    //         userFeed[key].profileProjects[projectKey]["projectCoverPhotoUrl"]
+    //       const exhibitCoverPhotoBase64 = await getBase64FromUrl(
+    //         userFeed[key].profileExhibits[exhibitKey]["exhibitCoverPhotoUrl"]
     //       );
-    //       userFeed[key].profileProjects[projectKey]["projectCoverPhotoBase64"] =
-    //         projectCoverPhotoBase64;
+    //       userFeed[key].profileExhibits[exhibitKey]["exhibitCoverPhotoBase64"] =
+    //         exhibitCoverPhotoBase64;
     //       for (const postKey of postKeys) {
     //         const postPhotoBase64 = await getBase64FromUrl(
-    //           userFeed[key].profileProjects[projectKey].projectPosts[postKey][
+    //           userFeed[key].profileExhibits[exhibitKey].exhibitPosts[postKey][
     //             "postPhotoUrl"
     //           ]
     //         );
-    //         userFeed[key].profileProjects[projectKey].projectPosts[postKey][
+    //         userFeed[key].profileExhibits[exhibitKey].exhibitPosts[postKey][
     //           "postPhotoBase64"
     //         ] = postPhotoBase64;
     //         if (
     //           userFeed[key].ExhibitUId ===
     //           getLoginResponse.data.docData.ExhibitUId
     //         ) {
-    //           userFeed[key].profileProjects[projectKey].projectPosts[postKey][
+    //           userFeed[key].profileExhibits[exhibitKey].exhibitPosts[postKey][
     //             "profilePictureBase64"
     //           ] = profilePictureBase64;
     //         }
@@ -174,8 +174,8 @@ export const login = (email: string, password: string) => {
     //   }
     // }
 
-    const projectTempCoverPhotoBase64 = await getBase64FromUrl(
-      getLoginResponse.data.docData.projectTempCoverPhotoUrl
+    const exhibitTempCoverPhotoBase64 = await getBase64FromUrl(
+      getLoginResponse.data.docData.exhibitTempCoverPhotoUrl
     );
 
     const tempPhotoPostBase64 = await getBase64FromUrl(
@@ -188,9 +188,9 @@ export const login = (email: string, password: string) => {
       getLoginResponse.data.docData.profilePictureId,
       getLoginResponse.data.docData.profilePictureUrl,
       profilePictureBase64,
-      getLoginResponse.data.docData.projectTempCoverPhotoId,
-      getLoginResponse.data.docData.projectTempCoverPhotoUrl,
-      projectTempCoverPhotoBase64,
+      getLoginResponse.data.docData.exhibitTempCoverPhotoId,
+      getLoginResponse.data.docData.exhibitTempCoverPhotoUrl,
+      exhibitTempCoverPhotoBase64,
       getLoginResponse.data.docData.tempPhotoPostId,
       getLoginResponse.data.docData.tempPhotoPostUrl,
       tempPhotoPostBase64,
@@ -207,9 +207,9 @@ export const login = (email: string, password: string) => {
       getLoginResponse.data.docData.following,
       getLoginResponse.data.docData.advocates,
       getLoginResponse.data.docData.advocating,
-      getLoginResponse.data.docData.projectsAdvocating,
+      getLoginResponse.data.docData.exhibitsAdvocating,
       getLoginResponse.data.docData.cheeredPosts,
-      profileProjects ? profileProjects : {},
+      profileExhibits ? profileExhibits : {},
       getLoginResponse.data.docData.profileLinks
         ? getLoginResponse.data.docData.profileLinks
         : {},
@@ -258,9 +258,9 @@ const saveUserDocumentToStorage = async (
   profilePictureId: string,
   profilePictureUrl: string,
   profilePictureBase64: string,
-  projectTempCoverPhotoId: string,
-  projectTempCoverPhotoUrl: string,
-  projectTempCoverPhotoBase64: string,
+  exhibitTempCoverPhotoId: string,
+  exhibitTempCoverPhotoUrl: string,
+  exhibitTempCoverPhotoBase64: string,
   tempPhotoPostId: string,
   tempPhotoPostUrl: string,
   tempPhotoPostBase64: string,
@@ -277,9 +277,9 @@ const saveUserDocumentToStorage = async (
   following: string[],
   advocates: string[],
   advocating: string[],
-  projectsAdvocating: string[],
+  exhibitsAdvocating: string[],
   cheeredPosts: string[],
-  profileProjects: object,
+  profileExhibits: object,
   profileLinks: object,
   userFeed: object,
   darkMode: boolean,
@@ -300,9 +300,9 @@ const saveUserDocumentToStorage = async (
       profilePictureId,
       profilePictureUrl,
       profilePictureBase64,
-      projectTempCoverPhotoId,
-      projectTempCoverPhotoUrl,
-      projectTempCoverPhotoBase64,
+      exhibitTempCoverPhotoId,
+      exhibitTempCoverPhotoUrl,
+      exhibitTempCoverPhotoBase64,
       tempPhotoPostId,
       tempPhotoPostUrl,
       tempPhotoPostBase64,
@@ -319,9 +319,9 @@ const saveUserDocumentToStorage = async (
       following,
       advocates,
       advocating,
-      projectsAdvocating,
+      exhibitsAdvocating,
       cheeredPosts,
-      profileProjects,
+      profileExhibits,
       profileLinks,
       userFeed,
       darkMode,

@@ -10,7 +10,7 @@ import IoniconsHeaderButton from "../../components/UI/header_buttons/IoniconsHea
 
 const FeedCommentsScreen = (props) => {
   const darkModeValue = useAppSelector((state) => state.user.darkMode);
-  const projectId = props.navigation.getParam("projectId");
+  const exhibitId = props.navigation.getParam("exhibitId");
   const userData = props.navigation.getParam("userData");
   const cheeredPosts = useAppSelector((state) => state.user.cheeredPosts);
   const [intialCheeredPosts, setIntialCheeredPosts] = useState([]);
@@ -20,7 +20,7 @@ const FeedCommentsScreen = (props) => {
   const viewCheeringHandler = () => {
     props.navigation.push("ViewCheering", {
       ExhibitUId: userData.ExhibitUId,
-      projectId: projectId,
+      exhibitId: exhibitId,
       postId: userData.postId,
       numberOfCheers: numberOfCheers,
     });
@@ -30,12 +30,12 @@ const FeedCommentsScreen = (props) => {
     props.navigation.push("ViewProfile", {
       userData: {
         ExhibitUId: userData.ExhibitUId,
-        projectId: projectId,
+        exhibitId: exhibitId,
         fullname: userData.fullname,
         username: userData.username,
         jobTitle: userData.jobTitle,
         profileBiography: userData.profileBiography,
-        profileProjects: userData.profileProjects,
+        profileExhibits: userData.profileExhibits,
         profilePictureBase64: userData.profilePictureBase64,
         numberOfFollowers: userData.numberOfFollowers,
         numberOfFollowing: userData.numberOfFollowing,
@@ -52,7 +52,7 @@ const FeedCommentsScreen = (props) => {
   useEffect(() => {
     LogBox.ignoreLogs(["VirtualizedLists should never be nested"]);
     setIntialCheeredPosts(cheeredPosts);
-    props.navigation.setParams({ projectId: projectId });
+    props.navigation.setParams({ exhibitId: exhibitId });
   }, []);
 
   useEffect(() => {
@@ -101,7 +101,7 @@ const FeedCommentsScreen = (props) => {
         numberOfCheers={numberOfCheers}
         numberOfComments={userData.numberOfComments}
         postId={userData.postId}
-        projectId={projectId}
+        exhibitId={exhibitId}
         posterExhibitUId={userData.ExhibitUId}
         links={userData.postLinks}
         postDateCreated={userData.postDateCreated}
@@ -111,7 +111,7 @@ const FeedCommentsScreen = (props) => {
         usernameStyle={{
           color: darkModeValue ? "white" : "black",
         }}
-        projectContainer={{
+        exhibitContainer={{
           borderColor: darkModeValue ? "#616161" : "#e8e8e8",
           marginBottom: 10,
         }}
@@ -132,7 +132,7 @@ const FeedCommentsScreen = (props) => {
           color: "white",
         }}
         nameTitleColors={["rgba(0,0,0,1)", "rgba(0,0,0,0.00)"]}
-        projectTitleColors={["rgba(0,0,0,0.00)", "rgba(0,0,0,1)"]}
+        exhibitTitleColors={["rgba(0,0,0,0.00)", "rgba(0,0,0,1)"]}
         pictureCheerContainer={{
           backgroundColor: darkModeValue ? "#121212" : "white",
         }}

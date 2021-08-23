@@ -30,7 +30,7 @@ const FeedScreen = (props) => {
   const localId = useAppSelector((state) => state.auth.userId);
   const userFeed = useAppSelector((state) => state.user.userFeed);
   const [userFeedState, setUserFeedState] = useState(
-    Object.values(userFeed).sort((first, second) => {
+    Object.values(userFeed).sort((first: string, second: string) => {
       return (
         second["postDateCreated"]["_seconds"] -
         first["postDateCreated"]["_seconds"]
@@ -48,14 +48,14 @@ const FeedScreen = (props) => {
     props.navigation.setParams({ darkMode: darkModeValue });
   }, [darkModeValue]);
 
-  const viewProjectHandler = (
+  const viewExhibitHandler = (
     ExhibitUId,
-    projectId,
+    exhibitId,
     fullname,
     username,
     jobTitle,
     profileBiography,
-    profileProjects,
+    profileExhibits,
     profilePictureBase64,
     profilePictureUrl,
     numberOfFollowers,
@@ -64,20 +64,20 @@ const FeedScreen = (props) => {
     hideFollowing,
     hideFollowers,
     hideAdvocates,
-    projectLinks,
+    exhibitLinks,
     profileColumns,
     postDateCreated
   ) => {
     dispatch(offScreen("Feed"));
-    props.navigation.navigate("ViewFeedProject", {
-      projectId,
+    props.navigation.navigate("ViewFeedExhibit", {
+      exhibitId,
       userData: {
         ExhibitUId,
         fullname,
         username,
         jobTitle,
         profileBiography,
-        profileProjects,
+        profileExhibits,
         profilePictureBase64,
         profilePictureUrl,
         numberOfFollowers,
@@ -86,7 +86,7 @@ const FeedScreen = (props) => {
         hideFollowing,
         hideFollowers,
         hideAdvocates,
-        projectLinks,
+        exhibitLinks,
         profileColumns,
         postDateCreated,
       },
@@ -95,14 +95,14 @@ const FeedScreen = (props) => {
 
   const viewCheeringHandler = (
     ExhibitUId,
-    projectId,
+    exhibitId,
     postId,
     numberOfCheers
   ) => {
     dispatch(offScreen("Feed"));
     props.navigation.navigate("ViewCheering", {
       ExhibitUId,
-      projectId,
+      exhibitId,
       postId,
       numberOfCheers,
     });
@@ -114,7 +114,7 @@ const FeedScreen = (props) => {
     username,
     jobTitle,
     profileBiography,
-    profileProjects,
+    profileExhibits,
     profilePictureBase64,
     profilePictureUrl,
     numberOfFollowers,
@@ -124,7 +124,7 @@ const FeedScreen = (props) => {
     hideFollowers,
     hideAdvocates,
     profileLinks,
-    projectLinks,
+    exhibitLinks,
     profileColumns,
     postDateCreated
   ) => {
@@ -136,7 +136,7 @@ const FeedScreen = (props) => {
         username,
         jobTitle,
         profileBiography,
-        profileProjects,
+        profileExhibits,
         profilePictureBase64,
         profilePictureUrl,
         numberOfFollowers,
@@ -146,7 +146,7 @@ const FeedScreen = (props) => {
         hideFollowers,
         hideAdvocates,
         profileLinks,
-        projectLinks,
+        exhibitLinks,
         profileColumns,
         postDateCreated,
       },
@@ -218,7 +218,7 @@ const FeedScreen = (props) => {
   useDidMountEffect(() => {
     // Sort the array based on the second element
     setUserFeedState(
-      Object.values(userFeed).sort((first, second) => {
+      Object.values(userFeed).sort((first: string, second: string) => {
         return (
           second["postDateCreated"]["_seconds"] -
           first["postDateCreated"]["_seconds"]
@@ -292,11 +292,11 @@ const FeedScreen = (props) => {
                 ? itemData.item.profilePictureBase64
                 : itemData.item.profilePictureUrl
             }
-            projectTitle={itemData.item.projectTitle}
+            exhibitTitle={itemData.item.exhibitTitle}
             caption={itemData.item.caption}
             numberOfCheers={itemData.item.numberOfCheers}
             numberOfComments={itemData.item.numberOfComments}
-            projectId={itemData.item.projectId}
+            exhibitId={itemData.item.exhibitId}
             postId={itemData.item.postId}
             posterExhibitUId={itemData.item.ExhibitUId}
             links={itemData.item.postLinks}
@@ -308,7 +308,7 @@ const FeedScreen = (props) => {
             usernameStyle={{
               color: darkModeValue ? "white" : "black",
             }}
-            projectContainer={{
+            exhibitContainer={{
               borderColor: darkModeValue ? "#616161" : "#e8e8e8",
             }}
             titleContainer={{
@@ -328,7 +328,7 @@ const FeedScreen = (props) => {
               color: "white",
             }}
             profilePictureColors={["rgba(0,0,0,0.2)", "rgba(0,0,0,0)"]}
-            projectTitleColors={["rgba(0,0,0,0)", "rgba(0,0,0,0.7)"]}
+            exhibitTitleColors={["rgba(0,0,0,0)", "rgba(0,0,0,0.7)"]}
             pictureCheerContainer={{
               backgroundColor: darkModeValue ? "#121212" : "white",
             }}
@@ -352,14 +352,14 @@ const FeedScreen = (props) => {
             }}
             arrowColor={"white"}
             onSelect={() => {
-              viewProjectHandler(
+              viewExhibitHandler(
                 itemData.item.ExhibitUId,
-                itemData.item.projectId,
+                itemData.item.exhibitId,
                 itemData.item.fullname,
                 itemData.item.username,
                 itemData.item.jobTitle,
                 itemData.item.profileBiography,
-                itemData.item.profileProjects,
+                itemData.item.profileExhibits,
                 itemData.item.profilePictureBase64,
                 itemData.item.profilePictureUrl,
                 itemData.item.numberOfFollowers,
@@ -368,7 +368,7 @@ const FeedScreen = (props) => {
                 itemData.item.hideFollowing,
                 itemData.item.hideFollowers,
                 itemData.item.hideAdvocates,
-                itemData.item.projectLinks,
+                itemData.item.exhibitLinks,
                 itemData.item.profileColumns,
                 itemData.item.postDateCreated._seconds
               );
@@ -376,7 +376,7 @@ const FeedScreen = (props) => {
             onSelectCheering={() => {
               viewCheeringHandler(
                 itemData.item.ExhibitUId,
-                itemData.item.projectId,
+                itemData.item.exhibitId,
                 itemData.item.postId,
                 itemData.item.numberOfCheers
               );
@@ -388,7 +388,7 @@ const FeedScreen = (props) => {
                 itemData.item.username,
                 itemData.item.jobTitle,
                 itemData.item.profileBiography,
-                itemData.item.profileProjects,
+                itemData.item.profileExhibits,
                 itemData.item.profilePictureBase64,
                 itemData.item.profilePictureUrl,
                 itemData.item.numberOfFollowers,
@@ -398,7 +398,7 @@ const FeedScreen = (props) => {
                 itemData.item.hideFollowers,
                 itemData.item.hideAdvocates,
                 itemData.item.profileLinks,
-                itemData.item.projectLinks,
+                itemData.item.exhibitLinks,
                 itemData.item.profileColumns,
                 itemData.item.postDateCreated._seconds
               );

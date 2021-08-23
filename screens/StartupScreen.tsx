@@ -15,7 +15,7 @@ const StartupScreen = (props) => {
       const transformedIntroing = JSON.parse(introingData);
       const transformedData = JSON.parse(userData);
 
-      let [localId, token, introing] = [false, false, true];
+      let [localId, token, introing] = ["", "", true];
       if (transformedIntroing) {
         [{ introing }] = [transformedIntroing];
       }
@@ -39,7 +39,7 @@ const StartupScreen = (props) => {
       } else {
         await dispatch(getUserData());
         await dispatch(authenticate(localId, token));
-        await props.navigation.navigate("Project");
+        await props.navigation.navigate("Exhibit");
       }
     };
 
