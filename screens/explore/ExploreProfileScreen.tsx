@@ -145,16 +145,14 @@ const ExploreProfileScreen = (props) => {
       : 0;
   }
 
-  const [profileExhibitsState, setProfileExhibitsState] = useState(
-    Object.values(exploredUserData.profileExhibits).sort(
-      (first: string, second: string) => {
-        return (
-          second["exhibitDateCreated"]["_seconds"] -
-          first["exhibitDateCreated"]["_seconds"]
-        );
-      }
-    )
-  );
+  const profileExhibitsState = Object.values(
+    exploredUserData.profileExhibits
+  ).sort((first: string, second: string) => {
+    return (
+      second["exhibitDateCreated"]["_seconds"] -
+      first["exhibitDateCreated"]["_seconds"]
+    );
+  });
 
   const [isfollowing, setIsFollowing] = useState(
     exploredUserData.followers.includes(ExhibitUId) ? true : false
@@ -163,7 +161,7 @@ const ExploreProfileScreen = (props) => {
     exploredUserData.advocates.includes(ExhibitUId) ? true : false
   );
 
-  let android = null;
+  let android: boolean = null;
   if (Platform.OS === "android") {
     android = true;
   }
@@ -313,14 +311,14 @@ const ExploreProfileScreen = (props) => {
   }, [exhibitsAdvocating]);
 
   const viewExhibitHandler = (
-    exhibitTitle,
-    exhibitCoverPhotoUrl,
-    exhibitDescription,
+    exhibitTitle: string,
+    exhibitCoverPhotoUrl: string,
+    exhibitDescription: string,
     exhibitPictures,
-    exhibitLinks,
-    exhibitPosts,
-    exhibitId,
-    exhibitColumns
+    exhibitLinks: object,
+    exhibitPosts: object,
+    exhibitId: string,
+    exhibitColumns: number
   ) => {
     props.navigation.push("ViewExploredProfileExhibit", {
       exhibitTitle,

@@ -17,7 +17,10 @@ import MainHeaderTitle from "../../components/UI/MainHeaderTitle";
 import TutorialExploreExhibit from "../../components/tutorial/TutorialExploreExhibit";
 import useDidMountEffect from "../../helper/useDidMountEffect";
 import getExlusiveBothSetsDifference from "../../helper/getExlusiveBothSetsDifference";
-import { advocateForUser, unadvocateForUser } from "../../store/actions/user/user";
+import {
+  advocateForUser,
+  unadvocateForUser,
+} from "../../store/actions/user/user";
 
 const ExploreExhibitScreen = (props) => {
   const dispatch = useAppDispatch();
@@ -154,12 +157,14 @@ const ExploreExhibitScreen = (props) => {
       : 0;
 
   const [exhibitPostsState, setExhibitPostsState] = useState(
-    Object.values(exploredExhibitData.exhibitPosts).sort((first: string, second: string) => {
-      return (
-        second["postDateCreated"]["_seconds"] -
-        first["postDateCreated"]["_seconds"]
-      );
-    })
+    Object.values(exploredExhibitData.exhibitPosts).sort(
+      (first: string, second: string) => {
+        return (
+          second["postDateCreated"]["_seconds"] -
+          first["postDateCreated"]["_seconds"]
+        );
+      }
+    )
   );
 
   let android = null;
@@ -201,20 +206,20 @@ const ExploreExhibitScreen = (props) => {
   }, [setIsLoading, unadvocateForUser, setIsAdvocating]);
 
   const viewCommentsHandler = (
-    ExhibitUId,
-    postId,
-    fullname,
-    username,
-    jobTitle,
-    profileBiography,
-    profileExhibits,
-    profilePictureUrl,
-    postPhotoUrl,
-    numberOfCheers,
-    numberOfComments,
-    caption,
-    postLinks,
-    postDateCreated
+    ExhibitUId: string,
+    postId: string,
+    fullname: string,
+    username: string,
+    jobTitle: string,
+    profileBiography: string,
+    profileExhibits: object,
+    profilePictureUrl: string,
+    postPhotoUrl: string,
+    numberOfCheers: number,
+    numberOfComments: number,
+    caption: string,
+    postLinks: object,
+    postDateCreated: string
   ) => {
     props.navigation.push("ViewExploredProfileExhibitPicture", {
       ExhibitUId,

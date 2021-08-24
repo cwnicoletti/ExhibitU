@@ -1,10 +1,5 @@
 import React, { useCallback, useEffect } from "react";
-import {
-  LogBox,
-  Platform,
-  ScrollView,
-  StyleSheet,
-} from "react-native";
+import { LogBox, Platform, ScrollView, StyleSheet } from "react-native";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import IoniconsHeaderButton from "../../components/UI/header_buttons/IoniconsHeaderButton";
@@ -39,7 +34,7 @@ const PictureScreen = (props) => {
     ? props.navigation.getParam("links")
     : {};
 
-  let android = null;
+  let android: boolean = null;
   if (Platform.OS === "android") {
     android = true;
   }
@@ -54,14 +49,14 @@ const PictureScreen = (props) => {
   };
 
   const viewProfileHandler = (
-    ExhibitUId,
-    exhibitId,
-    fullname,
-    username,
-    jobTitle,
-    profileBiography,
-    profileExhibits,
-    profilePictureUrl
+    ExhibitUId: string,
+    exhibitId: string,
+    fullname: string,
+    username: string,
+    jobTitle: string,
+    profileBiography: string,
+    profileExhibits: object,
+    profilePictureUrl: string
   ) => {
     props.navigation.push("ExhibitUProfile", {
       ExhibitUId,

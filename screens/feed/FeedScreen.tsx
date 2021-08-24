@@ -49,24 +49,24 @@ const FeedScreen = (props) => {
   }, [darkModeValue]);
 
   const viewExhibitHandler = (
-    ExhibitUId,
-    exhibitId,
-    fullname,
-    username,
-    jobTitle,
-    profileBiography,
-    profileExhibits,
-    profilePictureBase64,
-    profilePictureUrl,
-    numberOfFollowers,
-    numberOfFollowing,
-    numberOfAdvocates,
-    hideFollowing,
-    hideFollowers,
-    hideAdvocates,
-    exhibitLinks,
-    profileColumns,
-    postDateCreated
+    ExhibitUId: string,
+    exhibitId: string,
+    fullname: string,
+    username: string,
+    jobTitle: string,
+    profileBiography: string,
+    profileExhibits: object,
+    profilePictureBase64: string,
+    profilePictureUrl: string,
+    numberOfFollowers: number,
+    numberOfFollowing: number,
+    numberOfAdvocates: number,
+    hideFollowing: boolean,
+    hideFollowers: boolean,
+    hideAdvocates: boolean,
+    exhibitLinks: object,
+    profileColumns: number,
+    postDateCreated: string
   ) => {
     dispatch(offScreen("Feed"));
     props.navigation.navigate("ViewFeedExhibit", {
@@ -94,10 +94,10 @@ const FeedScreen = (props) => {
   };
 
   const viewCheeringHandler = (
-    ExhibitUId,
-    exhibitId,
-    postId,
-    numberOfCheers
+    ExhibitUId: string,
+    exhibitId: string,
+    postId: string,
+    numberOfCheers: number
   ) => {
     dispatch(offScreen("Feed"));
     props.navigation.navigate("ViewCheering", {
@@ -109,24 +109,24 @@ const FeedScreen = (props) => {
   };
 
   const viewProfileHandler = (
-    ExhibitUId,
-    fullname,
-    username,
-    jobTitle,
-    profileBiography,
-    profileExhibits,
-    profilePictureBase64,
-    profilePictureUrl,
-    numberOfFollowers,
-    numberOfFollowing,
-    numberOfAdvocates,
-    hideFollowing,
-    hideFollowers,
-    hideAdvocates,
-    profileLinks,
-    exhibitLinks,
-    profileColumns,
-    postDateCreated
+    ExhibitUId: string,
+    fullname: string,
+    username: string,
+    jobTitle: string,
+    profileBiography: string,
+    profileExhibits: object,
+    profilePictureBase64: string,
+    profilePictureUrl: string,
+    numberOfFollowers: number,
+    numberOfFollowing: number,
+    numberOfAdvocates: number,
+    hideFollowing: boolean,
+    hideFollowers: boolean,
+    hideAdvocates: boolean,
+    profileLinks: object,
+    exhibitLinks: object,
+    profileColumns: number,
+    postDateCreated: string
   ) => {
     dispatch(offScreen("Feed"));
     props.navigation.navigate("ViewProfile", {

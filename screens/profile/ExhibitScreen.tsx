@@ -65,15 +65,13 @@ const ExhibitScreen = (props) => {
         exhibitLinks: {},
         exhibitColumns: 2,
       };
-  const [exhibitPostsState, setExhibitPostsState] = useState(
-    Object.values(currentExhibit.exhibitPosts).sort(
-      (first: string, second: string) => {
-        return (
-          second["postDateCreated"]["_seconds"] -
-          first["postDateCreated"]["_seconds"]
-        );
-      }
-    )
+  const exhibitPostsState = Object.values(currentExhibit.exhibitPosts).sort(
+    (first: string, second: string) => {
+      return (
+        second["postDateCreated"]["_seconds"] -
+        first["postDateCreated"]["_seconds"]
+      );
+    }
   );
 
   const postIds = Object.keys(currentExhibit.exhibitPosts);
@@ -84,22 +82,22 @@ const ExhibitScreen = (props) => {
   }
 
   const viewCommentsHandler = (
-    ExhibitUId,
-    exhibitId,
-    postId,
-    fullname,
-    username,
-    jobTitle,
-    profileBiography,
-    profileExhibits,
-    profilePictureUrl,
-    postPhotoUrl,
-    postPhotoBase64,
-    numberOfCheers,
-    numberOfComments,
-    caption,
-    links,
-    postDateCreated
+    ExhibitUId: string,
+    exhibitId: string,
+    postId: string,
+    fullname: string,
+    username: string,
+    jobTitle: string,
+    profileBiography: string,
+    profileExhibits: object,
+    profilePictureUrl: string,
+    postPhotoUrl: string,
+    postPhotoBase64: string,
+    numberOfCheers: number,
+    numberOfComments: number,
+    caption: string,
+    links: object,
+    postDateCreated: string
   ) => {
     props.navigation.push("PictureScreen", {
       ExhibitUId,

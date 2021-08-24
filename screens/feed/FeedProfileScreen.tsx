@@ -80,7 +80,7 @@ const FeedProfileScreen = (props) => {
     );
   }, [userData.profileExhibits]);
 
-  const viewExhibitHandler = (exhibitId) => {
+  const viewExhibitHandler = (exhibitId: string) => {
     props.navigation.navigate("ViewFeedProfileExhibit", {
       exhibitId,
       userData,
