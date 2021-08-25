@@ -13,8 +13,6 @@ import {
   TouchableNativeFeedback,
   TouchableOpacity,
   View,
-  Alert,
-  Linking,
 } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
