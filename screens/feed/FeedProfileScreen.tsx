@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { FlatList, StyleSheet, Text, View } from "react-native";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import { useAppSelector } from "../../hooks";
-import FeedProfileHeader from "../../components/feed/FeedExhibitHeader";
+import FeedProfileHeader from "../../components/feed/FeedProfileHeader";
 import ExhibitItem from "../../components/exhibitItems/ExhibitItem";
 import useDidMountEffect from "../../helper/useDidMountEffect";
 import IoniconsHeaderButton from "../../components/UI/header_buttons/IoniconsHeaderButton";

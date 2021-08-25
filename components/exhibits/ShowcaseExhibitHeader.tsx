@@ -17,16 +17,16 @@ const ExhibitUExhibitHeader = (props) => {
       <View
         style={{
           alignItems: "center",
-          borderBottomColor: darkModeValue ? "white" : "black",
           borderBottomWidth: 1,
+          borderBottomColor: darkModeValue ? "white" : "black",
         }}
       >
         <Text
           style={{
-            color: darkModeValue ? "white" : "black",
             fontWeight: "bold",
             fontSize: 18,
             margin: 10,
+            color: darkModeValue ? "white" : "black",
           }}
         >
           {props.title}

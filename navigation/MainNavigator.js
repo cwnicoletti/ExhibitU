@@ -43,7 +43,7 @@ import AddExhibitScreen from "../screens/profile/AddExhibitScreen";
 import AdvocatesScreen from "../screens/profile/AdvocatesScreen";
 import CheeringScreen from "../screens/profile/CheeringScreen";
 import EditProfileScreen from "../screens/profile/EditProfileScreen";
-import EditExhibitScreen from "../screens/profile/EditProfileScreen";
+import EditExhibitScreen from "../screens/profile/EditExhibitScreen";
 import FollowersScreen from "../screens/profile/FollowersScreen";
 import FollowingScreen from "../screens/profile/FollowingScreen";
 import PictureScreen from "../screens/profile/PictureScreen";
