@@ -1,10 +1,7 @@
-import * as WebBrowser from "expo-web-browser";
-import React, { useEffect } from "react";
+import React from "react";
 import {
   Dimensions,
-  FlatList,
   ImageBackground,
-  LogBox,
   Platform,
   StyleSheet,
   Text,
@@ -14,14 +11,13 @@ import {
   View,
 } from "react-native";
 import { useAppSelector } from "../../hooks";
-import LinkButton from "../UI/LinkButton";
 import toDateTime from "../../helper/toDateTime";
 import TimeStamp from "../UI/TimeStamp";
+import LinksList from "../UI/LinksList";
 
 const ExhibitUPostView = (props) => {
-  const darkModeValue = useAppSelector((state) => state.user.darkMode);
   const showCheering = useAppSelector((state) => state.user.showCheering);
-  const links = props.links;
+  const links = Object.values(props.links);
   const postDateCreated = toDateTime(props.postDateCreated);
 
   // Post background-picture width, height
@@ -34,10 +30,6 @@ const ExhibitUPostView = (props) => {
   if (Platform.OS === "android") {
     TouchableCmp = TouchableNativeFeedback;
   }
-
-  useEffect(() => {
-    LogBox.ignoreLogs(["VirtualizedLists should never be nested"]);
-  }, []);
 
   return (
     <View style={{ ...styles.exhibit, ...props.exhibitContainer }}>
@@ -56,33 +48,14 @@ const ExhibitUPostView = (props) => {
           ></ImageBackground>
         </View>
       </TouchableWithoutFeedback>
-      {Object.keys(links).length <= 1 ? (
+      {links.length <= 1 ? (
         <View
           style={{
             ...styles.pictureCheerContainer,
             ...props.pictureCheerContainer,
           }}
         >
-          <FlatList<any>
-            data={Object.values(links)}
-            keyExtractor={(item) => item.linkId}
-            numColumns={1}
-            renderItem={(itemData) => (
-              <LinkButton
-                imageUrl={itemData.item[`linkImageUrl${itemData.item.linkId}`]}
-                title={itemData.item[`linkTitle${itemData.item.linkId}`]}
-                textStyle={{ color: darkModeValue ? "white" : "black" }}
-                linkContainer={{
-                  width: "100%",
-                }}
-                onPress={() =>
-                  WebBrowser.openBrowserAsync(
-                    itemData.item[`linkUrl${itemData.item.linkId}`]
-                  )
-                }
-              />
-            )}
-          />
+          <LinksList links={links} />
           {showCheering ? (
             props.numberOfCheers >= 1 ? (
               <TouchableCmp onPress={props.onSelectCheering}>
@@ -115,27 +88,7 @@ const ExhibitUPostView = (props) => {
             ...props.pictureCheerContainer,
           }}
         >
-          <FlatList<any>
-            data={Object.values(links)}
-            keyExtractor={(item) => item.linkId}
-            numColumns={Object.keys(links).length === 2 ? 2 : 3}
-            columnWrapperStyle={{ justifyContent: "center" }}
-            renderItem={(itemData) => (
-              <LinkButton
-                imageUrl={itemData.item[`linkImageUrl${itemData.item.linkId}`]}
-                title={itemData.item[`linkTitle${itemData.item.linkId}`]}
-                textStyle={{ color: darkModeValue ? "white" : "black" }}
-                linkContainer={{
-                  width: Object.keys(links).length === 2 ? "46%" : "28%",
-                }}
-                onPress={() =>
-                  WebBrowser.openBrowserAsync(
-                    itemData.item[`linkUrl${itemData.item.linkId}`]
-                  )
-                }
-              />
-            )}
-          />
+          <LinksList links={links} />
           {showCheering ? (
             props.numberOfCheers >= 1 ? (
               <TouchableCmp onPress={props.onSelectCheering}>

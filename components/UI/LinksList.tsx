@@ -17,7 +17,7 @@ const LinksList = (props) => {
         flexWrap: "wrap",
       }}
     >
-      {links.map((item) => (
+      {links.map((item: object) => (
         <LinkButton
           key={item["linkId"]}
           imageUrl={item[`linkImageUrl${item["linkId"]}`]}
