@@ -1,12 +1,34 @@
 import * as WebBrowser from "expo-web-browser";
 import React from "react";
-import { FlatList, Image, StyleSheet, Text, View } from "react-native";
+import { Image, StyleSheet, Text, View } from "react-native";
 import { useAppSelector } from "../../hooks";
 import LinkButton from "../UI/LinkButton";
 
 const ExhibitUExhibitHeader = (props) => {
   const darkModeValue = useAppSelector((state) => state.user.darkMode);
-  const links = props.links;
+  const links = Object.values(props.links);
+
+  const linksList = () => {
+    return links.map((item) => (
+      <LinkButton
+        key={item["linkId"]}
+        imageUrl={item[`linkImageUrl${item["linkId"]}`]}
+        title={item[`linkTitle${item["linkId"]}`]}
+        textStyle={{ color: darkModeValue ? "white" : "black" }}
+        linkContainer={{
+          width:
+            Object.keys(links).length === 1
+              ? "96%"
+              : Object.keys(links).length === 2
+              ? "46%"
+              : "28%",
+        }}
+        onPress={() =>
+          WebBrowser.openBrowserAsync(item[`linkUrl${item["linkId"]}`])
+        }
+      />
+    ));
+  };
 
   return (
     <View style={{ ...styles.container, ...props.containerStyle }}>
@@ -33,45 +55,16 @@ const ExhibitUExhibitHeader = (props) => {
         </Text>
       </View>
       <Text style={props.descriptionStyle}>{props.description}</Text>
-      <FlatList<any>
-        data={Object.values(links)}
-        keyExtractor={(item) => item.linkId}
-        numColumns={
-          Object.keys(links).length === 1
-            ? 1
-            : Object.keys(links).length === 2
-            ? 2
-            : 3
-        }
-        columnWrapperStyle={
-          Object.keys(links).length > 1 ? { justifyContent: "center" } : null
-        }
-        renderItem={(itemData) => (
-          <LinkButton
-            imageUrl={itemData.item[`linkImageUrl${itemData.item.linkId}`]}
-            title={itemData.item[`linkTitle${itemData.item.linkId}`]}
-            textStyle={{ color: darkModeValue ? "white" : "black" }}
-            linkContainer={{
-              borderColor: "gray",
-              width:
-                Object.keys(links).length === 1
-                  ? "96%"
-                  : Object.keys(links).length === 2
-                  ? "46%"
-                  : "28%",
-            }}
-            imageStyle={{
-              backgroundColor: "white",
-              borderRadius: 5,
-            }}
-            onPress={() =>
-              WebBrowser.openBrowserAsync(
-                itemData.item[`linkUrl${itemData.item.linkId}`]
-              )
-            }
-          />
-        )}
-      />
+      <View
+        style={{
+          marginVertical: 5,
+          justifyContent: "center",
+          flexDirection: "row",
+          flexWrap: "wrap",
+        }}
+      >
+        {linksList()}
+      </View>
     </View>
   );
 };
