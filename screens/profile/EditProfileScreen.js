@@ -3,9 +3,7 @@ import * as ImagePicker from "expo-image-picker";
 import React, { useCallback, useEffect, useReducer, useState } from "react";
 import {
   ActivityIndicator,
-  FlatList,
   Image,
-  LogBox,
   Platform,
   SafeAreaView,
   StyleSheet,
@@ -26,11 +24,11 @@ import { useAppDispatch, useAppSelector } from "../../hooks";
 import TutorialEditProfile from "../../components/tutorial/TutorialEditProfile";
 import Input from "../../components/UI/Input";
 import IoniconsHeaderButton from "../../components/UI/header_buttons/IoniconsHeaderButton";
-import LinkButton from "../../components/UI/LinkButton";
 import {
   uploadChangeProfilePicture,
   uploadUpdateUserProfile,
 } from "../../store/actions/user/user";
+import LinksList from "../../components/UI/LinksList";
 
 const FORM_INPUT_UPDATE = "FORM_INPUT_UPDATE";
 const FORM_INPUT_LINKS_UPDATE = "FORM_INPUT_LINKS_UPDATE";
@@ -208,7 +206,6 @@ const EditProfileScreen = (props) => {
   };
 
   useEffect(() => {
-    LogBox.ignoreLogs(["VirtualizedLists should never be nested"]);
     props.navigation.setParams({ submit: submitHandler });
   }, []);
 
@@ -427,59 +424,12 @@ const EditProfileScreen = (props) => {
           </Text>
         ) : null}
         {Object.keys(parseLinkValuesFromInputValues(formState)).length <= 1 ? (
-          <FlatList
-            data={Object.values(parseLinkValuesFromInputValues(formState))}
-            keyExtractor={(item) => item.linkId}
-            numColumns={1}
-            renderItem={(itemData) => (
-              <LinkButton
-                imageUrl={itemData.item[`linkImageUrl${itemData.item.linkId}`]}
-                title={itemData.item[`linkTitle${itemData.item.linkId}`]}
-                textStyle={{ color: darkModeValue ? "white" : "black" }}
-                linkContainer={{
-                  width:
-                    Object.keys(parseLinkValuesFromInputValues(formState))
-                      .length === 1
-                      ? "96%"
-                      : Object.keys(parseLinkValuesFromInputValues(formState))
-                          .length === 2
-                      ? "46%"
-                      : "28%",
-                }}
-              />
-            )}
+          <LinksList
+            links={Object.values(parseLinkValuesFromInputValues(formState))}
           />
         ) : (
-          <FlatList
-            data={Object.values(parseLinkValuesFromInputValues(formState))}
-            keyExtractor={(item) => item.linkId}
-            key={Object.keys(parseLinkValuesFromInputValues(formState)).length}
-            numColumns={
-              Object.keys(parseLinkValuesFromInputValues(formState)).length <= 1
-                ? 1
-                : Object.keys(parseLinkValuesFromInputValues(formState))
-                    .length === 2
-                ? 2
-                : 3
-            }
-            columnWrapperStyle={{ justifyContent: "center" }}
-            renderItem={(itemData) => (
-              <LinkButton
-                imageUrl={itemData.item[`linkImageUrl${itemData.item.linkId}`]}
-                title={itemData.item[`linkTitle${itemData.item.linkId}`]}
-                textStyle={{ color: darkModeValue ? "white" : "black" }}
-                linkContainer={{
-                  width:
-                    Object.keys(parseLinkValuesFromInputValues(formState))
-                      .length <= 1
-                      ? "96%"
-                      : Object.keys(parseLinkValuesFromInputValues(formState))
-                          .length === 2
-                      ? "46%"
-                      : "28%",
-                }}
-              />
-            )}
+          <LinksList
+            links={Object.values(parseLinkValuesFromInputValues(formState))}
           />
         )}
       </View>

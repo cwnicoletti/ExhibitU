@@ -1,12 +1,10 @@
 import { AntDesign } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
-import React, { useEffect } from "react";
+import React from "react";
 import {
   Dimensions,
-  FlatList,
   Image,
   ImageBackground,
-  LogBox,
   Platform,
   StyleSheet,
   Text,
@@ -16,13 +14,13 @@ import {
 } from "react-native";
 import { useAppSelector } from "../../hooks";
 import Cheer from "../../assets/Icons/clap.svg";
-import LinkButton from "../UI/LinkButton";
 import toDateTime from "../../helper/toDateTime";
+import LinksList from "../UI/LinksList";
 
 const ExhibitItem = (props) => {
   const darkModeValue = useAppSelector((state) => state.user.darkMode);
   const fullname = useAppSelector((state) => state.user.fullname);
-  const links = props.links;
+  const links = Object.values(props.links);
   const currentTime = toDateTime(
     Math.floor(Date.now() / 1000)
   ).toLocaleString();
@@ -37,10 +35,6 @@ const ExhibitItem = (props) => {
   if (Platform.OS === "android") {
     TouchableCmp = TouchableNativeFeedback;
   }
-
-  useEffect(() => {
-    LogBox.ignoreLogs(["VirtualizedLists should never be nested"]);
-  }, []);
 
   return (
     <View style={{ ...styles.exhibit, ...props.exhibitContainer }}>
@@ -151,7 +145,7 @@ const ExhibitItem = (props) => {
           </LinearGradient>
         </ImageBackground>
       </View>
-      {Object.keys(links).length <= 1 ? (
+      {links.length <= 1 ? (
         <View
           style={{
             ...styles.pictureCheerContainer,
@@ -179,34 +173,7 @@ const ExhibitItem = (props) => {
             </Text>
           </View>
           <View style={{ justifyContent: "center" }}>
-            <FlatList<any>
-              data={Object.values(links)}
-              keyExtractor={(item) => item.linkId}
-              numColumns={
-                Object.keys(links).length <= 1
-                  ? 1
-                  : Object.keys(links).length === 2
-                  ? 2
-                  : 3
-              }
-              renderItem={(itemData) => (
-                <LinkButton
-                  imageUrl={
-                    itemData.item[`linkImageUrl${itemData.item.linkId}`]
-                  }
-                  title={itemData.item[`linkTitle${itemData.item.linkId}`]}
-                  textStyle={{ color: darkModeValue ? "white" : "black" }}
-                  linkContainer={{
-                    width:
-                      Object.keys(links).length <= 1
-                        ? "96%"
-                        : Object.keys(links).length === 2
-                        ? "46%"
-                        : "28%",
-                  }}
-                />
-              )}
-            />
+            <LinksList links={links} />
           </View>
         </View>
       ) : (
@@ -216,34 +183,7 @@ const ExhibitItem = (props) => {
             ...props.pictureCheerContainer,
           }}
         >
-          <FlatList<any>
-            data={Object.values(links)}
-            keyExtractor={(item) => item.linkId}
-            key={Object.keys(links).length}
-            numColumns={
-              Object.keys(links).length <= 1
-                ? 1
-                : Object.keys(links).length === 2
-                ? 2
-                : 3
-            }
-            columnWrapperStyle={{ justifyContent: "center" }}
-            renderItem={(itemData) => (
-              <LinkButton
-                imageUrl={itemData.item[`linkImageUrl${itemData.item.linkId}`]}
-                title={itemData.item[`linkTitle${itemData.item.linkId}`]}
-                textStyle={{ color: darkModeValue ? "white" : "black" }}
-                linkContainer={{
-                  width:
-                    Object.keys(links).length <= 1
-                      ? "96%"
-                      : Object.keys(links).length === 2
-                      ? "46%"
-                      : "28%",
-                }}
-              />
-            )}
-          />
+          <LinksList links={links} />
           <View style={{ flexDirection: "row", padding: 10 }}>
             <Text
               style={{

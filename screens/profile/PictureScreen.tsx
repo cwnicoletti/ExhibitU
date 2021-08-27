@@ -79,7 +79,6 @@ const PictureScreen = (props) => {
   }, [dispatch]);
 
   useEffect(() => {
-    LogBox.ignoreLogs(["VirtualizedLists should never be nested"]);
     props.navigation.setParams({ android: android });
     props.navigation.setParams({ deleteFn: deleteHandler });
   }, []);

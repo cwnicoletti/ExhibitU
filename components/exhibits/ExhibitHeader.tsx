@@ -1,7 +1,5 @@
-import * as WebBrowser from "expo-web-browser";
 import React from "react";
 import {
-  FlatList,
   Image,
   Platform,
   StyleSheet,
@@ -13,11 +11,11 @@ import {
 } from "react-native";
 import { useAppSelector } from "../../hooks";
 import EditButton from "../UI/EditButton";
-import LinkButton from "../UI/LinkButton";
+import LinksList from "../UI/LinksList";
 
 const ExhibitHeader = (props) => {
   const darkModeValue = useAppSelector((state) => state.user.darkMode);
-  const links = props.links;
+  const links = Object.values(props.links);
 
   let TouchableCmp: any = TouchableOpacity;
   if (Platform.OS === "android") {
@@ -63,45 +61,7 @@ const ExhibitHeader = (props) => {
           </Text>
         </View>
         <Text style={props.descriptionStyle}>{props.description}</Text>
-        <FlatList<any>
-          data={Object.values(links)}
-          keyExtractor={(item) => item.linkId}
-          numColumns={
-            Object.keys(links).length === 1
-              ? 1
-              : Object.keys(links).length === 2
-              ? 2
-              : 3
-          }
-          columnWrapperStyle={
-            Object.keys(links).length > 1 ? { justifyContent: "center" } : null
-          }
-          renderItem={(itemData) => (
-            <LinkButton
-              imageUrl={itemData.item[`linkImageUrl${itemData.item.linkId}`]}
-              title={itemData.item[`linkTitle${itemData.item.linkId}`]}
-              textStyle={{ color: darkModeValue ? "white" : "black" }}
-              linkContainer={{
-                borderColor: "gray",
-                width:
-                  Object.keys(links).length === 1
-                    ? "96%"
-                    : Object.keys(links).length === 2
-                    ? "46%"
-                    : "28%",
-              }}
-              imageStyle={{
-                backgroundColor: "white",
-                borderRadius: 5,
-              }}
-              onPress={() =>
-                WebBrowser.openBrowserAsync(
-                  itemData.item[`linkUrl${itemData.item.linkId}`]
-                )
-              }
-            />
-          )}
-        />
+        <LinksList links={links} />
       </View>
       <Text
         style={{

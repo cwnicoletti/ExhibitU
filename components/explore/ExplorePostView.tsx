@@ -1,9 +1,7 @@
-import * as WebBrowser from "expo-web-browser";
 import React, { useEffect, useRef, useState } from "react";
 import {
   Animated,
   Dimensions,
-  FlatList,
   ImageBackground,
   LogBox,
   Platform,
@@ -18,7 +16,6 @@ import {
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import Cheerfill from "../../assets/Icons/clap-fill.svg";
 import Cheer from "../../assets/Icons/clap.svg";
-import LinkButton from "../UI/LinkButton";
 import TimeStamp from "../UI/TimeStamp";
 import {
   cheerOwnFeedPost,
@@ -28,6 +25,7 @@ import {
 } from "../../store/actions/user/user";
 import { AnimatedGradient } from "../custom/AnimatedGradient/AnimatedGradient";
 import toDateTime from "../../helper/toDateTime";
+import LinksList from "../UI/LinksList";
 
 const ExplorePostView = (props) => {
   const dispatch = useAppDispatch();
@@ -43,11 +41,10 @@ const ExplorePostView = (props) => {
   const showCheering = useAppSelector((state) => state.user.showCheering);
   const cheeredPosts = useAppSelector((state) => state.user.cheeredPosts);
   const localId = useAppSelector((state) => state.auth.userId);
-  const darkModeValue = useAppSelector((state) => state.user.darkMode);
   const ExhibitUId = useAppSelector((state) => state.user.ExhibitUId);
   const posterExhibitUId = props.posterExhibitUId;
   const currentUsersPost = ExhibitUId === posterExhibitUId ? true : false;
-  const links = props.links;
+  const links = Object.values(props.links);
   const postId = props.postId;
   const exhibitId = props.exhibitId;
   const postDateCreated = toDateTime(props.postDateCreated);
@@ -71,10 +68,6 @@ const ExplorePostView = (props) => {
       setClap(true);
     }
   }, [cheeredPosts]);
-
-  useEffect(() => {
-    LogBox.ignoreLogs(["VirtualizedLists should never be nested"]);
-  }, []);
 
   const slideUp = () => {
     Animated.timing(slideAnim, {
@@ -291,47 +284,7 @@ const ExplorePostView = (props) => {
         }}
       >
         <View style={{ alignItems: "center" }}>
-          <FlatList<any>
-            data={Object.values(links)}
-            keyExtractor={(item) => item.linkId}
-            numColumns={
-              Object.keys(links).length === 1
-                ? 1
-                : Object.keys(links).length === 2
-                ? 2
-                : 3
-            }
-            columnWrapperStyle={
-              Object.keys(links).length > 1
-                ? { justifyContent: "center" }
-                : null
-            }
-            renderItem={(itemData) => (
-              <LinkButton
-                imageUrl={itemData.item[`linkImageUrl${itemData.item.linkId}`]}
-                title={itemData.item[`linkTitle${itemData.item.linkId}`]}
-                textStyle={{ color: darkModeValue ? "white" : "black" }}
-                linkContainer={{
-                  borderColor: "gray",
-                  width:
-                    Object.keys(links).length === 1
-                      ? "96%"
-                      : Object.keys(links).length === 2
-                      ? "46%"
-                      : "28%",
-                }}
-                imageStyle={{
-                  backgroundColor: "white",
-                  borderRadius: 5,
-                }}
-                onPress={() =>
-                  WebBrowser.openBrowserAsync(
-                    itemData.item[`linkUrl${itemData.item.linkId}`]
-                  )
-                }
-              />
-            )}
-          />
+          <LinksList links={links} />
         </View>
         {showCheering ? (
           props.numberOfCheers >= 1 ? (

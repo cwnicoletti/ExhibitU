@@ -3,9 +3,7 @@ import {
   ActivityIndicator,
   Animated,
   Dimensions,
-  FlatList,
   ImageBackground,
-  LogBox,
   Platform,
   StyleSheet,
   Text,
@@ -21,10 +19,9 @@ import {
   cheerOwnProfilePost,
   uncheerOwnProfilePost,
 } from "../../store/actions/user/user";
-import LinkButton from "../UI/LinkButton";
 import toDateTime from "../../helper/toDateTime";
-import * as WebBrowser from "expo-web-browser";
 import TimeStamp from "../UI/TimeStamp";
+import LinksList from "../UI/LinksList";
 
 const ProfileExhibitPostView = (props) => {
   const dispatch = useAppDispatch();
@@ -39,7 +36,7 @@ const ProfileExhibitPostView = (props) => {
   const [clap, setClap] = useState(false);
   const localId = useAppSelector((state) => state.auth.userId);
   const posterExhibitUId = useAppSelector((state) => state.user.ExhibitUId);
-  const links = props.links;
+  const links = Object.values(props.links);
   const postId = props.postId;
   const exhibitId = props.exhibitId;
   const postDateCreated = toDateTime(props.postDateCreated);
@@ -64,10 +61,6 @@ const ProfileExhibitPostView = (props) => {
       setClap(true);
     }
   }, [cheeredPosts]);
-
-  useEffect(() => {
-    LogBox.ignoreLogs(["VirtualizedLists should never be nested"]);
-  }, []);
 
   const slideUp = () => {
     Animated.timing(slideAnim, {
@@ -275,33 +268,14 @@ const ProfileExhibitPostView = (props) => {
           </ImageBackground>
         </View>
       </TouchableWithoutFeedback>
-      {Object.keys(links).length <= 1 ? (
+      {links.length <= 1 ? (
         <View
           style={{
             ...styles.pictureCheerContainer,
             ...props.pictureCheerContainer,
           }}
         >
-          <FlatList<any>
-            data={Object.values(links)}
-            keyExtractor={(item) => item.linkId}
-            numColumns={1}
-            renderItem={(itemData) => (
-              <LinkButton
-                imageUrl={itemData.item[`linkImageUrl${itemData.item.linkId}`]}
-                title={itemData.item[`linkTitle${itemData.item.linkId}`]}
-                textStyle={{ color: darkModeValue ? "white" : "black" }}
-                linkContainer={{
-                  width: "100%",
-                }}
-                onPress={() =>
-                  WebBrowser.openBrowserAsync(
-                    itemData.item[`linkUrl${itemData.item.linkId}`]
-                  )
-                }
-              />
-            )}
-          />
+          <LinksList links={links} />
           {showCheering ? (
             numberOfCheers >= 1 ? (
               <TouchableCmp onPress={props.onSelectCheering}>
@@ -337,29 +311,7 @@ const ProfileExhibitPostView = (props) => {
           }}
         >
           <View style={{ alignItems: "center" }}>
-            <FlatList<any>
-              data={Object.values(links)}
-              keyExtractor={(item) => item.linkId}
-              numColumns={Object.keys(links).length === 2 ? 2 : 3}
-              columnWrapperStyle={{ justifyContent: "center" }}
-              renderItem={(itemData) => (
-                <LinkButton
-                  imageUrl={
-                    itemData.item[`linkImageUrl${itemData.item.linkId}`]
-                  }
-                  title={itemData.item[`linkTitle${itemData.item.linkId}`]}
-                  textStyle={{ color: darkModeValue ? "white" : "black" }}
-                  linkContainer={{
-                    width: Object.keys(links).length === 2 ? "46%" : "28%",
-                  }}
-                  onPress={() =>
-                    WebBrowser.openBrowserAsync(
-                      itemData.item[`linkUrl${itemData.item.linkId}`]
-                    )
-                  }
-                />
-              )}
-            />
+            <LinksList links={links} />
           </View>
           {showCheering && numberOfCheers >= 1 ? (
             <TouchableCmp onPress={props.onSelectCheering}>

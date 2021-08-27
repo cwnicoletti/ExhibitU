@@ -50,7 +50,6 @@ const FeedCommentsScreen = (props) => {
   };
 
   useEffect(() => {
-    LogBox.ignoreLogs(["VirtualizedLists should never be nested"]);
     setIntialCheeredPosts(cheeredPosts);
     props.navigation.setParams({ exhibitId: exhibitId });
   }, []);

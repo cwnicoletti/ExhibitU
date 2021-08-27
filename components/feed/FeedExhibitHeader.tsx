@@ -1,9 +1,8 @@
-import * as WebBrowser from "expo-web-browser";
 import React, { useState } from "react";
-import { FlatList, Image, StyleSheet, Text, View } from "react-native";
+import { Image, StyleSheet, Text, View } from "react-native";
 import { useAppSelector } from "../../hooks";
-import LinkButton from "../UI/LinkButton";
 import { AnimatedGradient } from "../custom/AnimatedGradient/AnimatedGradient";
+import LinksList from "../UI/LinksList";
 
 const FeedExhibitHeader = (props) => {
   const darkModeValue = useAppSelector((state) => state.user.darkMode);
@@ -13,7 +12,7 @@ const FeedExhibitHeader = (props) => {
     "rgba(0,0,0,1)",
   ]);
 
-  const links = props.links;
+  const links = Object.values(props.links);
 
   return (
     <View style={{ ...styles.container, ...props.containerStyle }}>
@@ -63,31 +62,7 @@ const FeedExhibitHeader = (props) => {
         </Text>
       </View>
       <Text style={props.descriptionStyle}>{props.description}</Text>
-      <FlatList<any>
-        data={Object.values(links)}
-        keyExtractor={(item) => item.linkId}
-        numColumns={Object.keys(links).length > 1 ? 2 : 1}
-        renderItem={(itemData) => (
-          <LinkButton
-            imageUrl={itemData.item[`linkImageUrl${itemData.item.linkId}`]}
-            title={itemData.item[`linkTitle${itemData.item.linkId}`]}
-            textStyle={{ color: darkModeValue ? "white" : "black" }}
-            linkContainer={{
-              borderColor: "gray",
-              width: Object.keys(links).length > 1 ? "46%" : "96%",
-            }}
-            imageStyle={{
-              backgroundColor: "white",
-              borderRadius: 5,
-            }}
-            onPress={() =>
-              WebBrowser.openBrowserAsync(
-                itemData.item[`linkUrl${itemData.item.linkId}`]
-              )
-            }
-          />
-        )}
-      />
+      <LinksList links={links} />
     </View>
   );
 };

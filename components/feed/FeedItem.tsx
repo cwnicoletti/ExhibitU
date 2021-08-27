@@ -1,12 +1,10 @@
 import { AntDesign } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
-import * as WebBrowser from "expo-web-browser";
 import React, { useEffect, useRef, useState } from "react";
 import {
   ActivityIndicator,
   Animated,
   Dimensions,
-  FlatList,
   Image,
   ImageBackground,
   Platform,
@@ -27,10 +25,10 @@ import {
   uncheerPost,
 } from "../../store/actions/user/user";
 import { AnimatedGradient } from "../custom/AnimatedGradient/AnimatedGradient";
-import LinkButton from "../UI/LinkButton";
 import toDateTime from "../../helper/toDateTime";
 import TimeStamp from "../UI/TimeStamp";
 import useDidMountEffect from "../../helper/useDidMountEffect";
+import LinksList from "../UI/LinksList";
 
 const FeedItem = (props) => {
   const dispatch = useAppDispatch();
@@ -44,7 +42,6 @@ const FeedItem = (props) => {
     "rgba(50,50,50,1)",
     "rgba(0,0,0,1)",
   ]);
-  const darkModeValue = useAppSelector((state) => state.user.darkMode);
   const cheeredPosts = useAppSelector((state) => state.user.cheeredPosts);
   const showCheering = useAppSelector((state) => state.user.showCheering);
   const localId = useAppSelector((state) => state.auth.userId);
@@ -53,7 +50,7 @@ const FeedItem = (props) => {
   const postId = props.postId;
   const posterExhibitUId = props.posterExhibitUId;
   const currentUsersPost = ExhibitUId === posterExhibitUId ? true : false;
-  const links = props.links ? props.links : {};
+  const links = Object.values(props.links) ? Object.values(props.links) : [{}];
   const fullname = props.fullname;
   const postDateCreated = toDateTime(props.postDateCreated);
 
@@ -402,33 +399,14 @@ const FeedItem = (props) => {
           </ImageBackground>
         </View>
       </TouchableWithoutFeedback>
-      {Object.keys(links).length <= 1 ? (
+      {links.length <= 1 ? (
         <View
           style={{
             ...styles.pictureCheerContainer,
             ...props.pictureCheerContainer,
           }}
         >
-          <FlatList<any>
-            data={Object.values(links)}
-            keyExtractor={(item) => item.linkId}
-            numColumns={1}
-            renderItem={(itemData) => (
-              <LinkButton
-                imageUrl={itemData.item[`linkImageUrl${itemData.item.linkId}`]}
-                title={itemData.item[`linkTitle${itemData.item.linkId}`]}
-                textStyle={{ color: darkModeValue ? "white" : "black" }}
-                linkContainer={{
-                  width: "100%",
-                }}
-                onPress={() =>
-                  WebBrowser.openBrowserAsync(
-                    itemData.item[`linkUrl${itemData.item.linkId}`]
-                  )
-                }
-              />
-            )}
-          />
+          <LinksList links={links} />
           {currentUsersPost ? (
             showCheering && props.numberOfCheers >= 1 ? (
               <TouchableCmp onPress={props.onSelectCheering}>
@@ -488,29 +466,7 @@ const FeedItem = (props) => {
           }}
         >
           <View style={{ alignItems: "center" }}>
-            <FlatList<any>
-              data={Object.values(links)}
-              keyExtractor={(item) => item.linkId}
-              numColumns={Object.keys(links).length === 2 ? 2 : 3}
-              columnWrapperStyle={{ justifyContent: "center" }}
-              renderItem={(itemData) => (
-                <LinkButton
-                  imageUrl={
-                    itemData.item[`linkImageUrl${itemData.item.linkId}`]
-                  }
-                  title={itemData.item[`linkTitle${itemData.item.linkId}`]}
-                  textStyle={{ color: darkModeValue ? "white" : "black" }}
-                  linkContainer={{
-                    width: Object.keys(links).length === 2 ? "46%" : "28%",
-                  }}
-                  onPress={() =>
-                    WebBrowser.openBrowserAsync(
-                      itemData.item[`linkUrl${itemData.item.linkId}`]
-                    )
-                  }
-                />
-              )}
-            />
+            <LinksList links={links} />
           </View>
           {showCheering && props.numberOfCheers >= 1 ? (
             <TouchableCmp onPress={props.onSelectCheering}>
