@@ -12,6 +12,7 @@ import {
   TouchableNativeFeedback,
   TouchableOpacity,
   View,
+  StyleSheet,
 } from "react-native";
 import { useAppSelector } from "../../hooks";
 
@@ -26,30 +27,19 @@ const RightDrawer = (props) => {
   return (
     <View
       style={{
-        flex: 1,
-        padding: 20,
+        ...styles.drawerContainer,
         backgroundColor: darkModeValue ? "black" : "white",
-        borderLeftWidth: 0.3,
         borderLeftColor: darkModeValue ? "white" : "black",
-        justifyContent: "center",
       }}
     >
       <View
         style={{
-          alignItems: "center",
-          justifyContent: "center",
-          borderBottomWidth: 1,
+          ...styles.settingsTitleContainer,
           borderBottomColor: darkModeValue ? "white" : "black",
         }}
       >
         <SafeAreaView>
-          <View
-            style={{
-              alignItems: "center",
-              justifyContent: "center",
-              flexDirection: "row",
-            }}
-          >
+          <View style={styles.settingsTitleSafeAreaContainer}>
             <Feather
               name="settings"
               size={21}
@@ -57,9 +47,8 @@ const RightDrawer = (props) => {
             />
             <Text
               style={{
+                ...styles.settingsTitleText,
                 color: darkModeValue ? "white" : "black",
-                margin: 10,
-                fontSize: 20,
               }}
             >
               Settings
@@ -67,129 +56,134 @@ const RightDrawer = (props) => {
           </View>
         </SafeAreaView>
       </View>
-      <SafeAreaView>
-        <View
-          style={{
-            flexDirection: "row",
-            alignItems: "center",
-            margin: 10,
-            marginTop: 20,
-          }}
-        >
-          <SimpleLineIcons
-            name="trophy"
-            size={20}
-            color={darkModeValue ? "white" : "black"}
-          />
-          <TouchableCmp onPress={props.ShowcaseOnPress}>
-            <View>
-              <Text
-                style={{
-                  color: darkModeValue ? "#bababa" : "black",
-                  fontSize: 18,
-                  marginHorizontal: 10,
-                }}
-              >
-                Profile
-              </Text>
-            </View>
-          </TouchableCmp>
-        </View>
-      </SafeAreaView>
-      <SafeAreaView>
-        <View
-          style={{
-            flexDirection: "row",
-            alignItems: "center",
-            margin: 10,
-          }}
-        >
-          <MaterialCommunityIcons
-            name="update"
-            size={20}
-            color={darkModeValue ? "white" : "black"}
-          />
-          <TouchableCmp onPress={props.updatesOnPress}>
-            <View>
-              <Text
-                style={{
-                  color: darkModeValue ? "#bababa" : "black",
-                  fontSize: 18,
-                  marginHorizontal: 10,
-                }}
-              >
-                Future Updates
-              </Text>
-            </View>
-          </TouchableCmp>
-        </View>
-      </SafeAreaView>
-      <SafeAreaView>
-        <View
-          style={{
-            flexDirection: "row",
-            alignItems: "center",
-            margin: 10,
-          }}
-        >
-          <AntDesign
-            name="questioncircleo"
-            size={20}
-            color={darkModeValue ? "white" : "black"}
-          />
-          <TouchableCmp onPress={props.tutorialOnPress}>
-            <View>
-              <Text
-                style={{
-                  color: darkModeValue ? "#bababa" : "black",
-                  fontSize: 18,
-                  marginHorizontal: 10,
-                }}
-              >
-                Tutorial
-              </Text>
-            </View>
-          </TouchableCmp>
-        </View>
-      </SafeAreaView>
-      <View
-        style={{
-          flex: 1,
-          justifyContent: "flex-end",
-          margin: 5,
-        }}
-      >
-        <SafeAreaView>
-          <View
-            style={{
-              flexDirection: "row",
-              alignItems: "center",
-              marginBottom: 10,
-            }}
-          >
-            <MaterialCommunityIcons
-              name="logout"
-              size={20}
-              color={darkModeValue ? "white" : "black"}
-            />
-            <TouchableCmp onPress={props.logoutOnPress}>
-              <View>
-                <Text
-                  style={{
-                    color: darkModeValue ? "#bababa" : "black",
-                    fontSize: 18,
-                    marginHorizontal: 10,
-                  }}
-                >
-                  Logout
-                </Text>
-              </View>
-            </TouchableCmp>
+      <View style={styles.drawerFirstItemContainer}>
+        <SimpleLineIcons
+          name="trophy"
+          size={20}
+          color={darkModeValue ? "white" : "black"}
+        />
+        <TouchableCmp onPress={props.ShowcaseOnPress}>
+          <View>
+            <Text
+              style={{
+                ...styles.drawerItemText,
+                color: darkModeValue ? "#bababa" : "black",
+              }}
+            >
+              Profile
+            </Text>
           </View>
-        </SafeAreaView>
+        </TouchableCmp>
+      </View>
+      <View style={styles.drawerMiddleItemContainer}>
+        <MaterialCommunityIcons
+          name="update"
+          size={20}
+          color={darkModeValue ? "white" : "black"}
+        />
+        <TouchableCmp onPress={props.updatesOnPress}>
+          <View>
+            <Text
+              style={{
+                ...styles.drawerItemText,
+                color: darkModeValue ? "#bababa" : "black",
+              }}
+            >
+              Future Updates
+            </Text>
+          </View>
+        </TouchableCmp>
+      </View>
+      <View style={styles.drawerMiddleItemContainer}>
+        <AntDesign
+          name="questioncircleo"
+          size={20}
+          color={darkModeValue ? "white" : "black"}
+        />
+        <TouchableCmp onPress={props.tutorialOnPress}>
+          <View>
+            <Text
+              style={{
+                ...styles.drawerItemText,
+                color: darkModeValue ? "#bababa" : "black",
+              }}
+            >
+              Tutorial
+            </Text>
+          </View>
+        </TouchableCmp>
+      </View>
+      <View style={styles.drawerLastItemContainer}>
+        <View style={styles.drawerLastItemSubContainer}>
+          <MaterialCommunityIcons
+            name="logout"
+            size={20}
+            color={darkModeValue ? "white" : "black"}
+          />
+          <TouchableCmp onPress={props.logoutOnPress}>
+            <View>
+              <Text
+                style={{
+                  ...styles.drawerItemText,
+                  color: darkModeValue ? "#bababa" : "black",
+                }}
+              >
+                Logout
+              </Text>
+            </View>
+          </TouchableCmp>
+        </View>
       </View>
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  drawerContainer: {
+    flex: 1,
+    padding: 20,
+    borderLeftWidth: 0.3,
+    justifyContent: "center",
+  },
+  settingsTitleContainer: {
+    alignItems: "center",
+    justifyContent: "center",
+    borderBottomWidth: 1,
+  },
+  settingsTitleSafeAreaContainer: {
+    alignItems: "center",
+    justifyContent: "center",
+    flexDirection: "row",
+  },
+  settingsTitleText: {
+    margin: 10,
+    fontSize: 20,
+  },
+  drawerFirstItemContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    margin: 10,
+    marginTop: 20,
+  },
+  drawerMiddleItemContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    margin: 10,
+  },
+  drawerLastItemContainer: {
+    flex: 1,
+    justifyContent: "flex-end",
+    margin: 5,
+  },
+  drawerLastItemSubContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 10,
+  },
+  drawerItemText: {
+    fontSize: 18,
+    marginHorizontal: 10,
+  },
+});
 
 export default RightDrawer;
