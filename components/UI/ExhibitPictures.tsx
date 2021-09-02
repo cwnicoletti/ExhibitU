@@ -29,12 +29,7 @@ const ExhibitItem = (props) => {
             <View style={{ ...props.imageContainer }}>
               {imageIsLoading ? (
                 <AnimatedGradient
-                  style={{
-                    width: "100%",
-                    height: "100%",
-                    position: "absolute",
-                    zindex: 3,
-                  }}
+                  style={styles.animatedGradient}
                   colors={greyColorValues}
                   start={{ x: 0, y: 0 }}
                   end={{ x: 1, y: 0 }}
@@ -61,6 +56,12 @@ const ExhibitItem = (props) => {
 const styles = StyleSheet.create({
   exhibit: {
     height: 300,
+  },
+  animatedGradient: {
+    width: "100%",
+    height: "100%",
+    position: "absolute",
+    zindex: 3,
   },
   image: {
     width: "100%",

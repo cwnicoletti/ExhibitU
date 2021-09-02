@@ -5,6 +5,7 @@ import {
   TouchableNativeFeedback,
   TouchableOpacity,
   View,
+  StyleSheet,
 } from "react-native";
 import { useAppSelector } from "../../hooks";
 
@@ -19,12 +20,8 @@ const EditButton = (props) => {
     <TouchableCmp onPress={props.onPress}>
       <View
         style={{
-          marginTop: 10,
-          marginBottom: 5,
-          paddingHorizontal: "20%",
+          ...styles.editContainer,
           borderColor: darkModeValue ? "gray" : "#c9c9c9",
-          borderWidth: 1,
-          alignItems: "center",
         }}
       >
         <Text
@@ -39,5 +36,15 @@ const EditButton = (props) => {
     </TouchableCmp>
   );
 };
+
+const styles = StyleSheet.create({
+  editContainer: {
+    marginTop: 10,
+    marginBottom: 5,
+    paddingHorizontal: "20%",
+    borderWidth: 1,
+    alignItems: "center",
+  },
+});
 
 export default EditButton;

@@ -1,6 +1,6 @@
 import React from "react";
 import * as WebBrowser from "expo-web-browser";
-import { View } from "react-native";
+import { View, StyleSheet } from "react-native";
 import { useAppSelector } from "../../hooks";
 import LinkButton from "./LinkButton";
 
@@ -9,14 +9,7 @@ const LinksList = (props) => {
   const links = props.links;
 
   return (
-    <View
-      style={{
-        marginVertical: 5,
-        justifyContent: "center",
-        flexDirection: "row",
-        flexWrap: "wrap",
-      }}
-    >
+    <View style={styles.linksListContainer}>
       {links.map((item: object) => (
         <LinkButton
           key={item["linkId"]}
@@ -35,5 +28,14 @@ const LinksList = (props) => {
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  linksListContainer: {
+    marginVertical: 5,
+    justifyContent: "center",
+    flexDirection: "row",
+    flexWrap: "wrap",
+  },
+});
 
 export default LinksList;
