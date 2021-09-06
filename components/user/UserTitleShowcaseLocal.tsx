@@ -25,7 +25,7 @@ const UserTitleExhibitULocal = (props) => {
             width: 100,
             borderRadius: 100 / 2,
             position: "absolute",
-            zindex: 3,
+            zIndex: 3,
           }}
           colors={greyColorValues}
           start={{ x: 0, y: 0 }}

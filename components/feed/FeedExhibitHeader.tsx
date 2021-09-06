@@ -22,7 +22,7 @@ const FeedExhibitHeader = (props) => {
             width: "100%",
             height: "100%",
             position: "absolute",
-            zindex: 3,
+            zIndex: 3,
           }}
           colors={greyColorValues}
           start={{ x: 0, y: 0 }}

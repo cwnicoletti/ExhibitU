@@ -22,7 +22,7 @@ const ExploreUserTitle = (props) => {
           style={{
             top: 0,
             position: "absolute",
-            zindex: 3,
+            zIndex: 3,
             height: 100,
             width: 100,
             borderRadius: 100 / 2,

@@ -33,7 +33,7 @@ const ExploreCard = (props) => {
                   style={{
                     top: 0,
                     position: "absolute",
-                    zindex: 3,
+                    zIndex: 3,
                     height: 60,
                     width: 60,
                     borderRadius: 60 / 2,

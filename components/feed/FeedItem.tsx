@@ -181,7 +181,7 @@ const FeedItem = (props) => {
                 height: height,
                 width: "100%",
                 position: "absolute",
-                zindex: 3,
+                zIndex: 3,
               }}
               colors={greyColorValues}
               start={{ x: 0, y: 0 }}
@@ -253,7 +253,7 @@ const FeedItem = (props) => {
                                 borderWidth: 1,
                                 borderColor: "white",
                                 position: "absolute",
-                                zindex: 3,
+                                zIndex: 3,
                                 height: 50,
                                 width: 50,
                                 borderRadius: 50 / 2,
