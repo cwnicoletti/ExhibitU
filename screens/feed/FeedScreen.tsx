@@ -327,8 +327,8 @@ const FeedScreen = (props) => {
             titleStyle={{
               color: "white",
             }}
-            profilePictureColors={["rgba(0,0,0,0.2)", "rgba(0,0,0,0)"]}
-            exhibitTitleColors={["rgba(0,0,0,0)", "rgba(0,0,0,0.7)"]}
+            profilePictureColors={["rgba(0,0,0,1)", "rgba(0,0,0,0)"]}
+            exhibitTitleColors={["rgba(0,0,0,0)", "rgba(0,0,0,1)"]}
             pictureCheerContainer={{
               backgroundColor: darkModeValue ? "#121212" : "white",
             }}
