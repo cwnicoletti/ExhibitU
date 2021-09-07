@@ -18,11 +18,11 @@ const MainBottomTabContainer = (props) => {
         darkModeValue={props.darkModeValue}
         isCurrentScreen={props.screen === "Explore" ? true : false}
       />
-      {/* <Notifications
+      <Notifications
         parentProps={props.parentProps}
         darkModeValue={props.darkModeValue}
         isCurrentScreen={props.screen === "Notifications" ? true : false}
-      /> */}
+      />
       <Profile
         parentProps={props.parentProps}
         darkModeValue={props.darkModeValue}
