@@ -50,7 +50,7 @@ const FeedItem = (props) => {
   const postId = props.postId;
   const posterExhibitUId = props.posterExhibitUId;
   const currentUsersPost = ExhibitUId === posterExhibitUId ? true : false;
-  const links = Object.values(props.links) ? Object.values(props.links) : [{}];
+  const links = props.links ? Object.values(props.links) : [];
   const fullname = props.fullname;
   const postDateCreated = toDateTime(props.postDateCreated);
 

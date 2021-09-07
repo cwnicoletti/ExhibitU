@@ -95,7 +95,6 @@ export const login = (email: string, password: string) => {
       );
       authenticated = true;
     } catch (err) {
-      console.log(err);
       return authenticated;
     }
 

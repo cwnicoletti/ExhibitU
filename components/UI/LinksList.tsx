@@ -10,21 +10,27 @@ const LinksList = (props) => {
 
   return (
     <View style={styles.linksListContainer}>
-      {links.map((item: object) => (
-        <LinkButton
-          key={item["linkId"]}
-          imageUrl={item[`linkImageUrl${item["linkId"]}`]}
-          title={item[`linkTitle${item["linkId"]}`]}
-          textStyle={{ color: darkModeValue ? "white" : "black" }}
-          linkContainer={{
-            width:
-              links.length === 1 ? "96%" : links.length === 2 ? "46%" : "28%",
-          }}
-          onPress={() =>
-            WebBrowser.openBrowserAsync(item[`linkUrl${item["linkId"]}`])
-          }
-        />
-      ))}
+      {links
+        ? links.map((item: object) => (
+            <LinkButton
+              key={item["linkId"]}
+              imageUrl={item[`linkImageUrl${item["linkId"]}`]}
+              title={item[`linkTitle${item["linkId"]}`]}
+              textStyle={{ color: darkModeValue ? "white" : "black" }}
+              linkContainer={{
+                width:
+                  links.length === 1
+                    ? "96%"
+                    : links.length === 2
+                    ? "46%"
+                    : "28%",
+              }}
+              onPress={() =>
+                WebBrowser.openBrowserAsync(item[`linkUrl${item["linkId"]}`])
+              }
+            />
+          ))
+        : null}
     </View>
   );
 };

@@ -51,7 +51,6 @@ const ExploreCard = (props) => {
                     : require("../../assets/default-profile-icon.jpg")
                 }
                 onLoadStart={() => {
-                  console.log("Hit2");
                   setGreyColorValues(["rgba(0,0,0,1)", "rgba(50,50,50,1)"]);
                 }}
                 onLoadEnd={() => {
