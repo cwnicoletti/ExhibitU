@@ -156,6 +156,7 @@ export const getUserData = () => {
     let profileLinks = {};
     let userFeed = {};
     let updates = {};
+    let notifications = {};
 
     if (transformedData.followers) {
       followers = transformedData.followers;
@@ -186,6 +187,9 @@ export const getUserData = () => {
     }
     if (transformedData.updates) {
       updates = transformedData.updates;
+    }
+    if (transformedData.notifications) {
+      notifications = transformedData.notifications;
     }
 
     await dispatch({
@@ -228,6 +232,7 @@ export const getUserData = () => {
       profileLinks,
       userFeed,
       updates,
+      notifications,
     });
 
     await dispatch({
@@ -1591,13 +1596,13 @@ export const getUpdates = () => {
   };
 };
 
-export const resetScroll = (tab: boolean) => {
+export const resetScroll = (tab: string) => {
   return async (dispatch) => {
     await dispatch({ type: RESET_SCROLL, tab });
   };
 };
 
-export const onScreen = (tab: boolean) => {
+export const onScreen = (tab: string) => {
   return async (dispatch) => {
     await dispatch({ type: ON_SCREEN, tab });
   };
