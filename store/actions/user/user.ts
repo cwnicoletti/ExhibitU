@@ -156,6 +156,7 @@ export const getUserData = () => {
     let profileLinks = {};
     let userFeed = {};
     let updates = {};
+    let notifications = {};
 
     if (transformedData.followers) {
       followers = transformedData.followers;
@@ -186,6 +187,9 @@ export const getUserData = () => {
     }
     if (transformedData.updates) {
       updates = transformedData.updates;
+    }
+    if (transformedData.notifications) {
+      notifications = transformedData.notifications;
     }
 
     await dispatch({
@@ -228,6 +232,7 @@ export const getUserData = () => {
       profileLinks,
       userFeed,
       updates,
+      notifications,
     });
 
     await dispatch({

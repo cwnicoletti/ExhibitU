@@ -81,6 +81,7 @@ export interface UserState {
   profileExhibits: object;
   profileLinks: object;
   userFeed: object;
+  notifications: object;
   darkMode: boolean;
   showCheering: boolean;
   hideFollowing: boolean;
@@ -90,11 +91,13 @@ export interface UserState {
   resetScrollFeed: boolean;
   resetScrollExplore: boolean;
   resetScrollProfile: boolean;
+  resetScrollNotifications: boolean;
   showcasingProfile: boolean;
   hiddenProfileFooter: boolean;
   onFeedScreen: boolean;
   onExploreScreen: boolean;
   onProfileScreen: boolean;
+  onNotificationsScreen: boolean;
   tutorialing: boolean;
   tutorialPrompt: boolean;
   tutorialScreen: string;
