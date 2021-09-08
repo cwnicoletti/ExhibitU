@@ -1,69 +1,31 @@
 import React, { useEffect, useState, useRef } from "react";
-import {
-  StyleSheet,
-  View,
-  Text,
-  TouchableWithoutFeedback,
-  Keyboard,
-  FlatList,
-  RefreshControl,
-} from "react-native";
+import { StyleSheet, View, FlatList, RefreshControl } from "react-native";
 import { useAppSelector, useAppDispatch } from "../../hooks";
-import { SearchBar } from "react-native-elements";
-import algoliasearch from "algoliasearch";
 import { offScreen } from "../../store/actions/user/user";
-import { EvilIcons, Feather } from "@expo/vector-icons";
 
-import ExploreCard from "../../components/explore/ExploreCard";
+import NotificationCard from "../../components/notifications/NotificationCard";
 import useDidMountEffect from "../../helper/useDidMountEffect";
 import MainHeaderTitle from "../../components/UI/MainHeaderTitle";
 
 const ExploreScreen = (props) => {
-  const client = algoliasearch(
-    "EXC8LH5MAX",
-    "2d8cedcaab4cb2b351e90679963fbd92"
-  );
-  const index = client.initIndex("users");
-
   const dispatch = useAppDispatch();
-  const darkModeValue = useAppSelector((state) => state.user.darkMode);
-  const [search, setSearch] = useState("");
-  const [returnedIndex, setReturnedIndex] = useState([]);
   const [isRefreshing, setIsRefreshing] = useState(false);
-  const resetScrollExplore = useAppSelector(
-    (state) => state.user.resetScrollExplore
+  const darkModeValue = useAppSelector((state) => state.user.darkMode);
+  const resetScrollNotifications = useAppSelector(
+    (state) => state.user.resetScrollNotifications
   );
+  const notifications = useAppSelector((state) => state.user.notifications);
 
   useEffect(() => {
     props.navigation.setParams({ darkMode: darkModeValue });
   }, [darkModeValue]);
 
-  const searchFilterFunction = (text) => {
-    setSearch(text);
-    if (text) {
-      index.search(text).then((responses) => {
-        setReturnedIndex(responses.hits);
-      });
-    } else {
-      setReturnedIndex([]);
-    }
-  };
-
-  const refreshSearchIndex = (text) => {
+  const refreshNotifications = () => {
     setIsRefreshing(true);
-    setSearch(text);
-    if (text) {
-      index.search(text).then((responses) => {
-        setReturnedIndex(responses.hits);
-      });
-    } else {
-      setReturnedIndex([]);
-    }
     setIsRefreshing(false);
   };
 
   const viewProfileHandler = (
-    text,
     ExhibitUId,
     profilePictureUrl,
     fullname,
@@ -87,9 +49,8 @@ const ExploreScreen = (props) => {
     profileColumns,
     showCheering
   ) => {
-    dispatch(offScreen("Explore"));
-    props.navigation.push("ExploreProfile", {
-      text,
+    dispatch(offScreen("Notifications"));
+    props.navigation.push("NotificationsProfile", {
       ExhibitUId,
       profilePictureUrl,
       fullname,
@@ -115,10 +76,10 @@ const ExploreScreen = (props) => {
     });
   };
 
-  const flatlistExplore = useRef();
+  const flatlistNotifications = useRef();
   useDidMountEffect(() => {
-    flatlistExplore.current.scrollToOffset({ animated: true, offset: 0 });
-  }, [resetScrollExplore]);
+    flatlistNotifications.current.scrollToOffset({ animated: true, offset: 0 });
+  }, [resetScrollNotifications]);
 
   return (
     <View
@@ -127,74 +88,31 @@ const ExploreScreen = (props) => {
         backgroundColor: darkModeValue ? "black" : "white",
       }}
     >
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-        <View style={{ alignItems: "center" }}>
-          <SearchBar
-            containerStyle={{
-              backgroundColor: 'darkModeValue ? "black" : "white"',
-              margin: 5,
-              borderBottomWidth: 0,
-              borderTopWidth: 0,
-              width: "80%",
-            }}
-            inputContainerStyle={{
-              height: 30,
-              backgroundColor: darkModeValue ? "black" : "white",
-              borderBottomColor: "gray",
-              borderBottomWidth: 1,
-            }}
-            searchIcon={<EvilIcons name="search" size={24} color="white" />}
-            clearIcon={
-              search ? (
-                <Feather
-                  name="x"
-                  size={24}
-                  color="white"
-                  onPress={() => {
-                    searchFilterFunction("");
-                  }}
-                />
-              ) : null
-            }
-            onChangeText={(text) => searchFilterFunction(text)}
-            onClear={() => {
-              searchFilterFunction("");
-            }}
-            placeholder="Search..."
-            value={search}
-          />
-        </View>
-      </TouchableWithoutFeedback>
       <FlatList
-        data={returnedIndex}
+        data={Object.values(notifications)}
         refreshControl={
           <RefreshControl
             refreshing={isRefreshing}
-            onRefresh={() => refreshSearchIndex(search)}
+            onRefresh={() => refreshNotifications()}
             tintColor={darkModeValue ? "white" : "black"}
           />
         }
-        ref={flatlistExplore}
+        ref={flatlistNotifications}
         keyExtractor={(item) => item.objectID}
         renderItem={(itemData) => (
-          <ExploreCard
+          <NotificationCard
             image={itemData.item.profilePictureUrl}
-            fullname={itemData.item.fullname}
-            jobTitle={itemData.item.jobTitle}
+            postImage={itemData.item.postImage}
             username={itemData.item.username}
             exhibitContainer={{
               backgroundColor: darkModeValue ? "black" : "white",
               borderColor: darkModeValue ? "gray" : "#c9c9c9",
             }}
-            fullNameStyle={{
-              color: darkModeValue ? "white" : "black",
-            }}
-            jobTitleStyle={{
+            usernameStyle={{
               color: darkModeValue ? "white" : "black",
             }}
             onSelect={() => {
               viewProfileHandler(
-                search,
                 itemData.item.objectID,
                 itemData.item.profilePictureUrl,
                 itemData.item.fullname,
