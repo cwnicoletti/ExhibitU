@@ -54,6 +54,9 @@ import ShowcaseProfileScreen from "../screens/profile/ShowcaseProfileScreen";
 import ShowcaseExhibitScreen from "../screens/profile/ShowcaseExhibitScreen";
 
 import NotificationsScreen from "../screens/notifications/NotificationsScreen";
+import NotificationsProfileScreen from "../screens/notifications/NotificationsProfileScreen";
+import NotificationsExhibitScreen from "../screens/notifications/NotificationsExhibitScreen";
+import NotificationsPictureScreen from "../screens/notifications/NotificationsPictureScreen";
 
 import ProfileBottomTab from "../components/footers/ProfileBottomTab";
 import NotificationsBottomTab from "../components/footers/NotificationsBottomTab";
@@ -183,6 +186,9 @@ const NotificationNavigator = createStackNavigator({
       header: () => <TitleOnlyHeader navigation={navigation} />,
     }),
   },
+  NotificationsProfile: NotificationsProfileScreen,
+  ViewNotificationsProfileExhibit: NotificationsExhibitScreen,
+  ViewNotificationsProfileExhibitPicture: NotificationsPictureScreen,
 });
 
 const RightNotificationsDrawerNavigator = createDrawerNavigator(
