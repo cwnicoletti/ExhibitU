@@ -7,25 +7,23 @@ import { useAppSelector, useAppDispatch } from "../../hooks";
 const Notifications = (props) => {
   const dispatch = useAppDispatch();
   
-  // Commented out since notifications are not implemented yet
-  //
-  // const onNotificationscreen = useAppSelector(
-  //   (state) => state.user.onNotificationsScreen
-  // );
+  const onNotificationscreen = useAppSelector(
+    (state) => state.user.onNotificationsScreen
+  );
 
   return (
     <TouchableWithoutFeedback
       onPress={() => {
-        // if (props.isCurrentScreen) {
-        //   if (onNotificationscreen) {
-        //     dispatch(resetScroll("Notifications"));
-        //   } else {
-        //     dispatch(onScreen("Notifications"));
-        //   }
-        //   props.parentProps.navigation.navigate("Notifications");
-        // } else {
-        //   props.parentProps.navigation.navigate("Notifications");
-        // }
+        if (props.isCurrentScreen) {
+          if (onNotificationscreen) {
+            dispatch(resetScroll("Notifications"));
+          } else {
+            dispatch(onScreen("Notifications"));
+          }
+          props.parentProps.navigation.navigate("Notifications");
+        } else {
+          props.parentProps.navigation.navigate("Notifications");
+        }
       }}
     >
       <View
