@@ -10,7 +10,7 @@ import authReducer from "./store/reducers/auth";
 import signupReducer from "./store/reducers/signup";
 import userReducer from "./store/reducers/user";
 import firebase from "firebase/app";
-// import * as Notifications from "expo-notifications";
+import * as Notifications from "expo-notifications";
 import FirebaseConfig from "./config";
 
 // Initialize Firebase
@@ -25,13 +25,13 @@ if (firebase.apps.length === 0) {
   firebase.initializeApp(firebaseConfig);
 }
 
-// Notifications.setNotificationHandler({
-//   handleNotification: async () => ({
-//     shouldShowAlert: true,
-//     shouldPlaySound: false,
-//     shouldSetBadge: false,
-//   }),
-// });
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowAlert: true,
+    shouldPlaySound: false,
+    shouldSetBadge: false,
+  }),
+});
 
 const rootReducer = combineReducers({
   signup: signupReducer,
