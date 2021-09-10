@@ -1591,13 +1591,13 @@ export const getUpdates = () => {
   };
 };
 
-export const resetScroll = (tab: boolean) => {
+export const resetScroll = (tab: string) => {
   return async (dispatch) => {
     await dispatch({ type: RESET_SCROLL, tab });
   };
 };
 
-export const onScreen = (tab: boolean) => {
+export const onScreen = (tab: string) => {
   return async (dispatch) => {
     await dispatch({ type: ON_SCREEN, tab });
   };
