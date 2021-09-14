@@ -92,6 +92,8 @@ const FeedCommentsScreen = (props) => {
         }}
         caption={userData.caption}
         fullname={userData.fullname}
+        jobTitle={userData.jobTitle}
+        username={userData.username}
         profileImageSource={
           userData.profilePictureBase64
             ? userData.profilePictureBase64

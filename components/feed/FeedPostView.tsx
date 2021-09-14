@@ -3,6 +3,7 @@ import {
   ActivityIndicator,
   Animated,
   Dimensions,
+  Image,
   ImageBackground,
   Platform,
   StyleSheet,
@@ -13,6 +14,8 @@ import {
   View,
 } from "react-native";
 import { useAppDispatch, useAppSelector } from "../../hooks";
+import { AntDesign } from "@expo/vector-icons";
+import { LinearGradient } from "expo-linear-gradient";
 import Cheerfill from "../../assets/Icons/clap-fill.svg";
 import Cheer from "../../assets/Icons/clap.svg";
 import {
@@ -33,6 +36,7 @@ const FeedPostView = (props) => {
   const [showClapping, setShowClapping] = useState(false);
   const [clap, setClap] = useState(false);
   const [imageIsLoading, setImageIsLoading] = useState(true);
+  const [profileImageIsLoading, setProfileImageIsLoading] = useState(true);
   const [greyColorValues, setGreyColorValues] = useState([
     "rgba(50,50,50,1)",
     "rgba(0,0,0,1)",
@@ -46,6 +50,9 @@ const FeedPostView = (props) => {
   const links = Object.values(props.links);
   const postId = props.postId;
   const exhibitId = props.exhibitId;
+  const fullname = props.fullname;
+  const username = props.username;
+  const jobTitle = props.jobTitle;
   const postDateCreated = toDateTime(props.postDateCreated);
 
   const fadeAnim = useRef(new Animated.Value(0)).current;
@@ -176,6 +183,158 @@ const FeedPostView = (props) => {
               end={{ x: 1, y: 0 }}
             />
           ) : null}
+          <View style={{ flexDirection: "row", ...props.nameContainer }}>
+            <View
+              style={{
+                flex: 1,
+                marginVertical: 5,
+              }}
+            >
+              <TouchableCmp onPress={props.onSelectProfile}>
+                <View
+                  style={{
+                    marginLeft: 10,
+                    flexDirection: "row",
+                  }}
+                >
+                  <View
+                    style={{
+                      height: 50,
+                      width: 50,
+                      borderRadius: 50 / 2,
+                    }}
+                  >
+                    {profileImageIsLoading ? (
+                      <AnimatedGradient
+                        style={{
+                          borderWidth: 1,
+                          borderColor: "white",
+                          position: "absolute",
+                          zIndex: 3,
+                          height: 50,
+                          width: 50,
+                          borderRadius: 50 / 2,
+                        }}
+                        colors={greyColorValues}
+                        start={{ x: 0, y: 0 }}
+                        end={{ x: 1, y: 0 }}
+                      />
+                    ) : null}
+                    <Image
+                      style={{
+                        borderWidth: 1,
+                        borderColor: "white",
+                        height: 50,
+                        width: 50,
+                        borderRadius: 50 / 2,
+                        ...props.profileImageStyle,
+                      }}
+                      source={
+                        props.profileImageSource
+                          ? { uri: props.profileImageSource }
+                          : require("../../assets/default-profile-icon.jpg")
+                      }
+                      onLoadEnd={() => {
+                        setProfileImageIsLoading(false);
+                      }}
+                    />
+                  </View>
+                  <View
+                    style={{
+                      flexDirection: "column",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <Text
+                      style={{
+                        color: "white",
+                        fontWeight: "700",
+                        marginLeft: 5,
+                        fontSize: 12,
+                      }}
+                    >
+                      {fullname}
+                    </Text>
+                    <Text
+                      style={{
+                        color: "white",
+                        fontWeight: "500",
+                        fontSize: 12,
+                        marginLeft: 5,
+                      }}
+                    >
+                      {jobTitle}
+                    </Text>
+                    <Text
+                      style={{
+                        color: "grey",
+                        fontSize: 11,
+                        marginLeft: 5,
+                      }}
+                    >
+                      {username}
+                    </Text>
+                  </View>
+                </View>
+              </TouchableCmp>
+            </View>
+            <View style={{ justifyContent: "center" }}>
+              {loadingCheer ? (
+                <ActivityIndicator
+                  size="small"
+                  color="white"
+                  style={{ marginRight: 10 }}
+                />
+              ) : (
+                <View>
+                  {!cheeredPosts.includes(postId) ? (
+                    <TouchableCmp onPress={unCheer}>
+                      <View>
+                        <Cheer
+                          style={{
+                            ...styles.clapContainer,
+                            ...props.clapContainer,
+                            flex: 1,
+                          }}
+                          height={28}
+                          width={28}
+                          fill="white"
+                        />
+                      </View>
+                    </TouchableCmp>
+                  ) : (
+                    <TouchableCmp onPress={unCheer}>
+                      <View>
+                        <Cheerfill
+                          style={{
+                            ...styles.clapContainer,
+                            ...props.clapContainer,
+                            flex: 1,
+                          }}
+                          height={28}
+                          width={28}
+                          fill="white"
+                        />
+                      </View>
+                    </TouchableCmp>
+                  )}
+                </View>
+              )}
+            </View>
+          </View>
+          {imageIsLoading ? (
+            <AnimatedGradient
+              style={{
+                height: photoHeight,
+                width: "100%",
+                position: "absolute",
+                zIndex: 3,
+              }}
+              colors={greyColorValues}
+              start={{ x: 0, y: 0 }}
+              end={{ x: 1, y: 0 }}
+            />
+          ) : null}
           <ImageBackground
             style={{
               height: photoHeight,
@@ -192,98 +351,7 @@ const FeedPostView = (props) => {
             onLoadEnd={() => {
               setImageIsLoading(false);
             }}
-          >
-            {showClapping ? (
-              <Animated.View
-                style={{
-                  flex: 1,
-                  justifyContent: "center",
-                  alignItems: "center",
-                  opacity: fadeAnim,
-                  transform: [{ translateY: slideAnim }],
-                }}
-              >
-                {clap ? (
-                  <Cheerfill
-                    style={{
-                      marginTop: photoHeight,
-                      ...props.clapContainer,
-                    }}
-                    height={photoHeight / 5}
-                    width={photoWidth / 5}
-                    fill="white"
-                  />
-                ) : (
-                  <Cheer
-                    style={{
-                      marginTop: photoHeight,
-                      ...props.clapContainer,
-                      transform: [{ rotate: "5deg" }],
-                    }}
-                    height={photoHeight / 5}
-                    width={photoWidth / 5}
-                    fill="white"
-                  />
-                )}
-              </Animated.View>
-            ) : null}
-            <View
-              style={{
-                flex: 1,
-                justifyContent: "flex-end",
-                alignItems: "flex-end",
-              }}
-            >
-              <View
-                style={{
-                  flexDirection: "row",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  paddingBottom: 10,
-                }}
-              >
-                {loadingCheer ? (
-                  <ActivityIndicator
-                    size="small"
-                    color="white"
-                    style={{ marginRight: 20 }}
-                  />
-                ) : (
-                  <View>
-                    {!cheeredPosts.includes(postId) ? (
-                      <TouchableCmp onPress={unCheer}>
-                        <View>
-                          <Cheer
-                            style={{
-                              ...styles.clapContainer,
-                              ...props.clapContainer,
-                            }}
-                            height={30}
-                            width={30}
-                            fill="white"
-                          />
-                        </View>
-                      </TouchableCmp>
-                    ) : (
-                      <TouchableCmp onPress={unCheer}>
-                        <View>
-                          <Cheerfill
-                            style={{
-                              ...styles.clapContainer,
-                              ...props.clapContainer,
-                            }}
-                            height={30}
-                            width={30}
-                            fill="white"
-                          />
-                        </View>
-                      </TouchableCmp>
-                    )}
-                  </View>
-                )}
-              </View>
-            </View>
-          </ImageBackground>
+          />
         </View>
       </TouchableWithoutFeedback>
       {links.length <= 1 ? (
@@ -428,6 +496,21 @@ const styles = StyleSheet.create({
   },
   clapContainer: {
     marginRight: 15,
+  },
+  titleContainer: {
+    alignItems: "center",
+    flexDirection: "row",
+    padding: 10,
+  },
+  titleTextContainer: {
+    flex: 1,
+    marginLeft: 5,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  balance: {
+    width: 24,
+    height: "100%",
   },
 });
 
