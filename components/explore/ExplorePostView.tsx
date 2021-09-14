@@ -3,7 +3,6 @@ import {
   Animated,
   Dimensions,
   ImageBackground,
-  LogBox,
   Platform,
   StyleSheet,
   Text,
@@ -12,6 +11,7 @@ import {
   TouchableWithoutFeedback,
   ActivityIndicator,
   View,
+  Image,
 } from "react-native";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import Cheerfill from "../../assets/Icons/clap-fill.svg";
@@ -24,6 +24,7 @@ import {
   uncheerPost,
 } from "../../store/actions/user/user";
 import { AnimatedGradient } from "../custom/AnimatedGradient/AnimatedGradient";
+import useDidMountEffect from "../../helper/useDidMountEffect";
 import toDateTime from "../../helper/toDateTime";
 import LinksList from "../UI/LinksList";
 
@@ -34,6 +35,7 @@ const ExplorePostView = (props) => {
   const [showClapping, setShowClapping] = useState(false);
   const [clap, setClap] = useState(false);
   const [imageIsLoading, setImageIsLoading] = useState(true);
+  const [profileImageIsLoading, setProfileImageIsLoading] = useState(true);
   const [greyColorValues, setGreyColorValues] = useState([
     "rgba(50,50,50,1)",
     "rgba(0,0,0,1)",
@@ -44,9 +46,12 @@ const ExplorePostView = (props) => {
   const ExhibitUId = useAppSelector((state) => state.user.ExhibitUId);
   const posterExhibitUId = props.posterExhibitUId;
   const currentUsersPost = ExhibitUId === posterExhibitUId ? true : false;
-  const links = Object.values(props.links);
+  const links = props.links ? Object.values(props.links) : {};
   const postId = props.postId;
   const exhibitId = props.exhibitId;
+  const fullname = props.fullname;
+  const jobTitle = props.jobTitle;
+  const username = props.username;
   const postDateCreated = toDateTime(props.postDateCreated);
 
   const fadeAnim = useRef(new Animated.Value(0)).current;
@@ -63,11 +68,17 @@ const ExplorePostView = (props) => {
     TouchableCmp = TouchableNativeFeedback;
   }
 
-  useEffect(() => {
+  useDidMountEffect(() => {
     if (cheeredPosts.includes(postId)) {
       setClap(true);
+    } else {
+      setClap(false);
     }
   }, [cheeredPosts]);
+
+  useDidMountEffect(() => {
+    setGreyColorValues(["rgba(50,50,50,1)", "rgba(0,0,0,1)"]);
+  }, [imageIsLoading, profileImageIsLoading]);
 
   const slideUp = () => {
     Animated.timing(slideAnim, {
@@ -164,6 +175,145 @@ const ExplorePostView = (props) => {
         }}
       >
         <View>
+          <View style={{ flexDirection: "row", ...props.nameContainer }}>
+            <View
+              style={{
+                flex: 1,
+                marginVertical: 5,
+              }}
+            >
+              <TouchableCmp onPress={props.onSelectProfile}>
+                <View
+                  style={{
+                    marginLeft: 10,
+                    flexDirection: "row",
+                  }}
+                >
+                  <View
+                    style={{
+                      height: 50,
+                      width: 50,
+                      borderRadius: 50 / 2,
+                    }}
+                  >
+                    {profileImageIsLoading ? (
+                      <AnimatedGradient
+                        style={{
+                          borderWidth: 1,
+                          borderColor: "white",
+                          position: "absolute",
+                          zIndex: 3,
+                          height: 50,
+                          width: 50,
+                          borderRadius: 50 / 2,
+                        }}
+                        colors={greyColorValues}
+                        start={{ x: 0, y: 0 }}
+                        end={{ x: 1, y: 0 }}
+                      />
+                    ) : null}
+                    <Image
+                      style={{
+                        borderWidth: 1,
+                        borderColor: "white",
+                        height: 50,
+                        width: 50,
+                        borderRadius: 50 / 2,
+                        ...props.profileImageStyle,
+                      }}
+                      source={
+                        props.profileImageSource
+                          ? { uri: props.profileImageSource }
+                          : require("../../assets/default-profile-icon.jpg")
+                      }
+                      onLoadEnd={() => {
+                        setProfileImageIsLoading(false);
+                      }}
+                    />
+                  </View>
+                  <View
+                    style={{
+                      flexDirection: "column",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <Text
+                      style={{
+                        color: "white",
+                        fontWeight: "700",
+                        marginLeft: 5,
+                        fontSize: 12,
+                      }}
+                    >
+                      {fullname}
+                    </Text>
+                    <Text
+                      style={{
+                        color: "white",
+                        fontWeight: "500",
+                        fontSize: 12,
+                        marginLeft: 5,
+                      }}
+                    >
+                      {jobTitle}
+                    </Text>
+                    <Text
+                      style={{
+                        color: "grey",
+                        fontSize: 11,
+                        marginLeft: 5,
+                      }}
+                    >
+                      {username}
+                    </Text>
+                  </View>
+                </View>
+              </TouchableCmp>
+            </View>
+            <View style={{ justifyContent: "center" }}>
+              {loadingCheer ? (
+                <ActivityIndicator
+                  size="small"
+                  color="white"
+                  style={{ marginRight: 10 }}
+                />
+              ) : (
+                <View>
+                  {!cheeredPosts.includes(postId) ? (
+                    <TouchableCmp onPress={unCheer}>
+                      <View>
+                        <Cheer
+                          style={{
+                            ...styles.clapContainer,
+                            ...props.clapContainer,
+                            flex: 1,
+                          }}
+                          height={28}
+                          width={28}
+                          fill="white"
+                        />
+                      </View>
+                    </TouchableCmp>
+                  ) : (
+                    <TouchableCmp onPress={unCheer}>
+                      <View>
+                        <Cheerfill
+                          style={{
+                            ...styles.clapContainer,
+                            ...props.clapContainer,
+                            flex: 1,
+                          }}
+                          height={28}
+                          width={28}
+                          fill="white"
+                        />
+                      </View>
+                    </TouchableCmp>
+                  )}
+                </View>
+              )}
+            </View>
+          </View>
           {imageIsLoading ? (
             <AnimatedGradient
               style={{
@@ -183,6 +333,9 @@ const ExplorePostView = (props) => {
               width: photoWidth,
             }}
             source={props.image}
+            onLoadEnd={() => {
+              setImageIsLoading(false);
+            }}
           >
             {showClapping ? (
               <Animated.View
