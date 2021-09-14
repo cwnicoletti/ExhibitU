@@ -94,6 +94,9 @@ const ShowcasePictureScreen = (props) => {
             ? userData.profilePictureBase64
             : userData.profilePictureUrl
         }
+        fullname={userData.fullname}
+        username={userData.username}
+        jobTitle={userData.jobTitle}
         numberOfCheers={numberOfCheers}
         numberOfComments={numberOfComments}
         links={postLinks}

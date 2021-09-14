@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Dimensions,
   ImageBackground,
@@ -9,16 +9,28 @@ import {
   TouchableOpacity,
   TouchableWithoutFeedback,
   View,
+  Image,
+  ActivityIndicator,
 } from "react-native";
 import { useAppSelector } from "../../hooks";
+import { AnimatedGradient } from "../custom/AnimatedGradient/AnimatedGradient";
+import useDidMountEffect from "../../helper/useDidMountEffect";
 import toDateTime from "../../helper/toDateTime";
 import TimeStamp from "../UI/TimeStamp";
 import LinksList from "../UI/LinksList";
 
 const ExhibitUPostView = (props) => {
+  const [profileImageIsLoading, setProfileImageIsLoading] = useState(true);
+  const [greyColorValues, setGreyColorValues] = useState([
+    "rgba(50,50,50,1)",
+    "rgba(0,0,0,1)",
+  ]);
   const showCheering = useAppSelector((state) => state.user.showCheering);
   const links = Object.values(props.links);
   const postDateCreated = toDateTime(props.postDateCreated);
+  const fullname = props.fullname;
+  const username = props.username;
+  const jobTitle = props.jobTitle;
 
   // Post background-picture width, height
   const photoWidth = Dimensions.get("window").width;
@@ -31,10 +43,108 @@ const ExhibitUPostView = (props) => {
     TouchableCmp = TouchableNativeFeedback;
   }
 
+  useDidMountEffect(() => {
+    setGreyColorValues(["rgba(50,50,50,1)", "rgba(0,0,0,1)"]);
+  }, [profileImageIsLoading]);
+
   return (
     <View style={{ ...styles.exhibit, ...props.exhibitContainer }}>
       <TouchableWithoutFeedback>
         <View>
+          <View style={{ flexDirection: "row", ...props.nameContainer }}>
+            <View
+              style={{
+                flex: 1,
+                marginVertical: 5,
+              }}
+            >
+              <View
+                style={{
+                  marginLeft: 10,
+                  flexDirection: "row",
+                }}
+              >
+                <View
+                  style={{
+                    height: 50,
+                    width: 50,
+                    borderRadius: 50 / 2,
+                  }}
+                >
+                  {profileImageIsLoading ? (
+                    <AnimatedGradient
+                      style={{
+                        borderWidth: 1,
+                        borderColor: "white",
+                        position: "absolute",
+                        zIndex: 3,
+                        height: 50,
+                        width: 50,
+                        borderRadius: 50 / 2,
+                      }}
+                      colors={greyColorValues}
+                      start={{ x: 0, y: 0 }}
+                      end={{ x: 1, y: 0 }}
+                    />
+                  ) : null}
+                  <Image
+                    style={{
+                      borderWidth: 1,
+                      borderColor: "white",
+                      height: 50,
+                      width: 50,
+                      borderRadius: 50 / 2,
+                      ...props.profileImageStyle,
+                    }}
+                    source={
+                      props.profileImageSource
+                        ? { uri: props.profileImageSource }
+                        : require("../../assets/default-profile-icon.jpg")
+                    }
+                    onLoadEnd={() => {
+                      setProfileImageIsLoading(false);
+                    }}
+                  />
+                </View>
+                <View
+                  style={{
+                    flexDirection: "column",
+                    justifyContent: "center",
+                  }}
+                >
+                  <Text
+                    style={{
+                      color: "white",
+                      fontWeight: "700",
+                      marginLeft: 5,
+                      fontSize: 12,
+                    }}
+                  >
+                    {fullname}
+                  </Text>
+                  <Text
+                    style={{
+                      color: "white",
+                      fontWeight: "500",
+                      fontSize: 12,
+                      marginLeft: 5,
+                    }}
+                  >
+                    {jobTitle}
+                  </Text>
+                  <Text
+                    style={{
+                      color: "grey",
+                      fontSize: 11,
+                      marginLeft: 5,
+                    }}
+                  >
+                    {username}
+                  </Text>
+                </View>
+              </View>
+            </View>
+          </View>
           <ImageBackground
             style={{
               height: photoHeight,
@@ -45,7 +155,7 @@ const ExhibitUPostView = (props) => {
                 ? { uri: props.image }
                 : require("../../assets/default-post-icon.png")
             }
-          ></ImageBackground>
+          />
         </View>
       </TouchableWithoutFeedback>
       {links.length <= 1 ? (
