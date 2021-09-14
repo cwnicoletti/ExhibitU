@@ -168,7 +168,7 @@ const FeedItem = (props) => {
   };
 
   return (
-    <View style={{ ...props.exhibitContainer }}>
+    <View style={{ ...styles.exhibitContainer, ...props.exhibitContainer }}>
       <TouchableWithoutFeedback
         onPress={() => {
           if (!processingWholeCheer) {
@@ -194,13 +194,13 @@ const FeedItem = (props) => {
             <View
               style={{
                 flex: 1,
-                marginVertical: 10,
+                marginVertical: 5,
               }}
             >
               <TouchableCmp onPress={props.onSelectProfile}>
                 <View
                   style={{
-                    marginLeft: 15,
+                    marginLeft: 10,
                     flexDirection: "row",
                   }}
                 >
@@ -246,13 +246,18 @@ const FeedItem = (props) => {
                       }}
                     />
                   </View>
-                  <View style={{ flexDirection: "column" }}>
+                  <View
+                    style={{
+                      flexDirection: "column",
+                      justifyContent: "center",
+                    }}
+                  >
                     <Text
                       style={{
                         color: "white",
                         fontWeight: "700",
                         marginLeft: 5,
-                        fontSize: 13,
+                        fontSize: 12,
                       }}
                     >
                       {fullname}
@@ -261,7 +266,7 @@ const FeedItem = (props) => {
                       style={{
                         color: "white",
                         fontWeight: "500",
-                        fontSize: 13,
+                        fontSize: 12,
                         marginLeft: 5,
                       }}
                     >
@@ -270,7 +275,7 @@ const FeedItem = (props) => {
                     <Text
                       style={{
                         color: "grey",
-                        fontSize: 12,
+                        fontSize: 11,
                         marginLeft: 5,
                       }}
                     >
@@ -512,6 +517,9 @@ const FeedItem = (props) => {
 };
 
 const styles = StyleSheet.create({
+  exhibitContainer: {
+    marginBottom: 5,
+  },
   title: {
     fontSize: 14,
     fontWeight: "bold",
