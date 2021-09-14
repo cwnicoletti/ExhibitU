@@ -20,7 +20,6 @@ const FeedScreen = (props) => {
   const dispatch = useAppDispatch();
   const styleTypes = ["dark-content", "light-content"];
   const [isRefreshing, setIsRefreshing] = useState(false);
-  const [emptyFeed, setEmptyFeed] = useState(false);
   // const [expoPushToken, setExpoPushToken] = useState("");
   // const [notification, setNotification] = useState(false);
   // const notificationListener = useRef();
@@ -167,8 +166,6 @@ const FeedScreen = (props) => {
     setIsRefreshing(false);
   };
 
-  // TODO: Implement with notifications
-  //
   // useEffect(() => {
   //   const registerForPushNotificationsAsync = async () => {
   //     let token;
@@ -204,16 +201,7 @@ const FeedScreen = (props) => {
   //       setExpoPushToken("");
   //     }
   //   });
-
   // }, []);
-
-  useEffect(() => {
-    if (Object.values(userFeed).length === 0) {
-      setEmptyFeed(true);
-    } else {
-      setEmptyFeed(false);
-    }
-  }, [userFeed]);
 
   useDidMountEffect(() => {
     // Sort the array based on the second element
@@ -235,7 +223,7 @@ const FeedScreen = (props) => {
   const topHeader = () => {
     return (
       <View>
-        {emptyFeed ? (
+        {Object.values(userFeed).length === 0 ? (
           <View style={{ alignItems: "center" }}>
             <Text style={{ color: "grey", margin: 10, marginTop: 20 }}>
               No posts to show!
@@ -301,6 +289,8 @@ const FeedScreen = (props) => {
             posterExhibitUId={itemData.item.ExhibitUId}
             links={itemData.item.postLinks}
             fullname={itemData.item.fullname}
+            username={itemData.item.username}
+            jobTitle={itemData.item.jobTitle}
             postDateCreated={itemData.item.postDateCreated._seconds}
             nameStyle={{
               color: darkModeValue ? "white" : "black",
@@ -315,6 +305,9 @@ const FeedScreen = (props) => {
               color: darkModeValue ? "white" : "black",
             }}
             threeDotsStyle={darkModeValue ? "white" : "black"}
+            nameContainer={{
+              backgroundColor: darkModeValue ? "#121212" : "white",
+            }}
             captionContainer={{
               backgroundColor: darkModeValue ? "#121212" : "white",
             }}
