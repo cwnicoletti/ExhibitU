@@ -106,6 +106,9 @@ const PictureScreen = (props) => {
         links={links}
         postId={postId}
         exhibitId={exhibitId}
+        fullname={fullname}
+        jobTitle={jobTitle}
+        username={username}
         postDateCreated={postDateCreated}
         nameStyle={{
           color: darkModeValue ? "white" : "black",
