@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { StyleSheet, View, FlatList, RefreshControl } from "react-native";
 import { useAppSelector, useAppDispatch } from "../../hooks";
-import { offScreen } from "../../store/actions/user/user";
+import { offScreen, refreshNotifications } from "../../store/actions/user/user";
 
 import NotificationCard from "../../components/notifications/NotificationCard";
 import useDidMountEffect from "../../helper/useDidMountEffect";
@@ -11,6 +11,7 @@ const ExploreScreen = (props) => {
   const dispatch = useAppDispatch();
   const [isRefreshing, setIsRefreshing] = useState(false);
   const darkModeValue = useAppSelector((state) => state.user.darkMode);
+  const localId = useAppSelector((state) => state.auth.userId);
   const resetScrollNotifications = useAppSelector(
     (state) => state.user.resetScrollNotifications
   );
@@ -20,9 +21,10 @@ const ExploreScreen = (props) => {
     props.navigation.setParams({ darkMode: darkModeValue });
   }, [darkModeValue]);
 
-  const refreshNotifications = () => {
-    setIsRefreshing(true);
-    setIsRefreshing(false);
+  const refreshNotificationPage = async () => {
+    await setIsRefreshing(true);
+    await dispatch(refreshNotifications(localId));
+    await setIsRefreshing(false);
   };
 
   const viewProfileHandler = (
@@ -89,16 +91,16 @@ const ExploreScreen = (props) => {
       }}
     >
       <FlatList
-        data={Object.values(notifications)}
+        data={notifications}
         refreshControl={
           <RefreshControl
             refreshing={isRefreshing}
-            onRefresh={() => refreshNotifications()}
+            onRefresh={() => refreshNotificationPage()}
             tintColor={darkModeValue ? "white" : "black"}
           />
         }
         ref={flatlistNotifications}
-        keyExtractor={(item) => item.objectID}
+        keyExtractor={(item) => item.notificationId}
         renderItem={(itemData) => (
           <NotificationCard
             image={itemData.item.profilePictureUrl}
