@@ -2,6 +2,8 @@ import React, { useEffect, useState, useRef } from "react";
 import { StyleSheet, View, FlatList, RefreshControl } from "react-native";
 import { useAppSelector, useAppDispatch } from "../../hooks";
 import { offScreen, refreshNotifications } from "../../store/actions/user/user";
+import getNotificationPermissions from "../../helper/getNotificationPermissions";
+import { setToken } from "../../store/actions/user/user";
 
 import NotificationCard from "../../components/notifications/NotificationCard";
 import useDidMountEffect from "../../helper/useDidMountEffect";
@@ -17,7 +19,16 @@ const ExploreScreen = (props) => {
   );
   const notifications = useAppSelector((state) => state.user.notifications);
 
+  const uploadToken = async () => {
+    const tokenValue = await getNotificationPermissions();
+
+    if (tokenValue !== false) {
+      dispatch(setToken(localId, tokenValue));
+    }
+  };
+
   useEffect(() => {
+    uploadToken();
     props.navigation.setParams({ darkMode: darkModeValue });
   }, [darkModeValue]);
 
