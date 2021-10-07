@@ -2,6 +2,7 @@ import { Platform, Alert, Linking } from "react-native";
 import * as Notifications from "expo-notifications";
 
 const getNotificationPermissions = async () => {
+  let token;
   if (Platform.OS === "ios") {
     const { status: existingStatus } =
       await Notifications.getPermissionsAsync();
@@ -37,7 +38,8 @@ const getNotificationPermissions = async () => {
       );
       return false;
     } else {
-      return true;
+      token = (await Notifications.getExpoPushTokenAsync()).data;
+      return token;
     }
   } else if (Platform.OS === "android") {
     Notifications.setNotificationChannelAsync("default", {
