@@ -23,6 +23,7 @@ import {
   cheerPost,
   uncheerOwnFeedPost,
   uncheerPost,
+  sendNotification,
 } from "../../store/actions/user/user";
 import { AnimatedGradient } from "../custom/AnimatedGradient/AnimatedGradient";
 import toDateTime from "../../helper/toDateTime";
@@ -140,6 +141,18 @@ const FeedItem = (props) => {
 
       if (!cheeredPosts.includes(postId)) {
         await setLoadingCheer(true);
+        dispatch(
+          sendNotification(
+            username,
+            ExhibitUId,
+            exhibitId,
+            postId,
+            posterExhibitUId,
+            props.profileImageSource,
+            props.image,
+            "cheer"
+          )
+        );
         await dispatch(
           cheerPost(localId, ExhibitUId, exhibitId, postId, posterExhibitUId)
         );
@@ -214,8 +227,6 @@ const FeedItem = (props) => {
                     {profileImageIsLoading ? (
                       <AnimatedGradient
                         style={{
-                          borderWidth: 1,
-                          borderColor: "white",
                           position: "absolute",
                           zIndex: 3,
                           height: 45,
@@ -229,8 +240,6 @@ const FeedItem = (props) => {
                     ) : null}
                     <Image
                       style={{
-                        borderWidth: 1,
-                        borderColor: "white",
                         height: 45,
                         width: 45,
                         borderRadius: 45 / 2,
