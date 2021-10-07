@@ -1563,6 +1563,20 @@ export const sendNotification = (
   };
 };
 
+export const setToken = (localId: string, token: any) => {
+  return async () => {
+    const tokenForm = {
+      localId,
+      token,
+    };
+
+    axios.post(
+      "https://us-central1-showcase-79c28.cloudfunctions.net/setToken",
+      tokenForm
+    );
+  };
+};
+
 export const changeProfileNumberOfColumns = (
   localId: string,
   ExhibitUId: string,
