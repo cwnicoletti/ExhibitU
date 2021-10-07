@@ -27,6 +27,7 @@ import {
   OFF_SCREEN,
   ON_SCREEN,
   REFRESH_PROFILE,
+  REFRESH_NOTIFICATIONS,
   REMOVE_USER_POST,
   REMOVE_USER_PROJECT,
   RESET_SCROLL,
@@ -47,6 +48,111 @@ import {
   SET_TUTORIALING_PROMPT,
   UserState,
 } from "./types";
+
+export const getUserData = () => {
+  return async (dispatch) => {
+    const userData = await AsyncStorage.getItem("userDocData");
+    const transformedData = JSON.parse(userData);
+
+    let followers = [];
+    let following = [];
+    let advocates = [];
+    let advocating = [];
+    let exhibitsAdvocating = [];
+    let cheeredPosts = [];
+    let profileExhibits = {};
+    let profileLinks = {};
+    let userFeed = {};
+    let updates = {};
+    let notifications = [];
+
+    if (transformedData.followers) {
+      followers = transformedData.followers;
+    }
+    if (transformedData.following) {
+      following = transformedData.following;
+    }
+    if (transformedData.advocates) {
+      advocates = transformedData.advocates;
+    }
+    if (transformedData.advocating) {
+      advocating = transformedData.advocating;
+    }
+    if (transformedData.exhibitsAdvocating) {
+      exhibitsAdvocating = transformedData.exhibitsAdvocating;
+    }
+    if (transformedData.cheeredPosts) {
+      cheeredPosts = transformedData.cheeredPosts;
+    }
+    if (transformedData.profileExhibits) {
+      profileExhibits = transformedData.profileExhibits;
+    }
+    if (transformedData.profileLinks) {
+      profileLinks = transformedData.profileLinks;
+    }
+    if (transformedData.userFeed) {
+      userFeed = transformedData.userFeed;
+    }
+    if (transformedData.updates) {
+      updates = transformedData.updates;
+    }
+    if (transformedData.notifications) {
+      notifications = transformedData.notifications;
+    }
+
+    await dispatch({
+      type: GET_USER_DATA,
+      ExhibitUId: transformedData.ExhibitUId,
+      email: transformedData.email,
+      profilePictureId: transformedData.profilePictureId,
+      profilePictureUrl: transformedData.profilePictureUrl,
+      profilePictureBase64: transformedData.profilePictureBase64,
+      exhibitTempCoverPhotoId: transformedData.exhibitTempCoverPhotoId,
+      exhibitTempCoverPhotoUrl: transformedData.exhibitTempCoverPhotoUrl,
+      exhibitTempCoverPhotoBase64: transformedData.exhibitTempCoverPhotoBase64,
+      tempPhotoPostId: transformedData.tempPhotoPostId,
+      tempPhotoPostUrl: transformedData.tempPhotoPostUrl,
+      tempPhotoPostBase64: transformedData.tempPhotoPostBase64,
+      fullname: transformedData.fullname,
+      jobTitle: transformedData.jobTitle,
+      username: transformedData.username,
+      profileBiography: transformedData.profileBiography,
+      numberOfFollowers: transformedData.numberOfFollowers,
+      numberOfFollowing: transformedData.numberOfFollowing,
+      numberOfAdvocates: transformedData.numberOfAdvocates,
+      numberOfAdvocating: transformedData.numberOfAdvocating,
+      profileColumns: transformedData.profileColumns,
+      darkMode: transformedData.darkMode,
+      showCheering: transformedData.showCheering,
+      hideFollowing: transformedData.hideFollowing,
+      hideFollowers: transformedData.hideFollowers,
+      hideAdvocates: transformedData.hideAdvocates,
+      tutorialing: transformedData.tutorialing,
+      tutorialPrompt: transformedData.tutorialPrompt,
+      tutorialScreen: transformedData.tutorialScreen,
+      followers,
+      following,
+      advocates,
+      advocating,
+      exhibitsAdvocating,
+      cheeredPosts,
+      profileExhibits,
+      profileLinks,
+      userFeed,
+      updates,
+      notifications,
+    });
+
+    await dispatch({
+      type: GET_SWITCHES,
+      darkMode: transformedData.darkMode,
+      showCheering: transformedData.showCheering,
+      hideFollowing: transformedData.hideFollowing,
+      hideFollowers: transformedData.hideFollowers,
+      hideAdvocates: transformedData.hideAdvocates,
+    });
+  };
+};
 
 export const refreshProfile = (localId: string) => {
   return async (dispatch) => {
@@ -141,107 +247,30 @@ export const refreshProfile = (localId: string) => {
   };
 };
 
-export const getUserData = () => {
+export const refreshNotifications = (localId: string) => {
   return async (dispatch) => {
-    const userData = await AsyncStorage.getItem("userDocData");
-    const transformedData = JSON.parse(userData);
+    const downloadForm = { localId };
 
-    let followers = [];
-    let following = [];
-    let advocates = [];
-    let advocating = [];
-    let exhibitsAdvocating = [];
-    let cheeredPosts = [];
-    let profileExhibits = {};
-    let profileLinks = {};
-    let userFeed = {};
-    let updates = {};
-    let notifications = {};
+    const profileInfo = await axios.post(
+      "https://us-central1-showcase-79c28.cloudfunctions.net/refreshNotifications",
+      downloadForm
+    );
 
-    if (transformedData.followers) {
-      followers = transformedData.followers;
-    }
-    if (transformedData.following) {
-      following = transformedData.following;
-    }
-    if (transformedData.advocates) {
-      advocates = transformedData.advocates;
-    }
-    if (transformedData.advocating) {
-      advocating = transformedData.advocating;
-    }
-    if (transformedData.exhibitsAdvocating) {
-      exhibitsAdvocating = transformedData.exhibitsAdvocating;
-    }
-    if (transformedData.cheeredPosts) {
-      cheeredPosts = transformedData.cheeredPosts;
-    }
-    if (transformedData.profileExhibits) {
-      profileExhibits = transformedData.profileExhibits;
-    }
-    if (transformedData.profileLinks) {
-      profileLinks = transformedData.profileLinks;
-    }
-    if (transformedData.userFeed) {
-      userFeed = transformedData.userFeed;
-    }
-    if (transformedData.updates) {
-      updates = transformedData.updates;
-    }
-    if (transformedData.notifications) {
-      notifications = transformedData.notifications;
+    let notifications = [];
+
+    if (profileInfo.data.data.notifications) {
+      notifications = profileInfo.data.data.notifications;
     }
 
-    await dispatch({
-      type: GET_USER_DATA,
-      ExhibitUId: transformedData.ExhibitUId,
-      email: transformedData.email,
-      profilePictureId: transformedData.profilePictureId,
-      profilePictureUrl: transformedData.profilePictureUrl,
-      profilePictureBase64: transformedData.profilePictureBase64,
-      exhibitTempCoverPhotoId: transformedData.exhibitTempCoverPhotoId,
-      exhibitTempCoverPhotoUrl: transformedData.exhibitTempCoverPhotoUrl,
-      exhibitTempCoverPhotoBase64: transformedData.exhibitTempCoverPhotoBase64,
-      tempPhotoPostId: transformedData.tempPhotoPostId,
-      tempPhotoPostUrl: transformedData.tempPhotoPostUrl,
-      tempPhotoPostBase64: transformedData.tempPhotoPostBase64,
-      fullname: transformedData.fullname,
-      jobTitle: transformedData.jobTitle,
-      username: transformedData.username,
-      profileBiography: transformedData.profileBiography,
-      numberOfFollowers: transformedData.numberOfFollowers,
-      numberOfFollowing: transformedData.numberOfFollowing,
-      numberOfAdvocates: transformedData.numberOfAdvocates,
-      numberOfAdvocating: transformedData.numberOfAdvocating,
-      profileColumns: transformedData.profileColumns,
-      darkMode: transformedData.darkMode,
-      showCheering: transformedData.showCheering,
-      hideFollowing: transformedData.hideFollowing,
-      hideFollowers: transformedData.hideFollowers,
-      hideAdvocates: transformedData.hideAdvocates,
-      tutorialing: transformedData.tutorialing,
-      tutorialPrompt: transformedData.tutorialPrompt,
-      tutorialScreen: transformedData.tutorialScreen,
-      followers,
-      following,
-      advocates,
-      advocating,
-      exhibitsAdvocating,
-      cheeredPosts,
-      profileExhibits,
-      profileLinks,
-      userFeed,
-      updates,
-      notifications,
+    await AsyncStorage.getItem("userDocData").then(async (data) => {
+      let parsedData: UserState = JSON.parse(data);
+      parsedData.notifications = profileInfo.data.data.notifications;
+      await AsyncStorage.setItem("userDocData", JSON.stringify(parsedData));
     });
 
     await dispatch({
-      type: GET_SWITCHES,
-      darkMode: transformedData.darkMode,
-      showCheering: transformedData.showCheering,
-      hideFollowing: transformedData.hideFollowing,
-      hideFollowers: transformedData.hideFollowers,
-      hideAdvocates: transformedData.hideAdvocates,
+      type: REFRESH_NOTIFICATIONS,
+      notifications: profileInfo.data.data.notifications,
     });
   };
 };
@@ -1502,6 +1531,35 @@ export const uncheerOwnProfilePost = (
     });
 
     await dispatch({ type: UNCHEER_UPDATE_POSTS, exhibitId, postId });
+  };
+};
+
+export const sendNotification = (
+  username: string,
+  ExhibitUId: string,
+  exhibitId: string,
+  postId: string,
+  posterExhibitUId: string,
+  profilePictureUrl: string,
+  postImage: string,
+  notificationType: string
+) => {
+  return async () => {
+    const notificationForm = {
+      username,
+      ExhibitUId,
+      exhibitId,
+      postId,
+      posterExhibitUId,
+      notificationType,
+      profilePictureUrl,
+      postImage,
+    };
+
+    axios.post(
+      "https://us-central1-showcase-79c28.cloudfunctions.net/sendNotification",
+      notificationForm
+    );
   };
 };
 

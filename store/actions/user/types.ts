@@ -32,6 +32,7 @@ export const UNADVOCATE_FOR_USER = "UNADVOCATE_FOR_USER";
 
 export const UPDATE_USER_PROFILE = "UPDATE_USER_PROFILE";
 export const REFRESH_PROFILE = "REFRESH_PROFILE";
+export const REFRESH_NOTIFICATIONS = "REFRESH_NOTIFICATIONS";
 export const UPDATE_USER_PROJECT = "UPDATE_USER_PROJECT";
 
 export const CHANGE_PROFILE_PICTURE = "CHANGE_PROFILE_PICTURE";
@@ -81,7 +82,7 @@ export interface UserState {
   profileExhibits: object;
   profileLinks: object;
   userFeed: object;
-  notifications: object;
+  notifications: object[];
   darkMode: boolean;
   showCheering: boolean;
   hideFollowing: boolean;
@@ -118,6 +119,10 @@ interface ActionRefreshProfile {
   profileExhibits: object;
   profileLinks: object;
 }
+interface ActionRefreshNotifications {
+  type: typeof REFRESH_NOTIFICATIONS;
+  notifications: object[];
+}
 interface ActionGetUserData {
   type: typeof GET_USER_DATA;
   ExhibitUId: string;
@@ -146,6 +151,7 @@ interface ActionGetUserData {
   advocating: string[];
   exhibitsAdvocating: string[];
   cheeredPosts: string[];
+  notifications: object[];
   profileExhibits: object;
   profileLinks: object;
   userFeed: object;
@@ -407,6 +413,7 @@ interface ActionSetTutorialingPrompt {
 
 export type Action =
   | ActionRefreshProfile
+  | ActionRefreshNotifications
   | ActionGetUserData
   | ActionGetSwitches
   | ActionUpdateUserProfile
