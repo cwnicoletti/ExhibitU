@@ -25,6 +25,7 @@ import {
   OFF_SCREEN,
   ON_SCREEN,
   REFRESH_PROFILE,
+  REFRESH_NOTIFICATIONS,
   REMOVE_USER_POST,
   REMOVE_USER_PROJECT,
   RESET_SCROLL,
@@ -78,7 +79,7 @@ const intialState: UserState = {
   profileLinks: {},
   userFeed: {},
   updates: {},
-  notifications: {},
+  notifications: [],
   resetScrollFeed: false,
   resetScrollExplore: false,
   resetScrollProfile: false,
@@ -131,6 +132,7 @@ export default (state = intialState, action: Action) => {
         exhibitsAdvocating: action.exhibitsAdvocating,
         cheeredPosts: action.cheeredPosts,
         profileExhibits: action.profileExhibits,
+        notifications: action.notifications,
         profileLinks: action.profileLinks,
         userFeed: action.userFeed,
         updates: action.updates,
@@ -164,6 +166,11 @@ export default (state = intialState, action: Action) => {
         cheeredPosts: action.cheeredPosts,
         profileExhibits: action.profileExhibits,
         profileLinks: action.profileLinks,
+      };
+    case REFRESH_NOTIFICATIONS:
+      return {
+        ...state,
+        notifications: action.notifications,
       };
     case UPDATE_USER_PROFILE:
       return {
