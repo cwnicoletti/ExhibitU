@@ -19,6 +19,7 @@ const firebaseConfig = {
   authDomain: FirebaseConfig.authDomain,
   databaseURL: FirebaseConfig.databaseURL,
   storageBucket: FirebaseConfig.storageBucket,
+  projectId: FirebaseConfig.projectId,
 };
 
 if (firebase.apps.length === 0) {
@@ -28,7 +29,7 @@ if (firebase.apps.length === 0) {
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
     shouldShowAlert: true,
-    shouldPlaySound: false,
+    shouldPlaySound: true,
     shouldSetBadge: false,
   }),
 });
