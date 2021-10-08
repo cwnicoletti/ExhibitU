@@ -182,93 +182,87 @@ const ExplorePostView = (props) => {
                 marginVertical: 5,
               }}
             >
-              <TouchableCmp onPress={props.onSelectProfile}>
+              <View
+                style={{
+                  marginLeft: 10,
+                  flexDirection: "row",
+                }}
+              >
                 <View
                   style={{
-                    marginLeft: 10,
-                    flexDirection: "row",
+                    height: 50,
+                    width: 50,
+                    borderRadius: 50 / 2,
                   }}
                 >
-                  <View
-                    style={{
-                      height: 50,
-                      width: 50,
-                      borderRadius: 50 / 2,
-                    }}
-                  >
-                    {profileImageIsLoading ? (
-                      <AnimatedGradient
-                        style={{
-                          borderWidth: 1,
-                          borderColor: "white",
-                          position: "absolute",
-                          zIndex: 3,
-                          height: 50,
-                          width: 50,
-                          borderRadius: 50 / 2,
-                        }}
-                        colors={greyColorValues}
-                        start={{ x: 0, y: 0 }}
-                        end={{ x: 1, y: 0 }}
-                      />
-                    ) : null}
-                    <Image
+                  {profileImageIsLoading ? (
+                    <AnimatedGradient
                       style={{
-                        borderWidth: 1,
-                        borderColor: "white",
-                        height: 50,
-                        width: 50,
-                        borderRadius: 50 / 2,
-                        ...props.profileImageStyle,
+                        position: "absolute",
+                        zIndex: 3,
+                        height: 45,
+                        width: 45,
+                        borderRadius: 45 / 2,
                       }}
-                      source={
-                        props.profileImageSource
-                          ? { uri: props.profileImageSource }
-                          : require("../../assets/default-profile-icon.jpg")
-                      }
-                      onLoadEnd={() => {
-                        setProfileImageIsLoading(false);
-                      }}
+                      colors={greyColorValues}
+                      start={{ x: 0, y: 0 }}
+                      end={{ x: 1, y: 0 }}
                     />
-                  </View>
-                  <View
+                  ) : null}
+                  <Image
                     style={{
-                      flexDirection: "column",
-                      justifyContent: "center",
+                      height: 45,
+                      width: 45,
+                      borderRadius: 45 / 2,
+                      ...props.profileImageStyle,
+                    }}
+                    source={
+                      props.profileImageSource
+                        ? { uri: props.profileImageSource }
+                        : require("../../assets/default-profile-icon.jpg")
+                    }
+                    onLoadEnd={() => {
+                      setProfileImageIsLoading(false);
+                    }}
+                  />
+                </View>
+                <View
+                  style={{
+                    flexDirection: "column",
+                    justifyContent: "center",
+                  }}
+                >
+                  <Text
+                    style={{
+                      color: "white",
+                      fontWeight: "700",
+                      marginLeft: 5,
+                      fontSize: 11,
                     }}
                   >
-                    <Text
-                      style={{
-                        color: "white",
-                        fontWeight: "700",
-                        marginLeft: 5,
-                        fontSize: 12,
-                      }}
-                    >
-                      {fullname}
-                    </Text>
-                    <Text
-                      style={{
-                        color: "white",
-                        fontWeight: "500",
-                        fontSize: 12,
-                        marginLeft: 5,
-                      }}
-                    >
-                      {jobTitle}
-                    </Text>
-                    <Text
-                      style={{
-                        color: "grey",
-                        fontSize: 11,
-                        marginLeft: 5,
-                      }}
-                    >
-                      {username}
-                    </Text>
-                  </View>
+                    {fullname}
+                  </Text>
+                  <Text
+                    style={{
+                      color: "white",
+                      fontWeight: "500",
+                      fontSize: 11,
+                      marginLeft: 5,
+                    }}
+                  >
+                    {jobTitle}
+                  </Text>
+                  <Text
+                    style={{
+                      color: "grey",
+                      fontSize: 10,
+                      marginLeft: 5,
+                    }}
+                  >
+                    {username}
+                  </Text>
                 </View>
-              </TouchableCmp>
+              </View>
             </View>
             <View style={{ justifyContent: "center" }}>
               {loadingCheer ? (
@@ -371,62 +365,6 @@ const ExplorePostView = (props) => {
                 )}
               </Animated.View>
             ) : null}
-            <View
-              style={{
-                flex: 1,
-                justifyContent: "flex-end",
-                alignItems: "flex-end",
-              }}
-            >
-              <View
-                style={{
-                  flexDirection: "row",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  paddingBottom: 10,
-                }}
-              >
-                {loadingCheer ? (
-                  <ActivityIndicator
-                    size="small"
-                    color="white"
-                    style={{ marginRight: 20 }}
-                  />
-                ) : (
-                  <View>
-                    {!cheeredPosts.includes(postId) ? (
-                      <TouchableCmp onPress={unCheer}>
-                        <View>
-                          <Cheer
-                            style={{
-                              ...styles.clapContainer,
-                              ...props.clapContainer,
-                            }}
-                            height={30}
-                            width={30}
-                            fill="white"
-                          />
-                        </View>
-                      </TouchableCmp>
-                    ) : (
-                      <TouchableCmp onPress={unCheer}>
-                        <View>
-                          <Cheerfill
-                            style={{
-                              ...styles.clapContainer,
-                              ...props.clapContainer,
-                            }}
-                            height={30}
-                            width={30}
-                            fill="white"
-                          />
-                        </View>
-                      </TouchableCmp>
-                    )}
-                  </View>
-                )}
-              </View>
-            </View>
           </ImageBackground>
         </View>
       </TouchableWithoutFeedback>

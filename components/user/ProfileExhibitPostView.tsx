@@ -196,21 +196,19 @@ const ProfileExhibitPostView = (props) => {
               >
                 <View
                   style={{
-                    height: 50,
-                    width: 50,
-                    borderRadius: 50 / 2,
+                    height: 45,
+                    width: 45,
+                    borderRadius: 45 / 2,
                   }}
                 >
                   {profileImageIsLoading ? (
                     <AnimatedGradient
                       style={{
-                        borderWidth: 1,
-                        borderColor: "white",
                         position: "absolute",
                         zIndex: 3,
-                        height: 50,
-                        width: 50,
-                        borderRadius: 50 / 2,
+                        height: 45,
+                        width: 45,
+                        borderRadius: 45 / 2,
                       }}
                       colors={greyColorValues}
                       start={{ x: 0, y: 0 }}
@@ -219,11 +217,9 @@ const ProfileExhibitPostView = (props) => {
                   ) : null}
                   <Image
                     style={{
-                      borderWidth: 1,
-                      borderColor: "white",
-                      height: 50,
-                      width: 50,
-                      borderRadius: 50 / 2,
+                      height: 45,
+                      width: 45,
+                      borderRadius: 45 / 2,
                       ...props.profileImageStyle,
                     }}
                     source={
@@ -247,7 +243,7 @@ const ProfileExhibitPostView = (props) => {
                       color: "white",
                       fontWeight: "700",
                       marginLeft: 5,
-                      fontSize: 12,
+                      fontSize: 11,
                     }}
                   >
                     {fullname}
@@ -256,7 +252,7 @@ const ProfileExhibitPostView = (props) => {
                     style={{
                       color: "white",
                       fontWeight: "500",
-                      fontSize: 12,
+                      fontSize: 11,
                       marginLeft: 5,
                     }}
                   >
@@ -265,7 +261,7 @@ const ProfileExhibitPostView = (props) => {
                   <Text
                     style={{
                       color: "grey",
-                      fontSize: 11,
+                      fontSize: 10,
                       marginLeft: 5,
                     }}
                   >
