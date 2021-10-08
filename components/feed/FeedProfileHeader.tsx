@@ -28,7 +28,7 @@ const FeedProfileHeader = (props) => {
           advocatesOnPress={props.advocatesOnPress}
           numberOfFollowers={props.numberOfFollowers}
           numberOfFollowing={props.numberOfFollowing}
-          numberOfAdvocates={props.numberOfAdvocates}
+          numberOfExhibits={props.numberOfExhibits}
         />
         {props.description ? (
           <Text style={props.descriptionStyle}>{props.description}</Text>

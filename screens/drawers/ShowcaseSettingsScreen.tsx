@@ -83,22 +83,6 @@ const ShowcaseSettingsScreen = (props) => {
             dispatch(setHideFollowing(localId, ExhibitUId, newValue));
           }}
         />
-        <FilterSwitch
-          viewStyle={{
-            flexDirection: "row",
-            justifyContent: "space-between",
-            alignItems: "center",
-            margin: 10,
-          }}
-          labelStyle={{
-            color: darkModeValue ? "white" : "black",
-          }}
-          label="Hide advocates"
-          state={advocatesValue}
-          onChange={(newValue) => {
-            dispatch(setHideAdvocates(localId, ExhibitUId, newValue));
-          }}
-        />
       </ScrollView>
     </View>
   );

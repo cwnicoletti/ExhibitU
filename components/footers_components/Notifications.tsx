@@ -25,7 +25,6 @@ const Notifications = (props) => {
           } else {
             dispatch(onScreen("Notifications"));
           }
-          dispatch(refreshNotifications(localId));
           props.parentProps.navigation.navigate("Notifications");
         } else {
           dispatch(refreshNotifications(localId));

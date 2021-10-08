@@ -140,7 +140,7 @@ const ShowcaseProfileScreen = (props) => {
         advocatesValue={userData.hideAdvocates}
         numberOfFollowers={userData.numberOfFollowers}
         numberOfFollowing={userData.numberOfFollowing}
-        numberOfAdvocates={userData.numberOfAdvocates}
+        numberOfExhibits={Object.keys(userData.profileExhibits).length}
         descriptionStyle={{
           ...styles.profileDescriptionStyle,
           color: darkModeValue ? "white" : "black",

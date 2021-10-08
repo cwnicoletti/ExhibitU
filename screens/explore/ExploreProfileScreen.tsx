@@ -362,10 +362,9 @@ const ExploreProfileScreen = (props) => {
         description={exploredUserData.profileBiography}
         numberOfFollowers={exploredUserData.numberOfFollowers}
         numberOfFollowing={exploredUserData.numberOfFollowing}
-        numberOfAdvocates={exploredUserData.numberOfAdvocates}
+        numberOfExhibits={Object.keys(exploredUserData.profileExhibits).length}
         hideFollowing={exploredUserData.hideFollowing}
         hideFollowers={exploredUserData.hideFollowers}
-        hideAdvocates={exploredUserData.hideAdvocates}
         ExhibitUId={exploredUserData.exploredExhibitUId}
         links={exploredUserData.profileLinks}
         followersOnPress={() =>

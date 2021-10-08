@@ -12,13 +12,12 @@ const ProfileStats = (props) => {
   const darkModeValue = props.darkModeValue;
   const followersValue = props.followersValue;
   const followingValue = props.followingValue;
-  const advocatesValue = props.advocatesValue;
   const followersOnPress = props.followersOnPress;
   const followingOnPress = props.followingOnPress;
   const advocatesOnPress = props.advocatesOnPress;
   const numberOfFollowers = props.numberOfFollowers;
   const numberOfFollowing = props.numberOfFollowing;
-  const numberOfAdvocates = props.numberOfAdvocates;
+  const numberOfExhibits = props.numberOfExhibits;
 
   let TouchableCmp: any = TouchableOpacity;
   if (Platform.OS === "android") {
@@ -100,43 +99,40 @@ const ProfileStats = (props) => {
           </View>
         </TouchableCmp>
       ) : null}
-      {!advocatesValue ? (
-        <TouchableCmp
+      <View
+        style={{
+          flex: 1,
+          borderColor: darkModeValue ? "gray" : "#c9c9c9",
+          alignItems: "center",
+        }}
+      >
+        <View
           style={{
             flex: 1,
             borderColor: darkModeValue ? "gray" : "#c9c9c9",
             alignItems: "center",
           }}
-          onPress={advocatesOnPress}
         >
-          <View
+          <Text
             style={{
-              flex: 1,
-              borderColor: darkModeValue ? "gray" : "#c9c9c9",
-              alignItems: "center",
+              margin: 5,
+              color: darkModeValue ? "white" : "black",
+              fontWeight: "bold",
             }}
           >
-            <Text
-              style={{
-                margin: 5,
-                color: darkModeValue ? "white" : "black",
-                fontWeight: "bold",
-              }}
-            >
-              Advocates
-            </Text>
-            <Text
-              style={{
-                marginBottom: 5,
-                color: darkModeValue ? "white" : "black",
-                fontSize: 15,
-              }}
-            >
-              {numberOfAdvocates}
-            </Text>
-          </View>
-        </TouchableCmp>
-      ) : null}
+            Exhibits
+          </Text>
+          <Text
+            style={{
+              marginBottom: 5,
+              color: darkModeValue ? "white" : "black",
+              fontSize: 15,
+            }}
+          >
+            {numberOfExhibits}
+          </Text>
+        </View>
+      </View>
     </View>
   );
 };

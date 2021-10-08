@@ -19,7 +19,6 @@ const Profile = (props) => {
   const darkModeValue = useAppSelector((state) => state.user.darkMode);
   const followingValue = useAppSelector((state) => state.user.hideFollowing);
   const followersValue = useAppSelector((state) => state.user.hideFollowers);
-  const advocatesValue = useAppSelector((state) => state.user.hideAdvocates);
   const profileExhibits = useAppSelector((state) => state.user.profileExhibits);
 
   const userDataProfileHeader = {
@@ -46,13 +45,12 @@ const Profile = (props) => {
           darkModeValue={darkModeValue}
           followersValue={followersValue}
           followingValue={followingValue}
-          advocatesValue={advocatesValue}
           followersOnPress={props.followersOnPress}
           followingOnPress={props.followingOnPress}
           advocatesOnPress={props.advocatesOnPress}
           numberOfFollowers={userDataProfileHeader.numberOfFollowers}
           numberOfFollowing={userDataProfileHeader.numberOfFollowing}
-          numberOfAdvocates={userDataProfileHeader.numberOfAdvocates}
+          numberOfExhibits={Object.keys(profileExhibits).length}
         />
         {props.description ? (
           <Text style={props.descriptionStyle}>{props.description}</Text>

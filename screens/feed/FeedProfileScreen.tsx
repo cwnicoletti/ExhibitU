@@ -111,10 +111,9 @@ const FeedProfileScreen = (props) => {
         jobTitle={userData.jobTitle}
         numberOfFollowers={userData.numberOfFollowers}
         numberOfFollowing={userData.numberOfFollowing}
-        numberOfAdvocates={userData.numberOfAdvocates}
+        numberOfExhibits={Object.keys(userData.profileExhibits).length}
         hideFollowing={userData.hideFollowing}
         hideFollowers={userData.hideFollowers}
-        hideAdvocates={userData.hideAdvocates}
         links={userData.profileLinks}
         imgSource={
           userData.profilePictureBase64

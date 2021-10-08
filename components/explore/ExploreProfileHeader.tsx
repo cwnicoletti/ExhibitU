@@ -1,8 +1,6 @@
-import * as WebBrowser from "expo-web-browser";
 import React from "react";
-import { FlatList, StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import { useAppSelector } from "../../hooks";
-import LinkButton from "../UI/LinkButton";
 import LinksList from "../UI/LinksList";
 import ProfileStats from "../UI/ProfileStats";
 import ExploreUserTitle from "./ExploreUserTitle";
@@ -30,7 +28,7 @@ const ExploreProfileHeader = (props) => {
           advocatesOnPress={props.advocatesOnPress}
           numberOfFollowers={props.numberOfFollowers}
           numberOfFollowing={props.numberOfFollowing}
-          numberOfAdvocates={props.numberOfAdvocates}
+          numberOfExhibits={props.numberOfExhibits}
         />
         {props.description ? (
           <Text style={props.descriptionStyle}>{props.description}</Text>
