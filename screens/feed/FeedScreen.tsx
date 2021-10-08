@@ -12,7 +12,6 @@ import { useAppDispatch, useAppSelector } from "../../hooks";
 import FeedItem from "../../components/feed/FeedItem";
 import useDidMountEffect from "../../helper/useDidMountEffect";
 import TutorialFeedView from "../../components/tutorial/TutorialFeedView";
-// import * as Notifications from "expo-notifications";
 import { getUserFeed, offScreen } from "../../store/actions/user/user";
 import MainHeaderTitle from "../../components/UI/MainHeaderTitle";
 
@@ -20,10 +19,6 @@ const FeedScreen = (props) => {
   const dispatch = useAppDispatch();
   const styleTypes = ["dark-content", "light-content"];
   const [isRefreshing, setIsRefreshing] = useState(false);
-  // const [expoPushToken, setExpoPushToken] = useState("");
-  // const [notification, setNotification] = useState(false);
-  // const notificationListener = useRef();
-  // const responseListener = useRef();
   const darkModeValue = useAppSelector((state) => state.user.darkMode);
   const ExhibitUId = useAppSelector((state) => state.user.ExhibitUId);
   const localId = useAppSelector((state) => state.auth.userId);
@@ -165,43 +160,6 @@ const FeedScreen = (props) => {
     await dispatch(getUserFeed(localId, ExhibitUId));
     setIsRefreshing(false);
   };
-
-  // useEffect(() => {
-  //   const registerForPushNotificationsAsync = async () => {
-  //     let token;
-  //     const { status: existingStatus } =
-  //       await Notifications.getPermissionsAsync();
-  //     let finalStatus = existingStatus;
-  //     if (existingStatus !== "granted") {
-  //       const { status } = await Notifications.requestPermissionsAsync();
-  //       finalStatus = status;
-  //     }
-  //     if (finalStatus !== "granted") {
-  //       alert("Failed to get push token for push notification!");
-  //       return;
-  //     }
-  //     token = (await Notifications.getExpoPushTokenAsync()).data;
-
-  //     if (Platform.OS === "android") {
-  //       Notifications.setNotificationChannelAsync("default", {
-  //         name: "default",
-  //         importance: Notifications.AndroidImportance.MAX,
-  //         vibrationPattern: [0, 250, 250, 250],
-  //         lightColor: "#FF231F7C",
-  //       });
-  //     }
-
-  //     return token;
-  //   };
-
-  //   registerForPushNotificationsAsync().then((token) => {
-  //     if (token) {
-  //       setExpoPushToken(token);
-  //     } else {
-  //       setExpoPushToken("");
-  //     }
-  //   });
-  // }, []);
 
   useDidMountEffect(() => {
     // Sort the array based on the second element
