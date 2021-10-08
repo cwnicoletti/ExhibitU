@@ -104,7 +104,6 @@ const styles = StyleSheet.create({
   postImage: {
     height: 40,
     width: 40,
-    borderRadius: 40 / 2,
     overflow: "hidden",
   },
   username: {
