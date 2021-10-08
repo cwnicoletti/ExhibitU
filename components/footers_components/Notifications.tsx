@@ -1,12 +1,17 @@
 import React from "react";
 import { View, TouchableWithoutFeedback } from "react-native";
 import { Entypo } from "@expo/vector-icons";
-import { resetScroll, onScreen } from "../../store/actions/user/user";
+import {
+  resetScroll,
+  onScreen,
+  refreshNotifications,
+} from "../../store/actions/user/user";
 import { useAppSelector, useAppDispatch } from "../../hooks";
 
 const Notifications = (props) => {
   const dispatch = useAppDispatch();
-  
+  const localId = useAppSelector((state) => state.auth.userId);
+
   const onNotificationscreen = useAppSelector(
     (state) => state.user.onNotificationsScreen
   );
@@ -20,8 +25,10 @@ const Notifications = (props) => {
           } else {
             dispatch(onScreen("Notifications"));
           }
+          dispatch(refreshNotifications(localId));
           props.parentProps.navigation.navigate("Notifications");
         } else {
+          dispatch(refreshNotifications(localId));
           props.parentProps.navigation.navigate("Notifications");
         }
       }}
