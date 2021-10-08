@@ -16,7 +16,6 @@ const ExplorePictureScreen = (props) => {
   const fullname = props.navigation.getParam("fullname");
   const jobTitle = props.navigation.getParam("jobTitle");
   const username = props.navigation.getParam("username");
-  const profilePictureUrl = props.navigation.getParam("profilePictureUrl");
   const postPhotoUrl = props.navigation.getParam("postPhotoUrl");
   const [numberOfCheers, setNumberOfCheers] = useState(
     props.navigation.getParam("numberOfCheers")
@@ -98,7 +97,7 @@ const ExplorePictureScreen = (props) => {
         fullname={fullname}
         jobTitle={jobTitle}
         username={username}
-        profileImageSource={profilePictureUrl}
+        profileImageSource={exploredUserData.profilePictureUrl}
         numberOfCheers={numberOfCheers}
         numberOfComments={numberOfComments}
         links={links}
