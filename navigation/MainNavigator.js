@@ -54,6 +54,9 @@ import NotificationsScreen from "../screens/notifications/NotificationsScreen";
 import NotificationsProfileScreen from "../screens/notifications/NotificationsProfileScreen";
 import NotificationsExhibitScreen from "../screens/notifications/NotificationsExhibitScreen";
 import NotificationsPictureScreen from "../screens/notifications/NotificationsPictureScreen";
+import NotificationsFollowingScreen from "../screens/notifications/NotificationsFollowingScreen";
+import NotificationsFollowersScreen from "../screens/notifications/NotificationsFollowersScreen";
+import NotificationsCheeringScreen from "../screens/notifications/NotificationsCheeringScreen";
 
 import ProfileBottomTab from "../components/footers/ProfileBottomTab";
 import NotificationsBottomTab from "../components/footers/NotificationsBottomTab";
@@ -184,6 +187,9 @@ const NotificationNavigator = createStackNavigator({
   NotificationsProfile: NotificationsProfileScreen,
   ViewNotificationsProfileExhibit: NotificationsExhibitScreen,
   ViewNotificationsProfileExhibitPicture: NotificationsPictureScreen,
+  NotificationsFollowing: NotificationsFollowingScreen,
+  NotificationsFollowers: NotificationsFollowersScreen,
+  NotificationsCheering: NotificationsCheeringScreen,
 });
 
 const RightNotificationsDrawerNavigator = createDrawerNavigator(
