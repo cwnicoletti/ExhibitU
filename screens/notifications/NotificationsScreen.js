@@ -1,9 +1,11 @@
 import React, { useEffect, useState, useRef } from "react";
-import { StyleSheet, View, FlatList, RefreshControl } from "react-native";
+import { StyleSheet, Text, View, FlatList, RefreshControl } from "react-native";
 import { useAppSelector, useAppDispatch } from "../../hooks";
 import { offScreen, refreshNotifications } from "../../store/actions/user/user";
 import getNotificationPermissions from "../../helper/getNotificationPermissions";
 import { setToken } from "../../store/actions/user/user";
+
+import { AntDesign } from "@expo/vector-icons";
 
 import NotificationCard from "../../components/notifications/NotificationCard";
 import useDidMountEffect from "../../helper/useDidMountEffect";
@@ -94,6 +96,29 @@ const ExploreScreen = (props) => {
     flatlistNotifications.current.scrollToOffset({ animated: true, offset: 0 });
   }, [resetScrollNotifications]);
 
+  const topHeader = () => {
+    return (
+      <View>
+        {notifications.length === 0 ? (
+          <View style={{ alignItems: "center" }}>
+            <Text style={{ color: "grey", margin: 10, marginTop: 20 }}>
+              No notifications
+            </Text>
+            <AntDesign
+              name="exclamationcircle"
+              size={24}
+              color={"grey"}
+              style={{ margin: 10 }}
+            />
+            <Text style={{ color: "grey", margin: 10 }}>
+              When you get your first notification it'll appear here!
+            </Text>
+          </View>
+        ) : null}
+      </View>
+    );
+  };
+
   return (
     <View
       style={{
@@ -110,6 +135,7 @@ const ExploreScreen = (props) => {
             tintColor={darkModeValue ? "white" : "black"}
           />
         }
+        ListFooterComponent={topHeader()}
         ref={flatlistNotifications}
         keyExtractor={(item) => item.notificationId}
         renderItem={(itemData) => (
