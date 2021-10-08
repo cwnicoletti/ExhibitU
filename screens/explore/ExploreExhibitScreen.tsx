@@ -1,16 +1,8 @@
 import React, { useCallback, useEffect, useState } from "react";
-import {
-  ActivityIndicator,
-  FlatList,
-  Platform,
-  StyleSheet,
-  Text,
-  View,
-} from "react-native";
+import { FlatList, Platform, StyleSheet, View } from "react-native";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import ExploreExhibitHeader from "../../components/explore/ExploreExhibitHeader";
-import FontAwesomeHeaderButton from "../../components/UI/header_buttons/FontAwesomeHeaderButton";
 import IoniconsHeaderButton from "../../components/UI/header_buttons/IoniconsHeaderButton";
 import ExhibitPictures from "../../components/UI/ExhibitPictures";
 import MainHeaderTitle from "../../components/UI/MainHeaderTitle";
@@ -393,12 +385,6 @@ const ExploreExhibitScreen = (props) => {
 
 ExploreExhibitScreen.navigationOptions = (navData) => {
   const darkModeValue = navData.navigation.getParam("darkMode");
-  const ExhibitUId = navData.navigation.getParam("ExhibitUId");
-  const exploredExhibitUId = navData.navigation.getParam("exploredExhibitUId");
-  const isAdvocating = navData.navigation.getParam("isAdvocating");
-  const isLoading = navData.navigation.getParam("isLoading");
-  const advocateFn = navData.navigation.getParam("advocateFn");
-  const unadvocateFn = navData.navigation.getParam("unadvocateFn");
 
   return {
     headerTitle: () => (
@@ -422,59 +408,6 @@ ExploreExhibitScreen.navigationOptions = (navData) => {
           }}
         />
       </HeaderButtons>
-    ),
-    headerRight: () => (
-      <View>
-        {ExhibitUId !== exploredExhibitUId ? (
-          <View>
-            {!isAdvocating ? (
-              <View>
-                {!isLoading ? (
-                  <HeaderButtons
-                    HeaderButtonComponent={FontAwesomeHeaderButton}
-                  >
-                    <Item
-                      title="Advocate"
-                      iconName={"handshake-o"}
-                      color={darkModeValue ? "white" : "black"}
-                      onPress={advocateFn}
-                    />
-                  </HeaderButtons>
-                ) : (
-                  <View style={{ margin: 20 }}>
-                    <ActivityIndicator
-                      size="small"
-                      color={darkModeValue ? "white" : "black"}
-                    />
-                  </View>
-                )}
-              </View>
-            ) : (
-              <View>
-                {!isLoading ? (
-                  <HeaderButtons
-                    HeaderButtonComponent={FontAwesomeHeaderButton}
-                  >
-                    <Item
-                      title="Unadvocate"
-                      iconName={"handshake-o"}
-                      color={"red"}
-                      onPress={unadvocateFn}
-                    />
-                  </HeaderButtons>
-                ) : (
-                  <View style={{ margin: 20 }}>
-                    <ActivityIndicator
-                      size="small"
-                      color={darkModeValue ? "white" : "black"}
-                    />
-                  </View>
-                )}
-              </View>
-            )}
-          </View>
-        ) : null}
-      </View>
     ),
   };
 };
