@@ -20,7 +20,6 @@ import SignupScreen4 from "../screens/auth/SignupScreen4";
 import ShowcaseSettingsScreen from "../screens/drawers/ShowcaseSettingsScreen";
 import VoteUpdatesSettingsScreen from "../screens/drawers/VoteUpdatesSettingsScreen";
 
-import ExploreAdvocatesScreen from "../screens/explore/ExploreAdvocatesScreen";
 import ExploreCheeringScreen from "../screens/explore/ExploreCheeringScreen";
 import ExploreFollowersScreen from "../screens/explore/ExploreFollowersScreen";
 import ExploreFollowingScreen from "../screens/explore/ExploreFollowingScreen";
@@ -29,7 +28,6 @@ import ExploreProfileScreen from "../screens/explore/ExploreProfileScreen";
 import ExploreExhibitScreen from "../screens/explore/ExploreExhibitScreen";
 import ExploreScreen from "../screens/explore/ExploreScreen";
 
-import FeedAdvocatesScreen from "../screens/feed/FeedAdvocatesScreen";
 import FeedCheeringScreen from "../screens/feed/FeedCheeringScreen";
 import FeedPictureScreen from "../screens/feed/FeedPictureScreen";
 import FeedFollowersScreen from "../screens/feed/FeedFollowersScreen";
@@ -40,7 +38,6 @@ import FeedScreen from "../screens/feed/FeedScreen";
 
 import AddPictureScreen from "../screens/profile/AddPictureScreen";
 import AddExhibitScreen from "../screens/profile/AddExhibitScreen";
-import AdvocatesScreen from "../screens/profile/AdvocatesScreen";
 import CheeringScreen from "../screens/profile/CheeringScreen";
 import EditProfileScreen from "../screens/profile/EditProfileScreen";
 import EditExhibitScreen from "../screens/profile/EditExhibitScreen";
@@ -78,7 +75,6 @@ const FeedandViewNavigator = createStackNavigator({
   ViewProfile: FeedProfileScreen,
   ViewFollowers: FeedFollowersScreen,
   ViewFollowing: FeedFollowingScreen,
-  ViewAdvocates: FeedAdvocatesScreen,
   ViewFeedExhibit: FeedExhibitScreen,
   ViewFeedProfileExhibit: FeedExhibitScreen,
 });
@@ -155,7 +151,6 @@ const ExploreNavigator = createStackNavigator({
   ExploreCheering: ExploreCheeringScreen,
   ExploreFollowers: ExploreFollowersScreen,
   ExploreFollowing: ExploreFollowingScreen,
-  ExploreAdvocates: ExploreAdvocatesScreen,
 });
 
 const RightExploreDrawerNavigator = createDrawerNavigator(
@@ -227,7 +222,6 @@ const ProfileandSettingsNavigator = createStackNavigator({
   EditProfile: EditProfileScreen,
   ShowcaseSettings: ShowcaseSettingsScreen,
   Updates: VoteUpdatesSettingsScreen,
-  Advocates: AdvocatesScreen,
   Following: FollowingScreen,
   Followers: FollowersScreen,
   AddExhibit: AddExhibitScreen,
