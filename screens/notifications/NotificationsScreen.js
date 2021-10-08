@@ -40,54 +40,64 @@ const ExploreScreen = (props) => {
     await setIsRefreshing(false);
   };
 
-  const viewProfileHandler = (
-    ExhibitUId,
-    profilePictureUrl,
-    fullname,
-    username,
-    jobTitle,
-    resumeLinkUrl,
-    profileBiography,
-    numberOfFollowers,
-    numberOfFollowing,
-    numberOfAdvocates,
-    showResume,
-    hideFollowing,
-    hideFollowers,
-    hideExhibits,
-    followers,
-    following,
-    advocates,
-    profileExhibits,
-    profileLinks,
-    exhibitLinks,
-    profileColumns,
-    showCheering
-  ) => {
+  const viewProfileHandler = async (username) => {
     dispatch(offScreen("Notifications"));
-    props.navigation.push("NotificationsProfile", {
-      ExhibitUId,
-      profilePictureUrl,
-      fullname,
-      username,
-      jobTitle,
-      resumeLinkUrl,
-      profileBiography,
-      numberOfFollowers,
-      numberOfFollowing,
-      numberOfAdvocates,
-      showResume,
-      hideFollowing,
-      hideFollowers,
-      hideExhibits,
-      followers,
-      following,
-      advocates,
-      profileExhibits,
-      profileLinks,
-      exhibitLinks,
-      profileColumns,
-      showCheering,
+
+    let userData = {};
+
+    const algoliasearch = await require("algoliasearch");
+    const client = await algoliasearch(
+      "EXC8LH5MAX",
+      "2d8cedcaab4cb2b351e90679963fbd92"
+    );
+    const index = await client.initIndex("users");
+    await index.search(username).then((responses) => {
+      for (const object of responses.hits) {
+        if (object) {
+          userData.ExhibitUId = object.objectID;
+          userData.profilePictureUrl = object.profilePictureUrl;
+          userData.fullname = object.fullname;
+          userData.username = object.username;
+          userData.jobTitle = object.jobTitle;
+          userData.profileBiography = object.profileBiography;
+          userData.numberOfFollowers = object.numberOfFollowers;
+          userData.numberOfFollowing = object.numberOfFollowing;
+          userData.numberOfAdvocates = object.numberOfAdvocates;
+          userData.hideFollowing = object.hideFollowing;
+          userData.hideFollowers = object.hideFollowers;
+          userData.hideExhibits = object.hideExhibits;
+          userData.followers = object.followers;
+          userData.following = object.following;
+          userData.advocates = object.advocates;
+          userData.profileExhibits = object.profileExhibits;
+          userData.profileLinks = object.profileLinks;
+          userData.profileColumns = object.profileColumns;
+          userData.showCheering = object.showCheering;
+        }
+      }
+    });
+    props.navigation.push("ExploreProfile", {
+      exploreData: {
+        exploredExhibitUId: userData.ExhibitUId,
+        profilePictureUrl: userData.profilePictureUrl,
+        fullname: userData.fullname,
+        username: userData.username,
+        jobTitle: userData.jobTitle,
+        profileBiography: userData.profileBiography,
+        numberOfFollowers: userData.numberOfFollowers,
+        numberOfFollowing: userData.numberOfFollowing,
+        numberOfAdvocates: userData.numberOfAdvocates,
+        hideFollowing: userData.hideFollowing,
+        hideFollowers: userData.hideFollowers,
+        hideExhibits: userData.hideExhibits,
+        followers: userData.followers,
+        following: userData.following,
+        advocates: userData.advocates,
+        profileExhibits: userData.profileExhibits,
+        profileLinks: userData.profileLinks,
+        profileColumns: userData.profileColumns,
+        showCheering: userData.showCheering,
+      },
     });
   };
 
@@ -151,30 +161,7 @@ const ExploreScreen = (props) => {
               color: darkModeValue ? "white" : "black",
             }}
             onSelect={() => {
-              viewProfileHandler(
-                itemData.item.objectID,
-                itemData.item.profilePictureUrl,
-                itemData.item.fullname,
-                itemData.item.username,
-                itemData.item.jobTitle,
-                itemData.item.resumeLinkUrl,
-                itemData.item.profileBiography,
-                itemData.item.numberOfFollowers,
-                itemData.item.numberOfFollowing,
-                itemData.item.numberOfAdvocates,
-                itemData.item.showResume,
-                itemData.item.hideFollowing,
-                itemData.item.hideFollowers,
-                itemData.item.hideExhibits,
-                itemData.item.followers,
-                itemData.item.following,
-                itemData.item.advocates,
-                itemData.item.profileExhibits,
-                itemData.item.profileLinks,
-                itemData.item.exhibitLinks,
-                itemData.item.profileColumns,
-                itemData.item.showCheering
-              );
+              viewProfileHandler(itemData.item.username);
             }}
           />
         )}
