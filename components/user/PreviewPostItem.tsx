@@ -1,6 +1,5 @@
-import { AntDesign } from "@expo/vector-icons";
-import { LinearGradient } from "expo-linear-gradient";
-import React from "react";
+import { AnimatedGradient } from "../custom/AnimatedGradient/AnimatedGradient";
+import React, { useState } from "react";
 import {
   Dimensions,
   Image,
@@ -13,13 +12,20 @@ import {
   View,
 } from "react-native";
 import { useAppSelector } from "../../hooks";
-import Cheer from "../../assets/Icons/clap.svg";
 import toDateTime from "../../helper/toDateTime";
 import LinksList from "../UI/LinksList";
+import useDidMountEffect from "../../helper/useDidMountEffect";
+import Cheer from "../../assets/Icons/clap.svg";
 
 const ExhibitItem = (props) => {
-  const darkModeValue = useAppSelector((state) => state.user.darkMode);
+  const [profileImageIsLoading, setProfileImageIsLoading] = useState(true);
+  const [greyColorValues, setGreyColorValues] = useState([
+    "rgba(50,50,50,1)",
+    "rgba(0,0,0,1)",
+  ]);
   const fullname = useAppSelector((state) => state.user.fullname);
+  const username = useAppSelector((state) => state.user.username);
+  const jobTitle = useAppSelector((state) => state.user.jobTitle);
   const links = Object.values(props.links);
   const currentTime = toDateTime(
     Math.floor(Date.now() / 1000)
@@ -36,114 +42,128 @@ const ExhibitItem = (props) => {
     TouchableCmp = TouchableNativeFeedback;
   }
 
+  useDidMountEffect(() => {
+    setGreyColorValues(["rgba(50,50,50,1)", "rgba(0,0,0,1)"]);
+  }, [profileImageIsLoading]);
+
   return (
     <View style={{ ...styles.exhibit, ...props.exhibitContainer }}>
       <View>
+        <View style={{ flexDirection: "row", ...props.nameContainer }}>
+          <View
+            style={{
+              flex: 1,
+              marginVertical: 5,
+            }}
+          >
+            <View
+              style={{
+                marginLeft: 10,
+                flexDirection: "row",
+              }}
+            >
+              <View
+                style={{
+                  height: 45,
+                  width: 45,
+                  borderRadius: 45 / 2,
+                }}
+              >
+                {profileImageIsLoading ? (
+                  <AnimatedGradient
+                    style={{
+                      position: "absolute",
+                      zIndex: 3,
+                      height: 45,
+                      width: 45,
+                      borderRadius: 45 / 2,
+                    }}
+                    colors={greyColorValues}
+                    start={{ x: 0, y: 0 }}
+                    end={{ x: 1, y: 0 }}
+                  />
+                ) : null}
+                <Image
+                  style={{
+                    height: 45,
+                    width: 45,
+                    borderRadius: 45 / 2,
+                    ...props.profileImageStyle,
+                  }}
+                  source={
+                    props.profileImageSource
+                      ? { uri: props.profileImageSource }
+                      : require("../../assets/default-profile-icon.jpg")
+                  }
+                  onLoadEnd={() => {
+                    setProfileImageIsLoading(false);
+                  }}
+                />
+              </View>
+              <View
+                style={{
+                  flexDirection: "column",
+                  justifyContent: "center",
+                }}
+              >
+                <Text
+                  style={{
+                    color: "white",
+                    fontWeight: "700",
+                    marginLeft: 5,
+                    fontSize: 11,
+                  }}
+                >
+                  {fullname}
+                </Text>
+                <Text
+                  style={{
+                    color: "white",
+                    fontWeight: "500",
+                    fontSize: 11,
+                    marginLeft: 5,
+                  }}
+                >
+                  {jobTitle}
+                </Text>
+                <Text
+                  style={{
+                    color: "grey",
+                    fontSize: 10,
+                    marginLeft: 5,
+                  }}
+                >
+                  {username}
+                </Text>
+              </View>
+            </View>
+          </View>
+          <View style={{ justifyContent: "center" }}>
+            <View>
+              <Cheer
+                style={{
+                  ...styles.clapContainer,
+                  ...props.clapContainer,
+                  flex: 1,
+                }}
+                height={28}
+                width={28}
+                fill="white"
+              />
+            </View>
+          </View>
+        </View>
         <ImageBackground
           style={{
             height: height,
-            width: "100%",
+            width: width,
           }}
           source={
             props.image
               ? { uri: props.image }
               : require("../../assets/default-post-icon.png")
           }
-        >
-          <View
-            style={{
-              flex: 1,
-              justifyContent: "flex-end",
-              alignItems: "flex-end",
-            }}
-          >
-            <View
-              style={{
-                flexDirection: "row",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <View
-                style={{
-                  flex: 1,
-                  alignItems: "flex-start",
-                }}
-              >
-                <TouchableCmp onPress={props.onSelectProfile}>
-                  <View
-                    style={{
-                      marginLeft: 15,
-                      alignItems: "center",
-                    }}
-                  >
-                    <View
-                      style={{
-                        height: 50,
-                        width: 50,
-                        borderRadius: 50 / 2,
-                      }}
-                    >
-                      <Image
-                        style={{
-                          ...styles.profileImage,
-                          ...props.profileImageStyle,
-                        }}
-                        source={
-                          props.profileImageSource
-                            ? { uri: props.profileImageSource }
-                            : require("../../assets/default-profile-icon.jpg")
-                        }
-                      />
-                    </View>
-                    <Text
-                      style={{
-                        color: darkModeValue ? "white" : "black",
-                        marginTop: 3,
-                        textAlign: "center",
-                      }}
-                    >
-                      {fullname.split(" ")[0].length > 10
-                        ? fullname.substring(0, 10) + "..."
-                        : fullname.split(" ")[0]}
-                    </Text>
-                  </View>
-                </TouchableCmp>
-              </View>
-              <View>
-                <Cheer
-                  style={{
-                    ...styles.clapContainer,
-                    ...props.clapContainer,
-                  }}
-                  height={28}
-                  width={28}
-                  fill="white"
-                />
-              </View>
-            </View>
-          </View>
-          <LinearGradient
-            style={{
-              ...styles.titleContainer,
-              ...props.titleContainer,
-            }}
-            colors={props.exhibitTitleColors}
-          >
-            <View style={styles.balance} />
-            <View style={styles.titleTextContainer}>
-              <Text style={{ ...styles.title, ...props.titleStyle }}>
-                {props.exhibitTitle}
-              </Text>
-            </View>
-            <AntDesign
-              style={{ marginRight: 5 }}
-              name="arrowright"
-              size={28}
-              color={props.arrowColor}
-            />
-          </LinearGradient>
-        </ImageBackground>
+        />
       </View>
       {links.length <= 1 ? (
         <View
