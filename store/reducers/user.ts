@@ -560,11 +560,14 @@ export default (state = intialState, action: Action) => {
               Object.keys(
                 state.userFeed[id].profileExhibits[projId].exhibitPosts
               ).includes(action.postId) &&
-              action.postId !== id
+              action.postId === id
             ) {
-              state.userFeed[id].profileExhibits[projId].exhibitPosts[
-                action.postId
-              ].numberOfCheers = state.userFeed[action.postId].numberOfCheers;
+              Object.assign(
+                state.userFeed[id].profileExhibits[projId].exhibitPosts[
+                  action.postId
+                ].numberOfCheers,
+                state.userFeed[action.postId].numberOfCheers
+              );
               Object.assign(
                 state.userFeed[id].profileExhibits[projId].exhibitPosts[
                   action.postId
@@ -731,11 +734,14 @@ export default (state = intialState, action: Action) => {
               Object.keys(
                 state.userFeed[id].profileExhibits[projId].exhibitPosts
               ).includes(action.postId) &&
-              action.postId !== id
+              action.postId === id
             ) {
-              state.userFeed[id].profileExhibits[projId].exhibitPosts[
-                action.postId
-              ].numberOfCheers = state.userFeed[action.postId].numberOfCheers;
+              Object.assign(
+                state.userFeed[id].profileExhibits[projId].exhibitPosts[
+                  action.postId
+                ].numberOfCheers,
+                state.userFeed[action.postId].numberOfCheers
+              );
               Object.assign(
                 state.userFeed[id].profileExhibits[projId].exhibitPosts[
                   action.postId

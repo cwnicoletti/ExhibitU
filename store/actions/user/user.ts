@@ -1053,39 +1053,6 @@ export const getUserFeed = (localId: string, ExhibitUId: string) => {
 
     let returnData = uploadedUserPost.data.returnData;
 
-    // if (returnData) {
-    //   for (const key of Object.keys(returnData)) {
-    //     const postPhotoBase64 = await getBase64FromUrl(
-    //       returnData[key]["postPhotoUrl"]
-    //     );
-    //     const profilePictureBase64 = await getBase64FromUrl(
-    //       returnData[key]["profilePictureUrl"]
-    //     );
-    //     returnData[key]["postPhotoBase64"] = postPhotoBase64;
-    //     returnData[key]["profilePictureBase64"] = profilePictureBase64;
-    //     for (const exhibitKey of Object.keys(returnData[key].profileExhibits)) {
-    //       const exhibitCoverPhotoBase64 = await getBase64FromUrl(
-    //         returnData[key].profileExhibits[exhibitKey]["exhibitCoverPhotoUrl"]
-    //       );
-    //       returnData[key].profileExhibits[exhibitKey][
-    //         "exhibitCoverPhotoBase64"
-    //       ] = exhibitCoverPhotoBase64;
-    //       for (const postKey of Object.keys(
-    //         returnData[key].profileExhibits[exhibitKey].exhibitPosts
-    //       )) {
-    //         const postPhotoBase64 = await getBase64FromUrl(
-    //           returnData[key].profileExhibits[exhibitKey].exhibitPosts[postKey][
-    //             "postPhotoUrl"
-    //           ]
-    //         );
-    //         returnData[key].profileExhibits[exhibitKey].exhibitPosts[postKey][
-    //           "postPhotoBase64"
-    //         ] = postPhotoBase64;
-    //       }
-    //     }
-    //   }
-    // }
-
     await AsyncStorage.getItem("userDocData").then(async (data) => {
       let parsedData: UserState = JSON.parse(data);
       parsedData.userFeed = { ...returnData };
@@ -1139,11 +1106,14 @@ export const cheerPost = (
                 Object.keys(
                   parsedData.userFeed[id].profileExhibits[projId].exhibitPosts
                 ).includes(postId) &&
-                postId !== id
+                postId === id
               ) {
-                parsedData.userFeed[id].profileExhibits[projId].exhibitPosts[
-                  postId
-                ].numberOfCheers = parsedData.userFeed[postId].numberOfCheers;
+                Object.assign(
+                  parsedData.userFeed[id].profileExhibits[projId].exhibitPosts[
+                    postId
+                  ].numberOfCheers,
+                  parsedData.userFeed[postId].numberOfCheers
+                );
                 Object.assign(
                   parsedData.userFeed[id].profileExhibits[projId].exhibitPosts[
                     postId
@@ -1273,7 +1243,7 @@ export const cheerOwnProfilePost = (
               Object.keys(
                 parsedData.userFeed[id].profileExhibits[projId].exhibitPosts
               ).includes(postId) &&
-              postId !== id
+              postId === id
             ) {
               parsedData.userFeed[id].profileExhibits[projId].exhibitPosts[
                 postId
@@ -1358,11 +1328,14 @@ export const uncheerPost = (
                 Object.keys(
                   parsedData.userFeed[id].profileExhibits[projId].exhibitPosts
                 ).includes(postId) &&
-                postId !== id
+                postId === id
               ) {
-                parsedData.userFeed[id].profileExhibits[projId].exhibitPosts[
-                  postId
-                ].numberOfCheers = parsedData.userFeed[postId].numberOfCheers;
+                Object.assign(
+                  parsedData.userFeed[id].profileExhibits[projId].exhibitPosts[
+                    postId
+                  ].numberOfCheers,
+                  parsedData.userFeed[postId].numberOfCheers
+                );
                 Object.assign(
                   parsedData.userFeed[id].profileExhibits[projId].exhibitPosts[
                     postId
@@ -1405,8 +1378,9 @@ export const uncheerOwnFeedPost = (
         ].cheering.indexOf(ExhibitUId),
         1
       );
-      parsedData.profileExhibits[exhibitId].exhibitPosts[postId]
-        .numberOfCheers - 1;
+      parsedData.profileExhibits[exhibitId].exhibitPosts[
+        postId
+      ].numberOfCheers -= 1;
 
       await AsyncStorage.setItem("userDocData", JSON.stringify(parsedData));
     });
@@ -1502,11 +1476,14 @@ export const uncheerOwnProfilePost = (
               Object.keys(
                 parsedData.userFeed[id].profileExhibits[projId].exhibitPosts
               ).includes(postId) &&
-              postId !== id
+              postId === id
             ) {
-              parsedData.userFeed[id].profileExhibits[projId].exhibitPosts[
-                postId
-              ].numberOfCheers = parsedData.userFeed[postId].numberOfCheers;
+              Object.assign(
+                parsedData.userFeed[id].profileExhibits[projId].exhibitPosts[
+                  postId
+                ].numberOfCheers,
+                parsedData.userFeed[postId].numberOfCheers
+              );
               Object.assign(
                 parsedData.userFeed[id].profileExhibits[projId].exhibitPosts[
                   postId
