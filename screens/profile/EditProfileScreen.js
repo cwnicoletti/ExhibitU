@@ -55,6 +55,7 @@ const EditProfileScreen = (props) => {
   const exhibitsValue = useAppSelector((state) => state.user.hideExhibits);
   const tutorialing = useAppSelector((state) => state.user.tutorialing);
   const tutorialScreen = useAppSelector((state) => state.user.tutorialScreen);
+  const profileExhibits = useAppSelector((state) => state.user.profileExhibits);
 
   let userData = {
     fullname: useAppSelector((state) => state.user.fullname),
@@ -312,7 +313,6 @@ const EditProfileScreen = (props) => {
                 borderColor: darkModeValue ? "gray" : "#c9c9c9",
                 alignItems: "center",
               }}
-              onPress={props.followersOnPress}
             >
               <View
                 style={{
@@ -348,7 +348,6 @@ const EditProfileScreen = (props) => {
                 borderColor: darkModeValue ? "gray" : "#c9c9c9",
                 alignItems: "center",
               }}
-              onPress={props.followingOnPress}
             >
               <View
                 style={{
@@ -385,7 +384,6 @@ const EditProfileScreen = (props) => {
                 borderColor: darkModeValue ? "gray" : "#c9c9c9",
                 alignItems: "center",
               }}
-              onPress={props.advocatesOnPress}
             >
               <View
                 style={{
@@ -401,7 +399,7 @@ const EditProfileScreen = (props) => {
                     fontWeight: "bold",
                   }}
                 >
-                  Advocates
+                  Exhibits
                 </Text>
                 <Text
                   style={{
@@ -410,7 +408,7 @@ const EditProfileScreen = (props) => {
                     fontSize: 15,
                   }}
                 >
-                  {userDataProfileHeader.numberOfAdvocates}
+                  {Object.keys(profileExhibits).length}
                 </Text>
               </View>
             </TouchableCmp>
