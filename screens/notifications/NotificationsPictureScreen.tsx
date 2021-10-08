@@ -14,7 +14,8 @@ const NotificationsPictureScreen = (props) => {
   const currentExhibitId = props.navigation.getParam("exhibitId");
   const postId = props.navigation.getParam("postId");
   const fullname = props.navigation.getParam("fullname");
-  const profilePictureUrl = props.navigation.getParam("profilePictureUrl");
+  const jobTitle = props.navigation.getParam("jobTitle");
+  const username = props.navigation.getParam("username");
   const postPhotoUrl = props.navigation.getParam("postPhotoUrl");
   const [numberOfCheers, setNumberOfCheers] = useState(
     props.navigation.getParam("numberOfCheers")
@@ -28,7 +29,7 @@ const NotificationsPictureScreen = (props) => {
   const [intialCheeredPosts, setIntialCheeredPosts] = useState([]);
 
   const viewCheeringHandler = () => {
-    props.navigation.navigate("ExploreCheering", {
+    props.navigation.navigate("NotificationsCheering", {
       ExhibitUId: ExhibitUId,
       exhibitId: currentExhibitId,
       postId: postId,
@@ -37,7 +38,7 @@ const NotificationsPictureScreen = (props) => {
   };
 
   const viewProfileHandler = () => {
-    props.navigation.push("ExploreProfile", {
+    props.navigation.push("NotificationsProfile", {
       ...exploredUserData,
       ExhibitUId: ExhibitUId,
     });
@@ -94,7 +95,9 @@ const NotificationsPictureScreen = (props) => {
         }}
         caption={caption}
         fullname={fullname}
-        profileImageSource={profilePictureUrl}
+        jobTitle={jobTitle}
+        username={username}
+        profileImageSource={exploredUserData.profilePictureUrl}
         numberOfCheers={numberOfCheers}
         numberOfComments={numberOfComments}
         links={links}

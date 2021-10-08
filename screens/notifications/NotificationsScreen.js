@@ -76,7 +76,7 @@ const ExploreScreen = (props) => {
         }
       }
     });
-    props.navigation.push("ExploreProfile", {
+    props.navigation.navigate("NotificationsProfile", {
       exploreData: {
         exploredExhibitUId: userData.ExhibitUId,
         profilePictureUrl: userData.profilePictureUrl,

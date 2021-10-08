@@ -221,7 +221,7 @@ const NotificationsExhibitScreen = (props) => {
     postLinks: object,
     postDateCreated: string
   ) => {
-    props.navigation.push("ViewExploredProfileExhibitPicture", {
+    props.navigation.push("ViewNotificationsProfileExhibitPicture", {
       ExhibitUId,
       exhibitId: exploredExhibitData.exhibitId,
       postId,

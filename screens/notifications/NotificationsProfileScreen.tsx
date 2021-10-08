@@ -42,109 +42,6 @@ const NotificationsProfileScreen = (props) => {
     ? exploredUserData.profileExhibits
     : {};
 
-  if (
-    tutorialing &&
-    (tutorialScreen === "ExploreScreen" ||
-      tutorialScreen === "ExploreProfile" ||
-      tutorialScreen === "ExploreExhibit")
-  ) {
-    exploredUserData.profileExhibits = {
-      ["randomId121334"]: {
-        exhibitPosts: {
-          ["randomId121334h"]: {
-            ExhibitUId: ExhibitUId,
-            exhibitId: "randomId121334",
-            postId: "randomId121334h",
-            fullname: "test",
-            username: "test",
-            jobTitle: "test",
-            profileBiography: "test",
-            profileExhibits: {},
-            profilePictureUrl: "test",
-            postPhotoUrl:
-              "https://camo.githubusercontent.com/9aea0a68fd10f943a82ce8a434f6c126296568fdf17d0cc914d40a4feb4a9f10/68747470733a2f2f7265732e636c6f7564696e6172792e636f6d2f706572736f6e616c757365313233342f696d6167652f75706c6f61642f76313631373231353939392f436f43726561746f727765626170705f6c7a716e696e2e706e67",
-            postPhotoBase64: "",
-            numberOfCheers: 0,
-            numberOfComments: 0,
-            caption: "Sample post",
-            postLinks: {},
-            postDateCreated: {
-              _seconds: 7654757,
-              _minutes: 7654757,
-            },
-          },
-        },
-        exhibitTitle: "Sample Exhibit",
-        exhibitDescription:
-          "I've been working on a really cool web application!",
-        exhibitCoverPhotoUrl:
-          "https://res.cloudinary.com/showcase-79c28/image/upload/v1626117054/exhibit_pic_ysb6uu.png",
-        exhibitCoverPhotoBase64: "",
-        exhibitDateCreated: {
-          _seconds: 7654757,
-          _minutes: 7654757,
-        },
-        exhibitLastUpdated: {
-          _seconds: 7654757,
-          _minutes: 7654757,
-        },
-        exhibitLinks: {},
-        exhibitColumns: 2,
-      },
-    };
-    exploredUserData.profileBiography = exploredUserData.profileBiography
-      ? exploredUserData.profileBiography
-      : "Yes, it's me, Elon Tusk.";
-    exploredUserData.following = exploredUserData.following
-      ? exploredUserData.following
-      : [];
-    exploredUserData.followers = exploredUserData.followers
-      ? exploredUserData.followers
-      : [];
-    exploredUserData.advocates = exploredUserData.advocates
-      ? exploredUserData.advocates
-      : [];
-    exploredUserData.fullname = exploredUserData.fullname
-      ? exploredUserData.fullname
-      : "Elon Tusk";
-    exploredUserData.username = exploredUserData.username
-      ? exploredUserData.username
-      : "elontusk";
-    exploredUserData.jobTitle = exploredUserData.jobTitle
-      ? exploredUserData.jobTitle
-      : "CEO of companies";
-    exploredUserData.profilePictureUrl = exploredUserData.profilePictureUrl
-      ? exploredUserData.profilePictureUrl
-      : "";
-    exploredUserData.hideFollowing = exploredUserData.hideFollowing
-      ? exploredUserData.hideFollowing
-      : false;
-    exploredUserData.hideFollowers = exploredUserData.hideFollowers
-      ? exploredUserData.hideFollowers
-      : false;
-    exploredUserData.hideExhibits = exploredUserData.hideExhibits
-      ? exploredUserData.hideExhibits
-      : false;
-    exploredUserData.profileLinks = exploredUserData.profileLinks
-      ? exploredUserData.profileLinks
-      : {};
-    exploredUserData.profileColumns = exploredUserData.profileColumns
-      ? exploredUserData.profileColumns
-      : 2;
-    exploredUserData.showCheering = exploredUserData.showCheering
-      ? exploredUserData.showCheering
-      : true;
-    exploredUserData.numberOfFollowers = exploredUserData.numberOfFollowers
-      ? exploredUserData.numberOfFollowers
-      : 0;
-    exploredUserData.numberOfFollowing = exploredUserData.numberOfFollowing
-      ? exploredUserData.numberOfFollowing
-      : 0;
-    exploredUserData.numberOfAdvocates = exploredUserData.numberOfAdvocates
-      ? exploredUserData.numberOfAdvocates
-      : 0;
-  }
-
   const profileExhibitsState = Object.values(
     exploredUserData.profileExhibits
   ).sort((first: string, second: string) => {
@@ -320,7 +217,7 @@ const NotificationsProfileScreen = (props) => {
     exhibitId: string,
     exhibitColumns: number
   ) => {
-    props.navigation.push("ViewExploredProfileExhibit", {
+    props.navigation.push("ViewNotificationsProfileExhibit", {
       exhibitTitle,
       exhibitCoverPhotoUrl,
       exhibitDescription,
@@ -362,25 +259,20 @@ const NotificationsProfileScreen = (props) => {
         description={exploredUserData.profileBiography}
         numberOfFollowers={exploredUserData.numberOfFollowers}
         numberOfFollowing={exploredUserData.numberOfFollowing}
-        numberOfAdvocates={exploredUserData.numberOfAdvocates}
+        numberOfExhibits={Object.keys(exploredUserData.profileExhibits).length}
         hideFollowing={exploredUserData.hideFollowing}
         hideFollowers={exploredUserData.hideFollowers}
         hideExhibits={exploredUserData.hideExhibits}
         ExhibitUId={exploredUserData.exploredExhibitUId}
         links={exploredUserData.profileLinks}
         followersOnPress={() =>
-          props.navigation.push("ExploreFollowers", {
+          props.navigation.push("NotificationsFollowers", {
             ExhibitUId: exploredUserData.exploredExhibitUId,
           })
         }
         followingOnPress={() =>
-          props.navigation.push("ExploreFollowing", {
+          props.navigation.push("NotificationsFollowing", {
             ExhibitUId: exploredUserData.exploredExhibitUId,
-          })
-        }
-        advocatesOnPress={() =>
-          props.navigation.push("ExploreAdvocates", {
-            exploredExhibitUId: exploredUserData.exploredExhibitUId,
           })
         }
       />
@@ -467,7 +359,7 @@ NotificationsProfileScreen.navigationOptions = (navData) => {
           iconName={"ios-arrow-back"}
           color={darkModeValue ? "white" : "black"}
           onPress={() => {
-            navData.navigation.goBack();
+            navData.navigation.pop();
           }}
         />
       </HeaderButtons>
