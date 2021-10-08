@@ -93,7 +93,7 @@ const ShowcaseSettingsScreen = (props) => {
           labelStyle={{
             color: darkModeValue ? "white" : "black",
           }}
-          label="Hide advocates"
+          label="Hide exhibits"
           state={exhibitsValue}
           onChange={(newValue) => {
             dispatch(setHideExhibits(localId, ExhibitUId, newValue));
