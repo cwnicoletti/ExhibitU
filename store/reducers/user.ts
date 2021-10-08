@@ -190,12 +190,9 @@ export default (state = intialState, action: Action) => {
               action.profilePictureBase64;
             Object.entries(state.userFeed[id].profileExhibits).map(
               ([exhibitId, value]) => {
-                state.profileExhibits[exhibitId].exhibitPosts[
-                  id
-                ].profilePictureBase64 = action.profilePictureBase64;
                 state.userFeed[id].profileExhibits[exhibitId].exhibitPosts[
                   id
-                ].profilePictureBase64 = action.profilePictureBase64;
+                ].profilePictureUrl = action.profilePictureUrl;
               }
             );
           }
