@@ -52,7 +52,7 @@ const EditProfileScreen = (props) => {
   );
   const followingValue = useAppSelector((state) => state.user.hideFollowing);
   const followersValue = useAppSelector((state) => state.user.hideFollowers);
-  const advocatesValue = useAppSelector((state) => state.user.hideAdvocates);
+  const exhibitsValue = useAppSelector((state) => state.user.hideExhibits);
   const tutorialing = useAppSelector((state) => state.user.tutorialing);
   const tutorialScreen = useAppSelector((state) => state.user.tutorialScreen);
 
@@ -378,7 +378,7 @@ const EditProfileScreen = (props) => {
               </View>
             </TouchableCmp>
           ) : null}
-          {!advocatesValue ? (
+          {!exhibitsValue ? (
             <TouchableCmp
               style={{
                 flex: 1,

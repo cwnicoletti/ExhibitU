@@ -122,8 +122,8 @@ const ExploreProfileScreen = (props) => {
     exploredUserData.hideFollowers = exploredUserData.hideFollowers
       ? exploredUserData.hideFollowers
       : false;
-    exploredUserData.hideAdvocates = exploredUserData.hideAdvocates
-      ? exploredUserData.hideAdvocates
+    exploredUserData.hideExhibits = exploredUserData.hideExhibits
+      ? exploredUserData.hideExhibits
       : false;
     exploredUserData.profileLinks = exploredUserData.profileLinks
       ? exploredUserData.profileLinks
@@ -253,7 +253,7 @@ const ExploreProfileScreen = (props) => {
           exploredUserDataNewState.profilePictureUrl = hit.profilePictureUrl;
           exploredUserDataNewState.hideFollowing = hit.hideFollowing;
           exploredUserDataNewState.hideFollowers = hit.hideFollowers;
-          exploredUserDataNewState.hideAdvocates = hit.hideAdvocates;
+          exploredUserDataNewState.hideExhibits = hit.hideExhibits;
           exploredUserDataNewState.profileLinks = hit.profileLinks;
           exploredUserDataNewState.profileColumns = hit.profileColumns;
           exploredUserDataNewState.showCheering = hit.showCheering;
@@ -365,6 +365,7 @@ const ExploreProfileScreen = (props) => {
         numberOfExhibits={Object.keys(exploredUserData.profileExhibits).length}
         hideFollowing={exploredUserData.hideFollowing}
         hideFollowers={exploredUserData.hideFollowers}
+        hideExhibits={exploredUserData.hideExhibits}
         ExhibitUId={exploredUserData.exploredExhibitUId}
         links={exploredUserData.profileLinks}
         followersOnPress={() =>

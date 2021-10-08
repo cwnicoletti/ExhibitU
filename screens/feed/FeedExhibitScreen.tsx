@@ -46,7 +46,7 @@ const FeedExhibitScreen = (props) => {
           ),
           hideFollowing: useAppSelector((state) => state.user.hideFollowing),
           hideFollowers: useAppSelector((state) => state.user.hideFollowers),
-          hideAdvocates: useAppSelector((state) => state.user.hideAdvocates),
+          hideExhibits: useAppSelector((state) => state.user.hideExhibits),
         }
       : userData;
 
@@ -87,7 +87,7 @@ const FeedExhibitScreen = (props) => {
     numberOfAdvocates: number,
     hideFollowing: boolean,
     hideFollowers: boolean,
-    hideAdvocates: boolean,
+    hideExhibits: boolean,
     profileColumns: number,
     postLinks: object,
     postDateCreated: string
@@ -110,7 +110,7 @@ const FeedExhibitScreen = (props) => {
         numberOfAdvocates,
         hideFollowing,
         hideFollowers,
-        hideAdvocates,
+        hideExhibits,
         profileColumns,
         postLinks,
         profileExhibits: userData.profileExhibits,
@@ -222,7 +222,7 @@ const FeedExhibitScreen = (props) => {
                 itemData.item.numberOfAdvocates,
                 itemData.item.hideFollowing,
                 itemData.item.hideFollowers,
-                itemData.item.hideAdvocates,
+                itemData.item.hideExhibits,
                 itemData.item.profileColumns,
                 userData.postLinks,
                 itemData.item.postDateCreated._seconds

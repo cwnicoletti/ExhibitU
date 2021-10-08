@@ -22,7 +22,7 @@ const ExploreProfileHeader = (props) => {
           darkModeValue={darkModeValue}
           followersValue={props.followersValue}
           followingValue={props.followingValue}
-          advocatesValue={props.advocatesValue}
+          exhibitsValue={props.exhibitsValue}
           followersOnPress={props.followersOnPress}
           followingOnPress={props.followingOnPress}
           advocatesOnPress={props.advocatesOnPress}

@@ -47,7 +47,7 @@ const FeedProfileScreen = (props) => {
           ),
           hideFollowing: useAppSelector((state) => state.user.hideFollowing),
           hideFollowers: useAppSelector((state) => state.user.hideFollowers),
-          hideAdvocates: useAppSelector((state) => state.user.hideAdvocates),
+          hideExhibits: useAppSelector((state) => state.user.hideExhibits),
         }
       : userData;
 
@@ -114,6 +114,7 @@ const FeedProfileScreen = (props) => {
         numberOfExhibits={Object.keys(userData.profileExhibits).length}
         hideFollowing={userData.hideFollowing}
         hideFollowers={userData.hideFollowers}
+        hideExhibits={userData.hideExhibits}
         links={userData.profileLinks}
         imgSource={
           userData.profilePictureBase64

@@ -56,7 +56,7 @@ const ShowcasePictureScreen = (props) => {
       numberOfAdvocates: userData.numberOfAdvocates,
       hideFollowing: userData.hideFollowing,
       hideFollowers: userData.hideFollowers,
-      hideAdvocates: userData.hideAdvocates,
+      hideExhibits: userData.hideExhibits,
       followers: userData.followers,
       following: userData.following,
       advocates: userData.advocates,

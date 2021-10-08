@@ -11,7 +11,7 @@ export const SET_DARKMODE = "SET_DARKMODE";
 export const SHOW_CHEERING = "SHOW_CHEERING";
 export const HIDE_FOLLOWING = "HIDE_FOLLOWING";
 export const HIDE_FOLLOWERS = "HIDE_FOLLOWERS";
-export const HIDE_ADVOCATES = "HIDE_ADVOCATES";
+export const HIDE_EXHIBITS = "HIDE_EXHIBITS";
 
 export const CHEER_POST = "CHEER_POST";
 export const CHEER_UPDATE_POSTS = "CHEER_UPDATE_POSTS";
@@ -87,7 +87,7 @@ export interface UserState {
   showCheering: boolean;
   hideFollowing: boolean;
   hideFollowers: boolean;
-  hideAdvocates: boolean;
+  hideExhibits: boolean;
   updates: object;
   resetScrollFeed: boolean;
   resetScrollExplore: boolean;
@@ -159,7 +159,7 @@ interface ActionGetUserData {
   showCheering: boolean;
   hideFollowing: boolean;
   hideFollowers: boolean;
-  hideAdvocates: boolean;
+  hideExhibits: boolean;
   updates: object;
   tutorialing: boolean;
   tutorialPrompt: boolean;
@@ -171,7 +171,7 @@ interface ActionGetSwitches {
   showCheering: boolean;
   hideFollowing: boolean;
   hideFollowers: boolean;
-  hideAdvocates: boolean;
+  hideExhibits: boolean;
 }
 interface ActionUpdateUserProfile {
   type: typeof UPDATE_USER_PROFILE;
@@ -269,7 +269,7 @@ interface ActionAddUserPost {
   numberOfAdvocates: number;
   followingValue: boolean;
   followersValue: boolean;
-  advocatesValue: boolean;
+  exhibitsValue: boolean;
   profilePictureUrl: string;
   profilePictureBase64: string;
   exhibitId: string;
@@ -396,10 +396,10 @@ interface ActionHideFollowers {
   ExhibitUId: string;
   hideFollowersValue: boolean;
 }
-interface ActionHideAdvocates {
-  type: typeof HIDE_ADVOCATES;
+interface ActionHideExhibits {
+  type: typeof HIDE_EXHIBITS;
   ExhibitUId: string;
-  hideAdvocatesValue: boolean;
+  hideExhibitsValue: boolean;
 }
 interface ActionSetTutorialing {
   type: typeof SET_TUTORIALING;
@@ -453,6 +453,6 @@ export type Action =
   | ActionShowCheering
   | ActionHideFollowing
   | ActionHideFollowers
-  | ActionHideAdvocates
+  | ActionHideExhibits
   | ActionSetTutorialing
   | ActionSetTutorialingPrompt;

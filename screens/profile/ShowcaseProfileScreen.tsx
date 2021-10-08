@@ -46,7 +46,7 @@ const ShowcaseProfileScreen = (props) => {
           ),
           hideFollowing: useAppSelector((state) => state.user.hideFollowing),
           hideFollowers: useAppSelector((state) => state.user.hideFollowers),
-          hideAdvocates: useAppSelector((state) => state.user.hideAdvocates),
+          hideExhibits: useAppSelector((state) => state.user.hideExhibits),
         }
       : {
           profilePictureUrl: props.navigation.getParam("profilePictureUrl"),
@@ -63,7 +63,7 @@ const ShowcaseProfileScreen = (props) => {
           numberOfFollowing: props.navigation.getParam("numberOfFollowing"),
           hideFollowing: props.navigation.getParam("hideFollowing"),
           hideFollowers: props.navigation.getParam("hideFollowers"),
-          hideAdvocates: props.navigation.getParam("hideAdvocates"),
+          hideExhibits: props.navigation.getParam("hideExhibits"),
         };
 
   const [profileExhibitsState, setProfileExhibitsState] = useState(
@@ -137,7 +137,7 @@ const ShowcaseProfileScreen = (props) => {
         links={userData.profileLinks}
         followingValue={userData.hideFollowing}
         followersValue={userData.hideFollowers}
-        advocatesValue={userData.hideAdvocates}
+        exhibitsValue={userData.hideExhibits}
         numberOfFollowers={userData.numberOfFollowers}
         numberOfFollowing={userData.numberOfFollowing}
         numberOfExhibits={Object.keys(userData.profileExhibits).length}
@@ -154,11 +154,6 @@ const ShowcaseProfileScreen = (props) => {
         }
         followingOnPress={() =>
           props.navigation.push("Following", {
-            ExhibitUId: userData.ExhibitUId,
-          })
-        }
-        advocatesOnPress={() =>
-          props.navigation.push("Advocates", {
             ExhibitUId: userData.ExhibitUId,
           })
         }

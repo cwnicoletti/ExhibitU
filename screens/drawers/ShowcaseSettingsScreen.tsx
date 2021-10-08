@@ -1,12 +1,12 @@
 import React, { useEffect } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import FilterSwitch from "../../components/UI/FilterSwitch";
 import IoniconsHeaderButton from "../../components/UI/header_buttons/IoniconsHeaderButton";
 import {
-  setHideAdvocates,
+  setHideExhibits,
   setHideFollowers,
   setHideFollowing,
   setShowCheering,
@@ -19,7 +19,7 @@ const ShowcaseSettingsScreen = (props) => {
   const showCheeringValue = useAppSelector((state) => state.user.showCheering);
   const followingValue = useAppSelector((state) => state.user.hideFollowing);
   const followersValue = useAppSelector((state) => state.user.hideFollowers);
-  const advocatesValue = useAppSelector((state) => state.user.hideAdvocates);
+  const exhibitsValue = useAppSelector((state) => state.user.hideExhibits);
   const localId = useAppSelector((state) => state.auth.userId);
   const ExhibitUId = useAppSelector((state) => state.user.ExhibitUId);
 
@@ -81,6 +81,22 @@ const ShowcaseSettingsScreen = (props) => {
           state={followingValue}
           onChange={(newValue) => {
             dispatch(setHideFollowing(localId, ExhibitUId, newValue));
+          }}
+        />
+        <FilterSwitch
+          viewStyle={{
+            flexDirection: "row",
+            justifyContent: "space-between",
+            alignItems: "center",
+            margin: 10,
+          }}
+          labelStyle={{
+            color: darkModeValue ? "white" : "black",
+          }}
+          label="Hide advocates"
+          state={exhibitsValue}
+          onChange={(newValue) => {
+            dispatch(setHideExhibits(localId, ExhibitUId, newValue));
           }}
         />
       </ScrollView>

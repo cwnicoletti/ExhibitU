@@ -22,7 +22,7 @@ const FeedProfileHeader = (props) => {
           darkModeValue={darkModeValue}
           followersValue={props.hideFollowing}
           followingValue={props.hideFollowers}
-          advocatesValue={props.hideAdvocates}
+          exhibitsValue={props.hideExhibits}
           followersOnPress={props.followersOnPress}
           followingOnPress={props.followingOnPress}
           advocatesOnPress={props.advocatesOnPress}

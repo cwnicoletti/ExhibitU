@@ -12,9 +12,9 @@ const ProfileStats = (props) => {
   const darkModeValue = props.darkModeValue;
   const followersValue = props.followersValue;
   const followingValue = props.followingValue;
+  const exhibitsValue = props.exhibitsValue;
   const followersOnPress = props.followersOnPress;
   const followingOnPress = props.followingOnPress;
-  const advocatesOnPress = props.advocatesOnPress;
   const numberOfFollowers = props.numberOfFollowers;
   const numberOfFollowing = props.numberOfFollowing;
   const numberOfExhibits = props.numberOfExhibits;
@@ -99,13 +99,7 @@ const ProfileStats = (props) => {
           </View>
         </TouchableCmp>
       ) : null}
-      <View
-        style={{
-          flex: 1,
-          borderColor: darkModeValue ? "gray" : "#c9c9c9",
-          alignItems: "center",
-        }}
-      >
+      {!exhibitsValue ? (
         <View
           style={{
             flex: 1,
@@ -113,26 +107,34 @@ const ProfileStats = (props) => {
             alignItems: "center",
           }}
         >
-          <Text
+          <View
             style={{
-              margin: 5,
-              color: darkModeValue ? "white" : "black",
-              fontWeight: "bold",
+              flex: 1,
+              borderColor: darkModeValue ? "gray" : "#c9c9c9",
+              alignItems: "center",
             }}
           >
-            Exhibits
-          </Text>
-          <Text
-            style={{
-              marginBottom: 5,
-              color: darkModeValue ? "white" : "black",
-              fontSize: 15,
-            }}
-          >
-            {numberOfExhibits}
-          </Text>
+            <Text
+              style={{
+                margin: 5,
+                color: darkModeValue ? "white" : "black",
+                fontWeight: "bold",
+              }}
+            >
+              Exhibits
+            </Text>
+            <Text
+              style={{
+                marginBottom: 5,
+                color: darkModeValue ? "white" : "black",
+                fontSize: 15,
+              }}
+            >
+              {numberOfExhibits}
+            </Text>
+          </View>
         </View>
-      </View>
+      ) : null}
     </View>
   );
 };

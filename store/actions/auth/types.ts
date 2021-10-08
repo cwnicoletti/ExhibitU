@@ -44,7 +44,7 @@ export interface AuthenticationResponse {
       showCheering: boolean;
       hideFollowing: boolean;
       hideFollowers: boolean;
-      hideAdvocates: boolean;
+      hideExhibits: boolean;
       updates: object;
       tutorialing: boolean;
       tutorialPrompt: boolean;

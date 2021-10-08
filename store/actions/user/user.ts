@@ -20,7 +20,7 @@ import {
   GET_UPDATES,
   GET_USER_DATA,
   GET_USER_FEED,
-  HIDE_ADVOCATES,
+  HIDE_EXHIBITS,
   HIDE_FOLLOWERS,
   HIDE_FOLLOWING,
   HIDE_PROFILE_FOOTER,
@@ -126,7 +126,7 @@ export const getUserData = () => {
       showCheering: transformedData.showCheering,
       hideFollowing: transformedData.hideFollowing,
       hideFollowers: transformedData.hideFollowers,
-      hideAdvocates: transformedData.hideAdvocates,
+      hideExhibits: transformedData.hideExhibits,
       tutorialing: transformedData.tutorialing,
       tutorialPrompt: transformedData.tutorialPrompt,
       tutorialScreen: transformedData.tutorialScreen,
@@ -149,7 +149,7 @@ export const getUserData = () => {
       showCheering: transformedData.showCheering,
       hideFollowing: transformedData.hideFollowing,
       hideFollowers: transformedData.hideFollowers,
-      hideAdvocates: transformedData.hideAdvocates,
+      hideExhibits: transformedData.hideExhibits,
     });
   };
 };
@@ -817,7 +817,7 @@ export const addUserPost = (
   numberOfAdvocates: number,
   followingValue: boolean,
   followersValue: boolean,
-  advocatesValue: boolean,
+  exhibitsValue: boolean,
   profileBiography: string,
   exhibitTitle: string,
   exhibitCoverPhotoUrl: string,
@@ -848,7 +848,7 @@ export const addUserPost = (
       numberOfAdvocates,
       followingValue,
       followersValue,
-      advocatesValue,
+      exhibitsValue,
       profileBiography,
       exhibitTitle,
       exhibitCoverPhotoUrl,
@@ -930,7 +930,7 @@ export const addUserPost = (
           numberOfAdvocates,
           followingValue,
           followersValue,
-          advocatesValue,
+          exhibitsValue,
           profileBiography,
           profileExhibits: {
             ...parsedData.profileExhibits,
@@ -950,7 +950,7 @@ export const addUserPost = (
                   numberOfAdvocates,
                   followingValue,
                   followersValue,
-                  advocatesValue,
+                  exhibitsValue,
                   profileBiography,
                   exhibitTitle,
                   profilePictureUrl,
@@ -1017,7 +1017,7 @@ export const addUserPost = (
       numberOfAdvocates,
       followingValue,
       followersValue,
-      advocatesValue,
+      exhibitsValue,
       profilePictureUrl,
       profilePictureBase64,
       exhibitId,
@@ -1811,31 +1811,31 @@ export const setHideFollowers = (
   };
 };
 
-export const setHideAdvocates = (
+export const setHideExhibits = (
   localId: string,
   ExhibitUId: string,
   value: boolean
 ) => {
   return async (dispatch) => {
-    const hideAdvocatesData = {
+    const hideExhibitsData = {
       localId,
       ExhibitUId,
       value,
-      switchName: "hideAdvocates",
+      switchName: "hideExhibits",
     };
 
     axios.post(
       `https://us-central1-showcase-79c28.cloudfunctions.net/setSwitchPublicInfo`,
-      hideAdvocatesData
+      hideExhibitsData
     );
 
     await AsyncStorage.getItem("userDocData").then(async (data) => {
       let parsedData: UserState = JSON.parse(data);
-      parsedData.hideAdvocates = value;
+      parsedData.hideExhibits = value;
       await AsyncStorage.setItem("userDocData", JSON.stringify(parsedData));
     });
 
-    dispatch({ type: HIDE_ADVOCATES, ExhibitUId, hideAdvocatesValue: value });
+    dispatch({ type: HIDE_EXHIBITS, ExhibitUId, hideExhibitsValue: value });
   };
 };
 

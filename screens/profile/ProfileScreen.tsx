@@ -214,11 +214,6 @@ const ProfileScreen = (props) => {
             ExhibitUId: userData.ExhibitUId,
           })
         }
-        advocatesOnPress={() =>
-          props.navigation.navigate("Advocates", {
-            ExhibitUId: userData.ExhibitUId,
-          })
-        }
         changeColumnToTwo={onPressChangeToColumnTwo}
         isLoadingTwoColumns={isLoadingTwoColumns}
         columnTwoStyle={{

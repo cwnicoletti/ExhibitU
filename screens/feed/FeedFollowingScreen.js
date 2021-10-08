@@ -80,7 +80,7 @@ const FeedFollowingScreen = (props) => {
     numberOfAdvocates,
     hideFollowing,
     hideFollowers,
-    hideAdvocates,
+    hideExhibits,
     profileLinks,
     profileColumns
   ) => {
@@ -98,7 +98,7 @@ const FeedFollowingScreen = (props) => {
         numberOfAdvocates,
         hideFollowing,
         hideFollowers,
-        hideAdvocates,
+        hideExhibits,
         profileLinks,
         profileColumns,
       },
@@ -198,7 +198,7 @@ const FeedFollowingScreen = (props) => {
                 itemData.item.numberOfAdvocates,
                 itemData.item.hideFollowing,
                 itemData.item.hideFollowers,
-                itemData.item.hideAdvocates,
+                itemData.item.hideExhibits,
                 itemData.item.profileLinks,
                 itemData.item.profileColumns
               );

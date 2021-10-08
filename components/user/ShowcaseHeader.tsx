@@ -18,6 +18,7 @@ const ExhibitUHeader = (props) => {
   const links = Object.values(props.links);
   const followingValue = props.followingValue;
   const followersValue = props.followersValue;
+  const exhibitsValue = props.exhibitsValue;
 
   const userDataProfileHeader = {
     numberOfFollowers: props.numberOfFollowers,
@@ -43,6 +44,7 @@ const ExhibitUHeader = (props) => {
           darkModeValue={darkModeValue}
           followersValue={followersValue}
           followingValue={followingValue}
+          exhibitsValue={exhibitsValue}
           followersOnPress={props.followersOnPress}
           followingOnPress={props.followingOnPress}
           advocatesOnPress={props.advocatesOnPress}

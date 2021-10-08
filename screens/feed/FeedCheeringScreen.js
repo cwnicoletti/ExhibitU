@@ -86,7 +86,7 @@ const FeedCheeringScreen = (props) => {
     numberOfAdvocates,
     hideFollowing,
     hideFollowers,
-    hideAdvocates,
+    hideExhibits,
     profileLinks,
     postLinks,
     profileColumns
@@ -106,7 +106,7 @@ const FeedCheeringScreen = (props) => {
         numberOfAdvocates,
         hideFollowing,
         hideFollowers,
-        hideAdvocates,
+        hideExhibits,
         profileLinks,
         postLinks,
         profileColumns,
@@ -220,7 +220,7 @@ const FeedCheeringScreen = (props) => {
                 itemData.item.numberOfAdvocates,
                 itemData.item.hideFollowing,
                 itemData.item.hideFollowers,
-                itemData.item.hideAdvocates,
+                itemData.item.hideExhibits,
                 itemData.item.profileLinks,
                 itemData.item.postLinks,
                 itemData.item.profileColumns

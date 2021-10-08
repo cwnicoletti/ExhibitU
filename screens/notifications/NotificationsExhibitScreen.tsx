@@ -131,8 +131,8 @@ const NotificationsExhibitScreen = (props) => {
   exploredUserDataLocal.hideFollowers = exploredUserDataLocal.hideFollowers
     ? exploredUserDataLocal.hideFollowers
     : false;
-  exploredUserDataLocal.hideAdvocates = exploredUserDataLocal.hideAdvocates
-    ? exploredUserDataLocal.hideAdvocates
+  exploredUserDataLocal.hideExhibits = exploredUserDataLocal.hideExhibits
+    ? exploredUserDataLocal.hideExhibits
     : false;
   exploredUserDataLocal.profileLinks = exploredUserDataLocal.profileLinks
     ? exploredUserDataLocal.profileLinks

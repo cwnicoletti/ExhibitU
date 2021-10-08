@@ -18,7 +18,7 @@ import {
   GET_UPDATES,
   GET_USER_DATA,
   GET_USER_FEED,
-  HIDE_ADVOCATES,
+  HIDE_EXHIBITS,
   HIDE_FOLLOWERS,
   HIDE_FOLLOWING,
   HIDE_PROFILE_FOOTER,
@@ -94,7 +94,7 @@ const intialState: UserState = {
   showCheering: true,
   hideFollowing: false,
   hideFollowers: false,
-  hideAdvocates: false,
+  hideExhibits: false,
   tutorialing: false,
   tutorialPrompt: false,
   tutorialScreen: "Start",
@@ -140,6 +140,7 @@ export default (state = intialState, action: Action) => {
         showCheering: action.showCheering,
         hideFollowing: action.hideFollowing,
         hideFollowers: action.hideFollowers,
+        hideExhibits: action.hideExhibits,
         tutorialing: action.tutorialing,
         tutorialPrompt: action.tutorialPrompt,
         tutorialScreen: action.tutorialScreen,
@@ -337,7 +338,7 @@ export default (state = intialState, action: Action) => {
             numberOfAdvocates: action.numberOfAdvocates,
             followingValue: action.followingValue,
             followersValue: action.followersValue,
-            advocatesValue: action.advocatesValue,
+            exhibitsValue: action.exhibitsValue,
             profileBiography: action.profileBiography,
             profileExhibits: {
               ...state.profileExhibits,
@@ -357,7 +358,7 @@ export default (state = intialState, action: Action) => {
                     numberOfAdvocates: action.numberOfAdvocates,
                     followingValue: action.followingValue,
                     followersValue: action.followersValue,
-                    advocatesValue: action.advocatesValue,
+                    exhibitsValue: action.exhibitsValue,
                     profileBiography: action.profileBiography,
                     exhibitTitle: action.exhibitTitle,
                     profilePictureUrl: action.profilePictureUrl,
@@ -968,16 +969,16 @@ export default (state = intialState, action: Action) => {
         ...state,
         hideFollowers: action.hideFollowersValue,
       };
-    case HIDE_ADVOCATES:
+    case HIDE_EXHIBITS:
       if (state.userFeed) {
         Object.entries(state.userFeed).map(([id, value]) => {
           if (state.userFeed[id].ExhibitUId === action.ExhibitUId) {
-            state.userFeed[id].hideAdvocates = action.hideAdvocatesValue;
+            state.userFeed[id].hideExhibits = action.hideExhibitsValue;
             Object.entries(state.userFeed[id].profileExhibits).map(
               ([exhibitId, value]) => {
                 state.userFeed[id].profileExhibits[exhibitId].exhibitPosts[
                   id
-                ].hideAdvocates = action.hideAdvocatesValue;
+                ].hideExhibits = action.hideExhibitsValue;
               }
             );
           }
@@ -985,7 +986,7 @@ export default (state = intialState, action: Action) => {
       }
       return {
         ...state,
-        hideAdvocates: action.hideAdvocatesValue,
+        hideExhibits: action.hideExhibitsValue,
       };
     case GET_SWITCHES:
       return {
@@ -994,7 +995,7 @@ export default (state = intialState, action: Action) => {
         showCheering: action.showCheering,
         hideFollowing: action.hideFollowing,
         hideFollowers: action.hideFollowers,
-        hideAdvocates: action.hideAdvocates,
+        hideExhibits: action.hideExhibits,
       };
     case SET_DARKMODE:
       return {

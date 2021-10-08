@@ -83,7 +83,7 @@ const EditProfileScreen = (props) => {
   const profileLinks = useAppSelector((state) => state.user.profileLinks);
   const followingValue = useAppSelector((state) => state.user.hideFollowing);
   const followersValue = useAppSelector((state) => state.user.hideFollowers);
-  const advocatesValue = useAppSelector((state) => state.user.hideAdvocates);
+  const exhibitsValue = useAppSelector((state) => state.user.hideExhibits);
   const tutorialing = useAppSelector((state) => state.user.tutorialing);
   const tutorialScreen = useAppSelector((state) => state.user.tutorialScreen);
 
@@ -155,7 +155,7 @@ const EditProfileScreen = (props) => {
         numberOfAdvocates,
         followingValue,
         followersValue,
-        advocatesValue,
+        exhibitsValue,
         profileBiography,
         exhibitTitle,
         exhibitCoverPhotoUrl,
