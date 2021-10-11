@@ -14,11 +14,11 @@ import UserTitleShowcaseLocal from "./UserTitleShowcaseLocal";
 
 const ExhibitUHeader = (props) => {
   const darkModeValue = useAppSelector((state) => state.user.darkMode);
-  const profileExhibits = useAppSelector((state) => state.user.profileExhibits);
   const links = Object.values(props.links);
   const followingValue = props.followingValue;
   const followersValue = props.followersValue;
   const exhibitsValue = props.exhibitsValue;
+  const numberOfExhibits = props.numberOfExhibits;
 
   const userDataProfileHeader = {
     numberOfFollowers: props.numberOfFollowers,
@@ -50,7 +50,7 @@ const ExhibitUHeader = (props) => {
           advocatesOnPress={props.advocatesOnPress}
           numberOfFollowers={userDataProfileHeader.numberOfFollowers}
           numberOfFollowing={userDataProfileHeader.numberOfFollowing}
-          numberOfExhibits={Object.keys(profileExhibits).length}
+          numberOfExhibits={numberOfExhibits}
         />
         {props.description ? (
           <Text style={props.descriptionStyle}>{props.description}</Text>
