@@ -261,7 +261,7 @@ const ProfileScreen = (props) => {
         backgroundColor: darkModeValue ? "black" : "white",
       }}
     >
-      {tutorialPrompt ? (
+      {/* {tutorialPrompt ? (
         <TutorialPrompt ExhibitUId={ExhibitUId} localId={localId} />
       ) : null}
       {tutorialing &&
@@ -283,7 +283,7 @@ const ProfileScreen = (props) => {
       (tutorialScreen === "TutorialEnd" ||
         tutorialScreen === "ExploreExhibit") ? (
         <TutorialEnd ExhibitUId={ExhibitUId} localId={localId} />
-      ) : null}
+      ) : null} */}
       <FlatList<Object | any>
         data={getData(profileExhibitsState)}
         keyExtractor={(item) => item.exhibitId}
