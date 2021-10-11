@@ -152,7 +152,8 @@ const ExploreScreen = (props) => {
           <NotificationCard
             image={itemData.item.profilePictureUrl}
             postImage={itemData.item.postImage}
-            username={itemData.item.username}
+            message={itemData.item.message}
+            action={itemData.item.action}
             exhibitContainer={{
               backgroundColor: darkModeValue ? "black" : "white",
               borderColor: darkModeValue ? "gray" : "#c9c9c9",
