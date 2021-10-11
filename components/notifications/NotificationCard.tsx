@@ -8,7 +8,6 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { grey100 } from "react-native-paper/lib/typescript/styles/colors";
 import { AnimatedGradient } from "../custom/AnimatedGradient/AnimatedGradient";
 
 const NotificationCard = (props) => {
@@ -61,25 +60,27 @@ const NotificationCard = (props) => {
             </View>
             <View style={{ ...styles.details, ...props.details }}>
               <Text style={{ ...styles.username, ...props.usernameStyle }}>
-                {props.username} is cheering on your post!
+                {props.message}
               </Text>
             </View>
-            <View style={{ flex: 1, alignItems: "flex-end" }}>
-              <Image
-                style={styles.postImage}
-                source={
-                  props.postImage
-                    ? { uri: props.postImage }
-                    : require("../../assets/default-post-icon.png")
-                }
-                onLoadStart={() => {
-                  setGreyColorValues(["rgba(0,0,0,1)", "rgba(50,50,50,1)"]);
-                }}
-                onLoadEnd={() => {
-                  setProfileImageIsLoading(false);
-                }}
-              />
-            </View>
+            {props.action === "follow" ? null : (
+              <View style={{ flex: 1, alignItems: "flex-end" }}>
+                <Image
+                  style={styles.postImage}
+                  source={
+                    props.postImage
+                      ? { uri: props.postImage }
+                      : require("../../assets/default-post-icon.png")
+                  }
+                  onLoadStart={() => {
+                    setGreyColorValues(["rgba(0,0,0,1)", "rgba(50,50,50,1)"]);
+                  }}
+                  onLoadEnd={() => {
+                    setProfileImageIsLoading(false);
+                  }}
+                />
+              </View>
+            )}
           </View>
         </TouchableCmp>
       </View>
