@@ -36,7 +36,7 @@ All contributions should be referenced to the [CONTRIBUTIONS](https://github.com
 ## Dependencies
 [Package.json](https://github.com/cwnicoletti/Diamond-Case/blob/main/package.json)
 
-"@react-native-async-storage/async-storage": "^1.15.0",<br />
+"@react-native-async-storage/async-storage": "~1.15.0",<br />
 "@react-native-community/masked-view": "0.1.10",<br />
 "algoliasearch": "^4.8.3",<br />
 "axios": "^0.21.1",<br />
@@ -48,9 +48,10 @@ All contributions should be referenced to the [CONTRIBUTIONS](https://github.com
 "expo-notifications": "~0.12.3",<br />
 "expo-status-bar": "~1.0.4",<br />
 "expo-web-browser": "~9.2.0",<br />
-"react": "16.13.1",<br />
+"firebase": "8.2.3",<br />
+"react": "^17.0.2",<br />
 "react-dom": "16.13.1",<br />
-"react-native": "https://github.com/expo/react-native/archive/sdk-41.0.0.tar.gz",<br />
+"react-native": "https://github.com/expo/react-native/archive/sdk-42.0.0.tar.gz",<br />
 "react-native-elements": "^3.0.0-alpha.1",<br />
 "react-native-gesture-handler": "~1.10.2",<br />
 "react-native-keyboard-aware-scroll-view": "^0.9.3",<br />
@@ -74,10 +75,11 @@ All contributions should be referenced to the [CONTRIBUTIONS](https://github.com
 ## DevDependencies
 [Package.json](https://github.com/cwnicoletti/Diamond-Case/blob/main/package.json)
 
-"firebase": "8.2.3",<br />
 "jest": "^26.6.3",<br />
-"jest-expo": "^42.0.0",<br />
+"jest-expo": "^42.1.0",<br />
+"metro-react-native-babel-preset": "^0.66.2",<br />
 "react-test-renderer": "^17.0.2",<br />
+"typescript": "~4.0.0"<br />
 
 ## Licensing
 The content of this repository is licensed under the terms specified in the [LICENSE](https://github.com/christiannicoletti/Diamond-Case/blob/master/LICENSE) file.
