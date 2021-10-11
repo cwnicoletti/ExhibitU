@@ -1,6 +1,6 @@
 import { AntDesign } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import {
   ActivityIndicator,
   Animated,
@@ -43,6 +43,7 @@ const FeedItem = (props) => {
     "rgba(50,50,50,1)",
     "rgba(0,0,0,1)",
   ]);
+  const darkModeValue = useAppSelector((state) => state.user.darkMode);
   const cheeredPosts = useAppSelector((state) => state.user.cheeredPosts);
   const showCheering = useAppSelector((state) => state.user.showCheering);
   const localId = useAppSelector((state) => state.auth.userId);
@@ -55,6 +56,7 @@ const FeedItem = (props) => {
   const fullname = props.fullname;
   const username = props.username;
   const jobTitle = props.jobTitle;
+  const postUrl = props.postUrl;
   const postDateCreated = toDateTime(props.postDateCreated);
 
   const fadeAnim = useRef(new Animated.Value(0)).current;
@@ -149,7 +151,7 @@ const FeedItem = (props) => {
             postId,
             posterExhibitUId,
             props.profileImageSource,
-            props.image,
+            postUrl,
             "cheer"
           )
         );
@@ -263,7 +265,7 @@ const FeedItem = (props) => {
                   >
                     <Text
                       style={{
-                        color: "white",
+                        color: darkModeValue ? "white" : "black",
                         fontWeight: "700",
                         marginLeft: 5,
                         fontSize: 11,
@@ -273,7 +275,7 @@ const FeedItem = (props) => {
                     </Text>
                     <Text
                       style={{
-                        color: "white",
+                        color: darkModeValue ? "white" : "black",
                         fontWeight: "500",
                         fontSize: 11,
                         marginLeft: 5,
@@ -298,7 +300,7 @@ const FeedItem = (props) => {
               {loadingCheer ? (
                 <ActivityIndicator
                   size="small"
-                  color="white"
+                  color={darkModeValue ? "white" : "black"}
                   style={{ marginRight: 10 }}
                 />
               ) : (
@@ -314,7 +316,7 @@ const FeedItem = (props) => {
                           }}
                           height={28}
                           width={28}
-                          fill="white"
+                          fill={darkModeValue ? "white" : "black"}
                         />
                       </View>
                     </TouchableCmp>
@@ -329,7 +331,7 @@ const FeedItem = (props) => {
                           }}
                           height={28}
                           width={28}
-                          fill="white"
+                          fill={darkModeValue ? "white" : "black"}
                         />
                       </View>
                     </TouchableCmp>
@@ -373,7 +375,7 @@ const FeedItem = (props) => {
                     }}
                     height={height / 5}
                     width={width / 5}
-                    fill="white"
+                    fill={darkModeValue ? "white" : "black"}
                   />
                 ) : (
                   <Cheer
@@ -384,7 +386,7 @@ const FeedItem = (props) => {
                     }}
                     height={height / 5}
                     width={width / 5}
-                    fill="white"
+                    fill={darkModeValue ? "white" : "black"}
                   />
                 )}
               </Animated.View>
