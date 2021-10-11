@@ -26,9 +26,6 @@ const NotificationsProfileScreen = (props) => {
   const darkModeValue = useAppSelector((state) => state.user.darkMode);
   const localId = useAppSelector((state) => state.auth.userId);
   const ExhibitUId = useAppSelector((state) => state.user.ExhibitUId);
-  const exhibitsAdvocating = useAppSelector(
-    (state) => state.user.exhibitsAdvocating
-  );
   const tutorialing = useAppSelector((state) => state.user.tutorialing);
   const tutorialScreen = useAppSelector((state) => state.user.tutorialScreen);
 
@@ -185,27 +182,6 @@ const NotificationsProfileScreen = (props) => {
     props.navigation.setParams({ isfollowing: isfollowing });
   }, [isfollowing]);
 
-  useDidMountEffect(() => {
-    if (isAdvocating) {
-      const exploredUserDataNewState = exploredUserData;
-      exploredUserDataNewState.advocates =
-        exploredUserDataNewState.advocates.filter(
-          (user) => user !== ExhibitUId
-        );
-      exploredUserDataNewState.numberOfAdvocates -= 1;
-      setIsAdvocating(false);
-      setExploredUserData(exploredUserDataNewState);
-    } else {
-      const exploredUserDataNewState = exploredUserData;
-      exploredUserDataNewState.advocates = [
-        ...exploredUserDataNewState.advocates,
-        ExhibitUId,
-      ];
-      exploredUserDataNewState.numberOfAdvocates += 1;
-      setIsAdvocating(true);
-      setExploredUserData(exploredUserDataNewState);
-    }
-  }, [exhibitsAdvocating]);
 
   const viewExhibitHandler = (
     exhibitTitle: string,
