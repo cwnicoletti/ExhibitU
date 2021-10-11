@@ -233,11 +233,8 @@ const FeedScreen = (props) => {
                 ? itemData.item.postPhotoBase64
                 : itemData.item.postPhotoUrl
             }
-            profileImageSource={
-              itemData.item.profilePictureBase64
-                ? itemData.item.profilePictureBase64
-                : itemData.item.profilePictureUrl
-            }
+            postUrl={itemData.item.postPhotoUrl}
+            profileImageSource={itemData.item.profilePictureUrl}
             exhibitTitle={itemData.item.exhibitTitle}
             caption={itemData.item.caption}
             numberOfCheers={itemData.item.numberOfCheers}
