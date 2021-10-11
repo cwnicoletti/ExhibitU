@@ -5,7 +5,6 @@ import {
   Platform,
   RefreshControl,
   StyleSheet,
-  Text,
   View,
 } from "react-native";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
@@ -15,22 +14,23 @@ import ExhibitItem from "../../components/exhibitItems/ExhibitItem";
 import IoniconsHeaderButton from "../../components/UI/header_buttons/IoniconsHeaderButton";
 import SimpleLineIconsHeaderButton from "../../components/UI/header_buttons/SimpleLineIconsHeaderButton";
 import MainHeaderTitle from "../../components/UI/MainHeaderTitle";
-import TutorialExploreProfile from "../../components/tutorial/TutorialExploreProfile";
-import useDidMountEffect from "../../helper/useDidMountEffect";
-import { followUser, unfollowUser } from "../../store/actions/user/user";
+import {
+  sendFollowNotification,
+  followUser,
+  unfollowUser,
+} from "../../store/actions/user/user";
 
 const ExploreProfileScreen = (props) => {
   const dispatch = useAppDispatch();
   const [isLoading, setIsLoading] = useState(false);
   const [isRefreshing, setIsRefreshing] = useState(false);
   const darkModeValue = useAppSelector((state) => state.user.darkMode);
+  const username = useAppSelector((state) => state.user.username);
   const localId = useAppSelector((state) => state.auth.userId);
   const ExhibitUId = useAppSelector((state) => state.user.ExhibitUId);
-  const exhibitsAdvocating = useAppSelector(
-    (state) => state.user.exhibitsAdvocating
+  const profilePictureUrl = useAppSelector(
+    (state) => state.user.profilePictureUrl
   );
-  const tutorialing = useAppSelector((state) => state.user.tutorialing);
-  const tutorialScreen = useAppSelector((state) => state.user.tutorialScreen);
 
   const [exploredUserData, setExploredUserData] = useState(
     props.navigation.getParam("exploreData")
@@ -42,108 +42,6 @@ const ExploreProfileScreen = (props) => {
     ? exploredUserData.profileExhibits
     : {};
 
-  if (
-    tutorialing &&
-    (tutorialScreen === "ExploreScreen" ||
-      tutorialScreen === "ExploreProfile" ||
-      tutorialScreen === "ExploreExhibit")
-  ) {
-    exploredUserData.profileExhibits = {
-      ["randomId121334"]: {
-        exhibitPosts: {
-          ["randomId121334h"]: {
-            ExhibitUId: ExhibitUId,
-            exhibitId: "randomId121334",
-            postId: "randomId121334h",
-            fullname: "test",
-            username: "test",
-            jobTitle: "test",
-            profileBiography: "test",
-            profileExhibits: {},
-            profilePictureUrl: "test",
-            postPhotoUrl:
-              "https://camo.githubusercontent.com/9aea0a68fd10f943a82ce8a434f6c126296568fdf17d0cc914d40a4feb4a9f10/68747470733a2f2f7265732e636c6f7564696e6172792e636f6d2f706572736f6e616c757365313233342f696d6167652f75706c6f61642f76313631373231353939392f436f43726561746f727765626170705f6c7a716e696e2e706e67",
-            postPhotoBase64: "",
-            numberOfCheers: 0,
-            numberOfComments: 0,
-            caption: "Sample post",
-            postLinks: {},
-            postDateCreated: {
-              _seconds: 7654757,
-              _minutes: 7654757,
-            },
-          },
-        },
-        exhibitTitle: "Sample Exhibit",
-        exhibitDescription:
-          "I've been working on a really cool web application!",
-        exhibitCoverPhotoUrl:
-          "https://res.cloudinary.com/showcase-79c28/image/upload/v1626117054/exhibit_pic_ysb6uu.png",
-        exhibitCoverPhotoBase64: "",
-        exhibitDateCreated: {
-          _seconds: 7654757,
-          _minutes: 7654757,
-        },
-        exhibitLastUpdated: {
-          _seconds: 7654757,
-          _minutes: 7654757,
-        },
-        exhibitLinks: {},
-        exhibitColumns: 2,
-      },
-    };
-    exploredUserData.profileBiography = exploredUserData.profileBiography
-      ? exploredUserData.profileBiography
-      : "Yes, it's me, Elon Tusk.";
-    exploredUserData.following = exploredUserData.following
-      ? exploredUserData.following
-      : [];
-    exploredUserData.followers = exploredUserData.followers
-      ? exploredUserData.followers
-      : [];
-    exploredUserData.advocates = exploredUserData.advocates
-      ? exploredUserData.advocates
-      : [];
-    exploredUserData.fullname = exploredUserData.fullname
-      ? exploredUserData.fullname
-      : "Elon Tusk";
-    exploredUserData.username = exploredUserData.username
-      ? exploredUserData.username
-      : "elontusk";
-    exploredUserData.jobTitle = exploredUserData.jobTitle
-      ? exploredUserData.jobTitle
-      : "CEO of companies";
-    exploredUserData.profilePictureUrl = exploredUserData.profilePictureUrl
-      ? exploredUserData.profilePictureUrl
-      : "";
-    exploredUserData.hideFollowing = exploredUserData.hideFollowing
-      ? exploredUserData.hideFollowing
-      : false;
-    exploredUserData.hideFollowers = exploredUserData.hideFollowers
-      ? exploredUserData.hideFollowers
-      : false;
-    exploredUserData.hideExhibits = exploredUserData.hideExhibits
-      ? exploredUserData.hideExhibits
-      : false;
-    exploredUserData.profileLinks = exploredUserData.profileLinks
-      ? exploredUserData.profileLinks
-      : {};
-    exploredUserData.profileColumns = exploredUserData.profileColumns
-      ? exploredUserData.profileColumns
-      : 2;
-    exploredUserData.showCheering = exploredUserData.showCheering
-      ? exploredUserData.showCheering
-      : true;
-    exploredUserData.numberOfFollowers = exploredUserData.numberOfFollowers
-      ? exploredUserData.numberOfFollowers
-      : 0;
-    exploredUserData.numberOfFollowing = exploredUserData.numberOfFollowing
-      ? exploredUserData.numberOfFollowing
-      : 0;
-    exploredUserData.numberOfAdvocates = exploredUserData.numberOfAdvocates
-      ? exploredUserData.numberOfAdvocates
-      : 0;
-  }
 
   const profileExhibitsState = Object.values(
     exploredUserData.profileExhibits
@@ -157,9 +55,6 @@ const ExploreProfileScreen = (props) => {
   const [isfollowing, setIsFollowing] = useState(
     exploredUserData.followers.includes(ExhibitUId) ? true : false
   );
-  const [isAdvocating, setIsAdvocating] = useState(
-    exploredUserData.advocates.includes(ExhibitUId) ? true : false
-  );
 
   let android: boolean = null;
   if (Platform.OS === "android") {
@@ -168,6 +63,14 @@ const ExploreProfileScreen = (props) => {
 
   const followUserHandler = useCallback(async () => {
     await setIsLoading(true);
+    dispatch(
+      sendFollowNotification(
+        username,
+        ExhibitUId,
+        exploredUserData.exploredExhibitUId,
+        profilePictureUrl
+      )
+    );
     await dispatch(
       await followUser(exploredUserData.exploredExhibitUId, ExhibitUId, localId)
     );
@@ -246,7 +149,6 @@ const ExploreProfileScreen = (props) => {
           exploredUserDataNewState.profileBiography = hit.profileBiography;
           exploredUserDataNewState.following = hit.following;
           exploredUserDataNewState.followers = hit.followers;
-          exploredUserDataNewState.advocates = hit.advocates;
           exploredUserDataNewState.fullname = hit.fullname;
           exploredUserDataNewState.username = hit.username;
           exploredUserDataNewState.jobTitle = hit.jobTitle;
@@ -259,7 +161,6 @@ const ExploreProfileScreen = (props) => {
           exploredUserDataNewState.showCheering = hit.showCheering;
           exploredUserDataNewState.numberOfFollowers = hit.numberOfFollowers;
           exploredUserDataNewState.numberOfFollowing = hit.numberOfFollowing;
-          exploredUserDataNewState.numberOfAdvocates = hit.numberOfAdvocates;
           setExploredUserData(exploredUserDataNewState);
         }
       });
@@ -287,28 +188,6 @@ const ExploreProfileScreen = (props) => {
   useEffect(() => {
     props.navigation.setParams({ isfollowing: isfollowing });
   }, [isfollowing]);
-
-  useDidMountEffect(() => {
-    if (isAdvocating) {
-      const exploredUserDataNewState = exploredUserData;
-      exploredUserDataNewState.advocates =
-        exploredUserDataNewState.advocates.filter(
-          (user) => user !== ExhibitUId
-        );
-      exploredUserDataNewState.numberOfAdvocates -= 1;
-      setIsAdvocating(false);
-      setExploredUserData(exploredUserDataNewState);
-    } else {
-      const exploredUserDataNewState = exploredUserData;
-      exploredUserDataNewState.advocates = [
-        ...exploredUserDataNewState.advocates,
-        ExhibitUId,
-      ];
-      exploredUserDataNewState.numberOfAdvocates += 1;
-      setIsAdvocating(true);
-      setExploredUserData(exploredUserDataNewState);
-    }
-  }, [exhibitsAdvocating]);
 
   const viewExhibitHandler = (
     exhibitTitle: string,
@@ -394,11 +273,11 @@ const ExploreProfileScreen = (props) => {
         backgroundColor: darkModeValue ? "black" : "white",
       }}
     >
-      {tutorialing &&
+      {/* {tutorialing &&
       (tutorialScreen === "ExploreProfile" ||
         tutorialScreen === "ExploreExhibit") ? (
         <TutorialExploreProfile ExhibitUId={ExhibitUId} localId={localId} />
-      ) : null}
+      ) : null} */}
       <FlatList<any>
         data={profileExhibitsState}
         keyExtractor={(item) => item.exhibitId}
@@ -552,7 +431,6 @@ const styles = StyleSheet.create({
   },
   profileContainerStyle: {
     justifyContent: "flex-start",
-    borderBottomWidth: 1,
   },
   text: {
     padding: 10,
