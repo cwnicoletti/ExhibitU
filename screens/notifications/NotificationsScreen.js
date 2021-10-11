@@ -21,6 +21,16 @@ const ExploreScreen = (props) => {
   );
   const notifications = useAppSelector((state) => state.user.notifications);
 
+  const [notificationsState, setNotificationsState] = useState(
+    notifications.sort((first, second) => {
+      return (
+        second["notificationDateCreated"]["_seconds"] -
+        first["notificationDateCreated"]["_seconds"]
+      );
+    })
+  );
+  console.log(notificationsState);
+
   const uploadToken = async () => {
     const tokenValue = await getNotificationPermissions();
 
@@ -101,6 +111,18 @@ const ExploreScreen = (props) => {
     });
   };
 
+  useDidMountEffect(() => {
+    // Sort the array based on the second element
+    setNotificationsState(
+      notifications.sort((first, second) => {
+        return (
+          second["notificationDateCreated"]["_seconds"] -
+          first["notificationDateCreated"]["_seconds"]
+        );
+      })
+    );
+  }, [notifications]);
+
   const flatlistNotifications = useRef();
   useDidMountEffect(() => {
     flatlistNotifications.current.scrollToOffset({ animated: true, offset: 0 });
@@ -109,7 +131,7 @@ const ExploreScreen = (props) => {
   const topHeader = () => {
     return (
       <View>
-        {notifications.length === 0 ? (
+        {notificationsState.length === 0 ? (
           <View style={{ alignItems: "center" }}>
             <Text style={{ color: "grey", margin: 10, marginTop: 20 }}>
               No notifications
@@ -137,7 +159,8 @@ const ExploreScreen = (props) => {
       }}
     >
       <FlatList
-        data={notifications}
+        data={notificationsState}
+        extraData={notificationsState}
         refreshControl={
           <RefreshControl
             refreshing={isRefreshing}
