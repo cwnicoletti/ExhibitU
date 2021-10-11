@@ -24,7 +24,6 @@ import { useAppDispatch, useAppSelector } from "../../hooks";
 import TutorialEditProfile from "../../components/tutorial/TutorialEditProfile";
 import Input from "../../components/UI/Input";
 import IoniconsHeaderButton from "../../components/UI/header_buttons/IoniconsHeaderButton";
-import ImageResizer from "react-native-image-resizer";
 import {
   uploadChangeProfilePicture,
   uploadUpdateUserProfile,
