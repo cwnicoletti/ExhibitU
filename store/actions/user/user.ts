@@ -216,13 +216,8 @@ export const refreshProfile = (localId: string) => {
       let parsedData: UserState = JSON.parse(data);
       parsedData.numberOfFollowers = profileInfo.data.data.numberOfFollowers;
       parsedData.numberOfFollowing = profileInfo.data.data.numberOfFollowing;
-      parsedData.numberOfAdvocates = profileInfo.data.data.numberOfAdvocates;
-      parsedData.numberOfAdvocating = profileInfo.data.data.numberOfAdvocating;
       parsedData.followers = followers;
       parsedData.following = following;
-      parsedData.advocates = advocates;
-      parsedData.advocating = advocating;
-      parsedData.exhibitsAdvocating = exhibitsAdvocating;
       parsedData.profileLinks = profileLinks;
       parsedData.cheeredPosts = cheeredPosts;
       parsedData.profileExhibits = profileExhibits;
@@ -585,72 +580,6 @@ export const unfollowUser = (
   };
 };
 
-export const advocateForUser = (
-  exploredExhibitUId: string,
-  ExhibitUId: string,
-  localId: string,
-  exhibitId: string
-) => {
-  return async (dispatch) => {
-    const user = { exploredExhibitUId, ExhibitUId, localId, exhibitId };
-
-    axios.post(
-      "https://us-central1-showcase-79c28.cloudfunctions.net/advocateForUser",
-      user
-    );
-
-    await AsyncStorage.getItem("userDocData").then(async (data) => {
-      let parsedData: UserState = JSON.parse(data);
-      parsedData.advocating.push(exploredExhibitUId);
-      parsedData.exhibitsAdvocating.push(exhibitId);
-      parsedData.numberOfAdvocating = parsedData.numberOfAdvocating + 1;
-      await AsyncStorage.setItem("userDocData", JSON.stringify(parsedData));
-    });
-
-    await dispatch({
-      type: ADVOCATE_FOR_USER,
-      exploredExhibitUId,
-      exhibitId,
-    });
-  };
-};
-
-export const unadvocateForUser = (
-  exploredExhibitUId: string,
-  ExhibitUId: string,
-  localId: string,
-  exhibitId: string
-) => {
-  return async (dispatch) => {
-    const user = { exploredExhibitUId, ExhibitUId, localId, exhibitId };
-
-    axios.post(
-      "https://us-central1-showcase-79c28.cloudfunctions.net/unadvocateForUser",
-      user
-    );
-
-    await AsyncStorage.getItem("userDocData").then(async (data) => {
-      let parsedData: UserState = JSON.parse(data);
-      parsedData.advocating.splice(
-        parsedData.advocating.indexOf(exploredExhibitUId),
-        1
-      );
-      parsedData.exhibitsAdvocating.splice(
-        parsedData.exhibitsAdvocating.indexOf(exhibitId),
-        1
-      );
-      parsedData.numberOfAdvocating = parsedData.numberOfAdvocating - 1;
-      await AsyncStorage.setItem("userDocData", JSON.stringify(parsedData));
-    });
-
-    await dispatch({
-      type: UNADVOCATE_FOR_USER,
-      exploredExhibitUId,
-      exhibitId,
-    });
-  };
-};
-
 export const uploadChangeProfilePicture = (
   base64: string,
   ExhibitUId: string,
@@ -674,8 +603,8 @@ export const uploadChangeProfilePicture = (
       if (parsedData.userFeed) {
         Object.entries(parsedData.userFeed).map(([id, value]) => {
           if (parsedData.userFeed[id].ExhibitUId === ExhibitUId) {
-            parsedData.userFeed[id].profilePictureBase64 =
-              parsedData.profilePictureBase64;
+            parsedData.userFeed[id].profilePictureUrl =
+              parsedData.profilePictureUrl;
           }
         });
       }
@@ -1535,6 +1464,27 @@ export const sendNotification = (
 
     axios.post(
       "https://us-central1-showcase-79c28.cloudfunctions.net/sendNotification",
+      notificationForm
+    );
+  };
+};
+
+export const sendFollowNotification = (
+  username: string,
+  ExhibitUId: string,
+  posterExhibitUId: string,
+  profilePictureUrl: string,
+) => {
+  return async () => {
+    const notificationForm = {
+      username,
+      ExhibitUId,
+      posterExhibitUId,
+      profilePictureUrl,
+    };
+
+    axios.post(
+      "https://us-central1-showcase-79c28.cloudfunctions.net/sendFollowNotification",
       notificationForm
     );
   };

@@ -66,14 +66,9 @@ const intialState: UserState = {
   profileBiography: "",
   numberOfFollowers: 0,
   numberOfFollowing: 0,
-  numberOfAdvocates: 0,
-  numberOfAdvocating: 0,
   profileColumns: 2,
   followers: [],
   following: [],
-  advocates: [],
-  advocating: [],
-  exhibitsAdvocating: [],
   cheeredPosts: [],
   profileExhibits: {},
   profileLinks: {},
@@ -186,8 +181,7 @@ export default (state = intialState, action: Action) => {
       if (state.userFeed) {
         Object.entries(state.userFeed).map(([id, value]) => {
           if (state.userFeed[id].ExhibitUId === action.ExhibitUId) {
-            state.userFeed[id].profilePictureBase64 =
-              action.profilePictureBase64;
+            state.userFeed[id].profilePictureUrl = action.profilePictureUrl;
             Object.entries(state.userFeed[id].profileExhibits).map(
               ([exhibitId, value]) => {
                 state.userFeed[id].profileExhibits[exhibitId].exhibitPosts[
@@ -474,29 +468,6 @@ export default (state = intialState, action: Action) => {
           action.exploredExhibitUId
         ),
         numberOfFollowing: state.numberOfFollowing - 1,
-      };
-    case ADVOCATE_FOR_USER:
-      return {
-        ...state,
-        advocating: pushReturn(state.advocating, action.exploredExhibitUId),
-        exhibitsAdvocating: pushReturn(
-          state.exhibitsAdvocating,
-          action.exhibitId
-        ),
-        numberOfAdvocating: state.numberOfAdvocating + 1,
-      };
-    case UNADVOCATE_FOR_USER:
-      return {
-        ...state,
-        advocating: spliceRemoveReturn(
-          state.advocating,
-          action.exploredExhibitUId
-        ),
-        exhibitsAdvocating: spliceRemoveReturn(
-          state.exhibitsAdvocating,
-          action.exhibitId
-        ),
-        numberOfAdvocating: state.numberOfAdvocating - 1,
       };
     case CHEER_POST:
       if (state.userFeed[action.postId]) {
