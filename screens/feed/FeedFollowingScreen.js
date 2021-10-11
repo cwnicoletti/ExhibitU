@@ -14,6 +14,7 @@ import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import { useAppSelector } from "../../hooks";
 import ExploreCard from "../../components/explore/ExploreCard";
 import IoniconsHeaderButton from "../../components/UI/header_buttons/IoniconsHeaderButton";
+import MainHeaderTitle from "../../components/UI/MainHeaderTitle";
 
 const FeedFollowingScreen = (props) => {
   const client = algoliasearch(

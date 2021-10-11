@@ -35,7 +35,7 @@ const StartupScreen = (props) => {
       }
 
       if (introing) {
-        props.navigation.navigate("Intro");
+        // props.navigation.navigate("Intro");
       } else {
         await dispatch(getUserData());
         await dispatch(authenticate(localId, token));

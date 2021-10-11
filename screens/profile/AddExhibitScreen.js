@@ -152,6 +152,7 @@ const AddExhibitScreen = (props) => {
       base64: true,
       quality: 1,
     });
+    
     await setIsLoadingTempPicture(true);
     if (!result.cancelled) {
       const fileSize = result.base64.length * (3 / 4) - 2;

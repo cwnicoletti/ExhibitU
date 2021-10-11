@@ -36,9 +36,6 @@ const FeedProfileScreen = (props) => {
           profileExhibits: useAppSelector((state) => state.user.profileExhibits)
             ? useAppSelector((state) => state.user.profileExhibits)
             : props.navigation.getParam("profileExhibits"),
-          numberOfAdvocates: useAppSelector(
-            (state) => state.user.numberOfAdvocates
-          ),
           numberOfFollowers: useAppSelector(
             (state) => state.user.numberOfFollowers
           ),
@@ -133,11 +130,6 @@ const FeedProfileScreen = (props) => {
         }
         followingOnPress={() =>
           props.navigation.push("ViewFollowing", {
-            ExhibitUId: userData.ExhibitUId,
-          })
-        }
-        advocatesOnPress={() =>
-          props.navigation.push("ViewAdvocates", {
             ExhibitUId: userData.ExhibitUId,
           })
         }
