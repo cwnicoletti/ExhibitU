@@ -66,6 +66,7 @@ export const signup = (
       getSignupResponse.data.docData.hideFollowers,
       getSignupResponse.data.docData.hideExhibits,
       getSignupResponse.data.docData.updates,
+      getSignupResponse.data.docData.notifications,
       getSignupResponse.data.docData.tutorialing,
       getSignupResponse.data.docData.tutorialPrompt,
       getSignupResponse.data.docData.tutorialScreen
@@ -125,61 +126,6 @@ export const login = (email: string, password: string) => {
     }
 
     let userFeed = await getLoginResponse.data.docData.userFeed;
-    // if (userFeed) {
-    //   const feedKeys = Object.keys(userFeed);
-    //   for (const key of feedKeys) {
-    //     const postPhotoBase64 = await getBase64FromUrl(
-    //       userFeed[key]["postPhotoUrl"]
-    //     );
-    //     userFeed[key]["postPhotoBase64"] = postPhotoBase64;
-    //     if (
-    //       userFeed[key].ExhibitUId === getLoginResponse.data.docData.ExhibitUId
-    //     ) {
-    //       userFeed[key]["profilePictureBase64"] = profilePictureBase64;
-    //     } else {
-    //       userFeed[key]["profilePictureBase64"] = await getBase64FromUrl(
-    //         userFeed[key]["profilePictureUrl"]
-    //       );
-    //     }
-    //     const feedExhibitKeys = Object.keys(userFeed[key].profileExhibits);
-    //     for (const exhibitKey of feedExhibitKeys) {
-    //       const postKeys = Object.keys(
-    //         userFeed[key].profileExhibits[exhibitKey].exhibitPosts
-    //       );
-    //       const exhibitCoverPhotoBase64 = await getBase64FromUrl(
-    //         userFeed[key].profileExhibits[exhibitKey]["exhibitCoverPhotoUrl"]
-    //       );
-    //       userFeed[key].profileExhibits[exhibitKey]["exhibitCoverPhotoBase64"] =
-    //         exhibitCoverPhotoBase64;
-    //       for (const postKey of postKeys) {
-    //         const postPhotoBase64 = await getBase64FromUrl(
-    //           userFeed[key].profileExhibits[exhibitKey].exhibitPosts[postKey][
-    //             "postPhotoUrl"
-    //           ]
-    //         );
-    //         userFeed[key].profileExhibits[exhibitKey].exhibitPosts[postKey][
-    //           "postPhotoBase64"
-    //         ] = postPhotoBase64;
-    //         if (
-    //           userFeed[key].ExhibitUId ===
-    //           getLoginResponse.data.docData.ExhibitUId
-    //         ) {
-    //           userFeed[key].profileExhibits[exhibitKey].exhibitPosts[postKey][
-    //             "profilePictureBase64"
-    //           ] = profilePictureBase64;
-    //         }
-    //       }
-    //     }
-    //   }
-    // }
-
-    const exhibitTempCoverPhotoBase64 = await getBase64FromUrl(
-      getLoginResponse.data.docData.exhibitTempCoverPhotoUrl
-    );
-
-    const tempPhotoPostBase64 = await getBase64FromUrl(
-      getLoginResponse.data.docData.tempPhotoPostUrl
-    );
 
     await saveUserDocumentToStorage(
       getLoginResponse.data.docData.ExhibitUId,
@@ -189,10 +135,10 @@ export const login = (email: string, password: string) => {
       profilePictureBase64,
       getLoginResponse.data.docData.exhibitTempCoverPhotoId,
       getLoginResponse.data.docData.exhibitTempCoverPhotoUrl,
-      exhibitTempCoverPhotoBase64,
+      getLoginResponse.data.docData.exhibitTempCoverPhotoBase64,
       getLoginResponse.data.docData.tempPhotoPostId,
       getLoginResponse.data.docData.tempPhotoPostUrl,
-      tempPhotoPostBase64,
+      getLoginResponse.data.docData.tempPhotoPostBase64,
       getLoginResponse.data.docData.fullname,
       getLoginResponse.data.docData.jobTitle,
       getLoginResponse.data.docData.username,
@@ -219,6 +165,7 @@ export const login = (email: string, password: string) => {
       getLoginResponse.data.docData.hideFollowers,
       getLoginResponse.data.docData.hideExhibits,
       getLoginResponse.data.docData.updates,
+      getLoginResponse.data.docData.notifications,
       getLoginResponse.data.docData.tutorialing,
       getLoginResponse.data.docData.tutorialPrompt,
       getLoginResponse.data.docData.tutorialScreen
@@ -287,6 +234,7 @@ const saveUserDocumentToStorage = async (
   hideFollowers: boolean,
   hideExhibits: boolean,
   updates: object,
+  notifications: object[],
   tutorialing: boolean,
   tutorialPrompt: boolean,
   tutorialScreen: string
@@ -329,6 +277,7 @@ const saveUserDocumentToStorage = async (
       hideFollowers,
       hideExhibits,
       updates,
+      notifications,
       tutorialing,
       tutorialPrompt,
       tutorialScreen,
