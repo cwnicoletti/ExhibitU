@@ -27,7 +27,6 @@ const Notifications = (props) => {
           }
           props.parentProps.navigation.navigate("Notifications");
         } else {
-          dispatch(refreshNotifications(localId));
           props.parentProps.navigation.navigate("Notifications");
         }
       }}
