@@ -94,7 +94,7 @@ const RightDrawer = (props) => {
           </View>
         </TouchableCmp>
       </View>
-      <View style={styles.drawerMiddleItemContainer}>
+      {/* <View style={styles.drawerMiddleItemContainer}>
         <AntDesign
           name="questioncircleo"
           size={20}
@@ -112,7 +112,7 @@ const RightDrawer = (props) => {
             </Text>
           </View>
         </TouchableCmp>
-      </View>
+      </View> */}
       <View style={styles.drawerLastItemContainer}>
         <View style={styles.drawerLastItemSubContainer}>
           <MaterialCommunityIcons
