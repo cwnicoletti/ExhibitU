@@ -35,9 +35,6 @@ const ShowcaseProfileScreen = (props) => {
           profileExhibits: useAppSelector((state) => state.user.profileExhibits)
             ? useAppSelector((state) => state.user.profileExhibits)
             : props.navigation.getParam("profileExhibits"),
-          numberOfAdvocates: useAppSelector(
-            (state) => state.user.numberOfAdvocates
-          ),
           numberOfFollowers: useAppSelector(
             (state) => state.user.numberOfFollowers
           ),
@@ -140,7 +137,7 @@ const ShowcaseProfileScreen = (props) => {
         exhibitsValue={userData.hideExhibits}
         numberOfFollowers={userData.numberOfFollowers}
         numberOfFollowing={userData.numberOfFollowing}
-        numberOfExhibits={Object.keys(userData.profileExhibits).length}
+        numberOfExhibits={Object.keys(profileExhibitsState).length}
         descriptionStyle={{
           ...styles.profileDescriptionStyle,
           color: darkModeValue ? "white" : "black",
