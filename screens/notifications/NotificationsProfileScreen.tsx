@@ -5,7 +5,6 @@ import {
   Platform,
   RefreshControl,
   StyleSheet,
-  Text,
   View,
 } from "react-native";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
@@ -16,7 +15,6 @@ import IoniconsHeaderButton from "../../components/UI/header_buttons/IoniconsHea
 import SimpleLineIconsHeaderButton from "../../components/UI/header_buttons/SimpleLineIconsHeaderButton";
 import MainHeaderTitle from "../../components/UI/MainHeaderTitle";
 import TutorialExploreProfile from "../../components/tutorial/TutorialExploreProfile";
-import useDidMountEffect from "../../helper/useDidMountEffect";
 import { followUser, unfollowUser } from "../../store/actions/user/user";
 
 const NotificationsProfileScreen = (props) => {
@@ -50,9 +48,6 @@ const NotificationsProfileScreen = (props) => {
 
   const [isfollowing, setIsFollowing] = useState(
     exploredUserData.followers.includes(ExhibitUId) ? true : false
-  );
-  const [isAdvocating, setIsAdvocating] = useState(
-    exploredUserData.advocates.includes(ExhibitUId) ? true : false
   );
 
   let android: boolean = null;
