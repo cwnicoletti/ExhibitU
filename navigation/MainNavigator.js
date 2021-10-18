@@ -15,6 +15,8 @@ import SignupOrLoginScreen from "../screens/auth/SignupOrLoginScreen";
 import SignupScreen1 from "../screens/auth/SignupScreen1";
 import SignupScreen2 from "../screens/auth/SignupScreen2";
 import SignupScreen3 from "../screens/auth/SignupScreen3";
+import PhotoPermissionsScreen from "../screens/auth/PhotoPermissionsScreen";
+import NotificationPermissionsScreen from "../screens/auth/NotificationPermissionsScreen";
 import SignupScreen4 from "../screens/auth/SignupScreen4";
 
 import ShowcaseSettingsScreen from "../screens/drawers/ShowcaseSettingsScreen";
@@ -337,8 +339,15 @@ const StartSignup = createStackNavigator({
   Signup1: SignupScreen1,
   Signup2: SignupScreen2,
   Signup3: SignupScreen3,
+  SignupPhotoPermissions: PhotoPermissionsScreen,
+  SignupNotificationPermissions: NotificationPermissionsScreen,
   Signup4: SignupScreen4,
   Login: LoginScreen,
+});
+
+const Permissions = createStackNavigator({
+  SignupPhotoPermissions: PhotoPermissionsScreen,
+  SignupNotificationPermissions: NotificationPermissionsScreen,
 });
 
 const IntroStack = createStackNavigator(
@@ -357,6 +366,7 @@ const MainNavigator = createSwitchNavigator({
   Startup: StartupScreen,
   Intro: IntroStack,
   StartAuth: StartSignup,
+  PermissionsStack: Permissions,
   Exhibit: FullAppNavigator,
 });
 
