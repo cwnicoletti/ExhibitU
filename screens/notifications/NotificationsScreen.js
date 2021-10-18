@@ -8,7 +8,6 @@ import { AntDesign } from "@expo/vector-icons";
 import NotificationCard from "../../components/notifications/NotificationCard";
 import useDidMountEffect from "../../helper/useDidMountEffect";
 import MainHeaderTitle from "../../components/UI/MainHeaderTitle";
-import uploadToken from "../../helper/uploadToken";
 
 const NotificationsScreen = (props) => {
   const dispatch = useAppDispatch();
@@ -31,10 +30,6 @@ const NotificationsScreen = (props) => {
   useEffect(() => {
     props.navigation.setParams({ darkMode: darkModeValue });
   }, [darkModeValue]);
-
-  useEffect(() => {
-    uploadToken(dispatch, localId);
-  }, []);
 
   const refreshNotificationPage = async () => {
     await setIsRefreshing(true);
