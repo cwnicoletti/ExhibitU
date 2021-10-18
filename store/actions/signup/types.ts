@@ -1,18 +1,18 @@
-export const INTROING = "INTROING";
+export const GETTING_PERMISSIONS = "GETTING_PERMISSIONS";
 export const SIGNUP_EMAIL = "SIGNUP_EMAIL";
 export const SIGNUP_FULLNAME = "SIGNUP_FULLNAME";
 export const SIGNUP_USERNAME = "SIGNUP_USERNAME";
 
 export interface SignUpState {
-  introing: boolean;
+  gettingPermissions: boolean;
   email: string;
   fullname: string;
   username: string;
 }
 
-interface ActionSetIntroing {
-  type: typeof INTROING;
-  introing: boolean;
+interface ActionGettingPermissions {
+  type: typeof GETTING_PERMISSIONS;
+  gettingPermissions: boolean;
 }
 
 interface ActionSetEmail {
@@ -31,7 +31,7 @@ interface ActionSetUsername {
 }
 
 export type Action =
-  | ActionSetIntroing
+  | ActionGettingPermissions
   | ActionSetEmail
   | ActionSetFullname
   | ActionSetUsername;

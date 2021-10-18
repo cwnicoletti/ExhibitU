@@ -2,8 +2,6 @@ import React, { useEffect, useState, useRef } from "react";
 import { StyleSheet, Text, View, FlatList, RefreshControl } from "react-native";
 import { useAppSelector, useAppDispatch } from "../../hooks";
 import { offScreen, refreshNotifications } from "../../store/actions/user/user";
-import getNotificationPermissions from "../../helper/getNotificationPermissions";
-import { setToken } from "../../store/actions/user/user";
 
 import { AntDesign } from "@expo/vector-icons";
 
@@ -11,7 +9,7 @@ import NotificationCard from "../../components/notifications/NotificationCard";
 import useDidMountEffect from "../../helper/useDidMountEffect";
 import MainHeaderTitle from "../../components/UI/MainHeaderTitle";
 
-const ExploreScreen = (props) => {
+const NotificationsScreen = (props) => {
   const dispatch = useAppDispatch();
   const [isRefreshing, setIsRefreshing] = useState(false);
   const darkModeValue = useAppSelector((state) => state.user.darkMode);
@@ -20,7 +18,6 @@ const ExploreScreen = (props) => {
     (state) => state.user.resetScrollNotifications
   );
   const notifications = useAppSelector((state) => state.user.notifications);
-
   const [notificationsState, setNotificationsState] = useState(
     notifications.sort((first, second) => {
       return (
@@ -29,18 +26,8 @@ const ExploreScreen = (props) => {
       );
     })
   );
-  console.log(notificationsState);
-
-  const uploadToken = async () => {
-    const tokenValue = await getNotificationPermissions();
-
-    if (tokenValue !== false) {
-      dispatch(setToken(localId, tokenValue));
-    }
-  };
 
   useEffect(() => {
-    uploadToken();
     props.navigation.setParams({ darkMode: darkModeValue });
   }, [darkModeValue]);
 
@@ -88,6 +75,7 @@ const ExploreScreen = (props) => {
     });
     props.navigation.navigate("NotificationsProfile", {
       exploreData: {
+        text: userData.username,
         exploredExhibitUId: userData.ExhibitUId,
         profilePictureUrl: userData.profilePictureUrl,
         fullname: userData.fullname,
@@ -194,7 +182,7 @@ const ExploreScreen = (props) => {
   );
 };
 
-ExploreScreen.navigationOptions = (navData) => {
+NotificationsScreen.navigationOptions = (navData) => {
   const darkModeValue = navData.navigation.getParam("darkMode");
   return {
     headerTitle: () => (
@@ -224,4 +212,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ExploreScreen;
+export default NotificationsScreen;

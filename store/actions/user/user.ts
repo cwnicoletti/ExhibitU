@@ -6,7 +6,6 @@ import {
   ADD_TEMP_PROJECT_PICTURE,
   ADD_USER_POST,
   ADD_USER_PROJECT,
-  ADVOCATE_FOR_USER,
   CHANGE_PROFILE_COLUMNS,
   CHANGE_PROFILE_PICTURE,
   CHANGE_PROJECT_COLUMNS,
@@ -35,7 +34,6 @@ import {
   SET_DARKMODE,
   SHOWCASE_PROFILE,
   SHOW_CHEERING,
-  UNADVOCATE_FOR_USER,
   UNCHEER_OWN_FEED_POST,
   UNCHEER_OWN_PROFILE_POST,
   UNCHEER_POST,
@@ -57,8 +55,6 @@ export const getUserData = () => {
     let followers = [];
     let following = [];
     let advocates = [];
-    let advocating = [];
-    let exhibitsAdvocating = [];
     let cheeredPosts = [];
     let profileExhibits = {};
     let profileLinks = {};
@@ -71,15 +67,6 @@ export const getUserData = () => {
     }
     if (transformedData.following) {
       following = transformedData.following;
-    }
-    if (transformedData.advocates) {
-      advocates = transformedData.advocates;
-    }
-    if (transformedData.advocating) {
-      advocating = transformedData.advocating;
-    }
-    if (transformedData.exhibitsAdvocating) {
-      exhibitsAdvocating = transformedData.exhibitsAdvocating;
     }
     if (transformedData.cheeredPosts) {
       cheeredPosts = transformedData.cheeredPosts;
@@ -119,8 +106,6 @@ export const getUserData = () => {
       profileBiography: transformedData.profileBiography,
       numberOfFollowers: transformedData.numberOfFollowers,
       numberOfFollowing: transformedData.numberOfFollowing,
-      numberOfAdvocates: transformedData.numberOfAdvocates,
-      numberOfAdvocating: transformedData.numberOfAdvocating,
       profileColumns: transformedData.profileColumns,
       darkMode: transformedData.darkMode,
       showCheering: transformedData.showCheering,
@@ -133,8 +118,6 @@ export const getUserData = () => {
       followers,
       following,
       advocates,
-      advocating,
-      exhibitsAdvocating,
       cheeredPosts,
       profileExhibits,
       profileLinks,
@@ -165,9 +148,6 @@ export const refreshProfile = (localId: string) => {
 
     let followers = [];
     let following = [];
-    let advocates = [];
-    let advocating = [];
-    let exhibitsAdvocating = [];
     let cheeredPosts = [];
     let profileExhibits = {};
     let profileLinks = {};
@@ -177,15 +157,6 @@ export const refreshProfile = (localId: string) => {
     }
     if (profileInfo.data.data.following) {
       following = profileInfo.data.data.following;
-    }
-    if (profileInfo.data.data.advocates) {
-      advocates = profileInfo.data.data.advocates;
-    }
-    if (profileInfo.data.data.advocating) {
-      advocating = profileInfo.data.data.advocating;
-    }
-    if (profileInfo.data.data.exhibitsAdvocating) {
-      exhibitsAdvocating = profileInfo.data.data.exhibitsAdvocating;
     }
     if (profileInfo.data.data.cheeredPosts) {
       cheeredPosts = profileInfo.data.data.cheeredPosts;
@@ -232,9 +203,6 @@ export const refreshProfile = (localId: string) => {
       numberOfAdvocating: profileInfo.data.data.numberOfAdvocating,
       followers,
       following,
-      advocates,
-      advocating,
-      exhibitsAdvocating,
       cheeredPosts,
       profileExhibits,
       profileLinks,
@@ -1473,7 +1441,7 @@ export const sendFollowNotification = (
   username: string,
   ExhibitUId: string,
   posterExhibitUId: string,
-  profilePictureUrl: string,
+  profilePictureUrl: string
 ) => {
   return async () => {
     const notificationForm = {

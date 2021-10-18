@@ -17,6 +17,7 @@ import IoniconsHeaderButton from "../../components/UI/header_buttons/IoniconsHea
 import { Ionicons } from "@expo/vector-icons";
 import { signup } from "../../store/actions/auth/auth";
 import MainHeaderTitle from "../../components/UI/MainHeaderTitle";
+import { setGettingPermissions } from "../../store/actions/signup/signup";
 
 const FORM_INPUT_UPDATE = "FORM_INPUT_UPDATE";
 
@@ -77,8 +78,9 @@ const SignupScreen2 = (props) => {
       await dispatch(
         signup(email, fullname, username, formState.inputValues.password)
       );
+      dispatch(setGettingPermissions(true));
       await setIsLoading(false);
-      await props.navigation.navigate("Exhibit");
+      await props.navigation.navigate("PermissionsStack");
     } else {
       await setIsLoading(false);
     }
