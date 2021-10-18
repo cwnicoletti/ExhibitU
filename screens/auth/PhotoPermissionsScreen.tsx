@@ -31,49 +31,43 @@ const PhotoPermissionsScreen = (props) => {
 
   return (
     <View style={styles.screen}>
-      <KeyboardAwareScrollView
-        enableResetScrollToCoords={false}
-        extraHeight={200}
-        keyboardShouldPersistTaps="handled"
-      >
-        <View style={styles.inner}>
-          <Text style={styles.text}>Enable photo access</Text>
-          <Text style={styles.smallerText}>
-            In order to post pictures ExhibitU must have permission to access
-            your phone's photos
-          </Text>
-          <Image
-            style={styles.image}
-            source={require("../../assets/default-post-icon.png")}
-          />
-          <View style={styles.authContainer}>
-            <TouchableCmp onPress={authHandler}>
-              <View
+      <View style={styles.inner}>
+        <Text style={styles.text}>Enable photo access</Text>
+        <Text style={styles.smallerText}>
+          In order to post pictures ExhibitU must have permission to access your
+          phone's photos
+        </Text>
+        <Image
+          style={styles.image}
+          source={require("../../assets/default-post-icon.png")}
+        />
+        <View style={styles.authContainer}>
+          <TouchableCmp onPress={authHandler}>
+            <View
+              style={{
+                borderColor: "#007AFF",
+                borderWidth: 1,
+                margin: 10,
+                alignItems: "center",
+                justifyContent: "center",
+                flexDirection: "row",
+              }}
+            >
+              <Text
                 style={{
-                  borderColor: "#007AFF",
-                  borderWidth: 1,
                   margin: 10,
-                  alignItems: "center",
-                  justifyContent: "center",
-                  flexDirection: "row",
+                  marginRight: 5,
+                  color: "#007AFF",
+                  fontSize: 16,
                 }}
               >
-                <Text
-                  style={{
-                    margin: 10,
-                    marginRight: 5,
-                    color: "#007AFF",
-                    fontSize: 16,
-                  }}
-                >
-                  Next
-                </Text>
-                <Feather name="arrow-right" size={16} color={"#007AFF"} />
-              </View>
-            </TouchableCmp>
-          </View>
+                Next
+              </Text>
+              <Feather name="arrow-right" size={16} color={"#007AFF"} />
+            </View>
+          </TouchableCmp>
         </View>
-      </KeyboardAwareScrollView>
+      </View>
     </View>
   );
 };
@@ -102,18 +96,13 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   image: {
-    width: 150,
-    height: 150,
+    width:  300,
+    height: 300,
   },
   text: {
     color: "white",
     marginTop: 20,
     fontSize: 22,
-  },
-  fullname: {
-    color: "white",
-    padding: 5,
-    fontSize: 20,
   },
   smallerText: {
     color: "white",
@@ -122,16 +111,6 @@ const styles = StyleSheet.create({
     fontSize: 12,
   },
   authContainer: {
-    shadowColor: null,
-    shadowOpacity: null,
-    shadowOffset: {
-      width: null,
-      height: null,
-    },
-    shadowRadius: null,
-    elevation: null,
-    borderRadius: null,
-    backgroundColor: "black",
     width: "90%",
     maxWidth: 400,
     maxHeight: 400,

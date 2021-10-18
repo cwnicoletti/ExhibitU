@@ -8,13 +8,13 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import IoniconsHeaderButton from "../../components/UI/header_buttons/IoniconsHeaderButton";
 import { Feather } from "@expo/vector-icons";
 import MainHeaderTitle from "../../components/UI/MainHeaderTitle";
 import uploadToken from "../../helper/uploadToken";
+import { setGettingPermissions } from "../../store/actions/signup/signup";
 
 const NotificationPermissionsScreen = (props) => {
   const dispatch = useAppDispatch();
@@ -26,6 +26,7 @@ const NotificationPermissionsScreen = (props) => {
   }
 
   const authHandler = async () => {
+    dispatch(setGettingPermissions(false));
     await props.navigation.navigate("Exhibit");
   };
 
@@ -35,20 +36,16 @@ const NotificationPermissionsScreen = (props) => {
 
   return (
     <View style={styles.screen}>
-      <KeyboardAwareScrollView
-        enableResetScrollToCoords={false}
-        extraHeight={200}
-        keyboardShouldPersistTaps="handled"
-      >
-        <View style={styles.inner}>
-          <Text style={styles.text}>Enable Notifications</Text>
-          <Text style={styles.smallerText}>
-            We can only send you notifications if you give us permission
-          </Text>
-          <Image
-            style={styles.image}
-            source={require("../../assets/default-profile-icon.jpg")}
-          />
+      <View style={styles.inner}>
+        <Text style={styles.text}>Enable Notifications</Text>
+        <Text style={styles.smallerText}>
+          We can only send you notifications if you give us permission
+        </Text>
+        <Image
+          style={styles.image}
+          source={require("../../assets/notifications.png")}
+        />
+        <View style={styles.authContainer}>
           <TouchableCmp onPress={authHandler}>
             <View
               style={{
@@ -74,7 +71,7 @@ const NotificationPermissionsScreen = (props) => {
             </View>
           </TouchableCmp>
         </View>
-      </KeyboardAwareScrollView>
+      </View>
     </View>
   );
 };
@@ -115,6 +112,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   image: {
+    margin: 30,
     width: 150,
     height: 150,
   },
@@ -135,16 +133,6 @@ const styles = StyleSheet.create({
     fontSize: 12,
   },
   authContainer: {
-    shadowColor: null,
-    shadowOpacity: null,
-    shadowOffset: {
-      width: null,
-      height: null,
-    },
-    shadowRadius: null,
-    elevation: null,
-    borderRadius: null,
-    backgroundColor: "black",
     width: "90%",
     maxWidth: 400,
     maxHeight: 400,
@@ -154,7 +142,7 @@ const styles = StyleSheet.create({
   },
   buttons: {
     alignItems: "center",
-    paddingVertical: 10,
+    padding: 10,
     color: "#00B7DB",
   },
 });
