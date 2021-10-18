@@ -181,7 +181,7 @@ export const login = (email: string, password: string) => {
         getLoginResponse.data.idToken
       )
     );
-    return authenticated;
+    return [authenticated, getLoginResponse.data.localId];
   };
 };
 

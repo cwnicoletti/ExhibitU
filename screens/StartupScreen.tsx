@@ -10,32 +10,34 @@ const StartupScreen = (props) => {
   useEffect(() => {
     const tryLogin = async () => {
       const userData = await AsyncStorage.getItem("userLoginData");
-      const introingData = await AsyncStorage.getItem("introing");
+      const permissionsData = await AsyncStorage.getItem("gettingPermissions");
 
-      const transformedIntroing = JSON.parse(introingData);
+      const transformedPermissions = JSON.parse(permissionsData);
       const transformedData = JSON.parse(userData);
 
-      let [localId, token, introing] = ["", "", true];
-      if (transformedIntroing) {
-        [{ introing }] = [transformedIntroing];
+      let [localId, token, gettingPermissions] = ["", "", true];
+      if (transformedPermissions) {
+        [{ gettingPermissions }] = [transformedPermissions];
       }
 
       if (transformedData) {
         [{ localId, token }] = [transformedData];
       }
 
-      if (!transformedData && !introing) {
+      if (!transformedData && !gettingPermissions) {
         props.navigation.navigate("StartAuth");
         return;
       }
 
-      if ((!token || !localId) && !introing) {
+      if ((!token || !localId) && !gettingPermissions) {
         props.navigation.navigate("StartAuth");
         return;
       }
 
-      if (introing) {
-        // props.navigation.navigate("Intro");
+      if (gettingPermissions) {
+        await dispatch(getUserData());
+        await dispatch(authenticate(localId, token));
+        props.navigation.navigate("PermissionsStack");
       } else {
         await dispatch(getUserData());
         await dispatch(authenticate(localId, token));

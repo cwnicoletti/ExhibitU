@@ -1,16 +1,19 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {
-  INTROING,
+  GETTING_PERMISSIONS,
   SIGNUP_EMAIL,
   SIGNUP_FULLNAME,
   SIGNUP_USERNAME,
 } from "./types";
 
-export const setIntroing = (value: boolean) => {
+export const setGettingPermissions = (value: boolean) => {
   return async (dispatch) => {
-    await AsyncStorage.setItem("introing", JSON.stringify({ introing: value }));
+    await AsyncStorage.setItem(
+      "gettingPermissions",
+      JSON.stringify({ gettingPermissions: value })
+    );
 
-    await dispatch({ type: INTROING, introing: value });
+    await dispatch({ type: GETTING_PERMISSIONS, gettingPermissions: value });
   };
 };
 
