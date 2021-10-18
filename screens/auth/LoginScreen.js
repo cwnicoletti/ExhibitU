@@ -18,6 +18,7 @@ import Input from "../../components/UI/Input";
 import IoniconsHeaderButton from "../../components/UI/header_buttons/IoniconsHeaderButton";
 import { login } from "../../store/actions/auth/auth";
 import MainHeaderTitle from "../../components/UI/MainHeaderTitle";
+import uploadToken from "../../helper/uploadToken";
 
 const FORM_INPUT_UPDATE = "FORM_INPUT_UPDATE";
 
@@ -69,11 +70,12 @@ const LoginScreen = (props) => {
 
   const authHandler = async () => {
     await setIsLoading(true);
-    const authenticated = await dispatch(
+    const [authenticated, localId] = await dispatch(
       await login(formState.inputValues.email, formState.inputValues.password)
     );
     await setIsLoading(false);
     if (authenticated) {
+      uploadToken(dispatch, localId);
       await props.navigation.navigate("Exhibit");
     } else {
       Alert.alert("Invalid Credentials", "Invalid username or password", [
