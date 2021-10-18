@@ -12,6 +12,9 @@ import userReducer from "./store/reducers/user";
 import firebase from "firebase/app";
 import * as Notifications from "expo-notifications";
 import FirebaseConfig from "./config";
+import { useFonts } from "expo-font";
+
+// Notification Icon made by Freepik from www.flaticon.com
 
 // Initialize Firebase
 const firebaseConfig = {
@@ -46,6 +49,10 @@ export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch | any;
 
 const App = () => {
+  const [loaded] = useFonts({
+    CormorantUpright: require("./assets/fonts/CormorantUpright-Regular.ttf"),
+  });
+
   return (
     <Provider store={store}>
       <SafeAreaProvider>

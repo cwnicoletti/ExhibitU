@@ -1,16 +1,7 @@
-import { useFonts } from "expo-font";
 import React from "react";
 import { StyleSheet } from "react-native";
 
 const Title = (props) => {
-  const [loaded] = useFonts({
-    CormorantUpright: require("../../assets/fonts/CormorantUpright-Regular.ttf"),
-  });
-
-  if (!loaded) {
-    return null;
-  }
-
   return (
     <props.View
       style={{
