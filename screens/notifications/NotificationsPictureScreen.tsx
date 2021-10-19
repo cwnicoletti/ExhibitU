@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { ScrollView, StyleSheet, Text, View } from "react-native";
+import { ScrollView, StyleSheet } from "react-native";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import { useAppSelector } from "../../hooks";
 import ExplorePostView from "../../components/explore/ExplorePostView";
 import IoniconsHeaderButton from "../../components/UI/header_buttons/IoniconsHeaderButton";
 import MainHeaderTitle from "../../components/UI/MainHeaderTitle";
-import getExlusiveBothSetsDifference from "../../helper/getExlusiveBothSetsDifference";
 import useDidMountEffect from "../../helper/useDidMountEffect";
 
 const NotificationsPictureScreen = (props) => {
   const darkModeValue = useAppSelector((state) => state.user.darkMode);
+  const exploredUserData = props.navigation.getParam("exploredUserData");
   const ExhibitUId = props.navigation.getParam("ExhibitUId");
   const currentExhibitId = props.navigation.getParam("exhibitId");
   const postId = props.navigation.getParam("postId");
@@ -24,12 +24,11 @@ const NotificationsPictureScreen = (props) => {
   const caption = props.navigation.getParam("caption");
   const links = props.navigation.getParam("postLinks");
   const postDateCreated = props.navigation.getParam("postDateCreated");
-  const exploredUserData = props.navigation.getParam("exploredUserData");
   const cheeredPosts = useAppSelector((state) => state.user.cheeredPosts);
   const [intialCheeredPosts, setIntialCheeredPosts] = useState([]);
 
   const viewCheeringHandler = () => {
-    props.navigation.navigate("NotificationsCheering", {
+    props.navigation.navigate("ExploreCheering", {
       ExhibitUId: ExhibitUId,
       exhibitId: currentExhibitId,
       postId: postId,
@@ -38,7 +37,7 @@ const NotificationsPictureScreen = (props) => {
   };
 
   const viewProfileHandler = () => {
-    props.navigation.push("NotificationsProfile", {
+    props.navigation.push("ExploreProfile", {
       ...exploredUserData,
       ExhibitUId: ExhibitUId,
     });
@@ -46,7 +45,25 @@ const NotificationsPictureScreen = (props) => {
 
   useEffect(() => {
     setIntialCheeredPosts(cheeredPosts);
-    props.navigation.setParams({ exhibitId: currentExhibitId });
+  }, []);
+
+  useEffect(() => {
+    const algoliasearch = require("algoliasearch");
+    const client = algoliasearch(
+      "EXC8LH5MAX",
+      "2d8cedcaab4cb2b351e90679963fbd92"
+    );
+    const index = client.initIndex("users");
+    index.search(exploredUserData.text).then((responses) => {
+      for (const object of responses.hits) {
+        if (object.objectID === exploredUserData.exploredExhibitUId) {
+          setNumberOfCheers(
+            object.profileExhibits[currentExhibitId].exhibitPosts[postId]
+              .numberOfCheers
+          );
+        }
+      }
+    });
   }, []);
 
   useEffect(() => {
@@ -54,25 +71,10 @@ const NotificationsPictureScreen = (props) => {
   }, [darkModeValue]);
 
   useDidMountEffect(() => {
-    const difference = getExlusiveBothSetsDifference(
-      intialCheeredPosts,
-      cheeredPosts
-    );
-    const exploredUserDataNewState = exploredUserData;
-    for (const exhibitId of Object.keys(
-      exploredUserDataNewState.profileExhibits
-    )) {
-      for (const postId of Object.keys(
-        exploredUserDataNewState.profileExhibits[exhibitId].exhibitPosts
-      )) {
-        if (postId === difference[0]) {
-          if (intialCheeredPosts.length < cheeredPosts.length) {
-            setNumberOfCheers((prevState) => prevState + 1);
-          } else {
-            setNumberOfCheers((prevState) => prevState - 1);
-          }
-        }
-      }
+    if (intialCheeredPosts.length < cheeredPosts.length) {
+      setNumberOfCheers((prevState) => prevState + 1);
+    } else {
+      setNumberOfCheers((prevState) => prevState - 1);
     }
     setIntialCheeredPosts(cheeredPosts);
   }, [cheeredPosts]);
