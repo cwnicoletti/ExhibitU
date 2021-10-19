@@ -59,7 +59,31 @@ const FollowersScreen = (props) => {
 
   const searchFilterFunction = (text) => {
     setSearch(text);
-    returnIndex(text);
+    if (!/^ *$/.test(text)) {
+      index.search(text).then((responses) => {
+        if (!Array.isArray(responses.hits) || !responses.hits.length) {
+          setReturnedIndex([]);
+        } else {
+          const followers = responses.hits.find(
+            (object) => object.objectID === ExhibitUId
+          ).followers;
+          const filteredIndex = responses.hits.filter((object) =>
+            followers.includes(object.objectID)
+          );
+          setReturnedIndex(filteredIndex);
+        }
+      });
+    } else {
+      index.search("").then((responses) => {
+        const followers = responses.hits.find(
+          (object) => object.objectID === ExhibitUId
+        ).followers;
+        const filteredIndex = responses.hits.filter((object) =>
+          followers.includes(object.objectID)
+        );
+        setReturnedIndex(filteredIndex);
+      });
+    }
   };
 
   const refreshSearchIndex = (text) => {
