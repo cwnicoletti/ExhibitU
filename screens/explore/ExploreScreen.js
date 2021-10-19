@@ -15,34 +15,24 @@ import ExploreCard from "../../components/explore/ExploreCard";
 import MainHeaderTitle from "../../components/UI/MainHeaderTitle";
 import useDidMountEffect from "../../helper/useDidMountEffect";
 import getExlusiveBothSetsDifference from "../../helper/getExlusiveBothSetsDifference";
-import TutorialExploreScreen from "../../components/tutorial/TutorialExploreScreen";
 import { offScreen } from "../../store/actions/user/user";
 import { FontAwesome5 } from "@expo/vector-icons";
 
 const ExploreScreen = (props) => {
   const dispatch = useAppDispatch();
   const darkModeValue = useAppSelector((state) => state.user.darkMode);
-  const localId = useAppSelector((state) => state.auth.userId);
   const ExhibitUId = useAppSelector((state) => state.user.ExhibitUId);
   const [search, setSearch] = useState("");
   const [returnedIndex, setReturnedIndex] = useState([]);
   const [isRefreshing, setIsRefreshing] = useState(false);
-  const advocating = useAppSelector((state) => state.user.advocating);
-  const [intialAdvocating, setIntialAdvocating] = useState([]);
   const following = useAppSelector((state) => state.user.following);
   const [intialFollowing, setIntialFollowing] = useState([]);
-  const cheeredPosts = useAppSelector((state) => state.user.cheeredPosts);
-  const [intialCheeredPosts, setIntialCheeredPosts] = useState([]);
   const resetScrollExplore = useAppSelector(
     (state) => state.user.resetScrollExplore
   );
-  const tutorialing = useAppSelector((state) => state.user.tutorialing);
-  const tutorialScreen = useAppSelector((state) => state.user.tutorialScreen);
 
   useEffect(() => {
-    setIntialAdvocating(advocating);
     setIntialFollowing(following);
-    setIntialCheeredPosts(cheeredPosts);
   }, []);
 
   useEffect(() => {
@@ -138,38 +128,6 @@ const ExploreScreen = (props) => {
 
   useDidMountEffect(() => {
     const difference = getExlusiveBothSetsDifference(
-      intialAdvocating,
-      advocating
-    );
-    if (search) {
-      const algoliasearch = require("algoliasearch");
-      const client = algoliasearch(
-        "EXC8LH5MAX",
-        "2d8cedcaab4cb2b351e90679963fbd92"
-      );
-      const index = client.initIndex("users");
-      index.search(search).then((responses) => {
-        for (const object of responses.hits) {
-          if (object.objectID === difference[0]) {
-            if (intialAdvocating.length < advocating.length) {
-              object.numberOfAdvocates += 1;
-              object.advocates = [...object.advocates, ExhibitUId];
-            } else {
-              object.numberOfAdvocates -= 1;
-              object.advocates = object.advocates.filter(
-                (userId) => userId !== ExhibitUId
-              );
-            }
-          }
-        }
-        setReturnedIndex(responses.hits);
-      });
-    }
-    setIntialAdvocating(advocating);
-  }, [advocating]);
-
-  useDidMountEffect(() => {
-    const difference = getExlusiveBothSetsDifference(
       intialFollowing,
       following
     );
@@ -200,65 +158,6 @@ const ExploreScreen = (props) => {
     setIntialFollowing(following);
   }, [following]);
 
-  useDidMountEffect(() => {
-    const difference = getExlusiveBothSetsDifference(
-      intialCheeredPosts,
-      cheeredPosts
-    );
-    if (search) {
-      const algoliasearch = require("algoliasearch");
-      const client = algoliasearch(
-        "EXC8LH5MAX",
-        "2d8cedcaab4cb2b351e90679963fbd92"
-      );
-      const index = client.initIndex("users");
-      index.search(search).then((responses) => {
-        for (const object of responses.hits) {
-          if (object) {
-            if (object.profileExhibits) {
-              for (const exhibitId of Object.keys(object.profileExhibits)) {
-                if (object.profileExhibits[exhibitId].exhibitPosts) {
-                  for (const postId of Object.keys(
-                    object.profileExhibits[exhibitId].exhibitPosts
-                  )) {
-                    if (postId === difference[0]) {
-                      if (intialCheeredPosts.length < cheeredPosts.length) {
-                        object.profileExhibits[exhibitId].exhibitPosts[
-                          postId
-                        ].numberOfCheers += 1;
-                        object.profileExhibits[exhibitId].exhibitPosts[
-                          postId
-                        ].cheering = [
-                          ...object.profileExhibits[exhibitId].exhibitPosts[
-                            postId
-                          ].cheering,
-                          ExhibitUId,
-                        ];
-                      } else {
-                        object.profileExhibits[exhibitId].exhibitPosts[
-                          postId
-                        ].numberOfCheers -= 1;
-                        object.profileExhibits[exhibitId].exhibitPosts[
-                          postId
-                        ].cheering = object.profileExhibits[
-                          exhibitId
-                        ].exhibitPosts[postId].cheering.filter(
-                          (userId) => userId !== ExhibitUId
-                        );
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-        setReturnedIndex(responses.hits);
-      });
-    }
-    setIntialCheeredPosts(cheeredPosts);
-  }, [cheeredPosts]);
-
   const flatlistExplore = useRef();
   useDidMountEffect(() => {
     flatlistExplore.current.scrollToOffset({ animated: true, offset: 0 });
@@ -271,12 +170,6 @@ const ExploreScreen = (props) => {
         backgroundColor: darkModeValue ? "black" : "white",
       }}
     >
-      {tutorialing &&
-      (tutorialScreen === "ExploreScreen" ||
-        tutorialScreen === "FeedView" ||
-        tutorialScreen === "ExploreProfile") ? (
-        <TutorialExploreScreen ExhibitUId={ExhibitUId} localId={localId} />
-      ) : null}
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
         <View style={{ alignItems: "center" }}>
           <SearchBar

@@ -12,11 +12,6 @@ import {
 } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import ExhibitItem from "../../components/exhibitItems/ExhibitItem";
-import TutorialPrompt from "../../components/tutorial/TutorialPrompt";
-import TutorialStart from "../../components/tutorial/TutorialStart";
-import TutorialCreateExhibit from "../../components/tutorial/TutorialCreateExhibit";
-import TutorialExploreExhibit from "../../components/tutorial/TutorialExploreExhibit";
-import TutorialEnd from "../../components/tutorial/TutorialEnd";
 import ProfileHeader from "../../components/user/ProfileHeader";
 import useDidMountEffect from "../../helper/useDidMountEffect";
 import {
@@ -36,9 +31,6 @@ const ProfileScreen = (props) => {
   const darkModeValue = useAppSelector((state) => state.user.darkMode);
   const localId = useAppSelector((state) => state.auth.userId);
   const ExhibitUId = useAppSelector((state) => state.user.ExhibitUId);
-  const tutorialing = useAppSelector((state) => state.user.tutorialing);
-  const tutorialPrompt = useAppSelector((state) => state.user.tutorialPrompt);
-  const tutorialScreen = useAppSelector((state) => state.user.tutorialScreen);
 
   const profilePictureBase64 = useAppSelector(
     (state) => state.user.profilePictureBase64
@@ -261,29 +253,6 @@ const ProfileScreen = (props) => {
         backgroundColor: darkModeValue ? "black" : "white",
       }}
     >
-      {/* {tutorialPrompt ? (
-        <TutorialPrompt ExhibitUId={ExhibitUId} localId={localId} />
-      ) : null}
-      {tutorialing &&
-      !tutorialPrompt &&
-      (tutorialScreen === "Start" || tutorialScreen === "EditProfile") ? (
-        <TutorialStart ExhibitUId={ExhibitUId} localId={localId} />
-      ) : null}
-      {tutorialing &&
-      !tutorialPrompt &&
-      (tutorialScreen === "CreateExhibit" ||
-        tutorialScreen === "ExhibitCreation") ? (
-        <TutorialCreateExhibit ExhibitUId={ExhibitUId} localId={localId} />
-      ) : null}
-      {tutorialing && !tutorialPrompt && tutorialScreen === "ExhibitView" ? (
-        <TutorialExploreExhibit ExhibitUId={ExhibitUId} localId={localId} />
-      ) : null}
-      {tutorialing &&
-      !tutorialPrompt &&
-      (tutorialScreen === "TutorialEnd" ||
-        tutorialScreen === "ExploreExhibit") ? (
-        <TutorialEnd ExhibitUId={ExhibitUId} localId={localId} />
-      ) : null} */}
       <FlatList<Object | any>
         data={getData(profileExhibitsState)}
         keyExtractor={(item) => item.exhibitId}

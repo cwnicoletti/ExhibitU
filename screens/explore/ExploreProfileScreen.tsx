@@ -31,17 +31,15 @@ const ExploreProfileScreen = (props) => {
   const profilePictureUrl = useAppSelector(
     (state) => state.user.profilePictureUrl
   );
-
   const [exploredUserData, setExploredUserData] = useState(
     props.navigation.getParam("exploreData")
       ? props.navigation.getParam("exploreData")
       : {}
   );
-  // Empty dict if user doesn't have any exhibits yet
+  // Empty object if user doesn't have any exhibits yet
   exploredUserData.profileExhibits = exploredUserData.profileExhibits
     ? exploredUserData.profileExhibits
     : {};
-
 
   const profileExhibitsState = Object.values(
     exploredUserData.profileExhibits
@@ -273,11 +271,6 @@ const ExploreProfileScreen = (props) => {
         backgroundColor: darkModeValue ? "black" : "white",
       }}
     >
-      {/* {tutorialing &&
-      (tutorialScreen === "ExploreProfile" ||
-        tutorialScreen === "ExploreExhibit") ? (
-        <TutorialExploreProfile ExhibitUId={ExhibitUId} localId={localId} />
-      ) : null} */}
       <FlatList<any>
         data={profileExhibitsState}
         keyExtractor={(item) => item.exhibitId}

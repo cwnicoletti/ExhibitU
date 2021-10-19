@@ -42,8 +42,6 @@ import {
   UPDATE_ALL_POSTS,
   UPDATE_USER_PROFILE,
   UPDATE_USER_PROJECT,
-  SET_TUTORIALING,
-  SET_TUTORIALING_PROMPT,
   UserState,
 } from "./types";
 
@@ -1731,62 +1729,5 @@ export const setHideExhibits = (
     });
 
     dispatch({ type: HIDE_EXHIBITS, ExhibitUId, hideExhibitsValue: value });
-  };
-};
-
-export const setTutorialing = (
-  localId: string,
-  ExhibitUId: string,
-  value: boolean,
-  screen: string
-) => {
-  return async (dispatch) => {
-    const tutorialingData = {
-      localId,
-      ExhibitUId,
-      value,
-      screen,
-    };
-
-    axios.post(
-      `https://us-central1-showcase-79c28.cloudfunctions.net/setTutorialing`,
-      tutorialingData
-    );
-
-    await AsyncStorage.getItem("userDocData").then(async (data) => {
-      let parsedData: UserState = JSON.parse(data);
-      parsedData.tutorialing = value;
-      parsedData.tutorialScreen = screen;
-      await AsyncStorage.setItem("userDocData", JSON.stringify(parsedData));
-    });
-
-    dispatch({ type: SET_TUTORIALING, value, screen });
-  };
-};
-
-export const setTutorialPrompt = (
-  localId: string,
-  ExhibitUId: string,
-  value: boolean
-) => {
-  return async (dispatch) => {
-    const tutorialingData = {
-      localId,
-      ExhibitUId,
-      value,
-    };
-
-    axios.post(
-      `https://us-central1-showcase-79c28.cloudfunctions.net/setTutorialPrompt`,
-      tutorialingData
-    );
-
-    await AsyncStorage.getItem("userDocData").then(async (data) => {
-      let parsedData: UserState = JSON.parse(data);
-      parsedData.tutorialPrompt = value;
-      await AsyncStorage.setItem("userDocData", JSON.stringify(parsedData));
-    });
-
-    dispatch({ type: SET_TUTORIALING_PROMPT, value });
   };
 };

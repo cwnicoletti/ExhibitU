@@ -27,8 +27,6 @@ export const GET_USER_FEED = "GET_USER_FEED";
 export const GET_UPDATES = "GET_UPDATES";
 export const FOLLOW_USER = "FOLLOW_USER";
 export const UNFOLLOW_USER = "UNFOLLOW_USER";
-export const ADVOCATE_FOR_USER = "ADVOCATE_FOR_USER";
-export const UNADVOCATE_FOR_USER = "UNADVOCATE_FOR_USER";
 
 export const UPDATE_USER_PROFILE = "UPDATE_USER_PROFILE";
 export const REFRESH_PROFILE = "REFRESH_PROFILE";
@@ -94,22 +92,14 @@ export interface UserState {
   onExploreScreen: boolean;
   onProfileScreen: boolean;
   onNotificationsScreen: boolean;
-  tutorialing: boolean;
-  tutorialPrompt: boolean;
-  tutorialScreen: string;
 }
 
 interface ActionRefreshProfile {
   type: typeof REFRESH_PROFILE;
   numberOfFollowers: number;
   numberOfFollowing: number;
-  numberOfAdvocates: number;
-  numberOfAdvocating: number;
   followers: string[];
   following: string[];
-  advocates: string[];
-  advocating: string[];
-  exhibitsAdvocating: string[];
   cheeredPosts: string[];
   profileExhibits: object;
   profileLinks: object;
@@ -137,14 +127,9 @@ interface ActionGetUserData {
   profileBiography: string;
   numberOfFollowers: number;
   numberOfFollowing: number;
-  numberOfAdvocates: number;
-  numberOfAdvocating: number;
   profileColumns: number;
   followers: string[];
   following: string[];
-  advocates: string[];
-  advocating: string[];
-  exhibitsAdvocating: string[];
   cheeredPosts: string[];
   notifications: object[];
   profileExhibits: object;
@@ -156,9 +141,6 @@ interface ActionGetUserData {
   hideFollowers: boolean;
   hideExhibits: boolean;
   updates: object;
-  tutorialing: boolean;
-  tutorialPrompt: boolean;
-  tutorialScreen: string;
 }
 interface ActionGetSwitches {
   type: typeof GET_SWITCHES;
@@ -215,16 +197,6 @@ interface ActionUnfollowUser {
   type: typeof UNFOLLOW_USER;
   exploredExhibitUId: string;
 }
-interface ActionAdvocateForUser {
-  type: typeof ADVOCATE_FOR_USER;
-  exploredExhibitUId: string;
-  exhibitId: string;
-}
-interface ActionUnadvocateForUser {
-  type: typeof UNADVOCATE_FOR_USER;
-  exploredExhibitUId: string;
-  exhibitId: string;
-}
 interface ActionChangeProfilePicture {
   type: typeof CHANGE_PROFILE_PICTURE;
   profilePictureId: string;
@@ -261,7 +233,6 @@ interface ActionAddUserPost {
   exhibitTitle: string;
   numberOfFollowers: number;
   numberOfFollowing: number;
-  numberOfAdvocates: number;
   followingValue: boolean;
   followersValue: boolean;
   exhibitsValue: boolean;
@@ -396,15 +367,6 @@ interface ActionHideExhibits {
   ExhibitUId: string;
   hideExhibitsValue: boolean;
 }
-interface ActionSetTutorialing {
-  type: typeof SET_TUTORIALING;
-  value: boolean;
-  screen: string;
-}
-interface ActionSetTutorialingPrompt {
-  type: typeof SET_TUTORIALING_PROMPT;
-  value: boolean;
-}
 
 export type Action =
   | ActionRefreshProfile
@@ -418,8 +380,6 @@ export type Action =
   | ActionRemoveUserPost
   | ActionFollowUser
   | ActionUnfollowUser
-  | ActionAdvocateForUser
-  | ActionUnadvocateForUser
   | ActionChangeProfilePicture
   | ActionAddTempExhibitPicture
   | ActionAddTempPostPicture
@@ -448,6 +408,4 @@ export type Action =
   | ActionShowCheering
   | ActionHideFollowing
   | ActionHideFollowers
-  | ActionHideExhibits
-  | ActionSetTutorialing
-  | ActionSetTutorialingPrompt;
+  | ActionHideExhibits;
