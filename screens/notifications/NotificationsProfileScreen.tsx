@@ -14,7 +14,6 @@ import ExhibitItem from "../../components/exhibitItems/ExhibitItem";
 import IoniconsHeaderButton from "../../components/UI/header_buttons/IoniconsHeaderButton";
 import SimpleLineIconsHeaderButton from "../../components/UI/header_buttons/SimpleLineIconsHeaderButton";
 import MainHeaderTitle from "../../components/UI/MainHeaderTitle";
-import TutorialExploreProfile from "../../components/tutorial/TutorialExploreProfile";
 import { followUser, unfollowUser } from "../../store/actions/user/user";
 
 const NotificationsProfileScreen = (props) => {
@@ -24,14 +23,13 @@ const NotificationsProfileScreen = (props) => {
   const darkModeValue = useAppSelector((state) => state.user.darkMode);
   const localId = useAppSelector((state) => state.auth.userId);
   const ExhibitUId = useAppSelector((state) => state.user.ExhibitUId);
-  const tutorialing = useAppSelector((state) => state.user.tutorialing);
-  const tutorialScreen = useAppSelector((state) => state.user.tutorialScreen);
 
   const [exploredUserData, setExploredUserData] = useState(
     props.navigation.getParam("exploreData")
       ? props.navigation.getParam("exploreData")
       : {}
   );
+  
   // Empty dict if user doesn't have any exhibits yet
   exploredUserData.profileExhibits = exploredUserData.profileExhibits
     ? exploredUserData.profileExhibits
@@ -257,11 +255,6 @@ const NotificationsProfileScreen = (props) => {
         backgroundColor: darkModeValue ? "black" : "white",
       }}
     >
-      {tutorialing &&
-      (tutorialScreen === "ExploreProfile" ||
-        tutorialScreen === "ExploreExhibit") ? (
-        <TutorialExploreProfile ExhibitUId={ExhibitUId} localId={localId} />
-      ) : null}
       <FlatList<any>
         data={profileExhibitsState}
         keyExtractor={(item) => item.exhibitId}
