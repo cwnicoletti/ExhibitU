@@ -139,10 +139,16 @@ const ExplorePostView = (props) => {
       if (!cheeredPosts.includes(postId)) {
         await setLoadingCheer(true);
         await dispatch(
-          cheerPost(localId, ExhibitUId, exhibitId, postId, posterExhibitUId)
+          await cheerPost(
+            localId,
+            ExhibitUId,
+            exhibitId,
+            postId,
+            posterExhibitUId
+          )
         );
         if (currentUsersPost) {
-          await dispatch(cheerOwnFeedPost(ExhibitUId, exhibitId, postId));
+          await dispatch(await cheerOwnFeedPost(ExhibitUId, exhibitId, postId));
         }
         await setLoadingCheer(false);
       }
@@ -156,10 +162,16 @@ const ExplorePostView = (props) => {
     if (cheeredPosts.includes(postId)) {
       await setLoadingCheer(true);
       await dispatch(
-        uncheerPost(localId, ExhibitUId, exhibitId, postId, posterExhibitUId)
+        await uncheerPost(
+          localId,
+          ExhibitUId,
+          exhibitId,
+          postId,
+          posterExhibitUId
+        )
       );
       if (currentUsersPost) {
-        await dispatch(uncheerOwnFeedPost(ExhibitUId, exhibitId, postId));
+        await dispatch(await uncheerOwnFeedPost(ExhibitUId, exhibitId, postId));
       }
       await setLoadingCheer(false);
     }
