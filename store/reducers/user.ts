@@ -1,10 +1,8 @@
-import { pushReturn, spliceRemoveReturn } from "../../helper/CoreFunctions";
 import {
   ADD_TEMP_POST_PICTURE,
   ADD_TEMP_PROJECT_PICTURE,
   ADD_USER_POST,
   ADD_USER_PROJECT,
-  ADVOCATE_FOR_USER,
   CHANGE_PROFILE_COLUMNS,
   CHANGE_PROFILE_PICTURE,
   CHANGE_PROJECT_COLUMNS,
@@ -33,7 +31,6 @@ import {
   SET_DARKMODE,
   SHOWCASE_PROFILE,
   SHOW_CHEERING,
-  UNADVOCATE_FOR_USER,
   UNCHEER_OWN_FEED_POST,
   UNCHEER_OWN_PROFILE_POST,
   UNCHEER_POST,
@@ -42,8 +39,6 @@ import {
   UPDATE_ALL_POSTS,
   UPDATE_USER_PROFILE,
   UPDATE_USER_PROJECT,
-  SET_TUTORIALING,
-  SET_TUTORIALING_PROMPT,
   UserState,
   Action,
 } from "../actions/user/types";
@@ -90,9 +85,6 @@ const intialState: UserState = {
   hideFollowing: false,
   hideFollowers: false,
   hideExhibits: false,
-  tutorialing: false,
-  tutorialPrompt: false,
-  tutorialScreen: "Start",
 };
 
 export default (state = intialState, action: Action) => {
@@ -117,14 +109,9 @@ export default (state = intialState, action: Action) => {
         profileBiography: action.profileBiography,
         numberOfFollowers: action.numberOfFollowers,
         numberOfFollowing: action.numberOfFollowing,
-        numberOfAdvocates: action.numberOfAdvocates,
-        numberOfAdvocating: action.numberOfAdvocating,
         profileColumns: action.profileColumns,
         followers: action.followers,
         following: action.following,
-        advocates: action.advocates,
-        advocating: action.advocating,
-        exhibitsAdvocating: action.exhibitsAdvocating,
         cheeredPosts: action.cheeredPosts,
         profileExhibits: action.profileExhibits,
         notifications: action.notifications,
@@ -136,9 +123,6 @@ export default (state = intialState, action: Action) => {
         hideFollowing: action.hideFollowing,
         hideFollowers: action.hideFollowers,
         hideExhibits: action.hideExhibits,
-        tutorialing: action.tutorialing,
-        tutorialPrompt: action.tutorialPrompt,
-        tutorialScreen: action.tutorialScreen,
       };
     case GET_USER_FEED:
       return {
@@ -152,13 +136,8 @@ export default (state = intialState, action: Action) => {
         ...state,
         numberOfFollowers: action.numberOfFollowers,
         numberOfFollowing: action.numberOfFollowing,
-        numberOfAdvocates: action.numberOfAdvocates,
-        numberOfAdvocating: action.numberOfAdvocating,
         followers: action.followers,
         following: action.following,
-        advocates: action.advocates,
-        advocating: action.advocating,
-        exhibitsAdvocating: action.exhibitsAdvocating,
         cheeredPosts: action.cheeredPosts,
         profileExhibits: action.profileExhibits,
         profileLinks: action.profileLinks,
@@ -294,7 +273,6 @@ export default (state = intialState, action: Action) => {
                 jobTitle: action.jobTitle,
                 numberOfFollowers: action.numberOfFollowers,
                 numberOfFollowing: action.numberOfFollowing,
-                numberOfAdvocates: action.numberOfAdvocates,
                 profileBiography: action.profileBiography,
                 exhibitTitle: action.exhibitTitle,
                 profilePictureUrl: action.profilePictureUrl,
@@ -326,7 +304,6 @@ export default (state = intialState, action: Action) => {
             jobTitle: action.jobTitle,
             numberOfFollowers: action.numberOfFollowers,
             numberOfFollowing: action.numberOfFollowing,
-            numberOfAdvocates: action.numberOfAdvocates,
             followingValue: action.followingValue,
             followersValue: action.followersValue,
             exhibitsValue: action.exhibitsValue,
@@ -346,7 +323,6 @@ export default (state = intialState, action: Action) => {
                     jobTitle: action.jobTitle,
                     numberOfFollowers: action.numberOfFollowers,
                     numberOfFollowing: action.numberOfFollowing,
-                    numberOfAdvocates: action.numberOfAdvocates,
                     followingValue: action.followingValue,
                     followersValue: action.followersValue,
                     exhibitsValue: action.exhibitsValue,
@@ -457,15 +433,14 @@ export default (state = intialState, action: Action) => {
     case FOLLOW_USER:
       return {
         ...state,
-        following: pushReturn(state.following, action.exploredExhibitUId),
+        following: [...state.following, action.exploredExhibitUId],
         numberOfFollowing: state.numberOfFollowing + 1,
       };
     case UNFOLLOW_USER:
       return {
         ...state,
-        following: spliceRemoveReturn(
-          state.following,
-          action.exploredExhibitUId
+        following: state.following.filter(
+          (user) => user !== action.exploredExhibitUId
         ),
         numberOfFollowing: state.numberOfFollowing - 1,
       };
@@ -477,10 +452,10 @@ export default (state = intialState, action: Action) => {
             ...state.userFeed,
             [action.postId]: {
               ...state.userFeed[action.postId],
-              cheering: pushReturn(
-                state.userFeed[action.postId].cheering,
-                action.ExhibitUId
-              ),
+              cheering: [
+                ...state.userFeed[action.postId].cheering,
+                action.ExhibitUId,
+              ],
               numberOfCheers: state.userFeed[action.postId].numberOfCheers + 1,
               profileExhibits: {
                 ...state.userFeed[action.postId].profileExhibits,
@@ -496,12 +471,12 @@ export default (state = intialState, action: Action) => {
                       ...state.userFeed[action.postId].profileExhibits[
                         action.exhibitId
                       ].exhibitPosts[action.postId],
-                      cheering: pushReturn(
-                        state.userFeed[action.postId].profileExhibits[
+                      cheering: [
+                        ...state.userFeed[action.postId].profileExhibits[
                           action.exhibitId
                         ].exhibitPosts[action.postId].cheering,
-                        action.ExhibitUId
-                      ),
+                        action.ExhibitUId,
+                      ],
                       numberOfCheers:
                         state.userFeed[action.postId].profileExhibits[
                           action.exhibitId
@@ -512,12 +487,12 @@ export default (state = intialState, action: Action) => {
               },
             },
           },
-          cheeredPosts: pushReturn(state.cheeredPosts, action.postId),
+          cheeredPosts: [...state.cheeredPosts, action.postId],
         };
       } else {
         return {
           ...state,
-          cheeredPosts: pushReturn(state.cheeredPosts, action.postId),
+          cheeredPosts: [...state.cheeredPosts, action.postId],
         };
       }
     case CHEER_UPDATE_POSTS:
@@ -564,12 +539,12 @@ export default (state = intialState, action: Action) => {
                   state.profileExhibits[action.exhibitId].exhibitPosts[
                     action.postId
                   ].numberOfCheers + 1,
-                cheering: pushReturn(
-                  state.profileExhibits[action.exhibitId].exhibitPosts[
+                cheering: [
+                  ...state.profileExhibits[action.exhibitId].exhibitPosts[
                     action.postId
                   ].cheering,
-                  action.ExhibitUId
-                ),
+                  action.ExhibitUId,
+                ],
               },
             },
           },
@@ -592,12 +567,12 @@ export default (state = intialState, action: Action) => {
                   state.profileExhibits[action.exhibitId].exhibitPosts[
                     action.postId
                   ].numberOfCheers + 1,
-                cheering: pushReturn(
-                  state.profileExhibits[action.exhibitId].exhibitPosts[
+                cheering: [
+                  ...state.profileExhibits[action.exhibitId].exhibitPosts[
                     action.postId
                   ].cheering,
-                  action.ExhibitUId
-                ),
+                  action.ExhibitUId,
+                ],
               },
             },
           },
@@ -620,12 +595,12 @@ export default (state = intialState, action: Action) => {
                     ...state.userFeed[action.postId].profileExhibits[
                       action.exhibitId
                     ].exhibitPosts[action.postId],
-                    cheering: pushReturn(
-                      state.userFeed[action.postId].profileExhibits[
+                    cheering: [
+                      ...state.userFeed[action.postId].profileExhibits[
                         action.exhibitId
                       ].exhibitPosts[action.postId].cheering,
-                      action.ExhibitUId
-                    ),
+                      action.ExhibitUId,
+                    ],
                     numberOfCheers:
                       state.userFeed[action.postId].profileExhibits[
                         action.exhibitId
@@ -634,14 +609,14 @@ export default (state = intialState, action: Action) => {
                 },
               },
             },
-            cheering: pushReturn(
-              state.userFeed[action.postId].cheering,
-              action.ExhibitUId
-            ),
+            cheering: [
+              ...state.userFeed[action.postId].cheering,
+              action.ExhibitUId,
+            ],
             numberOfCheers: state.userFeed[action.postId].numberOfCheers + 1,
           },
         },
-        cheeredPosts: pushReturn(state.cheeredPosts, action.postId),
+        cheeredPosts: [...state.cheeredPosts, action.postId],
       };
     case UNCHEER_POST:
       if (state.userFeed[action.postId]) {
@@ -665,11 +640,10 @@ export default (state = intialState, action: Action) => {
                       ...state.userFeed[action.postId].profileExhibits[
                         action.exhibitId
                       ].exhibitPosts[action.postId],
-                      cheering: spliceRemoveReturn(
-                        state.userFeed[action.postId].profileExhibits[
-                          action.exhibitId
-                        ].exhibitPosts[action.postId].cheering,
-                        action.ExhibitUId
+                      cheering: state.userFeed[action.postId].profileExhibits[
+                        action.exhibitId
+                      ].exhibitPosts[action.postId].cheering.filter(
+                        (user) => user !== action.ExhibitUId
                       ),
                       numberOfCheers:
                         state.userFeed[action.postId].profileExhibits[
@@ -679,19 +653,22 @@ export default (state = intialState, action: Action) => {
                   },
                 },
               },
-              cheering: spliceRemoveReturn(
-                state.userFeed[action.postId].cheering,
-                action.ExhibitUId
+              cheering: state.userFeed[action.postId].cheering.filter(
+                (user) => user !== action.ExhibitUId
               ),
               numberOfCheers: state.userFeed[action.postId].numberOfCheers - 1,
             },
           },
-          cheeredPosts: spliceRemoveReturn(state.cheeredPosts, action.postId),
+          cheeredPosts: state.cheeredPosts.filter(
+            (post) => post !== action.postId
+          ),
         };
       } else {
         return {
           ...state,
-          cheeredPosts: spliceRemoveReturn(state.cheeredPosts, action.postId),
+          cheeredPosts: state.cheeredPosts.filter(
+            (post) => post !== action.postId
+          ),
         };
       }
     case UNCHEER_UPDATE_POSTS:
@@ -738,12 +715,9 @@ export default (state = intialState, action: Action) => {
                   state.profileExhibits[action.exhibitId].exhibitPosts[
                     action.postId
                   ].numberOfCheers - 1,
-                cheering: spliceRemoveReturn(
-                  state.profileExhibits[action.exhibitId].exhibitPosts[
-                    action.postId
-                  ].cheering,
-                  action.ExhibitUId
-                ),
+                cheering: state.profileExhibits[action.exhibitId].exhibitPosts[
+                  action.postId
+                ].cheering.filter((post) => post !== action.ExhibitUId),
               },
             },
           },
@@ -766,12 +740,9 @@ export default (state = intialState, action: Action) => {
                   state.profileExhibits[action.exhibitId].exhibitPosts[
                     action.postId
                   ].numberOfCheers - 1,
-                cheering: spliceRemoveReturn(
-                  state.profileExhibits[action.exhibitId].exhibitPosts[
-                    action.postId
-                  ].cheering,
-                  action.ExhibitUId
-                ),
+                cheering: state.profileExhibits[action.exhibitId].exhibitPosts[
+                  action.postId
+                ].cheering.filter((post) => post !== action.ExhibitUId),
               },
             },
           },
@@ -794,11 +765,10 @@ export default (state = intialState, action: Action) => {
                     ...state.userFeed[action.postId].profileExhibits[
                       action.exhibitId
                     ].exhibitPosts[action.postId],
-                    cheering: spliceRemoveReturn(
-                      state.userFeed[action.postId].profileExhibits[
-                        action.exhibitId
-                      ].exhibitPosts[action.postId].cheering,
-                      action.ExhibitUId
+                    cheering: state.userFeed[action.postId].profileExhibits[
+                      action.exhibitId
+                    ].exhibitPosts[action.postId].cheering.filter(
+                      (post) => post !== action.ExhibitUId
                     ),
                     numberOfCheers:
                       state.userFeed[action.postId].profileExhibits[
@@ -808,14 +778,15 @@ export default (state = intialState, action: Action) => {
                 },
               },
             },
-            cheering: spliceRemoveReturn(
-              state.userFeed[action.postId].cheering,
-              action.ExhibitUId
+            cheering: state.userFeed[action.postId].cheering.filter(
+              (post) => post !== action.ExhibitUId
             ),
             numberOfCheers: state.userFeed[action.postId].numberOfCheers - 1,
           },
         },
-        cheeredPosts: spliceRemoveReturn(state.cheeredPosts, action.postId),
+        cheeredPosts: state.cheeredPosts.filter(
+          (post) => post !== action.postId
+        ),
       };
     case CHANGE_PROFILE_COLUMNS:
       if (state.userFeed) {
@@ -975,17 +946,6 @@ export default (state = intialState, action: Action) => {
       return {
         ...state,
         darkMode: action.darkMode,
-      };
-    case SET_TUTORIALING:
-      return {
-        ...state,
-        tutorialing: action.value,
-        tutorialScreen: action.screen,
-      };
-    case SET_TUTORIALING_PROMPT:
-      return {
-        ...state,
-        tutorialPrompt: action.value,
       };
     default:
       return state;
