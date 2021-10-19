@@ -37,7 +37,7 @@ const NotificationsScreen = (props) => {
     await setIsRefreshing(false);
   };
 
-  const viewProfileHandler = async (username) => {
+  const viewProfileHandler = async (username, ExhibitUId) => {
     dispatch(offScreen("Notifications"));
 
     let userData = {};
@@ -51,25 +51,27 @@ const NotificationsScreen = (props) => {
     await index.search(username).then((responses) => {
       for (const object of responses.hits) {
         if (object) {
-          userData.ExhibitUId = object.objectID;
-          userData.profilePictureUrl = object.profilePictureUrl;
-          userData.fullname = object.fullname;
-          userData.username = object.username;
-          userData.jobTitle = object.jobTitle;
-          userData.profileBiography = object.profileBiography;
-          userData.numberOfFollowers = object.numberOfFollowers;
-          userData.numberOfFollowing = object.numberOfFollowing;
-          userData.numberOfAdvocates = object.numberOfAdvocates;
-          userData.hideFollowing = object.hideFollowing;
-          userData.hideFollowers = object.hideFollowers;
-          userData.hideExhibits = object.hideExhibits;
-          userData.followers = object.followers;
-          userData.following = object.following;
-          userData.advocates = object.advocates;
-          userData.profileExhibits = object.profileExhibits;
-          userData.profileLinks = object.profileLinks;
-          userData.profileColumns = object.profileColumns;
-          userData.showCheering = object.showCheering;
+          if (object.objectID === ExhibitUId) {
+            userData.ExhibitUId = object.objectID;
+            userData.profilePictureUrl = object.profilePictureUrl;
+            userData.fullname = object.fullname;
+            userData.username = object.username;
+            userData.jobTitle = object.jobTitle;
+            userData.profileBiography = object.profileBiography;
+            userData.numberOfFollowers = object.numberOfFollowers;
+            userData.numberOfFollowing = object.numberOfFollowing;
+            userData.numberOfAdvocates = object.numberOfAdvocates;
+            userData.hideFollowing = object.hideFollowing;
+            userData.hideFollowers = object.hideFollowers;
+            userData.hideExhibits = object.hideExhibits;
+            userData.followers = object.followers;
+            userData.following = object.following;
+            userData.advocates = object.advocates;
+            userData.profileExhibits = object.profileExhibits;
+            userData.profileLinks = object.profileLinks;
+            userData.profileColumns = object.profileColumns;
+            userData.showCheering = object.showCheering;
+          }
         }
       }
     });
@@ -173,7 +175,10 @@ const NotificationsScreen = (props) => {
               color: darkModeValue ? "white" : "black",
             }}
             onSelect={() => {
-              viewProfileHandler(itemData.item.username);
+              viewProfileHandler(
+                itemData.item.username,
+                itemData.item.ExhibitUId
+              );
             }}
           />
         )}
