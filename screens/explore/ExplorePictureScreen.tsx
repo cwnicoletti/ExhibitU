@@ -5,8 +5,8 @@ import { useAppSelector } from "../../hooks";
 import ExplorePostView from "../../components/explore/ExplorePostView";
 import IoniconsHeaderButton from "../../components/UI/header_buttons/IoniconsHeaderButton";
 import MainHeaderTitle from "../../components/UI/MainHeaderTitle";
-import getExlusiveBothSetsDifference from "../../helper/getExlusiveBothSetsDifference";
 import useDidMountEffect from "../../helper/useDidMountEffect";
+import getExlusiveBothSetsDifference from "../../helper/getExlusiveBothSetsDifference";
 
 const ExplorePictureScreen = (props) => {
   const darkModeValue = useAppSelector((state) => state.user.darkMode);
@@ -72,10 +72,16 @@ const ExplorePictureScreen = (props) => {
   }, [darkModeValue]);
 
   useDidMountEffect(() => {
-    if (intialCheeredPosts.length < cheeredPosts.length) {
-      setNumberOfCheers((prevState) => prevState + 1);
-    } else {
-      setNumberOfCheers((prevState) => prevState - 1);
+    const difference = getExlusiveBothSetsDifference(
+      intialCheeredPosts,
+      cheeredPosts
+    );
+    if (postId === difference[0]) {
+      if (intialCheeredPosts.length < cheeredPosts.length) {
+        setNumberOfCheers((prevState) => prevState + 1);
+      } else {
+        setNumberOfCheers((prevState) => prevState - 1);
+      }
     }
     setIntialCheeredPosts(cheeredPosts);
   }, [cheeredPosts]);
