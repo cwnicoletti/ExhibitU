@@ -151,6 +151,17 @@ const ExploreScreen = (props) => {
               );
             }
           }
+          if (object.objectID === ExhibitUId) {
+            if (intialFollowing.length < following.length) {
+              object.numberOfFollowing += 1;
+              object.following = [...object.following, ExhibitUId];
+            } else {
+              object.numberOfFollowing -= 1;
+              object.following = object.following.filter(
+                (userId) => userId !== ExhibitUId
+              );
+            }
+          }
         }
         setReturnedIndex(responses.hits);
       });

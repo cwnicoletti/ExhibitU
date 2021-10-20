@@ -29,7 +29,7 @@ const NotificationsProfileScreen = (props) => {
       ? props.navigation.getParam("exploreData")
       : {}
   );
-  
+
   // Empty dict if user doesn't have any exhibits yet
   exploredUserData.profileExhibits = exploredUserData.profileExhibits
     ? exploredUserData.profileExhibits
@@ -58,27 +58,25 @@ const NotificationsProfileScreen = (props) => {
     await dispatch(
       await followUser(exploredUserData.exploredExhibitUId, ExhibitUId, localId)
     );
-    if (exploredUserData.text) {
-      const algoliasearch = require("algoliasearch");
-      const client = algoliasearch(
-        "EXC8LH5MAX",
-        "2d8cedcaab4cb2b351e90679963fbd92"
-      );
-      const index = client.initIndex("users");
+    const algoliasearch = require("algoliasearch");
+    const client = algoliasearch(
+      "EXC8LH5MAX",
+      "2d8cedcaab4cb2b351e90679963fbd92"
+    );
+    const index = client.initIndex("users");
 
-      await index.search(exploredUserData.text).then((responses) => {
-        responses.hits.forEach((hit) => {
-          if (hit.objectID === exploredUserData.exploredExhibitUId) {
-            exploredUserData.followers = [
-              ...exploredUserData.followers,
-              ExhibitUId,
-            ];
-            exploredUserData.numberOfFollowers += 1;
-            setExploredUserData(exploredUserData);
-          }
-        });
+    await index.search("").then((responses) => {
+      responses.hits.forEach((hit) => {
+        if (hit.objectID === exploredUserData.exploredExhibitUId) {
+          exploredUserData.followers = [
+            ...exploredUserData.followers,
+            ExhibitUId,
+          ];
+          exploredUserData.numberOfFollowers += 1;
+          setExploredUserData(exploredUserData);
+        }
       });
-    }
+    });
     await setIsFollowing(true);
     await setIsLoading(false);
   }, [setIsLoading, followUser, setIsFollowing]);
@@ -92,26 +90,24 @@ const NotificationsProfileScreen = (props) => {
         localId
       )
     );
-    if (exploredUserData.text) {
-      const algoliasearch = require("algoliasearch");
-      const client = algoliasearch(
-        "EXC8LH5MAX",
-        "2d8cedcaab4cb2b351e90679963fbd92"
-      );
-      const index = client.initIndex("users");
+    const algoliasearch = require("algoliasearch");
+    const client = algoliasearch(
+      "EXC8LH5MAX",
+      "2d8cedcaab4cb2b351e90679963fbd92"
+    );
+    const index = client.initIndex("users");
 
-      await index.search(exploredUserData.text).then((responses) => {
-        responses.hits.forEach((hit) => {
-          if (hit.objectID === exploredUserData.exploredExhibitUId) {
-            exploredUserData.followers = exploredUserData.followers.filter(
-              (userId) => userId !== ExhibitUId
-            );
-            exploredUserData.numberOfFollowers -= 1;
-            setExploredUserData(exploredUserData);
-          }
-        });
+    await index.search("").then((responses) => {
+      responses.hits.forEach((hit) => {
+        if (hit.objectID === exploredUserData.exploredExhibitUId) {
+          exploredUserData.followers = exploredUserData.followers.filter(
+            (userId) => userId !== ExhibitUId
+          );
+          exploredUserData.numberOfFollowers -= 1;
+          setExploredUserData(exploredUserData);
+        }
       });
-    }
+    });
     await setIsFollowing(false);
     await setIsLoading(false);
   }, [setIsLoading, unfollowUser, setIsFollowing]);
@@ -174,7 +170,6 @@ const NotificationsProfileScreen = (props) => {
   useEffect(() => {
     props.navigation.setParams({ isfollowing: isfollowing });
   }, [isfollowing]);
-
 
   const viewExhibitHandler = (
     exhibitTitle: string,

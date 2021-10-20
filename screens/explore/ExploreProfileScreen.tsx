@@ -19,6 +19,8 @@ import {
   followUser,
   unfollowUser,
 } from "../../store/actions/user/user";
+import useDidMountEffect from "../../helper/useDidMountEffect";
+import getExlusiveBothSetsDifference from "../../helper/getExlusiveBothSetsDifference";
 
 const ExploreProfileScreen = (props) => {
   const dispatch = useAppDispatch();
@@ -36,6 +38,13 @@ const ExploreProfileScreen = (props) => {
       ? props.navigation.getParam("exploreData")
       : {}
   );
+  const following = useAppSelector((state) => state.user.following);
+  const followers = useAppSelector((state) => state.user.followers);
+  const [intialFollowing, setIntialFollowing] = useState([]);
+  const [intialFollowers, setIntialFollowers] = useState([]);
+  const [numberOfFollowing, setNumberOfFollowing] = useState(0);
+  const [numberOfFollowers, setNumberOfFollowers] = useState(0);
+
   // Empty object if user doesn't have any exhibits yet
   exploredUserData.profileExhibits = exploredUserData.profileExhibits
     ? exploredUserData.profileExhibits
@@ -59,6 +68,13 @@ const ExploreProfileScreen = (props) => {
     android = true;
   }
 
+  useEffect(() => {
+    setNumberOfFollowing(exploredUserData.following.length);
+    setNumberOfFollowers(exploredUserData.followers.length);
+    setIntialFollowing(following);
+    setIntialFollowers(followers);
+  }, []);
+
   const followUserHandler = useCallback(async () => {
     await setIsLoading(true);
     dispatch(
@@ -72,30 +88,29 @@ const ExploreProfileScreen = (props) => {
     await dispatch(
       await followUser(exploredUserData.exploredExhibitUId, ExhibitUId, localId)
     );
-    if (exploredUserData.text) {
-      const algoliasearch = require("algoliasearch");
-      const client = algoliasearch(
-        "EXC8LH5MAX",
-        "2d8cedcaab4cb2b351e90679963fbd92"
-      );
-      const index = client.initIndex("users");
+    const algoliasearch = require("algoliasearch");
+    const client = algoliasearch(
+      "EXC8LH5MAX",
+      "2d8cedcaab4cb2b351e90679963fbd92"
+    );
+    const index = client.initIndex("users");
 
-      await index.search(exploredUserData.text).then((responses) => {
-        responses.hits.forEach((hit) => {
-          if (hit.objectID === exploredUserData.exploredExhibitUId) {
-            exploredUserData.followers = [
-              ...exploredUserData.followers,
-              ExhibitUId,
-            ];
-            exploredUserData.numberOfFollowers += 1;
-            setExploredUserData(exploredUserData);
-          }
-        });
+    await index.search("").then((responses) => {
+      responses.hits.forEach((hit) => {
+        if (hit.objectID === exploredUserData.exploredExhibitUId) {
+          exploredUserData.followers = [
+            ...exploredUserData.followers,
+            ExhibitUId,
+          ];
+          exploredUserData.numberOfFollowers += 1;
+          setNumberOfFollowers((prevState) => prevState + 1);
+          setExploredUserData(exploredUserData);
+        }
       });
-    }
+    });
     await setIsFollowing(true);
     await setIsLoading(false);
-  }, [setIsLoading, followUser, setIsFollowing]);
+  }, [setIsLoading, followUser, setIsFollowing, setExploredUserData]);
 
   const unfollowUserHandler = useCallback(async () => {
     await setIsLoading(true);
@@ -106,29 +121,28 @@ const ExploreProfileScreen = (props) => {
         localId
       )
     );
-    if (exploredUserData.text) {
-      const algoliasearch = require("algoliasearch");
-      const client = algoliasearch(
-        "EXC8LH5MAX",
-        "2d8cedcaab4cb2b351e90679963fbd92"
-      );
-      const index = client.initIndex("users");
+    const algoliasearch = require("algoliasearch");
+    const client = algoliasearch(
+      "EXC8LH5MAX",
+      "2d8cedcaab4cb2b351e90679963fbd92"
+    );
+    const index = client.initIndex("users");
 
-      await index.search(exploredUserData.text).then((responses) => {
-        responses.hits.forEach((hit) => {
-          if (hit.objectID === exploredUserData.exploredExhibitUId) {
-            exploredUserData.followers = exploredUserData.followers.filter(
-              (userId) => userId !== ExhibitUId
-            );
-            exploredUserData.numberOfFollowers -= 1;
-            setExploredUserData(exploredUserData);
-          }
-        });
+    await index.search("").then((responses) => {
+      responses.hits.forEach((hit) => {
+        if (hit.objectID === exploredUserData.exploredExhibitUId) {
+          exploredUserData.followers = exploredUserData.followers.filter(
+            (userId) => userId !== ExhibitUId
+          );
+          exploredUserData.numberOfFollowers -= 1;
+          setNumberOfFollowers((prevState) => prevState - 1);
+          setExploredUserData(exploredUserData);
+        }
       });
-    }
+    });
     await setIsFollowing(false);
     await setIsLoading(false);
-  }, [setIsLoading, unfollowUser, setIsFollowing]);
+  }, [setIsLoading, unfollowUser, setIsFollowing, setExploredUserData]);
 
   const refreshProfile = () => {
     setIsRefreshing(true);
@@ -187,6 +201,30 @@ const ExploreProfileScreen = (props) => {
     props.navigation.setParams({ isfollowing: isfollowing });
   }, [isfollowing]);
 
+  useDidMountEffect(() => {
+    if (ExhibitUId === exploredUserData.exploredExhibitUId) {
+      if (intialFollowing.length < following.length) {
+        setNumberOfFollowing((prevState) => prevState + 1);
+      } else {
+        setNumberOfFollowing((prevState) => prevState - 1);
+      }
+    }
+    setIntialFollowing(following);
+  }, [following]);
+
+  useDidMountEffect(() => {
+    if (ExhibitUId !== exploredUserData.exploredExhibitUId) {
+      if (intialFollowing.length < following.length) {
+        setNumberOfFollowers((prevState) => prevState + 1);
+        setIsFollowing(true);
+      } else {
+        setNumberOfFollowers((prevState) => prevState - 1);
+        setIsFollowing(false);
+      }
+    }
+    setIntialFollowers(followers);
+  }, [following]);
+
   const viewExhibitHandler = (
     exhibitTitle: string,
     exhibitCoverPhotoUrl: string,
@@ -237,8 +275,8 @@ const ExploreProfileScreen = (props) => {
           color: darkModeValue ? "white" : "black",
         }}
         description={exploredUserData.profileBiography}
-        numberOfFollowers={exploredUserData.numberOfFollowers}
-        numberOfFollowing={exploredUserData.numberOfFollowing}
+        numberOfFollowers={numberOfFollowers}
+        numberOfFollowing={numberOfFollowing}
         numberOfExhibits={Object.keys(exploredUserData.profileExhibits).length}
         hideFollowing={exploredUserData.hideFollowing}
         hideFollowers={exploredUserData.hideFollowers}
@@ -253,11 +291,6 @@ const ExploreProfileScreen = (props) => {
         followingOnPress={() =>
           props.navigation.push("ExploreFollowing", {
             ExhibitUId: exploredUserData.exploredExhibitUId,
-          })
-        }
-        advocatesOnPress={() =>
-          props.navigation.push("ExploreAdvocates", {
-            exploredExhibitUId: exploredUserData.exploredExhibitUId,
           })
         }
       />
