@@ -14,7 +14,12 @@ import ExhibitItem from "../../components/exhibitItems/ExhibitItem";
 import IoniconsHeaderButton from "../../components/UI/header_buttons/IoniconsHeaderButton";
 import SimpleLineIconsHeaderButton from "../../components/UI/header_buttons/SimpleLineIconsHeaderButton";
 import MainHeaderTitle from "../../components/UI/MainHeaderTitle";
-import { followUser, unfollowUser } from "../../store/actions/user/user";
+import {
+  sendFollowNotification,
+  followUser,
+  unfollowUser,
+} from "../../store/actions/user/user";
+import useDidMountEffect from "../../helper/useDidMountEffect";
 
 const NotificationsProfileScreen = (props) => {
   const dispatch = useAppDispatch();
@@ -22,7 +27,15 @@ const NotificationsProfileScreen = (props) => {
   const [isRefreshing, setIsRefreshing] = useState(false);
   const darkModeValue = useAppSelector((state) => state.user.darkMode);
   const localId = useAppSelector((state) => state.auth.userId);
+  const username = useAppSelector((state) => state.user.username);
   const ExhibitUId = useAppSelector((state) => state.user.ExhibitUId);
+  const following = useAppSelector((state) => state.user.following);
+  const profilePictureUrl = useAppSelector(
+    (state) => state.user.profilePictureUrl
+  );
+  const [intialFollowing, setIntialFollowing] = useState([]);
+  const [numberOfFollowing, setNumberOfFollowing] = useState(0);
+  const [numberOfFollowers, setNumberOfFollowers] = useState(0);
 
   const [exploredUserData, setExploredUserData] = useState(
     props.navigation.getParam("exploreData")
@@ -53,8 +66,22 @@ const NotificationsProfileScreen = (props) => {
     android = true;
   }
 
+  useEffect(() => {
+    setNumberOfFollowing(exploredUserData.following.length);
+    setNumberOfFollowers(exploredUserData.followers.length);
+    setIntialFollowing(following);
+  }, []);
+
   const followUserHandler = useCallback(async () => {
     await setIsLoading(true);
+    dispatch(
+      sendFollowNotification(
+        username,
+        ExhibitUId,
+        exploredUserData.exploredExhibitUId,
+        profilePictureUrl
+      )
+    );
     await dispatch(
       await followUser(exploredUserData.exploredExhibitUId, ExhibitUId, localId)
     );
@@ -79,7 +106,7 @@ const NotificationsProfileScreen = (props) => {
     });
     await setIsFollowing(true);
     await setIsLoading(false);
-  }, [setIsLoading, followUser, setIsFollowing]);
+  }, [setIsLoading, followUser, setIsFollowing, setExploredUserData]);
 
   const unfollowUserHandler = useCallback(async () => {
     await setIsLoading(true);
@@ -110,7 +137,7 @@ const NotificationsProfileScreen = (props) => {
     });
     await setIsFollowing(false);
     await setIsLoading(false);
-  }, [setIsLoading, unfollowUser, setIsFollowing]);
+  }, [setIsLoading, unfollowUser, setIsFollowing, setExploredUserData]);
 
   const refreshProfile = () => {
     setIsRefreshing(true);
@@ -171,6 +198,30 @@ const NotificationsProfileScreen = (props) => {
     props.navigation.setParams({ isfollowing: isfollowing });
   }, [isfollowing]);
 
+  useDidMountEffect(() => {
+    if (ExhibitUId === exploredUserData.exploredExhibitUId) {
+      if (intialFollowing.length < following.length) {
+        setNumberOfFollowing((prevState) => prevState + 1);
+      } else {
+        setNumberOfFollowing((prevState) => prevState - 1);
+      }
+    }
+    setIntialFollowing(following);
+  }, [following]);
+
+  useDidMountEffect(() => {
+    if (ExhibitUId !== exploredUserData.exploredExhibitUId) {
+      if (intialFollowing.length < following.length) {
+        setNumberOfFollowers((prevState) => prevState + 1);
+        setIsFollowing(true);
+      } else {
+        setNumberOfFollowers((prevState) => prevState - 1);
+        setIsFollowing(false);
+      }
+    }
+    setIntialFollowing(following);
+  }, [following]);
+
   const viewExhibitHandler = (
     exhibitTitle: string,
     exhibitCoverPhotoUrl: string,
@@ -221,8 +272,8 @@ const NotificationsProfileScreen = (props) => {
           color: darkModeValue ? "white" : "black",
         }}
         description={exploredUserData.profileBiography}
-        numberOfFollowers={exploredUserData.numberOfFollowers}
-        numberOfFollowing={exploredUserData.numberOfFollowing}
+        numberOfFollowers={numberOfFollowers}
+        numberOfFollowing={numberOfFollowing}
         numberOfExhibits={Object.keys(exploredUserData.profileExhibits).length}
         hideFollowing={exploredUserData.hideFollowing}
         hideFollowers={exploredUserData.hideFollowers}
@@ -231,12 +282,12 @@ const NotificationsProfileScreen = (props) => {
         links={exploredUserData.profileLinks}
         followersOnPress={() =>
           props.navigation.push("NotificationsFollowers", {
-            ExhibitUId: exploredUserData.exploredExhibitUId,
+            exploredExhibitUId: exploredUserData.exploredExhibitUId,
           })
         }
         followingOnPress={() =>
           props.navigation.push("NotificationsFollowing", {
-            ExhibitUId: exploredUserData.exploredExhibitUId,
+            exploredExhibitUId: exploredUserData.exploredExhibitUId,
           })
         }
       />

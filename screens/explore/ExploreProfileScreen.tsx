@@ -20,7 +20,6 @@ import {
   unfollowUser,
 } from "../../store/actions/user/user";
 import useDidMountEffect from "../../helper/useDidMountEffect";
-import getExlusiveBothSetsDifference from "../../helper/getExlusiveBothSetsDifference";
 
 const ExploreProfileScreen = (props) => {
   const dispatch = useAppDispatch();
@@ -39,9 +38,7 @@ const ExploreProfileScreen = (props) => {
       : {}
   );
   const following = useAppSelector((state) => state.user.following);
-  const followers = useAppSelector((state) => state.user.followers);
   const [intialFollowing, setIntialFollowing] = useState([]);
-  const [intialFollowers, setIntialFollowers] = useState([]);
   const [numberOfFollowing, setNumberOfFollowing] = useState(0);
   const [numberOfFollowers, setNumberOfFollowers] = useState(0);
 
@@ -72,7 +69,6 @@ const ExploreProfileScreen = (props) => {
     setNumberOfFollowing(exploredUserData.following.length);
     setNumberOfFollowers(exploredUserData.followers.length);
     setIntialFollowing(following);
-    setIntialFollowers(followers);
   }, []);
 
   const followUserHandler = useCallback(async () => {
@@ -103,7 +99,6 @@ const ExploreProfileScreen = (props) => {
             ExhibitUId,
           ];
           exploredUserData.numberOfFollowers += 1;
-          setNumberOfFollowers((prevState) => prevState + 1);
           setExploredUserData(exploredUserData);
         }
       });
@@ -135,7 +130,6 @@ const ExploreProfileScreen = (props) => {
             (userId) => userId !== ExhibitUId
           );
           exploredUserData.numberOfFollowers -= 1;
-          setNumberOfFollowers((prevState) => prevState - 1);
           setExploredUserData(exploredUserData);
         }
       });
@@ -222,7 +216,7 @@ const ExploreProfileScreen = (props) => {
         setIsFollowing(false);
       }
     }
-    setIntialFollowers(followers);
+    setIntialFollowing(following);
   }, [following]);
 
   const viewExhibitHandler = (

@@ -15,6 +15,8 @@ import MainHeaderTitle from "../../components/UI/MainHeaderTitle";
 import { useAppSelector } from "../../hooks";
 import ExploreCard from "../../components/explore/ExploreCard";
 import IoniconsHeaderButton from "../../components/UI/header_buttons/IoniconsHeaderButton";
+import useDidMountEffect from "../../helper/useDidMountEffect";
+import getExlusiveBothSetsDifference from "../../helper/getExlusiveBothSetsDifference";
 
 const NotificationsFollowingScreen = (props) => {
   const client = algoliasearch(
@@ -27,7 +29,14 @@ const NotificationsFollowingScreen = (props) => {
   const [returnedIndex, setReturnedIndex] = useState([]);
   const [search, setSearch] = useState("");
   const [isRefreshing, setIsRefreshing] = useState(false);
-  const ExhibitUId = props.navigation.getParam("ExhibitUId");
+  const exploredExhibitUId = props.navigation.getParam("exploredExhibitUId");
+  const ExhibitUId = useAppSelector((state) => state.user.ExhibitUId);
+  const following = useAppSelector((state) => state.user.following);
+  const [intialFollowing, setIntialFollowing] = useState([]);
+
+  useEffect(() => {
+    setIntialFollowing(following);
+  }, []);
 
   useEffect(() => {
     props.navigation.setParams({ darkMode: darkModeValue });
@@ -36,7 +45,7 @@ const NotificationsFollowingScreen = (props) => {
   useEffect(() => {
     index.search("").then((responses) => {
       const following = responses.hits.find(
-        (object) => object.objectID === ExhibitUId
+        (object) => object.objectID === exploredExhibitUId
       ).following;
       const filteredIndex = responses.hits.filter((object) =>
         following.includes(object.objectID)
@@ -48,7 +57,7 @@ const NotificationsFollowingScreen = (props) => {
   const returnIndex = (text) => {
     index.search(text).then((responses) => {
       const following = responses.hits.find(
-        (object) => object.objectID === ExhibitUId
+        (object) => object.objectID === exploredExhibitUId
       ).following;
       const filteredIndex = responses.hits.filter((object) =>
         following.includes(object.objectID)
@@ -65,7 +74,7 @@ const NotificationsFollowingScreen = (props) => {
           setReturnedIndex([]);
         } else {
           const following = responses.hits.find(
-            (object) => object.objectID === ExhibitUId
+            (object) => object.objectID === exploredExhibitUId
           ).following;
           const filteredIndex = responses.hits.filter((object) =>
             following.includes(object.objectID)
@@ -76,7 +85,7 @@ const NotificationsFollowingScreen = (props) => {
     } else {
       index.search("").then((responses) => {
         const following = responses.hits.find(
-          (object) => object.objectID === ExhibitUId
+          (object) => object.objectID === exploredExhibitUId
         ).following;
         const filteredIndex = responses.hits.filter((object) =>
           following.includes(object.objectID)
@@ -141,6 +150,53 @@ const NotificationsFollowingScreen = (props) => {
       },
     });
   };
+
+  useDidMountEffect(() => {
+    const difference = getExlusiveBothSetsDifference(
+      intialFollowing,
+      following
+    );
+    const algoliasearch = require("algoliasearch");
+    const client = algoliasearch(
+      "EXC8LH5MAX",
+      "2d8cedcaab4cb2b351e90679963fbd92"
+    );
+    const index = client.initIndex("users");
+    index.search(search).then((responses) => {
+      for (const object of responses.hits) {
+        if (object.objectID === difference[0]) {
+          if (intialFollowing.length < following.length) {
+            object.numberOfFollowers += 1;
+            object.followers = [...object.followers, ExhibitUId];
+          } else {
+            object.numberOfFollowers -= 1;
+            object.followers = object.followers.filter(
+              (userId) => userId !== ExhibitUId
+            );
+          }
+        }
+        if (object.objectID === ExhibitUId) {
+          if (intialFollowing.length < following.length) {
+            object.numberOfFollowing += 1;
+            object.following = [...object.following, ExhibitUId];
+          } else {
+            object.numberOfFollowing -= 1;
+            object.following = object.following.filter(
+              (userId) => userId !== ExhibitUId
+            );
+          }
+        }
+      }
+      const following = responses.hits.find(
+        (object) => object.objectID === exploredExhibitUId
+      ).following;
+      const filteredIndex = responses.hits.filter((object) =>
+        following.includes(object.objectID)
+      );
+      setReturnedIndex(filteredIndex);
+    });
+    setIntialFollowing(following);
+  }, [following]);
 
   return (
     <View
