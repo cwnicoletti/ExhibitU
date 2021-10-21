@@ -39,7 +39,8 @@ const NotificationPermissionsScreen = (props) => {
       <View style={styles.inner}>
         <Text style={styles.text}>Enable Notifications</Text>
         <Text style={styles.smallerText}>
-          We can only send you notifications if you give us permission
+          Enabling notifications allows us to send you notifications of users
+          cheering your posts or following you
         </Text>
         <Image
           style={styles.image}

@@ -89,7 +89,7 @@ const SignupScreen2 = (props) => {
         keyboardShouldPersistTaps="handled"
       >
         <View style={styles.inner}>
-          <Text style={styles.text}>Enter your name</Text>
+          <Text style={styles.text}>Enter your first and last name</Text>
           <Image
             style={styles.image}
             source={require("../../assets/default-profile-icon.jpg")}
@@ -97,7 +97,7 @@ const SignupScreen2 = (props) => {
           <View style={styles.authContainer}>
             <Input
               id="fullname"
-              label="Full Name"
+              label="First and Last Name"
               keyboardType="default"
               required
               minLength={2}
