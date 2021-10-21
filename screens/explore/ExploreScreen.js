@@ -100,7 +100,7 @@ const ExploreScreen = (props) => {
     showCheering
   ) => {
     dispatch(offScreen("Explore"));
-    props.navigation.push("ExploreProfile", {
+    props.navigation.navigate("ExploreProfile", {
       exploreData: {
         text,
         exploredExhibitUId: ExhibitUId,
@@ -138,33 +138,36 @@ const ExploreScreen = (props) => {
         "2d8cedcaab4cb2b351e90679963fbd92"
       );
       const index = client.initIndex("users");
-      index.search(search).then((responses) => {
-        for (const object of responses.hits) {
-          if (object.objectID === difference[0]) {
-            if (intialFollowing.length < following.length) {
-              object.numberOfFollowers += 1;
-              object.followers = [...object.followers, ExhibitUId];
-            } else {
-              object.numberOfFollowers -= 1;
-              object.followers = object.followers.filter(
-                (userId) => userId !== ExhibitUId
-              );
+      index
+        .search(search)
+        .then((responses) => {
+          for (const object of responses.hits) {
+            if (object.objectID === ExhibitUId) {
+              if (intialFollowing.length < following.length) {
+                object.numberOfFollowing += 1;
+              } else {
+                object.numberOfFollowing -= 1;
+              }
+            }
+            if (difference[0]?.length) {
+              if (object.objectID === difference[0]) {
+                if (intialFollowing.length < following.length) {
+                  object.numberOfFollowers += 1;
+                  object.followers = [...object.followers, ExhibitUId];
+                } else {
+                  object.numberOfFollowers -= 1;
+                  object.followers = object.followers.filter(
+                    (userId) => userId !== ExhibitUId
+                  );
+                }
+              }
             }
           }
-          if (object.objectID === ExhibitUId) {
-            if (intialFollowing.length < following.length) {
-              object.numberOfFollowing += 1;
-              object.following = [...object.following, ExhibitUId];
-            } else {
-              object.numberOfFollowing -= 1;
-              object.following = object.following.filter(
-                (userId) => userId !== ExhibitUId
-              );
-            }
-          }
-        }
-        setReturnedIndex(responses.hits);
-      });
+          return responses.hits;
+        })
+        .then((returnedHits) => {
+          setReturnedIndex(returnedHits);
+        });
     }
     setIntialFollowing(following);
   }, [following]);

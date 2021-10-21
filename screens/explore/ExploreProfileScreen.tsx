@@ -66,8 +66,8 @@ const ExploreProfileScreen = (props) => {
   }
 
   useEffect(() => {
-    setNumberOfFollowing(exploredUserData.following.length);
-    setNumberOfFollowers(exploredUserData.followers.length);
+    setNumberOfFollowing(exploredUserData.numberOfFollowing);
+    setNumberOfFollowers(exploredUserData.numberOfFollowers);
     setIntialFollowing(following);
   }, []);
 
