@@ -248,16 +248,18 @@ const ProfileExhibitPostView = (props) => {
                   >
                     {fullname}
                   </Text>
-                  <Text
-                    style={{
-                      color: "white",
-                      fontWeight: "500",
-                      fontSize: 11,
-                      marginLeft: 5,
-                    }}
-                  >
-                    {jobTitle}
-                  </Text>
+                  {jobTitle ? (
+                    <Text
+                      style={{
+                        color: "white",
+                        fontWeight: "500",
+                        fontSize: 11,
+                        marginLeft: 5,
+                      }}
+                    >
+                      {jobTitle}
+                    </Text>
+                  ) : null}
                   <Text
                     style={{
                       color: "grey",
