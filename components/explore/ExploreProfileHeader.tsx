@@ -25,7 +25,6 @@ const ExploreProfileHeader = (props) => {
           exhibitsValue={props.hideExhibits}
           followersOnPress={props.followersOnPress}
           followingOnPress={props.followingOnPress}
-          advocatesOnPress={props.advocatesOnPress}
           numberOfFollowers={props.numberOfFollowers}
           numberOfFollowing={props.numberOfFollowing}
           numberOfExhibits={props.numberOfExhibits}

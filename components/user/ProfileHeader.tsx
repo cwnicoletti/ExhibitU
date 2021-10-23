@@ -25,7 +25,6 @@ const Profile = (props) => {
   const userDataProfileHeader = {
     numberOfFollowers: useAppSelector((state) => state.user.numberOfFollowers),
     numberOfFollowing: useAppSelector((state) => state.user.numberOfFollowing),
-    numberOfAdvocates: useAppSelector((state) => state.user.numberOfAdvocates),
   };
 
   let TouchableCmp: any = TouchableOpacity;
@@ -49,7 +48,6 @@ const Profile = (props) => {
           exhibitsValue={exhibitsValue}
           followersOnPress={props.followersOnPress}
           followingOnPress={props.followingOnPress}
-          advocatesOnPress={props.advocatesOnPress}
           numberOfFollowers={userDataProfileHeader.numberOfFollowers}
           numberOfFollowing={userDataProfileHeader.numberOfFollowing}
           numberOfExhibits={Object.keys(profileExhibits).length}

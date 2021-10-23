@@ -35,9 +35,6 @@ const FeedExhibitScreen = (props) => {
           profileExhibits: useAppSelector((state) => state.user.profileExhibits)
             ? useAppSelector((state) => state.user.profileExhibits)
             : props.navigation.getParam("profileExhibits"),
-          numberOfAdvocates: useAppSelector(
-            (state) => state.user.numberOfAdvocates
-          ),
           numberOfFollowers: useAppSelector(
             (state) => state.user.numberOfFollowers
           ),
@@ -84,7 +81,6 @@ const FeedExhibitScreen = (props) => {
     caption: string,
     numberOfFollowers: number,
     numberOfFollowing: number,
-    numberOfAdvocates: number,
     hideFollowing: boolean,
     hideFollowers: boolean,
     hideExhibits: boolean,
@@ -107,7 +103,6 @@ const FeedExhibitScreen = (props) => {
         caption,
         numberOfFollowers,
         numberOfFollowing,
-        numberOfAdvocates,
         hideFollowing,
         hideFollowers,
         hideExhibits,
@@ -219,7 +214,6 @@ const FeedExhibitScreen = (props) => {
                 itemData.item.caption,
                 itemData.item.numberOfFollowers,
                 itemData.item.numberOfFollowing,
-                itemData.item.numberOfAdvocates,
                 itemData.item.hideFollowing,
                 itemData.item.hideFollowers,
                 itemData.item.hideExhibits,

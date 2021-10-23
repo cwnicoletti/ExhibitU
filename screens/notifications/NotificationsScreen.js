@@ -61,13 +61,11 @@ const NotificationsScreen = (props) => {
             userData.profileBiography = object.profileBiography;
             userData.numberOfFollowers = object.numberOfFollowers;
             userData.numberOfFollowing = object.numberOfFollowing;
-            userData.numberOfAdvocates = object.numberOfAdvocates;
             userData.hideFollowing = object.hideFollowing;
             userData.hideFollowers = object.hideFollowers;
             userData.hideExhibits = object.hideExhibits;
             userData.followers = object.followers;
             userData.following = object.following;
-            userData.advocates = object.advocates;
             userData.profileExhibits = object.profileExhibits;
             userData.profileLinks = object.profileLinks;
             userData.profileColumns = object.profileColumns;
@@ -87,13 +85,11 @@ const NotificationsScreen = (props) => {
         profileBiography: userData.profileBiography,
         numberOfFollowers: userData.numberOfFollowers,
         numberOfFollowing: userData.numberOfFollowing,
-        numberOfAdvocates: userData.numberOfAdvocates,
         hideFollowing: userData.hideFollowing,
         hideFollowers: userData.hideFollowers,
         hideExhibits: userData.hideExhibits,
         followers: userData.followers,
         following: userData.following,
-        advocates: userData.advocates,
         profileExhibits: userData.profileExhibits,
         profileLinks: userData.profileLinks,
         profileColumns: userData.profileColumns,

@@ -67,7 +67,6 @@ const EditProfileScreen = (props) => {
   const userDataProfileHeader = {
     numberOfFollowers: useAppSelector((state) => state.user.numberOfFollowers),
     numberOfFollowing: useAppSelector((state) => state.user.numberOfFollowing),
-    numberOfAdvocates: useAppSelector((state) => state.user.numberOfAdvocates),
   };
 
   let TouchableCmp = TouchableOpacity;

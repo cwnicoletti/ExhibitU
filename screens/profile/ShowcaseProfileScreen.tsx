@@ -55,7 +55,6 @@ const ShowcaseProfileScreen = (props) => {
           profileBiography: props.navigation.getParam("profileBiography"),
           profileLinks: props.navigation.getParam("profileLinks"),
           profileExhibits: props.navigation.getParam("profileExhibits"),
-          numberOfAdvocates: props.navigation.getParam("numberOfAdvocates"),
           numberOfFollowers: props.navigation.getParam("numberOfFollowers"),
           numberOfFollowing: props.navigation.getParam("numberOfFollowing"),
           hideFollowing: props.navigation.getParam("hideFollowing"),

@@ -23,7 +23,6 @@ const ExhibitUHeader = (props) => {
   const userDataProfileHeader = {
     numberOfFollowers: props.numberOfFollowers,
     numberOfFollowing: props.numberOfFollowing,
-    numberOfAdvocates: props.numberOfAdvocates,
   };
 
   let TouchableCmp: any = TouchableOpacity;
@@ -47,7 +46,6 @@ const ExhibitUHeader = (props) => {
           exhibitsValue={exhibitsValue}
           followersOnPress={props.followersOnPress}
           followingOnPress={props.followingOnPress}
-          advocatesOnPress={props.advocatesOnPress}
           numberOfFollowers={userDataProfileHeader.numberOfFollowers}
           numberOfFollowing={userDataProfileHeader.numberOfFollowing}
           numberOfExhibits={numberOfExhibits}
