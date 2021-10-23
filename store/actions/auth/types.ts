@@ -28,14 +28,9 @@ export interface AuthenticationResponse {
       profileBiography: string;
       numberOfFollowers: number;
       numberOfFollowing: number;
-      numberOfAdvocates: number;
-      numberOfAdvocating: number;
       profileColumns: number;
       followers: string[];
       following: string[];
-      advocates: string[];
-      advocating: string[];
-      exhibitsAdvocating: string[];
       cheeredPosts: string[];
       profileExhibits: object;
       profileLinks: object;

@@ -47,11 +47,6 @@ const IntroScreen = (props) => {
     },
     {
       title: "",
-      body: "We also have a unique feature within ExhibitU that allows you to 'advocate' for a user's creation as a way of showing your contribution to a creation",
-      useImg4: true,
-    },
-    {
-      title: "",
       body: "Our goal is to build a universal, encouraging and healthy community for those looking to build or present their creations!",
       useImg5: true,
     },

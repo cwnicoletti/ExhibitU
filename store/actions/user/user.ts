@@ -52,7 +52,6 @@ export const getUserData = () => {
 
     let followers = [];
     let following = [];
-    let advocates = [];
     let cheeredPosts = [];
     let profileExhibits = {};
     let profileLinks = {};
@@ -115,7 +114,6 @@ export const getUserData = () => {
       tutorialScreen: transformedData.tutorialScreen,
       followers,
       following,
-      advocates,
       cheeredPosts,
       profileExhibits,
       profileLinks,
@@ -197,8 +195,6 @@ export const refreshProfile = (localId: string) => {
       type: REFRESH_PROFILE,
       numberOfFollowers: profileInfo.data.data.numberOfFollowers,
       numberOfFollowing: profileInfo.data.data.numberOfFollowing,
-      numberOfAdvocates: profileInfo.data.data.numberOfAdvocates,
-      numberOfAdvocating: profileInfo.data.data.numberOfAdvocating,
       followers,
       following,
       cheeredPosts,
@@ -709,7 +705,6 @@ export const addUserPost = (
   jobTitle: string,
   numberOfFollowers: number,
   numberOfFollowing: number,
-  numberOfAdvocates: number,
   followingValue: boolean,
   followersValue: boolean,
   exhibitsValue: boolean,
@@ -740,7 +735,6 @@ export const addUserPost = (
       jobTitle,
       numberOfFollowers,
       numberOfFollowing,
-      numberOfAdvocates,
       followingValue,
       followersValue,
       exhibitsValue,
@@ -788,7 +782,6 @@ export const addUserPost = (
               jobTitle,
               numberOfFollowers,
               numberOfFollowing,
-              numberOfAdvocates,
               profileBiography,
               exhibitTitle,
               profilePictureUrl,
@@ -822,7 +815,6 @@ export const addUserPost = (
           jobTitle,
           numberOfFollowers,
           numberOfFollowing,
-          numberOfAdvocates,
           followingValue,
           followersValue,
           exhibitsValue,
@@ -842,7 +834,6 @@ export const addUserPost = (
                   jobTitle,
                   numberOfFollowers,
                   numberOfFollowing,
-                  numberOfAdvocates,
                   followingValue,
                   followersValue,
                   exhibitsValue,
@@ -909,7 +900,6 @@ export const addUserPost = (
       exhibitTitle,
       numberOfFollowers,
       numberOfFollowing,
-      numberOfAdvocates,
       followingValue,
       followersValue,
       exhibitsValue,

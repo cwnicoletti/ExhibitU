@@ -23,7 +23,6 @@ import { useAppDispatch, useAppSelector } from "../../hooks";
 import Input from "../../components/UI/Input";
 import IoniconsHeaderButton from "../../components/UI/header_buttons/IoniconsHeaderButton";
 import PreviewPostItem from "../../components/user/PreviewPostItem";
-import TutorialPostCreation from "../../components/tutorial/TutorialPostCreation";
 import {
   addUserPost,
   uploadAddTempPostPicture,
@@ -72,9 +71,6 @@ const EditProfileScreen = (props) => {
   );
   const numberOfFollowing = useAppSelector(
     (state) => state.user.numberOfFollowing
-  );
-  const numberOfAdvocates = useAppSelector(
-    (state) => state.user.numberOfAdvocates
   );
   const profileColumns = useAppSelector((state) => state.user.profileColumns);
   const profileBiography = useAppSelector(
@@ -152,7 +148,6 @@ const EditProfileScreen = (props) => {
         jobTitle,
         numberOfFollowers,
         numberOfFollowing,
-        numberOfAdvocates,
         followingValue,
         followersValue,
         exhibitsValue,
@@ -245,9 +240,6 @@ const EditProfileScreen = (props) => {
         keyboardShouldPersistTaps="handled"
         scrollEnabled={true}
       >
-        {tutorialing && tutorialScreen === "PostCreation" ? (
-          <TutorialPostCreation ExhibitUId={ExhibitUId} localId={localId} />
-        ) : null}
         <View
           style={{
             borderBottomWidth: 1,

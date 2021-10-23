@@ -17,10 +17,6 @@ import MainHeaderTitle from "../../components/UI/MainHeaderTitle";
 import TutorialExploreExhibit from "../../components/tutorial/TutorialExploreExhibit";
 import useDidMountEffect from "../../helper/useDidMountEffect";
 import getExlusiveBothSetsDifference from "../../helper/getExlusiveBothSetsDifference";
-import {
-  advocateForUser,
-  unadvocateForUser,
-} from "../../store/actions/user/user";
 
 const NotificationsExhibitScreen = (props) => {
   const dispatch = useAppDispatch();
@@ -109,9 +105,6 @@ const NotificationsExhibitScreen = (props) => {
   exploredUserDataLocal.followers = exploredUserDataLocal.followers
     ? exploredUserDataLocal.followers
     : [];
-  exploredUserDataLocal.advocates = exploredUserDataLocal.advocates
-    ? exploredUserDataLocal.advocates
-    : [];
   exploredUserDataLocal.fullname = exploredUserDataLocal.fullname
     ? exploredUserDataLocal.fullname
     : "Elon Tusk";
@@ -151,10 +144,6 @@ const NotificationsExhibitScreen = (props) => {
     exploredUserDataLocal.numberOfFollowing
       ? exploredUserDataLocal.numberOfFollowing
       : 0;
-  exploredUserDataLocal.numberOfAdvocates =
-    exploredUserDataLocal.numberOfAdvocates
-      ? exploredUserDataLocal.numberOfAdvocates
-      : 0;
 
   const [exhibitPostsState, setExhibitPostsState] = useState(
     Object.values(exploredExhibitData.exhibitPosts).sort(
@@ -171,39 +160,6 @@ const NotificationsExhibitScreen = (props) => {
   if (Platform.OS === "android") {
     android = true;
   }
-
-  const [isAdvocating, setIsAdvocating] = useState(
-    exploredUserDataLocal.advocates.includes(ExhibitUId) ? true : false
-  );
-
-  const advocateUserHandler = useCallback(async () => {
-    await setIsLoading(true);
-    await dispatch(
-      await advocateForUser(
-        exploredUserDataLocal.exploredExhibitUId,
-        ExhibitUId,
-        localId,
-        exploredExhibitData.exhibitId
-      )
-    );
-    setIsAdvocating(true);
-    await setIsLoading(false);
-  }, [setIsLoading, advocateForUser, setIsAdvocating]);
-
-  const unadvocateUserHandler = useCallback(async () => {
-    await setIsLoading(true);
-    await dispatch(
-      await unadvocateForUser(
-        exploredUserDataLocal.exploredExhibitUId,
-        ExhibitUId,
-        localId,
-        exploredExhibitData.exhibitId
-      )
-    );
-    setIsAdvocating(false);
-    await setIsAdvocating(false);
-    await setIsLoading(false);
-  }, [setIsLoading, unadvocateForUser, setIsAdvocating]);
 
   const viewCommentsHandler = (
     ExhibitUId: string,
@@ -246,8 +202,6 @@ const NotificationsExhibitScreen = (props) => {
     props.navigation.setParams({
       exploredExhibitUId: exploredUserDataLocal.exploredExhibitUId,
     });
-    props.navigation.setParams({ advocateFn: advocateUserHandler });
-    props.navigation.setParams({ unadvocateFn: unadvocateUserHandler });
   }, []);
 
   useEffect(() => {
@@ -257,10 +211,6 @@ const NotificationsExhibitScreen = (props) => {
   useEffect(() => {
     props.navigation.setParams({ isLoading: isLoading });
   }, [isLoading]);
-
-  useEffect(() => {
-    props.navigation.setParams({ isAdvocating: isAdvocating });
-  }, [isAdvocating]);
 
   useEffect(() => {
     props.navigation.setParams({ exploreData: exploredUserDataLocal });
@@ -393,12 +343,6 @@ const NotificationsExhibitScreen = (props) => {
 
 NotificationsExhibitScreen.navigationOptions = (navData) => {
   const darkModeValue = navData.navigation.getParam("darkMode");
-  const ExhibitUId = navData.navigation.getParam("ExhibitUId");
-  const exploredExhibitUId = navData.navigation.getParam("exploredExhibitUId");
-  const isAdvocating = navData.navigation.getParam("isAdvocating");
-  const isLoading = navData.navigation.getParam("isLoading");
-  const advocateFn = navData.navigation.getParam("advocateFn");
-  const unadvocateFn = navData.navigation.getParam("unadvocateFn");
 
   return {
     headerTitle: () => (
@@ -422,59 +366,6 @@ NotificationsExhibitScreen.navigationOptions = (navData) => {
           }}
         />
       </HeaderButtons>
-    ),
-    headerRight: () => (
-      <View>
-        {ExhibitUId !== exploredExhibitUId ? (
-          <View>
-            {!isAdvocating ? (
-              <View>
-                {!isLoading ? (
-                  <HeaderButtons
-                    HeaderButtonComponent={FontAwesomeHeaderButton}
-                  >
-                    <Item
-                      title="Advocate"
-                      iconName={"handshake-o"}
-                      color={darkModeValue ? "white" : "black"}
-                      onPress={advocateFn}
-                    />
-                  </HeaderButtons>
-                ) : (
-                  <View style={{ margin: 20 }}>
-                    <ActivityIndicator
-                      size="small"
-                      color={darkModeValue ? "white" : "black"}
-                    />
-                  </View>
-                )}
-              </View>
-            ) : (
-              <View>
-                {!isLoading ? (
-                  <HeaderButtons
-                    HeaderButtonComponent={FontAwesomeHeaderButton}
-                  >
-                    <Item
-                      title="Unadvocate"
-                      iconName={"handshake-o"}
-                      color={"red"}
-                      onPress={unadvocateFn}
-                    />
-                  </HeaderButtons>
-                ) : (
-                  <View style={{ margin: 20 }}>
-                    <ActivityIndicator
-                      size="small"
-                      color={darkModeValue ? "white" : "black"}
-                    />
-                  </View>
-                )}
-              </View>
-            )}
-          </View>
-        ) : null}
-      </View>
     ),
   };
 };

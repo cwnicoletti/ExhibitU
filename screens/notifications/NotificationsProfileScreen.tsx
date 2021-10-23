@@ -156,7 +156,6 @@ const NotificationsProfileScreen = (props) => {
           exploredUserDataNewState.profileBiography = hit.profileBiography;
           exploredUserDataNewState.following = hit.following;
           exploredUserDataNewState.followers = hit.followers;
-          exploredUserDataNewState.advocates = hit.advocates;
           exploredUserDataNewState.fullname = hit.fullname;
           exploredUserDataNewState.username = hit.username;
           exploredUserDataNewState.jobTitle = hit.jobTitle;
@@ -169,7 +168,6 @@ const NotificationsProfileScreen = (props) => {
           exploredUserDataNewState.showCheering = hit.showCheering;
           exploredUserDataNewState.numberOfFollowers = hit.numberOfFollowers;
           exploredUserDataNewState.numberOfFollowing = hit.numberOfFollowing;
-          exploredUserDataNewState.numberOfAdvocates = hit.numberOfAdvocates;
           setExploredUserData(exploredUserDataNewState);
         }
       });
