@@ -6,11 +6,11 @@ This is a mobile app built using React Native and Expo. Designs were made via Ad
 <img src="https://res.cloudinary.com/personaluse1234/image/upload/v1627322353/image0_xmon8y.png" width="200">&nbsp;
 <img src="https://res.cloudinary.com/personaluse1234/image/upload/v1627322354/image1_nzjygj.png" width="200">&nbsp;
 <img src="https://res.cloudinary.com/personaluse1234/image/upload/v1627322349/image2_vifzug.png" width="200">&nbsp;
-<img src="https://res.cloudinary.com/personaluse1234/image/upload/v1627322362/image6_wqmiup.png" width="200">&nbsp;
-<img src="https://res.cloudinary.com/personaluse1234/image/upload/v1627322356/image3_fkr3o5.png" width="200">&nbsp;
-<img src="https://res.cloudinary.com/personaluse1234/image/upload/v1627322354/image4_jbppjr.png" width="200">&nbsp;
-<img src="https://res.cloudinary.com/personaluse1234/image/upload/v1627322349/image5_xg1zfx.png" width="200">&nbsp;
-<img src="https://res.cloudinary.com/personaluse1234/image/upload/v1627322351/image8_aowb9b.png" width="200">&nbsp;
+<img src="https://res.cloudinary.com/personaluse1234/image/upload/v1635191479/image5_1_g84wn5.png" width="200">&nbsp;
+<img src="https://res.cloudinary.com/personaluse1234/image/upload/v1635191534/image0_8_trxnro.png" width="200">&nbsp;
+<img src="https://res.cloudinary.com/personaluse1234/image/upload/v1635191540/image1_4_loudoh.png" width="200">&nbsp;
+<img src="https://res.cloudinary.com/personaluse1234/image/upload/v1635191542/image4_3_xkcx6o.png" width="200">&nbsp;
+<img src="https://res.cloudinary.com/personaluse1234/image/upload/v1635191541/image3_2_zbae5m.png" width="200">&nbsp;
 
 ## Getting started
 
