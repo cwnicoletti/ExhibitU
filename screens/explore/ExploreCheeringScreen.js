@@ -38,14 +38,18 @@ const ExploreCheeringScreen = (props) => {
     );
     const index = client.initIndex("users");
 
-    index.search("").then((responses) => {
-      const cheering = responses.hits.find(
-        (object) => object.objectID === ExhibitUId
-      ).profileExhibits[exhibitId].exhibitPosts[postId].cheering;
-      const filteredIndex = responses.hits.filter((object) =>
-        cheering.includes(object.objectID)
-      );
-      setReturnedIndex(filteredIndex);
+    index.search("").then(async (responses) => {
+      if (!Array.isArray(responses.hits) || !responses.hits.length) {
+        setReturnedIndex([]);
+      } else {
+        const user = await index.getObject(ExhibitUId);
+        const cheering =
+          user.profileExhibits[exhibitId].exhibitPosts[postId].cheering;
+        const filteredIndex = responses.hits.filter((object) =>
+          cheering.includes(object.objectID)
+        );
+        setReturnedIndex(filteredIndex);
+      }
     });
   }, []);
 
@@ -56,14 +60,18 @@ const ExploreCheeringScreen = (props) => {
     );
     const index = client.initIndex("users");
 
-    index.search(text).then((responses) => {
-      const cheering = responses.hits.find(
-        (object) => object.objectID === ExhibitUId
-      ).profileExhibits[exhibitId].exhibitPosts[postId].cheering;
-      const filteredIndex = responses.hits.filter((object) =>
-        cheering.includes(object.objectID)
-      );
-      setReturnedIndex(filteredIndex);
+    index.search(text).then(async (responses) => {
+      if (!Array.isArray(responses.hits) || !responses.hits.length) {
+        setReturnedIndex([]);
+      } else {
+        const user = await index.getObject(ExhibitUId);
+        const cheering =
+          user.profileExhibits[exhibitId].exhibitPosts[postId].cheering;
+        const filteredIndex = responses.hits.filter((object) =>
+          cheering.includes(object.objectID)
+        );
+        setReturnedIndex(filteredIndex);
+      }
     });
   };
 
