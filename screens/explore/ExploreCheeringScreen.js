@@ -108,7 +108,7 @@ const ExploreCheeringScreen = (props) => {
   ) => {
     props.navigation.push("ExploreProfile", {
       exploreData: {
-        ExhibitUId,
+        exploredExhibitUId: ExhibitUId,
         profilePictureUrl,
         fullname,
         username,
