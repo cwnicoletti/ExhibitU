@@ -200,7 +200,7 @@ const NotificationsProfileScreen = (props) => {
     if (ExhibitUId === exploredUserData.exploredExhibitUId) {
       if (intialFollowing.length < following.length) {
         setNumberOfFollowing((prevState) => prevState + 1);
-      } else {
+      } else if (following.length < intialFollowing.length) {
         setNumberOfFollowing((prevState) => prevState - 1);
       }
     }
