@@ -55,6 +55,10 @@ const FeedItem = (props) => {
   const links = props.links ? Object.values(props.links) : [];
   const fullname = props.fullname;
   const username = props.username;
+  const currentUsername = useAppSelector((state) => state.user.username);
+  const profilePictureUrl = useAppSelector(
+    (state) => state.user.profilePictureUrl
+  );
   const jobTitle = props.jobTitle;
   const postUrl = props.postUrl;
   const postDateCreated = toDateTime(props.postDateCreated);
@@ -145,12 +149,12 @@ const FeedItem = (props) => {
         await setLoadingCheer(true);
         dispatch(
           sendNotification(
-            username,
+            currentUsername,
             ExhibitUId,
             exhibitId,
             postId,
             posterExhibitUId,
-            props.profileImageSource,
+            profilePictureUrl,
             postUrl,
             "cheer"
           )
