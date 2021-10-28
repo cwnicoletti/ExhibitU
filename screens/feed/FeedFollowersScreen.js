@@ -27,31 +27,27 @@ const FeedFollowersScreen = (props) => {
   const [returnedIndex, setReturnedIndex] = useState([]);
   const [search, setSearch] = useState("");
   const [isRefreshing, setIsRefreshing] = useState(false);
-  const ExhibitUId = props.navigation.getParam("ExhibitUId");
+  const exploredExhibitUId = props.navigation.getParam("exploredExhibitUId");
 
   useEffect(() => {
     props.navigation.setParams({ darkMode: darkModeValue });
   }, [darkModeValue]);
 
   useEffect(() => {
-    index.search("").then((responses) => {
-      const followers = responses.hits.find(
-        (object) => object.objectID === ExhibitUId
-      ).followers;
+    index.search("").then(async (responses) => {
+      const user = await index.getObject(exploredExhibitUId);
       const filteredIndex = responses.hits.filter((object) =>
-        followers.includes(object.objectID)
+        user.followers.includes(object.objectID)
       );
       setReturnedIndex(filteredIndex);
     });
   }, []);
 
   const returnIndex = (text) => {
-    index.search(text).then((responses) => {
-      const followers = responses.hits.find(
-        (object) => object.objectID === ExhibitUId
-      ).followers;
+    index.search(text).then(async (responses) => {
+      const user = await index.getObject(exploredExhibitUId);
       const filteredIndex = responses.hits.filter((object) =>
-        followers.includes(object.objectID)
+        user.followers.includes(object.objectID)
       );
       setReturnedIndex(filteredIndex);
     });
@@ -60,28 +56,28 @@ const FeedFollowersScreen = (props) => {
   const searchFilterFunction = (text) => {
     setSearch(text);
     if (!/^ *$/.test(text)) {
-      index.search(text).then((responses) => {
+      index.search(text).then(async (responses) => {
         if (!Array.isArray(responses.hits) || !responses.hits.length) {
           setReturnedIndex([]);
         } else {
-          const followers = responses.hits.find(
-            (object) => object.objectID === ExhibitUId
-          ).followers;
+          const user = await index.getObject(exploredExhibitUId);
           const filteredIndex = responses.hits.filter((object) =>
-            followers.includes(object.objectID)
+            user.followers.includes(object.objectID)
           );
           setReturnedIndex(filteredIndex);
         }
       });
     } else {
-      index.search("").then((responses) => {
-        const followers = responses.hits.find(
-          (object) => object.objectID === ExhibitUId
-        ).followers;
-        const filteredIndex = responses.hits.filter((object) =>
-          followers.includes(object.objectID)
-        );
-        setReturnedIndex(filteredIndex);
+      index.search("").then(async (responses) => {
+        if (!Array.isArray(responses.hits) || !responses.hits.length) {
+          setReturnedIndex([]);
+        } else {
+          const user = await index.getObject(exploredExhibitUId);
+          const filteredIndex = responses.hits.filter((object) =>
+            user.followers.includes(object.objectID)
+          );
+          setReturnedIndex(filteredIndex);
+        }
       });
     }
   };
