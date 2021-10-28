@@ -2,7 +2,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import React, { useEffect } from "react";
 import { ActivityIndicator, StyleSheet, View } from "react-native";
 import { useAppDispatch } from "../hooks";
-import { authenticate } from "../store/actions/auth/auth";
+import { authenticate, logout } from "../store/actions/auth/auth";
 import { getUserData } from "../store/actions/user/user";
 
 const StartupScreen = (props) => {
