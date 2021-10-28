@@ -14,7 +14,6 @@ import FontAwesomeHeaderButton from "../../components/UI/header_buttons/FontAwes
 import IoniconsHeaderButton from "../../components/UI/header_buttons/IoniconsHeaderButton";
 import ExhibitPictures from "../../components/UI/ExhibitPictures";
 import MainHeaderTitle from "../../components/UI/MainHeaderTitle";
-import TutorialExploreExhibit from "../../components/tutorial/TutorialExploreExhibit";
 import useDidMountEffect from "../../helper/useDidMountEffect";
 import getExlusiveBothSetsDifference from "../../helper/getExlusiveBothSetsDifference";
 
@@ -31,8 +30,6 @@ const NotificationsExhibitScreen = (props) => {
       ? props.navigation.getParam("exploredUserData")
       : {}
   );
-  const tutorialing = useAppSelector((state) => state.user.tutorialing);
-  const tutorialScreen = useAppSelector((state) => state.user.tutorialScreen);
 
   const exploredExhibitData = {
     exhibitId: props.navigation.getParam("exhibitId"),
@@ -284,12 +281,6 @@ const NotificationsExhibitScreen = (props) => {
         backgroundColor: darkModeValue ? "black" : "white",
       }}
     >
-      {tutorialing &&
-      (tutorialScreen === "ExploreProfile" ||
-        tutorialScreen === "ExploreExhibit" ||
-        tutorialScreen === "TutorialEnd") ? (
-        <TutorialExploreExhibit ExhibitUId={ExhibitUId} localId={localId} />
-      ) : null}
       <FlatList<any>
         data={exhibitPostsState}
         keyExtractor={(item) => item.postId}

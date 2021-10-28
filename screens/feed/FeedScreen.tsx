@@ -11,7 +11,6 @@ import {
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import FeedItem from "../../components/feed/FeedItem";
 import useDidMountEffect from "../../helper/useDidMountEffect";
-import TutorialFeedView from "../../components/tutorial/TutorialFeedView";
 import { getUserFeed, offScreen } from "../../store/actions/user/user";
 import MainHeaderTitle from "../../components/UI/MainHeaderTitle";
 
@@ -35,8 +34,6 @@ const FeedScreen = (props) => {
     (state) => state.user.profilePictureBase64
   );
   const resetScrollFeed = useAppSelector((state) => state.user.resetScrollFeed);
-  const tutorialing = useAppSelector((state) => state.user.tutorialing);
-  const tutorialScreen = useAppSelector((state) => state.user.tutorialScreen);
 
   useEffect(() => {
     props.navigation.setParams({ darkMode: darkModeValue });
@@ -204,10 +201,6 @@ const FeedScreen = (props) => {
         backgroundColor: darkModeValue ? "black" : "white",
       }}
     >
-      {tutorialing &&
-      (tutorialScreen === "FeedView" || tutorialScreen === "PostCreation") ? (
-        <TutorialFeedView ExhibitUId={ExhibitUId} localId={localId} />
-      ) : null}
       <StatusBar barStyle={setStatusBarStyle(darkModeValue)} />
       <FlatList<any>
         extraData={profilePictureBase64}

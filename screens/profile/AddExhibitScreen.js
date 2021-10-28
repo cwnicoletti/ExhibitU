@@ -16,7 +16,6 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import MainHeaderTitle from "../../components/UI/MainHeaderTitle";
 import { useAppDispatch, useAppSelector } from "../../hooks";
-import TutorialExhibitCreation from "../../components/tutorial/TutorialExhibitCreation";
 import DefaultPicture from "../../assets/Icons/picture.svg";
 import correctUrls from "../../helper/correctUrls";
 import parseLinkValuesFromInputValues from "../../helper/parseLinkValuesFromInputValues";
@@ -53,8 +52,6 @@ const AddExhibitScreen = (props) => {
   const exhibitTempCoverPhotoBase64 = useAppSelector(
     (state) => state.user.exhibitTempCoverPhotoBase64
   );
-  const tutorialing = useAppSelector((state) => state.user.tutorialing);
-  const tutorialScreen = useAppSelector((state) => state.user.tutorialScreen);
 
   let initialState = {
     inputValues: {
@@ -206,11 +203,6 @@ const AddExhibitScreen = (props) => {
         disableKBDismissScroll={true}
         scrollEnabled={true}
       >
-        {tutorialing &&
-        (tutorialScreen === "ExhibitCreation" ||
-          tutorialScreen === "ExhibitView") ? (
-          <TutorialExhibitCreation ExhibitUId={ExhibitUId} localId={localId} />
-        ) : null}
         <View
           style={{
             alignItems: "center",
