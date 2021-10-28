@@ -15,6 +15,8 @@ import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import MainHeaderTitle from "../../components/UI/MainHeaderTitle";
 import { useAppSelector } from "../../hooks";
 import ExploreCard from "../../components/explore/ExploreCard";
+import useDidMountEffect from "../../helper/useDidMountEffect";
+import getExlusiveBothSetsDifference from "../../helper/getExlusiveBothSetsDifference";
 import IoniconsHeaderButton from "../../components/UI/header_buttons/IoniconsHeaderButton";
 
 const FeedCheeringScreen = (props) => {
@@ -32,6 +34,12 @@ const FeedCheeringScreen = (props) => {
   const exhibitId = props.navigation.getParam("exhibitId");
   const postId = props.navigation.getParam("postId");
   const numberOfCheers = props.navigation.getParam("numberOfCheers");
+  const following = useAppSelector((state) => state.user.following);
+  const [intialFollowing, setIntialFollowing] = useState([]);
+
+  useEffect(() => {
+    setIntialFollowing(following);
+  }, []);
 
   useEffect(() => {
     props.navigation.setParams({ darkMode: darkModeValue });
@@ -82,43 +90,97 @@ const FeedCheeringScreen = (props) => {
 
   const viewProfileHandler = (
     ExhibitUId,
-    exhibitId,
+    profilePictureUrl,
     fullname,
     username,
     jobTitle,
     profileBiography,
-    profileExhibits,
-    profilePictureUrl,
     numberOfFollowers,
     numberOfFollowing,
     hideFollowing,
     hideFollowers,
     hideExhibits,
+    followers,
+    following,
+    profileExhibits,
     profileLinks,
-    postLinks,
-    profileColumns
+    exhibitLinks,
+    profileColumns,
+    showCheering
   ) => {
     props.navigation.push("ViewProfile", {
       userData: {
-        ExhibitUId,
-        exhibitId,
+        exploredExhibitUId: ExhibitUId,
+        profilePictureUrl,
         fullname,
         username,
         jobTitle,
         profileBiography,
-        profileExhibits,
-        profilePictureUrl,
         numberOfFollowers,
         numberOfFollowing,
         hideFollowing,
         hideFollowers,
         hideExhibits,
+        followers,
+        following,
+        profileExhibits,
         profileLinks,
-        postLinks,
+        exhibitLinks,
         profileColumns,
+        showCheering,
       },
     });
   };
+
+  useDidMountEffect(() => {
+    const difference = getExlusiveBothSetsDifference(
+      intialFollowing,
+      following
+    );
+    const algoliasearch = require("algoliasearch");
+    const client = algoliasearch(
+      "EXC8LH5MAX",
+      "2d8cedcaab4cb2b351e90679963fbd92"
+    );
+    const index = client.initIndex("users");
+    index
+      .search(search)
+      .then((responses) => {
+        for (const object of responses.hits) {
+          if (object.objectID === difference[0]) {
+            if (intialFollowing.length < following.length) {
+              object.numberOfFollowers += 1;
+              object.followers = [...object.followers, ExhibitUId];
+            } else {
+              object.numberOfFollowers -= 1;
+              object.followers = object.followers.filter(
+                (userId) => userId !== ExhibitUId
+              );
+            }
+          }
+          if (object.objectID === ExhibitUId) {
+            if (intialFollowing.length < following.length) {
+              object.numberOfFollowing += 1;
+              object.following = [...object.following, ExhibitUId];
+            } else {
+              object.numberOfFollowing -= 1;
+              object.following = object.following.filter(
+                (userId) => userId !== ExhibitUId
+              );
+            }
+          }
+        }
+        return responses.hits;
+      })
+      .then(async (returnedHits) => {
+        const user = await index.getObject(ExhibitUId);
+        const filteredIndex = returnedHits.filter((object) =>
+          user.followers.includes(object.objectID)
+        );
+        setReturnedIndex(filteredIndex);
+      });
+    setIntialFollowing(following);
+  }, [following]);
 
   return (
     <View
@@ -214,21 +276,23 @@ const FeedCheeringScreen = (props) => {
             onSelect={() => {
               viewProfileHandler(
                 itemData.item.objectID,
-                itemData.item.exhibitId,
+                itemData.item.profilePictureUrl,
                 itemData.item.fullname,
                 itemData.item.username,
                 itemData.item.jobTitle,
                 itemData.item.profileBiography,
-                itemData.item.profileExhibits,
-                itemData.item.profilePictureUrl,
                 itemData.item.numberOfFollowers,
                 itemData.item.numberOfFollowing,
                 itemData.item.hideFollowing,
                 itemData.item.hideFollowers,
                 itemData.item.hideExhibits,
+                itemData.item.followers,
+                itemData.item.following,
+                itemData.item.profileExhibits,
                 itemData.item.profileLinks,
-                itemData.item.postLinks,
-                itemData.item.profileColumns
+                itemData.item.exhibitLinks,
+                itemData.item.profileColumns,
+                itemData.item.showCheering
               );
             }}
           />

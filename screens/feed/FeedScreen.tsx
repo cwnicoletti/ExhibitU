@@ -104,38 +104,38 @@ const FeedScreen = (props) => {
     jobTitle: string,
     profileBiography: string,
     profileExhibits: object,
-    profilePictureBase64: string,
     profilePictureUrl: string,
+    followers: string[],
+    following: string[],
     numberOfFollowers: number,
     numberOfFollowing: number,
     hideFollowing: boolean,
     hideFollowers: boolean,
     hideExhibits: boolean,
     profileLinks: object,
-    exhibitLinks: object,
     profileColumns: number,
-    postDateCreated: string
+    showCheering: boolean
   ) => {
     dispatch(offScreen("Feed"));
     props.navigation.navigate("ViewProfile", {
       userData: {
-        ExhibitUId,
+        exploredExhibitUId: ExhibitUId,
+        profilePictureUrl,
         fullname,
         username,
         jobTitle,
         profileBiography,
-        profileExhibits,
-        profilePictureBase64,
-        profilePictureUrl,
         numberOfFollowers,
         numberOfFollowing,
         hideFollowing,
         hideFollowers,
         hideExhibits,
+        followers,
+        following,
+        profileExhibits,
         profileLinks,
-        exhibitLinks,
         profileColumns,
-        postDateCreated,
+        showCheering,
       },
     });
   };
@@ -325,17 +325,17 @@ const FeedScreen = (props) => {
                 itemData.item.jobTitle,
                 itemData.item.profileBiography,
                 itemData.item.profileExhibits,
-                itemData.item.profilePictureBase64,
                 itemData.item.profilePictureUrl,
+                itemData.item.followers,
+                itemData.item.following,
                 itemData.item.numberOfFollowers,
                 itemData.item.numberOfFollowing,
                 itemData.item.hideFollowing,
                 itemData.item.hideFollowers,
                 itemData.item.hideExhibits,
                 itemData.item.profileLinks,
-                itemData.item.exhibitLinks,
                 itemData.item.profileColumns,
-                itemData.item.postDateCreated._seconds
+                itemData.item.showCheering
               );
             }}
           />
