@@ -21,7 +21,6 @@ import linkFormReducer from "../../helper/linkFormReducer";
 import updateArrayOnRemove from "../../helper/updateArrayOnRemove";
 import getPhotoPermissions from "../../helper/getPhotoPermissions";
 import { useAppDispatch, useAppSelector } from "../../hooks";
-import TutorialEditProfile from "../../components/tutorial/TutorialEditProfile";
 import Input from "../../components/UI/Input";
 import IoniconsHeaderButton from "../../components/UI/header_buttons/IoniconsHeaderButton";
 import {
@@ -53,8 +52,6 @@ const EditProfileScreen = (props) => {
   const followingValue = useAppSelector((state) => state.user.hideFollowing);
   const followersValue = useAppSelector((state) => state.user.hideFollowers);
   const exhibitsValue = useAppSelector((state) => state.user.hideExhibits);
-  const tutorialing = useAppSelector((state) => state.user.tutorialing);
-  const tutorialScreen = useAppSelector((state) => state.user.tutorialScreen);
   const profileExhibits = useAppSelector((state) => state.user.profileExhibits);
 
   let userData = {
@@ -221,11 +218,6 @@ const EditProfileScreen = (props) => {
       style={{ backgroundColor: darkModeValue ? "black" : "white" }}
       scrollEnabled={true}
     >
-      {tutorialing &&
-      (tutorialScreen === "EditProfile" ||
-        tutorialScreen === "CreateExhibit") ? (
-        <TutorialEditProfile ExhibitUId={ExhibitUId} localId={localId} />
-      ) : null}
       <Text
         style={{
           fontSize: 28,

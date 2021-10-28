@@ -66,7 +66,6 @@ import FeedBottomTab from "../components/footers/FeedBottomTab";
 import ExploreBottomTab from "../components/footers/ExploreBottomTab";
 import StartupScreen from "../screens/StartupScreen";
 import { logout } from "../store/actions/auth/auth";
-import { setTutorialing } from "../store/actions/user/user";
 
 const FeedandViewNavigator = createStackNavigator({
   Feed: {
@@ -122,11 +121,6 @@ const FeedNavigator = createDrawerNavigator(
           updatesOnPress={() => {
             navData.navigation.closeRightDrawer();
             navData.navigation.navigate("Updates");
-          }}
-          tutorialOnPress={() => {
-            navData.navigation.closeRightDrawer();
-            navData.navigation.navigate("Exhibit");
-            dispatch(setTutorialing(localId, ExhibitUId, true, "Start"));
           }}
           logoutOnPress={() => {
             dispatch(logout());
@@ -276,11 +270,6 @@ const ProfileNavigator = createDrawerNavigator(
           updatesOnPress={() => {
             navData.navigation.closeRightDrawer();
             navData.navigation.navigate("Updates");
-          }}
-          tutorialOnPress={() => {
-            navData.navigation.closeRightDrawer();
-            navData.navigation.navigate("Exhibit");
-            dispatch(setTutorialing(localId, ExhibitUId, true, "Start"));
           }}
           logoutOnPress={() => {
             dispatch(logout());

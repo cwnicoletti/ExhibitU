@@ -80,8 +80,6 @@ const EditProfileScreen = (props) => {
   const followingValue = useAppSelector((state) => state.user.hideFollowing);
   const followersValue = useAppSelector((state) => state.user.hideFollowers);
   const exhibitsValue = useAppSelector((state) => state.user.hideExhibits);
-  const tutorialing = useAppSelector((state) => state.user.tutorialing);
-  const tutorialScreen = useAppSelector((state) => state.user.tutorialScreen);
 
   let TouchableCmp = TouchableOpacity;
   if (Platform.OS === "android") {

@@ -42,9 +42,6 @@ export interface AuthenticationResponse {
       hideExhibits: boolean;
       updates: object;
       notifications: object[];
-      tutorialing: boolean;
-      tutorialPrompt: boolean;
-      tutorialScreen: string;
     };
   };
 }

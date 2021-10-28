@@ -61,10 +61,7 @@ export const signup = (
       getSignupResponse.data.docData.hideFollowers,
       getSignupResponse.data.docData.hideExhibits,
       getSignupResponse.data.docData.updates,
-      getSignupResponse.data.docData.notifications,
-      getSignupResponse.data.docData.tutorialing,
-      getSignupResponse.data.docData.tutorialPrompt,
-      getSignupResponse.data.docData.tutorialScreen
+      getSignupResponse.data.docData.notifications
     );
 
     await dispatch(getUserData());
@@ -155,10 +152,7 @@ export const login = (email: string, password: string) => {
       getLoginResponse.data.docData.hideFollowers,
       getLoginResponse.data.docData.hideExhibits,
       getLoginResponse.data.docData.updates,
-      getLoginResponse.data.docData.notifications,
-      getLoginResponse.data.docData.tutorialing,
-      getLoginResponse.data.docData.tutorialPrompt,
-      getLoginResponse.data.docData.tutorialScreen
+      getLoginResponse.data.docData.notifications
     );
     await saveDataToStorage(
       getLoginResponse.data.localId,
@@ -220,9 +214,6 @@ const saveUserDocumentToStorage = async (
   hideExhibits: boolean,
   updates: object,
   notifications: object[],
-  tutorialing: boolean,
-  tutorialPrompt: boolean,
-  tutorialScreen: string
 ) => {
   await AsyncStorage.setItem(
     "userDocData",
@@ -257,10 +248,7 @@ const saveUserDocumentToStorage = async (
       hideFollowers,
       hideExhibits,
       updates,
-      notifications,
-      tutorialing,
-      tutorialPrompt,
-      tutorialScreen,
+      notifications
     })
   );
 };

@@ -47,9 +47,6 @@ export const ADD_USER_PROJECT = "ADD_USER_PROJECT";
 export const ADD_USER_POST = "ADD_USER_POST";
 export const UPDATE_ALL_POSTS = "UPDATE_ALL_POSTS";
 
-export const SET_TUTORIALING = "SET_TUTORIALING";
-export const SET_TUTORIALING_PROMPT = "SET_TUTORIALING_PROMPT";
-
 export interface UserState {
   ExhibitUId: string;
   email: string;

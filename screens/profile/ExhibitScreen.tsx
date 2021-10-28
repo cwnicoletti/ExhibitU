@@ -5,7 +5,6 @@ import { useAppDispatch, useAppSelector } from "../../hooks";
 import ExhibitHeader from "../../components/exhibits/ExhibitHeader";
 import IoniconsHeaderButton from "../../components/UI/header_buttons/IoniconsHeaderButton";
 import ExhibitPictures from "../../components/UI/ExhibitPictures";
-import TutorialExhibitView from "../../components/tutorial/TutorialExhibitView";
 import { changeExhibitNumberOfColumns } from "../../store/actions/user/user";
 import MainHeaderTitle from "../../components/UI/MainHeaderTitle";
 
@@ -18,8 +17,6 @@ const ExhibitScreen = (props) => {
   const localId = useAppSelector((state) => state.auth.userId);
   const ExhibitUId = useAppSelector((state) => state.user.ExhibitUId);
   const profileExhibits = useAppSelector((state) => state.user.profileExhibits);
-  const tutorialing = useAppSelector((state) => state.user.tutorialing);
-  const tutorialScreen = useAppSelector((state) => state.user.tutorialScreen);
   const currentExhibitId = props.navigation.getParam("exhibitId");
   const currentExhibit = profileExhibits[currentExhibitId]
     ? profileExhibits[currentExhibitId]
@@ -246,11 +243,6 @@ const ExhibitScreen = (props) => {
         backgroundColor: darkModeValue ? "black" : "white",
       }}
     >
-      {tutorialing &&
-      (tutorialScreen === "ExhibitView" ||
-        tutorialScreen === "PostCreation") ? (
-        <TutorialExhibitView ExhibitUId={ExhibitUId} localId={localId} />
-      ) : null}
       <FlatList<Object | any>
         data={exhibitPostsState}
         keyExtractor={(item) => item.postId}
