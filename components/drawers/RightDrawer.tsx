@@ -94,25 +94,6 @@ const RightDrawer = (props) => {
           </View>
         </TouchableCmp>
       </View>
-      {/* <View style={styles.drawerMiddleItemContainer}>
-        <AntDesign
-          name="questioncircleo"
-          size={20}
-          color={darkModeValue ? "white" : "black"}
-        />
-        <TouchableCmp onPress={props.tutorialOnPress}>
-          <View>
-            <Text
-              style={{
-                ...styles.drawerItemText,
-                color: darkModeValue ? "#bababa" : "black",
-              }}
-            >
-              Tutorial
-            </Text>
-          </View>
-        </TouchableCmp>
-      </View> */}
       <View style={styles.drawerLastItemContainer}>
         <View style={styles.drawerLastItemSubContainer}>
           <MaterialCommunityIcons
