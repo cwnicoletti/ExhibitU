@@ -27,7 +27,7 @@ const FollowingScreen = (props) => {
   const [returnedIndex, setReturnedIndex] = useState([]);
   const [isRefreshing, setIsRefreshing] = useState(false);
   const darkModeValue = useAppSelector((state) => state.user.darkMode);
-  const ExhibitUId = props.navigation.getParam("ExhibitUId");
+  const exploredExhibitUId = props.navigation.getParam("exploredExhibitUId");
 
   useEffect(() => {
     props.navigation.setParams({ darkMode: darkModeValue });

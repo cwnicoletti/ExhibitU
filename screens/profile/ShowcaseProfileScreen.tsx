@@ -145,12 +145,12 @@ const ShowcaseProfileScreen = (props) => {
         onAddNewExhibitPress={() => props.navigation.navigate("AddExhibit")}
         followersOnPress={() =>
           props.navigation.push("Followers", {
-            ExhibitUId: userData.ExhibitUId,
+            exploredExhibitUId: userData.ExhibitUId,
           })
         }
         followingOnPress={() =>
           props.navigation.push("Following", {
-            ExhibitUId: userData.ExhibitUId,
+            exploredExhibitUId: userData.ExhibitUId,
           })
         }
       />
