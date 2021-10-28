@@ -198,12 +198,12 @@ const ProfileScreen = (props) => {
         onAddNewExhibitPress={() => props.navigation.navigate("AddExhibit")}
         followersOnPress={() =>
           props.navigation.navigate("Followers", {
-            ExhibitUId: userData.ExhibitUId,
+            exploredExhibitUId: userData.ExhibitUId,
           })
         }
         followingOnPress={() =>
           props.navigation.navigate("Following", {
-            ExhibitUId: userData.ExhibitUId,
+            exploredExhibitUId: userData.ExhibitUId,
           })
         }
         changeColumnToTwo={onPressChangeToColumnTwo}

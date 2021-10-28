@@ -34,12 +34,10 @@ const FollowingScreen = (props) => {
   }, [darkModeValue]);
 
   useEffect(() => {
-    index.search("").then((responses) => {
-      const following = responses.hits.find(
-        (object) => object.objectID === ExhibitUId
-      ).following;
+    index.search("").then(async (responses) => {
+      const user = await index.getObject(exploredExhibitUId);
       const filteredIndex = responses.hits.filter((object) =>
-        following.includes(object.objectID)
+        user.following.includes(object.objectID)
       );
 
       setReturnedIndex(filteredIndex);
@@ -47,12 +45,10 @@ const FollowingScreen = (props) => {
   }, []);
 
   const returnIndex = (text) => {
-    index.search(text).then((responses) => {
-      const following = responses.hits.find(
-        (object) => object.objectID === ExhibitUId
-      ).following;
+    index.search(text).then(async (responses) => {
+      const user = await index.getObject(exploredExhibitUId);
       const filteredIndex = responses.hits.filter((object) =>
-        following.includes(object.objectID)
+        user.following.includes(object.objectID)
       );
 
       setReturnedIndex(filteredIndex);
@@ -62,26 +58,22 @@ const FollowingScreen = (props) => {
   const searchFilterFunction = (text) => {
     setSearch(text);
     if (!/^ *$/.test(text)) {
-      index.search(text).then((responses) => {
+      index.search(text).then(async (responses) => {
         if (!Array.isArray(responses.hits) || !responses.hits.length) {
           setReturnedIndex([]);
         } else {
-          const following = responses.hits.find(
-            (object) => object.objectID === ExhibitUId
-          ).following;
+          const user = await index.getObject(exploredExhibitUId);
           const filteredIndex = responses.hits.filter((object) =>
-            following.includes(object.objectID)
+            user.following.includes(object.objectID)
           );
           setReturnedIndex(filteredIndex);
         }
       });
     } else {
-      index.search("").then((responses) => {
-        const following = responses.hits.find(
-          (object) => object.objectID === ExhibitUId
-        ).following;
+      index.search("").then(async (responses) => {
+        const user = await index.getObject(exploredExhibitUId);
         const filteredIndex = responses.hits.filter((object) =>
-          following.includes(object.objectID)
+          user.following.includes(object.objectID)
         );
         setReturnedIndex(filteredIndex);
       });
