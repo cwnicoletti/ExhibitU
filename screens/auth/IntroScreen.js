@@ -135,15 +135,6 @@ const IntroScreen = (props) => {
             marginHorizontal: 10,
           }}
         />
-        <View
-          style={{
-            width: 8,
-            height: 8,
-            backgroundColor: sliderIndex === 4 ? "white" : "gray",
-            borderRadius: "50%",
-            marginHorizontal: 10,
-          }}
-        />
       </View>
       {isLoading ? (
         <View style={styles.activityContainer}>
@@ -151,7 +142,7 @@ const IntroScreen = (props) => {
         </View>
       ) : (
         <View style={{ margin: 10, marginBottom: 60 }}>
-          {sliderIndex === 4 ? (
+          {sliderIndex === 3 ? (
             <TouchableCmp
               style={{
                 borderColor: "#007AFF",
