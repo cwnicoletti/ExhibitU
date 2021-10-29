@@ -41,6 +41,7 @@ const StartupScreen = (props) => {
       }
       if (introing) {
         props.navigation.navigate("Intro");
+        return;
       }
 
       if (gettingPermissions) {
