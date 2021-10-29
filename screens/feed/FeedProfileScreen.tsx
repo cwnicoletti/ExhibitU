@@ -54,8 +54,6 @@ const FeedProfileScreen = (props) => {
     )
   );
 
-  console.log(userData);
-
   const [isfollowing, setIsFollowing] = useState(
     userData.followers.includes(ExhibitUId) ? true : false
   );

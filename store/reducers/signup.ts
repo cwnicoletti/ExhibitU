@@ -1,4 +1,5 @@
 import {
+  INTROING,
   GETTING_PERMISSIONS,
   SIGNUP_EMAIL,
   SIGNUP_FULLNAME,
@@ -8,6 +9,7 @@ import {
 } from "../actions/signup/types";
 
 const intialState: SignUpState = {
+  introing: false,
   gettingPermissions: false,
   email: "",
   fullname: "",
@@ -16,6 +18,11 @@ const intialState: SignUpState = {
 
 export default (state = intialState, action: Action) => {
   switch (action.type) {
+    case INTROING:
+      return {
+        ...state,
+        introing: action.introing,
+      };
     case GETTING_PERMISSIONS:
       return {
         ...state,
