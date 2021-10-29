@@ -21,8 +21,8 @@ export const setGettingPermissions = (value: boolean) => {
 export const setIntroing = (value: boolean) => {
   return async (dispatch) => {
     await AsyncStorage.setItem(
-      "gettingPermissions",
-      JSON.stringify({ gettingPermissions: value })
+      "introing",
+      JSON.stringify({ introing: value })
     );
 
     await dispatch({ type: INTROING, introing: value });
