@@ -84,6 +84,7 @@ PhotoPermissionsScreen.navigationOptions = (navData) => {
     headerStyle: {
       backgroundColor: "black",
     },
+    headerLeft: () => {},
   };
 };
 
@@ -96,7 +97,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   image: {
-    width:  300,
+    width: 300,
     height: 300,
   },
   text: {

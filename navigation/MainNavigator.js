@@ -124,7 +124,7 @@ const FeedNavigator = createDrawerNavigator(
           }}
           logoutOnPress={() => {
             dispatch(logout());
-            navData.navigation.navigate("StartAuth");
+            navData.navigation.navigate("SignupOrLogin");
           }}
         />
       );
@@ -273,7 +273,7 @@ const ProfileNavigator = createDrawerNavigator(
           }}
           logoutOnPress={() => {
             dispatch(logout());
-            navData.navigation.navigate("StartAuth");
+            navData.navigation.navigate("SignupOrLogin");
           }}
         />
       );
@@ -345,18 +345,68 @@ const IntroStack = createStackNavigator(
   },
   {
     headerMode: "none",
+    headerShown: false,
     navigationOptions: {
       headerVisible: false,
     },
   }
 );
 
-const MainNavigator = createSwitchNavigator({
-  Startup: StartupScreen,
-  Intro: IntroStack,
-  StartAuth: StartSignup,
-  PermissionsStack: Permissions,
-  Exhibit: FullAppNavigator,
+const MainNavigator = createStackNavigator({
+  Intro: {
+    screen: IntroStack,
+    navigationOptions: {
+      headerMode: "none",
+      headerShown: false,
+      navigationOptions: {
+        headerVisible: false,
+      },
+    },
+  },
+  StartAuth: {
+    screen: StartSignup,
+    navigationOptions: {
+      headerMode: "none",
+      headerShown: false,
+      navigationOptions: {
+        headerVisible: false,
+      },
+    },
+  },
+  PermissionsStack: {
+    screen: Permissions,
+    navigationOptions: {
+      headerMode: "none",
+      headerShown: false,
+      navigationOptions: {
+        headerVisible: false,
+      },
+    },
+  },
+  Exhibit: {
+    screen: FullAppNavigator,
+    navigationOptions: {
+      headerMode: "none",
+      headerShown: false,
+      navigationOptions: {
+        headerVisible: false,
+      },
+    },
+  },
 });
 
-export default createAppContainer(MainNavigator);
+const StartUpNavigator = createSwitchNavigator({
+  Startup: StartupScreen,
+  MainNavigator: {
+    screen: MainNavigator,
+    navigationOptions: {
+      headerMode: "none",
+      headerShown: false,
+      navigationOptions: {
+        headerVisible: false,
+      },
+    },
+  },
+});
+
+export default createAppContainer(StartUpNavigator);

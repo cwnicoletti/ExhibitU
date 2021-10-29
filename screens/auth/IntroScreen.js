@@ -189,6 +189,7 @@ IntroScreen.navigationOptions = () => {
   return {
     headerMode: "none",
     headerVisible: false,
+    headerShown: false,
   };
 };
 

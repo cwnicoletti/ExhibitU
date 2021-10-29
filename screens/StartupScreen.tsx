@@ -40,7 +40,7 @@ const StartupScreen = (props) => {
         return;
       }
       if (introing) {
-        props.navigation.navigate("Intro");
+        props.navigation.navigate("MainNavigator");
         return;
       }
 
