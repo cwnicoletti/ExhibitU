@@ -27,7 +27,8 @@ const FeedFollowingScreen = (props) => {
   const [returnedIndex, setReturnedIndex] = useState([]);
   const [search, setSearch] = useState("");
   const [isRefreshing, setIsRefreshing] = useState(false);
-  const ExhibitUId = props.navigation.getParam("ExhibitUId");
+  const exploredExhibitUId = props.navigation.getParam("exploredExhibitUId");
+  console.log(exploredExhibitUId);
 
   useEffect(() => {
     props.navigation.setParams({ darkMode: darkModeValue });

@@ -231,12 +231,12 @@ const FeedProfileScreen = (props) => {
         description={userData.profileBiography}
         followersOnPress={() =>
           props.navigation.push("ViewFollowers", {
-            ExhibitUId: userData.ExhibitUId,
+            exploredExhibitUId: userData.exploredExhibitUId,
           })
         }
         followingOnPress={() =>
           props.navigation.push("ViewFollowing", {
-            ExhibitUId: userData.ExhibitUId,
+            exploredExhibitUId: userData.exploredExhibitUId,
           })
         }
       />
