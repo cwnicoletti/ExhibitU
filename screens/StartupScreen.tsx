@@ -30,12 +30,12 @@ const StartupScreen = (props) => {
         [{ localId, token }] = [transformedData];
       }
 
-      if (!transformedData && !gettingPermissions && !introing) {
+      if (!transformedData && !introing && !gettingPermissions) {
         props.navigation.navigate("StartAuth");
         return;
       }
 
-      if ((!token || !localId) && !gettingPermissions && !introing) {
+      if ((!token || !localId) && !introing) {
         props.navigation.navigate("StartAuth");
         return;
       }
