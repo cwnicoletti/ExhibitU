@@ -81,7 +81,6 @@ const LoginScreen = (props) => {
       Alert.alert("Invalid Credentials", "Invalid username or password", [
         {
           text: "Dismiss",
-          onPress: () => console.log("Ask me later pressed"),
         },
       ]);
     }
