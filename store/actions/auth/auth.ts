@@ -88,7 +88,7 @@ export const login = (email: string, password: string) => {
       );
       authenticated = true;
     } catch (err) {
-      return authenticated;
+      return [authenticated, undefined];
     }
 
     const profilePictureBase64 = await getBase64FromUrl(
@@ -213,7 +213,7 @@ const saveUserDocumentToStorage = async (
   hideFollowers: boolean,
   hideExhibits: boolean,
   updates: object,
-  notifications: object[],
+  notifications: object[]
 ) => {
   await AsyncStorage.setItem(
     "userDocData",
@@ -248,7 +248,7 @@ const saveUserDocumentToStorage = async (
       hideFollowers,
       hideExhibits,
       updates,
-      notifications
+      notifications,
     })
   );
 };
