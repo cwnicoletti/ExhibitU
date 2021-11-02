@@ -74,13 +74,76 @@ const FeedandViewNavigator = createStackNavigator({
       header: () => <TitleOnlyHeader navigation={navigation} />,
     }),
   },
-  ViewCheering: FeedCheeringScreen,
-  ViewFeedPicture: FeedPictureScreen,
-  ViewProfile: FeedProfileScreen,
-  ViewFollowers: FeedFollowersScreen,
-  ViewFollowing: FeedFollowingScreen,
-  ViewFeedExhibit: FeedExhibitScreen,
-  ViewFeedProfileExhibit: FeedExhibitScreen,
+  ViewCheering: {
+    screen: FeedCheeringScreen,
+    navigationOptions: {
+      headerMode: "none",
+      headerShown: false,
+      navigationOptions: {
+        headerVisible: false,
+      },
+    },
+  },
+  ViewFeedPicture: {
+    screen: FeedPictureScreen,
+    navigationOptions: {
+      headerMode: "none",
+      headerShown: false,
+      navigationOptions: {
+        headerVisible: false,
+      },
+    },
+  },
+  ViewProfile: {
+    screen: FeedProfileScreen,
+    navigationOptions: {
+      headerMode: "none",
+      headerShown: false,
+      navigationOptions: {
+        headerVisible: false,
+      },
+    },
+  },
+  ViewFollowers: {
+    screen: FeedFollowersScreen,
+    navigationOptions: {
+      headerMode: "none",
+      headerShown: false,
+      navigationOptions: {
+        headerVisible: false,
+      },
+    },
+  },
+  ViewFollowing: {
+    screen: FeedFollowingScreen,
+    navigationOptions: {
+      headerMode: "none",
+      headerShown: false,
+      navigationOptions: {
+        headerVisible: false,
+      },
+    },
+  },
+  ViewFeedExhibit: {
+    screen: FeedExhibitScreen,
+    navigationOptions: {
+      headerMode: "none",
+      headerShown: false,
+      navigationOptions: {
+        headerVisible: false,
+      },
+    },
+  },
+  ViewFeedProfileExhibit: {
+    screen: FeedExhibitScreen,
+    navigationOptions: {
+      headerMode: "none",
+      headerShown: false,
+      navigationOptions: {
+        headerVisible: false,
+      },
+    },
+  },
 });
 
 const RightFeedDrawerNavigator = createDrawerNavigator(
@@ -108,8 +171,6 @@ const FeedNavigator = createDrawerNavigator(
     drawerPosition: "right",
     contentComponent: (navData) => {
       const dispatch = useAppDispatch();
-      const localId = useAppSelector((state) => state.auth.userId);
-      const ExhibitUId = useAppSelector((state) => state.user.ExhibitUId);
       return (
         <RightDrawer
           navData={navData}
@@ -144,12 +205,66 @@ const ExploreNavigator = createStackNavigator({
       header: () => <TitleOnlyHeader navigation={navigation} />,
     }),
   },
-  ExploreProfile: ExploreProfileScreen,
-  ViewExploredProfileExhibit: ExploreExhibitScreen,
-  ViewExploredProfileExhibitPicture: ExplorePictureScreen,
-  ExploreCheering: ExploreCheeringScreen,
-  ExploreFollowers: ExploreFollowersScreen,
-  ExploreFollowing: ExploreFollowingScreen,
+  ExploreProfile: {
+    screen: ExploreProfileScreen,
+    navigationOptions: {
+      headerMode: "none",
+      headerShown: false,
+      navigationOptions: {
+        headerVisible: false,
+      },
+    },
+  },
+  ViewExploredProfileExhibit: {
+    screen: ExploreExhibitScreen,
+    navigationOptions: {
+      headerMode: "none",
+      headerShown: false,
+      navigationOptions: {
+        headerVisible: false,
+      },
+    },
+  },
+  ViewExploredProfileExhibitPicture: {
+    screen: ExplorePictureScreen,
+    navigationOptions: {
+      headerMode: "none",
+      headerShown: false,
+      navigationOptions: {
+        headerVisible: false,
+      },
+    },
+  },
+  ExploreCheering: {
+    screen: ExploreCheeringScreen,
+    navigationOptions: {
+      headerMode: "none",
+      headerShown: false,
+      navigationOptions: {
+        headerVisible: false,
+      },
+    },
+  },
+  ExploreFollowers: {
+    screen: ExploreFollowersScreen,
+    navigationOptions: {
+      headerMode: "none",
+      headerShown: false,
+      navigationOptions: {
+        headerVisible: false,
+      },
+    },
+  },
+  ExploreFollowing: {
+    screen: ExploreFollowingScreen,
+    navigationOptions: {
+      headerMode: "none",
+      headerShown: false,
+      navigationOptions: {
+        headerVisible: false,
+      },
+    },
+  },
 });
 
 const RightExploreDrawerNavigator = createDrawerNavigator(
@@ -180,12 +295,66 @@ const NotificationNavigator = createStackNavigator({
       header: () => <TitleOnlyHeader navigation={navigation} />,
     }),
   },
-  NotificationsProfile: NotificationsProfileScreen,
-  ViewNotificationsProfileExhibit: NotificationsExhibitScreen,
-  ViewNotificationsProfileExhibitPicture: NotificationsPictureScreen,
-  NotificationsFollowing: NotificationsFollowingScreen,
-  NotificationsFollowers: NotificationsFollowersScreen,
-  NotificationsCheering: NotificationsCheeringScreen,
+  NotificationsProfile: {
+    screen: NotificationsProfileScreen,
+    navigationOptions: {
+      headerMode: "none",
+      headerShown: false,
+      navigationOptions: {
+        headerVisible: false,
+      },
+    },
+  },
+  ViewNotificationsProfileExhibit: {
+    screen: NotificationsExhibitScreen,
+    navigationOptions: {
+      headerMode: "none",
+      headerShown: false,
+      navigationOptions: {
+        headerVisible: false,
+      },
+    },
+  },
+  ViewNotificationsProfileExhibitPicture: {
+    screen: NotificationsPictureScreen,
+    navigationOptions: {
+      headerMode: "none",
+      headerShown: false,
+      navigationOptions: {
+        headerVisible: false,
+      },
+    },
+  },
+  NotificationsFollowing: {
+    screen: NotificationsFollowingScreen,
+    navigationOptions: {
+      headerMode: "none",
+      headerShown: false,
+      navigationOptions: {
+        headerVisible: false,
+      },
+    },
+  },
+  NotificationsFollowers: {
+    screen: NotificationsFollowersScreen,
+    navigationOptions: {
+      headerMode: "none",
+      headerShown: false,
+      navigationOptions: {
+        headerVisible: false,
+      },
+    },
+  },
+  NotificationsCheering: {
+    screen: NotificationsCheeringScreen,
+    navigationOptions: {
+      headerMode: "none",
+      headerShown: false,
+      navigationOptions: {
+        headerVisible: false,
+      },
+    },
+  },
 });
 
 const RightNotificationsDrawerNavigator = createDrawerNavigator(
@@ -216,20 +385,146 @@ const ProfileandSettingsNavigator = createStackNavigator({
       header: () => <ProfileHeader navigation={navigation} />,
     }),
   },
-  ViewProfileExhibit: ExhibitScreen,
-  PictureScreen: PictureScreen,
-  ShowcaseProfile: ShowcaseProfileScreen,
-  ShowcaseExhibit: ShowcaseExhibitScreen,
-  ShowcasePictureScreen: ShowcasePictureScreen,
-  EditProfile: EditProfileScreen,
-  ShowcaseSettings: ShowcaseSettingsScreen,
-  Updates: VoteUpdatesSettingsScreen,
-  Following: FollowingScreen,
-  Followers: FollowersScreen,
-  AddExhibit: AddExhibitScreen,
-  CheeringScreen: CheeringScreen,
-  EditExhibitScreen: EditExhibitScreen,
-  AddPicture: AddPictureScreen,
+  ViewProfileExhibit: {
+    screen: ExhibitScreen,
+    navigationOptions: {
+      headerMode: "none",
+      headerShown: false,
+      navigationOptions: {
+        headerVisible: false,
+      },
+    },
+  },
+  PictureScreen: {
+    screen: PictureScreen,
+    navigationOptions: {
+      headerMode: "none",
+      headerShown: false,
+      navigationOptions: {
+        headerVisible: false,
+      },
+    },
+  },
+  ShowcaseProfile: {
+    screen: ShowcaseProfileScreen,
+    navigationOptions: {
+      headerMode: "none",
+      headerShown: false,
+      navigationOptions: {
+        headerVisible: false,
+      },
+    },
+  },
+  ShowcaseExhibit: {
+    screen: ShowcaseExhibitScreen,
+    navigationOptions: {
+      headerMode: "none",
+      headerShown: false,
+      navigationOptions: {
+        headerVisible: false,
+      },
+    },
+  },
+  ShowcasePictureScreen: {
+    screen: ShowcasePictureScreen,
+    navigationOptions: {
+      headerMode: "none",
+      headerShown: false,
+      navigationOptions: {
+        headerVisible: false,
+      },
+    },
+  },
+  EditProfile: {
+    screen: EditProfileScreen,
+    navigationOptions: {
+      headerMode: "none",
+      headerShown: false,
+      navigationOptions: {
+        headerVisible: false,
+      },
+    },
+  },
+  ShowcaseSettings: {
+    screen: ShowcaseSettingsScreen,
+    navigationOptions: {
+      headerMode: "none",
+      headerShown: false,
+      navigationOptions: {
+        headerVisible: false,
+      },
+    },
+  },
+  Updates: {
+    screen: VoteUpdatesSettingsScreen,
+    navigationOptions: {
+      headerMode: "none",
+      headerShown: false,
+      navigationOptions: {
+        headerVisible: false,
+      },
+    },
+  },
+  Following: {
+    screen: FollowingScreen,
+    navigationOptions: {
+      headerMode: "none",
+      headerShown: false,
+      navigationOptions: {
+        headerVisible: false,
+      },
+    },
+  },
+  Followers: {
+    screen: FollowersScreen,
+    navigationOptions: {
+      headerMode: "none",
+      headerShown: false,
+      navigationOptions: {
+        headerVisible: false,
+      },
+    },
+  },
+  AddExhibit: {
+    screen: AddExhibitScreen,
+    navigationOptions: {
+      headerMode: "none",
+      headerShown: false,
+      navigationOptions: {
+        headerVisible: false,
+      },
+    },
+  },
+  CheeringScreen: {
+    screen: CheeringScreen,
+    navigationOptions: {
+      headerMode: "none",
+      headerShown: false,
+      navigationOptions: {
+        headerVisible: false,
+      },
+    },
+  },
+  EditExhibitScreen: {
+    screen: EditExhibitScreen,
+    navigationOptions: {
+      headerMode: "none",
+      headerShown: false,
+      navigationOptions: {
+        headerVisible: false,
+      },
+    },
+  },
+  AddPicture: {
+    screen: AddPictureScreen,
+    navigationOptions: {
+      headerMode: "none",
+      headerShown: false,
+      navigationOptions: {
+        headerVisible: false,
+      },
+    },
+  },
 });
 
 const RightProfileDrawerNavigator = createDrawerNavigator(
