@@ -3,12 +3,19 @@ import { Image, Platform, Text, View } from "react-native";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import { useAppSelector } from "../../hooks";
 import Back from "../headers_components/Back";
-import FillEmptySpace from "../headers_components/FillEmptySpace";
+import Follow from "../headers_components/Follow";
 import Title from "../headers_components/Title";
 import IoniconsHeaderButton from "../UI/header_buttons/IoniconsHeaderButton";
+import SimpleLineIconsHeaderButton from "../../components/UI/header_buttons/SimpleLineIconsHeaderButton";
 
-const BackTitleFill = ({ navigation }) => {
+const BackTitleFollow = ({ navigation }) => {
   const darkModeValue = useAppSelector((state) => state.user.darkMode);
+  const isfollowing = navigation.getParam("isfollowing");
+  const isLoading = navigation.getParam("isLoading");
+  const ExhibitUId = navigation.getParam("ExhibitUId");
+  const exploredExhibitUId = navigation.getParam("exploredExhibitUId");
+  const followFn = navigation.getParam("followFn");
+  const unfollowFn = navigation.getParam("unfollowFn");
 
   return (
     <View>
@@ -34,10 +41,24 @@ const BackTitleFill = ({ navigation }) => {
           Text={Text}
           darkModeValue={darkModeValue}
         />
-        <FillEmptySpace View={View} darkModeValue={darkModeValue} />
+        <Follow
+          darkModeValue={darkModeValue}
+          navigation={navigation}
+          HeaderButton={SimpleLineIconsHeaderButton}
+          HeaderButtons={HeaderButtons}
+          Item={Item}
+          View={View}
+          Platform={Platform}
+          isfollowing={isfollowing}
+          isLoading={isLoading}
+          ExhibitUId={ExhibitUId}
+          exploredExhibitUId={exploredExhibitUId}
+          followFn={followFn}
+          unfollowFn={unfollowFn}
+        />
       </View>
     </View>
   );
 };
 
-export default BackTitleFill;
+export default BackTitleFollow;

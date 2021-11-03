@@ -12,6 +12,8 @@ import {
   View,
 } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import { HeaderButtons, Item } from "react-navigation-header-buttons";
+import MainHeaderTitle from "../../components/UI/MainHeaderTitle";
 import correctUrls from "../../helper/correctUrls";
 import parseLinkValuesFromInputValues from "../../helper/parseLinkValuesFromInputValues";
 import updateArrayOnRemove from "../../helper/updateArrayOnRemove";
@@ -19,6 +21,7 @@ import linkFormReducer from "../../helper/linkFormReducer";
 import getPhotoPermissions from "../../helper/getPhotoPermissions";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import Input from "../../components/UI/Input";
+import IoniconsHeaderButton from "../../components/UI/header_buttons/IoniconsHeaderButton";
 import PreviewPostItem from "../../components/user/PreviewPostItem";
 import {
   addUserPost,
@@ -575,6 +578,34 @@ const EditProfileScreen = (props) => {
       </KeyboardAwareScrollView>
     </KeyboardAvoidingView>
   );
+};
+
+EditProfileScreen.navigationOptions = (navData) => {
+  const darkModeValue = navData.navigation.getParam("darkMode");
+
+  return {
+    headerTitle: () => (
+      <MainHeaderTitle
+        darkModeValue={darkModeValue}
+        titleName={"Create Post"}
+      />
+    ),
+    headerStyle: {
+      backgroundColor: darkModeValue ? "black" : "white",
+    },
+    headerLeft: () => (
+      <HeaderButtons HeaderButtonComponent={IoniconsHeaderButton}>
+        <Item
+          title="Add"
+          iconName={"ios-arrow-back"}
+          color={darkModeValue ? "white" : "black"}
+          onPress={() => {
+            navData.navigation.goBack();
+          }}
+        />
+      </HeaderButtons>
+    ),
+  };
 };
 
 const styles = StyleSheet.create({

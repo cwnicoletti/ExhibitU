@@ -16,7 +16,7 @@ const BackTitleFillShowcasing = ({ navigation }) => {
     <View>
       <View
         style={{
-          padding: 32,
+          padding: 23,
           backgroundColor: darkModeValue ? "black" : "white",
         }}
       />

@@ -197,6 +197,7 @@ NotificationsScreen.navigationOptions = (navData) => {
     headerStyle: {
       backgroundColor: darkModeValue ? "black" : "white",
     },
+    headerLeft: () => {},
   };
 };
 

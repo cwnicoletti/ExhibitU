@@ -11,10 +11,13 @@ import {
   View,
 } from "react-native";
 import { SearchBar } from "react-native-elements";
+import { HeaderButtons, Item } from "react-navigation-header-buttons";
+import MainHeaderTitle from "../../components/UI/MainHeaderTitle";
 import { useAppSelector } from "../../hooks";
 import ExploreCard from "../../components/explore/ExploreCard";
 import useDidMountEffect from "../../helper/useDidMountEffect";
 import getExlusiveBothSetsDifference from "../../helper/getExlusiveBothSetsDifference";
+import IoniconsHeaderButton from "../../components/UI/header_buttons/IoniconsHeaderButton";
 
 const CheeringScreen = (props) => {
   const client = algoliasearch(
@@ -296,6 +299,34 @@ const CheeringScreen = (props) => {
       />
     </View>
   );
+};
+
+CheeringScreen.navigationOptions = (navData) => {
+  const darkModeValue = navData.navigation.getParam("darkMode");
+  return {
+    headerTitle: () => (
+      <MainHeaderTitle
+        darkModeValue={darkModeValue}
+        fontFamily={"CormorantUpright"}
+        titleName={"ExhibitU"}
+      />
+    ),
+    headerStyle: {
+      backgroundColor: darkModeValue ? "black" : "white",
+    },
+    headerLeft: () => (
+      <HeaderButtons HeaderButtonComponent={IoniconsHeaderButton}>
+        <Item
+          title="Add"
+          iconName={"ios-arrow-back"}
+          color={darkModeValue ? "white" : "black"}
+          onPress={() => {
+            navData.navigation.goBack();
+          }}
+        />
+      </HeaderButtons>
+    ),
+  };
 };
 
 const styles = StyleSheet.create({
