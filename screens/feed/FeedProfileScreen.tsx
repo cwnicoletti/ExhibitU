@@ -2,18 +2,12 @@ import React, { useEffect, useState, useCallback } from "react";
 import {
   FlatList,
   StyleSheet,
-  Text,
   View,
-  ActivityIndicator,
 } from "react-native";
-import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import FeedProfileHeader from "../../components/feed/FeedProfileHeader";
 import ExhibitItem from "../../components/exhibitItems/ExhibitItem";
 import useDidMountEffect from "../../helper/useDidMountEffect";
-import IoniconsHeaderButton from "../../components/UI/header_buttons/IoniconsHeaderButton";
-import SimpleLineIconsHeaderButton from "../../components/UI/header_buttons/SimpleLineIconsHeaderButton";
-import MainHeaderTitle from "../../components/UI/MainHeaderTitle";
 import {
   sendFollowNotification,
   followUser,
@@ -279,94 +273,6 @@ const FeedProfileScreen = (props) => {
       />
     </View>
   );
-};
-
-FeedProfileScreen.navigationOptions = (navData) => {
-  const darkModeValue = navData.navigation.getParam("darkMode");
-  const isfollowing = navData.navigation.getParam("isfollowing");
-  const isLoading = navData.navigation.getParam("isLoading");
-  const ExhibitUId = navData.navigation.getParam("ExhibitUId");
-  const exploredExhibitUId = navData.navigation.getParam("exploredExhibitUId");
-  const followFn = navData.navigation.getParam("followFn");
-  const unfollowFn = navData.navigation.getParam("unfollowFn");
-
-  return {
-    headerTitle: () => (
-      <MainHeaderTitle
-        darkModeValue={darkModeValue}
-        fontFamily={"CormorantUpright"}
-        titleName={"ExhibitU"}
-      />
-    ),
-    headerStyle: {
-      backgroundColor: darkModeValue ? "black" : "white",
-    },
-    headerLeft: () => (
-      <HeaderButtons HeaderButtonComponent={IoniconsHeaderButton}>
-        <Item
-          title="Add"
-          iconName={"ios-arrow-back"}
-          color={darkModeValue ? "white" : "black"}
-          onPress={() => {
-            navData.navigation.goBack();
-          }}
-        />
-      </HeaderButtons>
-    ),
-    headerRight: () => (
-      <View>
-        {ExhibitUId !== exploredExhibitUId ? (
-          <View>
-            {!isfollowing ? (
-              <View>
-                {!isLoading ? (
-                  <HeaderButtons
-                    HeaderButtonComponent={SimpleLineIconsHeaderButton}
-                  >
-                    <Item
-                      title="Follow"
-                      iconName={"user-follow"}
-                      color={darkModeValue ? "white" : "black"}
-                      onPress={followFn}
-                    />
-                  </HeaderButtons>
-                ) : (
-                  <View style={{ margin: 20 }}>
-                    <ActivityIndicator
-                      size="small"
-                      color={darkModeValue ? "white" : "black"}
-                    />
-                  </View>
-                )}
-              </View>
-            ) : (
-              <View>
-                {!isLoading ? (
-                  <HeaderButtons
-                    HeaderButtonComponent={SimpleLineIconsHeaderButton}
-                  >
-                    <Item
-                      title="Follow"
-                      iconName={"user-unfollow"}
-                      color={"red"}
-                      onPress={unfollowFn}
-                    />
-                  </HeaderButtons>
-                ) : (
-                  <View style={{ margin: 20 }}>
-                    <ActivityIndicator
-                      size="small"
-                      color={darkModeValue ? "white" : "black"}
-                    />
-                  </View>
-                )}
-              </View>
-            )}
-          </View>
-        ) : null}
-      </View>
-    ),
-  };
 };
 
 const styles = StyleSheet.create({

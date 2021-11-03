@@ -2,17 +2,19 @@ import React from "react";
 
 const Follow = (props) => {
   return (
-    <props.View
-      style={{
-        flex: 1,
-        justifyContent: 'center',
-        borderBottomWidth: 1,
-        borderColor: "gray",
-        backgroundColor: props.darkModeValue ? "black" : "white",
-      }}
-    >
+    <props.View>
       {props.ExhibitUId !== props.exploredExhibitUId ? (
-        <props.View>
+        <props.View
+          style={{
+            flex: 1,
+            padding: 10,
+            alignItems: "center",
+            justifyContent: "center",
+            borderBottomWidth: 1,
+            borderColor: "gray",
+            backgroundColor: props.darkModeValue ? "black" : "white",
+          }}
+        >
           {!props.isfollowing ? (
             <props.View>
               {!props.isLoading ? (

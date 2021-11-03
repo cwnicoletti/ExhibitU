@@ -6,6 +6,7 @@ import { createBottomTabNavigator } from "react-navigation-tabs";
 import { useAppDispatch, useAppSelector } from "../hooks";
 import LeftDrawer from "../components/drawers/LeftDrawer";
 import RightDrawer from "../components/drawers/RightDrawer";
+import TitleOnlyHeader from "../components/headers/TitleOnlyHeader";
 
 import IntroScreen from "../screens/auth/IntroScreen";
 import LoginScreen from "../screens/auth/LoginScreen";
@@ -64,16 +65,61 @@ import FeedBottomTab from "../components/footers/FeedBottomTab";
 import ExploreBottomTab from "../components/footers/ExploreBottomTab";
 import StartupScreen from "../screens/StartupScreen";
 import { logout } from "../store/actions/auth/auth";
+import BackTitleAdd from "../components/headers/BackTitleAdd";
+import BackTitleFill from "../components/headers/BackTitleFill";
+import MenuTitleSettings from "../components/headers/MenuTitleSettings";
+import BackTitleFillShowcasing from "../components/headers/BackTitleFillShowcasing";
+import BackTitleFollow from "../components/headers/BackTitleFollow";
 
 const FeedandViewNavigator = createStackNavigator({
-  Feed: FeedScreen,
-  ViewCheering: FeedCheeringScreen,
-  ViewFeedPicture: FeedPictureScreen,
-  ViewProfile: FeedProfileScreen,
-  ViewFollowers: FeedFollowersScreen,
-  ViewFollowing: FeedFollowingScreen,
-  ViewFeedExhibit: FeedExhibitScreen,
-  ViewFeedProfileExhibit: FeedExhibitScreen,
+  Feed: {
+    screen: FeedScreen,
+    navigationOptions: ({ navigation }) => ({
+      header: () => <TitleOnlyHeader navigation={navigation} />,
+    }),
+  },
+  ViewCheering: {
+    screen: FeedCheeringScreen,
+    navigationOptions: ({ navigation }) => ({
+      header: () => <BackTitleAdd navigation={navigation} />,
+    }),
+  },
+  ViewFeedPicture: {
+    screen: FeedPictureScreen,
+    navigationOptions: ({ navigation }) => ({
+      header: () => <BackTitleAdd navigation={navigation} />,
+    }),
+  },
+  ViewProfile: {
+    screen: FeedProfileScreen,
+    navigationOptions: ({ navigation }) => ({
+      header: () => <BackTitleFollow navigation={navigation} />,
+    }),
+  },
+  ViewFollowers: {
+    screen: FeedFollowersScreen,
+    navigationOptions: ({ navigation }) => ({
+      header: () => <BackTitleAdd navigation={navigation} />,
+    }),
+  },
+  ViewFollowing: {
+    screen: FeedFollowingScreen,
+    navigationOptions: ({ navigation }) => ({
+      header: () => <BackTitleAdd navigation={navigation} />,
+    }),
+  },
+  ViewFeedExhibit: {
+    screen: FeedExhibitScreen,
+    navigationOptions: ({ navigation }) => ({
+      header: () => <BackTitleAdd navigation={navigation} />,
+    }),
+  },
+  ViewFeedProfileExhibit: {
+    screen: FeedExhibitScreen,
+    navigationOptions: ({ navigation }) => ({
+      header: () => <BackTitleAdd navigation={navigation} />,
+    }),
+  },
 });
 
 const RightFeedDrawerNavigator = createDrawerNavigator(
@@ -129,13 +175,48 @@ const FeedNavigator = createDrawerNavigator(
 );
 
 const ExploreNavigator = createStackNavigator({
-  Explore: ExploreScreen,
-  ExploreProfile: ExploreProfileScreen,
-  ViewExploredProfileExhibit: ExploreExhibitScreen,
-  ViewExploredProfileExhibitPicture: ExplorePictureScreen,
-  ExploreCheering: ExploreCheeringScreen,
-  ExploreFollowers: ExploreFollowersScreen,
-  ExploreFollowing: ExploreFollowingScreen,
+  Explore: {
+    screen: ExploreScreen,
+    navigationOptions: ({ navigation }) => ({
+      header: () => <TitleOnlyHeader navigation={navigation} />,
+    }),
+  },
+  ExploreProfile: {
+    screen: ExploreProfileScreen,
+    navigationOptions: ({ navigation }) => ({
+      header: () => <BackTitleFollow navigation={navigation} />,
+    }),
+  },
+  ViewExploredProfileExhibit: {
+    screen: ExploreExhibitScreen,
+    navigationOptions: ({ navigation }) => ({
+      header: () => <BackTitleAdd navigation={navigation} />,
+    }),
+  },
+  ViewExploredProfileExhibitPicture: {
+    screen: ExplorePictureScreen,
+    navigationOptions: ({ navigation }) => ({
+      header: () => <BackTitleAdd navigation={navigation} />,
+    }),
+  },
+  ExploreCheering: {
+    screen: ExploreCheeringScreen,
+    navigationOptions: ({ navigation }) => ({
+      header: () => <BackTitleAdd navigation={navigation} />,
+    }),
+  },
+  ExploreFollowers: {
+    screen: ExploreFollowersScreen,
+    navigationOptions: ({ navigation }) => ({
+      header: () => <BackTitleAdd navigation={navigation} />,
+    }),
+  },
+  ExploreFollowing: {
+    screen: ExploreFollowingScreen,
+    navigationOptions: ({ navigation }) => ({
+      header: () => <BackTitleAdd navigation={navigation} />,
+    }),
+  },
 });
 
 const RightExploreDrawerNavigator = createDrawerNavigator(
@@ -160,13 +241,48 @@ const ExplorerNavigator = createDrawerNavigator({
 });
 
 const NotificationNavigator = createStackNavigator({
-  Notifications: NotificationsScreen,
-  NotificationsProfile: NotificationsProfileScreen,
-  ViewNotificationsProfileExhibit: NotificationsExhibitScreen,
-  ViewNotificationsProfileExhibitPicture: NotificationsPictureScreen,
-  NotificationsFollowing: NotificationsFollowingScreen,
-  NotificationsFollowers: NotificationsFollowersScreen,
-  NotificationsCheering: NotificationsCheeringScreen,
+  Notifications: {
+    screen: NotificationsScreen,
+    navigationOptions: ({ navigation }) => ({
+      header: () => <TitleOnlyHeader navigation={navigation} />,
+    }),
+  },
+  NotificationsProfile: {
+    screen: NotificationsProfileScreen,
+    navigationOptions: ({ navigation }) => ({
+      header: () => <BackTitleFollow navigation={navigation} />,
+    }),
+  },
+  ViewNotificationsProfileExhibit: {
+    screen: NotificationsExhibitScreen,
+    navigationOptions: ({ navigation }) => ({
+      header: () => <BackTitleAdd navigation={navigation} />,
+    }),
+  },
+  ViewNotificationsProfileExhibitPicture: {
+    screen: NotificationsPictureScreen,
+    navigationOptions: ({ navigation }) => ({
+      header: () => <BackTitleAdd navigation={navigation} />,
+    }),
+  },
+  NotificationsFollowing: {
+    screen: NotificationsFollowingScreen,
+    navigationOptions: ({ navigation }) => ({
+      header: () => <BackTitleAdd navigation={navigation} />,
+    }),
+  },
+  NotificationsFollowers: {
+    screen: NotificationsFollowersScreen,
+    navigationOptions: ({ navigation }) => ({
+      header: () => <BackTitleAdd navigation={navigation} />,
+    }),
+  },
+  NotificationsCheering: {
+    screen: NotificationsCheeringScreen,
+    navigationOptions: ({ navigation }) => ({
+      header: () => <BackTitleAdd navigation={navigation} />,
+    }),
+  },
 });
 
 const RightNotificationsDrawerNavigator = createDrawerNavigator(
@@ -191,21 +307,91 @@ const NotificationsNavigator = createDrawerNavigator({
 });
 
 const ProfileandSettingsNavigator = createStackNavigator({
-  Profile: ProfileScreen,
-  ViewProfileExhibit: ExhibitScreen,
+  Profile: {
+    screen: ProfileScreen,
+    navigationOptions: ({ navigation }) => ({
+      header: () => <MenuTitleSettings navigation={navigation} />,
+    }),
+  },
+  ViewProfileExhibit: {
+    screen: ExhibitScreen,
+    navigationOptions: ({ navigation }) => ({
+      header: () => <BackTitleAdd navigation={navigation} />,
+    }),
+  },
   PictureScreen: PictureScreen,
-  ShowcaseProfile: ShowcaseProfileScreen,
-  ShowcaseExhibit: ShowcaseExhibitScreen,
-  ShowcasePictureScreen: ShowcasePictureScreen,
-  EditProfile: EditProfileScreen,
-  ShowcaseSettings: ShowcaseSettingsScreen,
-  Updates: VoteUpdatesSettingsScreen,
-  Following: FollowingScreen,
-  Followers: FollowersScreen,
-  AddExhibit: AddExhibitScreen,
-  CheeringScreen: CheeringScreen,
-  EditExhibitScreen: EditExhibitScreen,
-  AddPicture: AddPictureScreen,
+  ShowcaseProfile: {
+    screen: ShowcaseProfileScreen,
+    navigationOptions: ({ navigation }) => ({
+      header: () => <BackTitleFillShowcasing navigation={navigation} />,
+    }),
+  },
+  ShowcaseExhibit: {
+    screen: ShowcaseExhibitScreen,
+    navigationOptions: ({ navigation }) => ({
+      header: () => <BackTitleFill navigation={navigation} />,
+    }),
+  },
+  ShowcasePictureScreen: {
+    screen: ShowcasePictureScreen,
+    navigationOptions: ({ navigation }) => ({
+      header: () => <BackTitleFill navigation={navigation} />,
+    }),
+  },
+  EditProfile: {
+    screen: EditProfileScreen,
+    navigationOptions: ({ navigation }) => ({
+      header: () => <BackTitleFill navigation={navigation} />,
+    }),
+  },
+  ShowcaseSettings: {
+    screen: ShowcaseSettingsScreen,
+    navigationOptions: ({ navigation }) => ({
+      header: () => <BackTitleFill navigation={navigation} />,
+    }),
+  },
+  Updates: {
+    screen: VoteUpdatesSettingsScreen,
+    navigationOptions: ({ navigation }) => ({
+      header: () => <BackTitleFill navigation={navigation} />,
+    }),
+  },
+  Following: {
+    screen: FollowingScreen,
+    navigationOptions: ({ navigation }) => ({
+      header: () => <BackTitleFill navigation={navigation} />,
+    }),
+  },
+  Followers: {
+    screen: FollowersScreen,
+    navigationOptions: ({ navigation }) => ({
+      header: () => <BackTitleFill navigation={navigation} />,
+    }),
+  },
+  AddExhibit: {
+    screen: AddExhibitScreen,
+    navigationOptions: ({ navigation }) => ({
+      header: () => <BackTitleFill navigation={navigation} />,
+    }),
+  },
+  CheeringScreen: {
+    screen: CheeringScreen,
+    navigationOptions: ({ navigation }) => ({
+      header: () => <BackTitleFill navigation={navigation} />,
+    }),
+  },
+  EditExhibitScreen: {
+    screen: EditExhibitScreen,
+    navigationOptions: ({ navigation }) => ({
+      header: () => <BackTitleFill navigation={navigation} />,
+    }),
+  },
+  AddPicture: {
+    screen: AddPictureScreen,
+    navigationOptions: ({ navigation }) => ({
+      header: () => <BackTitleFill navigation={navigation} />,
+    }),
+  },
 });
 
 const RightProfileDrawerNavigator = createDrawerNavigator(

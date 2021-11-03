@@ -10,11 +10,8 @@ import {
   View,
 } from "react-native";
 import { SearchBar } from "react-native-elements";
-import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import { useAppSelector } from "../../hooks";
 import ExploreCard from "../../components/explore/ExploreCard";
-import IoniconsHeaderButton from "../../components/UI/header_buttons/IoniconsHeaderButton";
-import MainHeaderTitle from "../../components/UI/MainHeaderTitle";
 
 const FeedFollowingScreen = (props) => {
   const client = algoliasearch(
@@ -223,30 +220,6 @@ const FeedFollowingScreen = (props) => {
       />
     </View>
   );
-};
-
-FeedFollowingScreen.navigationOptions = (navData) => {
-  const darkModeValue = navData.navigation.getParam("darkMode");
-  return {
-    headerTitle: () => (
-      <MainHeaderTitle darkModeValue={darkModeValue} titleName={"Following"} />
-    ),
-    headerStyle: {
-      backgroundColor: darkModeValue ? "black" : "white",
-    },
-    headerLeft: () => (
-      <HeaderButtons HeaderButtonComponent={IoniconsHeaderButton}>
-        <Item
-          title="Add"
-          iconName={"ios-arrow-back"}
-          color={darkModeValue ? "white" : "black"}
-          onPress={() => {
-            navData.navigation.goBack();
-          }}
-        />
-      </HeaderButtons>
-    ),
-  };
 };
 
 const styles = StyleSheet.create({

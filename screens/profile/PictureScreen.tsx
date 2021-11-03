@@ -1,9 +1,6 @@
 import React, { useCallback, useEffect } from "react";
 import { Platform, ScrollView, StyleSheet } from "react-native";
-import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import { useAppDispatch, useAppSelector } from "../../hooks";
-import IoniconsHeaderButton from "../../components/UI/header_buttons/IoniconsHeaderButton";
-import MainHeaderTitle from "../../components/UI/MainHeaderTitle";
 import ProfileExhibitPostView from "../../components/user/ProfileExhibitPostView";
 import { uploadRemovePost } from "../../store/actions/user/user";
 
@@ -177,56 +174,6 @@ const PictureScreen = (props) => {
       />
     </ScrollView>
   );
-};
-
-PictureScreen.navigationOptions = (navData) => {
-  const darkModeValue = navData.navigation.getParam("darkMode");
-  const android = navData.navigation.getParam("android");
-  const deleteFn = navData.navigation.getParam("deleteFn");
-
-  return {
-    headerTitle: () => (
-      <MainHeaderTitle
-        darkModeValue={darkModeValue}
-        fontFamily={"CormorantUpright"}
-        titleName={"ExhibitU"}
-      />
-    ),
-    headerStyle: {
-      backgroundColor: darkModeValue ? "black" : "white",
-    },
-    headerLeft: () => (
-      <HeaderButtons HeaderButtonComponent={IoniconsHeaderButton}>
-        <Item
-          title="Add"
-          iconName={"ios-arrow-back"}
-          color={darkModeValue ? "white" : "black"}
-          onPress={() => {
-            navData.navigation.goBack();
-          }}
-        />
-      </HeaderButtons>
-    ),
-    headerRight: () => (
-      <HeaderButtons HeaderButtonComponent={IoniconsHeaderButton}>
-        {android ? (
-          <Item
-            title="Trash"
-            iconName={"md-trash"}
-            color="red"
-            onPress={deleteFn}
-          />
-        ) : (
-          <Item
-            title="Trash"
-            iconName={"ios-trash"}
-            color="red"
-            onPress={deleteFn}
-          />
-        )}
-      </HeaderButtons>
-    ),
-  };
 };
 
 const styles = StyleSheet.create({

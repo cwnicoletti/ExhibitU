@@ -7,8 +7,6 @@ import { AntDesign } from "@expo/vector-icons";
 
 import NotificationCard from "../../components/notifications/NotificationCard";
 import useDidMountEffect from "../../helper/useDidMountEffect";
-import MainHeaderTitle from "../../components/UI/MainHeaderTitle";
-import getExlusiveBothSetsDifference from "../../helper/getExlusiveBothSetsDifference";
 
 const NotificationsScreen = (props) => {
   const dispatch = useAppDispatch();
@@ -182,23 +180,6 @@ const NotificationsScreen = (props) => {
       />
     </View>
   );
-};
-
-NotificationsScreen.navigationOptions = (navData) => {
-  const darkModeValue = navData.navigation.getParam("darkMode");
-  return {
-    headerTitle: () => (
-      <MainHeaderTitle
-        darkModeValue={darkModeValue}
-        fontFamily={"CormorantUpright"}
-        titleName={"ExhibitU"}
-      />
-    ),
-    headerStyle: {
-      backgroundColor: darkModeValue ? "black" : "white",
-    },
-    headerLeft: () => {},
-  };
 };
 
 const styles = StyleSheet.create({

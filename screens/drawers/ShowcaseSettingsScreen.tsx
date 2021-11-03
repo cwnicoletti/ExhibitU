@@ -1,17 +1,14 @@
 import React, { useEffect } from "react";
 import { StyleSheet, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
-import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import FilterSwitch from "../../components/UI/FilterSwitch";
-import IoniconsHeaderButton from "../../components/UI/header_buttons/IoniconsHeaderButton";
 import {
   setHideExhibits,
   setHideFollowers,
   setHideFollowing,
   setShowCheering,
 } from "../../store/actions/user/user";
-import MainHeaderTitle from "../../components/UI/MainHeaderTitle";
 
 const ShowcaseSettingsScreen = (props) => {
   const dispatch = useAppDispatch();
@@ -102,33 +99,6 @@ const ShowcaseSettingsScreen = (props) => {
       </ScrollView>
     </View>
   );
-};
-
-ShowcaseSettingsScreen.navigationOptions = (navData) => {
-  const darkModeValue = navData.navigation.getParam("darkMode");
-  return {
-    headerTitle: () => (
-      <MainHeaderTitle
-        darkModeValue={darkModeValue}
-        titleName={"Profile Settings"}
-      />
-    ),
-    headerStyle: {
-      backgroundColor: darkModeValue ? "black" : "white",
-    },
-    headerLeft: () => (
-      <HeaderButtons HeaderButtonComponent={IoniconsHeaderButton}>
-        <Item
-          title="Add"
-          iconName={"ios-arrow-back"}
-          color={darkModeValue ? "white" : "black"}
-          onPress={() => {
-            navData.navigation.goBack();
-          }}
-        />
-      </HeaderButtons>
-    ),
-  };
 };
 
 const styles = StyleSheet.create({

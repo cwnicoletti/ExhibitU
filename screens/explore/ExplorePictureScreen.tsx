@@ -1,10 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { ScrollView, StyleSheet, Text, View } from "react-native";
-import { HeaderButtons, Item } from "react-navigation-header-buttons";
+import { ScrollView, StyleSheet } from "react-native";
 import { useAppSelector } from "../../hooks";
 import ExplorePostView from "../../components/explore/ExplorePostView";
-import IoniconsHeaderButton from "../../components/UI/header_buttons/IoniconsHeaderButton";
-import MainHeaderTitle from "../../components/UI/MainHeaderTitle";
 import useDidMountEffect from "../../helper/useDidMountEffect";
 import getExlusiveBothSetsDifference from "../../helper/getExlusiveBothSetsDifference";
 
@@ -173,35 +170,6 @@ const ExplorePictureScreen = (props) => {
       />
     </ScrollView>
   );
-};
-
-ExplorePictureScreen.navigationOptions = (navData) => {
-  const darkModeValue = navData.navigation.getParam("darkMode");
-
-  return {
-    headerTitle: () => (
-      <MainHeaderTitle
-        darkModeValue={darkModeValue}
-        fontFamily={"CormorantUpright"}
-        titleName={"ExhibitU"}
-      />
-    ),
-    headerStyle: {
-      backgroundColor: darkModeValue ? "black" : "white",
-    },
-    headerLeft: () => (
-      <HeaderButtons HeaderButtonComponent={IoniconsHeaderButton}>
-        <Item
-          title="Add"
-          iconName={"ios-arrow-back"}
-          color={darkModeValue ? "white" : "black"}
-          onPress={() => {
-            navData.navigation.goBack();
-          }}
-        />
-      </HeaderButtons>
-    ),
-  };
 };
 
 const styles = StyleSheet.create({

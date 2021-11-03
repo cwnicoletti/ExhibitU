@@ -12,7 +12,6 @@ import { useAppDispatch, useAppSelector } from "../../hooks";
 import FeedItem from "../../components/feed/FeedItem";
 import useDidMountEffect from "../../helper/useDidMountEffect";
 import { getUserFeed, offScreen } from "../../store/actions/user/user";
-import MainHeaderTitle from "../../components/UI/MainHeaderTitle";
 
 const FeedScreen = (props) => {
   const dispatch = useAppDispatch();
@@ -343,23 +342,6 @@ const FeedScreen = (props) => {
       />
     </View>
   );
-};
-
-FeedScreen.navigationOptions = (navData) => {
-  const darkModeValue = navData.navigation.getParam("darkMode");
-  return {
-    headerTitle: () => (
-      <MainHeaderTitle
-        darkModeValue={darkModeValue}
-        fontFamily={"CormorantUpright"}
-        titleName={"ExhibitU"}
-      />
-    ),
-    headerStyle: {
-      backgroundColor: darkModeValue ? "black" : "white",
-    },
-    headerLeft: () => {},
-  };
 };
 
 const styles = StyleSheet.create({

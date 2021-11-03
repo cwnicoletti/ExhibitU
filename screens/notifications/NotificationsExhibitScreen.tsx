@@ -1,27 +1,19 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
-  ActivityIndicator,
   FlatList,
   Platform,
   StyleSheet,
-  Text,
   View,
 } from "react-native";
-import { HeaderButtons, Item } from "react-navigation-header-buttons";
-import { useAppDispatch, useAppSelector } from "../../hooks";
+import { useAppSelector } from "../../hooks";
 import ExploreExhibitHeader from "../../components/explore/ExploreExhibitHeader";
-import FontAwesomeHeaderButton from "../../components/UI/header_buttons/FontAwesomeHeaderButton";
-import IoniconsHeaderButton from "../../components/UI/header_buttons/IoniconsHeaderButton";
 import ExhibitPictures from "../../components/UI/ExhibitPictures";
-import MainHeaderTitle from "../../components/UI/MainHeaderTitle";
 import useDidMountEffect from "../../helper/useDidMountEffect";
 import getExlusiveBothSetsDifference from "../../helper/getExlusiveBothSetsDifference";
 
 const NotificationsExhibitScreen = (props) => {
-  const dispatch = useAppDispatch();
   const [isLoading, setIsLoading] = useState(false);
   const darkModeValue = useAppSelector((state) => state.user.darkMode);
-  const localId = useAppSelector((state) => state.auth.userId);
   const ExhibitUId = useAppSelector((state) => state.user.ExhibitUId);
   const cheeredPosts = useAppSelector((state) => state.user.cheeredPosts);
   const [intialCheeredPosts, setIntialCheeredPosts] = useState([]);
@@ -330,35 +322,6 @@ const NotificationsExhibitScreen = (props) => {
       />
     </View>
   );
-};
-
-NotificationsExhibitScreen.navigationOptions = (navData) => {
-  const darkModeValue = navData.navigation.getParam("darkMode");
-
-  return {
-    headerTitle: () => (
-      <MainHeaderTitle
-        darkModeValue={darkModeValue}
-        fontFamily={"CormorantUpright"}
-        titleName={"ExhibitU"}
-      />
-    ),
-    headerStyle: {
-      backgroundColor: darkModeValue ? "black" : "white",
-    },
-    headerLeft: () => (
-      <HeaderButtons HeaderButtonComponent={IoniconsHeaderButton}>
-        <Item
-          title="Add"
-          iconName={"ios-arrow-back"}
-          color={darkModeValue ? "white" : "black"}
-          onPress={() => {
-            navData.navigation.goBack();
-          }}
-        />
-      </HeaderButtons>
-    ),
-  };
 };
 
 const styles = StyleSheet.create({

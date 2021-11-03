@@ -1,5 +1,5 @@
 import { SimpleLineIcons } from "@expo/vector-icons";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import {
   Animated,
   FlatList,
@@ -14,10 +14,6 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import ExhibitItem from "../../components/exhibitItems/ExhibitItem";
 import ProfileHeader from "../../components/user/ProfileHeader";
 import useDidMountEffect from "../../helper/useDidMountEffect";
-import { HeaderButtons, Item } from "react-navigation-header-buttons";
-import IoniconsHeaderButton from "../../components/UI/header_buttons/IoniconsHeaderButton";
-import FeatherHeaderButton from "../../components/UI/header_buttons/FeatherHeaderButton";
-import MainHeaderTitle from "../../components/UI/MainHeaderTitle";
 import {
   changeProfileNumberOfColumns,
   offScreen,
@@ -137,10 +133,6 @@ const ProfileScreen = (props) => {
     );
     await setIsLoadingFourColumns(false);
   };
-
-  useEffect(() => {
-    props.navigation.setParams({ darkMode: darkModeValue });
-  }, [darkModeValue]);
 
   useDidMountEffect(() => {
     // Sort the array based on the second element
@@ -327,46 +319,6 @@ const ProfileScreen = (props) => {
       ) : null}
     </View>
   );
-};
-
-ProfileScreen.navigationOptions = (navData) => {
-  const darkModeValue = navData.navigation.getParam("darkMode");
-  return {
-    headerTitle: () => (
-      <MainHeaderTitle
-        darkModeValue={darkModeValue}
-        fontFamily={"CormorantUpright"}
-        titleName={"ExhibitU"}
-      />
-    ),
-    headerStyle: {
-      backgroundColor: darkModeValue ? "black" : "white",
-    },
-    headerLeft: () => (
-      <HeaderButtons HeaderButtonComponent={IoniconsHeaderButton}>
-        <Item
-          title="Menu"
-          iconName={Platform.OS === "android" ? "md-menu" : "ios-menu"}
-          color={darkModeValue ? "white" : "black"}
-          onPress={() => {
-            navData.navigation.toggleLeftDrawer();
-          }}
-        />
-      </HeaderButtons>
-    ),
-    headerRight: () => (
-      <HeaderButtons HeaderButtonComponent={FeatherHeaderButton}>
-        <Item
-          title="Settings"
-          iconName={"settings"}
-          color={darkModeValue ? "white" : "black"}
-          onPress={() => {
-            navData.navigation.toggleRightDrawer();
-          }}
-        />
-      </HeaderButtons>
-    ),
-  };
 };
 
 const styles = StyleSheet.create({

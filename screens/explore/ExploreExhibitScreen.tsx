@@ -1,11 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { FlatList, Platform, StyleSheet, View } from "react-native";
-import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import { useAppSelector } from "../../hooks";
 import ExploreExhibitHeader from "../../components/explore/ExploreExhibitHeader";
-import IoniconsHeaderButton from "../../components/UI/header_buttons/IoniconsHeaderButton";
 import ExhibitPictures from "../../components/UI/ExhibitPictures";
-import MainHeaderTitle from "../../components/UI/MainHeaderTitle";
 
 const ExploreExhibitScreen = (props) => {
   const darkModeValue = useAppSelector((state) => state.user.darkMode);
@@ -159,35 +156,6 @@ const ExploreExhibitScreen = (props) => {
       />
     </View>
   );
-};
-
-ExploreExhibitScreen.navigationOptions = (navData) => {
-  const darkModeValue = navData.navigation.getParam("darkMode");
-
-  return {
-    headerTitle: () => (
-      <MainHeaderTitle
-        darkModeValue={darkModeValue}
-        fontFamily={"CormorantUpright"}
-        titleName={"ExhibitU"}
-      />
-    ),
-    headerStyle: {
-      backgroundColor: darkModeValue ? "black" : "white",
-    },
-    headerLeft: () => (
-      <HeaderButtons HeaderButtonComponent={IoniconsHeaderButton}>
-        <Item
-          title="Add"
-          iconName={"ios-arrow-back"}
-          color={darkModeValue ? "white" : "black"}
-          onPress={() => {
-            navData.navigation.goBack();
-          }}
-        />
-      </HeaderButtons>
-    ),
-  };
 };
 
 const styles = StyleSheet.create({

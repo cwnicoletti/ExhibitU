@@ -1,10 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { FlatList, StyleSheet, View } from "react-native";
-import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import ExhibitItem from "../../components/exhibitItems/ExhibitItem";
-import IoniconsHeaderButton from "../../components/UI/header_buttons/IoniconsHeaderButton";
-import MainHeaderTitle from "../../components/UI/MainHeaderTitle";
 import ShowcaseHeader from "../../components/user/ShowcaseHeader";
 import useDidMountEffect from "../../helper/useDidMountEffect";
 import { returnFromShowcasing } from "../../store/actions/user/user";
@@ -75,6 +72,7 @@ const ShowcaseProfileScreen = (props) => {
 
   useEffect(() => {
     props.navigation.setParams({ dispatch: dispatch });
+    props.navigation.setParams({ returnFn: returnFromShowcasing });
   }, []);
 
   useEffect(() => {
@@ -192,38 +190,6 @@ const ShowcaseProfileScreen = (props) => {
       />
     </View>
   );
-};
-
-ShowcaseProfileScreen.navigationOptions = (navData) => {
-  const darkModeValue = navData.navigation.getParam("darkMode");
-  const dispatch = navData.navigation.getParam("dispatch");
-
-  return {
-    gestureEnabled: false,
-    headerTitle: () => (
-      <MainHeaderTitle
-        darkModeValue={darkModeValue}
-        fontFamily={"CormorantUpright"}
-        titleName={"ExhibitU"}
-      />
-    ),
-    headerStyle: {
-      backgroundColor: darkModeValue ? "black" : "white",
-    },
-    headerLeft: () => (
-      <HeaderButtons HeaderButtonComponent={IoniconsHeaderButton}>
-        <Item
-          title="Back"
-          iconName={"ios-arrow-back"}
-          color={darkModeValue ? "white" : "black"}
-          onPress={() => {
-            dispatch(returnFromShowcasing());
-            navData.navigation.goBack();
-          }}
-        />
-      </HeaderButtons>
-    ),
-  };
 };
 
 const styles = StyleSheet.create({

@@ -12,7 +12,6 @@ import {
 import { SearchBar } from "react-native-elements";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import ExploreCard from "../../components/explore/ExploreCard";
-import MainHeaderTitle from "../../components/UI/MainHeaderTitle";
 import useDidMountEffect from "../../helper/useDidMountEffect";
 import getExlusiveBothSetsDifference from "../../helper/getExlusiveBothSetsDifference";
 import { offScreen } from "../../store/actions/user/user";
@@ -298,23 +297,6 @@ const ExploreScreen = (props) => {
       </View>
     </View>
   );
-};
-
-ExploreScreen.navigationOptions = (navData) => {
-  const darkModeValue = navData.navigation.getParam("darkMode");
-  return {
-    headerTitle: () => (
-      <MainHeaderTitle
-        darkModeValue={darkModeValue}
-        fontFamily={"CormorantUpright"}
-        titleName={"ExhibitU"}
-      />
-    ),
-    headerStyle: {
-      backgroundColor: darkModeValue ? "black" : "white",
-    },
-    headerLeft: () => {},
-  };
 };
 
 const styles = StyleSheet.create({
