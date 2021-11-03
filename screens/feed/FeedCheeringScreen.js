@@ -101,7 +101,6 @@ const FeedCheeringScreen = (props) => {
     following,
     profileExhibits,
     profileLinks,
-    exhibitLinks,
     profileColumns,
     showCheering
   ) => {
@@ -122,7 +121,6 @@ const FeedCheeringScreen = (props) => {
         following,
         profileExhibits,
         profileLinks,
-        exhibitLinks,
         profileColumns,
         showCheering,
       },
@@ -287,7 +285,6 @@ const FeedCheeringScreen = (props) => {
                 itemData.item.following,
                 itemData.item.profileExhibits,
                 itemData.item.profileLinks,
-                itemData.item.exhibitLinks,
                 itemData.item.profileColumns,
                 itemData.item.showCheering
               );

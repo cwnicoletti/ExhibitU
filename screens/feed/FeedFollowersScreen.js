@@ -87,36 +87,42 @@ const FeedFollowersScreen = (props) => {
 
   const viewProfileHandler = (
     ExhibitUId,
+    profilePictureUrl,
     fullname,
     username,
     jobTitle,
     profileBiography,
-    profileExhibits,
-    profilePictureUrl,
     numberOfFollowers,
     numberOfFollowing,
     hideFollowing,
     hideFollowers,
     hideExhibits,
+    followers,
+    following,
+    profileExhibits,
     profileLinks,
-    profileColumns
+    profileColumns,
+    showCheering
   ) => {
     props.navigation.push("ViewProfile", {
       userData: {
-        ExhibitUId,
+        exploredExhibitUId: ExhibitUId,
+        profilePictureUrl,
         fullname,
         username,
         jobTitle,
         profileBiography,
-        profileExhibits,
-        profilePictureUrl,
         numberOfFollowers,
         numberOfFollowing,
         hideFollowing,
         hideFollowers,
         hideExhibits,
+        followers,
+        following,
+        profileExhibits,
         profileLinks,
         profileColumns,
+        showCheering,
       },
     });
   };
@@ -211,19 +217,22 @@ const FeedFollowersScreen = (props) => {
             onSelect={() => {
               viewProfileHandler(
                 itemData.item.objectID,
+                itemData.item.profilePictureUrl,
                 itemData.item.fullname,
                 itemData.item.username,
                 itemData.item.jobTitle,
                 itemData.item.profileBiography,
-                itemData.item.profileExhibits,
-                itemData.item.profilePictureUrl,
                 itemData.item.numberOfFollowers,
                 itemData.item.numberOfFollowing,
                 itemData.item.hideFollowing,
                 itemData.item.hideFollowers,
                 itemData.item.hideExhibits,
+                itemData.item.followers,
+                itemData.item.following,
+                itemData.item.profileExhibits,
                 itemData.item.profileLinks,
-                itemData.item.profileColumns
+                itemData.item.profileColumns,
+                itemData.item.showCheering
               );
             }}
           />
