@@ -1,6 +1,6 @@
 import React from "react";
 
-const GoBack = (props) => {
+const FillEmptySpace = (props) => {
   return (
     <props.View
       style={{
@@ -10,8 +10,8 @@ const GoBack = (props) => {
         borderColor: "gray",
         backgroundColor: props.darkModeValue ? "black" : "white",
       }}
-    ></props.View>
+    />
   );
 };
 
-export default GoBack;
+export default FillEmptySpace;
