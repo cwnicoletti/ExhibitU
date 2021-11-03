@@ -1,16 +1,10 @@
 import React, { useEffect } from "react";
 import {
-  LogBox,
   Platform,
   ScrollView,
   StyleSheet,
-  Text,
-  View,
 } from "react-native";
-import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import { useAppSelector } from "../../hooks";
-import IoniconsHeaderButton from "../../components/UI/header_buttons/IoniconsHeaderButton";
-import MainHeaderTitle from "../../components/UI/MainHeaderTitle";
 import ShowcasePostView from "../../components/user/ShowcasePostView";
 
 const ShowcasePictureScreen = (props) => {
@@ -157,35 +151,6 @@ const ShowcasePictureScreen = (props) => {
       />
     </ScrollView>
   );
-};
-
-ShowcasePictureScreen.navigationOptions = (navData) => {
-  const darkModeValue = navData.navigation.getParam("darkMode");
-
-  return {
-    headerTitle: () => (
-      <MainHeaderTitle
-        darkModeValue={darkModeValue}
-        fontFamily={"CormorantUpright"}
-        titleName={"ExhibitU"}
-      />
-    ),
-    headerStyle: {
-      backgroundColor: darkModeValue ? "black" : "white",
-    },
-    headerLeft: () => (
-      <HeaderButtons HeaderButtonComponent={IoniconsHeaderButton}>
-        <Item
-          title="Add"
-          iconName={"ios-arrow-back"}
-          color={darkModeValue ? "white" : "black"}
-          onPress={() => {
-            navData.navigation.goBack();
-          }}
-        />
-      </HeaderButtons>
-    ),
-  };
 };
 
 const styles = StyleSheet.create({

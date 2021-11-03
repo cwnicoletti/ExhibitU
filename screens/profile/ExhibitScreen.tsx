@@ -1,12 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { FlatList, Platform, StyleSheet, View } from "react-native";
-import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import ExhibitHeader from "../../components/exhibits/ExhibitHeader";
-import IoniconsHeaderButton from "../../components/UI/header_buttons/IoniconsHeaderButton";
 import ExhibitPictures from "../../components/UI/ExhibitPictures";
 import { changeExhibitNumberOfColumns } from "../../store/actions/user/user";
-import MainHeaderTitle from "../../components/UI/MainHeaderTitle";
 
 const ExhibitScreen = (props) => {
   const dispatch = useAppDispatch();
@@ -296,67 +293,6 @@ const ExhibitScreen = (props) => {
       />
     </View>
   );
-};
-
-ExhibitScreen.navigationOptions = (navData) => {
-  const darkModeValue = navData.navigation.getParam("darkMode");
-  const exhibitIdParam = navData.navigation.getParam("exhibitId");
-  const exhibitTitleParam = navData.navigation.getParam("exhibitTitle");
-  const exhibitCoverPhotoUrlParam = navData.navigation.getParam(
-    "exhibitCoverPhotoUrl"
-  );
-  const exhibitDateCreatedParam =
-    navData.navigation.getParam("exhibitDateCreated");
-  const exhibitLastUpdatedParam =
-    navData.navigation.getParam("exhibitLastUpdated");
-  const exhibitDescriptionParam =
-    navData.navigation.getParam("exhibitDescription");
-  const exhibitLinksParam = navData.navigation.getParam("exhibitLinks");
-
-  return {
-    headerTitle: () => (
-      <MainHeaderTitle
-        darkModeValue={darkModeValue}
-        fontFamily={"CormorantUpright"}
-        titleName={"ExhibitU"}
-      />
-    ),
-    headerStyle: {
-      backgroundColor: darkModeValue ? "black" : "white",
-    },
-    headerLeft: () => (
-      <HeaderButtons HeaderButtonComponent={IoniconsHeaderButton}>
-        <Item
-          title="Back"
-          iconName={"ios-arrow-back"}
-          color={darkModeValue ? "white" : "black"}
-          onPress={() => {
-            navData.navigation.goBack();
-          }}
-        />
-      </HeaderButtons>
-    ),
-    headerRight: () => (
-      <HeaderButtons HeaderButtonComponent={IoniconsHeaderButton}>
-        <Item
-          title="Add"
-          iconName={"ios-add"}
-          color={darkModeValue ? "white" : "black"}
-          onPress={() => {
-            navData.navigation.navigate("AddPicture", {
-              exhibitId: exhibitIdParam,
-              exhibitTitle: exhibitTitleParam,
-              exhibitCoverPhotoUrl: exhibitCoverPhotoUrlParam,
-              exhibitDateCreated: exhibitDateCreatedParam,
-              exhibitLastUpdated: exhibitLastUpdatedParam,
-              exhibitDescription: exhibitDescriptionParam,
-              exhibitLinks: exhibitLinksParam,
-            });
-          }}
-        />
-      </HeaderButtons>
-    ),
-  };
 };
 
 const styles = StyleSheet.create({

@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect } from "react";
-import { LogBox, Platform, ScrollView, StyleSheet } from "react-native";
+import { Platform, ScrollView, StyleSheet } from "react-native";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import IoniconsHeaderButton from "../../components/UI/header_buttons/IoniconsHeaderButton";
