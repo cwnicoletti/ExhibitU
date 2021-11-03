@@ -2,26 +2,29 @@ import React from "react";
 import { Image, Platform, Text, View } from "react-native";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import { useAppSelector } from "../../hooks";
-import Menu from "../headers_components/Menu";
-import Settings from "../headers_components/Settings";
+import BackShowcasing from "../headers_components/BackShowcasing";
+import FillEmptySpace from "../headers_components/FillEmptySpace";
 import Title from "../headers_components/Title";
-import FeatherHeaderButton from "../UI/header_buttons/FeatherHeaderButton";
 import IoniconsHeaderButton from "../UI/header_buttons/IoniconsHeaderButton";
 
-const ProfileHeader = ({ navigation }) => {
+const BackTitleFillShowcasing = ({ navigation }) => {
   const darkModeValue = useAppSelector((state) => state.user.darkMode);
+  const dispatch = navigation.getParam("dispatch");
+  const returnFn = navigation.getParam("returnFn");
 
   return (
     <View>
       <View
         style={{
-          padding: 23,
+          padding: 32,
           backgroundColor: darkModeValue ? "black" : "white",
         }}
       />
       <View style={{ flexDirection: "row" }}>
-        <Menu
+        <BackShowcasing
           darkModeValue={darkModeValue}
+          dispatch={dispatch}
+          returnFn={returnFn}
           navigation={navigation}
           HeaderButton={IoniconsHeaderButton}
           HeaderButtons={HeaderButtons}
@@ -35,18 +38,10 @@ const ProfileHeader = ({ navigation }) => {
           Text={Text}
           darkModeValue={darkModeValue}
         />
-        <Settings
-          darkModeValue={darkModeValue}
-          navigation={navigation}
-          HeaderButton={FeatherHeaderButton}
-          HeaderButtons={HeaderButtons}
-          Item={Item}
-          View={View}
-          Platform={Platform}
-        />
+        <FillEmptySpace View={View} darkModeValue={darkModeValue} />
       </View>
     </View>
   );
 };
 
-export default ProfileHeader;
+export default BackTitleFillShowcasing;
