@@ -49,7 +49,7 @@ export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch | any;
 
 const App = () => {
-  const [loaded] = useFonts({
+  useFonts({
     CormorantUpright: require("./assets/fonts/CormorantUpright-Regular.ttf"),
   });
 
