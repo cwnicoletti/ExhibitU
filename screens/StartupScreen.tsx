@@ -17,11 +17,15 @@ const StartupScreen = (props) => {
       const transformedPermissions = JSON.parse(permissionsData);
       const transformedData = JSON.parse(userData);
 
-      let [localId, token, gettingPermissions, introing] = ["", "", true, true];
+      let [localId, token, gettingPermissions, introing] = [
+        "",
+        "",
+        false,
+        true,
+      ];
       if (transformedPermissions) {
         [{ gettingPermissions }] = [transformedPermissions];
       }
-
       if (transformedIntroing) {
         [{ introing }] = [transformedIntroing];
       }
@@ -44,7 +48,7 @@ const StartupScreen = (props) => {
         return;
       }
 
-      if (gettingPermissions) {
+      if (gettingPermissions === true) {
         await dispatch(getUserData());
         await dispatch(authenticate(localId, token));
         props.navigation.navigate("PermissionsStack");
