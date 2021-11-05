@@ -8,7 +8,7 @@ const getPhotoPermissions = async () => {
     if (permissionResult.granted !== true) {
       await Alert.alert(
         "Permission Denied",
-        "Sorry, we need permission to access your photo library to make this work!",
+        "Sorry, we need permission to access your photo library to add pictures on your profile",
         [
           {
             text: "Go to Settings",
@@ -40,7 +40,7 @@ const getPhotoPermissions = async () => {
     if (permissionResult.granted !== true) {
       await Alert.alert(
         "Permission Denied",
-        "Sorry, we need permission to access your photo library to make this work!",
+        "Sorry, we need permission to access your photo library to add pictures on your profile",
         [
           {
             text: "OK",

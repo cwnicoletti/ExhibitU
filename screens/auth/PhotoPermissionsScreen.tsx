@@ -8,7 +8,6 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { Feather } from "@expo/vector-icons";
 import MainHeaderTitle from "../../components/UI/MainHeaderTitle";
 import getPhotoPermissions from "../../helper/getPhotoPermissions";
@@ -34,7 +33,7 @@ const PhotoPermissionsScreen = (props) => {
       <View style={styles.inner}>
         <Text style={styles.text}>Enable photo access</Text>
         <Text style={styles.smallerText}>
-          In order to post pictures ExhibitU must have permission to access your
+          In order to post pictures to your profile, ExhibitU must have permission to access your
           phone's photos
         </Text>
         <Image
