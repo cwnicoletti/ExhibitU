@@ -3,7 +3,6 @@ import React, { useEffect, useRef, useState } from "react";
 import {
   FlatList,
   RefreshControl,
-  StatusBar,
   StyleSheet,
   Text,
   View,
@@ -15,7 +14,6 @@ import { getUserFeed, offScreen } from "../../store/actions/user/user";
 
 const FeedScreen = (props) => {
   const dispatch = useAppDispatch();
-  const styleTypes = ["dark-content", "light-content"];
   const [isRefreshing, setIsRefreshing] = useState(false);
   const darkModeValue = useAppSelector((state) => state.user.darkMode);
   const ExhibitUId = useAppSelector((state) => state.user.ExhibitUId);
@@ -139,14 +137,6 @@ const FeedScreen = (props) => {
     });
   };
 
-  const setStatusBarStyle: any = (darkModeValue: boolean) => {
-    if (darkModeValue === true) {
-      return styleTypes[1];
-    } else {
-      return styleTypes[0];
-    }
-  };
-
   const refreshFeed = async () => {
     setIsRefreshing(true);
     await dispatch(getUserFeed(localId, ExhibitUId));
@@ -200,7 +190,6 @@ const FeedScreen = (props) => {
         backgroundColor: darkModeValue ? "black" : "white",
       }}
     >
-      <StatusBar barStyle={setStatusBarStyle(darkModeValue)} />
       <FlatList<any>
         extraData={profilePictureBase64}
         data={userFeedState}
