@@ -244,8 +244,6 @@ const ExhibitUPostView = (props) => {
 
 const styles = StyleSheet.create({
   exhibit: {
-    borderTopWidth: 1,
-    borderBottomWidth: 1,
   },
   title: {
     fontSize: 14,
