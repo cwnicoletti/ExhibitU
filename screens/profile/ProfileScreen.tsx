@@ -1,5 +1,6 @@
 import { SimpleLineIcons } from "@expo/vector-icons";
 import React, { useRef, useState } from "react";
+import { NavigationEvents } from "react-navigation";
 import {
   Animated,
   FlatList,
@@ -19,6 +20,7 @@ import {
   offScreen,
   refreshProfile,
   showcaseProfile,
+  returnFromShowcasing,
 } from "../../store/actions/user/user";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 
@@ -38,9 +40,6 @@ const ProfileScreen = (props) => {
   const profileColumns = useAppSelector((state) => state.user.profileColumns);
   const resetScrollProfile = useAppSelector(
     (state) => state.user.resetScrollProfile
-  );
-  const showcasingProfile = useAppSelector(
-    (state) => state.user.showcasingProfile
   );
   const [hiddenComponent, setHiddenComponent] = useState(false);
 
@@ -148,14 +147,6 @@ const ProfileScreen = (props) => {
     );
   }, [userData.profileExhibits]);
 
-  useDidMountEffect(() => {
-    if (showcasingProfile === false) {
-      slideAnim.setValue(100);
-      setHiddenComponent(false);
-      slideUp();
-    }
-  }, [showcasingProfile]);
-
   const profileFlatlist: any = useRef();
   useDidMountEffect(() => {
     profileFlatlist.current.scrollToOffset({ animated: true, offset: 0 });
@@ -253,6 +244,18 @@ const ProfileScreen = (props) => {
         backgroundColor: darkModeValue ? "black" : "white",
       }}
     >
+      <NavigationEvents
+        onWillFocus={async (payload) => {
+          if (payload.lastState) {
+            if (payload.lastState.routeName === "ShowcaseProfile") {
+              dispatch(returnFromShowcasing());
+              setHiddenComponent(false);
+              slideAnim.setValue(100);
+              slideUp();
+            }
+          }
+        }}
+      />
       <FlatList<Object | any>
         data={getData(profileExhibitsState)}
         keyExtractor={(item) => item.exhibitId}
@@ -292,7 +295,7 @@ const ProfileScreen = (props) => {
         >
           <TouchableCmp
             style={{
-              ...styles.showcaseButton,
+              ...styles.showcaseContainer,
               borderColor: darkModeValue ? "gray" : "#c9c9c9",
             }}
             onPress={() => {
@@ -301,19 +304,25 @@ const ProfileScreen = (props) => {
               props.navigation.push("ShowcaseProfile");
             }}
           >
-            <SimpleLineIcons
-              name="trophy"
-              size={24}
-              color={darkModeValue ? "white" : "black"}
-            />
-            <Text
+            <View
               style={{
-                ...styles.showcaseText,
-                color: darkModeValue ? "white" : "black",
+                ...styles.showcaseButton,
               }}
             >
-              Showcase exhibits
-            </Text>
+              <SimpleLineIcons
+                name="trophy"
+                size={24}
+                color={darkModeValue ? "white" : "black"}
+              />
+              <Text
+                style={{
+                  ...styles.showcaseText,
+                  color: darkModeValue ? "white" : "black",
+                }}
+              >
+                Showcase exhibits
+              </Text>
+            </View>
           </TouchableCmp>
         </Animated.View>
       ) : null}
@@ -346,12 +355,17 @@ const styles = StyleSheet.create({
   profileContainerStyle: {
     justifyContent: "flex-start",
   },
-  showcaseButton: {
-    margin: 10,
-    padding: 10,
+  showcaseContainer: {
+    borderTopWidth: 1,
+    borderLeftWidth: 1,
+    borderRightWidth: 1,
     alignItems: "center",
     justifyContent: "center",
-    borderWidth: 1,
+  },
+  showcaseButton: {
+    margin: 10,
+    alignItems: "center",
+    justifyContent: "center",
     flexDirection: "row",
   },
   showcaseText: {
