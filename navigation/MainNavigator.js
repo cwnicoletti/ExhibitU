@@ -3,7 +3,7 @@ import { createAppContainer, createSwitchNavigator } from "react-navigation";
 import { createDrawerNavigator, DrawerActions } from "react-navigation-drawer";
 import { createStackNavigator } from "react-navigation-stack";
 import { createBottomTabNavigator } from "react-navigation-tabs";
-import { useAppDispatch, useAppSelector } from "../hooks";
+import { useAppDispatch } from "../hooks";
 import LeftDrawer from "../components/drawers/LeftDrawer";
 import RightDrawer from "../components/drawers/RightDrawer";
 import TitleOnlyHeader from "../components/headers/TitleOnlyHeader";
@@ -319,7 +319,12 @@ const ProfileandSettingsNavigator = createStackNavigator({
       header: () => <BackTitleAdd navigation={navigation} />,
     }),
   },
-  PictureScreen: PictureScreen,
+  PictureScreen: {
+    screen: PictureScreen,
+    navigationOptions: ({ navigation }) => ({
+      header: () => <BackTitleFill navigation={navigation} />,
+    }),
+  },
   ShowcaseProfile: {
     screen: ShowcaseProfileScreen,
     navigationOptions: ({ navigation }) => ({
@@ -503,68 +508,25 @@ const IntroStack = createStackNavigator(
   {
     IntroScreen: IntroScreen,
   },
-  {
-    headerMode: "none",
-    headerShown: false,
-    navigationOptions: {
-      headerVisible: false,
-    },
-  }
+  { defaultNavigationOptions: { headerShown: false } }
 );
 
-const MainNavigator = createStackNavigator({
-  Intro: {
-    screen: IntroStack,
-    navigationOptions: {
-      headerMode: "none",
-      headerShown: false,
-      navigationOptions: {
-        headerVisible: false,
-      },
-    },
+const MainNavigator = createStackNavigator(
+  {
+    Intro: IntroStack,
+    StartAuth: StartSignup,
+    PermissionsStack: Permissions,
+    Exhibit: FullAppNavigator,
   },
-  StartAuth: {
-    screen: StartSignup,
-    navigationOptions: {
-      headerMode: "none",
-      headerShown: false,
-      navigationOptions: {
-        headerVisible: false,
-      },
-    },
-  },
-  PermissionsStack: {
-    screen: Permissions,
-    navigationOptions: {
-      headerMode: "none",
-      headerShown: false,
-      navigationOptions: {
-        headerVisible: false,
-      },
-    },
-  },
-  Exhibit: {
-    screen: FullAppNavigator,
-    navigationOptions: {
-      headerMode: "none",
-      headerShown: false,
-      navigationOptions: {
-        headerVisible: false,
-      },
-    },
-  },
-});
+  { defaultNavigationOptions: { headerShown: false, gestureEnabled: false } }
+);
 
 const StartUpNavigator = createSwitchNavigator({
   Startup: StartupScreen,
   MainNavigator: {
     screen: MainNavigator,
     navigationOptions: {
-      headerMode: "none",
       headerShown: false,
-      navigationOptions: {
-        headerVisible: false,
-      },
     },
   },
 });
