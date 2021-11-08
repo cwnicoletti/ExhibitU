@@ -81,43 +81,43 @@ const FeedandViewNavigator = createStackNavigator({
   ViewCheering: {
     screen: FeedCheeringScreen,
     navigationOptions: ({ navigation }) => ({
-      header: () => <BackTitleAdd navigation={navigation} />,
+      header: () => <BackTitleFill navigation={navigation} />,
     }),
   },
   ViewFeedPicture: {
     screen: FeedPictureScreen,
     navigationOptions: ({ navigation }) => ({
-      header: () => <BackTitleAdd navigation={navigation} />,
+      header: () => <BackTitleFill navigation={navigation} />,
     }),
   },
   ViewProfile: {
     screen: FeedProfileScreen,
     navigationOptions: ({ navigation }) => ({
-      header: () => <BackTitleFollow navigation={navigation} />,
+      header: () => <BackTitleFill navigation={navigation} />,
     }),
   },
   ViewFollowers: {
     screen: FeedFollowersScreen,
     navigationOptions: ({ navigation }) => ({
-      header: () => <BackTitleAdd navigation={navigation} />,
+      header: () => <BackTitleFill navigation={navigation} />,
     }),
   },
   ViewFollowing: {
     screen: FeedFollowingScreen,
     navigationOptions: ({ navigation }) => ({
-      header: () => <BackTitleAdd navigation={navigation} />,
+      header: () => <BackTitleFill navigation={navigation} />,
     }),
   },
   ViewFeedExhibit: {
     screen: FeedExhibitScreen,
     navigationOptions: ({ navigation }) => ({
-      header: () => <BackTitleAdd navigation={navigation} />,
+      header: () => <BackTitleFill navigation={navigation} />,
     }),
   },
   ViewFeedProfileExhibit: {
     screen: FeedExhibitScreen,
     navigationOptions: ({ navigation }) => ({
-      header: () => <BackTitleAdd navigation={navigation} />,
+      header: () => <BackTitleFill navigation={navigation} />,
     }),
   },
 });
@@ -190,31 +190,31 @@ const ExploreNavigator = createStackNavigator({
   ViewExploredProfileExhibit: {
     screen: ExploreExhibitScreen,
     navigationOptions: ({ navigation }) => ({
-      header: () => <BackTitleAdd navigation={navigation} />,
+      header: () => <BackTitleFill navigation={navigation} />,
     }),
   },
   ViewExploredProfileExhibitPicture: {
     screen: ExplorePictureScreen,
     navigationOptions: ({ navigation }) => ({
-      header: () => <BackTitleAdd navigation={navigation} />,
+      header: () => <BackTitleFill navigation={navigation} />,
     }),
   },
   ExploreCheering: {
     screen: ExploreCheeringScreen,
     navigationOptions: ({ navigation }) => ({
-      header: () => <BackTitleAdd navigation={navigation} />,
+      header: () => <BackTitleFill navigation={navigation} />,
     }),
   },
   ExploreFollowers: {
     screen: ExploreFollowersScreen,
     navigationOptions: ({ navigation }) => ({
-      header: () => <BackTitleAdd navigation={navigation} />,
+      header: () => <BackTitleFill navigation={navigation} />,
     }),
   },
   ExploreFollowing: {
     screen: ExploreFollowingScreen,
     navigationOptions: ({ navigation }) => ({
-      header: () => <BackTitleAdd navigation={navigation} />,
+      header: () => <BackTitleFill navigation={navigation} />,
     }),
   },
 });
@@ -256,31 +256,31 @@ const NotificationNavigator = createStackNavigator({
   ViewNotificationsProfileExhibit: {
     screen: NotificationsExhibitScreen,
     navigationOptions: ({ navigation }) => ({
-      header: () => <BackTitleAdd navigation={navigation} />,
+      header: () => <BackTitleFill navigation={navigation} />,
     }),
   },
   ViewNotificationsProfileExhibitPicture: {
     screen: NotificationsPictureScreen,
     navigationOptions: ({ navigation }) => ({
-      header: () => <BackTitleAdd navigation={navigation} />,
+      header: () => <BackTitleFill navigation={navigation} />,
     }),
   },
   NotificationsFollowing: {
     screen: NotificationsFollowingScreen,
     navigationOptions: ({ navigation }) => ({
-      header: () => <BackTitleAdd navigation={navigation} />,
+      header: () => <BackTitleFill navigation={navigation} />,
     }),
   },
   NotificationsFollowers: {
     screen: NotificationsFollowersScreen,
     navigationOptions: ({ navigation }) => ({
-      header: () => <BackTitleAdd navigation={navigation} />,
+      header: () => <BackTitleFill navigation={navigation} />,
     }),
   },
   NotificationsCheering: {
     screen: NotificationsCheeringScreen,
     navigationOptions: ({ navigation }) => ({
-      header: () => <BackTitleAdd navigation={navigation} />,
+      header: () => <BackTitleFill navigation={navigation} />,
     }),
   },
 });
