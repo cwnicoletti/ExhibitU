@@ -57,7 +57,7 @@ const App = () => {
     <Provider store={store}>
       <SafeAreaProvider>
         <View style={{ flex: 1, backgroundColor: "#000000" }}>
-          <NavigationContainer />
+          <NavigationContainer theme={{ colors: { background: "#000" } }} />
         </View>
       </SafeAreaProvider>
     </Provider>
