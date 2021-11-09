@@ -3,7 +3,8 @@ import { createAppContainer, createSwitchNavigator } from "react-navigation";
 import { createDrawerNavigator, DrawerActions } from "react-navigation-drawer";
 import { createStackNavigator } from "react-navigation-stack";
 import { createBottomTabNavigator } from "react-navigation-tabs";
-import { useAppDispatch } from "../hooks";
+import { useAppSelector, useAppDispatch } from "../hooks";
+import uploadToken from "../helper/uploadToken";
 import LeftDrawer from "../components/drawers/LeftDrawer";
 import RightDrawer from "../components/drawers/RightDrawer";
 import TitleOnlyHeader from "../components/headers/TitleOnlyHeader";
@@ -147,6 +148,7 @@ const FeedNavigator = createDrawerNavigator(
     drawerPosition: "right",
     contentComponent: (navData) => {
       const dispatch = useAppDispatch();
+      const localId = useAppSelector((state) => state.auth.userId);
       return (
         <RightDrawer
           navData={navData}
@@ -161,6 +163,7 @@ const FeedNavigator = createDrawerNavigator(
           }}
           logoutOnPress={() => {
             dispatch(logout());
+            dispatch(uploadToken(localId, ""));
             navData.navigation.navigate("SignupOrLogin");
           }}
         />
@@ -424,6 +427,7 @@ const ProfileNavigator = createDrawerNavigator(
     drawerPosition: "right",
     contentComponent: (navData) => {
       const dispatch = useAppDispatch();
+      const localId = useAppSelector((state) => state.auth.userId);
       return (
         <RightDrawer
           navData={navData}
@@ -438,6 +442,7 @@ const ProfileNavigator = createDrawerNavigator(
           }}
           logoutOnPress={() => {
             dispatch(logout());
+            dispatch(uploadToken(localId, ""));
             navData.navigation.navigate("SignupOrLogin");
           }}
         />
