@@ -15,6 +15,7 @@ const NotificationsPictureScreen = (props) => {
   const jobTitle = props.navigation.getParam("jobTitle");
   const username = props.navigation.getParam("username");
   const postPhotoUrl = props.navigation.getParam("postPhotoUrl");
+  const cheering = props.navigation.getParam("cheering");
   const [numberOfCheers, setNumberOfCheers] = useState(
     props.navigation.getParam("numberOfCheers")
   );
@@ -104,6 +105,7 @@ const NotificationsPictureScreen = (props) => {
         jobTitle={jobTitle}
         username={username}
         profileImageSource={exploredUserData.profilePictureUrl}
+        cheering={cheering}
         numberOfCheers={numberOfCheers}
         numberOfComments={numberOfComments}
         links={links}

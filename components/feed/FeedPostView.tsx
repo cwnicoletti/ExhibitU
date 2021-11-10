@@ -42,7 +42,7 @@ const FeedPostView = (props) => {
     "rgba(0,0,0,1)",
   ]);
   const showCheering = useAppSelector((state) => state.user.showCheering);
-  const cheeredPosts = useAppSelector((state) => state.user.cheeredPosts);
+  const cheering = props.cheering;
   const localId = useAppSelector((state) => state.auth.userId);
   const ExhibitUId = useAppSelector((state) => state.user.ExhibitUId);
   const posterExhibitUId = props.posterExhibitUId;
@@ -70,10 +70,10 @@ const FeedPostView = (props) => {
   }
 
   useEffect(() => {
-    if (cheeredPosts.includes(postId)) {
+    if (cheering.includes(ExhibitUId)) {
       setClap(true);
     }
-  }, [cheeredPosts]);
+  }, [cheering]);
 
   const slideUp = () => {
     Animated.timing(slideAnim, {
@@ -131,7 +131,7 @@ const FeedPostView = (props) => {
         await setShowClapping(false);
       }, 1500);
 
-      if (!cheeredPosts.includes(postId)) {
+      if (!cheering.includes(ExhibitUId)) {
         await setLoadingCheer(true);
         await dispatch(
           cheerPost(localId, ExhibitUId, exhibitId, postId, posterExhibitUId)
@@ -148,7 +148,7 @@ const FeedPostView = (props) => {
   };
 
   const unCheer = async () => {
-    if (cheeredPosts.includes(postId)) {
+    if (cheering.includes(ExhibitUId)) {
       await setLoadingCheer(true);
       await dispatch(
         uncheerPost(localId, ExhibitUId, exhibitId, postId, posterExhibitUId)
@@ -285,10 +285,10 @@ const FeedPostView = (props) => {
                 />
               ) : (
                 <View>
-                  {!cheeredPosts.includes(postId) ? (
+                  {cheering.includes(ExhibitUId) ? (
                     <TouchableCmp onPress={unCheer}>
                       <View>
-                        <Cheer
+                        <Cheerfill
                           style={{
                             ...styles.clapContainer,
                             ...props.clapContainer,
@@ -303,7 +303,7 @@ const FeedPostView = (props) => {
                   ) : (
                     <TouchableCmp onPress={unCheer}>
                       <View>
-                        <Cheerfill
+                        <Cheer
                           style={{
                             ...styles.clapContainer,
                             ...props.clapContainer,
@@ -460,8 +460,7 @@ const FeedPostView = (props) => {
 };
 
 const styles = StyleSheet.create({
-  exhibit: {
-  },
+  exhibit: {},
   title: {
     fontSize: 14,
     fontWeight: "bold",

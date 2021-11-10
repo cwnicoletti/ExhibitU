@@ -95,6 +95,7 @@ const FeedCommentsScreen = (props) => {
             ? userData.profilePictureBase64
             : userData.profilePictureUrl
         }
+        cheering={userData.cheering}
         numberOfCheers={numberOfCheers}
         numberOfComments={userData.numberOfComments}
         postId={userData.postId}

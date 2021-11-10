@@ -1,10 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-  FlatList,
-  Platform,
-  StyleSheet,
-  View,
-} from "react-native";
+import { FlatList, Platform, StyleSheet, View } from "react-native";
 import { useAppSelector } from "../../hooks";
 import ExploreExhibitHeader from "../../components/explore/ExploreExhibitHeader";
 import ExhibitPictures from "../../components/UI/ExhibitPictures";
@@ -160,6 +155,7 @@ const NotificationsExhibitScreen = (props) => {
     profileExhibits: object,
     profilePictureUrl: string,
     postPhotoUrl: string,
+    cheering: string[],
     numberOfCheers: number,
     numberOfComments: number,
     caption: string,
@@ -177,6 +173,7 @@ const NotificationsExhibitScreen = (props) => {
       profileExhibits,
       profilePictureUrl,
       postPhotoUrl,
+      cheering,
       numberOfCheers,
       numberOfComments,
       caption,
@@ -310,6 +307,7 @@ const NotificationsExhibitScreen = (props) => {
                 itemData.item.profileExhibits,
                 itemData.item.profilePictureUrl,
                 itemData.item.postPhotoUrl,
+                itemData.item.cheering,
                 itemData.item.numberOfCheers,
                 itemData.item.numberOfComments,
                 itemData.item.caption,

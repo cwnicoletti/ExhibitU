@@ -45,6 +45,7 @@ const FeedItem = (props) => {
   ]);
   const darkModeValue = useAppSelector((state) => state.user.darkMode);
   const cheeredPosts = useAppSelector((state) => state.user.cheeredPosts);
+  const cheering = props.cheering;
   const showCheering = useAppSelector((state) => state.user.showCheering);
   const localId = useAppSelector((state) => state.auth.userId);
   const ExhibitUId = useAppSelector((state) => state.user.ExhibitUId);
@@ -145,7 +146,7 @@ const FeedItem = (props) => {
         await setShowClapping(false);
       }, 1500);
 
-      if (!cheeredPosts.includes(postId)) {
+      if (!cheering.includes(ExhibitUId)) {
         await setLoadingCheer(true);
         dispatch(
           sendNotification(
@@ -174,7 +175,7 @@ const FeedItem = (props) => {
   };
 
   const unCheer = async () => {
-    if (cheeredPosts.includes(postId)) {
+    if (cheering.includes(ExhibitUId)) {
       await setLoadingCheer(true);
       await dispatch(
         uncheerPost(localId, ExhibitUId, exhibitId, postId, posterExhibitUId)
@@ -311,10 +312,10 @@ const FeedItem = (props) => {
                 />
               ) : (
                 <View>
-                  {!cheeredPosts.includes(postId) ? (
+                  {cheering.includes(ExhibitUId) ? (
                     <TouchableCmp onPress={unCheer}>
                       <View>
-                        <Cheer
+                        <Cheerfill
                           style={{
                             ...styles.clapContainer,
                             ...props.clapContainer,
@@ -329,7 +330,7 @@ const FeedItem = (props) => {
                   ) : (
                     <TouchableCmp onPress={unCheer}>
                       <View>
-                        <Cheerfill
+                        <Cheer
                           style={{
                             ...styles.clapContainer,
                             ...props.clapContainer,

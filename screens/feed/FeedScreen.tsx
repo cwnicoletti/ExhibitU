@@ -214,6 +214,7 @@ const FeedScreen = (props) => {
             profileImageSource={itemData.item.profilePictureUrl}
             exhibitTitle={itemData.item.exhibitTitle}
             caption={itemData.item.caption}
+            cheering={itemData.item.cheering}
             numberOfCheers={itemData.item.numberOfCheers}
             numberOfComments={itemData.item.numberOfComments}
             exhibitId={itemData.item.exhibitId}
