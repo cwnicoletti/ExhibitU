@@ -2,7 +2,7 @@
   "expo": {
     "name": "ExhibitU",
     "slug": "ExhibitU",
-    "version": "0.4.7",
+    "version": "0.5.0",
     "orientation": "portrait",
     "icon": "./assets/ExhibitU_icon.png",
     "splash": {
@@ -18,7 +18,8 @@
       "supportsTablet": true,
       "bundleIdentifier": "com.exhibitu.ios",
       "infoPlist": {
-        "NSPhotoLibraryUsageDescription": "So you can add pictures to your ExhibitU profile"
+        "NSPhotoLibraryUsageDescription": "So you can add pictures to your ExhibitU profile",
+        "UIViewControllerBasedStatusBarAppearance": "YES"
       }
     },
     "web": {
