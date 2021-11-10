@@ -1,9 +1,5 @@
 import React, { useEffect, useState, useCallback } from "react";
-import {
-  FlatList,
-  StyleSheet,
-  View,
-} from "react-native";
+import { FlatList, StyleSheet, View } from "react-native";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import FeedProfileHeader from "../../components/feed/FeedProfileHeader";
 import ExhibitItem from "../../components/exhibitItems/ExhibitItem";
@@ -16,6 +12,7 @@ import {
 
 const FeedProfileScreen = (props) => {
   const dispatch = useAppDispatch();
+  const profileColumns = useAppSelector((state) => state.user.profileColumns);
   const darkModeValue = useAppSelector((state) => state.user.darkMode);
   const ExhibitUId = useAppSelector((state) => state.user.ExhibitUId);
   const following = useAppSelector((state) => state.user.following);
@@ -246,10 +243,18 @@ const FeedProfileScreen = (props) => {
     >
       <FlatList<any>
         data={profileExhibitsState}
+        key={
+          ExhibitUId === userData.exploredExhibitUId
+            ? profileColumns
+            : userData.profileColumns
+        }
         keyExtractor={(item) => item.exhibitId}
-        key={userData.profileColumns}
         ListHeaderComponent={topHeader()}
-        numColumns={userData.profileColumns}
+        numColumns={
+          ExhibitUId === userData.exploredExhibitUId
+            ? profileColumns
+            : userData.profileColumns
+        }
         renderItem={(itemData) => (
           <ExhibitItem
             image={
@@ -258,6 +263,11 @@ const FeedProfileScreen = (props) => {
                 : itemData.item.exhibitCoverPhotoUrl
             }
             title={itemData.item.exhibitTitle}
+            profileColumns={
+              ExhibitUId === userData.exploredExhibitUId
+                ? profileColumns
+                : userData.profileColumns
+            }
             exhibitContainer={{
               backgroundColor: darkModeValue ? "black" : "white",
               borderColor: darkModeValue ? "gray" : "#c9c9c9",

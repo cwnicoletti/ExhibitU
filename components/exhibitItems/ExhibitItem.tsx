@@ -8,16 +8,15 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { useAppSelector } from "../../hooks";
 import { AnimatedGradient } from "../custom/AnimatedGradient/AnimatedGradient";
 
 const ExhibitItem = (props) => {
-  const profileColumns = useAppSelector((state) => state.user.profileColumns);
   const [imageIsLoading, setImageIsLoading] = useState(true);
   const [greyColorValues, setGreyColorValues] = useState([
     "rgba(50,50,50,1)",
     "rgba(0,0,0,1)",
   ]);
+  const profileColumns = props.profileColumns;
 
   let TouchableCmp: any = TouchableOpacity;
   if (Platform.OS === "android") {

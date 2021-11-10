@@ -17,7 +17,7 @@ import LinksList from "../UI/LinksList";
 import useDidMountEffect from "../../helper/useDidMountEffect";
 import Cheer from "../../assets/Icons/clap.svg";
 
-const ExhibitItem = (props) => {
+const PreviewPostItem = (props) => {
   const [profileImageIsLoading, setProfileImageIsLoading] = useState(true);
   const [greyColorValues, setGreyColorValues] = useState([
     "rgba(50,50,50,1)",
@@ -311,4 +311,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ExhibitItem;
+export default PreviewPostItem;

@@ -24,6 +24,7 @@ const ExploreProfileScreen = (props) => {
   const username = useAppSelector((state) => state.user.username);
   const localId = useAppSelector((state) => state.auth.userId);
   const ExhibitUId = useAppSelector((state) => state.user.ExhibitUId);
+  const profileColumns = useAppSelector((state) => state.user.profileColumns);
   const profilePictureUrl = useAppSelector(
     (state) => state.user.profilePictureUrl
   );
@@ -295,6 +296,11 @@ const ExploreProfileScreen = (props) => {
     >
       <FlatList<any>
         data={profileExhibitsState}
+        key={
+          ExhibitUId === exploredUserData.exploredExhibitUId
+            ? profileColumns
+            : exploredUserData.profileColumns
+        }
         keyExtractor={(item) => item.exhibitId}
         ListHeaderComponent={topHeader()}
         refreshControl={
@@ -304,11 +310,20 @@ const ExploreProfileScreen = (props) => {
             tintColor={darkModeValue ? "white" : "black"}
           />
         }
-        numColumns={exploredUserData.profileColumns}
+        numColumns={
+          ExhibitUId === exploredUserData.exploredExhibitUId
+            ? profileColumns
+            : exploredUserData.profileColumns
+        }
         renderItem={(itemData) => (
           <ExhibitItem
             image={itemData.item.exhibitCoverPhotoUrl}
             title={itemData.item.exhibitTitle}
+            profileColumns={
+              ExhibitUId === exploredUserData.exploredExhibitUId
+                ? profileColumns
+                : exploredUserData.profileColumns
+            }
             exhibitContainer={{
               backgroundColor: darkModeValue ? "black" : "white",
               borderColor: darkModeValue ? "gray" : "#c9c9c9",

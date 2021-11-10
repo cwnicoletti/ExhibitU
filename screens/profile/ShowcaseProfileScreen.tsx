@@ -10,6 +10,7 @@ const ShowcaseProfileScreen = (props) => {
   const dispatch = useAppDispatch();
   const darkModeValue = useAppSelector((state) => state.user.darkMode);
   const ExhibitUId = useAppSelector((state) => state.user.ExhibitUId);
+  const profileColumns = useAppSelector((state) => state.user.profileColumns);
 
   const userData =
     props.navigation.getParam("ExhibitUId") === ExhibitUId ||
@@ -175,6 +176,7 @@ const ShowcaseProfileScreen = (props) => {
                 : itemData.item.exhibitCoverPhotoUrl
             }
             title={itemData.item.exhibitTitle}
+            profileColumns={profileColumns}
             exhibitContainer={{
               backgroundColor: darkModeValue ? "black" : "white",
               borderColor: darkModeValue ? "gray" : "#c9c9c9",

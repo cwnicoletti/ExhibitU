@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import { AnimatedGradient } from "../custom/AnimatedGradient/AnimatedGradient";
 
-const ExhibitItem = (props) => {
+const ExhibitPictures = (props) => {
   const [imageIsLoading, setImageIsLoading] = useState(true);
   const [greyColorValues, setGreyColorValues] = useState([
     "rgba(50,50,50,1)",
@@ -72,4 +72,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ExhibitItem;
+export default ExhibitPictures;

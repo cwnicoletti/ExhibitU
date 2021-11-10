@@ -2,7 +2,6 @@ import React, { useEffect, useState, useRef } from "react";
 import { StyleSheet, Text, View, FlatList, RefreshControl } from "react-native";
 import { useAppSelector, useAppDispatch } from "../../hooks";
 import { offScreen, refreshNotifications } from "../../store/actions/user/user";
-
 import { AntDesign } from "@expo/vector-icons";
 
 import NotificationCard from "../../components/notifications/NotificationCard";

@@ -30,6 +30,7 @@ const ProfileScreen = (props) => {
   const [isLoadingTwoColumns, setIsLoadingTwoColumns] = useState(false);
   const [isLoadingThreeColumns, setIsLoadingThreeColumns] = useState(false);
   const [isLoadingFourColumns, setIsLoadingFourColumns] = useState(false);
+  const [hiddenComponent, setHiddenComponent] = useState(false);
   const darkModeValue = useAppSelector((state) => state.user.darkMode);
   const localId = useAppSelector((state) => state.auth.userId);
   const ExhibitUId = useAppSelector((state) => state.user.ExhibitUId);
@@ -41,7 +42,6 @@ const ProfileScreen = (props) => {
   const resetScrollProfile = useAppSelector(
     (state) => state.user.resetScrollProfile
   );
-  const [hiddenComponent, setHiddenComponent] = useState(false);
 
   const userData = {
     ExhibitUId: useAppSelector((state) => state.user.ExhibitUId),
@@ -274,6 +274,7 @@ const ProfileScreen = (props) => {
           <ExhibitItem
             image={itemData.item.exhibitCoverPhotoBase64}
             title={itemData.item.exhibitTitle}
+            profileColumns={profileColumns}
             exhibitContainer={{
               backgroundColor: darkModeValue ? "black" : "white",
               borderColor: darkModeValue ? "gray" : "#c9c9c9",

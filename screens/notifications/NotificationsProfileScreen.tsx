@@ -310,6 +310,7 @@ const NotificationsProfileScreen = (props) => {
           <ExhibitItem
             image={itemData.item.exhibitCoverPhotoUrl}
             title={itemData.item.exhibitTitle}
+            profileColumns={exploredUserData.profileColumns}
             exhibitContainer={{
               backgroundColor: darkModeValue ? "black" : "white",
               borderColor: darkModeValue ? "gray" : "#c9c9c9",
