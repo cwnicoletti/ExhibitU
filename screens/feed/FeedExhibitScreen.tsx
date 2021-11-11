@@ -86,7 +86,7 @@ const FeedExhibitScreen = (props) => {
     postLinks: object,
     postDateCreated: string
   ) => {
-    props.navigation.navigate("ViewFeedPicture", {
+    props.navigation.push("ViewFeedPicture", {
       exhibitId,
       userData: {
         ExhibitUId,

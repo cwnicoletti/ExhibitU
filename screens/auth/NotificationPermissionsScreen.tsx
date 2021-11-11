@@ -27,7 +27,7 @@ const NotificationPermissionsScreen = (props) => {
 
   const authHandler = async () => {
     dispatch(setGettingPermissions(false));
-    await props.navigation.navigate("Exhibit");
+    await props.navigation.navigate("Feed");
   };
 
   useEffect(() => {

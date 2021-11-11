@@ -76,7 +76,7 @@ const LoginScreen = (props) => {
     await setIsLoading(false);
     if (authenticated) {
       uploadToken(localId);
-      await props.navigation.navigate("Exhibit");
+      await props.navigation.navigate("Feed");
     } else {
       Alert.alert("Invalid Credentials", "Invalid username or password", [
         {

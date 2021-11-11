@@ -443,6 +443,8 @@ const ProfileNavigator = createDrawerNavigator(
           logoutOnPress={() => {
             dispatch(logout());
             dispatch(uploadToken(localId, ""));
+            navData.navigation.closeRightDrawer();
+            navData.navigation.navigate("Feed");
             navData.navigation.navigate("SignupOrLogin");
           }}
         />
