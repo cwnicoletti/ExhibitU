@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import {
   ActivityIndicator,
   Animated,
@@ -28,11 +28,10 @@ import LinksList from "../UI/LinksList";
 
 const ProfileExhibitPostView = (props) => {
   const dispatch = useAppDispatch();
-  const darkModeValue = useAppSelector((state) => state.user.darkMode);
   const showCheering = useAppSelector((state) => state.user.showCheering);
   const [showClapping, setShowClapping] = useState(false);
   const [loadingCheer, setLoadingCheer] = useState(false);
-  const [numberOfCheers, setNumberOfCheers] = useState(props.numberOfCheers);
+  const numberOfCheers = props.numberOfCheers;
   const [processingWholeCheer, setProcessingWholeCheer] = useState(false);
   const [clap, setClap] = useState(false);
   const [greyColorValues, setGreyColorValues] = useState([
@@ -145,7 +144,6 @@ const ProfileExhibitPostView = (props) => {
             posterExhibitUId
           )
         );
-        setNumberOfCheers((prevState) => prevState + 1);
         await setLoadingCheer(false);
       }
       await setProcessingWholeCheer(false);
@@ -166,7 +164,6 @@ const ProfileExhibitPostView = (props) => {
           posterExhibitUId
         )
       );
-      setNumberOfCheers((prevState) => prevState - 1);
       await setLoadingCheer(false);
     }
   };

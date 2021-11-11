@@ -7,17 +7,15 @@ import getExlusiveBothSetsDifference from "../../helper/getExlusiveBothSetsDiffe
 
 const ExplorePictureScreen = (props) => {
   const darkModeValue = useAppSelector((state) => state.user.darkMode);
+  const ExhibitUId = useAppSelector((state) => state.user.ExhibitUId);
   const exploredUserData = props.navigation.getParam("exploredUserData");
-  const ExhibitUId = props.navigation.getParam("ExhibitUId");
   const currentExhibitId = props.navigation.getParam("exhibitId");
   const postId = props.navigation.getParam("postId");
   const fullname = props.navigation.getParam("fullname");
   const username = props.navigation.getParam("username");
-  const cheering = props.navigation.getParam("cheering");
+  const [cheering, setCheering] = useState([]);
   const postPhotoUrl = props.navigation.getParam("postPhotoUrl");
-  const [numberOfCheers, setNumberOfCheers] = useState(
-    props.navigation.getParam("numberOfCheers")
-  );
+  const [numberOfCheers, setNumberOfCheers] = useState(0);
   const numberOfComments = props.navigation.getParam("numberOfComments");
   const caption = props.navigation.getParam("caption");
   const links = props.navigation.getParam("postLinks");
@@ -27,7 +25,7 @@ const ExplorePictureScreen = (props) => {
 
   const viewCheeringHandler = () => {
     props.navigation.navigate("ExploreCheering", {
-      ExhibitUId: ExhibitUId,
+      ExhibitUId: exploredUserData.exploredExhibitUId,
       exhibitId: currentExhibitId,
       postId: postId,
       numberOfCheers: numberOfCheers,
@@ -37,7 +35,7 @@ const ExplorePictureScreen = (props) => {
   const viewProfileHandler = () => {
     props.navigation.push("ExploreProfile", {
       ...exploredUserData,
-      ExhibitUId: ExhibitUId,
+      ExhibitUId: exploredUserData.exploredExhibitUId,
     });
   };
 
@@ -59,6 +57,10 @@ const ExplorePictureScreen = (props) => {
             object.profileExhibits[currentExhibitId].exhibitPosts[postId]
               .numberOfCheers
           );
+          setCheering(
+            object.profileExhibits[currentExhibitId].exhibitPosts[postId]
+              .cheering
+          );
         }
       }
     });
@@ -76,8 +78,10 @@ const ExplorePictureScreen = (props) => {
     if (postId === difference[0]) {
       if (intialCheeredPosts.length < cheeredPosts.length) {
         setNumberOfCheers((prevState) => prevState + 1);
+        setCheering([...cheering, ExhibitUId]);
       } else {
         setNumberOfCheers((prevState) => prevState - 1);
+        setCheering(cheering.filter((id) => id !== ExhibitUId));
       }
     }
     setIntialCheeredPosts(cheeredPosts);
@@ -110,7 +114,7 @@ const ExplorePictureScreen = (props) => {
         links={links}
         postId={postId}
         exhibitId={currentExhibitId}
-        posterExhibitUId={ExhibitUId}
+        posterExhibitUId={exploredUserData.exploredExhibitUId}
         showCheering={exploredUserData.showCheering}
         postDateCreated={postDateCreated}
         nameStyle={{
@@ -127,11 +131,11 @@ const ExplorePictureScreen = (props) => {
           color: darkModeValue ? "white" : "black",
         }}
         dateContainer={{
-          backgroundColor: darkModeValue ? "#121212" : "white",
+          backgroundColor: darkModeValue ? "black" : "white",
         }}
         threeDotsStyle={darkModeValue ? "white" : "black"}
         captionContainer={{
-          backgroundColor: darkModeValue ? "#121212" : "white",
+          backgroundColor: darkModeValue ? "black" : "white",
         }}
         titleStyle={{
           color: "white",
@@ -142,7 +146,7 @@ const ExplorePictureScreen = (props) => {
         nameTitleColors={["rgba(0,0,0,1)", "rgba(0,0,0,0.00)"]}
         exhibitTitleColors={["rgba(0,0,0,0.00)", "rgba(0,0,0,1)"]}
         pictureCheerContainer={{
-          backgroundColor: darkModeValue ? "#121212" : "white",
+          backgroundColor: darkModeValue ? "black" : "white",
         }}
         pictureCheerNumber={{
           color: darkModeValue ? "white" : "black",
@@ -154,7 +158,7 @@ const ExplorePictureScreen = (props) => {
           color: darkModeValue ? "white" : "black",
         }}
         pictureTitleContainer={{
-          backgroundColor: darkModeValue ? "#121212" : "white",
+          backgroundColor: darkModeValue ? "black" : "white",
         }}
         pictureTitleStyle={{
           color: darkModeValue ? "white" : "black",

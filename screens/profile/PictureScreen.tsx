@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Platform, ScrollView, StyleSheet } from "react-native";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import ProfileExhibitPostView from "../../components/user/ProfileExhibitPostView";
@@ -23,7 +23,8 @@ const PictureScreen = (props) => {
   const jobTitle = props.navigation.getParam("jobTitle");
   const profileBiography = props.navigation.getParam("profileBiography");
   const postPhotoBase64 = props.navigation.getParam("postPhotoBase64");
-  const numberOfCheers = props.navigation.getParam("numberOfCheers");
+  const numberOfCheers =
+    profileExhibits[exhibitId].exhibitPosts[postId].numberOfCheers;
   const numberOfComments = props.navigation.getParam("numberOfComments");
   const caption = props.navigation.getParam("caption");
   const postDateCreated = props.navigation.getParam("postDateCreated");
@@ -120,14 +121,14 @@ const PictureScreen = (props) => {
           color: darkModeValue ? "white" : "black",
         }}
         dateContainer={{
-          backgroundColor: darkModeValue ? "#121212" : "white",
+          backgroundColor: darkModeValue ? "black" : "white",
         }}
         dateStyle={{
           color: "gray",
         }}
         threeDotsStyle={darkModeValue ? "white" : "black"}
         captionContainer={{
-          backgroundColor: darkModeValue ? "#121212" : "white",
+          backgroundColor: darkModeValue ? "black" : "white",
         }}
         titleStyle={{
           color: "white",
@@ -135,7 +136,7 @@ const PictureScreen = (props) => {
         nameTitleColors={["rgba(0,0,0,1)", "rgba(0,0,0,0.00)"]}
         exhibitTitleColors={["rgba(0,0,0,0.00)", "rgba(0,0,0,1)"]}
         pictureCheerContainer={{
-          backgroundColor: darkModeValue ? "#121212" : "white",
+          backgroundColor: darkModeValue ? "black" : "white",
         }}
         pictureCheerNumber={{
           color: darkModeValue ? "white" : "black",
@@ -147,7 +148,7 @@ const PictureScreen = (props) => {
           color: darkModeValue ? "white" : "black",
         }}
         pictureTitleContainer={{
-          backgroundColor: darkModeValue ? "#121212" : "white",
+          backgroundColor: darkModeValue ? "black" : "white",
         }}
         pictureTitleStyle={{
           color: darkModeValue ? "white" : "black",

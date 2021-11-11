@@ -7,8 +7,10 @@ import FeedPostView from "../../components/feed/FeedPostView";
 
 const FeedCommentsScreen = (props) => {
   const darkModeValue = useAppSelector((state) => state.user.darkMode);
+  const ExhibitUId = useAppSelector((state) => state.user.ExhibitUId);
   const exhibitId = props.navigation.getParam("exhibitId");
   const userData = props.navigation.getParam("userData");
+  const [cheering, setCheering] = useState(userData.cheering);
   const cheeredPosts = useAppSelector((state) => state.user.cheeredPosts);
   const [intialCheeredPosts, setIntialCheeredPosts] = useState([]);
   const [numberOfCheers, setNumberOfCheers] = useState(userData.numberOfCheers);
@@ -26,7 +28,7 @@ const FeedCommentsScreen = (props) => {
   const viewProfileHandler = () => {
     props.navigation.push("ViewProfile", {
       userData: {
-        ExhibitUId: userData.ExhibitUId,
+        exploredExhibitUId: userData.ExhibitUId,
         exhibitId: exhibitId,
         fullname: userData.fullname,
         username: userData.username,
@@ -62,8 +64,10 @@ const FeedCommentsScreen = (props) => {
     if (userData.postId === difference[0]) {
       if (intialCheeredPosts.length < cheeredPosts.length) {
         setNumberOfCheers((prevState) => prevState + 1);
+        setCheering([...cheering, ExhibitUId]);
       } else {
         setNumberOfCheers((prevState) => prevState - 1);
+        setCheering(cheering.filter((id) => id !== ExhibitUId));
       }
     }
     setIntialCheeredPosts(cheeredPosts);
@@ -95,7 +99,7 @@ const FeedCommentsScreen = (props) => {
             ? userData.profilePictureBase64
             : userData.profilePictureUrl
         }
-        cheering={userData.cheering}
+        cheering={cheering}
         numberOfCheers={numberOfCheers}
         numberOfComments={userData.numberOfComments}
         postId={userData.postId}
@@ -118,10 +122,10 @@ const FeedCommentsScreen = (props) => {
         }}
         threeDotsStyle={darkModeValue ? "white" : "black"}
         captionContainer={{
-          backgroundColor: darkModeValue ? "#121212" : "white",
+          backgroundColor: darkModeValue ? "black" : "white",
         }}
         dateContainer={{
-          backgroundColor: darkModeValue ? "#121212" : "white",
+          backgroundColor: darkModeValue ? "black" : "white",
         }}
         dateStyle={{
           color: "gray",
@@ -132,7 +136,7 @@ const FeedCommentsScreen = (props) => {
         nameTitleColors={["rgba(0,0,0,1)", "rgba(0,0,0,0.00)"]}
         exhibitTitleColors={["rgba(0,0,0,0.00)", "rgba(0,0,0,1)"]}
         pictureCheerContainer={{
-          backgroundColor: darkModeValue ? "#121212" : "white",
+          backgroundColor: darkModeValue ? "black" : "white",
         }}
         pictureCheerNumber={{
           color: darkModeValue ? "white" : "black",
@@ -144,7 +148,7 @@ const FeedCommentsScreen = (props) => {
           color: darkModeValue ? "white" : "black",
         }}
         pictureTitleContainer={{
-          backgroundColor: darkModeValue ? "#121212" : "white",
+          backgroundColor: darkModeValue ? "black" : "white",
         }}
         pictureTitleStyle={{
           color: darkModeValue ? "white" : "black",

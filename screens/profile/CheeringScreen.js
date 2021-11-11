@@ -25,16 +25,23 @@ const CheeringScreen = (props) => {
 
   const darkModeValue = useAppSelector((state) => state.user.darkMode);
   const [search, setSearch] = useState("");
+  const [numberOfCheers, setNumberOfCheers] = useState(0);
   const [returnedIndex, setReturnedIndex] = useState([]);
   const [isRefreshing, setIsRefreshing] = useState(false);
   const ExhibitUId = props.navigation.getParam("ExhibitUId");
   const exhibitId = props.navigation.getParam("exhibitId");
   const postId = props.navigation.getParam("postId");
-  const numberOfCheers = props.navigation.getParam("numberOfCheers");
   const following = useAppSelector((state) => state.user.following);
   const [intialFollowing, setIntialFollowing] = useState([]);
 
   useEffect(() => {
+    const getCheers = async () => {
+      const user = await index.getObject(ExhibitUId);
+      const cheering =
+        user.profileExhibits[exhibitId].exhibitPosts[postId].cheering;
+      setNumberOfCheers(cheering.length);
+    };
+    getCheers();
     setIntialFollowing(following);
   }, []);
 
