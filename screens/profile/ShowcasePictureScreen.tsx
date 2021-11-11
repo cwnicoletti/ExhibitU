@@ -107,10 +107,10 @@ const ShowcasePictureScreen = (props) => {
         }}
         threeDotsStyle={darkModeValue ? "white" : "black"}
         captionContainer={{
-          backgroundColor: darkModeValue ? "#121212" : "white",
+          backgroundColor: darkModeValue ? "black" : "white",
         }}
         dateContainer={{
-          backgroundColor: darkModeValue ? "#121212" : "white",
+          backgroundColor: darkModeValue ? "black" : "white",
         }}
         dateStyle={{
           color: "gray",
@@ -121,7 +121,7 @@ const ShowcasePictureScreen = (props) => {
         nameTitleColors={["rgba(0,0,0,1)", "rgba(0,0,0,0.00)"]}
         exhibitTitleColors={["rgba(0,0,0,0.00)", "rgba(0,0,0,1)"]}
         pictureCheerContainer={{
-          backgroundColor: darkModeValue ? "#121212" : "white",
+          backgroundColor: darkModeValue ? "black" : "white",
         }}
         pictureCheerNumber={{
           color: darkModeValue ? "white" : "black",
@@ -133,7 +133,7 @@ const ShowcasePictureScreen = (props) => {
           color: darkModeValue ? "white" : "black",
         }}
         pictureTitleContainer={{
-          backgroundColor: darkModeValue ? "#121212" : "white",
+          backgroundColor: darkModeValue ? "black" : "white",
         }}
         pictureTitleStyle={{
           color: darkModeValue ? "white" : "black",

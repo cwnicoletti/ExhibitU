@@ -535,9 +535,7 @@ const FeedItem = (props) => {
 };
 
 const styles = StyleSheet.create({
-  exhibitContainer: {
-    marginBottom: 5,
-  },
+  exhibitContainer: {},
   title: {
     fontSize: 14,
     fontWeight: "bold",

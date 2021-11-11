@@ -266,7 +266,7 @@ const EditProfileScreen = (props) => {
               color: darkModeValue ? "white" : "black",
             }}
             dateContainer={{
-              backgroundColor: darkModeValue ? "#121212" : "white",
+              backgroundColor: darkModeValue ? "black" : "white",
             }}
             dateStyle={{
               color: "gray",
@@ -280,7 +280,7 @@ const EditProfileScreen = (props) => {
             }}
             threeDotsStyle={darkModeValue ? "white" : "black"}
             captionContainer={{
-              backgroundColor: darkModeValue ? "#121212" : "white",
+              backgroundColor: darkModeValue ? "black" : "white",
             }}
             titleStyle={{
               color: "white",
@@ -288,7 +288,7 @@ const EditProfileScreen = (props) => {
             nameTitleColors={["rgba(0,0,0,1)", "rgba(0,0,0,0.00)"]}
             exhibitTitleColors={["rgba(0,0,0,0.00)", "rgba(0,0,0,1)"]}
             pictureCheerContainer={{
-              backgroundColor: darkModeValue ? "#121212" : "white",
+              backgroundColor: darkModeValue ? "black" : "white",
             }}
             pictureCheerNumber={{
               color: darkModeValue ? "white" : "black",
@@ -302,7 +302,7 @@ const EditProfileScreen = (props) => {
             }}
             numberOfComments={0}
             pictureTitleContainer={{
-              backgroundColor: darkModeValue ? "#121212" : "white",
+              backgroundColor: darkModeValue ? "black" : "white",
             }}
             pictureTitleStyle={{
               color: darkModeValue ? "white" : "black",

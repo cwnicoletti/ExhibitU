@@ -1,12 +1,6 @@
 import { AntDesign } from "@expo/vector-icons";
 import React, { useEffect, useRef, useState } from "react";
-import {
-  FlatList,
-  RefreshControl,
-  StyleSheet,
-  Text,
-  View,
-} from "react-native";
+import { FlatList, RefreshControl, StyleSheet, Text, View } from "react-native";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import FeedItem from "../../components/feed/FeedItem";
 import useDidMountEffect from "../../helper/useDidMountEffect";
@@ -191,8 +185,8 @@ const FeedScreen = (props) => {
       }}
     >
       <FlatList<any>
-        extraData={profilePictureBase64}
         data={userFeedState}
+        extraData={profilePictureBase64}
         ref={flatlistFeed}
         refreshControl={
           <RefreshControl
@@ -239,13 +233,13 @@ const FeedScreen = (props) => {
             }}
             threeDotsStyle={darkModeValue ? "white" : "black"}
             nameContainer={{
-              backgroundColor: darkModeValue ? "#121212" : "white",
+              backgroundColor: darkModeValue ? "black" : "white",
             }}
             captionContainer={{
-              backgroundColor: darkModeValue ? "#121212" : "white",
+              backgroundColor: darkModeValue ? "black" : "white",
             }}
             dateContainer={{
-              backgroundColor: darkModeValue ? "#121212" : "white",
+              backgroundColor: darkModeValue ? "black" : "white",
             }}
             dateStyle={{
               color: "gray",
@@ -256,7 +250,7 @@ const FeedScreen = (props) => {
             profilePictureColors={["rgba(0,0,0,1)", "rgba(0,0,0,0)"]}
             exhibitTitleColors={["rgba(0,0,0,0)", "rgba(0,0,0,1)"]}
             pictureCheerContainer={{
-              backgroundColor: darkModeValue ? "#121212" : "white",
+              backgroundColor: darkModeValue ? "black" : "white",
             }}
             pictureCheerNumber={{
               color: darkModeValue ? "white" : "black",
@@ -268,7 +262,7 @@ const FeedScreen = (props) => {
               color: darkModeValue ? "white" : "black",
             }}
             pictureTitleContainer={{
-              backgroundColor: darkModeValue ? "#121212" : "white",
+              backgroundColor: darkModeValue ? "black" : "white",
             }}
             pictureTitleStyle={{
               color: darkModeValue ? "white" : "black",

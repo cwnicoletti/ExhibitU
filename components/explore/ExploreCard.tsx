@@ -88,7 +88,6 @@ const styles = StyleSheet.create({
     height: 60,
     width: 60,
     borderRadius: 60 / 2,
-    overflow: "hidden",
   },
   fullname: {
     fontWeight: "800",
