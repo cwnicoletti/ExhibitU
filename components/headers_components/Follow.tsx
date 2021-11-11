@@ -23,7 +23,7 @@ const Follow = (props) => {
                     title="Follow"
                     iconName={"user-follow"}
                     color={props.darkModeValue ? "white" : "black"}
-                    onPress={props.followFn}
+                    onPress={() => props.followFn()}
                   />
                 </props.HeaderButtons>
               ) : (
@@ -43,7 +43,7 @@ const Follow = (props) => {
                     title="Follow"
                     iconName={"user-unfollow"}
                     color={"red"}
-                    onPress={props.unfollowFn}
+                    onPress={() => props.unfollowFn()}
                   />
                 </props.HeaderButtons>
               ) : (

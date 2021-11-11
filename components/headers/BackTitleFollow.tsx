@@ -1,5 +1,5 @@
 import React from "react";
-import { Image, Platform, Text, View } from "react-native";
+import { Image, Platform, Text, View, ActivityIndicator } from "react-native";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import { useAppSelector } from "../../hooks";
 import Back from "../headers_components/Back";
@@ -48,6 +48,7 @@ const BackTitleFollow = ({ navigation }) => {
           HeaderButtons={HeaderButtons}
           Item={Item}
           View={View}
+          ActivityIndicator={ActivityIndicator}
           Platform={Platform}
           isfollowing={isfollowing}
           isLoading={isLoading}
