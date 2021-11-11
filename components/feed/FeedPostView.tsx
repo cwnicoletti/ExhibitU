@@ -14,8 +14,6 @@ import {
   View,
 } from "react-native";
 import { useAppDispatch, useAppSelector } from "../../hooks";
-import { AntDesign } from "@expo/vector-icons";
-import { LinearGradient } from "expo-linear-gradient";
 import Cheerfill from "../../assets/Icons/clap-fill.svg";
 import Cheer from "../../assets/Icons/clap.svg";
 import {
@@ -28,6 +26,7 @@ import { AnimatedGradient } from "../custom/AnimatedGradient/AnimatedGradient";
 import TimeStamp from "../UI/TimeStamp";
 import toDateTime from "../../helper/toDateTime";
 import LinksList from "../UI/LinksList";
+import useDidMountEffect from "../../helper/useDidMountEffect";
 
 const FeedPostView = (props) => {
   const dispatch = useAppDispatch();
@@ -43,6 +42,7 @@ const FeedPostView = (props) => {
   ]);
   const showCheering = useAppSelector((state) => state.user.showCheering);
   const cheering = props.cheering;
+  const cheeredPosts = useAppSelector((state) => state.user.cheeredPosts);
   const localId = useAppSelector((state) => state.auth.userId);
   const ExhibitUId = useAppSelector((state) => state.user.ExhibitUId);
   const posterExhibitUId = props.posterExhibitUId;
@@ -69,11 +69,13 @@ const FeedPostView = (props) => {
     TouchableCmp = TouchableNativeFeedback;
   }
 
-  useEffect(() => {
-    if (cheering.includes(ExhibitUId)) {
+  useDidMountEffect(() => {
+    if (cheeredPosts.includes(postId)) {
       setClap(true);
+    } else {
+      setClap(false);
     }
-  }, [cheering]);
+  }, [cheeredPosts]);
 
   const slideUp = () => {
     Animated.timing(slideAnim, {

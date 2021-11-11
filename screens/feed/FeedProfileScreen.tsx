@@ -21,6 +21,7 @@ const FeedProfileScreen = (props) => {
   const profilePictureUrl = useAppSelector(
     (state) => state.user.profilePictureUrl
   );
+  const exploredExhibitUId = props.navigation.getParam("exploredExhibitUId");
   const [isLoading, setIsLoading] = useState(false);
   const [userData, setUserData] = useState(
     props.navigation.getParam("userData")
@@ -46,7 +47,7 @@ const FeedProfileScreen = (props) => {
   );
 
   const [isfollowing, setIsFollowing] = useState(
-    userData.followers.includes(ExhibitUId) ? true : false
+    following.includes(exploredExhibitUId) ? true : false
   );
 
   useEffect(() => {
@@ -90,7 +91,6 @@ const FeedProfileScreen = (props) => {
     await index.search("").then((responses) => {
       responses.hits.forEach((hit) => {
         if (hit.objectID === userData.exploredExhibitUId) {
-          userData.followers = [...userData.followers, ExhibitUId];
           userData.numberOfFollowers += 1;
           setUserData(userData);
         }
@@ -115,9 +115,6 @@ const FeedProfileScreen = (props) => {
     await index.search("").then((responses) => {
       responses.hits.forEach((hit) => {
         if (hit.objectID === userData.exploredExhibitUId) {
-          userData.followers = userData.followers.filter(
-            (userId) => userId !== ExhibitUId
-          );
           userData.numberOfFollowers -= 1;
           setUserData(userData);
         }
