@@ -1,7 +1,7 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 import getBase64FromUrl from "../../../helper/getBase64FromUrl";
-import { getUserData } from "../user/user";
+import { getUserData, getUserFeed } from "../user/user";
 import { AuthenticationResponse, AUTHENTICATE, LOGOUT } from "./types";
 
 export const authenticate = (userId: string, token: string) => {
@@ -159,6 +159,12 @@ export const login = (email: string, password: string) => {
       getLoginResponse.data.idToken
     );
     await dispatch(getUserData());
+    await dispatch(
+      getUserFeed(
+        getLoginResponse.data.localId,
+        getLoginResponse.data.docData.ExhibitUId
+      )
+    );
     await dispatch(
       await authenticate(
         getLoginResponse.data.localId,
