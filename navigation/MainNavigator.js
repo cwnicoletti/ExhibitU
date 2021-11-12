@@ -444,6 +444,9 @@ const ProfileNavigator = createDrawerNavigator(
             dispatch(logout());
             dispatch(uploadToken(localId, ""));
             navData.navigation.closeRightDrawer();
+            navData.navigation.navigate("Profile");
+            navData.navigation.navigate("Notifications");
+            navData.navigation.navigate("Explore");
             navData.navigation.navigate("Feed");
             navData.navigation.navigate("SignupOrLogin");
           }}
