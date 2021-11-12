@@ -66,7 +66,6 @@ const FeedExhibitScreen = (props) => {
 
   const viewPictureHandler = (
     ExhibitUId: string,
-    exhibitId: string,
     postId: string,
     fullname: string,
     username: string,
@@ -199,7 +198,6 @@ const FeedExhibitScreen = (props) => {
             onSelect={() =>
               viewPictureHandler(
                 itemData.item.ExhibitUId,
-                itemData.item.exhibitId,
                 itemData.item.postId,
                 itemData.item.fullname,
                 itemData.item.username,
