@@ -13,7 +13,6 @@ const NotificationsPictureScreen = (props) => {
   const currentExhibitId = props.navigation.getParam("exhibitId");
   const postId = props.navigation.getParam("postId");
   const fullname = props.navigation.getParam("fullname");
-  const jobTitle = props.navigation.getParam("jobTitle");
   const username = props.navigation.getParam("username");
   const postPhotoUrl = props.navigation.getParam("postPhotoUrl");
   const [cheering, setCheering] = useState(
@@ -30,8 +29,8 @@ const NotificationsPictureScreen = (props) => {
   const [intialCheeredPosts, setIntialCheeredPosts] = useState([]);
 
   const viewCheeringHandler = () => {
-    props.navigation.navigate("ExploreCheering", {
-      ExhibitUId: posterExhibitUId,
+    props.navigation.push("NotificationsCheering", {
+      ExhibitUId: exploredUserData.exploredExhibitUId,
       exhibitId: currentExhibitId,
       postId: postId,
       numberOfCheers: numberOfCheers,
@@ -39,9 +38,9 @@ const NotificationsPictureScreen = (props) => {
   };
 
   const viewProfileHandler = () => {
-    props.navigation.push("ExploreProfile", {
+    props.navigation.push("NotificationsProfile", {
       ...exploredUserData,
-      ExhibitUId: posterExhibitUId,
+      ExhibitUId: exploredUserData.exploredExhibitUId,
     });
   };
 
@@ -116,7 +115,7 @@ const NotificationsPictureScreen = (props) => {
         links={links}
         postId={postId}
         exhibitId={currentExhibitId}
-        posterExhibitUId={posterExhibitUId}
+        posterExhibitUId={exploredUserData.exploredExhibitUId}
         showCheering={exploredUserData.showCheering}
         postDateCreated={postDateCreated}
         nameStyle={{

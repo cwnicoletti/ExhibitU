@@ -24,7 +24,7 @@ const ExplorePictureScreen = (props) => {
   const [intialCheeredPosts, setIntialCheeredPosts] = useState([]);
 
   const viewCheeringHandler = () => {
-    props.navigation.navigate("ExploreCheering", {
+    props.navigation.push("ExploreCheering", {
       ExhibitUId: exploredUserData.exploredExhibitUId,
       exhibitId: currentExhibitId,
       postId: postId,

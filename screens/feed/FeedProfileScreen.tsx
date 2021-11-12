@@ -172,7 +172,7 @@ const FeedProfileScreen = (props) => {
   }, [following]);
 
   const viewExhibitHandler = (exhibitId: string) => {
-    props.navigation.navigate("ViewFeedProfileExhibit", {
+    props.navigation.push("ViewFeedProfileExhibit", {
       exhibitId,
       userData,
     });
