@@ -15,7 +15,9 @@ const NavigationContainer = (props) => {
     }
   }, [isAuth]);
 
-  return <MainNavigator ref={navRef} />;
+  return (
+    <MainNavigator ref={navRef} style={{ flex: 1, backgroundColor: "black" }} />
+  );
 };
 
 export default NavigationContainer;
