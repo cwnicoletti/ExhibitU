@@ -29,7 +29,6 @@ const RightDrawer = (props) => {
       style={{
         ...styles.drawerContainer,
         backgroundColor: darkModeValue ? "black" : "white",
-        borderLeftColor: darkModeValue ? "white" : "black",
       }}
     >
       <View
@@ -123,7 +122,6 @@ const styles = StyleSheet.create({
   drawerContainer: {
     flex: 1,
     padding: 20,
-    borderLeftWidth: 0.3,
     justifyContent: "center",
   },
   settingsTitleContainer: {

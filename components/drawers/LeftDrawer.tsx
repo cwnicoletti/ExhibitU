@@ -20,8 +20,6 @@ const LeftDrawer = () => {
         flex: 1,
         padding: 20,
         backgroundColor: darkModeValue ? "black" : "white",
-        borderRightWidth: 0.3,
-        borderRightColor: darkModeValue ? "white" : "black",
       }}
     >
       <View
