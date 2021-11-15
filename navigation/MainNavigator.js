@@ -72,7 +72,7 @@ import MenuTitleSettings from "../components/headers/MenuTitleSettings";
 import BackTitleFillShowcasing from "../components/headers/BackTitleFillShowcasing";
 import BackTitleFollow from "../components/headers/BackTitleFollow";
 
-const FeedandViewNavigator = createStackNavigator({
+const FeedNavigator = createStackNavigator({
   Feed: {
     screen: FeedScreen,
     navigationOptions: ({ navigation }) => ({
@@ -123,60 +123,6 @@ const FeedandViewNavigator = createStackNavigator({
   },
 });
 
-const RightFeedDrawerNavigator = createDrawerNavigator(
-  {
-    "My Profile": FeedandViewNavigator,
-  },
-  {
-    drawerPosition: "left",
-    contentComponent: (navData) => {
-      return <LeftDrawer navData={navData} />;
-    },
-    getCustomActionCreators: (_route, key) => ({
-      openLeftDrawer: () => DrawerActions.openDrawer({ key }),
-      closeLeftDrawer: () => DrawerActions.closeDrawer({ key }),
-      toggleLeftDrawer: () => DrawerActions.toggleDrawer({ key }),
-    }),
-  }
-);
-
-const FeedNavigator = createDrawerNavigator(
-  {
-    RightDrawer: RightFeedDrawerNavigator,
-  },
-  {
-    drawerPosition: "right",
-    contentComponent: (navData) => {
-      const dispatch = useAppDispatch();
-      const localId = useAppSelector((state) => state.auth.userId);
-      return (
-        <RightDrawer
-          navData={navData}
-          component={FeedNavigator}
-          ShowcaseOnPress={() => {
-            navData.navigation.closeRightDrawer();
-            navData.navigation.navigate("ShowcaseSettings");
-          }}
-          updatesOnPress={() => {
-            navData.navigation.closeRightDrawer();
-            navData.navigation.navigate("Updates");
-          }}
-          logoutOnPress={() => {
-            dispatch(logout());
-            dispatch(uploadToken(localId, ""));
-            navData.navigation.navigate("SignupOrLogin");
-          }}
-        />
-      );
-    },
-    getCustomActionCreators: (_route, key) => ({
-      openRightDrawer: () => DrawerActions.openDrawer({ key }),
-      closeRightDrawer: () => DrawerActions.closeDrawer({ key }),
-      toggleRightDrawer: () => DrawerActions.toggleDrawer({ key }),
-    }),
-  }
-);
-
 const ExploreNavigator = createStackNavigator({
   Explore: {
     screen: ExploreScreen,
@@ -222,28 +168,7 @@ const ExploreNavigator = createStackNavigator({
   },
 });
 
-const RightExploreDrawerNavigator = createDrawerNavigator(
-  {
-    "My Profile": ExploreNavigator,
-  },
-  {
-    drawerPosition: "left",
-    contentComponent: (navData) => {
-      return <LeftDrawer navData={navData} />;
-    },
-    getCustomActionCreators: (_route, key) => ({
-      openLeftDrawer: () => DrawerActions.openDrawer({ key }),
-      closeLeftDrawer: () => DrawerActions.closeDrawer({ key }),
-      toggleLeftDrawer: () => DrawerActions.toggleDrawer({ key }),
-    }),
-  }
-);
-
-const ExplorerNavigator = createDrawerNavigator({
-  RightDrawer: RightExploreDrawerNavigator,
-});
-
-const NotificationNavigator = createStackNavigator({
+const NotificationsNavigator = createStackNavigator({
   Notifications: {
     screen: NotificationsScreen,
     navigationOptions: ({ navigation }) => ({
@@ -286,27 +211,6 @@ const NotificationNavigator = createStackNavigator({
       header: () => <BackTitleFill navigation={navigation} />,
     }),
   },
-});
-
-const RightNotificationsDrawerNavigator = createDrawerNavigator(
-  {
-    "My Profile": NotificationNavigator,
-  },
-  {
-    drawerPosition: "left",
-    contentComponent: (navData) => {
-      return <LeftDrawer navData={navData} />;
-    },
-    getCustomActionCreators: (_route, key) => ({
-      openLeftDrawer: () => DrawerActions.openDrawer({ key }),
-      closeLeftDrawer: () => DrawerActions.closeDrawer({ key }),
-      toggleLeftDrawer: () => DrawerActions.toggleDrawer({ key }),
-    }),
-  }
-);
-
-const NotificationsNavigator = createDrawerNavigator({
-  RightDrawer: RightNotificationsDrawerNavigator,
 });
 
 const ProfileandSettingsNavigator = createStackNavigator({
@@ -471,7 +375,7 @@ const tabScreenConfig = {
     }),
   },
   Explore: {
-    screen: ExplorerNavigator,
+    screen: ExploreNavigator,
     navigationOptions: () => ({
       tabBarComponent: ({ navigation }) => {
         return <ExploreBottomTab navigation={navigation} />;
