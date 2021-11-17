@@ -3,47 +3,47 @@ import { StyleSheet, Text, View } from "react-native";
 
 const UserTitle = (props) => {
   return (
-    <View
-      style={{
-        flexDirection: "column",
-        justifyContent: "center",
-      }}
-    >
+    <View style={styles.container}>
       <Text
         style={{
+          ...styles.fullname,
           color: props.darkModeValue ? "white" : "black",
-          fontWeight: "700",
-          marginLeft: 5,
-          fontSize: 11,
         }}
       >
         {props.fullname}
       </Text>
-      {props.jobTitle ? (
+      {props.jobTitle && (
         <Text
           style={{
+            ...styles.jobTitle,
             color: props.darkModeValue ? "white" : "black",
-            fontWeight: "500",
-            fontSize: 11,
-            marginLeft: 5,
           }}
         >
           {props.jobTitle}
         </Text>
-      ) : null}
-      <Text
-        style={{
-          color: "grey",
-          fontSize: 10,
-          marginLeft: 5,
-        }}
-      >
-        {props.username}
-      </Text>
+      )}
+      <Text style={styles.username}>{props.username}</Text>
     </View>
   );
 };
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: { flexDirection: "column", justifyContent: "center" },
+  fullname: {
+    fontWeight: "700",
+    marginLeft: 5,
+    fontSize: 11,
+  },
+  jobTitle: {
+    fontWeight: "500",
+    fontSize: 11,
+    marginLeft: 5,
+  },
+  username: {
+    color: "grey",
+    fontSize: 10,
+    marginLeft: 5,
+  },
+});
 
 export default UserTitle;

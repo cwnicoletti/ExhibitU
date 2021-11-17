@@ -31,6 +31,8 @@ import TimeStamp from "../UI/TimeStamp";
 import useDidMountEffect from "../../helper/useDidMountEffect";
 import LinksList from "../UI/LinksList";
 import UserTitle from "./FeedItem_components/UserTitle";
+import Caption from "./FeedItem_components/Caption";
+import CheerIcon from "./FeedItem_components/CheerIcon";
 
 const FeedItem = (props) => {
   const dispatch = useAppDispatch();
@@ -189,7 +191,7 @@ const FeedItem = (props) => {
   };
 
   return (
-    <View style={{ ...styles.exhibitContainer, ...props.exhibitContainer }}>
+    <View style={{ ...props.exhibitContainer }}>
       <TouchableWithoutFeedback
         onPress={() => {
           if (!processingWholeCheer) {
@@ -232,7 +234,7 @@ const FeedItem = (props) => {
                       borderRadius: 45 / 2,
                     }}
                   >
-                    {profileImageIsLoading ? (
+                    {profileImageIsLoading && (
                       <AnimatedGradient
                         style={{
                           position: "absolute",
@@ -245,7 +247,7 @@ const FeedItem = (props) => {
                         start={{ x: 0, y: 0 }}
                         end={{ x: 1, y: 0 }}
                       />
-                    ) : null}
+                    )}
                     <Image
                       style={{
                         height: 45,
@@ -272,49 +274,13 @@ const FeedItem = (props) => {
                 </View>
               </TouchableCmp>
             </View>
-            <View style={{ justifyContent: "center" }}>
-              {loadingCheer ? (
-                <ActivityIndicator
-                  size="small"
-                  color={darkModeValue ? "white" : "black"}
-                  style={{ marginRight: 10 }}
-                />
-              ) : (
-                <View>
-                  {cheering.includes(ExhibitUId) ? (
-                    <TouchableCmp onPress={unCheer}>
-                      <View>
-                        <Cheerfill
-                          style={{
-                            ...styles.clapContainer,
-                            ...props.clapContainer,
-                            flex: 1,
-                          }}
-                          height={28}
-                          width={28}
-                          fill={darkModeValue ? "white" : "black"}
-                        />
-                      </View>
-                    </TouchableCmp>
-                  ) : (
-                    <TouchableCmp onPress={unCheer}>
-                      <View>
-                        <Cheer
-                          style={{
-                            ...styles.clapContainer,
-                            ...props.clapContainer,
-                            flex: 1,
-                          }}
-                          height={28}
-                          width={28}
-                          fill={darkModeValue ? "white" : "black"}
-                        />
-                      </View>
-                    </TouchableCmp>
-                  )}
-                </View>
-              )}
-            </View>
+            <CheerIcon
+              loadingCheer={loadingCheer}
+              darkModeValue={darkModeValue}
+              ExhibitUId={ExhibitUId}
+              cheering={cheering}
+              unCheer={unCheer}
+            />
           </View>
           <ImageBackground
             style={{
@@ -333,7 +299,7 @@ const FeedItem = (props) => {
               setImageIsLoading(false);
             }}
           >
-            {showClapping ? (
+            {showClapping && (
               <Animated.View
                 style={{
                   flex: 1,
@@ -366,7 +332,7 @@ const FeedItem = (props) => {
                   />
                 )}
               </Animated.View>
-            ) : null}
+            )}
             <View style={{ flex: 1 }} />
             <TouchableCmp onPress={props.onSelect}>
               <LinearGradient
@@ -401,56 +367,57 @@ const FeedItem = (props) => {
           }}
         >
           <LinksList links={links} />
-          {currentUsersPost ? (
-            showCheering && props.numberOfCheers >= 1 ? (
-              <TouchableCmp onPress={props.onSelectCheering}>
-                <View
-                  style={{
-                    flexDirection: "row",
-                    justifyContent: "flex-start",
-                  }}
-                >
-                  <Text
+          {currentUsersPost
+            ? showCheering &&
+              props.numberOfCheers >= 1 && (
+                <TouchableCmp onPress={props.onSelectCheering}>
+                  <View
                     style={{
-                      ...styles.pictureCheerNumber,
-                      ...props.pictureCheerNumber,
+                      flexDirection: "row",
+                      justifyContent: "flex-start",
                     }}
                   >
-                    {props.numberOfCheers}
-                  </Text>
-                  <Text
-                    style={{
-                      ...styles.pictureCheerText,
-                      ...props.pictureCheerText,
-                    }}
-                  >
-                    cheering
-                  </Text>
-                </View>
-              </TouchableCmp>
-            ) : null
-          ) : props.numberOfCheers >= 1 ? (
-            <TouchableCmp onPress={props.onSelectCheering}>
-              <View style={{ flexDirection: "row" }}>
-                <Text
-                  style={{
-                    ...styles.pictureCheerNumber,
-                    ...props.pictureCheerNumber,
-                  }}
-                >
-                  {props.numberOfCheers}
-                </Text>
-                <Text
-                  style={{
-                    ...styles.pictureCheerText,
-                    ...props.pictureCheerText,
-                  }}
-                >
-                  cheering
-                </Text>
-              </View>
-            </TouchableCmp>
-          ) : null}
+                    <Text
+                      style={{
+                        ...styles.pictureCheerNumber,
+                        ...props.pictureCheerNumber,
+                      }}
+                    >
+                      {props.numberOfCheers}
+                    </Text>
+                    <Text
+                      style={{
+                        ...styles.pictureCheerText,
+                        ...props.pictureCheerText,
+                      }}
+                    >
+                      cheering
+                    </Text>
+                  </View>
+                </TouchableCmp>
+              )
+            : props.numberOfCheers >= 1 && (
+                <TouchableCmp onPress={props.onSelectCheering}>
+                  <View style={{ flexDirection: "row" }}>
+                    <Text
+                      style={{
+                        ...styles.pictureCheerNumber,
+                        ...props.pictureCheerNumber,
+                      }}
+                    >
+                      {props.numberOfCheers}
+                    </Text>
+                    <Text
+                      style={{
+                        ...styles.pictureCheerText,
+                        ...props.pictureCheerText,
+                      }}
+                    >
+                      cheering
+                    </Text>
+                  </View>
+                </TouchableCmp>
+              )}
         </View>
       ) : (
         <View
@@ -462,7 +429,7 @@ const FeedItem = (props) => {
           <View style={{ alignItems: "center" }}>
             <LinksList links={links} />
           </View>
-          {showCheering && props.numberOfCheers >= 1 ? (
+          {showCheering && props.numberOfCheers >= 1 && (
             <TouchableCmp onPress={props.onSelectCheering}>
               <View style={{ flexDirection: "row", padding: 10 }}>
                 <Text
@@ -483,16 +450,16 @@ const FeedItem = (props) => {
                 </Text>
               </View>
             </TouchableCmp>
-          ) : null}
+          )}
         </View>
       )}
-      {props.caption ? (
-        <View style={{ ...styles.captionContainer, ...props.captionContainer }}>
-          <Text style={{ ...styles.caption, ...props.captionStyle }}>
-            {props.caption}
-          </Text>
-        </View>
-      ) : null}
+      {props.caption && (
+        <Caption
+          captionContainer={props.captionContainer}
+          captionStyle={props.captionStyle}
+          caption={props.caption}
+        />
+      )}
       <TimeStamp
         postDateCreated={postDateCreated}
         dateContainer={props.dateContainer}
@@ -504,21 +471,9 @@ const FeedItem = (props) => {
 };
 
 const styles = StyleSheet.create({
-  exhibitContainer: {},
   title: {
     fontSize: 14,
     fontWeight: "bold",
-  },
-  caption: {
-    textAlign: "center",
-    marginVertical: 10,
-    marginHorizontal: "10%",
-    fontSize: 13,
-  },
-  profilePictureContainer: {
-    alignItems: "center",
-    flexDirection: "row",
-    paddingRight: 10,
   },
   titleContainer: {
     alignItems: "center",
@@ -540,12 +495,6 @@ const styles = StyleSheet.create({
     fontSize: 15,
     marginLeft: 3,
     marginTop: 5,
-  },
-  captionContainer: {
-    justifyContent: "center",
-  },
-  clapContainer: {
-    marginRight: 10,
   },
   titleTextContainer: {
     flex: 1,
