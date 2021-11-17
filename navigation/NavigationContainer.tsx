@@ -3,7 +3,7 @@ import { NavigationActions } from "react-navigation";
 import { useAppSelector } from "../hooks";
 import MainNavigator from "./MainNavigator";
 
-const NavigationContainer = (props) => {
+const NavigationContainer = () => {
   const navRef: any = useRef();
   const isAuth = useAppSelector((state) => !!state.auth.token);
 

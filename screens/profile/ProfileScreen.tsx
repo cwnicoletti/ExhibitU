@@ -13,7 +13,7 @@ import {
 } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import ExhibitItem from "../../components/exhibitItems/ExhibitItem";
-import ProfileHeader from "../../components/user/ProfileHeader";
+import ProfileHeader from "../../components/profile/ProfileHeader";
 import useDidMountEffect from "../../helper/useDidMountEffect";
 import {
   changeProfileNumberOfColumns,
@@ -64,15 +64,6 @@ const ProfileScreen = (props) => {
     )
   );
 
-  let postIds: string[] = [];
-  for (const exhibitId of Object.keys(userData.profileExhibits)) {
-    for (const postId of Object.keys(
-      userData.profileExhibits[exhibitId].exhibitPosts
-    )) {
-      postIds.push(postId);
-    }
-  }
-
   let TouchableCmp: any = TouchableOpacity;
   if (Platform.OS === "android") {
     TouchableCmp = TouchableNativeFeedback;
@@ -110,6 +101,15 @@ const ProfileScreen = (props) => {
   };
 
   const onPressChangeToColumnTwo = async () => {
+    let postIds: string[] = [];
+    for (const exhibitId of Object.keys(userData.profileExhibits)) {
+      for (const postId of Object.keys(
+        userData.profileExhibits[exhibitId].exhibitPosts
+      )) {
+        postIds.push(postId);
+      }
+    }
+
     await setIsLoadingTwoColumns(true);
     await dispatch(
       changeProfileNumberOfColumns(localId, ExhibitUId, postIds, 2)
@@ -118,6 +118,15 @@ const ProfileScreen = (props) => {
   };
 
   const onPressChangeToColumnThree = async () => {
+    let postIds: string[] = [];
+    for (const exhibitId of Object.keys(userData.profileExhibits)) {
+      for (const postId of Object.keys(
+        userData.profileExhibits[exhibitId].exhibitPosts
+      )) {
+        postIds.push(postId);
+      }
+    }
+
     await setIsLoadingThreeColumns(true);
     await dispatch(
       changeProfileNumberOfColumns(localId, ExhibitUId, postIds, 3)
@@ -126,6 +135,15 @@ const ProfileScreen = (props) => {
   };
 
   const onPressChangeToColumnFour = async () => {
+    let postIds: string[] = [];
+    for (const exhibitId of Object.keys(userData.profileExhibits)) {
+      for (const postId of Object.keys(
+        userData.profileExhibits[exhibitId].exhibitPosts
+      )) {
+        postIds.push(postId);
+      }
+    }
+
     await setIsLoadingFourColumns(true);
     await dispatch(
       changeProfileNumberOfColumns(localId, ExhibitUId, postIds, 4)

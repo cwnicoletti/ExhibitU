@@ -19,7 +19,7 @@ import linkFormReducer from "../../helper/linkFormReducer";
 import getPhotoPermissions from "../../helper/getPhotoPermissions";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import Input from "../../components/UI/Input";
-import PreviewPostItem from "../../components/user/PreviewPostItem";
+import PreviewPostItem from "../../components/profile/PreviewPostItem";
 import {
   addUserPost,
   uploadAddTempPostPicture,

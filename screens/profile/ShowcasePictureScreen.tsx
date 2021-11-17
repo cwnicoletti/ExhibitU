@@ -5,7 +5,7 @@ import {
   StyleSheet,
 } from "react-native";
 import { useAppSelector } from "../../hooks";
-import ShowcasePostView from "../../components/user/ShowcasePostView";
+import ShowcasePostView from "../../components/profile/ShowcasePostView";
 
 const ShowcasePictureScreen = (props) => {
   const darkModeValue = useAppSelector((state) => state.user.darkMode);

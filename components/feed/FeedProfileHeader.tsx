@@ -3,7 +3,7 @@ import { StyleSheet, Text, View } from "react-native";
 import { useAppSelector } from "../../hooks";
 import LinksList from "../UI/LinksList";
 import ProfileStats from "../UI/ProfileStats";
-import UserTitleShowcaseLocal from "../user/UserTitleShowcaseLocal";
+import UserTitleShowcaseLocal from "../profile/UserTitleShowcaseLocal";
 
 const FeedProfileHeader = (props) => {
   const darkModeValue = useAppSelector((state) => state.user.darkMode);
