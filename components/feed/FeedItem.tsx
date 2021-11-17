@@ -30,6 +30,7 @@ import toDateTime from "../../helper/toDateTime";
 import TimeStamp from "../UI/TimeStamp";
 import useDidMountEffect from "../../helper/useDidMountEffect";
 import LinksList from "../UI/LinksList";
+import UserTitle from "./FeedItem_components/UserTitle";
 
 const FeedItem = (props) => {
   const dispatch = useAppDispatch();
@@ -262,44 +263,12 @@ const FeedItem = (props) => {
                       }}
                     />
                   </View>
-                  <View
-                    style={{
-                      flexDirection: "column",
-                      justifyContent: "center",
-                    }}
-                  >
-                    <Text
-                      style={{
-                        color: darkModeValue ? "white" : "black",
-                        fontWeight: "700",
-                        marginLeft: 5,
-                        fontSize: 11,
-                      }}
-                    >
-                      {fullname}
-                    </Text>
-                    {jobTitle ? (
-                      <Text
-                        style={{
-                          color: darkModeValue ? "white" : "black",
-                          fontWeight: "500",
-                          fontSize: 11,
-                          marginLeft: 5,
-                        }}
-                      >
-                        {jobTitle}
-                      </Text>
-                    ) : null}
-                    <Text
-                      style={{
-                        color: "grey",
-                        fontSize: 10,
-                        marginLeft: 5,
-                      }}
-                    >
-                      {username}
-                    </Text>
-                  </View>
+                  <UserTitle
+                    darkModeValue={darkModeValue}
+                    fullname={fullname}
+                    jobTitle={jobTitle}
+                    username={username}
+                  />
                 </View>
               </TouchableCmp>
             </View>
