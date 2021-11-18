@@ -2,10 +2,8 @@ import { AntDesign } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import React, { useRef, useState } from "react";
 import {
-  ActivityIndicator,
   Animated,
   Dimensions,
-  Image,
   ImageBackground,
   Platform,
   StyleSheet,
@@ -30,9 +28,8 @@ import toDateTime from "../../helper/toDateTime";
 import TimeStamp from "../UI/TimeStamp";
 import useDidMountEffect from "../../helper/useDidMountEffect";
 import LinksList from "../UI/LinksList";
-import UserTitle from "./FeedItem_components/UserTitle";
 import Caption from "./FeedItem_components/Caption";
-import CheerIcon from "./FeedItem_components/CheerIcon";
+import FeedItemHeader from "./FeedItem_components/FeedItemHeader";
 
 const FeedItem = (props) => {
   const dispatch = useAppDispatch();
@@ -200,88 +197,36 @@ const FeedItem = (props) => {
         }}
       >
         <View>
-          {imageIsLoading ? (
-            <AnimatedGradient
-              style={{
-                height: height,
-                width: "100%",
-                position: "absolute",
-                zIndex: 3,
-              }}
-              colors={greyColorValues}
-              start={{ x: 0, y: 0 }}
-              end={{ x: 1, y: 0 }}
-            />
-          ) : null}
-          <View style={{ flexDirection: "row", ...props.nameContainer }}>
-            <View
-              style={{
-                flex: 1,
-                marginVertical: 5,
-              }}
-            >
-              <TouchableCmp onPress={props.onSelectProfile}>
-                <View
-                  style={{
-                    marginLeft: 10,
-                    flexDirection: "row",
-                  }}
-                >
-                  <View
-                    style={{
-                      height: 45,
-                      width: 45,
-                      borderRadius: 45 / 2,
-                    }}
-                  >
-                    {profileImageIsLoading && (
-                      <AnimatedGradient
-                        style={{
-                          position: "absolute",
-                          zIndex: 3,
-                          height: 45,
-                          width: 45,
-                          borderRadius: 45 / 2,
-                        }}
-                        colors={greyColorValues}
-                        start={{ x: 0, y: 0 }}
-                        end={{ x: 1, y: 0 }}
-                      />
-                    )}
-                    <Image
-                      style={{
-                        height: 45,
-                        width: 45,
-                        borderRadius: 45 / 2,
-                        ...props.profileImageStyle,
-                      }}
-                      source={
-                        props.profileImageSource
-                          ? { uri: props.profileImageSource }
-                          : require("../../assets/default-profile-icon.jpg")
-                      }
-                      onLoadEnd={() => {
-                        setProfileImageIsLoading(false);
-                      }}
-                    />
-                  </View>
-                  <UserTitle
-                    darkModeValue={darkModeValue}
-                    fullname={fullname}
-                    jobTitle={jobTitle}
-                    username={username}
-                  />
-                </View>
-              </TouchableCmp>
+          <FeedItemHeader
+            profileImageIsLoading={profileImageIsLoading}
+            greyColorValues={greyColorValues}
+            profileImageStyle={props.profileImageStyle}
+            profileImageSource={props.profileImageSource}
+            onSelectProfile={props.onSelectProfile}
+            setProfileImageIsLoading={setProfileImageIsLoading}
+            darkModeValue={darkModeValue}
+            fullname={fullname}
+            jobTitle={jobTitle}
+            username={username}
+            loadingCheer={loadingCheer}
+            ExhibitUId={ExhibitUId}
+            cheering={cheering}
+            unCheer={unCheer}
+          />
+          {imageIsLoading && (
+            <View>
+              <AnimatedGradient
+                style={{
+                  height: height,
+                  width: "100%",
+                  position: "absolute",
+                }}
+                colors={greyColorValues}
+                start={{ x: 0, y: 0 }}
+                end={{ x: 1, y: 0 }}
+              />
             </View>
-            <CheerIcon
-              loadingCheer={loadingCheer}
-              darkModeValue={darkModeValue}
-              ExhibitUId={ExhibitUId}
-              cheering={cheering}
-              unCheer={unCheer}
-            />
-          </View>
+          )}
           <ImageBackground
             style={{
               height: height,
@@ -475,33 +420,39 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: "bold",
   },
+
   titleContainer: {
     alignItems: "center",
     flexDirection: "row",
     padding: 10,
   },
+
   pictureCheerContainer: {
     width: "100%",
     paddingVertical: 5,
     paddingHorizontal: 15,
   },
+
   pictureCheerNumber: {
     fontWeight: "bold",
     fontSize: 15,
     marginTop: 5,
     marginLeft: 3,
   },
+
   pictureCheerText: {
     fontSize: 15,
     marginLeft: 3,
     marginTop: 5,
   },
+
   titleTextContainer: {
     flex: 1,
     marginLeft: 5,
     justifyContent: "center",
     alignItems: "center",
   },
+
   balance: {
     width: 24,
     height: "100%",

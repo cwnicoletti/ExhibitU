@@ -15,6 +15,7 @@ const styles = StyleSheet.create({
   container: {
     justifyContent: "center",
   },
+
   caption: {
     textAlign: "center",
     marginVertical: 10,

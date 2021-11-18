@@ -7,8 +7,8 @@ import {
   TouchableNativeFeedback,
   Platform,
 } from "react-native";
-import Cheerfill from "../../../assets/Icons/clap-fill.svg";
-import Cheer from "../../../assets/Icons/clap.svg";
+import Cheerfill from "../../../../assets/Icons/clap-fill.svg";
+import Cheer from "../../../../assets/Icons/clap.svg";
 
 const CheerIcon = (props) => {
   let TouchableCmp: any = TouchableOpacity;
@@ -59,8 +59,15 @@ const styles = StyleSheet.create({
   container: {
     justifyContent: "center",
   },
-  activityContainer: { marginRight: 15 },
-  clapContainer: { flex: 1, marginRight: 10 },
+
+  activityContainer: {
+    marginRight: 15,
+  },
+
+  clapContainer: {
+    flex: 1,
+    marginRight: 10,
+  },
 });
 
 export default CheerIcon;

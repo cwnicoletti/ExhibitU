@@ -28,17 +28,23 @@ const UserTitle = (props) => {
 };
 
 const styles = StyleSheet.create({
-  container: { flexDirection: "column", justifyContent: "center" },
+  container: {
+    flexDirection: "column",
+    justifyContent: "center",
+  },
+
   fullname: {
     fontWeight: "700",
     marginLeft: 5,
     fontSize: 11,
   },
+
   jobTitle: {
     fontWeight: "500",
     fontSize: 11,
     marginLeft: 5,
   },
+
   username: {
     color: "grey",
     fontSize: 10,
