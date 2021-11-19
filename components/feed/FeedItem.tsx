@@ -1,5 +1,3 @@
-import { AntDesign } from "@expo/vector-icons";
-import { LinearGradient } from "expo-linear-gradient";
 import React, { useRef, useState } from "react";
 import {
   Animated,
@@ -14,8 +12,6 @@ import {
   View,
 } from "react-native";
 import { useAppDispatch, useAppSelector } from "../../hooks";
-import Cheerfill from "../../assets/Icons/clap-fill.svg";
-import Cheer from "../../assets/Icons/clap.svg";
 import {
   cheerOwnFeedPost,
   cheerPost,
@@ -30,6 +26,8 @@ import useDidMountEffect from "../../helper/useDidMountEffect";
 import LinksList from "../UI/LinksList";
 import Caption from "./FeedItem_components/Caption";
 import FeedItemHeader from "./FeedItem_components/FeedItemHeader";
+import FeedItemExhibitButton from "./FeedItem_components/FeedItemExhibitButton";
+import DoubleTappedClapAnim from "./FeedItem_components/DoubleTappedClapAnim";
 
 const FeedItem = (props) => {
   const dispatch = useAppDispatch();
@@ -245,62 +243,25 @@ const FeedItem = (props) => {
             }}
           >
             {showClapping && (
-              <Animated.View
-                style={{
-                  flex: 1,
-                  justifyContent: "center",
-                  alignItems: "center",
-                  opacity: fadeAnim,
-                  transform: [{ translateY: slideAnim }],
-                }}
-              >
-                {clap ? (
-                  <Cheerfill
-                    style={{
-                      marginTop: height,
-                      ...props.clapContainer,
-                    }}
-                    height={height / 5}
-                    width={width / 5}
-                    fill={darkModeValue ? "white" : "black"}
-                  />
-                ) : (
-                  <Cheer
-                    style={{
-                      marginTop: height,
-                      ...props.clapContainer,
-                      transform: [{ rotate: "5deg" }],
-                    }}
-                    height={height / 5}
-                    width={width / 5}
-                    fill={darkModeValue ? "white" : "black"}
-                  />
-                )}
-              </Animated.View>
+              <DoubleTappedClapAnim
+                darkModeValue={darkModeValue}
+                clap={clap}
+                fadeAnim={fadeAnim}
+                slideAnim={slideAnim}
+                height={height}
+                width={width}
+                clapContainer={props.clapContainer}
+              />
             )}
             <View style={{ flex: 1 }} />
-            <TouchableCmp onPress={props.onSelect}>
-              <LinearGradient
-                style={{
-                  ...styles.titleContainer,
-                  ...props.titleContainer,
-                }}
-                colors={props.exhibitTitleColors}
-              >
-                <View style={styles.balance} />
-                <View style={styles.titleTextContainer}>
-                  <Text style={{ ...styles.title, ...props.titleStyle }}>
-                    {props.exhibitTitle}
-                  </Text>
-                </View>
-                <AntDesign
-                  style={{ marginRight: 5 }}
-                  name="arrowright"
-                  size={28}
-                  color={props.arrowColor}
-                />
-              </LinearGradient>
-            </TouchableCmp>
+            <FeedItemExhibitButton
+              exhibitTitleColors={props.exhibitTitleColors}
+              exhibitTitle={props.exhibitTitle}
+              arrowColor={props.arrowColor}
+              titleContainer={props.titleContainer}
+              titleStyle={props.titleStyle}
+              onSelect={props.onSelect}
+            />
           </ImageBackground>
         </View>
       </TouchableWithoutFeedback>
@@ -416,17 +377,6 @@ const FeedItem = (props) => {
 };
 
 const styles = StyleSheet.create({
-  title: {
-    fontSize: 14,
-    fontWeight: "bold",
-  },
-
-  titleContainer: {
-    alignItems: "center",
-    flexDirection: "row",
-    padding: 10,
-  },
-
   pictureCheerContainer: {
     width: "100%",
     paddingVertical: 5,
@@ -444,18 +394,6 @@ const styles = StyleSheet.create({
     fontSize: 15,
     marginLeft: 3,
     marginTop: 5,
-  },
-
-  titleTextContainer: {
-    flex: 1,
-    marginLeft: 5,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-
-  balance: {
-    width: 24,
-    height: "100%",
   },
 });
 

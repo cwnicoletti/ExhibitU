@@ -17,20 +17,10 @@ const FeedItemHeader = (props) => {
   }
 
   return (
-    <View style={{ flexDirection: "row", ...props.nameContainer }}>
-      <View
-        style={{
-          flex: 1,
-          marginVertical: 5,
-        }}
-      >
+    <View style={{ ...styles.container, ...props.nameContainer }}>
+      <View style={styles.profileContentContainer}>
         <TouchableCmp onPress={props.onSelectProfile}>
-          <View
-            style={{
-              marginLeft: 10,
-              flexDirection: "row",
-            }}
-          >
+          <View style={styles.profileContent}>
             <ProfilePicture
               profileImageIsLoading={props.profileImageIsLoading}
               greyColorValues={props.greyColorValues}
@@ -60,14 +50,17 @@ const FeedItemHeader = (props) => {
 
 const styles = StyleSheet.create({
   container: {
-    justifyContent: "center",
+    flexDirection: "row",
   },
 
-  caption: {
-    textAlign: "center",
-    marginVertical: 10,
-    marginHorizontal: "10%",
-    fontSize: 13,
+  profileContentContainer: {
+    flex: 1,
+    marginVertical: 5,
+  },
+
+  profileContent: {
+    marginLeft: 10,
+    flexDirection: "row",
   },
 });
 
