@@ -12,7 +12,7 @@ import {
 } from "react-native";
 import { SearchBar } from "react-native-elements";
 import { useAppSelector } from "../../hooks";
-import ExploreCard from "../../components/explore/ExploreCard";
+import ExploreCard from "../../components/screen_specific/explore/ExploreCard";
 import useDidMountEffect from "../../helper/useDidMountEffect";
 import getExlusiveBothSetsDifference from "../../helper/getExlusiveBothSetsDifference";
 

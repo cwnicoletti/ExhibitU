@@ -2,7 +2,7 @@ import { AntDesign } from "@expo/vector-icons";
 import React, { useEffect, useRef, useState } from "react";
 import { FlatList, RefreshControl, StyleSheet, Text, View } from "react-native";
 import { useAppDispatch, useAppSelector } from "../../hooks";
-import FeedItem from "../../components/feed/FeedItem";
+import FeedItem from "../../components/screen_specific/feed/FeedItem";
 import useDidMountEffect from "../../helper/useDidMountEffect";
 import { getUserFeed, offScreen } from "../../store/actions/user/user";
 

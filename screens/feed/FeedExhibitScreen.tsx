@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { FlatList, Platform, StyleSheet, View } from "react-native";
 import { useAppSelector } from "../../hooks";
-import FeedExhibitHeader from "../../components/feed/FeedExhibitHeader";
+import FeedExhibitHeader from "../../components/screen_specific/feed/FeedExhibitHeader";
 import useDidMountEffect from "../../helper/useDidMountEffect";
-import ExhibitPictures from "../../components/UI/ExhibitPictures";
+import ExhibitPictures from "../../components/UI_general/ExhibitPictures";
 
 const FeedExhibitScreen = (props) => {
   const darkModeValue = useAppSelector((state) => state.user.darkMode);

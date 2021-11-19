@@ -3,7 +3,7 @@ import { ScrollView, StyleSheet } from "react-native";
 import { useAppSelector } from "../../hooks";
 import useDidMountEffect from "../../helper/useDidMountEffect";
 import getExlusiveBothSetsDifference from "../../helper/getExlusiveBothSetsDifference";
-import FeedPostView from "../../components/feed/FeedPostView";
+import FeedPostView from "../../components/screen_specific/feed/FeedPostView";
 
 const FeedCommentsScreen = (props) => {
   const darkModeValue = useAppSelector((state) => state.user.darkMode);

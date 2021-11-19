@@ -9,7 +9,7 @@ import {
   View,
 } from "react-native";
 import { Feather } from "@expo/vector-icons";
-import MainHeaderTitle from "../../components/UI/MainHeaderTitle";
+import MainHeaderTitle from "../../components/UI_general/MainHeaderTitle";
 import getPhotoPermissions from "../../helper/getPhotoPermissions";
 
 const PhotoPermissionsScreen = (props) => {

@@ -7,9 +7,9 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { useAppSelector } from "../../hooks";
-import LinksList from "../UI/LinksList";
-import ProfileStats from "../UI/ProfileStats";
+import { useAppSelector } from "../../../hooks";
+import LinksList from "../../UI_general/LinksList";
+import ProfileStats from "../../UI_general/ProfileStats";
 import UserTitleShowcaseLocal from "./UserTitleShowcaseLocal";
 
 const ExhibitUHeader = (props) => {

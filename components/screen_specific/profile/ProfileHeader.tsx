@@ -9,9 +9,9 @@ import {
   View,
   ActivityIndicator,
 } from "react-native";
-import { useAppSelector } from "../../hooks";
-import LinksList from "../UI/LinksList";
-import ProfileStats from "../UI/ProfileStats";
+import { useAppSelector } from "../../../hooks";
+import LinksList from "../../UI_general/LinksList";
+import ProfileStats from "../../UI_general/ProfileStats";
 import UserTitleEdit from "./UserTitleEdit";
 
 const Profile = (props) => {

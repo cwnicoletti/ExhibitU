@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Image, StyleSheet, Text, View } from "react-native";
-import { useAppSelector } from "../../hooks";
-import { AnimatedGradient } from "../custom/AnimatedGradient/AnimatedGradient";
-import LinksList from "../UI/LinksList";
+import { useAppSelector } from "../../../hooks";
+import { AnimatedGradient } from "../../custom/AnimatedGradient/AnimatedGradient";
+import LinksList from "../../UI_general/LinksList";
 
 const FeedExhibitHeader = (props) => {
   const darkModeValue = useAppSelector((state) => state.user.darkMode);

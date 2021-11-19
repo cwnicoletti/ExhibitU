@@ -1,4 +1,4 @@
-import { AnimatedGradient } from "../custom/AnimatedGradient/AnimatedGradient";
+import { AnimatedGradient } from "../../custom/AnimatedGradient/AnimatedGradient";
 import React, { useState } from "react";
 import {
   Dimensions,
@@ -11,10 +11,10 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { useAppSelector } from "../../hooks";
-import toDateTime from "../../helper/toDateTime";
-import LinksList from "../UI/LinksList";
-import useDidMountEffect from "../../helper/useDidMountEffect";
+import { useAppSelector } from "../../../hooks";
+import toDateTime from "../../../helper/toDateTime";
+import LinksList from "../../UI_general/LinksList";
+import useDidMountEffect from "../../../helper/useDidMountEffect";
 import Cheer from "../../assets/Icons/clap.svg";
 
 const PreviewPostItem = (props) => {

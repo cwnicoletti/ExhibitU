@@ -9,9 +9,9 @@ import {
   View,
   ActivityIndicator,
 } from "react-native";
-import { useAppSelector } from "../../hooks";
-import EditButton from "../UI/EditButton";
-import LinksList from "../UI/LinksList";
+import { useAppSelector } from "../../../hooks";
+import EditButton from "../../UI_general/EditButton";
+import LinksList from "../../UI_general/LinksList";
 
 const ExhibitHeader = (props) => {
   const darkModeValue = useAppSelector((state) => state.user.darkMode);

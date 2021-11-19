@@ -5,8 +5,8 @@ import { useAppSelector } from "../../hooks";
 import Menu from "./headers_components/Menu";
 import Settings from "./headers_components/Settings";
 import Title from "./headers_components/Title";
-import FeatherHeaderButton from "../UI/header_buttons/FeatherHeaderButton";
-import IoniconsHeaderButton from "../UI/header_buttons/IoniconsHeaderButton";
+import FeatherHeaderButton from "../UI_general/header_buttons/FeatherHeaderButton";
+import IoniconsHeaderButton from "../UI_general/header_buttons/IoniconsHeaderButton";
 
 const MenuTitleSettings = ({ navigation }) => {
   const darkModeValue = useAppSelector((state) => state.user.darkMode);

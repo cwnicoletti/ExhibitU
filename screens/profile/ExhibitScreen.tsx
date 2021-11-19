@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { FlatList, Platform, StyleSheet, View } from "react-native";
 import { useAppDispatch, useAppSelector } from "../../hooks";
-import ExhibitHeader from "../../components/exhibits/ExhibitHeader";
-import ExhibitPictures from "../../components/UI/ExhibitPictures";
+import ExhibitHeader from "../../components/screen_specific/profile/ExhibitHeader";
+import ExhibitPictures from "../../components/UI_general/ExhibitPictures";
 import { changeExhibitNumberOfColumns } from "../../store/actions/user/user";
 
 const ExhibitScreen = (props) => {

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Image, StyleSheet, Text, View } from "react-native";
-import { AnimatedGradient } from "../custom/AnimatedGradient/AnimatedGradient";
+import { AnimatedGradient } from "../../custom/AnimatedGradient/AnimatedGradient";
 
 const ExploreUserTitle = (props) => {
   const sourceImg = props.imgSource

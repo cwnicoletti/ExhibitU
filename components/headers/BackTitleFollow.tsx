@@ -5,8 +5,8 @@ import { useAppSelector } from "../../hooks";
 import Back from "./headers_components/Back";
 import Follow from "./headers_components/Follow";
 import Title from "./headers_components/Title";
-import IoniconsHeaderButton from "../UI/header_buttons/IoniconsHeaderButton";
-import SimpleLineIconsHeaderButton from "../../components/UI/header_buttons/SimpleLineIconsHeaderButton";
+import IoniconsHeaderButton from "../UI_general/header_buttons/IoniconsHeaderButton";
+import SimpleLineIconsHeaderButton from "../UI_general/header_buttons/SimpleLineIconsHeaderButton";
 
 const BackTitleFollow = ({ navigation }) => {
   const darkModeValue = useAppSelector((state) => state.user.darkMode);

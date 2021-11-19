@@ -12,11 +12,11 @@ import {
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import { useAppDispatch, useAppSelector } from "../../hooks";
-import Input from "../../components/UI/Input";
-import IoniconsHeaderButton from "../../components/UI/header_buttons/IoniconsHeaderButton";
+import Input from "../../components/UI_general/Input";
+import IoniconsHeaderButton from "../../components/UI_general/header_buttons/IoniconsHeaderButton";
 import { Feather } from "@expo/vector-icons";
 import { setUsername } from "../../store/actions/signup/signup";
-import MainHeaderTitle from "../../components/UI/MainHeaderTitle";
+import MainHeaderTitle from "../../components/UI_general/MainHeaderTitle";
 
 const FORM_INPUT_UPDATE = "FORM_INPUT_UPDATE";
 

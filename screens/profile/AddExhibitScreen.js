@@ -20,12 +20,12 @@ import parseLinkValuesFromInputValues from "../../helper/parseLinkValuesFromInpu
 import linkFormReducer from "../../helper/linkFormReducer";
 import updateArrayOnRemove from "../../helper/updateArrayOnRemove";
 import getPhotoPermissions from "../../helper/getPhotoPermissions";
-import Input from "../../components/UI/Input";
+import Input from "../../components/UI_general/Input";
 import {
   uploadAddTempExhibitCoverPicture,
   uploadNewExhibit,
 } from "../../store/actions/user/user";
-import LinksList from "../../components/UI/LinksList";
+import LinksList from "../../components/UI_general/LinksList";
 
 const FORM_INPUT_UPDATE = "FORM_INPUT_UPDATE";
 const FORM_INPUT_LINKS_UPDATE = "FORM_INPUT_LINKS_UPDATE";

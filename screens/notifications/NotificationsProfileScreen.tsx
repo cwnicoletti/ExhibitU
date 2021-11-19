@@ -7,8 +7,8 @@ import {
   View,
 } from "react-native";
 import { useAppDispatch, useAppSelector } from "../../hooks";
-import ExploreProfileHeader from "../../components/explore/ExploreProfileHeader";
-import ExhibitItem from "../../components/exhibitItems/ExhibitItem";
+import ExploreProfileHeader from "../../components/screen_specific/explore/ExploreProfileHeader";
+import ExhibitItem from "../../components/UI_general/ExhibitItem";
 import {
   sendFollowNotification,
   followUser,

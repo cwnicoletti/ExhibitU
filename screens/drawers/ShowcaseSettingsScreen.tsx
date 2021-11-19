@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { StyleSheet, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { useAppDispatch, useAppSelector } from "../../hooks";
-import FilterSwitch from "../../components/UI/FilterSwitch";
+import FilterSwitch from "../../components/UI_general/FilterSwitch";
 import {
   setHideExhibits,
   setHideFollowers,

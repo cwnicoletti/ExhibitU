@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { FlatList, Platform, StyleSheet, View } from "react-native";
 import { useAppSelector } from "../../hooks";
-import ExploreExhibitHeader from "../../components/explore/ExploreExhibitHeader";
-import ExhibitPictures from "../../components/UI/ExhibitPictures";
+import ExploreExhibitHeader from "../../components/screen_specific/explore/ExploreExhibitHeader";
+import ExhibitPictures from "../../components/UI_general/ExhibitPictures";
 import useDidMountEffect from "../../helper/useDidMountEffect";
 import getExlusiveBothSetsDifference from "../../helper/getExlusiveBothSetsDifference";
 

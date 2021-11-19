@@ -11,19 +11,19 @@ import {
   TouchableWithoutFeedback,
   View,
 } from "react-native";
-import { useAppDispatch, useAppSelector } from "../../hooks";
+import { useAppDispatch, useAppSelector } from "../../../hooks";
 import {
   cheerOwnFeedPost,
   cheerPost,
   uncheerOwnFeedPost,
   uncheerPost,
   sendNotification,
-} from "../../store/actions/user/user";
-import { AnimatedGradient } from "../custom/AnimatedGradient/AnimatedGradient";
-import toDateTime from "../../helper/toDateTime";
-import TimeStamp from "../UI/TimeStamp";
-import useDidMountEffect from "../../helper/useDidMountEffect";
-import LinksList from "../UI/LinksList";
+} from "../../../store/actions/user/user";
+import { AnimatedGradient } from "../../custom/AnimatedGradient/AnimatedGradient";
+import toDateTime from "../../../helper/toDateTime";
+import TimeStamp from "../../UI_general/TimeStamp";
+import useDidMountEffect from "../../../helper/useDidMountEffect";
+import LinksList from "../../UI_general/LinksList";
 import Caption from "./FeedItem_components/Caption";
 import FeedItemHeader from "./FeedItem_components/FeedItemHeader";
 import FeedItemExhibitButton from "./FeedItem_components/FeedItemExhibitButton";

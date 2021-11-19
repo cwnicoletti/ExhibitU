@@ -18,8 +18,8 @@ import updateArrayOnRemove from "../../helper/updateArrayOnRemove";
 import linkFormReducer from "../../helper/linkFormReducer";
 import getPhotoPermissions from "../../helper/getPhotoPermissions";
 import { useAppDispatch, useAppSelector } from "../../hooks";
-import Input from "../../components/UI/Input";
-import PreviewPostItem from "../../components/profile/PreviewPostItem";
+import Input from "../../components/UI_general/Input";
+import PreviewPostItem from "../../components/screen_specific/profile/PreviewPostItem";
 import {
   addUserPost,
   uploadAddTempPostPicture,

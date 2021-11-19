@@ -10,9 +10,9 @@ import {
 } from "react-native";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import { useAppDispatch, useAppSelector } from "../../hooks";
-import IoniconsHeaderButton from "../../components/UI/header_buttons/IoniconsHeaderButton";
+import IoniconsHeaderButton from "../../components/UI_general/header_buttons/IoniconsHeaderButton";
 import { Feather } from "@expo/vector-icons";
-import MainHeaderTitle from "../../components/UI/MainHeaderTitle";
+import MainHeaderTitle from "../../components/UI_general/MainHeaderTitle";
 import uploadToken from "../../helper/uploadToken";
 import { setGettingPermissions } from "../../store/actions/signup/signup";
 

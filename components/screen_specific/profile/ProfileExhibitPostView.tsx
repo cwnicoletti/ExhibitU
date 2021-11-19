@@ -1,5 +1,6 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import {
+  ActivityIndicator,
   Animated,
   Dimensions,
   ImageBackground,
@@ -9,50 +10,45 @@ import {
   TouchableNativeFeedback,
   TouchableOpacity,
   TouchableWithoutFeedback,
-  ActivityIndicator,
   View,
   Image,
 } from "react-native";
-import { useAppDispatch, useAppSelector } from "../../hooks";
+import { useAppDispatch, useAppSelector } from "../../../hooks";
+import { AnimatedGradient } from "../../custom/AnimatedGradient/AnimatedGradient";
 import Cheerfill from "../../assets/Icons/clap-fill.svg";
 import Cheer from "../../assets/Icons/clap.svg";
-import TimeStamp from "../UI/TimeStamp";
 import {
-  cheerOwnFeedPost,
-  cheerPost,
-  uncheerOwnFeedPost,
-  uncheerPost,
-} from "../../store/actions/user/user";
-import { AnimatedGradient } from "../custom/AnimatedGradient/AnimatedGradient";
-import useDidMountEffect from "../../helper/useDidMountEffect";
-import toDateTime from "../../helper/toDateTime";
-import LinksList from "../UI/LinksList";
+  cheerOwnProfilePost,
+  uncheerOwnProfilePost,
+} from "../../../store/actions/user/user";
+import toDateTime from "../../../helper/toDateTime";
+import TimeStamp from "../../UI_general/TimeStamp";
+import useDidMountEffect from "../../../helper/useDidMountEffect";
+import LinksList from "../../UI_general/LinksList";
 
-const ExplorePostView = (props) => {
+const ProfileExhibitPostView = (props) => {
   const dispatch = useAppDispatch();
-  const [processingWholeCheer, setProcessingWholeCheer] = useState(false);
-  const [loadingCheer, setLoadingCheer] = useState(false);
+  const showCheering = useAppSelector((state) => state.user.showCheering);
   const [showClapping, setShowClapping] = useState(false);
+  const [loadingCheer, setLoadingCheer] = useState(false);
+  const numberOfCheers = props.numberOfCheers;
+  const [processingWholeCheer, setProcessingWholeCheer] = useState(false);
   const [clap, setClap] = useState(false);
-  const [imageIsLoading, setImageIsLoading] = useState(true);
-  const [profileImageIsLoading, setProfileImageIsLoading] = useState(true);
   const [greyColorValues, setGreyColorValues] = useState([
     "rgba(50,50,50,1)",
     "rgba(0,0,0,1)",
   ]);
-  const showCheering = useAppSelector((state) => state.user.showCheering);
-  const cheering = props.cheering;
+  const [profileImageIsLoading, setProfileImageIsLoading] = useState(true);
+  const ExhibitUId = useAppSelector((state) => state.user.ExhibitUId);
   const cheeredPosts = useAppSelector((state) => state.user.cheeredPosts);
   const localId = useAppSelector((state) => state.auth.userId);
-  const ExhibitUId = useAppSelector((state) => state.user.ExhibitUId);
-  const posterExhibitUId = props.posterExhibitUId;
-  const currentUsersPost = ExhibitUId === posterExhibitUId ? true : false;
-  const links = props.links ? Object.values(props.links) : {};
+  const posterExhibitUId = useAppSelector((state) => state.user.ExhibitUId);
+  const links = Object.values(props.links);
   const postId = props.postId;
   const exhibitId = props.exhibitId;
   const fullname = props.fullname;
-  const jobTitle = props.jobTitle;
   const username = props.username;
+  const jobTitle = props.jobTitle;
   const postDateCreated = toDateTime(props.postDateCreated);
 
   const fadeAnim = useRef(new Animated.Value(0)).current;
@@ -64,6 +60,7 @@ const ExplorePostView = (props) => {
   let imageHeight = 500 / scaleFactor;
   const photoHeight = imageHeight;
 
+  let secondnow = null;
   let TouchableCmp: any = TouchableOpacity;
   if (Platform.OS === "android") {
     TouchableCmp = TouchableNativeFeedback;
@@ -79,7 +76,7 @@ const ExplorePostView = (props) => {
 
   useDidMountEffect(() => {
     setGreyColorValues(["rgba(50,50,50,1)", "rgba(0,0,0,1)"]);
-  }, [imageIsLoading, profileImageIsLoading]);
+  }, [profileImageIsLoading]);
 
   const slideUp = () => {
     Animated.timing(slideAnim, {
@@ -120,7 +117,6 @@ const ExplorePostView = (props) => {
     }
   };
 
-  let secondnow = null;
   const handleToubleTap = async () => {
     const now = Date.now();
     if (now - secondnow < 200) {
@@ -137,10 +133,10 @@ const ExplorePostView = (props) => {
         await setShowClapping(false);
       }, 1500);
 
-      if (!cheering.includes(ExhibitUId)) {
+      if (!cheeredPosts.includes(postId)) {
         await setLoadingCheer(true);
         await dispatch(
-          await cheerPost(
+          cheerOwnProfilePost(
             localId,
             ExhibitUId,
             exhibitId,
@@ -148,9 +144,6 @@ const ExplorePostView = (props) => {
             posterExhibitUId
           )
         );
-        if (currentUsersPost) {
-          await dispatch(await cheerOwnFeedPost(ExhibitUId, exhibitId, postId));
-        }
         await setLoadingCheer(false);
       }
       await setProcessingWholeCheer(false);
@@ -160,10 +153,10 @@ const ExplorePostView = (props) => {
   };
 
   const unCheer = async () => {
-    if (cheering.includes(ExhibitUId)) {
+    if (cheeredPosts.includes(postId)) {
       await setLoadingCheer(true);
       await dispatch(
-        await uncheerPost(
+        uncheerOwnProfilePost(
           localId,
           ExhibitUId,
           exhibitId,
@@ -171,15 +164,12 @@ const ExplorePostView = (props) => {
           posterExhibitUId
         )
       );
-      if (currentUsersPost) {
-        await dispatch(await uncheerOwnFeedPost(ExhibitUId, exhibitId, postId));
-      }
       await setLoadingCheer(false);
     }
   };
 
   return (
-    <View style={{ ...styles.exhibit, ...props.exhibitContainer }}>
+    <View style={{ ...props.exhibitContainer }}>
       <TouchableWithoutFeedback
         onPress={() => {
           if (!processingWholeCheer) {
@@ -203,9 +193,9 @@ const ExplorePostView = (props) => {
               >
                 <View
                   style={{
-                    height: 50,
-                    width: 50,
-                    borderRadius: 50 / 2,
+                    height: 45,
+                    width: 45,
+                    borderRadius: 45 / 2,
                   }}
                 >
                   {profileImageIsLoading ? (
@@ -288,10 +278,10 @@ const ExplorePostView = (props) => {
                 />
               ) : (
                 <View>
-                  {cheering.includes(ExhibitUId) ? (
+                  {!cheeredPosts.includes(postId) ? (
                     <TouchableCmp onPress={unCheer}>
                       <View>
-                        <Cheerfill
+                        <Cheer
                           style={{
                             ...styles.clapContainer,
                             ...props.clapContainer,
@@ -306,7 +296,7 @@ const ExplorePostView = (props) => {
                   ) : (
                     <TouchableCmp onPress={unCheer}>
                       <View>
-                        <Cheer
+                        <Cheerfill
                           style={{
                             ...styles.clapContainer,
                             ...props.clapContainer,
@@ -323,28 +313,16 @@ const ExplorePostView = (props) => {
               )}
             </View>
           </View>
-          {imageIsLoading ? (
-            <AnimatedGradient
-              style={{
-                height: photoHeight,
-                width: "100%",
-                position: "absolute",
-                zIndex: 3,
-              }}
-              colors={greyColorValues}
-              start={{ x: 0, y: 0 }}
-              end={{ x: 1, y: 0 }}
-            />
-          ) : null}
           <ImageBackground
             style={{
               height: photoHeight,
-              width: photoWidth,
+              width: "100%",
             }}
-            source={props.image}
-            onLoadEnd={() => {
-              setImageIsLoading(false);
-            }}
+            source={
+              props.image
+                ? { uri: props.image }
+                : require("../../assets/default-post-icon.png")
+            }
           >
             {showClapping ? (
               <Animated.View
@@ -383,26 +361,61 @@ const ExplorePostView = (props) => {
           </ImageBackground>
         </View>
       </TouchableWithoutFeedback>
-      <View
-        style={{
-          ...styles.pictureCheerContainer,
-          ...props.pictureCheerContainer,
-        }}
-      >
-        <View style={{ alignItems: "center" }}>
+      {links.length <= 1 ? (
+        <View
+          style={{
+            ...styles.pictureCheerContainer,
+            ...props.pictureCheerContainer,
+          }}
+        >
           <LinksList links={links} />
+          {showCheering ? (
+            numberOfCheers >= 1 ? (
+              <TouchableCmp onPress={props.onSelectCheering}>
+                <View
+                  style={{ flexDirection: "row", justifyContent: "flex-start" }}
+                >
+                  <Text
+                    style={{
+                      ...styles.pictureCheerNumber,
+                      ...props.pictureCheerNumber,
+                    }}
+                  >
+                    {numberOfCheers}
+                  </Text>
+                  <Text
+                    style={{
+                      ...styles.pictureCheerText,
+                      ...props.pictureCheerText,
+                    }}
+                  >
+                    cheering
+                  </Text>
+                </View>
+              </TouchableCmp>
+            ) : null
+          ) : null}
         </View>
-        {showCheering ? (
-          props.numberOfCheers >= 1 ? (
+      ) : (
+        <View
+          style={{
+            ...styles.pictureCheerContainer,
+            ...props.pictureCheerContainer,
+          }}
+        >
+          <View style={{ alignItems: "center" }}>
+            <LinksList links={links} />
+          </View>
+          {showCheering && numberOfCheers >= 1 ? (
             <TouchableCmp onPress={props.onSelectCheering}>
-              <View style={{ flexDirection: "row" }}>
+              <View style={{ flexDirection: "row", padding: 10 }}>
                 <Text
                   style={{
                     ...styles.pictureCheerNumber,
                     ...props.pictureCheerNumber,
                   }}
                 >
-                  {props.numberOfCheers}
+                  {numberOfCheers}
                 </Text>
                 <Text
                   style={{
@@ -414,9 +427,9 @@ const ExplorePostView = (props) => {
                 </Text>
               </View>
             </TouchableCmp>
-          ) : null
-        ) : null}
-      </View>
+          ) : null}
+        </View>
+      )}
       <View style={{ ...styles.captionContainer, ...props.captionContainer }}>
         <Text
           style={{
@@ -437,24 +450,26 @@ const ExplorePostView = (props) => {
 };
 
 const styles = StyleSheet.create({
-  exhibit: {},
-  title: {
-    fontSize: 14,
-    fontWeight: "bold",
-  },
-  caption: {
-    textAlign: "center",
+  date: {
     margin: 10,
     fontSize: 13,
   },
+  caption: {
+    textAlign: "center",
+    marginVertical: 10,
+    marginHorizontal: "10%",
+    fontSize: 13,
+  },
   pictureCheerContainer: {
-    padding: 10,
+    width: "100%",
+    paddingVertical: 5,
+    paddingHorizontal: 15,
   },
   pictureCheerNumber: {
     fontWeight: "bold",
     fontSize: 15,
-    marginLeft: 5,
     marginTop: 5,
+    marginLeft: 3,
   },
   pictureCheerText: {
     fontSize: 15,
@@ -465,8 +480,11 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   clapContainer: {
-    marginRight: 15,
+    marginRight: 10,
+  },
+  dateContainer: {
+    alignItems: "flex-end",
   },
 });
 
-export default ExplorePostView;
+export default ProfileExhibitPostView;

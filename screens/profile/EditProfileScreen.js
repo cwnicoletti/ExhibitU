@@ -19,12 +19,12 @@ import linkFormReducer from "../../helper/linkFormReducer";
 import updateArrayOnRemove from "../../helper/updateArrayOnRemove";
 import getPhotoPermissions from "../../helper/getPhotoPermissions";
 import { useAppDispatch, useAppSelector } from "../../hooks";
-import Input from "../../components/UI/Input";
+import Input from "../../components/UI_general/Input";
 import {
   uploadChangeProfilePicture,
   uploadUpdateUserProfile,
 } from "../../store/actions/user/user";
-import LinksList from "../../components/UI/LinksList";
+import LinksList from "../../components/UI_general/LinksList";
 
 const FORM_INPUT_UPDATE = "FORM_INPUT_UPDATE";
 const FORM_INPUT_LINKS_UPDATE = "FORM_INPUT_LINKS_UPDATE";

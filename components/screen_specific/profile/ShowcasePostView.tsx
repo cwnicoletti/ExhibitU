@@ -12,12 +12,12 @@ import {
   Image,
   ActivityIndicator,
 } from "react-native";
-import { useAppSelector } from "../../hooks";
-import { AnimatedGradient } from "../custom/AnimatedGradient/AnimatedGradient";
-import useDidMountEffect from "../../helper/useDidMountEffect";
-import toDateTime from "../../helper/toDateTime";
-import TimeStamp from "../UI/TimeStamp";
-import LinksList from "../UI/LinksList";
+import { useAppSelector } from "../../../hooks";
+import { AnimatedGradient } from "../../custom/AnimatedGradient/AnimatedGradient";
+import useDidMountEffect from "../../../helper/useDidMountEffect";
+import toDateTime from "../../../helper/toDateTime";
+import TimeStamp from "../../UI_general/TimeStamp";
+import LinksList from "../../UI_general/LinksList";
 
 const ExhibitUPostView = (props) => {
   const [profileImageIsLoading, setProfileImageIsLoading] = useState(true);

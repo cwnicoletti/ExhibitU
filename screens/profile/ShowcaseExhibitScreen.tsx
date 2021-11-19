@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { FlatList, Platform, StyleSheet, View } from "react-native";
 import { useAppSelector } from "../../hooks";
-import ShowcaseExhibitHeader from "../../components/exhibits/ShowcaseExhibitHeader";
+import ShowcaseExhibitHeader from "../../components/screen_specific/profile/ShowcaseExhibitHeader";
 import useDidMountEffect from "../../helper/useDidMountEffect";
-import ExhibitPictures from "../../components/UI/ExhibitPictures";
+import ExhibitPictures from "../../components/UI_general/ExhibitPictures";
 
 const ShowcaseExhibitScreen = (props) => {
   const darkModeValue = useAppSelector((state) => state.user.darkMode);

@@ -14,10 +14,10 @@ import { SimpleLineIcons } from "@expo/vector-icons";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import { useAppDispatch } from "../../hooks";
-import Input from "../../components/UI/Input";
-import IoniconsHeaderButton from "../../components/UI/header_buttons/IoniconsHeaderButton";
+import Input from "../../components/UI_general/Input";
+import IoniconsHeaderButton from "../../components/UI_general/header_buttons/IoniconsHeaderButton";
 import { login } from "../../store/actions/auth/auth";
-import MainHeaderTitle from "../../components/UI/MainHeaderTitle";
+import MainHeaderTitle from "../../components/UI_general/MainHeaderTitle";
 import uploadToken from "../../helper/uploadToken";
 
 const FORM_INPUT_UPDATE = "FORM_INPUT_UPDATE";

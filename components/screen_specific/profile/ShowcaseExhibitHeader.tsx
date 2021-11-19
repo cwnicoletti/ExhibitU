@@ -1,7 +1,7 @@
 import React from "react";
 import { Image, StyleSheet, Text, View } from "react-native";
-import { useAppSelector } from "../../hooks";
-import LinksList from "../UI/LinksList";
+import { useAppSelector } from "../../../hooks";
+import LinksList from "../../UI_general/LinksList";
 
 const ExhibitUExhibitHeader = (props) => {
   const darkModeValue = useAppSelector((state) => state.user.darkMode);

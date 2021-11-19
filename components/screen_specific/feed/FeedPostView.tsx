@@ -13,20 +13,20 @@ import {
   TouchableWithoutFeedback,
   View,
 } from "react-native";
-import { useAppDispatch, useAppSelector } from "../../hooks";
-import Cheerfill from "../../assets/Icons/clap-fill.svg";
-import Cheer from "../../assets/Icons/clap.svg";
+import { useAppDispatch, useAppSelector } from "../../../hooks";
+import Cheerfill from "../../../assets/Icons/clap-fill.svg";
+import Cheer from "../../../assets/Icons/clap.svg";
 import {
   cheerOwnFeedPost,
   cheerPost,
   uncheerOwnFeedPost,
   uncheerPost,
-} from "../../store/actions/user/user";
-import { AnimatedGradient } from "../custom/AnimatedGradient/AnimatedGradient";
-import TimeStamp from "../UI/TimeStamp";
-import toDateTime from "../../helper/toDateTime";
-import LinksList from "../UI/LinksList";
-import useDidMountEffect from "../../helper/useDidMountEffect";
+} from "../../../store/actions/user/user";
+import { AnimatedGradient } from "../../custom/AnimatedGradient/AnimatedGradient";
+import TimeStamp from "../../UI_general/TimeStamp";
+import toDateTime from "../../../helper/toDateTime";
+import LinksList from "../../UI_general/LinksList";
+import useDidMountEffect from "../../../helper/useDidMountEffect";
 
 const FeedPostView = (props) => {
   const dispatch = useAppDispatch();

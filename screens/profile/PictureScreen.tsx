@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { Platform, ScrollView, StyleSheet } from "react-native";
 import { useAppDispatch, useAppSelector } from "../../hooks";
-import ProfileExhibitPostView from "../../components/profile/ProfileExhibitPostView";
+import ProfileExhibitPostView from "../../components/screen_specific/profile/ProfileExhibitPostView";
 import { uploadRemovePost } from "../../store/actions/user/user";
 
 const PictureScreen = (props) => {

@@ -16,7 +16,7 @@ import {
   default as exampleImage1,
   default as exampleImage2,
 } from "../../assets/ExhibitU_icon_transparent_white.png";
-import CarouselCardItem from "../../components/UI/CarouselCardItem";
+import CarouselCardItem from "../../components/UI_general/CarouselCardItem";
 import { setIntroing } from "../../store/actions/signup/signup";
 
 const IntroScreen = (props) => {

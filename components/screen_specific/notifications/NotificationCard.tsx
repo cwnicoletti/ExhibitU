@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { AnimatedGradient } from "../custom/AnimatedGradient/AnimatedGradient";
+import { AnimatedGradient } from "../../custom/AnimatedGradient/AnimatedGradient";
 
 const NotificationCard = (props) => {
   const [profileImageIsLoading, setProfileImageIsLoading] = useState(true);

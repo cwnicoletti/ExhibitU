@@ -4,7 +4,7 @@ import { useAppSelector, useAppDispatch } from "../../hooks";
 import { offScreen, refreshNotifications } from "../../store/actions/user/user";
 import { AntDesign } from "@expo/vector-icons";
 
-import NotificationCard from "../../components/notifications/NotificationCard";
+import NotificationCard from "../../components/screen_specific/notifications/NotificationCard";
 import useDidMountEffect from "../../helper/useDidMountEffect";
 
 const NotificationsScreen = (props) => {

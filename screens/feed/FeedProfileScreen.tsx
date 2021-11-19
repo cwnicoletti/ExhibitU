@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { FlatList, StyleSheet, View } from "react-native";
 import { useAppDispatch, useAppSelector } from "../../hooks";
-import FeedProfileHeader from "../../components/feed/FeedProfileHeader";
-import ExhibitItem from "../../components/exhibitItems/ExhibitItem";
+import FeedProfileHeader from "../../components/screen_specific/feed/FeedProfileHeader";
+import ExhibitItem from "../../components/UI_general/ExhibitItem";
 import useDidMountEffect from "../../helper/useDidMountEffect";
 import {
   sendFollowNotification,

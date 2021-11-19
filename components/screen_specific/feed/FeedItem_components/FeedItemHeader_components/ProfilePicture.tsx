@@ -1,6 +1,6 @@
 import React from "react";
 import { StyleSheet, Image, View } from "react-native";
-import { AnimatedGradient } from "../../../custom/AnimatedGradient/AnimatedGradient";
+import { AnimatedGradient } from "../../../../custom/AnimatedGradient/AnimatedGradient";
 
 const ProfilePicture = (props) => {
   return (

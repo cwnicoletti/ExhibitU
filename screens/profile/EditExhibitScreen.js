@@ -15,7 +15,7 @@ import {
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import DefaultPicture from "../../assets/Icons/picture.svg";
-import Input from "../../components/UI/Input";
+import Input from "../../components/UI_general/Input";
 import correctUrls from "../../helper/correctUrls";
 import parseLinkValuesFromInputValues from "../../helper/parseLinkValuesFromInputValues";
 import linkFormReducer from "../../helper/linkFormReducer";
@@ -27,7 +27,7 @@ import {
   uploadRemoveExhibit,
   uploadUpdatedExhibit,
 } from "../../store/actions/user/user";
-import LinksList from "../../components/UI/LinksList";
+import LinksList from "../../components/UI_general/LinksList";
 
 const FORM_INPUT_UPDATE = "FORM_INPUT_UPDATE";
 const FORM_INPUT_LINKS_UPDATE = "FORM_INPUT_LINKS_UPDATE";

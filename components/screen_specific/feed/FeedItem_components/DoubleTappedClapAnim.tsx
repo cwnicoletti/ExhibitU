@@ -1,7 +1,7 @@
 import React from "react";
 import { Animated, StyleSheet } from "react-native";
-import Cheerfill from "../../../assets/Icons/clap-fill.svg";
-import Cheer from "../../../assets/Icons/clap.svg";
+import Cheerfill from "../../../../assets/Icons/clap-fill.svg";
+import Cheer from "../../../../assets/Icons/clap.svg";
 
 const DoubleTappedClapAnim = (props) => {
   return (

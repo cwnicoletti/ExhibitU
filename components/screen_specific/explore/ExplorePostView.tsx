@@ -1,6 +1,5 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
-  ActivityIndicator,
   Animated,
   Dimensions,
   ImageBackground,
@@ -10,45 +9,50 @@ import {
   TouchableNativeFeedback,
   TouchableOpacity,
   TouchableWithoutFeedback,
+  ActivityIndicator,
   View,
   Image,
 } from "react-native";
-import { useAppDispatch, useAppSelector } from "../../hooks";
-import { AnimatedGradient } from "../custom/AnimatedGradient/AnimatedGradient";
-import Cheerfill from "../../assets/Icons/clap-fill.svg";
-import Cheer from "../../assets/Icons/clap.svg";
+import { useAppDispatch, useAppSelector } from "../../../hooks";
+import Cheerfill from "../../../assets/Icons/clap-fill.svg";
+import Cheer from "../../../assets/Icons/clap.svg";
+import TimeStamp from "../../UI_general/TimeStamp";
 import {
-  cheerOwnProfilePost,
-  uncheerOwnProfilePost,
-} from "../../store/actions/user/user";
-import toDateTime from "../../helper/toDateTime";
-import TimeStamp from "../UI/TimeStamp";
-import useDidMountEffect from "../../helper/useDidMountEffect";
-import LinksList from "../UI/LinksList";
+  cheerOwnFeedPost,
+  cheerPost,
+  uncheerOwnFeedPost,
+  uncheerPost,
+} from "../../../store/actions/user/user";
+import { AnimatedGradient } from "../../custom/AnimatedGradient/AnimatedGradient";
+import useDidMountEffect from "../../../helper/useDidMountEffect";
+import toDateTime from "../../../helper/toDateTime";
+import LinksList from "../../UI_general/LinksList";
 
-const ProfileExhibitPostView = (props) => {
+const ExplorePostView = (props) => {
   const dispatch = useAppDispatch();
-  const showCheering = useAppSelector((state) => state.user.showCheering);
-  const [showClapping, setShowClapping] = useState(false);
-  const [loadingCheer, setLoadingCheer] = useState(false);
-  const numberOfCheers = props.numberOfCheers;
   const [processingWholeCheer, setProcessingWholeCheer] = useState(false);
+  const [loadingCheer, setLoadingCheer] = useState(false);
+  const [showClapping, setShowClapping] = useState(false);
   const [clap, setClap] = useState(false);
+  const [imageIsLoading, setImageIsLoading] = useState(true);
+  const [profileImageIsLoading, setProfileImageIsLoading] = useState(true);
   const [greyColorValues, setGreyColorValues] = useState([
     "rgba(50,50,50,1)",
     "rgba(0,0,0,1)",
   ]);
-  const [profileImageIsLoading, setProfileImageIsLoading] = useState(true);
-  const ExhibitUId = useAppSelector((state) => state.user.ExhibitUId);
+  const showCheering = useAppSelector((state) => state.user.showCheering);
+  const cheering = props.cheering;
   const cheeredPosts = useAppSelector((state) => state.user.cheeredPosts);
   const localId = useAppSelector((state) => state.auth.userId);
-  const posterExhibitUId = useAppSelector((state) => state.user.ExhibitUId);
-  const links = Object.values(props.links);
+  const ExhibitUId = useAppSelector((state) => state.user.ExhibitUId);
+  const posterExhibitUId = props.posterExhibitUId;
+  const currentUsersPost = ExhibitUId === posterExhibitUId ? true : false;
+  const links = props.links ? Object.values(props.links) : {};
   const postId = props.postId;
   const exhibitId = props.exhibitId;
   const fullname = props.fullname;
-  const username = props.username;
   const jobTitle = props.jobTitle;
+  const username = props.username;
   const postDateCreated = toDateTime(props.postDateCreated);
 
   const fadeAnim = useRef(new Animated.Value(0)).current;
@@ -60,7 +64,6 @@ const ProfileExhibitPostView = (props) => {
   let imageHeight = 500 / scaleFactor;
   const photoHeight = imageHeight;
 
-  let secondnow = null;
   let TouchableCmp: any = TouchableOpacity;
   if (Platform.OS === "android") {
     TouchableCmp = TouchableNativeFeedback;
@@ -76,7 +79,7 @@ const ProfileExhibitPostView = (props) => {
 
   useDidMountEffect(() => {
     setGreyColorValues(["rgba(50,50,50,1)", "rgba(0,0,0,1)"]);
-  }, [profileImageIsLoading]);
+  }, [imageIsLoading, profileImageIsLoading]);
 
   const slideUp = () => {
     Animated.timing(slideAnim, {
@@ -117,6 +120,7 @@ const ProfileExhibitPostView = (props) => {
     }
   };
 
+  let secondnow = null;
   const handleToubleTap = async () => {
     const now = Date.now();
     if (now - secondnow < 200) {
@@ -133,10 +137,10 @@ const ProfileExhibitPostView = (props) => {
         await setShowClapping(false);
       }, 1500);
 
-      if (!cheeredPosts.includes(postId)) {
+      if (!cheering.includes(ExhibitUId)) {
         await setLoadingCheer(true);
         await dispatch(
-          cheerOwnProfilePost(
+          await cheerPost(
             localId,
             ExhibitUId,
             exhibitId,
@@ -144,6 +148,9 @@ const ProfileExhibitPostView = (props) => {
             posterExhibitUId
           )
         );
+        if (currentUsersPost) {
+          await dispatch(await cheerOwnFeedPost(ExhibitUId, exhibitId, postId));
+        }
         await setLoadingCheer(false);
       }
       await setProcessingWholeCheer(false);
@@ -153,10 +160,10 @@ const ProfileExhibitPostView = (props) => {
   };
 
   const unCheer = async () => {
-    if (cheeredPosts.includes(postId)) {
+    if (cheering.includes(ExhibitUId)) {
       await setLoadingCheer(true);
       await dispatch(
-        uncheerOwnProfilePost(
+        await uncheerPost(
           localId,
           ExhibitUId,
           exhibitId,
@@ -164,12 +171,15 @@ const ProfileExhibitPostView = (props) => {
           posterExhibitUId
         )
       );
+      if (currentUsersPost) {
+        await dispatch(await uncheerOwnFeedPost(ExhibitUId, exhibitId, postId));
+      }
       await setLoadingCheer(false);
     }
   };
 
   return (
-    <View style={{ ...props.exhibitContainer }}>
+    <View style={{ ...styles.exhibit, ...props.exhibitContainer }}>
       <TouchableWithoutFeedback
         onPress={() => {
           if (!processingWholeCheer) {
@@ -193,9 +203,9 @@ const ProfileExhibitPostView = (props) => {
               >
                 <View
                   style={{
-                    height: 45,
-                    width: 45,
-                    borderRadius: 45 / 2,
+                    height: 50,
+                    width: 50,
+                    borderRadius: 50 / 2,
                   }}
                 >
                   {profileImageIsLoading ? (
@@ -278,10 +288,10 @@ const ProfileExhibitPostView = (props) => {
                 />
               ) : (
                 <View>
-                  {!cheeredPosts.includes(postId) ? (
+                  {cheering.includes(ExhibitUId) ? (
                     <TouchableCmp onPress={unCheer}>
                       <View>
-                        <Cheer
+                        <Cheerfill
                           style={{
                             ...styles.clapContainer,
                             ...props.clapContainer,
@@ -296,7 +306,7 @@ const ProfileExhibitPostView = (props) => {
                   ) : (
                     <TouchableCmp onPress={unCheer}>
                       <View>
-                        <Cheerfill
+                        <Cheer
                           style={{
                             ...styles.clapContainer,
                             ...props.clapContainer,
@@ -313,16 +323,28 @@ const ProfileExhibitPostView = (props) => {
               )}
             </View>
           </View>
+          {imageIsLoading ? (
+            <AnimatedGradient
+              style={{
+                height: photoHeight,
+                width: "100%",
+                position: "absolute",
+                zIndex: 3,
+              }}
+              colors={greyColorValues}
+              start={{ x: 0, y: 0 }}
+              end={{ x: 1, y: 0 }}
+            />
+          ) : null}
           <ImageBackground
             style={{
               height: photoHeight,
-              width: "100%",
+              width: photoWidth,
             }}
-            source={
-              props.image
-                ? { uri: props.image }
-                : require("../../assets/default-post-icon.png")
-            }
+            source={props.image}
+            onLoadEnd={() => {
+              setImageIsLoading(false);
+            }}
           >
             {showClapping ? (
               <Animated.View
@@ -361,61 +383,26 @@ const ProfileExhibitPostView = (props) => {
           </ImageBackground>
         </View>
       </TouchableWithoutFeedback>
-      {links.length <= 1 ? (
-        <View
-          style={{
-            ...styles.pictureCheerContainer,
-            ...props.pictureCheerContainer,
-          }}
-        >
+      <View
+        style={{
+          ...styles.pictureCheerContainer,
+          ...props.pictureCheerContainer,
+        }}
+      >
+        <View style={{ alignItems: "center" }}>
           <LinksList links={links} />
-          {showCheering ? (
-            numberOfCheers >= 1 ? (
-              <TouchableCmp onPress={props.onSelectCheering}>
-                <View
-                  style={{ flexDirection: "row", justifyContent: "flex-start" }}
-                >
-                  <Text
-                    style={{
-                      ...styles.pictureCheerNumber,
-                      ...props.pictureCheerNumber,
-                    }}
-                  >
-                    {numberOfCheers}
-                  </Text>
-                  <Text
-                    style={{
-                      ...styles.pictureCheerText,
-                      ...props.pictureCheerText,
-                    }}
-                  >
-                    cheering
-                  </Text>
-                </View>
-              </TouchableCmp>
-            ) : null
-          ) : null}
         </View>
-      ) : (
-        <View
-          style={{
-            ...styles.pictureCheerContainer,
-            ...props.pictureCheerContainer,
-          }}
-        >
-          <View style={{ alignItems: "center" }}>
-            <LinksList links={links} />
-          </View>
-          {showCheering && numberOfCheers >= 1 ? (
+        {showCheering ? (
+          props.numberOfCheers >= 1 ? (
             <TouchableCmp onPress={props.onSelectCheering}>
-              <View style={{ flexDirection: "row", padding: 10 }}>
+              <View style={{ flexDirection: "row" }}>
                 <Text
                   style={{
                     ...styles.pictureCheerNumber,
                     ...props.pictureCheerNumber,
                   }}
                 >
-                  {numberOfCheers}
+                  {props.numberOfCheers}
                 </Text>
                 <Text
                   style={{
@@ -427,9 +414,9 @@ const ProfileExhibitPostView = (props) => {
                 </Text>
               </View>
             </TouchableCmp>
-          ) : null}
-        </View>
-      )}
+          ) : null
+        ) : null}
+      </View>
       <View style={{ ...styles.captionContainer, ...props.captionContainer }}>
         <Text
           style={{
@@ -450,26 +437,24 @@ const ProfileExhibitPostView = (props) => {
 };
 
 const styles = StyleSheet.create({
-  date: {
-    margin: 10,
-    fontSize: 13,
+  exhibit: {},
+  title: {
+    fontSize: 14,
+    fontWeight: "bold",
   },
   caption: {
     textAlign: "center",
-    marginVertical: 10,
-    marginHorizontal: "10%",
+    margin: 10,
     fontSize: 13,
   },
   pictureCheerContainer: {
-    width: "100%",
-    paddingVertical: 5,
-    paddingHorizontal: 15,
+    padding: 10,
   },
   pictureCheerNumber: {
     fontWeight: "bold",
     fontSize: 15,
+    marginLeft: 5,
     marginTop: 5,
-    marginLeft: 3,
   },
   pictureCheerText: {
     fontSize: 15,
@@ -480,11 +465,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   clapContainer: {
-    marginRight: 10,
-  },
-  dateContainer: {
-    alignItems: "flex-end",
+    marginRight: 15,
   },
 });
 
-export default ProfileExhibitPostView;
+export default ExplorePostView;

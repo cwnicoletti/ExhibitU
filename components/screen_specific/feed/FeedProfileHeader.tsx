@@ -1,11 +1,11 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
-import { useAppSelector } from "../../hooks";
-import LinksList from "../UI/LinksList";
-import ProfileStats from "../UI/ProfileStats";
-import ExploreUserTitle from "./ExploreUserTitle";
+import { useAppSelector } from "../../../hooks";
+import LinksList from "../../UI_general/LinksList";
+import ProfileStats from "../../UI_general/ProfileStats";
+import UserTitleShowcaseLocal from "../profile/UserTitleShowcaseLocal";
 
-const ExploreProfileHeader = (props) => {
+const FeedProfileHeader = (props) => {
   const darkModeValue = useAppSelector((state) => state.user.darkMode);
   const links = Object.values(props.links);
 
@@ -17,7 +17,7 @@ const ExploreProfileHeader = (props) => {
           ...props.containerStyle,
         }}
       >
-        <ExploreUserTitle {...props} />
+        <UserTitleShowcaseLocal {...props} />
         <ProfileStats
           darkModeValue={darkModeValue}
           followersValue={props.hideFollowing}
@@ -46,4 +46,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ExploreProfileHeader;
+export default FeedProfileHeader;

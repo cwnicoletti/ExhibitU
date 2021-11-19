@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { ScrollView, StyleSheet } from "react-native";
 import { useAppSelector } from "../../hooks";
-import ExplorePostView from "../../components/explore/ExplorePostView";
+import ExplorePostView from "../../components/screen_specific/explore/ExplorePostView";
 import useDidMountEffect from "../../helper/useDidMountEffect";
 import getExlusiveBothSetsDifference from "../../helper/getExlusiveBothSetsDifference";
 

@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import EditButton from "../UI/EditButton";
+import EditButton from "../../UI_general/EditButton";
 
 const UserTitleEdit = (props) => {
   let TouchableCmp: any = TouchableOpacity;

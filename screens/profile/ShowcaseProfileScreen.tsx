@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { FlatList, StyleSheet, View } from "react-native";
 import { useAppDispatch, useAppSelector } from "../../hooks";
-import ExhibitItem from "../../components/exhibitItems/ExhibitItem";
-import ShowcaseHeader from "../../components/profile/ShowcaseHeader";
+import ExhibitItem from "../../components/UI_general/ExhibitItem";
+import ShowcaseHeader from "../../components/screen_specific/profile/ShowcaseHeader";
 import useDidMountEffect from "../../helper/useDidMountEffect";
 import { returnFromShowcasing } from "../../store/actions/user/user";
 
