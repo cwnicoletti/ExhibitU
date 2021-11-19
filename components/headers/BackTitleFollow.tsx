@@ -2,9 +2,9 @@ import React from "react";
 import { Image, Platform, Text, View, ActivityIndicator } from "react-native";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import { useAppSelector } from "../../hooks";
-import Back from "../headers_components/Back";
-import Follow from "../headers_components/Follow";
-import Title from "../headers_components/Title";
+import Back from "./headers_components/Back";
+import Follow from "./headers_components/Follow";
+import Title from "./headers_components/Title";
 import IoniconsHeaderButton from "../UI/header_buttons/IoniconsHeaderButton";
 import SimpleLineIconsHeaderButton from "../../components/UI/header_buttons/SimpleLineIconsHeaderButton";
 

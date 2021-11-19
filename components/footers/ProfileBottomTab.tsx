@@ -1,7 +1,7 @@
 import React from "react";
 import { Animated, View } from "react-native";
 import { useAppSelector } from "../../hooks";
-import MainBottomTabContainer from "../footers_components/MainBottomTabContainer";
+import MainBottomTabContainer from "./footers_components/MainBottomTabContainer";
 
 const ProfileBottomTab = (props) => {
   const darkModeValue = useAppSelector((state) => state.user.darkMode);

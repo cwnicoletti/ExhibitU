@@ -1,28 +1,24 @@
 import React from "react";
 import { View, TouchableWithoutFeedback } from "react-native";
-import { Entypo } from "@expo/vector-icons";
-import { resetScroll, onScreen } from "../../store/actions/user/user";
-import { useAppSelector, useAppDispatch } from "../../hooks";
+import { Ionicons } from "@expo/vector-icons";
+import { resetScroll, onScreen } from "../../../store/actions/user/user";
+import { useAppSelector, useAppDispatch } from "../../../hooks";
 
-const Notifications = (props) => {
+const Explore = (props) => {
   const dispatch = useAppDispatch();
-
-  const onNotificationscreen = useAppSelector(
-    (state) => state.user.onNotificationsScreen
-  );
-
+  const onExploreScreen = useAppSelector((state) => state.user.onExploreScreen);
   return (
     <TouchableWithoutFeedback
       onPress={() => {
         if (props.isCurrentScreen) {
-          if (onNotificationscreen) {
-            dispatch(resetScroll("Notifications"));
+          if (onExploreScreen) {
+            dispatch(resetScroll("Explore"));
           } else {
-            dispatch(onScreen("Notifications"));
+            dispatch(onScreen("Explore"));
           }
-          props.parentProps.navigation.navigate("Notifications");
+          props.parentProps.navigation.navigate("Explore");
         } else {
-          props.parentProps.navigation.navigate("Notifications");
+          props.parentProps.navigation.navigate("Explore");
         }
       }}
     >
@@ -37,8 +33,8 @@ const Notifications = (props) => {
           alignItems: "center",
         }}
       >
-        <Entypo
-          name="notification"
+        <Ionicons
+          name="ios-search"
           size={25}
           color={
             props.isCurrentScreen
@@ -57,4 +53,4 @@ const Notifications = (props) => {
   );
 };
 
-export default Notifications;
+export default Explore;

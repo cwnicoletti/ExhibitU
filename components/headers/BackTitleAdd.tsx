@@ -2,9 +2,9 @@ import React from "react";
 import { Image, Platform, Text, View } from "react-native";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import { useAppSelector } from "../../hooks";
-import Add from "../headers_components/Add";
-import Back from "../headers_components/Back";
-import Title from "../headers_components/Title";
+import Add from "./headers_components/Add";
+import Back from "./headers_components/Back";
+import Title from "./headers_components/Title";
 import IoniconsHeaderButton from "../UI/header_buttons/IoniconsHeaderButton";
 
 const BackTitleAdd = ({ navigation }) => {

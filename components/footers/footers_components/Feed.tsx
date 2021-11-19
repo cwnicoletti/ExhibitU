@@ -1,24 +1,25 @@
 import React from "react";
 import { View, TouchableWithoutFeedback } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import { resetScroll, onScreen } from "../../store/actions/user/user";
-import { useAppSelector, useAppDispatch } from "../../hooks";
+import { resetScroll, onScreen } from "../../../store/actions/user/user";
+import { useAppSelector, useAppDispatch } from "../../../hooks";
 
-const Explore = (props) => {
+const Feed = (props) => {
   const dispatch = useAppDispatch();
-  const onExploreScreen = useAppSelector((state) => state.user.onExploreScreen);
+  const onFeedScreen = useAppSelector((state) => state.user.onFeedScreen);
+
   return (
     <TouchableWithoutFeedback
       onPress={() => {
         if (props.isCurrentScreen) {
-          if (onExploreScreen) {
-            dispatch(resetScroll("Explore"));
+          if (onFeedScreen) {
+            dispatch(resetScroll("Feed"));
           } else {
-            dispatch(onScreen("Explore"));
+            dispatch(onScreen("Feed"));
           }
-          props.parentProps.navigation.navigate("Explore");
+          props.parentProps.navigation.navigate("Feed");
         } else {
-          props.parentProps.navigation.navigate("Explore");
+          props.parentProps.navigation.navigate("Feed");
         }
       }}
     >
@@ -34,7 +35,7 @@ const Explore = (props) => {
         }}
       >
         <Ionicons
-          name="ios-search"
+          name="ios-home"
           size={25}
           color={
             props.isCurrentScreen
@@ -53,4 +54,4 @@ const Explore = (props) => {
   );
 };
 
-export default Explore;
+export default Feed;

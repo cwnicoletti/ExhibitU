@@ -1,8 +1,8 @@
 import React from "react";
 import { View, TouchableWithoutFeedback } from "react-native";
 import { SimpleLineIcons } from "@expo/vector-icons";
-import { resetScroll, onScreen } from "../../store/actions/user/user";
-import { useAppSelector, useAppDispatch } from "../../hooks";
+import { resetScroll, onScreen } from "../../../store/actions/user/user";
+import { useAppSelector, useAppDispatch } from "../../../hooks";
 
 const Explore = (props) => {
   const dispatch = useAppDispatch();

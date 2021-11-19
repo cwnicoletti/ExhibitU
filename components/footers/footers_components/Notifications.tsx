@@ -1,25 +1,28 @@
 import React from "react";
 import { View, TouchableWithoutFeedback } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
-import { resetScroll, onScreen } from "../../store/actions/user/user";
-import { useAppSelector, useAppDispatch } from "../../hooks";
+import { Entypo } from "@expo/vector-icons";
+import { resetScroll, onScreen } from "../../../store/actions/user/user";
+import { useAppSelector, useAppDispatch } from "../../../hooks";
 
-const Feed = (props) => {
+const Notifications = (props) => {
   const dispatch = useAppDispatch();
-  const onFeedScreen = useAppSelector((state) => state.user.onFeedScreen);
+
+  const onNotificationscreen = useAppSelector(
+    (state) => state.user.onNotificationsScreen
+  );
 
   return (
     <TouchableWithoutFeedback
       onPress={() => {
         if (props.isCurrentScreen) {
-          if (onFeedScreen) {
-            dispatch(resetScroll("Feed"));
+          if (onNotificationscreen) {
+            dispatch(resetScroll("Notifications"));
           } else {
-            dispatch(onScreen("Feed"));
+            dispatch(onScreen("Notifications"));
           }
-          props.parentProps.navigation.navigate("Feed");
+          props.parentProps.navigation.navigate("Notifications");
         } else {
-          props.parentProps.navigation.navigate("Feed");
+          props.parentProps.navigation.navigate("Notifications");
         }
       }}
     >
@@ -34,8 +37,8 @@ const Feed = (props) => {
           alignItems: "center",
         }}
       >
-        <Ionicons
-          name="ios-home"
+        <Entypo
+          name="notification"
           size={25}
           color={
             props.isCurrentScreen
@@ -54,4 +57,4 @@ const Feed = (props) => {
   );
 };
 
-export default Feed;
+export default Notifications;
