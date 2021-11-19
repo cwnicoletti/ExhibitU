@@ -41,12 +41,12 @@ const UserTitleEdit = (props) => {
             source={
               props.imgSource
                 ? { uri: props.imgSource }
-                : require("../../assets/default-profile-icon.jpg")
+                : require("../../../assets/default-profile-icon.jpg")
             }
             defaultSource={
               props.imgSource
                 ? { uri: props.imgSource }
-                : require("../../assets/default-profile-icon.jpg")
+                : require("../../../assets/default-profile-icon.jpg")
             }
           />
         </View>

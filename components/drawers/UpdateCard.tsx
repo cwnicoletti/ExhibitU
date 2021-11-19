@@ -70,17 +70,20 @@ const styles = StyleSheet.create({
     height: 100,
     width: "80%",
   },
+
   title: {
     fontWeight: "500",
     fontSize: 12,
     margin: 20,
     marginBottom: 10,
   },
+
   body: {
     fontWeight: "300",
     fontSize: 12,
     marginHorizontal: 20,
   },
+  
   touchable: {
     overflow: "hidden",
   },

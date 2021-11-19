@@ -5,7 +5,7 @@ import { AnimatedGradient } from "../../custom/AnimatedGradient/AnimatedGradient
 const ExploreUserTitle = (props) => {
   const sourceImg = props.imgSource
     ? { uri: props.imgSource }
-    : require("../../assets/default-profile-icon.jpg");
+    : require("../../../assets/default-profile-icon.jpg");
 
   const [profileImageIsLoading, setProfileImageIsLoading] = useState(true);
   const [greyColorValues, setGreyColorValues] = useState([

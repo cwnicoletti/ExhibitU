@@ -15,7 +15,7 @@ import { useAppSelector } from "../../../hooks";
 import toDateTime from "../../../helper/toDateTime";
 import LinksList from "../../UI_general/LinksList";
 import useDidMountEffect from "../../../helper/useDidMountEffect";
-import Cheer from "../../assets/Icons/clap.svg";
+import Cheer from "../../../assets/Icons/clap.svg";
 
 const PreviewPostItem = (props) => {
   const [profileImageIsLoading, setProfileImageIsLoading] = useState(true);
@@ -93,7 +93,7 @@ const PreviewPostItem = (props) => {
                   source={
                     props.profileImageSource
                       ? { uri: props.profileImageSource }
-                      : require("../../assets/default-profile-icon.jpg")
+                      : require("../../../assets/default-profile-icon.jpg")
                   }
                   onLoadEnd={() => {
                     setProfileImageIsLoading(false);
@@ -163,7 +163,7 @@ const PreviewPostItem = (props) => {
           source={
             props.image
               ? { uri: props.image }
-              : require("../../assets/default-post-icon.png")
+              : require("../../../assets/default-post-icon.png")
           }
         />
       </View>

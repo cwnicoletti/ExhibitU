@@ -10,7 +10,6 @@ import {
   TouchableWithoutFeedback,
   View,
   Image,
-  ActivityIndicator,
 } from "react-native";
 import { useAppSelector } from "../../../hooks";
 import { AnimatedGradient } from "../../custom/AnimatedGradient/AnimatedGradient";
@@ -95,7 +94,7 @@ const ExhibitUPostView = (props) => {
                     source={
                       props.profileImageSource
                         ? { uri: props.profileImageSource }
-                        : require("../../assets/default-profile-icon.jpg")
+                        : require("../../../assets/default-profile-icon.jpg")
                     }
                     onLoadEnd={() => {
                       setProfileImageIsLoading(false);
@@ -151,7 +150,7 @@ const ExhibitUPostView = (props) => {
             source={
               props.image
                 ? { uri: props.image }
-                : require("../../assets/default-post-icon.png")
+                : require("../../../assets/default-post-icon.png")
             }
           />
         </View>

@@ -48,7 +48,7 @@ const NotificationCard = (props) => {
                 source={
                   props.image
                     ? { uri: props.image }
-                    : require("../../assets/default-profile-icon.jpg")
+                    : require("../../../assets/default-profile-icon.jpg")
                 }
                 onLoadStart={() => {
                   setGreyColorValues(["rgba(0,0,0,1)", "rgba(50,50,50,1)"]);
@@ -70,7 +70,7 @@ const NotificationCard = (props) => {
                   source={
                     props.postImage
                       ? { uri: props.postImage }
-                      : require("../../assets/default-post-icon.png")
+                      : require("../../../assets/default-post-icon.png")
                   }
                   onLoadStart={() => {
                     setGreyColorValues(["rgba(0,0,0,1)", "rgba(50,50,50,1)"]);

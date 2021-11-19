@@ -232,7 +232,7 @@ const ExplorePostView = (props) => {
                     source={
                       props.profileImageSource
                         ? { uri: props.profileImageSource }
-                        : require("../../assets/default-profile-icon.jpg")
+                        : require("../../../assets/default-profile-icon.jpg")
                     }
                     onLoadEnd={() => {
                       setProfileImageIsLoading(false);

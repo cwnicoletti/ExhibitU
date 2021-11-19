@@ -15,8 +15,8 @@ import {
 } from "react-native";
 import { useAppDispatch, useAppSelector } from "../../../hooks";
 import { AnimatedGradient } from "../../custom/AnimatedGradient/AnimatedGradient";
-import Cheerfill from "../../assets/Icons/clap-fill.svg";
-import Cheer from "../../assets/Icons/clap.svg";
+import Cheerfill from "../../../assets/Icons/clap-fill.svg";
+import Cheer from "../../../assets/Icons/clap.svg";
 import {
   cheerOwnProfilePost,
   uncheerOwnProfilePost,
@@ -222,7 +222,7 @@ const ProfileExhibitPostView = (props) => {
                     source={
                       props.profileImageSource
                         ? { uri: props.profileImageSource }
-                        : require("../../assets/default-profile-icon.jpg")
+                        : require("../../../assets/default-profile-icon.jpg")
                     }
                     onLoadEnd={() => {
                       setProfileImageIsLoading(false);
@@ -321,7 +321,7 @@ const ProfileExhibitPostView = (props) => {
             source={
               props.image
                 ? { uri: props.image }
-                : require("../../assets/default-post-icon.png")
+                : require("../../../assets/default-post-icon.png")
             }
           >
             {showClapping ? (

@@ -30,12 +30,12 @@ const ExhibitHeader = (props) => {
           source={
             props.imgSource
               ? { uri: props.imgSource }
-              : require("../../assets/default-post-icon.png")
+              : require("../../../assets/default-post-icon.png")
           }
           defaultSource={
             props.imgSource
               ? { uri: props.imgSource }
-              : require("../../assets/default-post-icon.png")
+              : require("../../../assets/default-post-icon.png")
           }
         />
         <EditButton

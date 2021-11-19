@@ -2,7 +2,6 @@ import {
   Feather,
   MaterialCommunityIcons,
   SimpleLineIcons,
-  AntDesign,
 } from "@expo/vector-icons";
 import React from "react";
 import {

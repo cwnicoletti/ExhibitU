@@ -1,13 +1,25 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { ActivityIndicator, StyleSheet, View } from "react-native";
+import * as Progress from "react-native-progress";
+import useDidMountEffect from "../helper/useDidMountEffect";
 import { useAppDispatch } from "../hooks";
-import { authenticate, logout } from "../store/actions/auth/auth";
+import { authenticate } from "../store/actions/auth/auth";
 import { getUserData } from "../store/actions/user/user";
 
 const StartupScreen = (props) => {
   const dispatch = useAppDispatch();
+  let [progress, setProgress] = useState(0);
+
+  const progressBarHandler = () => {
+    setProgress(1);
+  };
+
   useEffect(() => {
+    progressBarHandler();
+  }, []);
+
+  useDidMountEffect(() => {
     const tryLogin = async () => {
       const userData = await AsyncStorage.getItem("userLoginData");
       const introingData = await AsyncStorage.getItem("introing");
@@ -59,12 +71,22 @@ const StartupScreen = (props) => {
       }
     };
 
-    tryLogin();
-  }, []);
+    if (progress === 1) {
+      setTimeout(() => {
+        tryLogin();
+      }, 700);
+    }
+  }, [progress]);
 
   return (
     <View style={styles.screen}>
-      <ActivityIndicator size="large" color="white" />
+      <ActivityIndicator size="large" color="white" style={{ padding: 30 }} />
+      <Progress.Bar
+        progress={progress}
+        width={200}
+        height={5}
+        color={"white"}
+      />
     </View>
   );
 };

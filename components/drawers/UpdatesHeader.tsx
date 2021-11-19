@@ -28,7 +28,11 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-  updatesTitle: { margin: 20, fontSize: 26 },
+
+  updatesTitle: {
+    margin: 20,
+    fontSize: 26,
+  },
 });
 
 export default UpdatesHeader;
