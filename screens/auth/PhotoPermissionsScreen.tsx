@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import {
   Image,
   Platform,
@@ -7,12 +7,14 @@ import {
   TouchableNativeFeedback,
   TouchableOpacity,
   View,
+  Animated,
 } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import MainHeaderTitle from "../../components/UI_general/MainHeaderTitle";
 import getPhotoPermissions from "../../helper/getPhotoPermissions";
 
 const PhotoPermissionsScreen = (props) => {
+  const fadeInAnim = useRef(new Animated.Value(0)).current;
   let TouchableCmp: any = TouchableOpacity;
   if (Platform.OS === "android") {
     TouchableCmp = TouchableNativeFeedback;
@@ -23,6 +25,10 @@ const PhotoPermissionsScreen = (props) => {
   };
 
   useEffect(() => {
+    Animated.spring(fadeInAnim, {
+      toValue: 1,
+      useNativeDriver: true,
+    }).start();
     if (!getPhotoPermissions()) {
       return;
     }
@@ -30,43 +36,51 @@ const PhotoPermissionsScreen = (props) => {
 
   return (
     <View style={styles.screen}>
-      <View style={styles.inner}>
-        <Text style={styles.text}>Enable photo access</Text>
-        <Text style={styles.smallerText}>
-          In order to post pictures to your profile, ExhibitU must have permission to access your
-          phone's photos
-        </Text>
-        <Image
-          style={styles.image}
-          source={require("../../assets/default-post-icon.png")}
-        />
-        <View style={styles.authContainer}>
-          <TouchableCmp onPress={authHandler}>
-            <View
-              style={{
-                borderColor: "#007AFF",
-                borderWidth: 1,
-                margin: 10,
-                alignItems: "center",
-                justifyContent: "center",
-                flexDirection: "row",
-              }}
-            >
-              <Text
+      <Animated.View
+        style={{
+          flex: 1,
+          backgroundColor: "black",
+          opacity: fadeInAnim,
+        }}
+      >
+        <View style={styles.inner}>
+          <Text style={styles.text}>Enable photo access</Text>
+          <Text style={styles.smallerText}>
+            In order to post pictures to your profile, ExhibitU must have
+            permission to access your phone's photos
+          </Text>
+          <Image
+            style={styles.image}
+            source={require("../../assets/default-post-icon.png")}
+          />
+          <View style={styles.authContainer}>
+            <TouchableCmp onPress={authHandler}>
+              <View
                 style={{
+                  borderColor: "#007AFF",
+                  borderWidth: 1,
                   margin: 10,
-                  marginRight: 5,
-                  color: "#007AFF",
-                  fontSize: 16,
+                  alignItems: "center",
+                  justifyContent: "center",
+                  flexDirection: "row",
                 }}
               >
-                Next
-              </Text>
-              <Feather name="arrow-right" size={16} color={"#007AFF"} />
-            </View>
-          </TouchableCmp>
+                <Text
+                  style={{
+                    margin: 10,
+                    marginRight: 5,
+                    color: "#007AFF",
+                    fontSize: 16,
+                  }}
+                >
+                  Next
+                </Text>
+                <Feather name="arrow-right" size={16} color={"#007AFF"} />
+              </View>
+            </TouchableCmp>
+          </View>
         </View>
-      </View>
+      </Animated.View>
     </View>
   );
 };

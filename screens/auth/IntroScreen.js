@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import {
   ActivityIndicator,
   Dimensions,
@@ -9,6 +9,7 @@ import {
   TouchableNativeFeedback,
   TouchableOpacity,
   View,
+  Animated,
 } from "react-native";
 import Carousel from "react-native-snap-carousel";
 import { useAppDispatch } from "../../hooks";
@@ -23,9 +24,10 @@ const IntroScreen = (props) => {
   const dispatch = useAppDispatch();
   const [isLoading, setIsLoading] = useState(false);
   const [sliderIndex, setSliderIndex] = useState(0);
-  const isCarousel = React.useRef(null);
   const exampleImage1Uri = Image.resolveAssetSource(exampleImage1).uri;
   const exampleImage2Uri = Image.resolveAssetSource(exampleImage2).uri;
+  const isCarousel = useRef(null);
+  const fadeInAnim = useRef(new Animated.Value(0)).current;
 
   const data = [
     {
@@ -68,119 +70,134 @@ const IntroScreen = (props) => {
     await props.navigation.navigate("StartAuth");
   };
 
+  useEffect(() => {
+    Animated.spring(fadeInAnim, {
+      toValue: 1,
+      useNativeDriver: true,
+    }).start();
+  }, []);
+
   return (
     <View style={styles.screen}>
-      {sliderIndex === 0 ? (
-        <TouchableCmp
-          style={{ paddingTop: 75, paddingRight: 50, alignSelf: "flex-end" }}
-          onPress={authHandler}
-        >
-          <Text style={{ color: "white", fontSize: 16 }}>Skip</Text>
-        </TouchableCmp>
-      ) : (
-        <TouchableCmp
-          style={{ paddingTop: 75, paddingRight: 50, alignSelf: "flex-end" }}
-        >
-          <Text style={{ fontSize: 16 }}>Placeholder</Text>
-        </TouchableCmp>
-      )}
-      <Carousel
-        ref={isCarousel}
-        data={data}
-        renderItem={CarouselCardItem}
-        onSnapToItem={(index) => setSliderIndex(index)}
-        sliderWidth={WIDTH}
-        itemWidth={WIDTH}
-      />
-      <View
+      <Animated.View
         style={{
-          flexDirection: "row",
-          alignSelf: "center",
-          margin: 10,
+          flex: 1,
+          backgroundColor: "black",
+          opacity: fadeInAnim,
         }}
       >
-        <View
-          style={{
-            width: 8,
-            height: 8,
-            backgroundColor: sliderIndex === 0 ? "white" : "gray",
-            borderRadius: "50%",
-            marginHorizontal: 10,
-          }}
+        {sliderIndex === 0 ? (
+          <TouchableCmp
+            style={{ paddingTop: 75, paddingRight: 50, alignSelf: "flex-end" }}
+            onPress={authHandler}
+          >
+            <Text style={{ color: "white", fontSize: 16 }}>Skip</Text>
+          </TouchableCmp>
+        ) : (
+          <TouchableCmp
+            style={{ paddingTop: 75, paddingRight: 50, alignSelf: "flex-end" }}
+          >
+            <Text style={{ fontSize: 16 }}>Placeholder</Text>
+          </TouchableCmp>
+        )}
+        <Carousel
+          ref={isCarousel}
+          data={data}
+          renderItem={CarouselCardItem}
+          onSnapToItem={(index) => setSliderIndex(index)}
+          sliderWidth={WIDTH}
+          itemWidth={WIDTH}
         />
         <View
           style={{
-            width: 8,
-            height: 8,
-            backgroundColor: sliderIndex === 1 ? "white" : "gray",
-            borderRadius: "50%",
-            marginHorizontal: 10,
+            flexDirection: "row",
+            alignSelf: "center",
+            margin: 10,
           }}
-        />
-        <View
-          style={{
-            width: 8,
-            height: 8,
-            backgroundColor: sliderIndex === 2 ? "white" : "gray",
-            borderRadius: "50%",
-            marginHorizontal: 10,
-          }}
-        />
-        <View
-          style={{
-            width: 8,
-            height: 8,
-            backgroundColor: sliderIndex === 3 ? "white" : "gray",
-            borderRadius: "50%",
-            marginHorizontal: 10,
-          }}
-        />
-      </View>
-      {isLoading ? (
-        <View style={styles.activityContainer}>
-          <ActivityIndicator size="small" color="white" />
+        >
+          <View
+            style={{
+              width: 8,
+              height: 8,
+              backgroundColor: sliderIndex === 0 ? "white" : "gray",
+              borderRadius: "50%",
+              marginHorizontal: 10,
+            }}
+          />
+          <View
+            style={{
+              width: 8,
+              height: 8,
+              backgroundColor: sliderIndex === 1 ? "white" : "gray",
+              borderRadius: "50%",
+              marginHorizontal: 10,
+            }}
+          />
+          <View
+            style={{
+              width: 8,
+              height: 8,
+              backgroundColor: sliderIndex === 2 ? "white" : "gray",
+              borderRadius: "50%",
+              marginHorizontal: 10,
+            }}
+          />
+          <View
+            style={{
+              width: 8,
+              height: 8,
+              backgroundColor: sliderIndex === 3 ? "white" : "gray",
+              borderRadius: "50%",
+              marginHorizontal: 10,
+            }}
+          />
         </View>
-      ) : (
-        <View style={{ margin: 10, marginBottom: 60 }}>
-          {sliderIndex === 3 ? (
-            <TouchableCmp
-              style={{
-                borderColor: "#007AFF",
-                borderWidth: 1,
-                alignItems: "center",
-              }}
-              onPress={authHandler}
-            >
-              <Text
+        {isLoading ? (
+          <View style={styles.activityContainer}>
+            <ActivityIndicator size="small" color="white" />
+          </View>
+        ) : (
+          <View style={{ margin: 10, marginBottom: 60 }}>
+            {sliderIndex === 3 ? (
+              <TouchableCmp
                 style={{
-                  margin: 10,
-                  color: "#007AFF",
-                  fontSize: 16,
+                  borderColor: "#007AFF",
+                  borderWidth: 1,
+                  alignItems: "center",
                 }}
+                onPress={authHandler}
               >
-                Start
-              </Text>
-            </TouchableCmp>
-          ) : (
-            <View
-              style={{
-                borderWidth: 1,
-                alignItems: "center",
-              }}
-              onPress={authHandler}
-            >
-              <Text
+                <Text
+                  style={{
+                    margin: 10,
+                    color: "#007AFF",
+                    fontSize: 16,
+                  }}
+                >
+                  Start
+                </Text>
+              </TouchableCmp>
+            ) : (
+              <View
                 style={{
-                  margin: 10,
-                  fontSize: 16,
+                  borderWidth: 1,
+                  alignItems: "center",
                 }}
+                onPress={authHandler}
               >
-                Start
-              </Text>
-            </View>
-          )}
-        </View>
-      )}
+                <Text
+                  style={{
+                    margin: 10,
+                    fontSize: 16,
+                  }}
+                >
+                  Start
+                </Text>
+              </View>
+            )}
+          </View>
+        )}
+      </Animated.View>
     </View>
   );
 };

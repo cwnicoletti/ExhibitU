@@ -1,6 +1,13 @@
 import { AntDesign } from "@expo/vector-icons";
 import React, { useEffect, useRef, useState } from "react";
-import { FlatList, RefreshControl, StyleSheet, Text, View } from "react-native";
+import {
+  Animated,
+  FlatList,
+  RefreshControl,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import FeedItem from "../../components/screen_specific/feed/FeedItem";
 import useDidMountEffect from "../../helper/useDidMountEffect";
@@ -25,6 +32,14 @@ const FeedScreen = (props) => {
     (state) => state.user.profilePictureBase64
   );
   const resetScrollFeed = useAppSelector((state) => state.user.resetScrollFeed);
+  const fadeInAnim = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    Animated.spring(fadeInAnim, {
+      toValue: 1,
+      useNativeDriver: true,
+    }).start();
+  }, []);
 
   useEffect(() => {
     props.navigation.setParams({ darkMode: darkModeValue });
@@ -181,149 +196,155 @@ const FeedScreen = (props) => {
     <View
       style={{
         ...styles.screen,
-        backgroundColor: darkModeValue ? "black" : "white",
+        backgroundColor: darkModeValue ? "#000000" : "white",
       }}
     >
-      <FlatList<any>
-        data={userFeedState}
-        extraData={profilePictureBase64}
-        ref={flatlistFeed}
-        refreshControl={
-          <RefreshControl
-            refreshing={isRefreshing}
-            onRefresh={refreshFeed}
-            tintColor={darkModeValue ? "white" : "black"}
-          />
-        }
-        ListFooterComponent={topHeader()}
-        keyExtractor={(item) => item.postId}
-        renderItem={(itemData) => (
-          <FeedItem
-            image={
-              itemData.item.postPhotoBase64
-                ? itemData.item.postPhotoBase64
-                : itemData.item.postPhotoUrl
-            }
-            postUrl={itemData.item.postPhotoUrl}
-            profileImageSource={itemData.item.profilePictureUrl}
-            exhibitTitle={itemData.item.exhibitTitle}
-            caption={itemData.item.caption}
-            cheering={itemData.item.cheering}
-            numberOfCheers={itemData.item.numberOfCheers}
-            numberOfComments={itemData.item.numberOfComments}
-            exhibitId={itemData.item.exhibitId}
-            postId={itemData.item.postId}
-            posterExhibitUId={itemData.item.ExhibitUId}
-            links={itemData.item.postLinks}
-            fullname={itemData.item.fullname}
-            username={itemData.item.username}
-            jobTitle={itemData.item.jobTitle}
-            postDateCreated={itemData.item.postDateCreated._seconds}
-            nameStyle={{
-              color: darkModeValue ? "white" : "black",
-            }}
-            usernameStyle={{
-              color: darkModeValue ? "white" : "black",
-            }}
-            exhibitContainer={{
-              borderColor: darkModeValue ? "#616161" : "#e8e8e8",
-            }}
-            titleContainer={{
-              color: darkModeValue ? "white" : "black",
-            }}
-            threeDotsStyle={darkModeValue ? "white" : "black"}
-            nameContainer={{
-              backgroundColor: darkModeValue ? "black" : "white",
-            }}
-            captionContainer={{
-              backgroundColor: darkModeValue ? "black" : "white",
-            }}
-            dateContainer={{
-              backgroundColor: darkModeValue ? "black" : "white",
-            }}
-            dateStyle={{
-              color: "gray",
-            }}
-            titleStyle={{
-              color: "white",
-            }}
-            profilePictureColors={["rgba(0,0,0,1)", "rgba(0,0,0,0)"]}
-            exhibitTitleColors={["rgba(0,0,0,0)", "rgba(0,0,0,1)"]}
-            pictureCheerContainer={{
-              backgroundColor: darkModeValue ? "black" : "white",
-            }}
-            pictureCheerNumber={{
-              color: darkModeValue ? "white" : "black",
-            }}
-            pictureCheerText={{
-              color: darkModeValue ? "white" : "black",
-            }}
-            pictureCommentNumber={{
-              color: darkModeValue ? "white" : "black",
-            }}
-            pictureTitleContainer={{
-              backgroundColor: darkModeValue ? "black" : "white",
-            }}
-            pictureTitleStyle={{
-              color: darkModeValue ? "white" : "black",
-            }}
-            captionStyle={{
-              color: darkModeValue ? "white" : "black",
-            }}
-            arrowColor={"white"}
-            onSelect={() => {
-              viewExhibitHandler(
-                itemData.item.ExhibitUId,
-                itemData.item.exhibitId,
-                itemData.item.fullname,
-                itemData.item.username,
-                itemData.item.jobTitle,
-                itemData.item.profileBiography,
-                itemData.item.profileExhibits,
-                itemData.item.profilePictureBase64,
-                itemData.item.profilePictureUrl,
-                itemData.item.numberOfFollowers,
-                itemData.item.numberOfFollowing,
-                itemData.item.hideFollowing,
-                itemData.item.hideFollowers,
-                itemData.item.hideExhibits,
-                itemData.item.exhibitLinks,
-                itemData.item.profileColumns,
-                itemData.item.postDateCreated._seconds
-              );
-            }}
-            onSelectCheering={() => {
-              viewCheeringHandler(
-                itemData.item.ExhibitUId,
-                itemData.item.exhibitId,
-                itemData.item.postId,
-                itemData.item.numberOfCheers
-              );
-            }}
-            onSelectProfile={() => {
-              viewProfileHandler(
-                itemData.item.ExhibitUId,
-                itemData.item.fullname,
-                itemData.item.username,
-                itemData.item.jobTitle,
-                itemData.item.profileBiography,
-                itemData.item.profileExhibits,
-                itemData.item.profilePictureUrl,
-                itemData.item.followers,
-                itemData.item.following,
-                itemData.item.numberOfFollowers,
-                itemData.item.numberOfFollowing,
-                itemData.item.hideFollowing,
-                itemData.item.hideFollowers,
-                itemData.item.hideExhibits,
-                itemData.item.profileLinks,
-                itemData.item.profileColumns,
-                itemData.item.showCheering
-              );
-            }}
-          />
-        )}
-      />
+      <Animated.View
+        style={{
+          opacity: fadeInAnim,
+        }}
+      >
+        <FlatList<any>
+          data={userFeedState}
+          extraData={profilePictureBase64}
+          ref={flatlistFeed}
+          refreshControl={
+            <RefreshControl
+              refreshing={isRefreshing}
+              onRefresh={refreshFeed}
+              tintColor={darkModeValue ? "white" : "black"}
+            />
+          }
+          ListFooterComponent={topHeader()}
+          keyExtractor={(item) => item.postId}
+          renderItem={(itemData) => (
+            <FeedItem
+              image={
+                itemData.item.postPhotoBase64
+                  ? itemData.item.postPhotoBase64
+                  : itemData.item.postPhotoUrl
+              }
+              postUrl={itemData.item.postPhotoUrl}
+              profileImageSource={itemData.item.profilePictureUrl}
+              exhibitTitle={itemData.item.exhibitTitle}
+              caption={itemData.item.caption}
+              cheering={itemData.item.cheering}
+              numberOfCheers={itemData.item.numberOfCheers}
+              numberOfComments={itemData.item.numberOfComments}
+              exhibitId={itemData.item.exhibitId}
+              postId={itemData.item.postId}
+              posterExhibitUId={itemData.item.ExhibitUId}
+              links={itemData.item.postLinks}
+              fullname={itemData.item.fullname}
+              username={itemData.item.username}
+              jobTitle={itemData.item.jobTitle}
+              postDateCreated={itemData.item.postDateCreated._seconds}
+              nameStyle={{
+                color: darkModeValue ? "white" : "black",
+              }}
+              usernameStyle={{
+                color: darkModeValue ? "white" : "black",
+              }}
+              exhibitContainer={{
+                borderColor: darkModeValue ? "#616161" : "#e8e8e8",
+              }}
+              titleContainer={{
+                color: darkModeValue ? "white" : "black",
+              }}
+              threeDotsStyle={darkModeValue ? "white" : "black"}
+              nameContainer={{
+                backgroundColor: darkModeValue ? "black" : "white",
+              }}
+              captionContainer={{
+                backgroundColor: darkModeValue ? "black" : "white",
+              }}
+              dateContainer={{
+                backgroundColor: darkModeValue ? "black" : "white",
+              }}
+              dateStyle={{
+                color: "gray",
+              }}
+              titleStyle={{
+                color: "white",
+              }}
+              profilePictureColors={["rgba(0,0,0,1)", "rgba(0,0,0,0)"]}
+              exhibitTitleColors={["rgba(0,0,0,0)", "rgba(0,0,0,1)"]}
+              pictureCheerContainer={{
+                backgroundColor: darkModeValue ? "black" : "white",
+              }}
+              pictureCheerNumber={{
+                color: darkModeValue ? "white" : "black",
+              }}
+              pictureCheerText={{
+                color: darkModeValue ? "white" : "black",
+              }}
+              pictureCommentNumber={{
+                color: darkModeValue ? "white" : "black",
+              }}
+              pictureTitleContainer={{
+                backgroundColor: darkModeValue ? "black" : "white",
+              }}
+              pictureTitleStyle={{
+                color: darkModeValue ? "white" : "black",
+              }}
+              captionStyle={{
+                color: darkModeValue ? "white" : "black",
+              }}
+              arrowColor={"white"}
+              onSelect={() => {
+                viewExhibitHandler(
+                  itemData.item.ExhibitUId,
+                  itemData.item.exhibitId,
+                  itemData.item.fullname,
+                  itemData.item.username,
+                  itemData.item.jobTitle,
+                  itemData.item.profileBiography,
+                  itemData.item.profileExhibits,
+                  itemData.item.profilePictureBase64,
+                  itemData.item.profilePictureUrl,
+                  itemData.item.numberOfFollowers,
+                  itemData.item.numberOfFollowing,
+                  itemData.item.hideFollowing,
+                  itemData.item.hideFollowers,
+                  itemData.item.hideExhibits,
+                  itemData.item.exhibitLinks,
+                  itemData.item.profileColumns,
+                  itemData.item.postDateCreated._seconds
+                );
+              }}
+              onSelectCheering={() => {
+                viewCheeringHandler(
+                  itemData.item.ExhibitUId,
+                  itemData.item.exhibitId,
+                  itemData.item.postId,
+                  itemData.item.numberOfCheers
+                );
+              }}
+              onSelectProfile={() => {
+                viewProfileHandler(
+                  itemData.item.ExhibitUId,
+                  itemData.item.fullname,
+                  itemData.item.username,
+                  itemData.item.jobTitle,
+                  itemData.item.profileBiography,
+                  itemData.item.profileExhibits,
+                  itemData.item.profilePictureUrl,
+                  itemData.item.followers,
+                  itemData.item.following,
+                  itemData.item.numberOfFollowers,
+                  itemData.item.numberOfFollowing,
+                  itemData.item.hideFollowing,
+                  itemData.item.hideFollowers,
+                  itemData.item.hideExhibits,
+                  itemData.item.profileLinks,
+                  itemData.item.profileColumns,
+                  itemData.item.showCheering
+                );
+              }}
+            />
+          )}
+        />
+      </Animated.View>
     </View>
   );
 };
