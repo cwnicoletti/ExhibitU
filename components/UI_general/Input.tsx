@@ -116,14 +116,14 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   label: {
-    marginVertical: 2,
+    marginVertical: 1,
     paddingLeft: 15,
     color: "white",
   },
   input: {
     paddingHorizontal: 10,
-    borderRadius: 10,
-    paddingVertical: 10,
+    borderRadius: 15,
+    paddingVertical: 13,
     marginHorizontal: 10,
   },
   errorContainer: {

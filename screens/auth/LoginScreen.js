@@ -110,6 +110,9 @@ const LoginScreen = (props) => {
             style={styles.image}
             source={require("../../assets/ExhibitU_icon_transparent_white.png")}
           />
+          <Text style={{ color: "white", fontSize: 20, fontWeight: "500" }}>
+            Log in
+          </Text>
           <View style={styles.authContainer}>
             <Input
               id="email"
@@ -155,6 +158,7 @@ const LoginScreen = (props) => {
                 color: "white",
                 backgroundColor: "#222222",
                 marginBottom: 10,
+                borderRadius: 15,
               }}
             />
             {isLoading ? (
@@ -192,6 +196,7 @@ const LoginScreen = (props) => {
                     alignItems: "center",
                     justifyContent: "center",
                     flexDirection: "row",
+                    borderRadius: 15,
                   }}
                 >
                   <Text
@@ -203,7 +208,7 @@ const LoginScreen = (props) => {
                       fontSize: 16,
                     }}
                   >
-                    Login
+                    Continue
                   </Text>
                   <SimpleLineIcons
                     name="login"
@@ -213,6 +218,16 @@ const LoginScreen = (props) => {
                 </View>
               </TouchableCmp>
             )}
+            <Text
+              style={{
+                color: "white",
+                fontSize: 12,
+                paddingTop: 8,
+                textAlign: "center",
+              }}
+            >
+              By continuing, you agree to our Terms of Use, and Privacy Policy
+            </Text>
           </View>
         </View>
       </KeyboardAwareScrollView>

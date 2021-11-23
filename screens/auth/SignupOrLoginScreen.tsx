@@ -64,6 +64,7 @@ const SignupOrLoginScreen = (props) => {
               alignItems: "center",
               flexDirection: "row",
               paddingHorizontal: "20%",
+              borderRadius: 15,
             }}
           >
             <Fontisto
@@ -115,6 +116,7 @@ const SignupOrLoginScreen = (props) => {
               margin: 10,
               alignItems: "center",
               width: "80%",
+              borderRadius: 15,
             }}
           >
             <MaterialIcons

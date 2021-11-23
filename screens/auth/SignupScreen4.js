@@ -201,6 +201,7 @@ const SignupScreen2 = (props) => {
                     alignItems: "center",
                     justifyContent: "center",
                     flexDirection: "row",
+                    borderRadius: 15,
                   }}
                 >
                   <Text
