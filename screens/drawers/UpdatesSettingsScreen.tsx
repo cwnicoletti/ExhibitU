@@ -2,7 +2,7 @@ import { AntDesign } from "@expo/vector-icons";
 import React, { useEffect, useState } from "react";
 import { FlatList, RefreshControl, StyleSheet, Text, View } from "react-native";
 import { useAppDispatch, useAppSelector } from "../../hooks";
-import UpdateCard from "../../components/drawers/UpdateCard";
+import UpdateCard from "../../components/screen_specific/drawers/UpdateCard";
 import { getUpdates } from "../../store/actions/user/user";
 
 const VoteUpdatesSettingsScreen = (props) => {

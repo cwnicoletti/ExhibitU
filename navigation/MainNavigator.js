@@ -20,7 +20,7 @@ import NotificationPermissionsScreen from "../screens/auth/NotificationPermissio
 import SignupScreen4 from "../screens/auth/SignupScreen4";
 
 import ShowcaseSettingsScreen from "../screens/drawers/ShowcaseSettingsScreen";
-import VoteUpdatesSettingsScreen from "../screens/drawers/VoteUpdatesSettingsScreen";
+import VoteUpdatesSettingsScreen from "../screens/drawers/UpdatesSettingsScreen";
 
 import ExploreCheeringScreen from "../screens/explore/ExploreCheeringScreen";
 import ExploreFollowersScreen from "../screens/explore/ExploreFollowersScreen";
