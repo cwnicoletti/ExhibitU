@@ -1,7 +1,6 @@
 // Clapping icon & default exhibit icon made by Freepik (https://www.flaticon.com/authors/freepik)
 import React from "react";
 import { View } from "react-native";
-import { SafeAreaProvider } from "react-native-safe-area-context";
 import { Provider } from "react-redux";
 import { applyMiddleware, combineReducers, createStore } from "redux";
 import ReduxThunk from "redux-thunk";

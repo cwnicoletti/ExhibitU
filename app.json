@@ -2,11 +2,11 @@
   "expo": {
     "name": "ExhibitU",
     "slug": "ExhibitU",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "orientation": "portrait",
     "icon": "./assets/ExhibitU_icon.png",
     "splash": {
-      "image": "./assets/ExhibitU_splash.png",
+      "image": "./assets/ExhibitU_icon_transparent_white_spaced.png",
       "resizeMode": "contain",
       "backgroundColor": "#000000"
     },
