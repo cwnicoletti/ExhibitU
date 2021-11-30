@@ -41,7 +41,7 @@ const ExplorePostView = (props) => {
     "rgba(0,0,0,1)",
   ]);
   const showCheering = useAppSelector((state) => state.user.showCheering);
-  const cheering = props.cheering;
+  const cheering = props.cheering ? props.cheering : [];
   const cheeredPosts = useAppSelector((state) => state.user.cheeredPosts);
   const localId = useAppSelector((state) => state.auth.userId);
   const ExhibitUId = useAppSelector((state) => state.user.ExhibitUId);

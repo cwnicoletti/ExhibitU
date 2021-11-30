@@ -83,7 +83,7 @@ const styles = StyleSheet.create({
     fontSize: 12,
     marginHorizontal: 20,
   },
-  
+
   touchable: {
     overflow: "hidden",
   },

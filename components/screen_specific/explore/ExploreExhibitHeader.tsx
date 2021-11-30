@@ -12,7 +12,7 @@ const ExploreExhibitHeader = (props) => {
     "rgba(0,0,0,1)",
   ]);
 
-  const links = Object.values(props.links);
+  const links = props.links ? Object.values(props.links) : [];
 
   return (
     <View style={{ ...styles.container, ...props.containerStyle }}>

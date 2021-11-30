@@ -1,0 +1,120 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`matches previous snapshot and renders correctly 1`] = `
+<View
+  style={
+    Object {
+      "justifyContent": "center",
+      "marginVertical": 2,
+      "width": "100%",
+    }
+  }
+>
+  <View
+    style={
+      Object {
+        "overflow": "hidden",
+      }
+    }
+  >
+    <View
+      accessible={true}
+      focusable={false}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "opacity": 1,
+        }
+      }
+    >
+      <View
+        style={
+          Object {
+            "flexDirection": "row",
+            "margin": 10,
+          }
+        }
+      >
+        <View
+          style={Object {}}
+        >
+          <ViewManagerAdapter_ExpoLinearGradient
+            proxiedProperties={
+              Object {
+                "colors": Array [
+                  4281479730,
+                  4278190080,
+                ],
+                "endPoint": Array [
+                  1,
+                  0,
+                ],
+                "locations": undefined,
+                "startPoint": Array [
+                  0,
+                  0,
+                ],
+              }
+            }
+            style={
+              Object {
+                "borderRadius": 30,
+                "height": 60,
+                "position": "absolute",
+                "top": 0,
+                "width": 60,
+                "zIndex": 3,
+              }
+            }
+          />
+          <Image
+            onLoadEnd={[Function]}
+            onLoadStart={[Function]}
+            source={1}
+            style={
+              Object {
+                "borderRadius": 30,
+                "height": 60,
+                "width": 60,
+              }
+            }
+          />
+        </View>
+        <View
+          style={
+            Object {
+              "justifyContent": "center",
+              "marginLeft": 10,
+            }
+          }
+        >
+          <Text
+            style={
+              Object {
+                "fontSize": 14,
+                "fontWeight": "800",
+              }
+            }
+          />
+          <Text
+            style={
+              Object {
+                "color": "gray",
+                "fontSize": 12,
+              }
+            }
+          >
+            @undefined
+          </Text>
+        </View>
+      </View>
+    </View>
+  </View>
+</View>
+`;
