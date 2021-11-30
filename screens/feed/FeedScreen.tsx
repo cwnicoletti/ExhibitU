@@ -35,8 +35,9 @@ const FeedScreen = (props) => {
   const fadeInAnim = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
-    Animated.spring(fadeInAnim, {
+    Animated.timing(fadeInAnim, {
       toValue: 1,
+      duration: 200,
       useNativeDriver: true,
     }).start();
   }, []);
