@@ -120,7 +120,7 @@ const IntroScreen = (props) => {
               width: 8,
               height: 8,
               backgroundColor: sliderIndex === 0 ? "white" : "gray",
-              borderRadius: "50%",
+              borderRadius: 50,
               marginHorizontal: 10,
             }}
           />
@@ -129,7 +129,7 @@ const IntroScreen = (props) => {
               width: 8,
               height: 8,
               backgroundColor: sliderIndex === 1 ? "white" : "gray",
-              borderRadius: "50%",
+              borderRadius: 50,
               marginHorizontal: 10,
             }}
           />
@@ -138,7 +138,7 @@ const IntroScreen = (props) => {
               width: 8,
               height: 8,
               backgroundColor: sliderIndex === 2 ? "white" : "gray",
-              borderRadius: "50%",
+              borderRadius: 50,
               marginHorizontal: 10,
             }}
           />
@@ -147,7 +147,7 @@ const IntroScreen = (props) => {
               width: 8,
               height: 8,
               backgroundColor: sliderIndex === 3 ? "white" : "gray",
-              borderRadius: "50%",
+              borderRadius: 50,
               marginHorizontal: 10,
             }}
           />
