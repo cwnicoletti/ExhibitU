@@ -344,9 +344,9 @@ const ProfileNavigator = createDrawerNavigator(
             navData.navigation.closeRightDrawer();
             navData.navigation.navigate("Updates");
           }}
-          logoutOnPress={() => {
+          logoutOnPress={async () => {
             dispatch(logout());
-            dispatch(uploadToken(localId, ""));
+            uploadToken(dispatch, localId, false);
             navData.navigation.closeRightDrawer();
             navData.navigation.navigate("Profile");
             navData.navigation.navigate("Notifications");

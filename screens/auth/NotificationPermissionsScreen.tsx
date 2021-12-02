@@ -31,7 +31,7 @@ const NotificationPermissionsScreen = (props) => {
   };
 
   useEffect(() => {
-    uploadToken(dispatch, localId);
+    uploadToken(dispatch, localId, true);
   }, []);
 
   return (
