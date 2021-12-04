@@ -17,6 +17,7 @@ import IoniconsHeaderButton from "../../components/UI_general/header_buttons/Ion
 import { Ionicons } from "@expo/vector-icons";
 import { signup } from "../../store/actions/auth/auth";
 import MainHeaderTitle from "../../components/UI_general/MainHeaderTitle";
+import * as WebBrowser from "expo-web-browser";
 import { setGettingPermissions } from "../../store/actions/signup/signup";
 
 const FORM_INPUT_UPDATE = "FORM_INPUT_UPDATE";
@@ -164,7 +165,36 @@ const SignupScreen2 = (props) => {
               }}
             />
             <Text style={styles.text}>
-              By continuing, you agree to our Terms of Use, and Privacy Policy
+              By continuing, you agree to our{" "}
+              <Text
+                style={{
+                  color: "rgb(0, 187, 207)",
+                  fontSize: 12,
+                  paddingTop: 8,
+                  textAlign: "center",
+                }}
+                onPress={() =>
+                  WebBrowser.openBrowserAsync("https://exhibitu.io/termsofuse")
+                }
+              >
+                Terms of Use
+              </Text>
+              , and{" "}
+              <Text
+                style={{
+                  color: "rgb(0, 187, 207)",
+                  fontSize: 12,
+                  paddingTop: 8,
+                  textAlign: "center",
+                }}
+                onPress={() =>
+                  WebBrowser.openBrowserAsync(
+                    "https://exhibitu.io/privacypolicy"
+                  )
+                }
+              >
+                Privacy Policy
+              </Text>
             </Text>
             {isLoading ? (
               <View
@@ -284,6 +314,7 @@ const styles = StyleSheet.create({
   text: {
     color: "white",
     padding: 10,
+    fontSize: 12,
     textAlign: "center",
   },
   authContainer: {

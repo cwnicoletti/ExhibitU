@@ -18,6 +18,7 @@ import Input from "../../components/UI_general/Input";
 import IoniconsHeaderButton from "../../components/UI_general/header_buttons/IoniconsHeaderButton";
 import { login } from "../../store/actions/auth/auth";
 import MainHeaderTitle from "../../components/UI_general/MainHeaderTitle";
+import * as WebBrowser from "expo-web-browser";
 import uploadToken from "../../helper/uploadToken";
 
 const FORM_INPUT_UPDATE = "FORM_INPUT_UPDATE";
@@ -221,12 +222,41 @@ const LoginScreen = (props) => {
             <Text
               style={{
                 color: "white",
-                fontSize: 12,
+                fontSize: 13,
                 paddingTop: 8,
                 textAlign: "center",
               }}
             >
-              By continuing, you agree to our Terms of Use, and Privacy Policy
+              By continuing, you agree to our{" "}
+              <Text
+                style={{
+                  color: "rgb(0, 187, 207)",
+                  fontSize: 13,
+                  paddingTop: 8,
+                  textAlign: "center",
+                }}
+                onPress={() =>
+                  WebBrowser.openBrowserAsync("https://exhibitu.io/termsofuse")
+                }
+              >
+                Terms of Use
+              </Text>
+              , and{" "}
+              <Text
+                style={{
+                  color: "rgb(0, 187, 207)",
+                  fontSize: 13,
+                  paddingTop: 8,
+                  textAlign: "center",
+                }}
+                onPress={() =>
+                  WebBrowser.openBrowserAsync(
+                    "https://exhibitu.io/privacypolicy"
+                  )
+                }
+              >
+                Privacy Policy
+              </Text>
             </Text>
           </View>
         </View>
