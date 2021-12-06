@@ -1,17 +1,19 @@
 import React from "react";
-import { StyleSheet, Text } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 
 const MainHeaderTitle = (props) => {
   return (
-    <Text
-      style={{
-        ...styles.titleText,
-        color: props.darkModeValue ? "white" : "black",
-        fontFamily: props.fontFamily,
-      }}
-    >
-      {props.titleName}
-    </Text>
+    <View style={{ alignItems: "center" }}>
+      <Text
+        style={{
+          ...styles.titleText,
+          color: props.darkModeValue ? "white" : "black",
+          fontFamily: props.fontFamily,
+        }}
+      >
+        {props.titleName}
+      </Text>
+    </View>
   );
 };
 

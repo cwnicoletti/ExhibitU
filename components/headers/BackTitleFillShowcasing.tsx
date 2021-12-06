@@ -16,7 +16,7 @@ const BackTitleFillShowcasing = ({ navigation }) => {
     <View>
       <View
         style={{
-          padding: 23,
+          padding: Platform.OS === "ios" ? 23 : 0,
           backgroundColor: darkModeValue ? "black" : "white",
         }}
       />

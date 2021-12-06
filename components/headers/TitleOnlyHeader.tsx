@@ -1,5 +1,5 @@
 import React from "react";
-import { Image, Text, View, StatusBar } from "react-native";
+import { Image, Text, View, StatusBar, Platform } from "react-native";
 import { useAppSelector } from "../../hooks";
 import Title from "./headers_components/Title";
 
@@ -19,7 +19,7 @@ const TitleOnlyHeader = () => {
     <View>
       <View
         style={{
-          padding: 23,
+          padding: Platform.OS === "ios" ? 23 : 0,
           backgroundColor: darkModeValue ? "black" : "white",
         }}
       />
