@@ -289,6 +289,16 @@ LoginScreen.navigationOptions = (navData) => {
         />
       </HeaderButtons>
     ),
+    headerRight: () => (
+      <HeaderButtons HeaderButtonComponent={IoniconsHeaderButton}>
+        <Item
+          title="Back"
+          iconName={"ios-arrow-back"}
+          color={"black"}
+          onPress={() => {}}
+        />
+      </HeaderButtons>
+    ),
   };
 };
 
