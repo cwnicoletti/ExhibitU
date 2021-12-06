@@ -49,6 +49,7 @@ const SignupOrLoginScreen = (props) => {
         </Text>
         <Image
           style={styles.image}
+          resizeMode={"contain"}
           source={require("../../assets/ExhibitU_icon_transparent_white.png")}
         />
         <TouchableCmp
@@ -153,8 +154,7 @@ const styles = StyleSheet.create({
     fontSize: 60,
   },
   image: {
-    width: 318,
-    height: 300,
+    height: "35%",
     margin: 40,
   },
   text: {
