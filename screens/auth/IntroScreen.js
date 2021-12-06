@@ -87,17 +87,35 @@ const IntroScreen = (props) => {
         }}
       >
         {sliderIndex === 0 ? (
-          <TouchableCmp
-            style={{ paddingTop: 75, paddingRight: 50, alignSelf: "flex-end" }}
-            onPress={authHandler}
-          >
-            <Text style={{ color: "white", fontSize: 16 }}>Skip</Text>
+          <TouchableCmp onPress={authHandler}>
+            <View
+              style={{
+                paddingTop: 75,
+                paddingRight: 50,
+                alignSelf: "flex-end",
+              }}
+            >
+              <Text
+                style={{
+                  color: "white",
+                  fontSize: 16,
+                }}
+              >
+                Skip
+              </Text>
+            </View>
           </TouchableCmp>
         ) : (
-          <TouchableCmp
-            style={{ paddingTop: 75, paddingRight: 50, alignSelf: "flex-end" }}
-          >
-            <Text style={{ fontSize: 16 }}>Placeholder</Text>
+          <TouchableCmp>
+            <View
+              style={{
+                paddingTop: 75,
+                paddingRight: 50,
+                alignSelf: "flex-end",
+              }}
+            >
+              <Text style={{ fontSize: 16 }}>Placeholder</Text>
+            </View>
           </TouchableCmp>
         )}
         <Carousel
@@ -157,42 +175,58 @@ const IntroScreen = (props) => {
             <ActivityIndicator size="small" color="white" />
           </View>
         ) : (
-          <View style={{ margin: 10, marginBottom: 60 }}>
+          <View
+            style={{
+              margin: 10,
+              marginBottom: 60,
+            }}
+          >
             {sliderIndex === 3 ? (
-              <TouchableCmp
+              <View
                 style={{
                   borderColor: "#007AFF",
                   borderWidth: 1,
-                  alignItems: "center",
                 }}
-                onPress={authHandler}
               >
-                <Text
+                <TouchableCmp
                   style={{
-                    margin: 10,
-                    color: "#007AFF",
-                    fontSize: 16,
+                    alignItems: "center",
                   }}
+                  onPress={authHandler}
                 >
-                  Start
-                </Text>
-              </TouchableCmp>
+                  <Text
+                    style={{
+                      margin: 10,
+                      color: "#007AFF",
+                      fontSize: 16,
+                      textAlign: "center",
+                    }}
+                  >
+                    Start
+                  </Text>
+                </TouchableCmp>
+              </View>
             ) : (
               <View
                 style={{
                   borderWidth: 1,
-                  alignItems: "center",
                 }}
-                onPress={authHandler}
               >
-                <Text
+                <View
                   style={{
-                    margin: 10,
-                    fontSize: 16,
+                    alignItems: "center",
                   }}
+                  onPress={authHandler}
                 >
-                  Start
-                </Text>
+                  <Text
+                    style={{
+                      margin: 10,
+                      fontSize: 16,
+                    }}
+                  >
+                    Start
+                  </Text>
+                </View>
               </View>
             )}
           </View>
