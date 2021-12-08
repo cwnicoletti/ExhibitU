@@ -313,10 +313,6 @@ const ProfileScreen = (props) => {
           }}
         >
           <TouchableCmp
-            style={{
-              ...styles.showcaseContainer,
-              borderColor: darkModeValue ? "gray" : "#c9c9c9",
-            }}
             onPress={() => {
               slideDown();
               dispatch(showcaseProfile());
@@ -325,22 +321,29 @@ const ProfileScreen = (props) => {
           >
             <View
               style={{
-                ...styles.showcaseButton,
+                ...styles.showcaseContainer,
+                borderColor: darkModeValue ? "gray" : "#c9c9c9",
               }}
             >
-              <SimpleLineIcons
-                name="trophy"
-                size={24}
-                color={darkModeValue ? "white" : "black"}
-              />
-              <Text
+              <View
                 style={{
-                  ...styles.showcaseText,
-                  color: darkModeValue ? "white" : "black",
+                  ...styles.showcaseButton,
                 }}
               >
-                Showcase exhibits
-              </Text>
+                <SimpleLineIcons
+                  name="trophy"
+                  size={24}
+                  color={darkModeValue ? "white" : "black"}
+                />
+                <Text
+                  style={{
+                    ...styles.showcaseText,
+                    color: darkModeValue ? "white" : "black",
+                  }}
+                >
+                  Showcase exhibits
+                </Text>
+              </View>
             </View>
           </TouchableCmp>
         </Animated.View>
