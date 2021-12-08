@@ -416,25 +416,26 @@ const EditProfileScreen = (props) => {
         )}
       </View>
       {!isLoadingTempPicture ? (
-        <TouchableCmp
+        <View
           style={{
             margin: 10,
             alignSelf: "center",
           }}
-          onPress={changeProfilePicture}
         >
-          <View
-            style={{
-              alignItems: "center",
-              flexDirection: "row",
-            }}
-          >
-            <Octicons name="pencil" size={14} color="#007AFF" />
-            <Text style={{ margin: 10, color: "#007AFF" }}>
-              Change Profile Picture
-            </Text>
-          </View>
-        </TouchableCmp>
+          <TouchableCmp onPress={changeProfilePicture}>
+            <View
+              style={{
+                alignItems: "center",
+                flexDirection: "row",
+              }}
+            >
+              <Octicons name="pencil" size={14} color="#007AFF" />
+              <Text style={{ margin: 10, color: "#007AFF" }}>
+                Change Profile Picture
+              </Text>
+            </View>
+          </TouchableCmp>
+        </View>
       ) : (
         <View
           style={{
@@ -457,7 +458,7 @@ const EditProfileScreen = (props) => {
           <ActivityIndicator size="small" color="white" />
         </View>
       )}
-      {fileSizeError ? (
+      {fileSizeError && (
         <Text
           style={{
             color: "red",
@@ -470,7 +471,7 @@ const EditProfileScreen = (props) => {
           Picture file size bigger than 6MB. Try cropping or using a different
           picture.
         </Text>
-      ) : null}
+      )}
       <Input
         textLabel={{ color: darkModeValue ? "white" : "black" }}
         id="fullname"
@@ -587,24 +588,27 @@ const EditProfileScreen = (props) => {
             }}
           >
             <TouchableCmp
-              style={{
-                margin: 10,
-                flexDirection: "row",
-                alignItems: "center",
-              }}
               onPress={async () => {
                 await removeLink(i + 1);
               }}
             >
-              <Ionicons name="ios-remove" size={14} color="red" />
-              <Text style={{ margin: 10, color: "red" }}>
-                Remove link {i + 1}
-              </Text>
+              <View
+                style={{
+                  margin: 10,
+                  flexDirection: "row",
+                  alignItems: "center",
+                }}
+              >
+                <Ionicons name="ios-remove" size={14} color="red" />
+                <Text style={{ margin: 10, color: "red" }}>
+                  Remove link {i + 1}
+                </Text>
+              </View>
             </TouchableCmp>
           </View>
         </View>
       ))}
-      {linksState && Object.keys(linksState).length <= 0 ? (
+      {linksState && Object.keys(linksState).length <= 0 && (
         <View
           style={{
             flexDirection: "row",
@@ -612,22 +616,25 @@ const EditProfileScreen = (props) => {
           }}
         >
           <TouchableCmp
-            style={{
-              margin: 10,
-              flexDirection: "row",
-              alignItems: "center",
-            }}
             onPress={async () => {
               await addLink();
             }}
           >
-            <Ionicons name="ios-add" size={14} color="green" />
-            <Text style={{ margin: 10, color: "green" }}>
-              Add a link to profile
-            </Text>
+            <View
+              style={{
+                margin: 10,
+                flexDirection: "row",
+                alignItems: "center",
+              }}
+            >
+              <Ionicons name="ios-add" size={14} color="green" />
+              <Text style={{ margin: 10, color: "green" }}>
+                Add a link to profile
+              </Text>
+            </View>
           </TouchableCmp>
         </View>
-      ) : null}
+      )}
       {linksState && Object.keys(linksState).length > 0 ? (
         <View
           style={{
@@ -636,34 +643,40 @@ const EditProfileScreen = (props) => {
           }}
         >
           <TouchableCmp
-            style={{
-              margin: 10,
-              flexDirection: "row",
-              alignItems: "center",
-            }}
             onPress={async () => {
               await addLink();
             }}
           >
-            <Ionicons name="ios-add" size={14} color="green" />
-            <Text style={{ margin: 10, color: "green" }}>Add another link</Text>
+            <View
+              style={{
+                margin: 10,
+                flexDirection: "row",
+                alignItems: "center",
+              }}
+            >
+              <Ionicons name="ios-add" size={14} color="green" />
+              <Text style={{ margin: 10, color: "green" }}>
+                Add another link
+              </Text>
+            </View>
           </TouchableCmp>
         </View>
       ) : null}
       {!isLoading ? (
-        <TouchableCmp
-          style={{
-            margin: 20,
-            alignSelf: "center",
-            alignItems: "center",
-            flexDirection: "row",
-          }}
-          onPress={submitHandler}
-        >
-          <Text style={{ margin: 10, color: "#007AFF" }}>
-            Confirm profile edits
-          </Text>
-          <Ionicons name="ios-checkmark" size={18} color="#007AFF" />
+        <TouchableCmp onPress={submitHandler}>
+          <View
+            style={{
+              margin: 20,
+              alignSelf: "center",
+              alignItems: "center",
+              flexDirection: "row",
+            }}
+          >
+            <Text style={{ margin: 10, color: "#007AFF" }}>
+              Confirm profile edits
+            </Text>
+            <Ionicons name="ios-checkmark" size={18} color="#007AFF" />
+          </View>
         </TouchableCmp>
       ) : (
         <View
