@@ -146,7 +146,7 @@ const AddExhibitScreen = (props) => {
       base64: true,
       quality: 1,
     });
-    
+
     await setIsLoadingTempPicture(true);
     if (!result.cancelled) {
       const fileSize = result.base64.length * (3 / 4) - 2;
@@ -311,25 +311,26 @@ const AddExhibitScreen = (props) => {
         </View>
         <View style={styles.form}>
           {!isLoadingTempPicture ? (
-            <TouchableCmp
+            <View
               style={{
-                margin: 10,
-                alignSelf: "center",
+                alignItems: "center",
               }}
-              onPress={changeExhibitCoverPicture}
             >
-              <View
-                style={{
-                  alignItems: "center",
-                  flexDirection: "row",
-                }}
-              >
-                <Ionicons name="ios-add" size={14} color="#007AFF" />
-                <Text style={{ margin: 10, color: "#007AFF" }}>
-                  Add Exhibit Cover Photo
-                </Text>
-              </View>
-            </TouchableCmp>
+              <TouchableCmp onPress={changeExhibitCoverPicture}>
+                <View
+                  style={{
+                    margin: 10,
+                    alignItems: "center",
+                    flexDirection: "row",
+                  }}
+                >
+                  <Ionicons name="ios-add" size={14} color="#007AFF" />
+                  <Text style={{ margin: 10, color: "#007AFF" }}>
+                    Add Exhibit Cover Photo
+                  </Text>
+                </View>
+              </TouchableCmp>
+            </View>
           ) : (
             <View
               style={{
@@ -470,10 +471,12 @@ const AddExhibitScreen = (props) => {
                     await removeLink(i + 1);
                   }}
                 >
-                  <Ionicons name="ios-remove" size={14} color="red" />
-                  <Text style={{ margin: 10, color: "red" }}>
-                    Remove link {i + 1}
-                  </Text>
+                  <View>
+                    <Ionicons name="ios-remove" size={14} color="red" />
+                    <Text style={{ margin: 10, color: "red" }}>
+                      Remove link {i + 1}
+                    </Text>
+                  </View>
                 </TouchableCmp>
               </View>
             </View>
@@ -486,23 +489,26 @@ const AddExhibitScreen = (props) => {
               }}
             >
               <TouchableCmp
-                style={{
-                  margin: 10,
-                  flexDirection: "row",
-                  alignItems: "center",
-                }}
                 onPress={async () => {
                   await addLink();
                 }}
               >
-                <Ionicons name="ios-add" size={14} color="green" />
-                <Text style={{ margin: 10, color: "green" }}>
-                  Add a link to exhibit
-                </Text>
+                <View
+                  style={{
+                    margin: 10,
+                    flexDirection: "row",
+                    alignItems: "center",
+                  }}
+                >
+                  <Ionicons name="ios-add" size={14} color="green" />
+                  <Text style={{ margin: 10, color: "green" }}>
+                    Add a link to exhibit
+                  </Text>
+                </View>
               </TouchableCmp>
             </View>
           ) : null}
-          {linksState && Object.keys(linksState).length > 0 ? (
+          {linksState && Object.keys(linksState).length > 0 && (
             <View
               style={{
                 flexDirection: "row",
@@ -510,65 +516,72 @@ const AddExhibitScreen = (props) => {
               }}
             >
               <TouchableCmp
-                style={{
-                  margin: 10,
-                  flexDirection: "row",
-                  alignItems: "center",
-                }}
                 onPress={async () => {
                   await addLink();
                 }}
               >
-                <Ionicons name="ios-add" size={14} color="green" />
-                <Text style={{ margin: 10, color: "green" }}>
-                  Add another link
-                </Text>
+                <View
+                  style={{
+                    margin: 10,
+                    flexDirection: "row",
+                    alignItems: "center",
+                  }}
+                >
+                  <Ionicons name="ios-add" size={14} color="green" />
+                  <Text style={{ margin: 10, color: "green" }}>
+                    Add another link
+                  </Text>
+                </View>
               </TouchableCmp>
             </View>
-          ) : null}
+          )}
         </View>
         {!isLoading ? (
-          <TouchableCmp
+          <View
             style={{
-              margin: 10,
+              margin: 20,
               alignSelf: "center",
               alignItems: "center",
               flexDirection: "row",
             }}
-            onPress={submitHandler}
-            disabled={
-              !exhibitTempCoverPhotoUrl || formState.formIsValid === false
-            }
           >
-            <View
-              style={{
-                margin: 10,
-                alignItems: "center",
-                flexDirection: "row",
-              }}
+            <TouchableCmp
+              onPress={submitHandler}
+              disabled={
+                !exhibitTempCoverPhotoUrl || formState.formIsValid === false
+              }
             >
-              <Text
+              <View
                 style={{
                   margin: 10,
-                  color:
-                    !exhibitTempCoverPhotoUrl || formState.formIsValid === false
-                      ? "gray"
-                      : "#007AFF",
+                  alignItems: "center",
+                  flexDirection: "row",
                 }}
               >
-                Confirm and create exhibit
-              </Text>
-              <Ionicons
-                name="ios-checkmark"
-                size={18}
-                color={
-                  !exhibitTempCoverPhotoUrl || formState.formIsValid === false
-                    ? "gray"
-                    : "#007AFF"
-                }
-              />
-            </View>
-          </TouchableCmp>
+                <Text
+                  style={{
+                    margin: 10,
+                    color:
+                      !exhibitTempCoverPhotoUrl ||
+                      formState.formIsValid === false
+                        ? "gray"
+                        : "#007AFF",
+                  }}
+                >
+                  Confirm and create exhibit
+                </Text>
+                <Ionicons
+                  name="ios-checkmark"
+                  size={18}
+                  color={
+                    !exhibitTempCoverPhotoUrl || formState.formIsValid === false
+                      ? "gray"
+                      : "#007AFF"
+                  }
+                />
+              </View>
+            </TouchableCmp>
+          </View>
         ) : (
           <View
             style={{
