@@ -318,25 +318,26 @@ const EditProfileScreen = (props) => {
         </View>
         <View style={styles.form}>
           {!isLoadingTempPicture ? (
-            <TouchableCmp
+            <View
               style={{
                 margin: 10,
                 alignSelf: "center",
               }}
-              onPress={addExhibitPicture}
             >
-              <View
-                style={{
-                  alignItems: "center",
-                  flexDirection: "row",
-                }}
-              >
-                <Ionicons name="ios-add" size={14} color="#007AFF" />
-                <Text style={{ margin: 10, color: "#007AFF" }}>
-                  Add Picture
-                </Text>
-              </View>
-            </TouchableCmp>
+              <TouchableCmp onPress={addExhibitPicture}>
+                <View
+                  style={{
+                    alignItems: "center",
+                    flexDirection: "row",
+                  }}
+                >
+                  <Ionicons name="ios-add" size={14} color="#007AFF" />
+                  <Text style={{ margin: 10, color: "#007AFF" }}>
+                    Add Picture
+                  </Text>
+                </View>
+              </TouchableCmp>
+            </View>
           ) : (
             <View
               style={{
@@ -451,19 +452,22 @@ const EditProfileScreen = (props) => {
                 }}
               >
                 <TouchableCmp
-                  style={{
-                    margin: 10,
-                    flexDirection: "row",
-                    alignItems: "center",
-                  }}
                   onPress={async () => {
                     await removeLink(i + 1);
                   }}
                 >
-                  <Ionicons name="ios-remove" size={14} color="red" />
-                  <Text style={{ margin: 10, color: "red" }}>
-                    Remove link {i + 1}
-                  </Text>
+                  <View
+                    style={{
+                      margin: 10,
+                      flexDirection: "row",
+                      alignItems: "center",
+                    }}
+                  >
+                    <Ionicons name="ios-remove" size={14} color="red" />
+                    <Text style={{ margin: 10, color: "red" }}>
+                      Remove link {i + 1}
+                    </Text>
+                  </View>
                 </TouchableCmp>
               </View>
             </View>
@@ -476,19 +480,22 @@ const EditProfileScreen = (props) => {
               }}
             >
               <TouchableCmp
-                style={{
-                  margin: 10,
-                  flexDirection: "row",
-                  alignItems: "center",
-                }}
                 onPress={async () => {
                   await addLink();
                 }}
               >
-                <Ionicons name="ios-add" size={14} color="green" />
-                <Text style={{ margin: 10, color: "green" }}>
-                  Add a link to post
-                </Text>
+                <View
+                  style={{
+                    margin: 10,
+                    flexDirection: "row",
+                    alignItems: "center",
+                  }}
+                >
+                  <Ionicons name="ios-add" size={14} color="green" />
+                  <Text style={{ margin: 10, color: "green" }}>
+                    Add a link to post
+                  </Text>
+                </View>
               </TouchableCmp>
             </View>
           ) : null}
@@ -500,55 +507,61 @@ const EditProfileScreen = (props) => {
               }}
             >
               <TouchableCmp
-                style={{
-                  margin: 10,
-                  flexDirection: "row",
-                  alignItems: "center",
-                }}
                 onPress={async () => {
                   await addLink();
                 }}
               >
-                <Ionicons name="ios-add" size={14} color="green" />
-                <Text style={{ margin: 10, color: "green" }}>
-                  Add another link
-                </Text>
+                <View
+                  style={{
+                    margin: 10,
+                    flexDirection: "row",
+                    alignItems: "center",
+                  }}
+                >
+                  <Ionicons name="ios-add" size={14} color="green" />
+                  <Text style={{ margin: 10, color: "green" }}>
+                    Add another link
+                  </Text>
+                </View>
               </TouchableCmp>
             </View>
           ) : null}
         </View>
         {!isLoading ? (
           <TouchableCmp
-            style={{
-              margin: 10,
-              alignSelf: "center",
-              alignItems: "center",
-              flexDirection: "row",
-            }}
             onPress={submitHandler}
             disabled={!tempPhotoPostUrl || formState.formIsValid === false}
           >
-            <Text
+            <View
               style={{
-                margin: 20,
-                marginRight: 10,
-                color:
-                  !tempPhotoPostUrl || formState.formIsValid === false
-                    ? "gray"
-                    : "#007AFF",
+                margin: 10,
+                alignSelf: "center",
+                alignItems: "center",
+                flexDirection: "row",
               }}
             >
-              Confirm and post
-            </Text>
-            <Ionicons
-              name="ios-checkmark"
-              size={18}
-              color={
-                !tempPhotoPostUrl || formState.formIsValid === false
-                  ? "gray"
-                  : "#007AFF"
-              }
-            />
+              <Text
+                style={{
+                  margin: 20,
+                  marginRight: 10,
+                  color:
+                    !tempPhotoPostUrl || formState.formIsValid === false
+                      ? "gray"
+                      : "#007AFF",
+                }}
+              >
+                Confirm and post
+              </Text>
+              <Ionicons
+                name="ios-checkmark"
+                size={18}
+                color={
+                  !tempPhotoPostUrl || formState.formIsValid === false
+                    ? "gray"
+                    : "#007AFF"
+                }
+              />
+            </View>
           </TouchableCmp>
         ) : (
           <View
