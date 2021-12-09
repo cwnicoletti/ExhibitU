@@ -1,8 +1,3 @@
-import {
-  Feather,
-  MaterialCommunityIcons,
-  SimpleLineIcons,
-} from "@expo/vector-icons";
 import React from "react";
 import {
   Platform,
@@ -13,6 +8,11 @@ import {
   View,
   StyleSheet,
 } from "react-native";
+import {
+  Feather,
+  MaterialCommunityIcons,
+  SimpleLineIcons,
+} from "@expo/vector-icons";
 import { useAppSelector } from "../../hooks";
 
 const RightDrawer = (props) => {

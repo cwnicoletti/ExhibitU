@@ -1,5 +1,5 @@
 import React from "react";
-import { Image, SafeAreaView, Text, View } from "react-native";
+import { Image, SafeAreaView, Text, View, StyleSheet } from "react-native";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import { setDarkMode } from "../../store/actions/user/user";
 import FilterSwitch from "../UI_general/FilterSwitch";
@@ -17,28 +17,20 @@ const LeftDrawer = () => {
   return (
     <View
       style={{
-        flex: 1,
-        padding: 20,
+        ...styles.drawerContainer,
         backgroundColor: darkModeValue ? "black" : "white",
       }}
     >
       <View
         style={{
-          alignItems: "center",
-          justifyContent: "center",
-          borderBottomWidth: 1,
+          ...styles.userHeaderContainer,
           borderBottomColor: darkModeValue ? "white" : "black",
         }}
       >
         <SafeAreaView>
-          <View
-            style={{
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
+          <View style={styles.userHeader}>
             <Image
-              style={{ height: 50, width: 50, borderRadius: 50 / 2 }}
+              style={styles.profileIcon}
               source={
                 profilePictureUrl
                   ? { uri: profilePictureUrl }
@@ -47,9 +39,8 @@ const LeftDrawer = () => {
             />
             <Text
               style={{
+                ...styles.fullname,
                 color: darkModeValue ? "white" : "black",
-                fontSize: 16,
-                margin: 10,
               }}
             >
               {fullname}
@@ -57,20 +48,10 @@ const LeftDrawer = () => {
           </View>
         </SafeAreaView>
       </View>
-      <View
-        style={{
-          flex: 1,
-          justifyContent: "flex-end",
-        }}
-      >
+      <View style={styles.switchContainer}>
         <SafeAreaView>
           <FilterSwitch
-            viewStyle={{
-              flexDirection: "row",
-              justifyContent: "space-between",
-              alignItems: "center",
-              margin: 10,
-            }}
+            viewStyle={styles.switchStyle}
             labelStyle={{
               color: darkModeValue ? "white" : "black",
             }}
@@ -85,5 +66,46 @@ const LeftDrawer = () => {
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  drawerContainer: {
+    flex: 1,
+    padding: 20,
+  },
+
+  userHeaderContainer: {
+    alignItems: "center",
+    justifyContent: "center",
+    borderBottomWidth: 1,
+  },
+
+  userHeader: {
+    alignItems: "center",
+    justifyContent: "center",
+  },
+
+  profileIcon: {
+    height: 50,
+    width: 50,
+    borderRadius: 50 / 2,
+  },
+
+  fullname: {
+    fontSize: 16,
+    margin: 10,
+  },
+
+  switchContainer: {
+    flex: 1,
+    justifyContent: "flex-end",
+  },
+
+  switchStyle: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    margin: 10,
+  },
+});
 
 export default LeftDrawer;
