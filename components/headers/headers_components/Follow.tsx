@@ -57,7 +57,19 @@ const Follow = (props) => {
             </props.View>
           )}
         </props.View>
-      ) : null}
+      ) : (
+        <props.View
+          style={{
+            flex: 1,
+            marginLeft: 23,
+            marginRight: 23,
+            padding: 10,
+            borderBottomWidth: 1,
+            borderColor: "gray",
+            backgroundColor: props.darkModeValue ? "black" : "white",
+          }}
+        />
+      )}
     </props.View>
   );
 };
