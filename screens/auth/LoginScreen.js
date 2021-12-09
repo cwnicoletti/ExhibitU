@@ -50,11 +50,9 @@ const LoginScreen = (props) => {
   const dispatch = useAppDispatch();
   const [isLoading, setIsLoading] = useState(false);
 
-  let android = null;
   let TouchableCmp = TouchableOpacity;
   if (Platform.OS === "android") {
     TouchableCmp = TouchableNativeFeedback;
-    android = true;
   }
 
   const [formState, dispatchFormState] = useReducer(formReducer, {

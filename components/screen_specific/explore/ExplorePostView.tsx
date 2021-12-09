@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import {
   Animated,
   Dimensions,
@@ -120,7 +120,7 @@ const ExplorePostView = (props) => {
     }
   };
 
-  let secondnow = null;
+  let secondnow;
   const handleToubleTap = async () => {
     const now = Date.now();
     if (now - secondnow < 200) {
@@ -179,7 +179,7 @@ const ExplorePostView = (props) => {
   };
 
   return (
-    <View style={{ ...styles.exhibit, ...props.exhibitContainer }}>
+    <View>
       <TouchableWithoutFeedback
         onPress={() => {
           if (!processingWholeCheer) {
@@ -208,7 +208,7 @@ const ExplorePostView = (props) => {
                     borderRadius: 50 / 2,
                   }}
                 >
-                  {profileImageIsLoading ? (
+                  {profileImageIsLoading && (
                     <AnimatedGradient
                       style={{
                         position: "absolute",
@@ -221,7 +221,7 @@ const ExplorePostView = (props) => {
                       start={{ x: 0, y: 0 }}
                       end={{ x: 1, y: 0 }}
                     />
-                  ) : null}
+                  )}
                   <Image
                     style={{
                       height: 45,
@@ -255,7 +255,7 @@ const ExplorePostView = (props) => {
                   >
                     {fullname}
                   </Text>
-                  {jobTitle ? (
+                  {jobTitle && (
                     <Text
                       style={{
                         color: "white",
@@ -266,7 +266,7 @@ const ExplorePostView = (props) => {
                     >
                       {jobTitle}
                     </Text>
-                  ) : null}
+                  )}
                   <Text
                     style={{
                       color: "grey",
@@ -323,7 +323,7 @@ const ExplorePostView = (props) => {
               )}
             </View>
           </View>
-          {imageIsLoading ? (
+          {imageIsLoading && (
             <AnimatedGradient
               style={{
                 height: photoHeight,
@@ -335,7 +335,7 @@ const ExplorePostView = (props) => {
               start={{ x: 0, y: 0 }}
               end={{ x: 1, y: 0 }}
             />
-          ) : null}
+          )}
           <ImageBackground
             style={{
               height: photoHeight,
@@ -346,7 +346,7 @@ const ExplorePostView = (props) => {
               setImageIsLoading(false);
             }}
           >
-            {showClapping ? (
+            {showClapping && (
               <Animated.View
                 style={{
                   flex: 1,
@@ -379,7 +379,7 @@ const ExplorePostView = (props) => {
                   />
                 )}
               </Animated.View>
-            ) : null}
+            )}
           </ImageBackground>
         </View>
       </TouchableWithoutFeedback>
@@ -392,30 +392,28 @@ const ExplorePostView = (props) => {
         <View style={{ alignItems: "center" }}>
           <LinksList links={links} />
         </View>
-        {showCheering ? (
-          props.numberOfCheers >= 1 ? (
-            <TouchableCmp onPress={props.onSelectCheering}>
-              <View style={{ flexDirection: "row" }}>
-                <Text
-                  style={{
-                    ...styles.pictureCheerNumber,
-                    ...props.pictureCheerNumber,
-                  }}
-                >
-                  {props.numberOfCheers}
-                </Text>
-                <Text
-                  style={{
-                    ...styles.pictureCheerText,
-                    ...props.pictureCheerText,
-                  }}
-                >
-                  cheering
-                </Text>
-              </View>
-            </TouchableCmp>
-          ) : null
-        ) : null}
+        {showCheering && props.numberOfCheers >= 1 && (
+          <TouchableCmp onPress={props.onSelectCheering}>
+            <View style={{ flexDirection: "row" }}>
+              <Text
+                style={{
+                  ...styles.pictureCheerNumber,
+                  ...props.pictureCheerNumber,
+                }}
+              >
+                {props.numberOfCheers}
+              </Text>
+              <Text
+                style={{
+                  ...styles.pictureCheerText,
+                  ...props.pictureCheerText,
+                }}
+              >
+                cheering
+              </Text>
+            </View>
+          </TouchableCmp>
+        )}
       </View>
       <View style={{ ...styles.captionContainer, ...props.captionContainer }}>
         <Text
@@ -437,11 +435,6 @@ const ExplorePostView = (props) => {
 };
 
 const styles = StyleSheet.create({
-  exhibit: {},
-  title: {
-    fontSize: 14,
-    fontWeight: "bold",
-  },
   caption: {
     textAlign: "center",
     margin: 10,

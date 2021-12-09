@@ -14,24 +14,15 @@ const ExploreUserTitle = (props) => {
   ]);
 
   return (
-    <View
-      style={{ justifyContent: "center", alignItems: "center", margin: 10 }}
-    >
-      {profileImageIsLoading ? (
+    <View style={styles.userTitleContainer}>
+      {profileImageIsLoading && (
         <AnimatedGradient
-          style={{
-            top: 0,
-            position: "absolute",
-            zIndex: 3,
-            height: 100,
-            width: 100,
-            borderRadius: 100 / 2,
-          }}
+          style={styles.loadingGradient}
           colors={greyColorValues}
           start={{ x: 0, y: 0 }}
           end={{ x: 1, y: 0 }}
         />
-      ) : null}
+      )}
       <Image
         style={{ ...styles.showCaseLocalImage, ...props.style }}
         source={sourceImg}
@@ -43,17 +34,32 @@ const ExploreUserTitle = (props) => {
         }}
       />
       <Text style={props.fullnameStyle}>{props.fullname}</Text>
-      {props.jobTitle ? (
+      {props.jobTitle && (
         <Text style={props.jobTitleStyle}>{props.jobTitle}</Text>
-      ) : null}
-      {props.username ? (
+      )}
+      {props.username && (
         <Text style={props.usernameStyle}>{props.username}</Text>
-      ) : null}
+      )}
     </View>
   );
 };
 
 const styles = StyleSheet.create({
+  userTitleContainer: {
+    justifyContent: "center",
+    alignItems: "center",
+    margin: 10,
+  },
+
+  loadingGradient: {
+    top: 0,
+    position: "absolute",
+    zIndex: 3,
+    height: 100,
+    width: 100,
+    borderRadius: 100 / 2,
+  },
+
   showCaseLocalImage: {
     height: 100,
     width: 100,

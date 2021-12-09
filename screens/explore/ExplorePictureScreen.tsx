@@ -95,9 +95,6 @@ const ExplorePictureScreen = (props) => {
       }}
     >
       <ExplorePostView
-        containerStyle={{
-          borderBottomColor: darkModeValue ? "white" : "black",
-        }}
         image={{ uri: postPhotoUrl }}
         descriptionStyle={{
           ...styles.profileDescriptionStyle,
