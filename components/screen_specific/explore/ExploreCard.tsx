@@ -84,27 +84,33 @@ const styles = StyleSheet.create({
     width: "100%",
     justifyContent: "center",
   },
+
   image: {
     height: 60,
     width: 60,
     borderRadius: 60 / 2,
   },
+
   fullname: {
     fontWeight: "800",
     fontSize: 14,
   },
+
   jobTitle: {
     fontWeight: "500",
     fontSize: 12,
   },
+
   username: {
     color: "gray",
     fontSize: 12,
   },
+
   details: {
     marginLeft: 10,
     justifyContent: "center",
   },
+  
   touchable: {
     overflow: "hidden",
   },

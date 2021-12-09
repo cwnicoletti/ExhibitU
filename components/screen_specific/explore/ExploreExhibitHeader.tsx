@@ -18,12 +18,7 @@ const ExploreExhibitHeader = (props) => {
     <View style={{ ...styles.container, ...props.containerStyle }}>
       {imageIsLoading ? (
         <AnimatedGradient
-          style={{
-            width: "100%",
-            height: 350,
-            position: "absolute",
-            zIndex: 3,
-          }}
+          style={styles.gradient}
           colors={greyColorValues}
           start={{ x: 0, y: 0 }}
           end={{ x: 1, y: 0 }}
@@ -41,17 +36,14 @@ const ExploreExhibitHeader = (props) => {
       />
       <View
         style={{
-          alignItems: "center",
+          ...styles.titleContainer,
           borderBottomColor: darkModeValue ? "white" : "black",
-          borderBottomWidth: 1,
         }}
       >
         <Text
           style={{
+            ...styles.titleText,
             color: darkModeValue ? "white" : "black",
-            fontWeight: "bold",
-            fontSize: 18,
-            margin: 10,
           }}
         >
           {props.title}
@@ -67,12 +59,32 @@ const styles = StyleSheet.create({
   container: {
     alignItems: "center",
   },
-  descriptionStyle: {
-    margin: 50,
+
+  gradient: {
+    width: "100%",
+    height: 350,
+    position: "absolute",
+    zIndex: 3,
   },
+
   image: {
     height: 350,
     width: "100%",
+  },
+
+  titleContainer: {
+    alignItems: "center",
+    borderBottomWidth: 1,
+  },
+
+  titleText: {
+    fontWeight: "bold",
+    fontSize: 18,
+    margin: 10,
+  },
+
+  descriptionStyle: {
+    margin: 50,
   },
 });
 
