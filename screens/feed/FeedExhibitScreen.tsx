@@ -140,9 +140,6 @@ const FeedExhibitScreen = (props) => {
   const topHeader = () => {
     return (
       <ExhibitHeader
-        containerStyle={{
-          borderBottomColor: darkModeValue ? "white" : "black",
-        }}
         imgSource={
           exhibit.exhibitCoverPhotoBase64
             ? exhibit.exhibitCoverPhotoBase64

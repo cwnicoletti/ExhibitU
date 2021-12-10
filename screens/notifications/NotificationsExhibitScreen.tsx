@@ -248,9 +248,6 @@ const NotificationsExhibitScreen = (props) => {
   const topHeader = () => {
     return (
       <ExhibitHeader
-        containerStyle={{
-          borderBottomColor: darkModeValue ? "white" : "black",
-        }}
         imgSource={exploredExhibitData.exhibitCoverPhotoUrl}
         descriptionStyle={{
           ...styles.profileDescriptionStyle,

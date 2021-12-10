@@ -15,17 +15,17 @@ const ExhibitHeader = (props) => {
   const links = props.links ? Object.values(props.links) : [];
 
   return (
-    <View style={{ ...styles.container, ...props.containerStyle }}>
-      {imageIsLoading ? (
+    <View style={styles.container}>
+      {imageIsLoading && (
         <AnimatedGradient
           style={styles.gradient}
           colors={greyColorValues}
           start={{ x: 0, y: 0 }}
           end={{ x: 1, y: 0 }}
         />
-      ) : null}
+      )}
       <Image
-        style={{ ...styles.image, ...props.style }}
+        style={styles.image}
         source={
           props.imgSource
             ? { uri: props.imgSource }
@@ -38,12 +38,7 @@ const ExhibitHeader = (props) => {
           setImageIsLoading(false);
         }}
       />
-      <View
-        style={{
-          ...styles.titleContainer,
-          borderBottomColor: darkModeValue ? "white" : "black",
-        }}
-      >
+      <View style={styles.titleContainer}>
         <Text
           style={{
             ...styles.titleText,
