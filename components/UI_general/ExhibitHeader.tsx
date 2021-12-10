@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { Image, StyleSheet, Text, View } from "react-native";
-import { useAppSelector } from "../../../hooks";
-import { AnimatedGradient } from "../../custom/AnimatedGradient/AnimatedGradient";
-import LinksList from "../../UI_general/LinksList";
+import { useAppSelector } from "../../hooks";
+import { AnimatedGradient } from "../custom/AnimatedGradient/AnimatedGradient";
+import LinksList from "./LinksList";
 
-const ExploreExhibitHeader = (props) => {
+const ExhibitHeader = (props) => {
   const darkModeValue = useAppSelector((state) => state.user.darkMode);
   const [imageIsLoading, setImageIsLoading] = useState(true);
   const [greyColorValues, setGreyColorValues] = useState([
@@ -26,7 +26,11 @@ const ExploreExhibitHeader = (props) => {
       ) : null}
       <Image
         style={{ ...styles.image, ...props.style }}
-        source={props.imgSource}
+        source={
+          props.imgSource
+            ? { uri: props.imgSource }
+            : require("../../../assets/default-post-icon.png")
+        }
         onLoadStart={() => {
           setGreyColorValues(["rgba(0,0,0,1)", "rgba(50,50,50,1)"]);
         }}
@@ -62,14 +66,13 @@ const styles = StyleSheet.create({
 
   gradient: {
     width: "100%",
-    height: 350,
+    height: "100%",
     position: "absolute",
     zIndex: 3,
   },
 
-  image: {
-    height: 350,
-    width: "100%",
+  descriptionStyle: {
+    margin: 50,
   },
 
   titleContainer: {
@@ -83,9 +86,10 @@ const styles = StyleSheet.create({
     margin: 10,
   },
 
-  descriptionStyle: {
-    margin: 50,
+  image: {
+    height: 350,
+    width: "100%",
   },
 });
 
-export default ExploreExhibitHeader;
+export default ExhibitHeader;

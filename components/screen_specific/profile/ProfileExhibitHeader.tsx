@@ -13,7 +13,7 @@ import { useAppSelector } from "../../../hooks";
 import EditButton from "../../UI_general/EditButton";
 import LinksList from "../../UI_general/LinksList";
 
-const ExhibitHeader = (props) => {
+const ProfileExhibitHeader = (props) => {
   const darkModeValue = useAppSelector((state) => state.user.darkMode);
   const links = Object.values(props.links);
 
@@ -270,4 +270,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ExhibitHeader;
+export default ProfileExhibitHeader;

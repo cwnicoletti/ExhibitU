@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { FlatList, Platform, StyleSheet, View } from "react-native";
 import { useAppSelector } from "../../hooks";
-import ExploreExhibitHeader from "../../components/screen_specific/explore/ExploreExhibitHeader";
 import ExhibitPictures from "../../components/UI_general/ExhibitPictures";
 import useDidMountEffect from "../../helper/useDidMountEffect";
 import getExlusiveBothSetsDifference from "../../helper/getExlusiveBothSetsDifference";
+import ExhibitHeader from "../../components/UI_general/ExhibitHeader";
 
 const NotificationsExhibitScreen = (props) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -247,7 +247,7 @@ const NotificationsExhibitScreen = (props) => {
 
   const topHeader = () => {
     return (
-      <ExploreExhibitHeader
+      <ExhibitHeader
         containerStyle={{
           borderBottomColor: darkModeValue ? "white" : "black",
         }}

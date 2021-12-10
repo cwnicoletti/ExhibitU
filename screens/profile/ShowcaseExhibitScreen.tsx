@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { FlatList, Platform, StyleSheet, View } from "react-native";
 import { useAppSelector } from "../../hooks";
-import ShowcaseExhibitHeader from "../../components/screen_specific/profile/ShowcaseExhibitHeader";
 import useDidMountEffect from "../../helper/useDidMountEffect";
 import ExhibitPictures from "../../components/UI_general/ExhibitPictures";
+import ExhibitHeader from "../../components/UI_general/ExhibitHeader";
 
 const ShowcaseExhibitScreen = (props) => {
   const darkModeValue = useAppSelector((state) => state.user.darkMode);
@@ -75,7 +75,7 @@ const ShowcaseExhibitScreen = (props) => {
 
   const topHeader = () => {
     return (
-      <ShowcaseExhibitHeader
+      <ExhibitHeader
         containerStyle={{
           borderBottomColor: darkModeValue ? "white" : "black",
         }}

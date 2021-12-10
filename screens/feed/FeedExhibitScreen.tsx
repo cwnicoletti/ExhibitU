@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { FlatList, Platform, StyleSheet, View } from "react-native";
 import { useAppSelector } from "../../hooks";
-import FeedExhibitHeader from "../../components/screen_specific/feed/FeedExhibitHeader";
 import useDidMountEffect from "../../helper/useDidMountEffect";
 import ExhibitPictures from "../../components/UI_general/ExhibitPictures";
+import ExhibitHeader from "../../components/UI_general/ExhibitHeader";
 
 const FeedExhibitScreen = (props) => {
   const darkModeValue = useAppSelector((state) => state.user.darkMode);
@@ -139,7 +139,7 @@ const FeedExhibitScreen = (props) => {
 
   const topHeader = () => {
     return (
-      <FeedExhibitHeader
+      <ExhibitHeader
         containerStyle={{
           borderBottomColor: darkModeValue ? "white" : "black",
         }}
