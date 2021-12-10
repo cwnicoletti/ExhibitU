@@ -43,19 +43,14 @@ const ExhibitItem = (props) => {
         <TouchableCmp onPress={props.onSelect} useForeground>
           <View>
             <View style={{ ...styles.imageContainer, ...props.imageContainer }}>
-              {imageIsLoading ? (
+              {imageIsLoading && (
                 <AnimatedGradient
-                  style={{
-                    width: "100%",
-                    height: "100%",
-                    position: "absolute",
-                    zIndex: 3,
-                  }}
+                  style={styles.gradient}
                   colors={greyColorValues}
                   start={{ x: 0, y: 0 }}
                   end={{ x: 1, y: 0 }}
                 />
-              ) : null}
+              )}
               <Image
                 style={styles.image}
                 source={{ uri: props.image }}
@@ -89,14 +84,24 @@ const styles = StyleSheet.create({
   exhibit: {
     height: 300,
   },
+
+  gradient: {
+    width: "100%",
+    height: "100%",
+    position: "absolute",
+    zIndex: 3,
+  },
+
   image: {
     width: "100%",
     height: "100%",
   },
+
   title: {
     fontSize: 14,
     textAlign: "center",
   },
+
   details: {
     alignItems: "center",
     justifyContent: "center",
@@ -104,9 +109,11 @@ const styles = StyleSheet.create({
     width: "100%",
     padding: 10,
   },
+
   touchable: {
     overflow: "hidden",
   },
+
   imageContainer: {
     width: "100%",
     height: "75%",

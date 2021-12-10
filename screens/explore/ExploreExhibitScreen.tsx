@@ -90,7 +90,7 @@ const ExploreExhibitScreen = (props) => {
         containerStyle={{
           borderBottomColor: darkModeValue ? "white" : "black",
         }}
-        imgSource={{ uri: exploredExhibitData.exhibitCoverPhotoUrl }}
+        imgSource={exploredExhibitData.exhibitCoverPhotoUrl}
         descriptionStyle={{
           ...styles.profileDescriptionStyle,
           color: darkModeValue ? "white" : "black",

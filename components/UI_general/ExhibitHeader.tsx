@@ -29,7 +29,7 @@ const ExhibitHeader = (props) => {
         source={
           props.imgSource
             ? { uri: props.imgSource }
-            : require("../../../assets/default-post-icon.png")
+            : require("../../assets/default-post-icon.png")
         }
         onLoadStart={() => {
           setGreyColorValues(["rgba(0,0,0,1)", "rgba(50,50,50,1)"]);
