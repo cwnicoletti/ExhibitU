@@ -1,9 +1,9 @@
 import React from "react";
 import renderer from "react-test-renderer";
-import ExploreExhibitHeader from "../ExploreExhibitHeader";
-import authReducer from "../../../../store/reducers/auth";
-import signupReducer from "../../../../store/reducers/signup";
-import userReducer from "../../../../store/reducers/user";
+import MenuTitleSettings from "../MenuTitleSettings";
+import authReducer from "../../../store/reducers/auth";
+import signupReducer from "../../../store/reducers/signup";
+import userReducer from "../../../store/reducers/user";
 import { Provider } from "react-redux";
 import { applyMiddleware, combineReducers, createStore } from "redux";
 import ReduxThunk from "redux-thunk";
@@ -20,7 +20,7 @@ test("matches previous snapshot and renders correctly", () => {
   const tree = renderer
     .create(
       <Provider store={store}>
-        <ExploreExhibitHeader />
+        <MenuTitleSettings navigation={{ getParam: jest.fn() }} />
       </Provider>
     )
     .toJSON();

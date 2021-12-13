@@ -1,0 +1,32 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`matches previous snapshot and renders correctly 1`] = `
+<View
+  style={
+    Object {
+      "flexDirection": "column",
+      "justifyContent": "center",
+    }
+  }
+>
+  <Text
+    style={
+      Object {
+        "color": "black",
+        "fontSize": 11,
+        "fontWeight": "700",
+        "marginLeft": 5,
+      }
+    }
+  />
+  <Text
+    style={
+      Object {
+        "color": "grey",
+        "fontSize": 10,
+        "marginLeft": 5,
+      }
+    }
+  />
+</View>
+`;

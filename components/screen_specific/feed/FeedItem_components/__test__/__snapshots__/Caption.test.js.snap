@@ -1,0 +1,22 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`matches previous snapshot and renders correctly 1`] = `
+<View
+  style={
+    Object {
+      "justifyContent": "center",
+    }
+  }
+>
+  <Text
+    style={
+      Object {
+        "fontSize": 13,
+        "marginHorizontal": "10%",
+        "marginVertical": 10,
+        "textAlign": "center",
+      }
+    }
+  />
+</View>
+`;
