@@ -28,21 +28,14 @@ const NotificationCard = (props) => {
         <TouchableCmp onPress={props.onSelect} useForeground>
           <View style={{ flex: 1, flexDirection: "row", margin: 10 }}>
             <View style={{ ...props.imageContainer }}>
-              {profileImageIsLoading ? (
+              {profileImageIsLoading && (
                 <AnimatedGradient
-                  style={{
-                    top: 0,
-                    position: "absolute",
-                    zIndex: 3,
-                    height: 40,
-                    width: 40,
-                    borderRadius: 40 / 2,
-                  }}
+                  style={styles.gradient}
                   colors={greyColorValues}
                   start={{ x: 0, y: 0 }}
                   end={{ x: 1, y: 0 }}
                 />
-              ) : null}
+              )}
               <Image
                 style={styles.image}
                 source={
@@ -96,25 +89,39 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderColor: "grey",
   },
+
+  gradient: {
+    top: 0,
+    position: "absolute",
+    zIndex: 3,
+    height: 40,
+    width: 40,
+    borderRadius: 40 / 2,
+  },
+
   image: {
     height: 40,
     width: 40,
     borderRadius: 40 / 2,
     overflow: "hidden",
   },
+
   postImage: {
     height: 40,
     width: 40,
     overflow: "hidden",
   },
+
   username: {
     fontWeight: "500",
     fontSize: 14,
   },
+
   details: {
     marginLeft: 10,
     justifyContent: "center",
   },
+
   touchable: {
     overflow: "hidden",
   },

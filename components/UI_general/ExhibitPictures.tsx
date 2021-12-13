@@ -27,14 +27,14 @@ const ExhibitPictures = (props) => {
         <TouchableCmp onPress={props.onSelect} useForeground>
           <View>
             <View style={{ ...props.imageContainer }}>
-              {imageIsLoading ? (
+              {imageIsLoading && (
                 <AnimatedGradient
                   style={styles.animatedGradient}
                   colors={greyColorValues}
                   start={{ x: 0, y: 0 }}
                   end={{ x: 1, y: 0 }}
                 />
-              ) : null}
+              )}
               <Image
                 style={styles.image}
                 source={{ uri: props.image }}

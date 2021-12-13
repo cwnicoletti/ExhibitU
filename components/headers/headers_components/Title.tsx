@@ -5,11 +5,7 @@ const Title = (props) => {
   return (
     <props.View
       style={{
-        flex: 6,
-        paddingTop: 9,
-        paddingBottom: 7,
-        borderBottomWidth: 1,
-        borderColor: "gray",
+        ...styles.container,
         backgroundColor: props.darkModeValue ? "black" : "white",
       }}
     >
@@ -29,11 +25,20 @@ const Title = (props) => {
 };
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 6,
+    paddingTop: 9,
+    paddingBottom: 7,
+    borderBottomWidth: 1,
+    borderColor: "gray",
+  },
+
   logo: {
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
   },
+
   logoTitle: {
     fontSize: 26,
   },

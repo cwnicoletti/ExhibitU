@@ -11,7 +11,7 @@ const UserTitle = (props) => {
 
   const sourceImg: string | any = props.imgSource
     ? { uri: props.imgSource }
-    : require("../../../assets/default-profile-icon.jpg");
+    : require("../../assets/default-profile-icon.jpg");
 
   return (
     <View style={styles.container}>
