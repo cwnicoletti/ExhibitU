@@ -28,21 +28,14 @@ const ExploreCard = (props) => {
         <TouchableCmp onPress={props.onSelect} useForeground>
           <View style={{ flexDirection: "row", margin: 10 }}>
             <View style={{ ...props.imageContainer }}>
-              {profileImageIsLoading ? (
+              {profileImageIsLoading && (
                 <AnimatedGradient
-                  style={{
-                    top: 0,
-                    position: "absolute",
-                    zIndex: 3,
-                    height: 60,
-                    width: 60,
-                    borderRadius: 60 / 2,
-                  }}
+                  style={styles.gradient}
                   colors={greyColorValues}
                   start={{ x: 0, y: 0 }}
                   end={{ x: 1, y: 0 }}
                 />
-              ) : null}
+              )}
               <Image
                 style={styles.image}
                 source={
@@ -62,11 +55,11 @@ const ExploreCard = (props) => {
               <Text style={{ ...styles.fullname, ...props.fullNameStyle }}>
                 {props.fullname}
               </Text>
-              {props.jobTitle ? (
+              {props.jobTitle && (
                 <Text style={{ ...styles.jobTitle, ...props.jobTitleStyle }}>
                   {props.jobTitle}
                 </Text>
-              ) : null}
+              )}
               <Text style={{ ...styles.username, ...props.userNameStyle }}>
                 {`@${props.username}`}
               </Text>
@@ -83,6 +76,15 @@ const styles = StyleSheet.create({
     marginVertical: 2,
     width: "100%",
     justifyContent: "center",
+  },
+
+  gradient: {
+    top: 0,
+    position: "absolute",
+    zIndex: 3,
+    height: 60,
+    width: 60,
+    borderRadius: 60 / 2,
   },
 
   image: {
@@ -110,7 +112,7 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     justifyContent: "center",
   },
-  
+
   touchable: {
     overflow: "hidden",
   },
