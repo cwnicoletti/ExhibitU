@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { FlatList, StyleSheet, View } from "react-native";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import ExhibitItem from "../../components/UI_general/ExhibitItem";
-import ShowcaseHeader from "../../components/screen_specific/profile/ShowcaseHeader";
+import ProfileHeader from "../../components/UI_general/ProfileHeader";
 import useDidMountEffect from "../../helper/useDidMountEffect";
 import { returnFromShowcasing } from "../../store/actions/user/user";
 
@@ -103,7 +103,7 @@ const ShowcaseProfileScreen = (props) => {
 
   const topHeader = () => {
     return (
-      <ShowcaseHeader
+      <ProfileHeader
         containerStyle={{
           ...styles.profileContainerStyle,
           borderBottomColor: darkModeValue ? "gray" : "#c9c9c9",

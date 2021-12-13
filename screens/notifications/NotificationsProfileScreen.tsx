@@ -7,7 +7,7 @@ import {
   View,
 } from "react-native";
 import { useAppDispatch, useAppSelector } from "../../hooks";
-import ExploreProfileHeader from "../../components/screen_specific/explore/ExploreProfileHeader";
+import ProfileHeader from "../../components/UI_general/ProfileHeader";
 import ExhibitItem from "../../components/UI_general/ExhibitItem";
 import {
   sendFollowNotification,
@@ -240,7 +240,7 @@ const NotificationsProfileScreen = (props) => {
 
   const topHeader = () => {
     return (
-      <ExploreProfileHeader
+      <ProfileHeader
         containerStyle={{
           ...styles.profileContainerStyle,
         }}

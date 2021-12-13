@@ -12,9 +12,9 @@ import {
 import { useAppSelector } from "../../../hooks";
 import LinksList from "../../UI_general/LinksList";
 import ProfileStats from "../../UI_general/ProfileStats";
-import UserTitleEdit from "./UserTitleEdit";
+import UserTitleEdit from "./ProfileUserTitleEdit";
 
-const Profile = (props) => {
+const ProfileScreenHeader = (props) => {
   const links = Object.values(props.links);
   const darkModeValue = useAppSelector((state) => state.user.darkMode);
   const followingValue = useAppSelector((state) => state.user.hideFollowing);
@@ -52,9 +52,9 @@ const Profile = (props) => {
           numberOfFollowing={userDataProfileHeader.numberOfFollowing}
           numberOfExhibits={Object.keys(profileExhibits).length}
         />
-        {props.description ? (
+        {props.description && (
           <Text style={props.descriptionStyle}>{props.description}</Text>
-        ) : null}
+        )}
         <LinksList links={links} />
       </View>
       <View
@@ -90,7 +90,7 @@ const Profile = (props) => {
           </View>
         </TouchableCmp>
       </View>
-      {Object.keys(profileExhibits).length > 0 ? (
+      {Object.keys(profileExhibits).length > 0 && (
         <View>
           <Text
             style={{
@@ -283,7 +283,7 @@ const Profile = (props) => {
             )}
           </View>
         </View>
-      ) : null}
+      )}
     </View>
   );
 };
@@ -294,6 +294,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     margin: 5,
   },
+  
   image: {
     height: 80,
     width: 80,
@@ -301,4 +302,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Profile;
+export default ProfileScreenHeader;

@@ -13,7 +13,7 @@ import {
 } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import ExhibitItem from "../../components/UI_general/ExhibitItem";
-import ProfileHeader from "../../components/screen_specific/profile/ProfileHeader";
+import ProfileHeader from "../../components/screen_specific/profile/ProfileScreenHeader";
 import useDidMountEffect from "../../helper/useDidMountEffect";
 import {
   changeProfileNumberOfColumns,

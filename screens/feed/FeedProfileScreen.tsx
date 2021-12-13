@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { FlatList, StyleSheet, View } from "react-native";
 import { useAppDispatch, useAppSelector } from "../../hooks";
-import FeedProfileHeader from "../../components/screen_specific/feed/FeedProfileHeader";
+import ProfileHeader from "../../components/UI_general/ProfileHeader";
 import ExhibitItem from "../../components/UI_general/ExhibitItem";
 import useDidMountEffect from "../../helper/useDidMountEffect";
 import {
@@ -180,7 +180,7 @@ const FeedProfileScreen = (props) => {
 
   const topHeader = () => {
     return (
-      <FeedProfileHeader
+      <ProfileHeader
         containerStyle={{
           ...styles.profileContainerStyle,
           borderBottomColor: darkModeValue ? "gray" : "#c9c9c9",
