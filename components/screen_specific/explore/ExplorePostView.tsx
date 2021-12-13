@@ -255,7 +255,7 @@ const ExplorePostView = (props) => {
                   >
                     {fullname}
                   </Text>
-                  {jobTitle && (
+                  {jobTitle ? (
                     <Text
                       style={{
                         color: "white",
@@ -266,7 +266,7 @@ const ExplorePostView = (props) => {
                     >
                       {jobTitle}
                     </Text>
-                  )}
+                  ) : null}
                   <Text
                     style={{
                       color: "grey",

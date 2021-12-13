@@ -21,11 +21,11 @@ const ProfileUserTitleEdit = (props) => {
       <View style={{ ...styles.secondContainer }}>
         <View style={{ ...styles.thirdContainer }}>
           <Text style={props.fullnameStyle}>{props.fullname}</Text>
-          {props.jobTitle && (
+          {props.jobTitle ? (
             <Text style={{ textAlign: "center", ...props.jobTitleStyle }}>
               {props.jobTitle}
             </Text>
-          )}
+          ) : null}
           <Text style={props.usernameStyle}>{props.username}</Text>
         </View>
         <View>

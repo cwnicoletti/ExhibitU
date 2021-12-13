@@ -34,12 +34,12 @@ const UserTitle = (props) => {
         }}
       />
       <Text style={props.fullnameStyle}>{props.fullname}</Text>
-      {props.jobTitle && (
+      {props.jobTitle ? (
         <Text style={props.jobTitleStyle}>{props.jobTitle}</Text>
-      )}
-      {props.username && (
+      ) : null}
+      {props.username ? (
         <Text style={props.usernameStyle}>{props.username}</Text>
-      )}
+      ) : null}
     </View>
   );
 };

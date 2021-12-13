@@ -102,11 +102,11 @@ const Input = (props) => {
         onBlur={lostFocusHandler}
         ref={props.inputRef}
       />
-      {!inputState.isValid && inputState.touched && (
+      {!inputState.isValid && inputState.touched ? (
         <View style={styles.errorContainer}>
           <Text style={styles.errorText}>{inputState.error}</Text>
         </View>
-      )}
+      ) : null}
     </View>
   );
 };

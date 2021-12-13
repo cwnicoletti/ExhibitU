@@ -52,9 +52,9 @@ const ProfileScreenHeader = (props) => {
           numberOfFollowing={userDataProfileHeader.numberOfFollowing}
           numberOfExhibits={Object.keys(profileExhibits).length}
         />
-        {props.description && (
+        {props.description ? (
           <Text style={props.descriptionStyle}>{props.description}</Text>
-        )}
+        ) : null}
         <LinksList links={links} />
       </View>
       <View
@@ -90,7 +90,7 @@ const ProfileScreenHeader = (props) => {
           </View>
         </TouchableCmp>
       </View>
-      {Object.keys(profileExhibits).length > 0 && (
+      {Object.keys(profileExhibits).length > 0 ? (
         <View>
           <Text
             style={{
@@ -283,7 +283,7 @@ const ProfileScreenHeader = (props) => {
             )}
           </View>
         </View>
-      )}
+      ) : null}
     </View>
   );
 };
@@ -294,7 +294,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     margin: 5,
   },
-  
+
   image: {
     height: 80,
     width: 80,

@@ -55,11 +55,11 @@ const ExploreCard = (props) => {
               <Text style={{ ...styles.fullname, ...props.fullNameStyle }}>
                 {props.fullname}
               </Text>
-              {props.jobTitle && (
+              {props.jobTitle ? (
                 <Text style={{ ...styles.jobTitle, ...props.jobTitleStyle }}>
                   {props.jobTitle}
                 </Text>
-              )}
+              ) : null}
               <Text style={{ ...styles.username, ...props.userNameStyle }}>
                 {`@${props.username}`}
               </Text>

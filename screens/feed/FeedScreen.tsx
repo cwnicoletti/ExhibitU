@@ -173,7 +173,7 @@ const FeedScreen = (props) => {
   const topHeader = () => {
     return (
       <View>
-        {Object.values(userFeed).length === 0 && (
+        {Object.values(userFeed).length === 0 ? (
           <View style={{ alignItems: "center" }}>
             <Text style={{ color: "grey", margin: 10, marginTop: 20 }}>
               No posts to show!
@@ -188,7 +188,7 @@ const FeedScreen = (props) => {
               Try following someone or posting something!
             </Text>
           </View>
-        )}
+        ) : null}
       </View>
     );
   };

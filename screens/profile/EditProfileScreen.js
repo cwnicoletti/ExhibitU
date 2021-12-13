@@ -458,7 +458,7 @@ const EditProfileScreen = (props) => {
           <ActivityIndicator size="small" color="white" />
         </View>
       )}
-      {fileSizeError && (
+      {fileSizeError ? (
         <Text
           style={{
             color: "red",
@@ -471,7 +471,7 @@ const EditProfileScreen = (props) => {
           Picture file size bigger than 6MB. Try cropping or using a different
           picture.
         </Text>
-      )}
+      ) : null}
       <Input
         textLabel={{ color: darkModeValue ? "white" : "black" }}
         id="fullname"

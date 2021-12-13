@@ -29,9 +29,9 @@ const ProfileHeader = (props) => {
           numberOfFollowing={props.numberOfFollowing}
           numberOfExhibits={props.numberOfExhibits}
         />
-        {props.description && (
+        {props.description ? (
           <Text style={props.descriptionStyle}>{props.description}</Text>
-        )}
+        ) : null}
         <LinksList links={links} />
       </View>
     </View>
