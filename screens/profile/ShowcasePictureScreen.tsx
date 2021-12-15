@@ -1,9 +1,5 @@
 import React, { useEffect } from "react";
-import {
-  Platform,
-  ScrollView,
-  StyleSheet,
-} from "react-native";
+import { Platform, ScrollView, StyleSheet } from "react-native";
 import { useAppSelector } from "../../hooks";
 import ShowcasePostView from "../../components/screen_specific/profile/ShowcasePostView";
 
@@ -72,14 +68,7 @@ const ShowcasePictureScreen = (props) => {
       }}
     >
       <ShowcasePostView
-        containerStyle={{
-          borderBottomColor: darkModeValue ? "white" : "black",
-        }}
         image={postPhotoBase64 ? postPhotoBase64 : postPhotoUrl}
-        descriptionStyle={{
-          ...styles.profileDescriptionStyle,
-          color: darkModeValue ? "white" : "black",
-        }}
         caption={caption}
         profileImageSource={
           userData.profilePictureBase64
@@ -93,6 +82,13 @@ const ShowcasePictureScreen = (props) => {
         numberOfComments={numberOfComments}
         links={postLinks}
         postDateCreated={postDateCreated}
+        containerStyle={{
+          borderBottomColor: darkModeValue ? "white" : "black",
+        }}
+        descriptionStyle={{
+          ...styles.profileDescriptionStyle,
+          color: darkModeValue ? "white" : "black",
+        }}
         nameStyle={{
           color: darkModeValue ? "white" : "black",
         }}
@@ -118,8 +114,6 @@ const ShowcasePictureScreen = (props) => {
         titleStyle={{
           color: "white",
         }}
-        nameTitleColors={["rgba(0,0,0,1)", "rgba(0,0,0,0.00)"]}
-        exhibitTitleColors={["rgba(0,0,0,0.00)", "rgba(0,0,0,1)"]}
         pictureCheerContainer={{
           backgroundColor: darkModeValue ? "black" : "white",
         }}
@@ -141,6 +135,8 @@ const ShowcasePictureScreen = (props) => {
         captionStyle={{
           color: darkModeValue ? "white" : "black",
         }}
+        nameTitleColors={["rgba(0,0,0,1)", "rgba(0,0,0,0.00)"]}
+        exhibitTitleColors={["rgba(0,0,0,0.00)", "rgba(0,0,0,1)"]}
         arrowColor={"white"}
         onSelectCheering={() => {
           viewCheeringHandler();
@@ -157,6 +153,7 @@ const styles = StyleSheet.create({
   screen: {
     flex: 1,
   },
+  
   profileDescriptionStyle: {
     margin: 15,
   },

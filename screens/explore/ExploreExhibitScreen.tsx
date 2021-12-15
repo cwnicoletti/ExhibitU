@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { FlatList, Platform, StyleSheet, View } from "react-native";
+import { FlatList, StyleSheet, View } from "react-native";
 import { useAppSelector } from "../../hooks";
 import ExhibitPictures from "../../components/UI_general/ExhibitPictures";
 import ExhibitHeader from "../../components/UI_general/ExhibitHeader";
@@ -36,11 +36,6 @@ const ExploreExhibitScreen = (props) => {
       }
     )
   );
-
-  let android = null;
-  if (Platform.OS === "android") {
-    android = true;
-  }
 
   const viewCommentsHandler = (
     ExhibitUId: string,
@@ -162,16 +157,9 @@ const styles = StyleSheet.create({
   screen: {
     flex: 1,
   },
+
   profileDescriptionStyle: {
     margin: 15,
-  },
-  text: {
-    padding: 10,
-  },
-  image: {
-    height: 30,
-    width: 30,
-    marginRight: 5,
   },
 });
 

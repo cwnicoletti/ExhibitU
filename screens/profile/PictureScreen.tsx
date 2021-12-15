@@ -94,9 +94,6 @@ const PictureScreen = (props) => {
     >
       <ProfileExhibitPostView
         image={postPhotoBase64}
-        descriptionStyle={{
-          color: darkModeValue ? "white" : "black",
-        }}
         caption={caption}
         profileImageSource={profilePictureBase64}
         numberOfCheers={numberOfCheers}
@@ -108,6 +105,9 @@ const PictureScreen = (props) => {
         jobTitle={jobTitle}
         username={username}
         postDateCreated={postDateCreated}
+        descriptionStyle={{
+          color: darkModeValue ? "white" : "black",
+        }}
         nameStyle={{
           color: darkModeValue ? "white" : "black",
         }}
@@ -133,8 +133,6 @@ const PictureScreen = (props) => {
         titleStyle={{
           color: "white",
         }}
-        nameTitleColors={["rgba(0,0,0,1)", "rgba(0,0,0,0.00)"]}
-        exhibitTitleColors={["rgba(0,0,0,0.00)", "rgba(0,0,0,1)"]}
         pictureCheerContainer={{
           backgroundColor: darkModeValue ? "black" : "white",
         }}
@@ -156,6 +154,8 @@ const PictureScreen = (props) => {
         captionStyle={{
           color: darkModeValue ? "white" : "black",
         }}
+        nameTitleColors={["rgba(0,0,0,1)", "rgba(0,0,0,0.00)"]}
+        exhibitTitleColors={["rgba(0,0,0,0.00)", "rgba(0,0,0,1)"]}
         arrowColor={"white"}
         onSelectCheering={() => {
           viewCheeringHandler();
@@ -180,14 +180,6 @@ const PictureScreen = (props) => {
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-  },
-  text: {
-    padding: 10,
-  },
-  image: {
-    height: 30,
-    width: 30,
-    marginRight: 5,
   },
 });
 

@@ -33,12 +33,7 @@ const ShowcaseSettingsScreen = (props) => {
     >
       <ScrollView style={{ alignSelf: "center", width: 200, marginTop: 20 }}>
         <FilterSwitch
-          viewStyle={{
-            flexDirection: "row",
-            justifyContent: "space-between",
-            alignItems: "center",
-            margin: 10,
-          }}
+          viewStyle={styles.switch}
           labelStyle={{
             color: darkModeValue ? "white" : "black",
           }}
@@ -49,12 +44,7 @@ const ShowcaseSettingsScreen = (props) => {
           }}
         />
         <FilterSwitch
-          viewStyle={{
-            flexDirection: "row",
-            justifyContent: "space-between",
-            alignItems: "center",
-            margin: 10,
-          }}
+          viewStyle={styles.switch}
           labelStyle={{
             color: darkModeValue ? "white" : "black",
           }}
@@ -65,12 +55,7 @@ const ShowcaseSettingsScreen = (props) => {
           }}
         />
         <FilterSwitch
-          viewStyle={{
-            flexDirection: "row",
-            justifyContent: "space-between",
-            alignItems: "center",
-            margin: 10,
-          }}
+          viewStyle={styles.switch}
           labelStyle={{
             color: darkModeValue ? "white" : "black",
           }}
@@ -81,12 +66,7 @@ const ShowcaseSettingsScreen = (props) => {
           }}
         />
         <FilterSwitch
-          viewStyle={{
-            flexDirection: "row",
-            justifyContent: "space-between",
-            alignItems: "center",
-            margin: 10,
-          }}
+          viewStyle={styles.switch}
           labelStyle={{
             color: darkModeValue ? "white" : "black",
           }}
@@ -105,17 +85,12 @@ const styles = StyleSheet.create({
   screen: {
     flex: 1,
   },
-  text: {
-    padding: 10,
-  },
-  image: {
-    width: 150,
-    height: 150,
-  },
-  logoImage: {
-    height: 30,
-    width: 30,
-    marginRight: 5,
+
+  switch: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    margin: 10,
   },
 });
 

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { FlatList, Platform, StyleSheet, View } from "react-native";
+import { FlatList, StyleSheet, View } from "react-native";
 import { useAppSelector } from "../../hooks";
 import ExhibitPictures from "../../components/UI_general/ExhibitPictures";
 import useDidMountEffect from "../../helper/useDidMountEffect";
@@ -32,103 +32,6 @@ const NotificationsExhibitScreen = (props) => {
       : {},
   };
 
-  exploredExhibitData.exhibitId = exploredExhibitData.exhibitId
-    ? exploredExhibitData.exhibitId
-    : "";
-  exploredExhibitData.exhibitTitle = exploredExhibitData.exhibitTitle
-    ? exploredExhibitData.exhibitTitle
-    : "Sample Exhibit";
-  exploredExhibitData.exhibitCoverPhotoUrl =
-    exploredExhibitData.exhibitCoverPhotoUrl
-      ? exploredExhibitData.exhibitCoverPhotoUrl
-      : "https://res.cloudinary.com/showcase-79c28/image/upload/v1626117054/exhibit_pic_ysb6uu.png";
-  exploredExhibitData.exhibitDescription =
-    exploredExhibitData.exhibitDescription
-      ? exploredExhibitData.exhibitDescription
-      : "I've been working on a really cool web application!";
-  exploredExhibitData.exhibitColumns = exploredExhibitData.exhibitColumns
-    ? exploredExhibitData.exhibitColumns
-    : 2;
-  exploredExhibitData.exhibitPosts = exploredExhibitData.exhibitPosts
-    ? exploredExhibitData.exhibitPosts
-    : {
-        ["randomId121334h"]: {
-          ExhibitUId: ExhibitUId,
-          exhibitId: "randomId121334",
-          postId: "randomId121334h",
-          fullname: "test",
-          username: "test",
-          jobTitle: "test",
-          profileBiography: "test",
-          profileExhibits: {},
-          profilePictureUrl: "test",
-          postPhotoUrl:
-            "https://camo.githubusercontent.com/9aea0a68fd10f943a82ce8a434f6c126296568fdf17d0cc914d40a4feb4a9f10/68747470733a2f2f7265732e636c6f7564696e6172792e636f6d2f706572736f6e616c757365313233342f696d6167652f75706c6f61642f76313631373231353939392f436f43726561746f727765626170705f6c7a716e696e2e706e67",
-          postPhotoBase64: "",
-          numberOfCheers: 0,
-          numberOfComments: 0,
-          caption: "Sample post",
-          postLinks: {},
-          postDateCreated: {
-            _seconds: 7654757,
-            _minutes: 7654757,
-          },
-        },
-      };
-  exploredExhibitData.exhibitLinks = exploredExhibitData.exhibitLinks
-    ? exploredExhibitData.exhibitLinks
-    : {};
-
-  exploredUserDataLocal.profileBiography =
-    exploredUserDataLocal.profileBiography
-      ? exploredUserDataLocal.profileBiography
-      : "Yes, it's me, Elon Tusk.";
-  exploredUserDataLocal.following = exploredUserDataLocal.following
-    ? exploredUserDataLocal.following
-    : [];
-  exploredUserDataLocal.followers = exploredUserDataLocal.followers
-    ? exploredUserDataLocal.followers
-    : [];
-  exploredUserDataLocal.fullname = exploredUserDataLocal.fullname
-    ? exploredUserDataLocal.fullname
-    : "Elon Tusk";
-  exploredUserDataLocal.username = exploredUserDataLocal.username
-    ? exploredUserDataLocal.username
-    : "elontusk";
-  exploredUserDataLocal.jobTitle = exploredUserDataLocal.jobTitle
-    ? exploredUserDataLocal.jobTitle
-    : "CEO of companies";
-  exploredUserDataLocal.profilePictureUrl =
-    exploredUserDataLocal.profilePictureUrl
-      ? exploredUserDataLocal.profilePictureUrl
-      : "";
-  exploredUserDataLocal.hideFollowing = exploredUserDataLocal.hideFollowing
-    ? exploredUserDataLocal.hideFollowing
-    : false;
-  exploredUserDataLocal.hideFollowers = exploredUserDataLocal.hideFollowers
-    ? exploredUserDataLocal.hideFollowers
-    : false;
-  exploredUserDataLocal.hideExhibits = exploredUserDataLocal.hideExhibits
-    ? exploredUserDataLocal.hideExhibits
-    : false;
-  exploredUserDataLocal.profileLinks = exploredUserDataLocal.profileLinks
-    ? exploredUserDataLocal.profileLinks
-    : {};
-  exploredUserDataLocal.profileColumns = exploredUserDataLocal.profileColumns
-    ? exploredUserDataLocal.profileColumns
-    : 2;
-  exploredUserDataLocal.showCheering = exploredUserDataLocal.showCheering
-    ? exploredUserDataLocal.showCheering
-    : true;
-  exploredUserDataLocal.numberOfFollowers =
-    exploredUserDataLocal.numberOfFollowers
-      ? exploredUserDataLocal.numberOfFollowers
-      : 0;
-  exploredUserDataLocal.numberOfFollowing =
-    exploredUserDataLocal.numberOfFollowing
-      ? exploredUserDataLocal.numberOfFollowing
-      : 0;
-
   const [exhibitPostsState, setExhibitPostsState] = useState(
     Object.values(exploredExhibitData.exhibitPosts).sort(
       (first: string, second: string) => {
@@ -139,11 +42,6 @@ const NotificationsExhibitScreen = (props) => {
       }
     )
   );
-
-  let android = null;
-  if (Platform.OS === "android") {
-    android = true;
-  }
 
   const viewCommentsHandler = (
     ExhibitUId: string,
@@ -323,16 +221,9 @@ const styles = StyleSheet.create({
   screen: {
     flex: 1,
   },
+  
   profileDescriptionStyle: {
     margin: 15,
-  },
-  text: {
-    padding: 10,
-  },
-  image: {
-    height: 30,
-    width: 30,
-    marginRight: 5,
   },
 });
 

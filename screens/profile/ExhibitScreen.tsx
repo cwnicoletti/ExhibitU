@@ -15,50 +15,8 @@ const ExhibitScreen = (props) => {
   const ExhibitUId = useAppSelector((state) => state.user.ExhibitUId);
   const profileExhibits = useAppSelector((state) => state.user.profileExhibits);
   const currentExhibitId = props.navigation.getParam("exhibitId");
-  const currentExhibit = profileExhibits[currentExhibitId]
-    ? profileExhibits[currentExhibitId]
-    : {
-        exhibitPosts: {
-          ["randomId121334h"]: {
-            ExhibitUId: ExhibitUId,
-            exhibitId: "randomId121334",
-            postId: "randomId121334h",
-            fullname: "test",
-            username: "test",
-            jobTitle: "test",
-            profileBiography: "test",
-            profileExhibits: {},
-            profilePictureUrl: "test",
-            postPhotoUrl:
-              "https://camo.githubusercontent.com/9aea0a68fd10f943a82ce8a434f6c126296568fdf17d0cc914d40a4feb4a9f10/68747470733a2f2f7265732e636c6f7564696e6172792e636f6d2f706572736f6e616c757365313233342f696d6167652f75706c6f61642f76313631373231353939392f436f43726561746f727765626170705f6c7a716e696e2e706e67",
-            postPhotoBase64: "",
-            numberOfCheers: 0,
-            numberOfComments: 0,
-            caption: "Sample post",
-            postLinks: {},
-            postDateCreated: {
-              _seconds: 7654757,
-              _minutes: 7654757,
-            },
-          },
-        },
-        exhibitTitle: "Sample Exhibit",
-        exhibitDescription:
-          "I've been working on a really cool web application!",
-        exhibitCoverPhotoUrl:
-          "https://res.cloudinary.com/showcase-79c28/image/upload/v1626117054/exhibit_pic_ysb6uu.png",
-        exhibitCoverPhotoBase64: "",
-        exhibitDateCreated: {
-          _seconds: 7654757,
-          _minutes: 7654757,
-        },
-        exhibitLastUpdated: {
-          _seconds: 7654757,
-          _minutes: 7654757,
-        },
-        exhibitLinks: {},
-        exhibitColumns: 2,
-      };
+  const currentExhibit = profileExhibits[currentExhibitId];
+
   const exhibitPostsState = Object.values(currentExhibit.exhibitPosts).sort(
     (first: string, second: string) => {
       return (
@@ -302,6 +260,7 @@ const styles = StyleSheet.create({
   screen: {
     flex: 1,
   },
+  
   profileDescriptionStyle: {
     margin: 15,
   },

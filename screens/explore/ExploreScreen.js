@@ -1,4 +1,3 @@
-import { EvilIcons, Feather } from "@expo/vector-icons";
 import React, { useEffect, useRef, useState } from "react";
 import {
   FlatList,
@@ -9,6 +8,7 @@ import {
   TouchableWithoutFeedback,
   View,
 } from "react-native";
+import { EvilIcons, Feather } from "@expo/vector-icons";
 import { SearchBar } from "react-native-elements";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import ExploreCard from "../../components/screen_specific/explore/ExploreCard";
@@ -183,17 +183,12 @@ const ExploreScreen = (props) => {
         <View style={{ alignItems: "center" }}>
           <SearchBar
             containerStyle={{
-              backgroundColor: 'darkModeValue ? "black" : "white"',
-              margin: 5,
-              borderBottomWidth: 0,
-              borderTopWidth: 0,
-              width: "80%",
+              ...styles.searchBarContainerStyle,
+              backgroundColor: darkModeValue ? "black" : "white",
             }}
             inputContainerStyle={{
-              height: 30,
+              ...styles.searchBarInputContainerStyle,
               backgroundColor: darkModeValue ? "black" : "white",
-              borderBottomColor: "gray",
-              borderBottomWidth: 1,
             }}
             searchIcon={
               <EvilIcons
@@ -303,13 +298,18 @@ const styles = StyleSheet.create({
   screen: {
     flex: 1,
   },
-  text: {
-    padding: 10,
+
+  searchBarContainerStyle: {
+    margin: 5,
+    borderBottomWidth: 0,
+    borderTopWidth: 0,
+    width: "80%",
   },
-  image: {
+
+  searchBarInputContainerStyle: {
     height: 30,
-    width: 30,
-    marginRight: 5,
+    borderBottomColor: "gray",
+    borderBottomWidth: 1,
   },
 });
 

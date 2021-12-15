@@ -203,17 +203,12 @@ const NotificationsFollowersScreen = (props) => {
         <View style={{ alignItems: "center" }}>
           <SearchBar
             containerStyle={{
-              backgroundColor: 'darkModeValue ? "black" : "white"',
-              margin: 5,
-              borderBottomWidth: 0,
-              borderTopWidth: 0,
-              width: "80%",
+              ...styles.searchBarContainerStyle,
+              backgroundColor: darkModeValue ? "black" : "white",
             }}
             inputContainerStyle={{
-              height: 30,
+              ...styles.searchBarInputContainerStyle,
               backgroundColor: darkModeValue ? "black" : "white",
-              borderBottomColor: "gray",
-              borderBottomWidth: 1,
             }}
             searchIcon={
               <EvilIcons
@@ -313,13 +308,18 @@ const styles = StyleSheet.create({
   screen: {
     flex: 1,
   },
-  text: {
-    padding: 10,
+
+  searchBarContainerStyle: {
+    margin: 5,
+    borderBottomWidth: 0,
+    borderTopWidth: 0,
+    width: "80%",
   },
-  image: {
+
+  searchBarInputContainerStyle: {
     height: 30,
-    width: 30,
-    marginRight: 5,
+    borderBottomColor: "gray",
+    borderBottomWidth: 1,
   },
 });
 

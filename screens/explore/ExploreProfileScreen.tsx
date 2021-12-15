@@ -256,14 +256,14 @@ const ExploreProfileScreen = (props) => {
           ...styles.profileJobTitleStyle,
           color: darkModeValue ? "white" : "black",
         }}
-        fullname={exploredUserData.fullname}
-        username={`@${exploredUserData.username}`}
-        jobTitle={exploredUserData.jobTitle}
-        imgSource={exploredUserData.profilePictureUrl}
         descriptionStyle={{
           ...styles.profileDescriptionStyle,
           color: darkModeValue ? "white" : "black",
         }}
+        fullname={exploredUserData.fullname}
+        username={`@${exploredUserData.username}`}
+        jobTitle={exploredUserData.jobTitle}
+        imgSource={exploredUserData.profilePictureUrl}
         description={exploredUserData.profileBiography}
         numberOfFollowers={numberOfFollowers}
         numberOfFollowing={numberOfFollowing}
@@ -355,33 +355,30 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "space-between",
   },
+
   profileTitleStyle: {
     fontSize: 24,
     fontWeight: "bold",
     paddingTop: 5,
   },
+
   profileJobTitleStyle: {
     fontSize: 17,
     fontWeight: "bold",
     paddingTop: 5,
   },
+
   profileUsernameStyle: {
     fontSize: 18,
     paddingTop: 5,
   },
+
   profileDescriptionStyle: {
     padding: 20,
   },
+
   profileContainerStyle: {
     justifyContent: "flex-start",
-  },
-  text: {
-    padding: 10,
-  },
-  image: {
-    height: 30,
-    width: 30,
-    marginRight: 5,
   },
 });
 

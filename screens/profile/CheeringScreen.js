@@ -194,10 +194,8 @@ const CheeringScreen = (props) => {
       <View style={{ alignItems: "center" }}>
         <Text
           style={{
+            ...styles.numberOfCheersText,
             color: darkModeValue ? "white" : "black",
-            margin: 20,
-            marginBottom: 0,
-            fontSize: 18,
           }}
         >
           {numberOfCheers} cheering
@@ -208,17 +206,12 @@ const CheeringScreen = (props) => {
           <Text style={{ marginTop: 10 }}>{numberOfCheers} Cheering</Text>
           <SearchBar
             containerStyle={{
-              backgroundColor: 'darkModeValue ? "black" : "white"',
-              margin: 5,
-              borderBottomWidth: 0,
-              borderTopWidth: 0,
-              width: "80%",
+              ...styles.searchBarContainerStyle,
+              backgroundColor: darkModeValue ? "black" : "white",
             }}
             inputContainerStyle={{
-              height: 30,
+              ...styles.searchBarInputContainerStyle,
               backgroundColor: darkModeValue ? "black" : "white",
-              borderBottomColor: "gray",
-              borderBottomWidth: 1,
             }}
             searchIcon={
               <EvilIcons
@@ -309,13 +302,24 @@ const styles = StyleSheet.create({
   screen: {
     flex: 1,
   },
-  text: {
-    padding: 10,
+
+  numberOfCheersText: {
+    margin: 20,
+    marginBottom: 0,
+    fontSize: 18,
   },
-  image: {
+
+  searchBarContainerStyle: {
+    margin: 5,
+    borderBottomWidth: 0,
+    borderTopWidth: 0,
+    width: "80%",
+  },
+
+  searchBarInputContainerStyle: {
     height: 30,
-    width: 30,
-    marginRight: 5,
+    borderBottomColor: "gray",
+    borderBottomWidth: 1,
   },
 });
 

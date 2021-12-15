@@ -120,6 +120,10 @@ const ShowcaseProfileScreen = (props) => {
           ...styles.profileJobTitleStyle,
           color: darkModeValue ? "white" : "black",
         }}
+        descriptionStyle={{
+          ...styles.profileDescriptionStyle,
+          color: darkModeValue ? "white" : "black",
+        }}
         fullname={userData.fullname}
         username={`@${userData.username}`}
         jobTitle={userData.jobTitle}
@@ -136,10 +140,6 @@ const ShowcaseProfileScreen = (props) => {
         numberOfFollowers={userData.numberOfFollowers}
         numberOfFollowing={userData.numberOfFollowing}
         numberOfExhibits={Object.keys(profileExhibitsState).length}
-        descriptionStyle={{
-          ...styles.profileDescriptionStyle,
-          color: darkModeValue ? "white" : "black",
-        }}
         onEditProfilePress={() => props.navigation.navigate("EditProfile")}
         onAddNewExhibitPress={() => props.navigation.navigate("AddExhibit")}
         followersOnPress={() =>
@@ -200,23 +200,28 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     backgroundColor: "black",
   },
+
   profileTitleStyle: {
     fontSize: 24,
     fontWeight: "bold",
     paddingTop: 5,
   },
+
   profileJobTitleStyle: {
     fontSize: 17,
     fontWeight: "bold",
     paddingTop: 5,
   },
+
   profileUsernameStyle: {
     fontSize: 18,
     paddingTop: 5,
   },
+
   profileDescriptionStyle: {
     padding: 20,
   },
+
   profileContainerStyle: {
     justifyContent: "flex-start",
   },

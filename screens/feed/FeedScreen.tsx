@@ -268,8 +268,6 @@ const FeedScreen = (props) => {
               titleStyle={{
                 color: "white",
               }}
-              profilePictureColors={["rgba(0,0,0,1)", "rgba(0,0,0,0)"]}
-              exhibitTitleColors={["rgba(0,0,0,0)", "rgba(0,0,0,1)"]}
               pictureCheerContainer={{
                 backgroundColor: darkModeValue ? "black" : "white",
               }}
@@ -291,6 +289,8 @@ const FeedScreen = (props) => {
               captionStyle={{
                 color: darkModeValue ? "white" : "black",
               }}
+              profilePictureColors={["rgba(0,0,0,1)", "rgba(0,0,0,0)"]}
+              exhibitTitleColors={["rgba(0,0,0,0)", "rgba(0,0,0,1)"]}
               arrowColor={"white"}
               onSelect={() => {
                 viewExhibitHandler(

@@ -193,15 +193,15 @@ const ProfileScreen = (props) => {
           ...styles.profileJobTitleStyle,
           color: darkModeValue ? "white" : "black",
         }}
+        descriptionStyle={{
+          ...styles.profileDescriptionStyle,
+          color: darkModeValue ? "white" : "black",
+        }}
         fullname={userData.fullname}
         username={`@${userData.username}`}
         jobTitle={userData.jobTitle}
         links={userData.profileLinks}
         imgSource={profilePictureBase64}
-        descriptionStyle={{
-          ...styles.profileDescriptionStyle,
-          color: darkModeValue ? "white" : "black",
-        }}
         onEditProfilePress={() => props.navigation.navigate("EditProfile")}
         description={userData.profileBiography}
         onAddNewExhibitPress={() => props.navigation.navigate("AddExhibit")}
@@ -357,26 +357,32 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
   },
+
   profileTitleStyle: {
     fontSize: 24,
     fontWeight: "bold",
     paddingTop: 5,
   },
+
   profileJobTitleStyle: {
     fontSize: 17,
     fontWeight: "bold",
     paddingTop: 5,
   },
+
   profileUsernameStyle: {
     fontSize: 18,
     paddingTop: 5,
   },
+
   profileDescriptionStyle: {
     padding: 20,
   },
+
   profileContainerStyle: {
     justifyContent: "flex-start",
   },
+
   showcaseContainer: {
     borderTopWidth: 1,
     borderLeftWidth: 1,
@@ -384,12 +390,14 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
+
   showcaseButton: {
     margin: 10,
     alignItems: "center",
     justifyContent: "center",
     flexDirection: "row",
   },
+
   showcaseText: {
     fontWeight: "bold",
     marginLeft: 10,

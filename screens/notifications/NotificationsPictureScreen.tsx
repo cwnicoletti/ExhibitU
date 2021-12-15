@@ -144,8 +144,6 @@ const NotificationsPictureScreen = (props) => {
         dateStyle={{
           color: "gray",
         }}
-        nameTitleColors={["rgba(0,0,0,1)", "rgba(0,0,0,0.00)"]}
-        exhibitTitleColors={["rgba(0,0,0,0.00)", "rgba(0,0,0,1)"]}
         pictureCheerContainer={{
           backgroundColor: darkModeValue ? "black" : "white",
         }}
@@ -167,6 +165,8 @@ const NotificationsPictureScreen = (props) => {
         captionStyle={{
           color: darkModeValue ? "white" : "black",
         }}
+        nameTitleColors={["rgba(0,0,0,1)", "rgba(0,0,0,0.00)"]}
+        exhibitTitleColors={["rgba(0,0,0,0.00)", "rgba(0,0,0,1)"]}
         arrowColor={"white"}
         onSelectCheering={() => {
           viewCheeringHandler();
@@ -183,16 +183,9 @@ const styles = StyleSheet.create({
   screen: {
     flex: 1,
   },
+
   profileDescriptionStyle: {
     margin: 15,
-  },
-  text: {
-    padding: 10,
-  },
-  image: {
-    height: 30,
-    width: 30,
-    marginRight: 5,
   },
 });
 

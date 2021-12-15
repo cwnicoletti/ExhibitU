@@ -92,13 +92,9 @@ const styles = StyleSheet.create({
   screen: {
     flex: 1,
   },
+  
   text: {
     padding: 10,
-  },
-  image: {
-    height: 30,
-    width: 30,
-    marginRight: 5,
   },
 });
 
