@@ -1,21 +1,12 @@
 import React, { useEffect, useRef, useState } from "react";
-import {
-  FlatList,
-  Keyboard,
-  RefreshControl,
-  StyleSheet,
-  Text,
-  TouchableWithoutFeedback,
-  View,
-} from "react-native";
-import { EvilIcons, Feather } from "@expo/vector-icons";
-import { SearchBar } from "react-native-elements";
+import { FlatList, RefreshControl, StyleSheet, Text, View } from "react-native";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import ExploreCard from "../../components/screen_specific/explore/ExploreCard";
 import useDidMountEffect from "../../helper/useDidMountEffect";
 import getExlusiveBothSetsDifference from "../../helper/getExlusiveBothSetsDifference";
 import { offScreen } from "../../store/actions/user/user";
 import { FontAwesome5 } from "@expo/vector-icons";
+import CustomSearchBar from "../../components/UI_general/CustomSearchBar";
 
 const ExploreScreen = (props) => {
   const dispatch = useAppDispatch();
@@ -179,45 +170,10 @@ const ExploreScreen = (props) => {
         backgroundColor: darkModeValue ? "black" : "white",
       }}
     >
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-        <View style={{ alignItems: "center" }}>
-          <SearchBar
-            containerStyle={{
-              ...styles.searchBarContainerStyle,
-              backgroundColor: darkModeValue ? "black" : "white",
-            }}
-            inputContainerStyle={{
-              ...styles.searchBarInputContainerStyle,
-              backgroundColor: darkModeValue ? "black" : "white",
-            }}
-            searchIcon={
-              <EvilIcons
-                name="search"
-                size={24}
-                color={darkModeValue ? "white" : "black"}
-              />
-            }
-            clearIcon={
-              search ? (
-                <Feather
-                  name="x"
-                  size={24}
-                  color={darkModeValue ? "white" : "black"}
-                  onPress={() => {
-                    searchFilterFunction("");
-                  }}
-                />
-              ) : null
-            }
-            onChangeText={(text) => searchFilterFunction(text)}
-            onClear={() => {
-              searchFilterFunction("");
-            }}
-            placeholder="Search..."
-            value={search}
-          />
-        </View>
-      </TouchableWithoutFeedback>
+      <CustomSearchBar
+        search={search}
+        searchFilterFunction={searchFilterFunction}
+      />
       <FlatList
         extraData={returnedIndex}
         data={returnedIndex}

@@ -1,17 +1,9 @@
-import { EvilIcons, Feather } from "@expo/vector-icons";
-import algoliasearch from "algoliasearch";
 import React, { useEffect, useState } from "react";
-import {
-  FlatList,
-  Keyboard,
-  RefreshControl,
-  StyleSheet,
-  TouchableWithoutFeedback,
-  View,
-} from "react-native";
-import { SearchBar } from "react-native-elements";
+import { FlatList, RefreshControl, StyleSheet, View } from "react-native";
 import { useAppSelector } from "../../hooks";
+import algoliasearch from "algoliasearch";
 import ExploreCard from "../../components/screen_specific/explore/ExploreCard";
+import CustomSearchBar from "../../components/UI_general/CustomSearchBar";
 
 const ExploreFollowersScreen = (props) => {
   const client = algoliasearch(
@@ -138,53 +130,10 @@ const ExploreFollowersScreen = (props) => {
         backgroundColor: darkModeValue ? "black" : "white",
       }}
     >
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-        <View style={{ alignItems: "center" }}>
-          <SearchBar
-            containerStyle={{
-              ...styles.searchBarContainerStyle,
-              backgroundColor: darkModeValue ? "black" : "white",
-            }}
-            inputContainerStyle={{
-              ...styles.searchBarInputContainerStyle,
-              backgroundColor: darkModeValue ? "black" : "white",
-            }}
-            searchIcon={
-              <EvilIcons
-                name="search"
-                size={24}
-                color={darkModeValue ? "white" : "black"}
-              />
-            }
-            clearIcon={
-              search ? (
-                <Feather
-                  name="x"
-                  size={24}
-                  color={darkModeValue ? "white" : "black"}
-                  onPress={() => {
-                    searchFilterFunction("");
-                  }}
-                />
-              ) : null
-            }
-            onChangeText={(text) => searchFilterFunction(text)}
-            onClear={() => {
-              searchFilterFunction("");
-              setReturnedIndex(
-                index.search("").then((responses) => {
-                  const filteredIndex = responses.hits.filter((object) =>
-                    followers.includes(object.objectID)
-                  );
-                  setReturnedIndex(filteredIndex);
-                })
-              );
-            }}
-            placeholder="Search..."
-            value={search}
-          />
-        </View>
-      </TouchableWithoutFeedback>
+      <CustomSearchBar
+        search={search}
+        searchFilterFunction={searchFilterFunction}
+      />
       <FlatList
         data={returnedIndex}
         onRefresh={() => refreshSearchIndex(search)}

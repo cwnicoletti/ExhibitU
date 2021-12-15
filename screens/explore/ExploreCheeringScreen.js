@@ -1,20 +1,11 @@
-import { EvilIcons, Feather } from "@expo/vector-icons";
-import algoliasearch from "algoliasearch";
 import React, { useEffect, useState } from "react";
-import {
-  FlatList,
-  Keyboard,
-  RefreshControl,
-  StyleSheet,
-  Text,
-  TouchableWithoutFeedback,
-  View,
-} from "react-native";
-import { SearchBar } from "react-native-elements";
-import { useAppSelector } from "../../hooks";
+import { FlatList, RefreshControl, StyleSheet, Text, View } from "react-native";
+import algoliasearch from "algoliasearch";
+import CustomSearchBar from "../../components/UI_general/CustomSearchBar";
 import ExploreCard from "../../components/screen_specific/explore/ExploreCard";
-import useDidMountEffect from "../../helper/useDidMountEffect";
 import getExlusiveBothSetsDifference from "../../helper/getExlusiveBothSetsDifference";
+import { useAppSelector } from "../../hooks";
+import useDidMountEffect from "../../helper/useDidMountEffect";
 
 const ExploreCheeringScreen = (props) => {
   const [returnedIndex, setReturnedIndex] = useState([]);
@@ -202,46 +193,11 @@ const ExploreCheeringScreen = (props) => {
           {numberOfCheers} cheering
         </Text>
       </View>
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-        <View style={{ alignItems: "center" }}>
-          <Text style={{ marginTop: 10 }}>{numberOfCheers} Cheering</Text>
-          <SearchBar
-            containerStyle={{
-              ...styles.searchBarContainerStyle,
-              backgroundColor: darkModeValue ? "black" : "white",
-            }}
-            inputContainerStyle={{
-              ...styles.searchBarInputContainerStyle,
-              backgroundColor: darkModeValue ? "black" : "white",
-            }}
-            searchIcon={
-              <EvilIcons
-                name="search"
-                size={24}
-                color={darkModeValue ? "white" : "black"}
-              />
-            }
-            clearIcon={
-              search ? (
-                <Feather
-                  name="x"
-                  size={24}
-                  color={darkModeValue ? "white" : "black"}
-                  onPress={() => {
-                    searchFilterFunction("");
-                  }}
-                />
-              ) : null
-            }
-            onChangeText={(text) => searchFilterFunction(text)}
-            onClear={() => {
-              searchFilterFunction("");
-            }}
-            placeholder="Search..."
-            value={search}
-          />
-        </View>
-      </TouchableWithoutFeedback>
+      <CustomSearchBar
+        search={search}
+        numberOfCheers={numberOfCheers}
+        searchFilterFunction={searchFilterFunction}
+      />
       <FlatList
         data={returnedIndex}
         onRefresh={() => refreshSearchIndex(search)}
@@ -308,19 +264,6 @@ const styles = StyleSheet.create({
     margin: 20,
     marginBottom: 0,
     fontSize: 18,
-  },
-
-  searchBarContainerStyle: {
-    margin: 5,
-    borderBottomWidth: 0,
-    borderTopWidth: 0,
-    width: "80%",
-  },
-
-  searchBarInputContainerStyle: {
-    height: 30,
-    borderBottomColor: "gray",
-    borderBottomWidth: 1,
   },
 });
 

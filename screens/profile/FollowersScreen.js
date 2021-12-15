@@ -134,53 +134,10 @@ const FollowersScreen = (props) => {
         backgroundColor: darkModeValue ? "black" : "white",
       }}
     >
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-        <View style={{ alignItems: "center" }}>
-          <SearchBar
-            containerStyle={{
-              ...styles.searchBarContainerStyle,
-              backgroundColor: darkModeValue ? "black" : "white",
-            }}
-            inputContainerStyle={{
-              ...styles.searchBarInputContainerStyle,
-              backgroundColor: darkModeValue ? "black" : "white",
-            }}
-            searchIcon={
-              <EvilIcons
-                name="search"
-                size={24}
-                color={darkModeValue ? "white" : "black"}
-              />
-            }
-            clearIcon={
-              search ? (
-                <Feather
-                  name="x"
-                  size={24}
-                  color={darkModeValue ? "white" : "black"}
-                  onPress={() => {
-                    searchFilterFunction("");
-                  }}
-                />
-              ) : null
-            }
-            onChangeText={(text) => searchFilterFunction(text)}
-            onClear={() => {
-              searchFilterFunction("");
-              setReturnedIndex(
-                index.search("").then((responses) => {
-                  const filteredIndex = responses.hits.filter((object) =>
-                    followers.includes(object.objectID)
-                  );
-                  setReturnedIndex(filteredIndex);
-                })
-              );
-            }}
-            placeholder="Search..."
-            value={search}
-          />
-        </View>
-      </TouchableWithoutFeedback>
+      <CustomSearchBar
+        search={search}
+        searchFilterFunction={searchFilterFunction}
+      />
       <FlatList
         data={returnedIndex}
         onRefresh={() => refreshSearchIndex(search)}
@@ -241,19 +198,6 @@ const FollowersScreen = (props) => {
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-  },
-
-  searchBarContainerStyle: {
-    margin: 5,
-    borderBottomWidth: 0,
-    borderTopWidth: 0,
-    width: "80%",
-  },
-
-  searchBarInputContainerStyle: {
-    height: 30,
-    borderBottomColor: "gray",
-    borderBottomWidth: 1,
   },
 });
 

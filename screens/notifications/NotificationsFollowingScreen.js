@@ -1,16 +1,7 @@
-import { EvilIcons, Feather } from "@expo/vector-icons";
-import algoliasearch from "algoliasearch";
 import React, { useEffect, useState } from "react";
-import {
-  FlatList,
-  Keyboard,
-  RefreshControl,
-  StyleSheet,
-  TouchableWithoutFeedback,
-  View,
-} from "react-native";
-import { SearchBar } from "react-native-elements";
+import { FlatList, RefreshControl, StyleSheet, View } from "react-native";
 import { useAppSelector } from "../../hooks";
+import algoliasearch from "algoliasearch";
 import ExploreCard from "../../components/screen_specific/explore/ExploreCard";
 import useDidMountEffect from "../../helper/useDidMountEffect";
 import getExlusiveBothSetsDifference from "../../helper/getExlusiveBothSetsDifference";
@@ -195,45 +186,10 @@ const NotificationsFollowingScreen = (props) => {
         backgroundColor: darkModeValue ? "black" : "white",
       }}
     >
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-        <View style={{ alignItems: "center" }}>
-          <SearchBar
-            containerStyle={{
-              ...styles.searchBarContainerStyle,
-              backgroundColor: darkModeValue ? "black" : "white",
-            }}
-            inputContainerStyle={{
-              ...styles.searchBarInputContainerStyle,
-              backgroundColor: darkModeValue ? "black" : "white",
-            }}
-            searchIcon={
-              <EvilIcons
-                name="search"
-                size={24}
-                color={darkModeValue ? "white" : "black"}
-              />
-            }
-            clearIcon={
-              search ? (
-                <Feather
-                  name="x"
-                  size={24}
-                  color={darkModeValue ? "white" : "black"}
-                  onPress={() => {
-                    searchFilterFunction("");
-                  }}
-                />
-              ) : null
-            }
-            onChangeText={(text) => searchFilterFunction(text)}
-            onClear={() => {
-              searchFilterFunction("");
-            }}
-            placeholder="Search..."
-            value={search}
-          />
-        </View>
-      </TouchableWithoutFeedback>
+      <CustomSearchBar
+        search={search}
+        searchFilterFunction={searchFilterFunction}
+      />
       <FlatList
         data={returnedIndex}
         onRefresh={() => refreshSearchIndex(search)}
@@ -295,19 +251,6 @@ const NotificationsFollowingScreen = (props) => {
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-  },
-
-  searchBarContainerStyle: {
-    margin: 5,
-    borderBottomWidth: 0,
-    borderTopWidth: 0,
-    width: "80%",
-  },
-
-  searchBarInputContainerStyle: {
-    height: 30,
-    borderBottomColor: "gray",
-    borderBottomWidth: 1,
   },
 });
 
