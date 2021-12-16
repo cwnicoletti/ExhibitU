@@ -297,31 +297,37 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "black",
   },
+
   inner: {
     alignItems: "center",
   },
+
   image: {
     width: 100,
     height: 100,
   },
+
   fullname: {
     color: "white",
     padding: 5,
     fontSize: 20,
     fontWeight: "500",
   },
+
   username: {
     color: "white",
     padding: 5,
     fontSize: 16,
     fontWeight: "300",
   },
+
   text: {
     color: "white",
     padding: 10,
     fontSize: 12,
     textAlign: "center",
   },
+
   authContainer: {
     backgroundColor: "black",
     width: "90%",

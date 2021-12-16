@@ -196,19 +196,6 @@ const styles = StyleSheet.create({
   screen: {
     flex: 1,
   },
-
-  searchBarContainerStyle: {
-    margin: 5,
-    borderBottomWidth: 0,
-    borderTopWidth: 0,
-    width: "80%",
-  },
-
-  searchBarInputContainerStyle: {
-    height: 30,
-    borderBottomColor: "gray",
-    borderBottomWidth: 1,
-  },
 });
 
 export default ExploreFollowersScreen;

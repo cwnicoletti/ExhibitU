@@ -305,14 +305,17 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "black",
   },
+  
   inner: {
     alignItems: "center",
   },
+
   image: {
     width: 150,
     height: 150,
     margin: 20,
   },
+
   authContainer: {
     shadowColor: null,
     shadowOpacity: null,

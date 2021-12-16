@@ -211,29 +211,35 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "black",
   },
+
   inner: {
     alignItems: "center",
   },
+
   image: {
     width: 150,
     height: 150,
   },
+
   text: {
     color: "white",
     marginTop: 20,
     fontSize: 22,
   },
+
   fullname: {
     color: "white",
     padding: 5,
     fontSize: 20,
   },
+
   smallerText: {
     color: "white",
     padding: 5,
     paddingBottom: 10,
     fontSize: 12,
   },
+
   authContainer: {
     shadowColor: null,
     shadowOpacity: null,
@@ -249,13 +255,9 @@ const styles = StyleSheet.create({
     maxWidth: 400,
     maxHeight: 400,
   },
+
   activityContainer: {
     marginTop: 10,
-  },
-  buttons: {
-    alignItems: "center",
-    paddingVertical: 10,
-    color: "#00B7DB",
   },
 });
 

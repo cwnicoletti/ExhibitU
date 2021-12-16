@@ -35,18 +35,11 @@ const SignupOrLoginScreen = (props) => {
     <View style={styles.screen}>
       <Animated.View
         style={{
-          flex: 1,
-          width: "100%",
-          height: "100%",
-          alignItems: "center",
-          justifyContent: "center",
-          backgroundColor: "black",
+          ...styles.screen,
           opacity: fadeInAnim,
         }}
       >
-        <Text style={{ ...styles.titleText, fontFamily: "CormorantUpright" }}>
-          ExhibitU
-        </Text>
+        <Text style={styles.titleText}>ExhibitU</Text>
         <Image
           style={styles.image}
           resizeMode={"contain"}
@@ -88,7 +81,7 @@ const SignupOrLoginScreen = (props) => {
               width: 100,
             }}
           />
-          <Text style={{ ...styles.text }}>OR</Text>
+          <Text style={styles.text}>OR</Text>
           <View
             style={{
               alignSelf: "center",
@@ -149,14 +142,18 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     backgroundColor: "black",
   },
+  
   titleText: {
     color: "white",
     fontSize: 60,
+    fontFamily: "CormorantUpright",
   },
+
   image: {
     height: "35%",
     margin: 40,
   },
+  
   text: {
     color: "white",
     padding: 10,

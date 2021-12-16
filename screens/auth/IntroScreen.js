@@ -56,11 +56,9 @@ const IntroScreen = (props) => {
 
   const WIDTH = Dimensions.get("window").width;
 
-  let android = null;
   let TouchableCmp = TouchableOpacity;
   if (Platform.OS === "android") {
     TouchableCmp = TouchableNativeFeedback;
-    android = true;
   }
 
   const authHandler = async () => {
@@ -137,36 +135,36 @@ const IntroScreen = (props) => {
             style={{
               width: 8,
               height: 8,
+              borderRadius: 50,
+              marginHorizontal: 10,
               backgroundColor: sliderIndex === 0 ? "white" : "gray",
-              borderRadius: 50,
-              marginHorizontal: 10,
             }}
           />
           <View
             style={{
               width: 8,
               height: 8,
+              borderRadius: 50,
+              marginHorizontal: 10,
               backgroundColor: sliderIndex === 1 ? "white" : "gray",
-              borderRadius: 50,
-              marginHorizontal: 10,
             }}
           />
           <View
             style={{
               width: 8,
               height: 8,
+              borderRadius: 50,
+              marginHorizontal: 10,
               backgroundColor: sliderIndex === 2 ? "white" : "gray",
-              borderRadius: 50,
-              marginHorizontal: 10,
             }}
           />
           <View
             style={{
               width: 8,
               height: 8,
-              backgroundColor: sliderIndex === 3 ? "white" : "gray",
               borderRadius: 50,
               marginHorizontal: 10,
+              backgroundColor: sliderIndex === 3 ? "white" : "gray",
             }}
           />
         </View>
@@ -249,14 +247,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "black",
   },
-  image: {
-    width: 150,
-    height: 150,
-  },
-  text: {
-    color: "white",
-    padding: 10,
-  },
+
   activityContainer: {
     marginTop: 10,
   },
