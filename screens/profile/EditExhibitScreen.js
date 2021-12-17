@@ -218,18 +218,10 @@ const EditExhibitScreen = (props) => {
         disableKBDismissScroll={true}
         scrollEnabled={true}
       >
-        <View
-          style={{
-            alignItems: "center",
-            justifyContent: "center",
-            margin: 5,
-          }}
-        >
+        <View style={styles.previewTextContainer}>
           <Text
             style={{
-              fontSize: 28,
-              fontWeight: "bold",
-              margin: 10,
+              ...styles.previewText,
               color: darkModeValue ? "white" : "black",
             }}
           >
@@ -245,10 +237,7 @@ const EditExhibitScreen = (props) => {
           >
             {exhibitCoverPhotoUrl ? (
               <Image
-                style={{
-                  height: 350,
-                  width: "100%",
-                }}
+                style={styles.exhibitCoverPhoto}
                 source={{ uri: exhibitCoverPhotoUrl }}
               />
             ) : (
@@ -256,17 +245,14 @@ const EditExhibitScreen = (props) => {
             )}
             <View
               style={{
-                alignItems: "center",
+                ...styles.exhibitTitleContainer,
                 borderBottomColor: darkModeValue ? "white" : "black",
-                borderBottomWidth: 1,
               }}
             >
               <Text
                 style={{
+                  ...styles.exhibitTitleText,
                   color: darkModeValue ? "white" : "black",
-                  fontWeight: "bold",
-                  fontSize: 18,
-                  margin: 10,
                 }}
               >
                 {formState.inputValues.exhibitTitle}
@@ -325,19 +311,9 @@ const EditExhibitScreen = (props) => {
         </View>
         <View style={styles.form}>
           {!isLoadingTempPicture ? (
-            <View
-              style={{
-                margin: 10,
-                alignSelf: "center",
-              }}
-            >
+            <View style={styles.changeExhibitPhotoContainer}>
               <TouchableCmp onPress={changeExhibitCoverPicture}>
-                <View
-                  style={{
-                    alignItems: "center",
-                    flexDirection: "row",
-                  }}
-                >
+                <View style={styles.changeExhibitPhotoSubContainer}>
                   <Octicons name="pencil" size={14} color="#007AFF" />
                   <Text style={{ margin: 10, color: "#007AFF" }}>
                     Change Exhibit Cover Photo
@@ -346,20 +322,11 @@ const EditExhibitScreen = (props) => {
               </TouchableCmp>
             </View>
           ) : (
-            <View
-              style={{
-                margin: 10,
-                justifyContent: "center",
-                alignItems: "center",
-                flexDirection: "row",
-              }}
-            >
+            <View style={styles.loadingExhibitPhotoContainer}>
               <Text
                 style={{
-                  fontWeight: "bold",
-                  textAlign: "center",
+                  ...styles.loadingExhibitPhotoText,
                   color: darkModeValue ? "white" : "black",
-                  margin: 10,
                 }}
               >
                 Loading ehxibit cover photo
@@ -368,15 +335,7 @@ const EditExhibitScreen = (props) => {
             </View>
           )}
           {fileSizeError ? (
-            <Text
-              style={{
-                color: "red",
-                alignSelf: "center",
-                marginHorizontal: 10,
-                marginTop: 5,
-                marginBottom: 15,
-              }}
-            >
+            <Text style={styles.fileSizeErrorText}>
               Picture file size bigger than 6MB. Try cropping or using a
               different picture.
             </Text>
@@ -461,24 +420,13 @@ const EditExhibitScreen = (props) => {
                 initiallyValid={true}
                 required
               />
-              <View
-                style={{
-                  flexDirection: "row",
-                  justifyContent: "center",
-                }}
-              >
+              <View style={styles.linkContainer}>
                 <TouchableCmp
                   onPress={async () => {
                     await removeLink(i + 1);
                   }}
                 >
-                  <View
-                    style={{
-                      margin: 10,
-                      flexDirection: "row",
-                      alignItems: "center",
-                    }}
-                  >
+                  <View style={styles.linkSubContainer}>
                     <Ionicons name="ios-remove" size={14} color="red" />
                     <Text style={{ margin: 10, color: "red" }}>
                       Remove link {i + 1}
@@ -489,24 +437,13 @@ const EditExhibitScreen = (props) => {
             </View>
           ))}
           {linksState && Object.keys(linksState).length <= 0 ? (
-            <View
-              style={{
-                flexDirection: "row",
-                justifyContent: "center",
-              }}
-            >
+            <View style={styles.linkContainer}>
               <TouchableCmp
                 onPress={async () => {
                   await addLink();
                 }}
               >
-                <View
-                  style={{
-                    margin: 10,
-                    flexDirection: "row",
-                    alignItems: "center",
-                  }}
-                >
+                <View style={styles.linkSubContainer}>
                   <Ionicons name="ios-add" size={14} color="green" />
                   <Text style={{ margin: 10, color: "green" }}>
                     Add a link to exhibit
@@ -516,24 +453,13 @@ const EditExhibitScreen = (props) => {
             </View>
           ) : null}
           {linksState && Object.keys(linksState).length > 0 ? (
-            <View
-              style={{
-                flexDirection: "row",
-                justifyContent: "center",
-              }}
-            >
+            <View style={styles.linkContainer}>
               <TouchableCmp
                 onPress={async () => {
                   await addLink();
                 }}
               >
-                <View
-                  style={{
-                    margin: 10,
-                    flexDirection: "row",
-                    alignItems: "center",
-                  }}
-                >
+                <View style={styles.linkSubContainer}>
                   <Ionicons name="ios-add" size={14} color="green" />
                   <Text style={{ margin: 10, color: "green" }}>
                     Add another link
@@ -545,14 +471,7 @@ const EditExhibitScreen = (props) => {
         </View>
         {!isLoading ? (
           <TouchableCmp onPress={submitHandler}>
-            <View
-              style={{
-                margin: 20,
-                alignSelf: "center",
-                alignItems: "center",
-                flexDirection: "row",
-              }}
-            >
+            <View style={styles.confirmEdits}>
               <Text style={{ margin: 10, color: "#007AFF" }}>
                 Confirm exhibit edits
               </Text>
@@ -560,20 +479,11 @@ const EditExhibitScreen = (props) => {
             </View>
           </TouchableCmp>
         ) : (
-          <View
-            style={{
-              margin: 20,
-              justifyContent: "center",
-              alignItems: "center",
-              flexDirection: "row",
-            }}
-          >
+          <View style={styles.uploadingEditsContainer}>
             <Text
               style={{
-                fontWeight: "bold",
-                textAlign: "center",
+                ...styles.uploadingEditsText,
                 color: darkModeValue ? "white" : "black",
-                margin: 10,
               }}
             >
               Uploading exhibit edits...
@@ -587,13 +497,94 @@ const EditExhibitScreen = (props) => {
 };
 
 const styles = StyleSheet.create({
-  text: {
-    padding: 10,
+  previewTextContainer: {
+    alignItems: "center",
+    justifyContent: "center",
+    margin: 5,
   },
-  image: {
-    height: 30,
-    width: 30,
-    marginRight: 5,
+
+  previewText: {
+    fontSize: 28,
+    fontWeight: "bold",
+    margin: 10,
+  },
+
+  exhibitCoverPhoto: {
+    height: 350,
+    width: "100%",
+  },
+
+  exhibitTitleContainer: {
+    alignItems: "center",
+    borderBottomWidth: 1,
+  },
+
+  exhibitTitleText: {
+    fontWeight: "bold",
+    fontSize: 18,
+    margin: 10,
+  },
+
+  changeExhibitPhotoContainer: {
+    margin: 10,
+    alignSelf: "center",
+  },
+
+  changeExhibitPhotoSubContainer: {
+    alignItems: "center",
+    flexDirection: "row",
+  },
+
+  loadingExhibitPhotoContainer: {
+    margin: 10,
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "row",
+  },
+
+  loadingExhibitPhotoText: {
+    fontWeight: "bold",
+    textAlign: "center",
+    margin: 10,
+  },
+
+  fileSizeErrorText: {
+    color: "red",
+    alignSelf: "center",
+    marginHorizontal: 10,
+    marginTop: 5,
+    marginBottom: 15,
+  },
+
+  linkContainer: {
+    flexDirection: "row",
+    justifyContent: "center",
+  },
+
+  linkSubContainer: {
+    margin: 10,
+    flexDirection: "row",
+    alignItems: "center",
+  },
+
+  confirmEdits: {
+    margin: 20,
+    alignSelf: "center",
+    alignItems: "center",
+    flexDirection: "row",
+  },
+
+  uploadingEditsContainer: {
+    margin: 20,
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "row",
+  },
+
+  uploadingEditsText: {
+    fontWeight: "bold",
+    textAlign: "center",
+    margin: 10,
   },
 });
 

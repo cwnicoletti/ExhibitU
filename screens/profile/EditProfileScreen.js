@@ -213,10 +213,7 @@ const EditProfileScreen = (props) => {
     >
       <Text
         style={{
-          fontSize: 28,
-          fontWeight: "bold",
-          textAlign: "center",
-          margin: 10,
+          ...styles.previewText,
           color: darkModeValue ? "white" : "black",
         }}
       >
@@ -239,12 +236,7 @@ const EditProfileScreen = (props) => {
             }}
           >
             <Image
-              style={{
-                height: 100,
-                width: 100,
-                borderRadius: 100 / 2,
-                marginTop: 20,
-              }}
+              style={styles.profilePicture}
               source={
                 profilePictureBase64
                   ? { uri: profilePictureBase64 }
@@ -253,10 +245,8 @@ const EditProfileScreen = (props) => {
             />
             <Text
               style={{
+                ...styles.fullnameText,
                 color: darkModeValue ? "white" : "black",
-                fontSize: 24,
-                fontWeight: "bold",
-                paddingTop: 5,
               }}
             >
               {formState.inputValues.fullname}
@@ -264,10 +254,8 @@ const EditProfileScreen = (props) => {
             {formState.inputValues.jobTitle ? (
               <Text
                 style={{
+                  ...styles.jobTitleText,
                   color: darkModeValue ? "white" : "black",
-                  fontSize: 17,
-                  fontWeight: "bold",
-                  paddingTop: 5,
                 }}
               >
                 {formState.inputValues.jobTitle}
@@ -275,9 +263,8 @@ const EditProfileScreen = (props) => {
             ) : null}
             <Text
               style={{
+                ...styles.usernameText,
                 color: darkModeValue ? "white" : "black",
-                fontSize: 16,
-                margin: 5,
               }}
             >
               @{formState.inputValues.username}
@@ -294,22 +281,22 @@ const EditProfileScreen = (props) => {
             <TouchableCmp
               style={{
                 flex: 1,
-                borderColor: darkModeValue ? "gray" : "#c9c9c9",
                 alignItems: "center",
+                borderColor: darkModeValue ? "gray" : "#c9c9c9",
               }}
             >
               <View
                 style={{
                   flex: 1,
-                  borderColor: darkModeValue ? "gray" : "#c9c9c9",
                   alignItems: "center",
+                  borderColor: darkModeValue ? "gray" : "#c9c9c9",
                 }}
               >
                 <Text
                   style={{
                     margin: 5,
-                    color: darkModeValue ? "white" : "black",
                     fontWeight: "bold",
+                    color: darkModeValue ? "white" : "black",
                   }}
                 >
                   Followers
@@ -329,22 +316,22 @@ const EditProfileScreen = (props) => {
             <TouchableCmp
               style={{
                 flex: 1,
-                borderColor: darkModeValue ? "gray" : "#c9c9c9",
                 alignItems: "center",
+                borderColor: darkModeValue ? "gray" : "#c9c9c9",
               }}
             >
               <View
                 style={{
                   flex: 1,
-                  borderColor: darkModeValue ? "gray" : "#c9c9c9",
                   alignItems: "center",
+                  borderColor: darkModeValue ? "gray" : "#c9c9c9",
                 }}
               >
                 <Text
                   style={{
                     margin: 5,
-                    color: darkModeValue ? "white" : "black",
                     fontWeight: "bold",
+                    color: darkModeValue ? "white" : "black",
                   }}
                 >
                   Following
@@ -352,8 +339,8 @@ const EditProfileScreen = (props) => {
                 <Text
                   style={{
                     marginBottom: 5,
-                    color: darkModeValue ? "white" : "black",
                     fontSize: 15,
+                    color: darkModeValue ? "white" : "black",
                   }}
                 >
                   {userDataProfileHeader.numberOfFollowing}
@@ -365,22 +352,22 @@ const EditProfileScreen = (props) => {
             <TouchableCmp
               style={{
                 flex: 1,
-                borderColor: darkModeValue ? "gray" : "#c9c9c9",
                 alignItems: "center",
+                borderColor: darkModeValue ? "gray" : "#c9c9c9",
               }}
             >
               <View
                 style={{
                   flex: 1,
-                  borderColor: darkModeValue ? "gray" : "#c9c9c9",
                   alignItems: "center",
+                  borderColor: darkModeValue ? "gray" : "#c9c9c9",
                 }}
               >
                 <Text
                   style={{
                     margin: 5,
-                    color: darkModeValue ? "white" : "black",
                     fontWeight: "bold",
+                    color: darkModeValue ? "white" : "black",
                   }}
                 >
                   Exhibits
@@ -388,8 +375,8 @@ const EditProfileScreen = (props) => {
                 <Text
                   style={{
                     marginBottom: 5,
-                    color: darkModeValue ? "white" : "black",
                     fontSize: 15,
+                    color: darkModeValue ? "white" : "black",
                   }}
                 >
                   {Object.keys(profileExhibits).length}
@@ -449,8 +436,8 @@ const EditProfileScreen = (props) => {
             style={{
               fontWeight: "bold",
               textAlign: "center",
-              color: darkModeValue ? "white" : "black",
               margin: 10,
+              color: darkModeValue ? "white" : "black",
             }}
           >
             Changing profile picture...
@@ -459,15 +446,7 @@ const EditProfileScreen = (props) => {
         </View>
       )}
       {fileSizeError ? (
-        <Text
-          style={{
-            color: "red",
-            alignSelf: "center",
-            marginHorizontal: 10,
-            marginTop: 5,
-            marginBottom: 15,
-          }}
-        >
+        <Text style={styles.fileSizeErrorText}>
           Picture file size bigger than 6MB. Try cropping or using a different
           picture.
         </Text>
@@ -547,9 +526,9 @@ const EditProfileScreen = (props) => {
           />
           <Text
             style={{
-              color: darkModeValue ? "white" : "black",
               textAlign: "center",
               margin: 10,
+              color: darkModeValue ? "white" : "black",
             }}
           >
             Link {i + 1}
@@ -581,24 +560,13 @@ const EditProfileScreen = (props) => {
             initiallyValid={true}
             required
           />
-          <View
-            style={{
-              flexDirection: "row",
-              justifyContent: "center",
-            }}
-          >
+          <View style={styles.linkContainer}>
             <TouchableCmp
               onPress={async () => {
                 await removeLink(i + 1);
               }}
             >
-              <View
-                style={{
-                  margin: 10,
-                  flexDirection: "row",
-                  alignItems: "center",
-                }}
-              >
+              <View style={styles.linkSubContainer}>
                 <Ionicons name="ios-remove" size={14} color="red" />
                 <Text style={{ margin: 10, color: "red" }}>
                   Remove link {i + 1}
@@ -609,24 +577,13 @@ const EditProfileScreen = (props) => {
         </View>
       ))}
       {linksState && Object.keys(linksState).length <= 0 && (
-        <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "center",
-          }}
-        >
+        <View style={styles.linkContainer}>
           <TouchableCmp
             onPress={async () => {
               await addLink();
             }}
           >
-            <View
-              style={{
-                margin: 10,
-                flexDirection: "row",
-                alignItems: "center",
-              }}
-            >
+            <View style={styles.linkSubContainer}>
               <Ionicons name="ios-add" size={14} color="green" />
               <Text style={{ margin: 10, color: "green" }}>
                 Add a link to profile
@@ -636,24 +593,13 @@ const EditProfileScreen = (props) => {
         </View>
       )}
       {linksState && Object.keys(linksState).length > 0 ? (
-        <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "center",
-          }}
-        >
+        <View style={styles.linkContainer}>
           <TouchableCmp
             onPress={async () => {
               await addLink();
             }}
           >
-            <View
-              style={{
-                margin: 10,
-                flexDirection: "row",
-                alignItems: "center",
-              }}
-            >
+            <View style={styles.linkSubContainer}>
               <Ionicons name="ios-add" size={14} color="green" />
               <Text style={{ margin: 10, color: "green" }}>
                 Add another link
@@ -664,14 +610,7 @@ const EditProfileScreen = (props) => {
       ) : null}
       {!isLoading ? (
         <TouchableCmp onPress={submitHandler}>
-          <View
-            style={{
-              margin: 20,
-              alignSelf: "center",
-              alignItems: "center",
-              flexDirection: "row",
-            }}
-          >
+          <View style={styles.confirmProfileEditsContainer}>
             <Text style={{ margin: 10, color: "#007AFF" }}>
               Confirm profile edits
             </Text>
@@ -679,20 +618,11 @@ const EditProfileScreen = (props) => {
           </View>
         </TouchableCmp>
       ) : (
-        <View
-          style={{
-            margin: 20,
-            justifyContent: "center",
-            alignItems: "center",
-            flexDirection: "row",
-          }}
-        >
+        <View style={styles.uploadingProfileEditsContainer}>
           <Text
             style={{
-              fontWeight: "bold",
-              textAlign: "center",
+              ...styles.uploadingProfileEditsText,
               color: darkModeValue ? "white" : "black",
-              margin: 10,
             }}
           >
             Uploading profile edits...
@@ -705,13 +635,74 @@ const EditProfileScreen = (props) => {
 };
 
 const styles = StyleSheet.create({
-  text: {
-    padding: 10,
+  previewText: {
+    fontSize: 28,
+    fontWeight: "bold",
+    textAlign: "center",
+    margin: 10,
   },
-  image: {
-    height: 30,
-    width: 30,
-    marginRight: 5,
+
+  profilePicture: {
+    height: 100,
+    width: 100,
+    borderRadius: 100 / 2,
+    marginTop: 20,
+  },
+
+  fullnameText: {
+    fontSize: 24,
+    fontWeight: "bold",
+    paddingTop: 5,
+  },
+
+  jobTitleText: {
+    fontSize: 17,
+    fontWeight: "bold",
+    paddingTop: 5,
+  },
+
+  usernameText: {
+    fontSize: 16,
+    margin: 5,
+  },
+
+  fileSizeErrorText: {
+    color: "red",
+    alignSelf: "center",
+    marginHorizontal: 10,
+    marginTop: 5,
+    marginBottom: 15,
+  },
+
+  linkContainer: {
+    flexDirection: "row",
+    justifyContent: "center",
+  },
+
+  linkSubContainer: {
+    margin: 10,
+    flexDirection: "row",
+    alignItems: "center",
+  },
+
+  confirmProfileEditsContainer: {
+    margin: 20,
+    alignSelf: "center",
+    alignItems: "center",
+    flexDirection: "row",
+  },
+
+  uploadingProfileEditsContainer: {
+    margin: 20,
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "row",
+  },
+
+  uploadingProfileEditsText: {
+    fontWeight: "bold",
+    textAlign: "center",
+    margin: 10,
   },
 });
 
