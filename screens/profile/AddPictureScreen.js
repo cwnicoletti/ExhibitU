@@ -235,19 +235,10 @@ const EditProfileScreen = (props) => {
         keyboardShouldPersistTaps="handled"
         scrollEnabled={true}
       >
-        <View
-          style={{
-            borderBottomWidth: 1,
-            borderBottomColor: "gray",
-            margin: 5,
-          }}
-        >
+        <View style={styles.previewContainer}>
           <Text
             style={{
-              fontSize: 28,
-              textAlign: "center",
-              fontWeight: "bold",
-              margin: 10,
+              ...styles.previewText,
               color: darkModeValue ? "white" : "black",
             }}
           >
@@ -318,19 +309,9 @@ const EditProfileScreen = (props) => {
         </View>
         <View style={styles.form}>
           {!isLoadingTempPicture ? (
-            <View
-              style={{
-                margin: 10,
-                alignSelf: "center",
-              }}
-            >
+            <View style={styles.addPictureContainer}>
               <TouchableCmp onPress={addExhibitPicture}>
-                <View
-                  style={{
-                    alignItems: "center",
-                    flexDirection: "row",
-                  }}
-                >
+                <View style={styles.addPictureSubContainer}>
                   <Ionicons name="ios-add" size={14} color="#007AFF" />
                   <Text style={{ margin: 10, color: "#007AFF" }}>
                     Add Picture
@@ -339,20 +320,11 @@ const EditProfileScreen = (props) => {
               </TouchableCmp>
             </View>
           ) : (
-            <View
-              style={{
-                margin: 10,
-                justifyContent: "center",
-                alignItems: "center",
-                flexDirection: "row",
-              }}
-            >
+            <View style={styles.loadingPictureTextContainer}>
               <Text
                 style={{
-                  fontWeight: "bold",
-                  textAlign: "center",
+                  ...styles.loadingPictureText,
                   color: darkModeValue ? "white" : "black",
-                  margin: 10,
                 }}
               >
                 Loading picture, please wait...
@@ -361,15 +333,7 @@ const EditProfileScreen = (props) => {
             </View>
           )}
           {fileSizeError ? (
-            <Text
-              style={{
-                color: "red",
-                alignSelf: "center",
-                marginHorizontal: 10,
-                marginTop: 5,
-                marginBottom: 15,
-              }}
-            >
+            <Text style={styles.fileSizeErrorText}>
               Picture file size bigger than 6MB. Try cropping or using a
               different picture.
             </Text>
@@ -405,9 +369,9 @@ const EditProfileScreen = (props) => {
               />
               <Text
                 style={{
-                  color: darkModeValue ? "white" : "black",
                   textAlign: "center",
                   margin: 10,
+                  color: darkModeValue ? "white" : "black",
                 }}
               >
                 Link {i + 1}
@@ -445,24 +409,13 @@ const EditProfileScreen = (props) => {
                   marginBottom: 10,
                 }}
               />
-              <View
-                style={{
-                  flexDirection: "row",
-                  justifyContent: "center",
-                }}
-              >
+              <View style={styles.linkContainer}>
                 <TouchableCmp
                   onPress={async () => {
                     await removeLink(i + 1);
                   }}
                 >
-                  <View
-                    style={{
-                      margin: 10,
-                      flexDirection: "row",
-                      alignItems: "center",
-                    }}
-                  >
+                  <View style={styles.linkSubContainer}>
                     <Ionicons name="ios-remove" size={14} color="red" />
                     <Text style={{ margin: 10, color: "red" }}>
                       Remove link {i + 1}
@@ -473,24 +426,13 @@ const EditProfileScreen = (props) => {
             </View>
           ))}
           {linksState && Object.keys(linksState).length <= 0 ? (
-            <View
-              style={{
-                flexDirection: "row",
-                justifyContent: "center",
-              }}
-            >
+            <View style={styles.linkContainer}>
               <TouchableCmp
                 onPress={async () => {
                   await addLink();
                 }}
               >
-                <View
-                  style={{
-                    margin: 10,
-                    flexDirection: "row",
-                    alignItems: "center",
-                  }}
-                >
+                <View style={styles.linkSubContainer}>
                   <Ionicons name="ios-add" size={14} color="green" />
                   <Text style={{ margin: 10, color: "green" }}>
                     Add a link to post
@@ -500,24 +442,13 @@ const EditProfileScreen = (props) => {
             </View>
           ) : null}
           {linksState && Object.keys(linksState).length > 0 ? (
-            <View
-              style={{
-                flexDirection: "row",
-                justifyContent: "center",
-              }}
-            >
+            <View style={styles.linkContainer}>
               <TouchableCmp
                 onPress={async () => {
                   await addLink();
                 }}
               >
-                <View
-                  style={{
-                    margin: 10,
-                    flexDirection: "row",
-                    alignItems: "center",
-                  }}
-                >
+                <View style={styles.linkSubContainer}>
                   <Ionicons name="ios-add" size={14} color="green" />
                   <Text style={{ margin: 10, color: "green" }}>
                     Add another link
@@ -532,14 +463,7 @@ const EditProfileScreen = (props) => {
             onPress={submitHandler}
             disabled={!tempPhotoPostUrl || formState.formIsValid === false}
           >
-            <View
-              style={{
-                margin: 10,
-                alignSelf: "center",
-                alignItems: "center",
-                flexDirection: "row",
-              }}
-            >
+            <View style={styles.confirmPostContainer}>
               <Text
                 style={{
                   margin: 20,
@@ -564,20 +488,11 @@ const EditProfileScreen = (props) => {
             </View>
           </TouchableCmp>
         ) : (
-          <View
-            style={{
-              margin: 20,
-              justifyContent: "center",
-              alignItems: "center",
-              flexDirection: "row",
-            }}
-          >
+          <View style={styles.creatingPostContainer}>
             <Text
               style={{
-                fontWeight: "bold",
-                textAlign: "center",
+                ...styles.creatingPostText,
                 color: darkModeValue ? "white" : "black",
-                margin: 10,
               }}
             >
               Creating post...
@@ -591,13 +506,79 @@ const EditProfileScreen = (props) => {
 };
 
 const styles = StyleSheet.create({
-  text: {
-    padding: 10,
+  previewContainer: {
+    borderBottomWidth: 1,
+    borderBottomColor: "gray",
+    margin: 5,
   },
-  image: {
-    height: 30,
-    width: 30,
-    marginRight: 5,
+
+  previewText: {
+    fontSize: 28,
+    textAlign: "center",
+    fontWeight: "bold",
+    margin: 10,
+  },
+
+  addPictureContainer: {
+    margin: 10,
+    alignSelf: "center",
+  },
+
+  addPictureSubContainer: {
+    alignItems: "center",
+    flexDirection: "row",
+  },
+
+  loadingPictureTextContainer: {
+    margin: 10,
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "row",
+  },
+
+  loadingPictureText: {
+    fontWeight: "bold",
+    textAlign: "center",
+    margin: 10,
+  },
+
+  fileSizeErrorText: {
+    color: "red",
+    alignSelf: "center",
+    marginHorizontal: 10,
+    marginTop: 5,
+    marginBottom: 15,
+  },
+
+  linkContainer: {
+    flexDirection: "row",
+    justifyContent: "center",
+  },
+
+  linkSubContainer: {
+    margin: 10,
+    flexDirection: "row",
+    alignItems: "center",
+  },
+
+  confirmPostContainer: {
+    margin: 10,
+    alignSelf: "center",
+    alignItems: "center",
+    flexDirection: "row",
+  },
+
+  creatingPostContainer: {
+    margin: 20,
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "row",
+  },
+
+  creatingPostText: {
+    fontWeight: "bold",
+    textAlign: "center",
+    margin: 10,
   },
 });
 
