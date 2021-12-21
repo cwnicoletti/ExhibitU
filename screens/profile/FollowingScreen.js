@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { FlatList, RefreshControl, StyleSheet, View } from "react-native";
-import algoliasearch from "algoliasearch";
 import { useAppSelector } from "../../hooks";
+import algoliasearch from "algoliasearch";
 import ExploreCard from "../../components/screen_specific/explore/ExploreCard";
+import CustomSearchBar from "../../components/UI_general/CustomSearchBar";
 
 const FollowingScreen = (props) => {
   const client = algoliasearch(

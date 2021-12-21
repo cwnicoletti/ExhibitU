@@ -1,17 +1,9 @@
-import { EvilIcons, Feather } from "@expo/vector-icons";
-import algoliasearch from "algoliasearch";
 import React, { useEffect, useState } from "react";
-import {
-  FlatList,
-  Keyboard,
-  RefreshControl,
-  StyleSheet,
-  TouchableWithoutFeedback,
-  View,
-} from "react-native";
-import { SearchBar } from "react-native-elements";
+import { FlatList, RefreshControl, StyleSheet, View } from "react-native";
 import { useAppSelector } from "../../hooks";
+import algoliasearch from "algoliasearch";
 import ExploreCard from "../../components/screen_specific/explore/ExploreCard";
+import CustomSearchBar from "../../components/UI_general/CustomSearchBar";
 
 const FollowersScreen = (props) => {
   const client = algoliasearch(

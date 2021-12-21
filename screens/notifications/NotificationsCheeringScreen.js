@@ -5,6 +5,7 @@ import algoliasearch from "algoliasearch";
 import ExploreCard from "../../components/screen_specific/explore/ExploreCard";
 import useDidMountEffect from "../../helper/useDidMountEffect";
 import getExlusiveBothSetsDifference from "../../helper/getExlusiveBothSetsDifference";
+import CustomSearchBar from "../../components/UI_general/CustomSearchBar";
 
 const NotificationsCheeringScreen = (props) => {
   const [returnedIndex, setReturnedIndex] = useState([]);
