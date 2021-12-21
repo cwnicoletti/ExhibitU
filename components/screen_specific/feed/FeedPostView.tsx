@@ -1,9 +1,7 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import {
-  ActivityIndicator,
   Animated,
   Dimensions,
-  Image,
   ImageBackground,
   Platform,
   StyleSheet,
@@ -14,8 +12,6 @@ import {
   View,
 } from "react-native";
 import { useAppDispatch, useAppSelector } from "../../../hooks";
-import Cheerfill from "../../../assets/Icons/clap-fill.svg";
-import Cheer from "../../../assets/Icons/clap.svg";
 import {
   cheerOwnFeedPost,
   cheerPost,
@@ -27,6 +23,8 @@ import TimeStamp from "../../UI_general/TimeStamp";
 import toDateTime from "../../../helper/toDateTime";
 import LinksList from "../../UI_general/LinksList";
 import useDidMountEffect from "../../../helper/useDidMountEffect";
+import FeedItemHeader from "./FeedItem_components/FeedItemHeader";
+import DoubleTappedClapAnim from "./FeedItem_components/DoubleTappedClapAnim";
 
 const FeedPostView = (props) => {
   const dispatch = useAppDispatch();
@@ -40,6 +38,7 @@ const FeedPostView = (props) => {
     "rgba(50,50,50,1)",
     "rgba(0,0,0,1)",
   ]);
+  const darkModeValue = useAppSelector((state) => state.user.darkMode);
   const showCheering = useAppSelector((state) => state.user.showCheering);
   const cheering = props.cheering;
   const cheeredPosts = useAppSelector((state) => state.user.cheeredPosts);
@@ -163,7 +162,7 @@ const FeedPostView = (props) => {
   };
 
   return (
-    <View style={{ ...styles.exhibit, ...props.exhibitContainer }}>
+    <View style={props.exhibitContainer}>
       <TouchableWithoutFeedback
         onPress={() => {
           if (!processingWholeCheer) {
@@ -172,156 +171,22 @@ const FeedPostView = (props) => {
         }}
       >
         <View>
-          {imageIsLoading ? (
-            <AnimatedGradient
-              style={{
-                height: photoHeight,
-                width: "100%",
-                position: "absolute",
-                zIndex: 3,
-              }}
-              colors={greyColorValues}
-              start={{ x: 0, y: 0 }}
-              end={{ x: 1, y: 0 }}
-            />
-          ) : null}
-          <View style={{ flexDirection: "row", ...props.nameContainer }}>
-            <View
-              style={{
-                flex: 1,
-                marginVertical: 5,
-              }}
-            >
-              <TouchableCmp onPress={props.onSelectProfile}>
-                <View
-                  style={{
-                    marginLeft: 10,
-                    flexDirection: "row",
-                  }}
-                >
-                  <View
-                    style={{
-                      height: 50,
-                      width: 50,
-                      borderRadius: 50 / 2,
-                    }}
-                  >
-                    {profileImageIsLoading ? (
-                      <AnimatedGradient
-                        style={{
-                          position: "absolute",
-                          zIndex: 3,
-                          height: 50,
-                          width: 50,
-                          borderRadius: 50 / 2,
-                        }}
-                        colors={greyColorValues}
-                        start={{ x: 0, y: 0 }}
-                        end={{ x: 1, y: 0 }}
-                      />
-                    ) : null}
-                    <Image
-                      style={{
-                        height: 50,
-                        width: 50,
-                        borderRadius: 50 / 2,
-                        ...props.profileImageStyle,
-                      }}
-                      source={
-                        props.profileImageSource
-                          ? { uri: props.profileImageSource }
-                          : require("../../../assets/default-profile-icon.jpg")
-                      }
-                      onLoadEnd={() => {
-                        setProfileImageIsLoading(false);
-                      }}
-                    />
-                  </View>
-                  <View
-                    style={{
-                      flexDirection: "column",
-                      justifyContent: "center",
-                    }}
-                  >
-                    <Text
-                      style={{
-                        color: "white",
-                        fontWeight: "700",
-                        marginLeft: 5,
-                        fontSize: 11,
-                      }}
-                    >
-                      {fullname}
-                    </Text>
-                    {jobTitle ? (
-                      <Text
-                        style={{
-                          color: "white",
-                          fontWeight: "500",
-                          fontSize: 11,
-                          marginLeft: 5,
-                        }}
-                      >
-                        {jobTitle}
-                      </Text>
-                    ) : null}
-                    <Text
-                      style={{
-                        color: "grey",
-                        fontSize: 10,
-                        marginLeft: 5,
-                      }}
-                    >
-                      {username}
-                    </Text>
-                  </View>
-                </View>
-              </TouchableCmp>
-            </View>
-            <View style={{ justifyContent: "center" }}>
-              {loadingCheer ? (
-                <ActivityIndicator
-                  size="small"
-                  color="white"
-                  style={{ marginRight: 10 }}
-                />
-              ) : (
-                <View>
-                  {cheering.includes(ExhibitUId) ? (
-                    <TouchableCmp onPress={unCheer}>
-                      <View>
-                        <Cheerfill
-                          style={{
-                            ...styles.clapContainer,
-                            ...props.clapContainer,
-                            flex: 1,
-                          }}
-                          height={28}
-                          width={28}
-                          fill="white"
-                        />
-                      </View>
-                    </TouchableCmp>
-                  ) : (
-                    <TouchableCmp onPress={unCheer}>
-                      <View>
-                        <Cheer
-                          style={{
-                            ...styles.clapContainer,
-                            ...props.clapContainer,
-                            flex: 1,
-                          }}
-                          height={28}
-                          width={28}
-                          fill="white"
-                        />
-                      </View>
-                    </TouchableCmp>
-                  )}
-                </View>
-              )}
-            </View>
-          </View>
+          <FeedItemHeader
+            profileImageIsLoading={profileImageIsLoading}
+            greyColorValues={greyColorValues}
+            profileImageStyle={props.profileImageStyle}
+            profileImageSource={props.profileImageSource}
+            onSelectProfile={props.onSelectProfile}
+            setProfileImageIsLoading={setProfileImageIsLoading}
+            darkModeValue={darkModeValue}
+            fullname={fullname}
+            jobTitle={jobTitle}
+            username={username}
+            loadingCheer={loadingCheer}
+            ExhibitUId={ExhibitUId}
+            cheering={cheering}
+            unCheer={unCheer}
+          />
           {imageIsLoading ? (
             <AnimatedGradient
               style={{
@@ -351,7 +216,19 @@ const FeedPostView = (props) => {
             onLoadEnd={() => {
               setImageIsLoading(false);
             }}
-          />
+          >
+            {showClapping && (
+              <DoubleTappedClapAnim
+                darkModeValue={darkModeValue}
+                clap={clap}
+                fadeAnim={fadeAnim}
+                slideAnim={slideAnim}
+                height={photoHeight}
+                width={photoWidth}
+                clapContainer={props.clapContainer}
+              />
+            )}
+          </ImageBackground>
         </View>
       </TouchableWithoutFeedback>
       {links.length <= 1 ? (
@@ -462,52 +339,33 @@ const FeedPostView = (props) => {
 };
 
 const styles = StyleSheet.create({
-  exhibit: {},
-  title: {
-    fontSize: 14,
-    fontWeight: "bold",
-  },
   caption: {
     textAlign: "center",
     margin: 10,
     fontSize: 13,
   },
+
   pictureCheerContainer: {
     width: "100%",
     paddingVertical: 5,
     paddingHorizontal: 15,
   },
+
   pictureCheerNumber: {
     fontWeight: "bold",
     fontSize: 15,
     marginLeft: 5,
     marginTop: 5,
   },
+
   pictureCheerText: {
     fontSize: 15,
     marginLeft: 3,
     marginTop: 5,
   },
+
   captionContainer: {
     justifyContent: "center",
-  },
-  clapContainer: {
-    marginRight: 15,
-  },
-  titleContainer: {
-    alignItems: "center",
-    flexDirection: "row",
-    padding: 10,
-  },
-  titleTextContainer: {
-    flex: 1,
-    marginLeft: 5,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  balance: {
-    width: 24,
-    height: "100%",
   },
 });
 
