@@ -19,7 +19,25 @@ const FeedItemHeader = (props) => {
   return (
     <View style={{ ...styles.container, ...props.nameContainer }}>
       <View style={styles.profileContentContainer}>
-        <TouchableCmp onPress={props.onSelectProfile}>
+        {props.profileClickable ? (
+          <TouchableCmp onPress={props.onSelectProfile}>
+            <View style={styles.profileContent}>
+              <ProfilePicture
+                profileImageIsLoading={props.profileImageIsLoading}
+                greyColorValues={props.greyColorValues}
+                profileImageStyle={props.profileImageStyle}
+                profileImageSource={props.profileImageSource}
+                setProfileImageIsLoading={props.setProfileImageIsLoading}
+              />
+              <UserTitle
+                darkModeValue={props.darkModeValue}
+                fullname={props.fullname}
+                jobTitle={props.jobTitle}
+                username={props.username}
+              />
+            </View>
+          </TouchableCmp>
+        ) : (
           <View style={styles.profileContent}>
             <ProfilePicture
               profileImageIsLoading={props.profileImageIsLoading}
@@ -35,7 +53,7 @@ const FeedItemHeader = (props) => {
               username={props.username}
             />
           </View>
-        </TouchableCmp>
+        )}
       </View>
       <CheerIcon
         loadingCheer={props.loadingCheer}

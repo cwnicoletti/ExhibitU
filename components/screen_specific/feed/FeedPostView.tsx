@@ -176,7 +176,6 @@ const FeedPostView = (props) => {
             greyColorValues={greyColorValues}
             profileImageStyle={props.profileImageStyle}
             profileImageSource={props.profileImageSource}
-            onSelectProfile={props.onSelectProfile}
             setProfileImageIsLoading={setProfileImageIsLoading}
             darkModeValue={darkModeValue}
             fullname={fullname}

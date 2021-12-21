@@ -210,6 +210,7 @@ const FeedItem = (props) => {
             ExhibitUId={ExhibitUId}
             cheering={cheering}
             unCheer={unCheer}
+            profileClickable
           />
           {imageIsLoading && (
             <View>
