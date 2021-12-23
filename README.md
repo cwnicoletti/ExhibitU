@@ -4,13 +4,13 @@
 This is a mobile app built using React Native and Expo. Designs were made via Adobe Xd.
 
 <img src="https://res.cloudinary.com/personaluse1234/image/upload/v1627322353/image0_xmon8y.png" width="190">&nbsp;
-<img src="https://res.cloudinary.com/personaluse1234/image/upload/v1627322354/image1_nzjygj.png" width="190">&nbsp;
+<img src="https://res.cloudinary.com/personaluse1234/image/upload/v1640293406/image0_14_ezm4ov.png" width="190">&nbsp;
 <img src="https://res.cloudinary.com/personaluse1234/image/upload/v1640222879/image0_13_e0hzq0.png" width="190">&nbsp;
-<img src="https://res.cloudinary.com/personaluse1234/image/upload/v1635192858/image0_10_ugt4vs.png" width="190">&nbsp;
-<img src="https://res.cloudinary.com/personaluse1234/image/upload/v1635447621/image0_11_odpji2.png" width="190">&nbsp;
+<img src="https://res.cloudinary.com/personaluse1234/image/upload/v1640293687/image4_4_wpm4f4.png" width="190">&nbsp;
+<img src="https://res.cloudinary.com/personaluse1234/image/upload/v1640293648/image2_6_itl0aq.png" width="190">&nbsp;
 <img src="https://res.cloudinary.com/personaluse1234/image/upload/v1635191534/image0_8_trxnro.png" width="190">&nbsp;
 <img src="https://res.cloudinary.com/personaluse1234/image/upload/v1635191540/image1_4_loudoh.png" width="190">&nbsp;
-<img src="https://res.cloudinary.com/personaluse1234/image/upload/v1635192723/image3_3_qhp1hy.png" width="190">&nbsp;
+<img src="https://res.cloudinary.com/personaluse1234/image/upload/v1640293716/image3_4_fq1rcv.png" width="190">&nbsp;
 <img src="https://res.cloudinary.com/personaluse1234/image/upload/v1635191542/image4_3_xkcx6o.png" width="190">&nbsp;
 <img src="https://res.cloudinary.com/personaluse1234/image/upload/v1635191541/image3_2_zbae5m.png" width="190">&nbsp;
 <img src="https://res.cloudinary.com/personaluse1234/image/upload/v1635192716/image0_9_asoiyp.png" width="190">&nbsp;
