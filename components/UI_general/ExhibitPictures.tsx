@@ -23,32 +23,30 @@ const ExhibitPictures = (props) => {
 
   return (
     <View style={{ ...styles.exhibit, ...props.exhibitContainer }}>
-      <View style={styles.touchable}>
-        <TouchableCmp onPress={props.onSelect} useForeground>
-          <View>
-            <View style={{ ...props.imageContainer }}>
-              {imageIsLoading && (
-                <AnimatedGradient
-                  style={styles.animatedGradient}
-                  colors={greyColorValues}
-                  start={{ x: 0, y: 0 }}
-                  end={{ x: 1, y: 0 }}
-                />
-              )}
-              <Image
-                style={styles.image}
-                source={{ uri: props.image }}
-                onLoadStart={() => {
-                  setGreyColorValues(["rgba(0,0,0,1)", "rgba(50,50,50,1)"]);
-                }}
-                onLoadEnd={() => {
-                  setImageIsLoading(false);
-                }}
+      <TouchableCmp onPress={props.onSelect} useForeground>
+        <View>
+          <View style={{ ...props.imageContainer }}>
+            {imageIsLoading && (
+              <AnimatedGradient
+                style={styles.animatedGradient}
+                colors={greyColorValues}
+                start={{ x: 0, y: 0 }}
+                end={{ x: 1, y: 0 }}
               />
-            </View>
+            )}
+            <Image
+              style={styles.image}
+              source={{ uri: props.image }}
+              onLoadStart={() => {
+                setGreyColorValues(["rgba(0,0,0,1)", "rgba(50,50,50,1)"]);
+              }}
+              onLoadEnd={() => {
+                setImageIsLoading(false);
+              }}
+            />
           </View>
-        </TouchableCmp>
-      </View>
+        </View>
+      </TouchableCmp>
     </View>
   );
 };

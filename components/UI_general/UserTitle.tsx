@@ -8,7 +8,6 @@ const UserTitle = (props) => {
     "rgba(50,50,50,1)",
     "rgba(0,0,0,1)",
   ]);
-
   const sourceImg: string | any = props.imgSource
     ? { uri: props.imgSource }
     : require("../../assets/default-profile-icon.jpg");

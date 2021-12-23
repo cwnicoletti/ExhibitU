@@ -7,8 +7,8 @@ const MainHeaderTitle = (props) => {
       <Text
         style={{
           ...styles.titleText,
-          color: props.darkModeValue ? "white" : "black",
           fontFamily: props.fontFamily,
+          color: props.darkModeValue ? "white" : "black",
         }}
       >
         {props.titleName}

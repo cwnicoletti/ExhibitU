@@ -140,7 +140,10 @@ const ProfileStats = (props) => {
 };
 
 const styles = StyleSheet.create({
-  statsContainer: { marginTop: 5, flexDirection: "row" },
+  statsContainer: {
+    marginTop: 5,
+    flexDirection: "row",
+  },
 });
 
 export default ProfileStats;

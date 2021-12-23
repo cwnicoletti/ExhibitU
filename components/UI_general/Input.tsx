@@ -115,21 +115,25 @@ const styles = StyleSheet.create({
   formControl: {
     width: "100%",
   },
+
   label: {
     marginVertical: 1,
     paddingLeft: 15,
     color: "white",
   },
+
   input: {
     paddingHorizontal: 10,
     borderRadius: 15,
     paddingVertical: 13,
     marginHorizontal: 10,
   },
+
   errorContainer: {
     marginVertical: 5,
     paddingLeft: 10,
   },
+  
   errorText: {
     color: "red",
     fontSize: 13,

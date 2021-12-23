@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Platform, ScrollView, StyleSheet } from "react-native";
+import { ScrollView, StyleSheet } from "react-native";
 import { useAppSelector } from "../../hooks";
 import ShowcasePostView from "../../components/screen_specific/profile/ShowcasePostView";
 
@@ -18,11 +18,6 @@ const ShowcasePictureScreen = (props) => {
   const postLinks = props.navigation.getParam("postLinks")
     ? props.navigation.getParam("postLinks")
     : {};
-
-  let android = null;
-  if (Platform.OS === "android") {
-    android = true;
-  }
 
   const viewCheeringHandler = () => {
     props.navigation.push("CheeringScreen", {
@@ -153,7 +148,7 @@ const styles = StyleSheet.create({
   screen: {
     flex: 1,
   },
-  
+
   profileDescriptionStyle: {
     margin: 15,
   },

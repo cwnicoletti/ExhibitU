@@ -123,41 +123,49 @@ const styles = StyleSheet.create({
     padding: 20,
     justifyContent: "center",
   },
+
   settingsTitleContainer: {
     alignItems: "center",
     justifyContent: "center",
     borderBottomWidth: 1,
   },
+
   settingsTitleSafeAreaContainer: {
     alignItems: "center",
     justifyContent: "center",
     flexDirection: "row",
   },
+
   settingsTitleText: {
     margin: 10,
     fontSize: 20,
   },
+
   drawerFirstItemContainer: {
     flexDirection: "row",
     alignItems: "center",
     margin: 10,
     marginTop: 20,
   },
+
   drawerMiddleItemContainer: {
     flexDirection: "row",
     alignItems: "center",
     margin: 10,
   },
+
   drawerLastItemContainer: {
     flex: 1,
     justifyContent: "flex-end",
     margin: 5,
   },
+
   drawerLastItemSubContainer: {
     flexDirection: "row",
     alignItems: "center",
     marginBottom: 10,
   },
+  
   drawerItemText: {
     fontSize: 18,
     marginHorizontal: 10,
