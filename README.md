@@ -10,7 +10,7 @@ This is a mobile app built using React Native and Expo. Designs were made via Ad
 <img src="https://res.cloudinary.com/personaluse1234/image/upload/v1640293648/image2_6_itl0aq.png" width="190">&nbsp;
 <img src="https://res.cloudinary.com/personaluse1234/image/upload/v1635191534/image0_8_trxnro.png" width="190">&nbsp;
 <img src="https://res.cloudinary.com/personaluse1234/image/upload/v1635191540/image1_4_loudoh.png" width="190">&nbsp;
-<img src="https://res.cloudinary.com/personaluse1234/image/upload/v1640293716/image3_4_fq1rcv.png" width="190">&nbsp;
+<img src="https://res.cloudinary.com/personaluse1234/image/upload/v1640294304/image0_15_wfp4pn.png" width="190">&nbsp;
 <img src="https://res.cloudinary.com/personaluse1234/image/upload/v1635191542/image4_3_xkcx6o.png" width="190">&nbsp;
 <img src="https://res.cloudinary.com/personaluse1234/image/upload/v1635191541/image3_2_zbae5m.png" width="190">&nbsp;
 <img src="https://res.cloudinary.com/personaluse1234/image/upload/v1635192716/image0_9_asoiyp.png" width="190">&nbsp;
