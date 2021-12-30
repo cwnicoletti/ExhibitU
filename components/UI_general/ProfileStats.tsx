@@ -29,31 +29,28 @@ const ProfileStats = (props) => {
       {!followersValue ? (
         <TouchableCmp
           style={{
-            flex: 1,
+            ...styles.container,
             borderColor: darkModeValue ? "gray" : "#c9c9c9",
-            alignItems: "center",
           }}
           onPress={followersOnPress}
         >
           <View
             style={{
-              flex: 1,
+              ...styles.subContainer,
               borderColor: darkModeValue ? "gray" : "#c9c9c9",
-              alignItems: "center",
             }}
           >
             <Text
               style={{
-                margin: 5,
+                ...styles.textStyle,
                 color: darkModeValue ? "white" : "black",
-                fontWeight: "bold",
               }}
             >
               Followers
             </Text>
             <Text
               style={{
-                marginBottom: 5,
+                ...styles.numberOf,
                 color: darkModeValue ? "white" : "black",
               }}
             >
@@ -65,33 +62,29 @@ const ProfileStats = (props) => {
       {!followingValue ? (
         <TouchableCmp
           style={{
-            flex: 1,
+            ...styles.container,
             borderColor: darkModeValue ? "gray" : "#c9c9c9",
-            alignItems: "center",
           }}
           onPress={followingOnPress}
         >
           <View
             style={{
-              flex: 1,
+              ...styles.subContainer,
               borderColor: darkModeValue ? "gray" : "#c9c9c9",
-              alignItems: "center",
             }}
           >
             <Text
               style={{
-                margin: 5,
+                ...styles.textStyle,
                 color: darkModeValue ? "white" : "black",
-                fontWeight: "bold",
               }}
             >
               Following
             </Text>
             <Text
               style={{
-                marginBottom: 5,
+                ...styles.numberOf,
                 color: darkModeValue ? "white" : "black",
-                fontSize: 15,
               }}
             >
               {numberOfFollowing}
@@ -102,32 +95,28 @@ const ProfileStats = (props) => {
       {!exhibitsValue ? (
         <View
           style={{
-            flex: 1,
+            ...styles.container,
             borderColor: darkModeValue ? "gray" : "#c9c9c9",
-            alignItems: "center",
           }}
         >
           <View
             style={{
-              flex: 1,
+              ...styles.subContainer,
               borderColor: darkModeValue ? "gray" : "#c9c9c9",
-              alignItems: "center",
             }}
           >
             <Text
               style={{
-                margin: 5,
+                ...styles.textStyle,
                 color: darkModeValue ? "white" : "black",
-                fontWeight: "bold",
               }}
             >
               Exhibits
             </Text>
             <Text
               style={{
-                marginBottom: 5,
+                ...styles.numberOf,
                 color: darkModeValue ? "white" : "black",
-                fontSize: 15,
               }}
             >
               {numberOfExhibits}
@@ -143,6 +132,26 @@ const styles = StyleSheet.create({
   statsContainer: {
     marginTop: 5,
     flexDirection: "row",
+  },
+
+  container: {
+    flex: 1,
+    alignItems: "center",
+  },
+
+  subContainer: {
+    flex: 1,
+    alignItems: "center",
+  },
+
+  textStyle: {
+    margin: 5,
+    fontWeight: "bold",
+  },
+
+  numberOf: {
+    fontSize: 15,
+    marginBottom: 5,
   },
 });
 
