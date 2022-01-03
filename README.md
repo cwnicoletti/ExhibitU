@@ -45,23 +45,29 @@ All contributions should be referenced to the [CONTRIBUTIONS](https://github.com
 "algoliasearch": "^4.8.3",<br />
 "axios": "^0.21.1",<br />
 "buffer": "^6.0.3",<br />
-"expo": "^42.0.0",<br />
-"expo-font": "~9.2.1",<br />
-"expo-image-picker": "~10.2.2",<br />
-"expo-linear-gradient": "~9.2.0",<br />
-"expo-notifications": "~0.12.3",<br />
-"expo-status-bar": "~1.0.4",<br />
-"expo-web-browser": "~9.2.0",<br />
+"expo": "^43.0.0",<br />
+"expo-app-loading": "~1.2.1",<br />
+"expo-asset": "~8.4.3",<br />
+"expo-font": "~10.0.3",<br />
+"expo-image-picker": "~11.0.3",<br />
+"expo-image-picker/build/ImagePicker.types": "~11.0.3",<br />
+"expo-linear-gradient": "~10.0.3",<br />
+"expo-notifications": "~0.13.3",<br />
+"expo-splash-screen": "~0.13.5",<br />
+"expo-status-bar": "~1.1.0",<br />
+"expo-web-browser": "~10.0.3",<br />
 "firebase": "8.2.3",<br />
-"react": "^17.0.2",<br />
-"react-dom": "16.13.1",<br />
-"react-native": "https://github.com/expo/react-native/archive/sdk-42.0.0.tar.gz",<br />
+"react": "17.0.1",<br />
+"react-dom": "17.0.1",<br />
+"react-native": "0.64.3",<br />
 "react-native-elements": "^3.0.0-alpha.1",<br />
 "react-native-gesture-handler": "~1.10.2",<br />
 "react-native-keyboard-aware-scroll-view": "^0.9.3",<br />
 "react-native-linear-gradient": "^2.5.6",<br />
 "react-native-paper": "^4.7.0",<br />
+"react-native-progress": "^5.0.0",<br />
 "react-native-reanimated": "^1.13.3",<br />
+"react-native-safe-area-context": "3.3.2",<br />
 "react-native-screens": "^2.10.1",<br />
 "react-native-snap-carousel": "^3.9.1",<br />
 "react-native-svg": "12.1.1",<br />
@@ -80,10 +86,10 @@ All contributions should be referenced to the [CONTRIBUTIONS](https://github.com
 [Package.json](https://github.com/cwnicoletti/Diamond-Case/blob/main/package.json)
 
 "jest": "^26.6.3",<br />
-"jest-expo": "^42.1.0",<br />
+"jest-expo": "^43.0.0",<br />
 "metro-react-native-babel-preset": "^0.66.2",<br />
 "react-test-renderer": "^17.0.2",<br />
-"typescript": "~4.0.0"<br />
+"typescript": "~4.3.5"<br />
 
 ## Licensing
 The content of this repository is licensed under the terms specified in the [LICENSE](https://github.com/christiannicoletti/Diamond-Case/blob/master/LICENSE) file.
